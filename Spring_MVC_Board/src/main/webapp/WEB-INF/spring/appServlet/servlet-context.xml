@@ -29,9 +29,9 @@
 	</beans:bean>
 	
 	<!-- 컨트롤러(@Controller) 를 비롯한 어노테이션을 통해 자동 주입될 클래스가 포함되는 패키지 지정 -->
-	<context:component-scan base-package="com.itwillbs.spring_mvc_board" />
-	<context:component-scan base-package="com.itwillbs.spring_mvc_board.controller" />
-	<context:component-scan base-package="com.itwillbs.spring_mvc_board.service" />
+	<context:component-scan base-package="com.itwillbs.asset" />
+	<context:component-scan base-package="com.itwillbs.asset.controller" />
+	<context:component-scan base-package="com.itwillbs.asset.service" />
 	
 	
 	
