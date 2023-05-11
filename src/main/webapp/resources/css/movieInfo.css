@@ -1,0 +1,631 @@
+@charset "UTF-8";
+
+/*============================================================
+/*
+/* [m]: movie list
+/*
+============================================================== */
+.posterlist {
+	width: 170px;
+	height: 243px;
+}
+
+.section-movie-list {
+	background-color: #ececec;
+	max-width: 100%;
+	margin: 0 auto;
+	padding: 40px 0 55px 0;
+
+}
+
+.section-movie-list.screening, .section-movie-list.latest, .section-movie-list.comming {
+	padding-top: 85px;
+}
+.section-movie-list ul li .over-a .over-btn-rsv
+	{
+	background: #8080803b;
+	border: 1px solid;
+	border-radius: 5px;
+	padding: 1px 38px;
+	margin-left: 18px;
+}
+.section-movie-list ul li .over-a .over-btn-info
+	{
+	background: #8080803b;
+	border: 1px solid;
+	border-radius: 5px;
+	padding: 1px 38px;
+	margin-left: 18px;
+	
+}
+
+
+/* 목록페이지의 ul*/
+.section-movie-list ul {
+	display: block;
+	width: 1100px;
+	margin: 0 auto;
+}
+
+.section-movie-list ul li {
+	display: inline-block;
+	margin: 0 25px 100px 3px;
+	position: relative;
+	
+
+}
+
+.section-movie-list ul li:nth-child(5n-4) {
+	margin-left: -4px;
+}
+
+.section-movie-list ul li:nth-child(5n) {
+	margin-right: -4px;
+}
+
+.section-movie-list ul li .over-a {
+	opacity: 0;
+	display: block;
+	background-color: rgba(0, 0, 0, 0.7);
+	width: 100%;
+	height: 243px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.section-movie-list ul li .over-a.on {
+	display: block;
+	opacity: 1;
+}
+
+/* .section-movie-list ul li .over-a.up { */
+/* 	background: url("../images/movies/bg-list-hover-up.png") center center */
+/* 		no-repeat; */
+/* } */
+
+/* .section-movie-list ul li .over-a.down { */
+/* 	background: url("../movies/bg-list-hover-down.png") center center */
+/* 		no-repeat; */
+/* } */
+/********************************************포스터 안에 들어가는 rsv info 영역*******************************************************/
+.section-movie-list ul li .over-a a.rsv {
+
+	display: block;
+	width: 168px;
+	height: 121px;
+	line-height: 220px;
+	font-size: 16px;
+	color: #f3f3f3;
+	font-weight: normal;
+	background-color: transparent;
+}
+
+.section-movie-list ul li .over-a a.info {
+	display: block;
+	width: 168px;
+	height: 110px;
+	line-height: 50px;
+	font-size: 16px;
+	color: #f3f3f3;
+	font-weight: normal;
+	background-color: transparent;
+}
+/**************************************************************************************************************************/
+.section-movie-list ul li .over-a a:hover {
+	color: #C39C71;
+}
+
+.section-movie-list ul li .over-b {
+	opacity: 0;
+	display: block;
+	background-color: rgba(0, 0, 0, 0.5);
+	width: 100%;
+	height: 243px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.section-movie-list ul li .over-b.on {
+	display: block;
+	opacity: 1;
+}
+
+.section-movie-list ul li .over-b.up {
+	background: url("../images/movies/bg-list-hover-2.png") center center
+		no-repeat;
+}
+
+.section-movie-list ul li .over-b a.info {
+	display: block;
+	width: 170px;
+	height: 243px;
+	line-height: 243px;
+	font-size: 16px;
+	color: #f3f3f3;
+	font-weight: normal;
+	text-align: center;
+}
+
+.section-movie-list ul li .over-b a.rsv {
+	display: none;
+}
+
+.section-movie-list ul li .over-b a:hover {
+	color: #C39C71;
+}
+
+.section-movie-list .btn-more {
+	display: block;
+	width: 720px;
+	height: 41px;
+	margin: 35px auto 0 auto;
+	background-color: #fff;
+	border: 1px solid #d8d8d8;
+	color: #7d7d7d;
+	font-size: 16px;
+	line-height: 41px;
+	text-align: center;
+}
+
+.section-movie-list .btn-more:hover {
+	color: #000;
+	border: 1px solid #000;
+}
+
+.section-movie-list .selector {
+	display: block;
+	width: 880px;
+	height: 15px;
+	margin: 0 auto 37px auto;
+	text-align: right;
+	padding: 0 5px;
+	font-size: 15px;
+}
+
+.section-movie-list .selector a {
+	color: #7d7d7d;
+}
+
+.section-movie-list .selector a.selected {
+	color: #000;
+}
+
+.section-movie-list .selector a:hover {
+	color: #000;
+}
+
+/*============================================================
+/*
+/* [m]: movie list
+/*
+============================================================== */
+/* 영화 페이지 등급&이름 표시*/
+.movie-desc {	
+    width: 154px;
+    overflow: hidden !important;
+    border: 1px solid #b4b5b5;
+    height: 32px;
+    padding: 0 7px;
+    line-height: 31px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #89898a;
+    position: relative;
+}
+
+.movie-desc .rate-all, .movie-desc .rate-12, .movie-desc .rate-15,
+	.movie-desc .rate-n, .movie-desc .rate-x {
+	background-size: 23px 23px !important;
+	font-weight: bold;
+	color: #fff;
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	text-align: center;
+	margin-right: 7px;
+	padding: 0;
+	overflow: hidden;
+	text-indent: -10000em;
+	top: 6px;
+	position: absolute;
+}
+
+.movie-desc .rate-all {
+	background: url("../images/movies/icon-rate-all.png") center center
+		no-repeat;
+}
+
+.movie-desc .rate-12 {
+	background: url("../images/movies/icon-rate-12.png") center center
+		no-repeat;
+}
+
+.movie-desc .rate-15 {
+	background: url("../images/movies/icon-rate-15.png") center center
+		no-repeat;
+}
+
+.movie-desc .rate-x {
+	background: url("../images/movies/icon-rate-x.png") center center
+		no-repeat;
+}
+
+.movie-desc .rate-n {
+	background: url("../images/movies/grade/icon-rate-n.png") center center
+		no-repeat;
+}
+
+.movie-desc .tit {
+
+	overflow: hidden;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0px 0 0 25px;
+    font-size: 16px;
+    font-weight: 400;
+    
+}
+
+.movie-date {
+	border: 1px solid #b4b5b5;
+	border-bottom: 0;
+	padding: 0 7px;
+	line-height: 31px;
+	background-color: #fff;
+	color: #89898a;
+	font-size: 13px;
+	text-align: right;
+	position: relative;
+}
+
+.movie-date .rb-1, .movie-date .rb-2, .movie-date .rb-3 {
+	display: block;
+	position: absolute;
+	top: 6px;
+	left: 8px;
+	width: 44px;
+	height: 19px;
+	padding-left: 10px;
+	text-align: left;
+	line-height: 16px;
+	font-weight: bold;
+	color: #fff;
+}
+
+.movie-date .rb-1 {
+	background: url("../images/movies/icon-rb-1.png") center center
+		no-repeat;
+}
+
+.movie-date .rb-2 {
+	background: url("../images/movies/icon-rb-2.png") center center
+		no-repeat;
+}
+
+.movie-date .rb-3 {
+	background: url("../images/movies/icon-rb-3.png") center center
+		no-repeat;
+}
+
+/* 예매하기 버튼*/
+.movie-list ol li .btn-util .case.col-2 .button:first-child {
+    margin-left: 0;
+}
+.movie-list ol li .btn-util .case.col-2 .button {
+    width: 74px;
+    margin-left: 5px;
+}
+.movie-list ol li .btn-util .case .button {
+    display: block;
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+a.button {
+    text-decoration: none;
+}
+a:link {
+    color: #444;
+    text-decoration: none;
+}
+.section-movie-list.screening ul li .btn-util .button {
+    width: 60px;
+    display: inline-block;
+    height: 34px;
+    margin: 0;
+    padding: 0 20px;
+    text-align: center;
+    line-height: 34px;
+    color: #fff !important;
+    font-weight: 400;
+    border-radius: 4px;
+    text-decoration: none;
+    border: 1px solid #503396;
+    vertical-align: middle;
+    background-color: #503396;
+    cursor: pointer;
+}
+.section-movie-list.comming ul li .btn-util .button{
+    width: 60px;
+    display: inline-block;
+    height: 34px;
+    margin: 0;
+    padding: 0 20px;
+    text-align: center;
+    line-height: 34px;
+    color: #fff !important;
+    font-weight: 400;
+    border-radius: 4px;
+    text-decoration: none;
+    border: 1px solid #503396;
+    vertical-align: middle;
+    background-color: #666;
+    cursor: pointer;
+}
+
+/*============================================================
+/*
+/* [p]: movie info
+/*
+============================================================== */
+.section-movie-info {
+	background-color: #f9f9f9;
+}
+
+.section-movie-info .wrap {
+	width: 720px;
+	margin: 0 auto;
+	padding: 56px 30px 140px 270px;
+	background-color: #fff;
+	position: relative;
+}
+
+.section-movie-info .wrap .poster {
+	position: absolute;
+	top: 56px;
+	left: 65px;
+	box-shadow: 2px 6px 15px 0 rgba(0, 0, 0, 0.65);
+}
+
+.section-movie-info .wrap h3 {
+	font-size: 20px;
+	font-weight: bold;
+	padding-bottom: 24px;
+	border-bottom: 2px solid #7d7d7d;
+	line-height: 22px;
+	margin-top: -1px;
+	color: #494949;
+}
+
+.section-movie-info .wrap h3 .rate-all, .section-movie-info .wrap h3 .rate-12,
+	.section-movie-info .wrap h3 .rate-15, .section-movie-info .wrap h3 .rate-n,
+	.section-movie-info .wrap h3 .rate-x {
+	font-weight: bold;
+	color: #fff;
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	text-align: center;
+	margin-right: 9px;
+	position: relative;
+	padding: 0;
+	overflow: hidden;
+	text-indent: -10000em;
+	position: relative;
+	top: 2px;
+	left: 2px;
+/* 	position: absolute; */
+/*     left: 0; */
+/*     top: 50%; */
+/*     margin-top: -10px; */
+}
+.section-movie-info .wrap h3 .rate-all {
+	background: url("../images/movies/icon-rate-all.png") center center
+		no-repeat;
+	background-size: 23px 23px;
+}
+
+.section-movie-info .wrap h3 .rate-12 {
+	background: url("../images/movies/icon-rate-12.png") center center
+		no-repeat;
+	background-size: 23px 23px;
+}
+
+.section-movie-info .wrap h3 .rate-15 {
+	background: url("../images/movies/icon-rate-15.png") center center
+		no-repeat;
+	background-size: 23px 23px;
+}
+
+.section-movie-info .wrap h3 .rate-x {
+	background: url("../images/movies/icon-rate-x.png") center center
+		no-repeat;
+	background-size: 23px 23px;
+		
+}
+
+.section-movie-info .wrap h3 .rate-n {
+	background: url("../images/movies/icon-rate-n.png") center center
+		no-repeat;
+	background-size: 23px 23px;
+}
+
+.section-movie-info .wrap .basic {
+	margin: 16px 0 0 31px;
+	color: #666;
+	font-size: 16px;
+	line-height: 1.94em;
+}
+
+.section-movie-info .wrap .basic span {
+	font-weight: bold;
+}
+
+.section-movie-info .wrap .btn-rsv {
+	margin: 18px 0 25px 31px;
+	width: 115px;
+	height: 39px;
+	border-radius: 5px;
+	background-color: #666;
+	display: block;
+	line-height: 39px;
+	font-size: 17px;
+	color: #fff;
+	text-align: center;
+	display: block;
+}
+
+.section-movie-info .wrap .synopsis-title {
+	padding: 41px 0 20px 30px;
+	font-size: 20px;
+	font-weight: bold;
+	color: #494949;
+	border: 1px solid #d8d8d8;
+	border-width: 1px 0 1px 0;
+	margin-top: 18px;
+}
+
+.section-movie-info .wrap .synopsis {
+	line-height: 2.19em;
+	color: #666;
+	padding: 21px 0 21px 30px;
+}
+
+.section-movie-info .wrap .synopsis strong {
+	color: #3a3a3a;
+}
+
+.section-movie-info .wrap .trailer-title {
+	padding: 41px 0 20px 30px;
+	font-size: 20px;
+	font-weight: bold;
+	color: #494949;
+	border: 1px solid #d8d8d8;
+	border-width: 1px 0 0 0;
+}
+
+.section-movie-info .wrap iframe {
+	max-width: 720px;
+	max-height: 405px;
+}
+
+
+.wrap-movie-title {
+  background-color: #e5e5e5;
+  width: 100%;
+  height: 134px;
+  text-align: center; }
+  .wrap-movie-title h2.movie-title {
+    display: inline-block;
+    margin: 0 auto;
+    font-size: 25px;
+    color: #666;
+    font-weight: normal;
+    padding-top: 42px;
+    height: 46px; }
+    .wrap-movie-title h2.movie-title::after {
+      content: "";
+      border-bottom: 2px solid #979797;
+      display: block;
+      margin: 0 auto; }
+      
+ .like-btn {
+	margin-top: 0px;
+	padding-bottom: 6px;
+    float: left;
+}
+
+.like-btn .icon {
+	width : 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #f1f1f1;
+	margin: 0px 4px 0 0;
+	padding: 7px 15px;
+	border-radius: 8px;
+	border: 1px solid #c1c1c1;
+}
+
+.like-btn .icon:hover {
+	background-color: #e5e5e5;
+}
+
+.icon.heart img {
+	width: 19px !important;
+	height: 17px !important;
+}
+
+.heart {
+	transform-origin: center;
+}
+
+.heart .likeNum {
+	color: #232323;
+	margin-left: 5px;
+	font-size: 14px;
+}
+  
+/* 영화 목록 페이지에서 좋아요, 예매버튼 부분 */
+.section-movie-list .btn-util{
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    padding-top: 8px;
+}
+
+/* 스틸컷 위치 */
+.section-movie-info  .bx-pager {
+	display: none;
+}
+
+.section-movie-info .bx-wrapper .bx-controls-direction a
+	{
+	position: absolute;
+	top: 105px;
+}
+
+.section-movie-info .bx-prev,
+	.section-movie-info .bx-prev:hover {
+	display: block;
+	background: url("../images/main/btn-slider-movie-list-prev.png") center
+		center no-repeat;
+	width: 25px;
+	height: 67px;
+	left: -50px;
+}
+
+.section-movie-info .bx-next,
+	.section-movie-info .bx-next:hover {
+	display: block;
+	background: url("../images/main/btn-slider-movie-list-next.png") center
+		center no-repeat;
+	width: 25px;
+	height: 67px;
+	right: -50px;
+}
+
+.section-movie-info .bx-prev.disabled,
+	.section-movie-info .bx-next.disabled
+	{
+	opacity: 0.2;
+}
+
+h2.tit {
+	font-size: 1.8666em;
+	font-weight: 400;
+	letter-spacing: -1px;
+	line-height: 1.1;
+	color: #222;
+	margin-bottom: 30px;
+	text-align: center;
+	margin-left: -928px;
+}

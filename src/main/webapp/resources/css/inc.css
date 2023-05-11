@@ -1,0 +1,597 @@
+@charset "UTF-8";
+
+/*=============================*/
+/*  헤 더  */
+/*=============================*/
+#header {
+	background-color: #efefef;
+}
+
+#header .nav_left {
+	margin-left: 165px;
+	margin-right: -119px;
+}
+
+#header .nav_right {
+	margin-left: 45px;
+}
+
+
+
+#header nav.secondary {
+	width: 1200px;
+	margin: 0 auto;
+	text-align: right;
+	height: 30px;
+	padding-right: 12px;
+	position: relative;
+}
+
+
+#header .nav_right .tertiary ul {
+	width: 900px;
+	/* margin: 0 auto; */
+	/* text-align: right; */
+	/* height: 30px; */
+	/* padding-right: 12px; */
+	/* position: relative; */
+	margin-right: 110px;
+}
+
+
+#header nav.secondary>ul>li {
+	display: inline-block;
+	padding-right: 21px;
+	height: 31px;
+}
+
+#header nav.secondary>ul>li a {
+	color: #888889;
+	font-size: 13px;
+	line-height: 32px;
+}
+
+#header nav.secondary>ul>li.username>a {
+	color: #3a3a3a;
+	padding-right: 17px;
+	background: url("../images/member/icon-nav-arrow.png") right 9px
+		no-repeat;
+}
+
+#header nav.secondary>ul>li.username>a.on {
+	background: url("../images/member/icon-nav-arrow-on.png") right 9px
+		no-repeat;
+}
+
+#header nav.secondary>ul>li a:hover {
+	color: #000;
+}
+
+#header nav.secondary>ul>li .sub {
+	display: none;
+	position: absolute;
+	background-color: #3a3a3a;
+	top: 30px;
+	right: 166px;
+	width: 190px;
+	z-index: 10;
+	box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.2);
+}
+
+#header nav.secondary>ul>li .sub li {
+	position: relative;
+	text-align: left;
+	height: 33px;
+	padding-left: 29px;
+	position: relative;
+	font-size: 16px;
+}
+
+#header nav.secondary>ul>li .sub li:nth-child(1) {
+	background-color: #3a3a3a;
+}
+
+#header nav.secondary>ul>li .sub li:nth-child(1) a {
+	color: #ccc;
+	display: block;
+	position: relative;
+	line-height: 31px;
+}
+
+#header nav.secondary>ul>li .sub li:nth-child(1) a:after {
+	content: "";
+	width: 160px;
+	height: 1px;
+	background-color: #555;
+	position: absolute;
+	left: -15px;
+	bottom: 0;
+}
+
+#header nav.secondary>ul>li .sub li:nth-child(2) {
+	background-color: #3a3a3a;
+}
+
+#header nav.secondary>ul>li .sub li:nth-child(2) a {
+	color: #ccc;
+	display: block;
+	position: relative;
+	line-height: 31px;
+}
+
+#header nav.secondary>ul>li .sub li:nth-child(2) a:after {
+	content: "";
+	width: 160px;
+	height: 1px;
+	background-color: #555;
+	position: absolute;
+	left: -15px;
+	bottom: 0;
+}
+
+#header nav.secondary>ul>li .sub li:nth-child(3) {
+	background-color: #3a3a3a;
+}
+
+#header nav.secondary>ul>li .sub li:nth-child(3) a {
+	color: #ccc;
+	line-height: 31px;
+}
+
+#header nav.secondary>ul>li .sub li:nth-child(4) {
+	background-color: #fff;
+	color: #333;
+	box-sizing: border-box;
+	border: solid 1px #d8d8d8;
+	border-width: 0 1px;
+	line-height: 31px;
+}
+
+#header nav.secondary>ul>li .sub li:nth-child(4) a:hover {
+	color: #7d7d7d;
+}
+
+#header nav.secondary>ul>li .sub li:nth-child(5) {
+	background-color: #f3f3f3;
+	height: 66px;
+	line-height: 31px;
+	color: #7d7d7d;
+}
+
+#header nav.secondary>ul>li .sub li .info {
+	position: absolute;
+	right: 24px;
+	top: 0;
+}
+
+#header nav.secondary>ul>li .sub li .num {
+	color: #fff;
+	font-weight: 500;
+}
+
+#header nav.secondary>ul>li .sub li .p {
+	color: #5d46b5;
+	font-weight: 500;
+	position: absolute;
+	right: 24px;
+	top: 0;
+}
+
+#header nav.secondary>ul>li .sub.on {
+	display: block;
+	z-index: 10;
+}
+
+.wrap-nav-primary {
+	width: 100%;
+	position: relative;
+	background: white;
+	border-bottom: 1px solid #d4d1d1;
+}
+
+.wrap-nav-primary nav.primary {
+	width: 1300px;
+	margin: 0 auto;
+	height: 100px;
+}
+
+.wrap-nav-primary nav.primary h1#logo {
+	display: block;
+	width: 140px;
+	height: 90px;
+	overflow: hidden;
+	text-indent: -10000em;
+	background: url("../images/header/logo.png") center no-repeat;
+	float: left;
+	margin-left: 159px;
+	/* background-size: 225px 90px; */
+}
+
+.wrap-nav-primary nav.primary>ul {
+	float: left;
+	margin-top: 0;
+}
+
+.wrap-nav-primary nav.primary>ul>li {
+	display: inline-block;
+	width: 96px;
+	height: 100px;
+	margin-left: -1px;
+}
+
+.wrap-nav-primary nav.primary>ul>li.wrap-simple-rsv {
+	width: 425px;
+}
+
+.wrap-nav-primary nav.primary>ul>li:last-child {
+	border-right: none;
+}
+
+.wrap-nav-primary nav.primary>ul>li:first-child {
+	margin-left: 0;
+}
+
+.wrap-nav-primary nav.primary>ul>li>a {
+	text-align: center;
+	display: block;
+	color: #888889;
+	font-size: 17px;
+	margin-top: 37px;
+	border-right: 2px solid #e4e4e4;
+	height: 17px;
+	line-height: 17px;
+}
+
+.wrap-nav-primary nav.primary .nav_left {
+	margin-left: 167px;
+}
+
+.wrap-nav-primary nav.primary>ul>li>a.selected {
+	color: #c39c71;
+}
+
+.wrap-nav-primary nav.primary>ul>li>a:hover {
+	color: #c39c71;
+}
+
+.wrap-nav-primary nav.primary>ul>li:last-child>a {
+	border-right: none;
+}
+
+.wrap-nav-primary nav.primary .btn-simple-rsv {
+	display: inline-block;
+	background-color: #673bd4;
+	border-radius: 20px;
+	width: 116px;
+	height: 40px;
+	font-size: 17px;
+	font-weight: 500;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	line-height: 38px;
+	margin: 26px 0 0 23px;
+}
+
+
+
+div.tertiary {
+	width: 100%;
+	background-color: #efefef;
+	height: 52px;
+	display: none;
+}
+
+div.tertiary.on {
+	display: block;
+	position: absolute;
+	top: 100px;
+	left: 0;
+	z-index: 6;
+}
+
+div.tertiary.stay {
+	display: block !important;
+	position: absolute;
+	top: 100px;
+	left: 0;
+	z-index: 5;
+}
+
+div.tertiary ul {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+div.tertiary ul li {
+	float: left;
+}
+
+div.tertiary ul li a {
+	display: block;
+	box-sizing: border-box;
+	width: 130px;
+	height: 52px;
+	line-height: 52px;
+	text-align: center;
+	color: #333;
+	font-size: 16px;
+}
+
+div.tertiary ul li a.selected {
+	border-bottom: 5px solid #5d46b5;
+	color: #5d46b5;
+}
+
+div.tertiary ul li a:hover {
+	color: #5d46b5;
+}
+
+div.tertiary ul li:first-child {
+	margin-left: 100px;
+}
+
+div.theaterInfo {
+	width: 100%;
+	background-color: #efefef;
+	height: 52px;
+	display: none;
+}
+
+div.theaterInfo.on {
+	display: block;
+	position: absolute;
+	top: 100px;
+	left: 0;
+	z-index: 99;
+}
+
+div.theaterInfo.stay {
+	display: block !important;
+	position: absolute;
+	top: 100px;
+	left: 0;
+	z-index: 98;
+}
+
+div.theaterInfo ul {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+div.theaterInfo ul li {
+	float: left;
+}
+
+div.theaterInfo ul li a {
+	display: block;
+	box-sizing: border-box;
+	width: 130px;
+	height: 52px;
+	line-height: 52px;
+	text-align: center;
+	color: #333;
+	font-size: 16px;
+}
+
+div.theaterInfo ul li a.selected {
+	border-bottom: 5px solid #5d46b5;
+	color: #5d46b5;
+}
+
+div.theaterInfo ul li a:hover {
+	color: #5d46b5;
+}
+
+div.theaterInfo ul li:first-child {
+	margin-left: 0px;
+}
+
+div.theaterInfo2 {
+	width: 100%;
+	background-color: #efefef;
+	height: 50px;
+	display: none;
+}
+
+div.theaterInfo2.on {
+	display: block;
+	position: absolute;
+	top: 152px;
+	left: 0;
+	z-index: 100;
+}
+
+div.theaterInfo2.stay {
+	display: block !important;
+	position: absolute;
+	top: 152px;
+	left: 0;
+	z-index: 101;
+}
+
+div.theaterInfo2 ul {
+	width: 800px;
+	margin: 0 auto;
+	align-content: center
+}
+
+div.theaterInfo2 ul li {
+	float: left;
+}
+
+div.theaterInfo2 ul li a {
+	display: block;
+	box-sizing: border-box;
+	width: 130px;
+	height: 52px;
+	line-height: 52px;
+	text-align: center;
+	color: #333;
+	font-size: 16px;
+}
+
+div.theaterInfo2 ul li a.selected {
+	border-bottom: 5px solid #08088A;
+	color: #08088A;
+}
+
+div.theaterInfo2 ul li a:hover {
+	color: #08088A;
+}
+
+div.theaterInfo2 ul li:first-child {
+	margin-left: 0px;
+}
+
+
+
+/*=============================*/
+/*  푸 터 */
+/*=============================*/
+
+#footer {
+    background-color: #3a3a3a;
+    height: 220px;
+    padding-top: 20px;
+}
+
+#footer .footer-social {
+	background-color: #b4b5b5;
+	height: 66px;
+}
+
+#footer .footer-social ul {
+	width: 890px;
+	margin: 14px auto 0 auto;
+}
+
+#footer .footer-social ul li {
+	float: right;
+	margin-left: 10px;
+}
+
+#footer .footer-social ul li a {
+	display: block;
+	width: 38px;
+	height: 38px;
+	overflow: hidden;
+	text-indent: -10000em;
+}
+
+#footer .footer-social ul li a.fb {
+	background: url("../images/footer/icon-fb.png") center center no-repeat;
+}
+
+#footer .footer-social ul li a.tw {
+	background: url("../images/footer/icon-tw.png") center center no-repeat;
+}
+
+#footer .footer-social ul li a.gp {
+	background: url("../images/footer/icon-gp.png") center center no-repeat;
+	margin-right: 27px;
+}
+
+#footer .footer-social .btn-to-top {
+	display: block;
+	width: 50px;
+	height: 50px;
+	position: relative;
+	top: -99px;
+	right: -141px; /*original:-151*/
+	background: url("../images/footer/btn-to-top.png") center center
+		no-repeat;
+	overflow: hidden;
+	text-indent: -10000em;
+	float: right;
+}
+
+#footer .footer-social .btn-to-top:hover {
+	background-image: url("../images/footer/btn-to-top-on.png");
+}
+
+#footer .footer-service {
+	background-color: #3a3a3a;
+}
+
+#footer .footer-service .logo-footer {
+	display: block;
+	overflow: hidden;
+	text-indent: -10000em;
+	width: 890px;
+	height: 55px;
+	background: url("../images/footer/logo.png") left center no-repeat;
+	margin: 21px auto 13px auto;
+}
+
+#footer .footer-service ul {
+	width: 890px;
+	margin: 0 auto 0 auto;
+}
+
+#footer .footer-service ul li {
+	float: left;
+}
+
+#footer .footer-service ul li a {
+	color: #7d7d7d;
+	font-size: 13px;
+}
+
+#footer .footer-service ul li a:hover {
+	color: #C49C6E;
+}
+
+#footer .footer-service ul li::after {
+	content: "|";
+	padding: 0 5px;
+	color: #7d7d7d;
+}
+
+#footer .footer-service ul li:last-child::after {
+	content: "";
+}
+
+#footer .footer-contact {
+	background-color: #3a3a3a;
+}
+
+#footer .footer-contact .addr {
+	display: block;
+	width: 890px;
+	margin: 23px auto 0 auto;
+	font-size: 13px;
+	color: #7d7d7d;
+}
+
+#footer .footer-contact ul {
+	width: 890px;
+	margin: 0 auto 0 auto;
+}
+
+#footer .footer-contact ul li {
+	float: left;
+	font-size: 13px;
+	color: #7d7d7d;
+}
+
+#footer .footer-contact ul li::after {
+	content: "|";
+	padding: 0 5px;
+	color: #7d7d7d;
+}
+#footer .footer-contact ul li:last-child::after {
+	content: "";
+}
+
+#footer .footer-copyright {
+	background-color: #3a3a3a;
+}
+
+#footer .footer-copyright span {
+	display: block;
+	width: 890px;
+	margin: 17px auto 47px auto;
+	font-size: 13px;
+	color: #7d7d7d;
+}

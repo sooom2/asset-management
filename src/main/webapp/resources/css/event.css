@@ -1,0 +1,307 @@
+@charset "EUC-KR";
+
+/*============================================================
+/*
+/* [m]: event list
+/*
+============================================================== */
+.section-event-list {
+	width: 1100px;
+	margin: 0 auto 0 auto;
+	background-color: #f9f9f9;
+	padding: 80px 0 121px;
+}
+
+.section-event-list ul {
+	display: block;
+	width: 1100px;
+	margin: 0 auto;
+}
+
+.section-event-list ul li {
+	display: inline-block;
+	margin: 12px 8px 95px 9px;
+	width: 220px;
+	height: 319px;
+	position: relative;
+}
+
+.section-event-list ul li:nth-child(4n-3) {
+	margin-left: -9px;
+}
+
+.section-event-list ul li:nth-child(4n) {
+	margin-right: -8px;
+}
+
+.section-event-list ul li .desc-box {
+	display: block;
+	border: 1px solid #d8d8d8;
+	position: relative;
+	width: 220px;
+	height: 95px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.section-event-list ul li .desc-box .desc {
+	display: block;
+	font-size: 20px;
+	font-weight: bold;
+	color: #494949;
+	padding: 10px 10px 8px;
+	line-height: 1.2em;
+	height: 40px;
+}
+
+.section-event-list ul li .desc-box .desc.finished {
+	color: #ccc;
+}
+
+.section-event-list ul li .desc-box .desc.finished:after {
+	content: "종료";
+	display: block;
+	position: absolute;
+	width: 26px;
+	height: 14px;
+	overflow: hidden;
+	text-indent: -10000em;
+	background: url("/images/event/icon-finished.png") center center
+		no-repeat;
+	bottom: 15px;
+	right: 9px;
+}
+
+.section-event-list ul li .desc-box .date {
+	display: block;
+	font-size: 16px;
+	color: #7d7d7d;
+	padding: 5px 10px;
+}
+
+.section-event-list .btn-more {
+	display: block;
+	width: 720px;
+	height: 41px;
+	margin: 35px auto 0 auto;
+	background-color: #fff;
+	border: 1px solid #d8d8d8;
+	color: #7d7d7d;
+	font-size: 16px;
+	line-height: 41px;
+	text-align: center;
+}
+
+.section-event-list .btn-more:hover {
+	color: #000;
+	border: 1px solid #000;
+}
+
+/*============================================================
+/*
+/* [m]: event view
+/*
+============================================================== */
+.section-event {
+	width: 100%;
+	margin: 0 auto 0 auto;
+	background-color: #f9f9f9;
+	padding: 83px 0 120px;
+}
+
+.section-event .wrap-event-box {
+	width: 850px;
+	background-color: #fff;
+	margin: 30px auto 0;
+	padding: 80px 85px 50px;
+	/* min-height: 825px;  */
+}
+
+.section-event .wrap-event-box.wrap-winner-box {
+	padding-top: 36px;
+}
+
+.section-event .search-winner {
+	float: right;
+	margin: 0 20px 34px 0;
+}
+
+.section-event .search-winner .keyword {
+	border: 1px solid #d8d8d8;
+	color: #666;
+	width: 180px;
+	height: 30px;
+	box-sizing: border-box;
+	padding: 0 10px;
+	line-height: 30px;
+	font-size: 17px;
+}
+
+.section-event .search-winner input[type=submit] {
+	width: 80px;
+	height: 30px;
+	background-color: #cc1221;
+	color: #fff;
+	font-size: 17px;
+	line-height: 30px;
+	border: 1px solid #cc1221;
+}
+
+table.bbs-view {
+	border: 1px solid #7d7d7d;
+	border-width: 1px 0;
+	width: 100%;
+}
+
+table.bbs-view th {
+	font-weight: normal;
+	font-size: 14px;
+	color: #4a4a4a;
+	background-color: #f3f3f3;
+	height: 46px;
+	line-height: 46px;
+}
+
+table.bbs-view tr td.title {
+	text-align: left;
+	padding-left: 15px;
+	font-weight: bold;
+}
+
+table.bbs-view tr td {
+	height: 46px;
+	line-height: 46px;
+	border-bottom: 1px solid #ccc;
+	color: #666;
+	font-size: 14px;
+}
+
+table.bbs-view.bbs-view-event tr td:nth-child(2) {
+	width: 210px;
+}
+
+table.bbs-view.bbs-view-event tr td:nth-child(3) {
+	width: 150px;
+}
+
+table.bbs-view tr td.ing {
+	color: #c39c71;
+}
+
+table.bbs-view tr td.content {
+	text-align: left;
+	padding: 45px 44px;
+	line-height: 1.57em;
+}
+
+table.bbs-view tr td.content img {
+	margin: 0 0 1em 0;
+	max-width: 762px !important;
+	height: auto;
+}
+
+table.bbs-view tr td.share {
+	height: 79px;
+}
+
+.btn-bbs-list {
+	display: block;
+	width: 80px;
+	height: 27px;
+	line-height: 27px;
+	border-radius: 2px;
+	background-color: #efefef;
+	border: 1px solid #b7b7b7;
+	text-align: center;
+	margin: 40px auto 0;
+	color: #666;
+}
+
+table.bbs-view tr td.share ul:before {
+	content: "공유";
+	border-right: 1px solid #ccc;
+	display: inline-block;
+	padding-right: 18px;
+	height: 30px;
+	line-height: 30px;
+	position: relative;
+	top: -14px;
+	font-size: 16px;
+	margin-right: 18px;
+	margin-left: 27px;
+}
+
+table.bbs-view tr td.share ul {
+	margin-top: 20px;
+}
+
+table.bbs-view tr td.share ul li a.ks {
+	background: url("../images/event/icon-share-ks-off.png") center center
+		no-repeat;
+}
+
+table.bbs-view tr td.share ul li a.ks:hover {
+	background-image: url("../images/event/icon-share-ks-on.png");
+}
+
+table.bbs-view tr td.share ul li a.bd {
+	background: url("../images/event/icon-share-bd-off.png") center center
+		no-repeat;
+}
+
+table.bbs-view tr td.share ul li a.bd:hover {
+	background-image: url("../images/event/icon-share-bd-on.png");
+}
+
+table.bbs-view tr td.share ul li a.fb {
+	background: url("../images/event/icon-share-fb-off.png") center center
+		no-repeat;
+}
+
+table.bbs-view tr td.share ul li a.fb:hover {
+	background-image: url("../images/event/icon-share-fb-on.png");
+}
+
+table.bbs-view tr:last-child td {
+	border-bottom: none;
+}
+
+table.bbs-view.bbs-view-event tr td:nth-child(2) {
+	width: 210px;
+}
+
+table.bbs-view.bbs-view-event tr td:nth-child(3) {
+	width: 150px;
+}
+
+table.bbs-view.bbs-view-branch-event tr td:nth-child(2) {
+	width: 210px;
+}
+
+table.bbs-view.bbs-view-branch-event tr td:nth-child(3) {
+	width: 150px;
+}
+
+table.bbs-view.bbs-view-branch-event tr td:nth-child(4) {
+	width: 90px;
+}
+table.bbs-view tr td.share ul li a {
+    display: block;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    text-indent: -10000em;
+}
+table.bbs-view tr td.share ul li {
+    display: inline-block;
+    margin-right: 12px;
+}
+h2.tit {
+	font-size: 1.8666em;
+	font-weight: 400;
+	letter-spacing: -1px;
+	line-height: 1.1;
+	color: #222;
+	margin-bottom: 50px;
+/* 	text-align: center; */
+}
