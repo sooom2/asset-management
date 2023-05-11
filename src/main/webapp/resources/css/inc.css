@@ -198,13 +198,13 @@
 .wrap-nav-primary nav.primary h1#logo {
 	display: block;
 	width: 140px;
-	height: 90px;
+	height: 97px;
 	overflow: hidden;
 	text-indent: -10000em;
-	background: url("../images/header/logo.png") center no-repeat;
+	background: url("../images/header/logo.jpg") center no-repeat;
 	float: left;
 	margin-left: 159px;
-	/* background-size: 225px 90px; */
+	background-size: 100px 51px;
 }
 
 .wrap-nav-primary nav.primary>ul {
