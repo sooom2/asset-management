@@ -3,28 +3,38 @@
 /*=============================*/
 /*  헤 더  */
 /*=============================*/
+
+#top{
+	margin:0;
+}
+
 #header {
-	background-color: #efefef;
+	background-color: #BB2649;
 }
 
 #header .nav_left {
-	margin-left: 165px;
-	margin-right: -119px;
+	margin-left: 335px;
+	/* margin-right: -119px; */
 }
 
 #header .nav_right {
 	margin-left: 45px;
 }
 
-
+#header ul{
+	margin: 0;
+	line-height: 40px;
+	color: white;
+}
 
 #header nav.secondary {
 	width: 1200px;
 	margin: 0 auto;
 	text-align: right;
-	height: 30px;
+	height: 40px;
 	padding-right: 12px;
 	position: relative;
+	/* color: #000; */
 }
 
 
@@ -43,11 +53,12 @@
 	display: inline-block;
 	padding-right: 21px;
 	height: 31px;
+	color: #fff;
 }
 
 #header nav.secondary>ul>li a {
-	color: #888889;
-	font-size: 13px;
+	color: #ffffff;
+	font-size: 15px;
 	line-height: 32px;
 }
 
@@ -198,13 +209,13 @@
 .wrap-nav-primary nav.primary h1#logo {
 	display: block;
 	width: 140px;
-	height: 97px;
+	height: 58px;
 	overflow: hidden;
 	text-indent: -10000em;
-	background: url("../images/header/logo.jpg") center no-repeat;
+	background: url("../images/header/logo.png") center no-repeat;
 	float: left;
 	margin-left: 159px;
-	background-size: 100px 51px;
+	background-size: 130px 67px;
 }
 
 .wrap-nav-primary nav.primary>ul {
@@ -214,7 +225,7 @@
 
 .wrap-nav-primary nav.primary>ul>li {
 	display: inline-block;
-	width: 96px;
+	width: 110px;
 	height: 100px;
 	margin-left: -1px;
 }
@@ -229,6 +240,7 @@
 
 .wrap-nav-primary nav.primary>ul>li:first-child {
 	margin-left: 0;
+	width: 130px;
 }
 
 .wrap-nav-primary nav.primary>ul>li>a {
@@ -251,7 +263,7 @@
 }
 
 .wrap-nav-primary nav.primary>ul>li>a:hover {
-	color: #c39c71;
+	color: #bb2649;
 }
 
 .wrap-nav-primary nav.primary>ul>li:last-child>a {
