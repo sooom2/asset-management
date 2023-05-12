@@ -19,7 +19,7 @@
 				<li><a href="">IR</a></li>
 				<li><a href="" class="loginpop">제휴/광고/부대사업 문의</a></li>
 				<li><a href="" class="read1">이용약관</a></li>
-				<li><a href="" class="read2" style="color: #E60012">개인정보처리방침</a></li>
+				<li><a href="" class="read2">개인정보처리방침</a></li>
 				<li><a href="customer_center/cc_home.jsp">고객센터</a></li>
 				<li><a href="" class="read3">배정/편성기준</a></li>
 				<li><a href="">사이트맵</a></li>

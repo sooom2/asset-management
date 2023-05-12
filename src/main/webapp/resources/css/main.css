@@ -832,10 +832,9 @@ header {
 /* 챌린지 */
 
 .pickedContentContainer {
-    display: block;
-    width: 100%;
-    margin: 24px -16px 0 0;
-    height: 300px;
+    display: inline-block;
+    /* width: 100%; */
+    margin: 0px -16px 0 0;
 }
 
 .pickedContent {
@@ -910,4 +909,9 @@ header {
 }
 .contentBox .con_detail{
 	margin-top: 20px;
+}
+.chall_more{
+	border: 1px solid #bdbdbd;
+	padding: 5px;
+	text-align: center;
 }
