@@ -5,14 +5,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class MainController {
+public class MemberController {
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String main() {
-		
-		
-		
-		return "redirect:/main";
-	}
+//	@RequestMapping(value = "/", method = RequestMethod.GET)
+//	public String main() {
+//		
+//		
+//		
+//		return "";
+//	}
 	
 }
