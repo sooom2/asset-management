@@ -133,47 +133,25 @@
 		SELECT ROW_NUMBER() OVER(ORDER BY write_date , table_name , code ) AS rownum, T1.*, count(*) OVER() AS totalCnt
 		FROM(
 			SELECT 
-				'one_board' AS table_name, one_code AS code, cinema_name, one_question_type AS question_type,
-				one_subject AS subject, one_rep_board AS rep_board, one_write_date AS write_date, one_passwd AS passwd,
-				one_rep_board_content AS rep_content
-			FROM one_board
+				'free_board' AS table_name, free_code AS code, free_question_type AS question_type,
+				free_subject AS subject, free_rep_board AS rep_board, free_write_date AS write_date, free_passwd AS passwd,
+				free_rep_board_content AS rep_content
+			FROM free_board
 			WHERE 1=1
 			<if test="memberName!= null and !memberName.equals('')">
-				AND one_name = #{memberName}
+				AND free_name = #{memberName}
 			</if>
 			<if test="memberTel!= null and !memberTel.equals('')">
-				AND one_tel = #{memberTel}
+				AND free_tel = #{memberTel}
 			</if>
 			<if test="memberEmail!= null and !memberEmail.equals('')">
-				AND one_email = #{memberEmail}
+				AND free_email = #{memberEmail}
 			</if>
 			<if test="searchKeyword != null and !searchKeyword.equals('')">
-				AND (one_subject LIKE '%${searchKeyword}%' OR one_content LIKE '%${searchKeyword}%')
+				AND (free_subject LIKE '%${searchKeyword}%' OR free_content LIKE '%${searchKeyword}%')
 			</if>
 			<if test="rep_board != null and !rep_board.equals('') and !rep_board.equals('전체')">
-				AND one_rep_board = #{rep_board}
-			</if>
-			UNION ALL 
-			SELECT 
-				'lost_board' AS table_name, lost_code AS code, cinema_name, lost_question_type AS  question_type,
-				lost_subject AS subject, lost_board_rep AS rep_board, lost_write_date AS write_date, lost_passwd AS passwd,
-				lost_board_rep_content  AS rep_content
-			FROM lost_board
-			WHERE 1=1 
-			<if test="memberName!= null and !memberName.equals('')">
-				AND lost_name = #{memberName}
-			</if>
-			<if test="memberTel!= null and !memberTel.equals('')">
-				AND lost_tel = #{memberTel}	
-			</if>
-			<if test="memberEmail!= null and !memberEmail.equals('')">
-				AND lost_email = #{memberEmail}	
-			</if>
-			<if test="searchKeyword != null and !searchKeyword.equals('')">
-				AND (lost_subject LIKE '%${searchKeyword}%' OR lost_content LIKE '%${searchKeyword}%')
-			</if>
-			<if test="rep_board != null and !rep_board.equals('') and !rep_board.equals('전체')">
-				AND lost_board_rep = #{rep_board}
+				AND free_rep_board = #{rep_board}
 			</if>
 		) T1
 		ORDER BY write_date DESC 

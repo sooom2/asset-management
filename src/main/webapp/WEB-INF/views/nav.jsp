@@ -38,8 +38,8 @@
 			<ul class="nav_left">
 				<li><a href="" class="">가계부</a></li>
 				<li><a href="" class="">챌린지</a></li>
-				<li><a href="" class="">공지사항</a></li>
-				<li><a href="" class="">자유게시판</a></li>
+				<li><a href="notice_board" class="">공지사항</a></li>
+				<li><a href="free_board" class="">자유게시판</a></li>
 				<li><a href="" class="">마이페이지</a></li>
 			
 			
