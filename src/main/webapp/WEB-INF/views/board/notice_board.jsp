@@ -37,13 +37,11 @@ function search(idx) {
 </script>
 <body>
 	<jsp:include page="../nav.jsp" />
-	<div class="container has-lnb">
-
-		<div class="inner-wrap">
-			<div id="contents">
+	<div class="container">
+	<div id="con_wrap">
+		<div id="contents">
 			<form id="iForm">
 				<h2 class="tit">공지사항</h2>
-
 				<div class="board-list-util">
 					<p class="result-count">
 						<strong>전체 <em class="font-gblue">${paramMap.totalCnt == null ? 0 : paramMap.totalCnt}</em>건
@@ -79,19 +77,19 @@ function search(idx) {
 				<div class="table-wrap">
 					<table class="board-list">
 						<caption>번호, 극장, 구분, 제목, 등록일이 들어간 공지사항 전체 리스트</caption>
-						<colgroup>
-							<col style="width: 70px;">
-							<col style="width: 180px;">
-							<col style="width: 400px;">
-							<col>
-							<col style="width: 1px;">
-						</colgroup>
+<%-- 						<colgroup> --%>
+<%-- 							<col style="width: 70px;"> --%>
+<%-- 							<col style="width: 180px;"> --%>
+<%-- 							<col style="width: 400px;"> --%>
+<%-- 							<col> --%>
+<%-- 							<col style="width: 1px;"> --%>
+<%-- 						</colgroup> --%>
 						<thead>
-							<tr style="line-height: 38px">
-								<th scope="col">번호</th>
+							<tr>
+								<th scope="col" style="width: 7%">번호</th>
 								<th scope="col">극장</th>
-								<th scope="col">제목</th>
-								<th scope="col">등록일</th>
+								<th scope="col" style="width: 50%">제목</th>
+								<th scope="col" style="width: 15%">등록일</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -140,7 +138,7 @@ function search(idx) {
 					</nav>
 				<!--// pagination -->
 				</form>
-			</div>
+			</div>	
 		</div>
 	</div>
 	<jsp:include page="../footer.jsp" />

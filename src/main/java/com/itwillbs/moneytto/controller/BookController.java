@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class BookController {
 	
-//	@RequestMapping(value = "/", method = RequestMethod.GET)
-//	public String main() {
-//		
-//		
-//		
-//		return "";
-//	}
+	@RequestMapping(value = "accountBook", method = RequestMethod.GET)
+	public String accountBookMain() {
+		
+		
+		
+		return "accountBook/accountBookMain";
+	}
 	
 }

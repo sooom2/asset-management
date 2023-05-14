@@ -36,7 +36,7 @@
 		<nav class="primary">
 			<a href="main"><h1 id="logo">로고</h1></a>		
 			<ul class="nav_left">
-				<li><a href="" class="">가계부</a></li>
+				<li><a href="accountBook" class="">가계부</a></li>
 				<li><a href="" class="">챌린지</a></li>
 				<li><a href="notice_board" class="">공지사항</a></li>
 				<li><a href="free_board" class="">자유게시판</a></li>

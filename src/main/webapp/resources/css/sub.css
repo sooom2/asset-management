@@ -1,0 +1,327 @@
+@charset "UTF-8";
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+.container {
+    width: 100%;
+    min-width: 1100px;
+    min-height: 100%;
+    padding: 20px 0 300px 0;
+}
+
+#con_wrap {
+    width: 1100px;
+    margin: 0 auto;
+}
+.inner-wrap {
+    width: 1100px;
+    margin: 0 auto;
+}
+
+.lnb-area.addchat {
+    position: relative;
+}
+
+#contents {
+    width: 100%;
+    margin: 0;
+    padding: 60px 0 80px 0;
+}
+
+h2.tit {
+    padding: 0px 0 0px 0;
+    font-size: 35px;
+    font-weight: 600;
+    /* letter-spacing: 1px; */
+    /* line-height: 1.1; */
+    color: #222;
+}
+h3.tit {
+    margin: 0;
+    padding: 0 0 16px 0;
+    font-size: 1.6em;
+    font-weight: 400;
+    color: #503396;
+    line-height: 1.1;
+}
+
+.dot-list>li {
+    position: relative;
+    padding: 0 0 0 8px;
+}
+
+.button {
+    display: inline-block;
+    height: 36px;
+    margin: 0;
+    padding: 0 15px;
+    text-align: center;
+    line-height: 34px;
+    color: #503396;
+    font-weight: 400;
+    border-radius: 4px;
+    font-family: NanumBarunGothic, Dotum, 'ÃƒÂ«Ã‚ÂÃ¢â‚¬Â¹ÃƒÂ¬Ã¢â‚¬ÂºÃ¢â€šÂ¬', sans-serif;
+    text-decoration: none;
+    border: 1px solid #503396;
+    vertical-align: middle;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.dot-list>li+li {
+    margin-top: 2px;
+}
+
+.board-list-util {
+    margin: 30px 0 15px 0;
+    text-align: right;
+}
+
+
+.board-list-util .result-count {
+    position: relative;
+    float: left;
+    margin: 0;
+    padding-top: 15px;
+    line-height: 1.1;
+    vertical-align: top;
+}
+
+.font-gblue {
+    color: #bb2649 !important;
+}
+
+.board-list-util select {
+    display: inline-block;
+    vertical-align: middle;
+    width: 150px;
+    height: 36px;
+    border: 1px solid #d8d9db;
+    border-radius: 3px;
+    padding: 0 5px;
+    margin-right: 7px;
+}
+option:checked {
+    background-color: #ecf0f4;
+}
+
+.board-search {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 230px;
+    height: 36px;
+    margin: 0;
+    padding: 0 31px 0 0;
+    border: 1px solid #d8d9db;
+    border-radius: 3px;
+}
+
+.board-search .input-text {
+    display: block;
+    width: 100%;
+    height: 34px;
+    border: 0;
+    margin-left: 5px;
+}
+
+.board-search .btn-search-input {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+}
+
+.btn-search-input {
+    overflow: hidden;
+    width: 30px;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    line-height: 0;
+    border: 0;
+    text-indent: -9999px;
+    background: #fff url("../images/btn-search-input.png") no-repeat center;
+}
+
+.table-wrap {
+    position: relative;
+    border-top: 1px solid #555;
+}
+
+.board-list {
+    line-height: 1.3;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+table caption {
+    overflow: hidden;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+    opacity: 0;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.6);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 8000;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+}
+
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 0 auto 15px;
+    padding: 0 20px;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    outline: none;
+    overflow: hidden;
+    border-radius: 0;
+    padding: 20px;
+}
+
+.modal-header {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.modal-header .close-modal {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 25px;
+    height: 25px;
+    background: url(../images/member/ico_modal_close.png) no-repeat 50% 50%;
+    text-indent: -9999px;
+}
+.modal-type2 .modal-bottom.flex {
+    margin: 20px -20px -20px;
+}
+
+.modal-bottom.flex {
+    display: flex;
+}
+
+.modal-bottom {
+    margin: 0 -3px;
+    text-align: center;
+}
+
+.modal-type2 .modal-bottom.flex button {
+    width: 50%;
+    border-radius: 0;
+    margin: 0;
+    height: 48px;
+    font-size: 16px;
+}
+
+.modal-bottom button {
+    width: 115px;
+    height: 38px;
+    border: 0;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #000;
+    font-weight: 600;
+    background: #e4e9f2;
+    margin: 0 3px;
+}
+
+.modal-type2 .modal-bottom.flex button {
+    width: 50%;
+    border-radius: 0;
+    margin: 0;
+    height: 48px;
+    font-size: 16px;
+}
+
+.modal-bottom button.btn-modal2 {
+    background: #673bd4;
+}
+
+.dropdown{
+	display: inline-block;
+}
+.board-list>thead>tr>th {
+    color: #222;
+    border: 1px solid #eaeaea;
+    border-width: 0 0 1px 0;
+    background-color: #f9f5ee;
+    line-height: 45px;
+    font-size: 17px;
+}
+
+
+.pagination {
+    clear: both;
+    position: relative;
+    margin: 0 auto;
+    padding: 30px 0 0 0;
+    text-align: center;
+}
+
+.pagination .active {
+    color: #fff;
+    background-color: #888889;
+    border-color: #888889;
+}
+
+.pagination .control, .pagination a, .pagination strong {
+    display: inline-block;
+    position: relative;
+    min-width: 32px;
+    height: 32px;
+    margin: 0;
+    border: 1px solid #ebebeb;
+    text-decoration: none;
+    line-height: 30px;
+    color: #333;
+    font-weight: 400;
+    vertical-align: middle;
+    border-radius: 4px;
+    width: 22px;
+}
+.pagination .control.next {
+    margin-left: 5px;
+    background-position: -64px 0;
+}
+
+.pagination .control.last {
+    background-position: right 0;
+}
+
+.pagination .control {
+    overflow: hidden;
+    width: 32px;
+    height: 32px;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    font-size: 0;
+    line-height: 0;
+    text-indent: -9999px;
+    background: url("../images/btn-paging.png") no-repeat 0 0;
+}

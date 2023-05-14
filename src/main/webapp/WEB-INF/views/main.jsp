@@ -12,11 +12,9 @@
 <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="resources/js/main.js"></script>
 <script type="text/javascript" src="resources/js/jquery.bxslider.min.js"></script>
 <script type="text/javascript">
 	$(function() {
-		
 		//메인 슬라이 더
 		if ($(".bxslider-main").length) {
 
@@ -299,7 +297,7 @@
 				</ul>
 				
 				
-				<a href="">
+				<a href="challange">
 					<div class="chall_more">MORE</div>
 				</a>
 			</div>
