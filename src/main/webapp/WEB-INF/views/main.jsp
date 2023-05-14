@@ -148,21 +148,13 @@
 					<div class="btn_more">MORE</div>
 				</div>
 				<ul class="news_list">
+					<c:forEach var="news" items ="${newsList}" >
 					<li class="news_box">
-						<div class="news_tit">에코프로, 연달아 주가 악재…MSCI 지수 편입 무산</div>
-						<p>에코프로가 모건스탠리캐피털인터내셔널(MSCI) 한국 지수 구성 종목에 포함되지 못했다.
-							MSCI는 12일 5월 정기 리뷰 결과를 발표하고 한국 지수에 한화에어로스페이스, 코스모신소재, KT, 포스코인터내셔널을 새로 편입한다고 발표했다.
-							반면 편입이 유력할 것으로 평가됐던 에코프로는 편입이 무산됐다. 증권가는 단기 주가 급등으로 지수 편입이 불발된 것으로 분석하고 있다. BM(기준이 되는 벤치마크) 대비 초과수익률이 일정 기준을 초과하면, 해당 주식은 과열 종목으로 지정돼 신규 구성종목 심사에서 탈락하는 조항 때문이다.
-							편입이 불발됨에 따라 지수를 추종하는 글로벌 패시브 자금 유입을 기대하기 어렵게 됐다는 분석이다. 증권업계에 따르면, MSCI 신흥국지수를 추종하는 자금은 500조 원 규모로 추정된다. 지수에 편입되면 편입 비중에 따라 기계적으로 일부 자금이 유입될 수 있다. 전날 이동채 전 에코프로 회장의 구속에 이어 주가에 연달아 악재가 생긴 셈이다.</p>
+						<div class="news_tit">${news.title}</div>
+						<div>${news.pubDate }</div>
+						<a href ="${news.link }"  target="_blank" rel="noreferrer noopener">${news.description}</a>
 					</li>
-					<li class="news_box">
-						<div class="news_tit">뉴우스스스스스제목</div>
-						<p>뉴우스스스스스내용</p>
-					</li>
-					<li class="news_box">
-						<div class="news_tit">뉴우스스스스스제목</div>
-						<p>뉴우스스스스스내용</p>
-					</li>
+					</c:forEach>
 				</ul>
 			</div>
 		</div>
