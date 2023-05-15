@@ -171,7 +171,7 @@
 						<div class="landingPickWrap">
 							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);">
 								<div class="dday">
-									시작까지<br>&nbsp;&nbsp;D-10
+									시작<br>D-10
 								</div>
 							</div>
 							<div class="contentBox">

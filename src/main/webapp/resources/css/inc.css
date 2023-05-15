@@ -324,8 +324,7 @@ header {
 }
 
 #header .nav_left {
-	margin-left: 335px;
-	/* margin-right: -119px; */
+	margin-left: 260px!important;
 }
 
 #header .nav_right {
@@ -557,12 +556,13 @@ header {
 .wrap-nav-primary nav.primary>ul>li>a {
 	text-align: center;
 	display: block;
-	color: #888889;
+	color: #575757;
 	font-size: 17px;
 	margin-top: 37px;
 	border-right: 2px solid #e4e4e4;
 	height: 17px;
 	line-height: 17px;
+	font-weight: 600;
 }
 
 .wrap-nav-primary nav.primary .nav_left {
