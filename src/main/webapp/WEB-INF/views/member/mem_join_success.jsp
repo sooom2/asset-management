@@ -47,7 +47,7 @@
 								<strong><%=name %></strong> 님<br>회원가입이 완료되었습니다.
 							</div>
 							<div class="t2">
-								포인트 1000점 적립완료!<br>지금부터 아이무비에서 제공하는 다양한 서비스를 이용하실 수 있습니다.
+								가입완료오오오오
 							</div>
 							<div class="btns">
 								<a href="main" class="btn-type-main">메인화면</a>
