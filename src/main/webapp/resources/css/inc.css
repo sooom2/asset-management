@@ -329,7 +329,7 @@ header {
 
 #header ul{
 	margin: 0;
-	line-height: 30px;
+	line-height: 25px;
 	color: white;
 }
 
@@ -337,7 +337,7 @@ header {
 	width: 1200px;
 	margin: 0 auto;
 	text-align: right;
-	height: 30px;
+	height: 25px;
 	padding-right: 12px;
 	position: relative;
 	/* color: #000; */
@@ -348,14 +348,14 @@ header {
 #header nav.secondary>ul>li {
 	display: inline-block;
 	padding-right: 21px;
-	height: 31px;
+	height: 25px;
 	color: #fff;
 }
 
 #header nav.secondary>ul>li a {
 	color: #ffffff;
-	font-size: 15px;
-	line-height: 32px;
+	font-size: 13px;
+	line-height: 20px;
 }
 
 #header nav.secondary>ul>li.username>a {
@@ -489,7 +489,7 @@ header {
 	z-index: 10;
 }
 #hearder ul{
-    width: 1200px;
+	    width: 1200px;
     margin: 0 auto;
 }
 .wrap-nav-primary {
@@ -502,19 +502,20 @@ header {
 .wrap-nav-primary nav.primary {
 	width: 1200px;
 	margin: 0 auto;
-	height: 100px;
+	height: 80px;
 }
 
 .wrap-nav-primary nav.primary h1#logo {
 	display: block;
 	width: 140px;
-	height: 90px;
+	height: 75px;
 	overflow: hidden;
 	text-indent: -10000em;
 	background: url("../images/header/logo.png") center no-repeat;
 	float: left;
 	/* margin-left: 56px; */
 	background-size: 130px 67px;
+	/* float: right; */
 }
 
 .wrap-nav-primary nav.primary>ul {
@@ -525,7 +526,7 @@ header {
 .wrap-nav-primary nav.primary>ul>li {
 	display: inline-block;
 	width: 110px;
-	height: 100px;
+	height: 80px;
 	margin-left: -1px;
 }
 
@@ -546,12 +547,12 @@ header {
 	text-align: center;
 	display: block;
 	color: #575757;
-	font-size: 17px;
-	margin-top: 37px;
+	font-size: 15px;
+	margin-top: 34px;
 	border-right: 2px solid #e4e4e4;
 	height: 17px;
 	line-height: 17px;
-	font-weight: 600;
+	font-weight: 400;
 }
 
 .wrap-nav-primary nav.primary .nav_left {

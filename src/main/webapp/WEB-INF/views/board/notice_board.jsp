@@ -38,7 +38,7 @@ function search(idx) {
 <body>
 	<jsp:include page="../nav.jsp" />
 	<div class="container">
-	<div id="con_wrap">
+	<div id="con_wrap" style="width: 1200px">
 		<div id="contents">
 			<form id="iForm">
 				<h2 class="tit">공지사항</h2>
