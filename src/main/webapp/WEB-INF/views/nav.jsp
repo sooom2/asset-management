@@ -22,11 +22,14 @@
 				</c:when>
 				<c:otherwise>
 					<li><a href="javascript:logout()" data-reload="reload" class="">로그아웃</a></li>
-					<c:if test="${sessionScope.sId eq 'admin' }">
-						<li><a href="admin" class="">관리자</a></li>
-					</c:if>
+					<%-- 관리자페이지 접근 서비스시 주석 해지할것  --%>
+<%-- 					<c:if test="${sessionScope.sId eq 'admin' }"> --%>
+<!-- 						<li><a href="admin" class="">관리자</a></li> -->
+<%-- 					</c:if> --%>
 				</c:otherwise>
 			</c:choose>
+					<%-- 실제 서비스시 없앨것 --%>
+					<li><a href="admin" class="">관리자</a></li>
 			</ul>
 		</nav>
 	
