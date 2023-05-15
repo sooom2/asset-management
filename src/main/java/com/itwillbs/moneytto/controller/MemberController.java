@@ -2,12 +2,18 @@ package com.itwillbs.moneytto.controller;
 
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 
+import com.itwillbs.moneytto.service.*;
+
 @Controller
 public class MemberController {
+	@Autowired
+	private MailSendService mailService;
+	
 	
 //	@RequestMapping(value = "/", method = RequestMethod.GET)
 //	public String main() {
@@ -52,5 +58,12 @@ public class MemberController {
 	public String memLogin() {
 		return "member/mem_login_form";
 	}
-		
+	
+	// 이메일 인증
+	@GetMapping(value = "mailCheck")
+	@ResponseBody
+	public String mailCheck(String email) {
+		System.out.println(email);
+		return mailService.joinEmail(email);
+	}
 }
