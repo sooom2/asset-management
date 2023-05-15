@@ -1,0 +1,522 @@
+@charset "UTF-8";
+
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+* {
+    font-family: 'Noto Sans KR';
+}
+
+div {
+    display: block;
+}
+
+#content {
+    min-height: 100%;
+    position: relative;
+}
+
+.section-member {
+    width: 100%;
+    margin: 0 auto 0 auto;
+    background-color: #f9f9f9;
+    padding: 68px 0 120px;
+}
+
+.section {
+    clear: both;
+    margin: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    /* height: 550px; */
+}
+
+.group:before, .group:after {
+    content: "";
+    display: table;
+}
+
+.group:after {
+    clear: both;
+}
+
+.group:before, .group:after {
+    content: "";
+    display: table;
+}
+
+.section-member>.title {
+    width: 115px;
+    height: 40px;
+    border-bottom: 2px solid #979797;
+    font-size: 25px;
+    color: #666;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section-member .wrap-member-box {
+    width: 680px;
+    background-color: #fff;
+    margin: 60px auto 0;
+    padding: 80px 170px;
+}
+
+.section-member .wrap-member-box .join-indicator {
+    display: block;
+    width: 714px;
+    height: 60px;
+    overflow: hidden;
+    background: url(../images/member/bg-join-indicator.png) center top no-repeat;
+    position: relative;
+    left: -17px;
+}
+
+.section-member .wrap-member-box .join-indicator li:nth-child(1) {
+    width: 254px;
+}
+
+.section-member .wrap-member-box .join-indicator .selected {
+    font-weight: 500;
+    color: #BB2649;
+}
+
+.section-member .wrap-member-box .join-indicator li {
+    float: left;
+    display: block;
+    height: 60px;
+    text-align: center;
+    font-size: 16px;
+    color: #7d7d7d;
+    line-height: 60px;
+    position: relative;
+}
+
+.section-member .wrap-member-box .join-indicator li:nth-child(2) {
+    width: 207px;
+}
+
+.section-member .wrap-member-box .join-indicator li {
+    float: left;
+    display: block;
+    height: 60px;
+    text-align: center;
+    font-size: 16px;
+    color: #7d7d7d;
+    line-height: 60px;
+    position: relative;
+}
+
+.section-member .wrap-member-box .join-indicator li:nth-child(3) {
+    width: 253px;
+}
+
+.section-member .wrap-member-box .join-indicator li {
+    float: left;
+    display: block;
+    height: 60px;
+    text-align: center;
+    font-size: 16px;
+    color: #7d7d7d;
+    line-height: 60px;
+    position: relative;
+}
+
+.section-member .wrap-member-box .join-indicator {
+    display: block;
+    width: 714px;
+    height: 60px;
+    overflow: hidden;
+    background: url(../images/member/bg-join-indicator.png) center top no-repeat;
+    position: relative;
+    left: -17px;
+}
+
+.section-member .wrap-member-box .wrap-inside {
+    margin: 40px 0 20px 0;
+    border: 1px solid #ececec;
+    border-width: 1px 0;
+    padding-top: 20px;
+}
+
+.join-social-desc, .section-member .wrap-member-box .join-email-desc {
+    display: inline-block;
+    width: 194px;
+    height: 53px;
+    box-sizing: border-box;
+    border-right: 2px solid #ececec;
+    margin-left: 61px;
+    margin-top: 41px;
+    margin-bottom: 41px;
+    vertical-align: top;
+    position: relative;
+}
+
+.join-social-desc span, .section-member .wrap-member-box .join-email-desc span {
+    display: block;
+    box-sizing: border-box;
+    border-left: 4px solid #ccc;
+    height: 20px;
+    line-height: 18px;
+    font-size: 16px;
+    color: #333;
+    margin-top: 10px;
+    padding-left: 21px;
+}
+
+.join-social-desc:after {
+    content: "";
+    display: block;
+    position: absolute;
+    background-color: #ececec;
+    width: 680px;
+    height: 1px;
+    left: -61px;
+    bottom: -50px;
+}
+
+.join-social {
+    display: inline-block;
+    margin-top: 41px;
+    height: 40px;
+    vertical-align: top;
+}
+
+.join-social #naver_id_login {
+    display: inline-block;
+}
+
+.join-social a.kt {
+    background-image: url(../images/member/ico_kakao.png);
+    background-size: 50px;
+}
+
+.join-social a {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    text-indent: -10000em;
+    display: inline-block;
+    background-position: center center;
+    margin-left: 11px;
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    color: black;
+}
+
+a {
+    text-decoration: none;
+}
+
+.join-social {
+    display: inline-block;
+    margin-top: 41px;
+    height: 40px;
+    vertical-align: top;
+}
+
+.join-social-desc, .section-member .wrap-member-box .join-email-desc {
+    display: inline-block;
+    width: 194px;
+    height: 53px;
+    box-sizing: border-box;
+    border-right: 2px solid #ececec;
+    margin-left: 61px;
+    margin-top: 41px;
+    margin-bottom: 41px;
+    vertical-align: top;
+    position: relative;
+}
+
+.join-social a.nv {
+    background-image: url(../images/member/ico_naver.png);
+    background-size: 50px 50px;
+}
+
+.join-email {
+    display: inline-block;
+    margin-top: 41px;
+    height: 40px;
+    vertical-align: top;
+}
+
+.join-email label {
+    width: 380px;
+    height: 40px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    border: 1px solid #d8d8d8;
+    font-size: 14px;
+    color: #666;
+    display: block;
+    line-height: 40px;
+    padding-left: 20px;
+    margin-left: 11px;
+    margin-top: 25px;
+}
+
+.join-social-desc span, .section-member .wrap-member-box .join-email-desc span {
+    display: block;
+    box-sizing: border-box;
+    border-left: 4px solid #ccc;
+    height: 20px;
+    line-height: 18px;
+    font-size: 16px;
+    color: #333;
+    margin-top: 10px;
+    padding-left: 21px;
+}
+
+.join-email input {
+    width: 206px;
+    -webkit-appearance: none;
+    appearance: none;
+    -moz-appearance: none;
+    background-color: #f9f9f9;
+    border: 0;
+    border-left: 1px solid #b7b7b7;
+    margin-left: 35px;
+    padding-left: 14px;
+    font-size: 14px;
+    color: #3a3a3a;
+    margin-top: -5px;
+}
+
+.section-member .wrap-member-box .btn-join {
+    display: block;
+    width: 77%;
+    height: 48px;
+    line-height: 46px;
+    border-radius: 4px;
+    text-align: center;
+    background: #BB2649;
+    font-size: 16px;
+    /* font-weight: 600; */
+    color: #fff;
+    border: none;
+    margin: 0 auto;
+    /* padding-left: 50px; */
+}
+
+
+
+/* joinform */
+
+.section-member {
+    width: 100%;
+    margin: 0 auto 0 auto;
+    background-color: #f9f9f9;
+    padding: 68px 0 120px;
+}
+
+.section {
+    clear: both;
+    margin: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    /* height: 550px; */
+}
+
+.group:before, .group:after {
+    content: "";
+    display: table;
+}
+
+.section-member>.title {
+    width: 115px;
+    height: 40px;
+    border-bottom: 2px solid #979797;
+    font-size: 25px;
+    color: #666;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section-member .wrap-member-box {
+    width: 680px;
+    background-color: #fff;
+    margin: 60px auto 0;
+    padding: 80px 170px;
+}
+
+.section-member .wrap-member-box .join-indicator {
+    display: block;
+    width: 714px;
+    height: 60px;
+    overflow: hidden;
+    background: url(../images/member/bg-join-indicator.png) center top no-repeat;
+    position: relative;
+    left: -17px;
+}
+
+.section-member .wrap-member-box .join-indicator li:nth-child(1) {
+    width: 254px;
+}
+
+.section-member .wrap-member-box .join-indicator li {
+    float: left;
+    display: block;
+    height: 60px;
+    text-align: center;
+    font-size: 16px;
+    color: #7d7d7d;
+    line-height: 60px;
+    position: relative;
+}
+
+.section-member .wrap-member-box .join-indicator li:nth-child(2) {
+    width: 207px;
+}
+
+.section-member .wrap-member-box .join-indicator .selected {
+    font-weight: 500;
+    color: #673bd4;
+}
+
+.section-member .wrap-member-box .join-indicator li {
+    float: left;
+    display: block;
+    height: 60px;
+    text-align: center;
+    font-size: 16px;
+    color: #7d7d7d;
+    line-height: 60px;
+    position: relative;
+}
+
+ul li {
+    list-style: none;
+}
+
+.section-member .wrap-member-box .join-indicator li.selected:before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 15px;
+    height: 2px;
+    border-radius: 6px;
+    background-color: #5d46b5;
+    left: 45%;
+    top: 10px;
+}
+
+.section-member .wrap-member-box .join-indicator .selected {
+    font-weight: 500;
+    color: #673bd4;
+}
+
+.section-member .wrap-member-box .join-indicator li {
+    float: left;
+    display: block;
+    height: 60px;
+    text-align: center;
+    font-size: 16px;
+    color: #7d7d7d;
+    line-height: 60px;
+    position: relative;
+}
+
+.section-member .wrap-member-box .wrap-inside {
+    margin: 40px 0 20px 0;
+    border: 1px solid #ececec;
+    border-width: 1px 0;
+    padding-top: 20px;
+}
+
+.join-detail {
+    display: inline-block;
+    margin: 18px 0 8px 0;
+    /* height: 40px; */
+    vertical-align: top;
+}
+
+.join-detail label.label-input {
+    width: 425px;
+    height: 40px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    border: 1px solid #d8d8d8;
+    font-size: 14px;
+    color: #666;
+    display: block;
+    line-height: 38px;
+    padding-left: 20px;
+    margin-left: 128px;
+    position: relative;
+}
+
+.join-detail label.label-input span {
+    position: absolute;
+    left: 20px;
+    top: 0;
+}
+
+.join-detail input[type=text], .section-member .wrap-member-box .join-detail input[type=password] {
+    width: 251px;
+    -webkit-appearance: none;
+    appearance: none;
+    -moz-appearance: none;
+    background-color: #f9f9f9;
+    border: 0;
+    border-left: 1px solid #b7b7b7;
+    margin-left: 100px;
+    padding-left: 14px;
+    font-size: 14px;
+    color: #3a3a3a;
+    margin-top: -5px;
+}
+
+.join-detail label.label-input {
+    width: 425px;
+    height: 40px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    border: 1px solid #d8d8d8;
+    font-size: 14px;
+    color: #666;
+    display: block;
+    line-height: 38px;
+    padding-left: 20px;
+    margin-left: 128px;
+    position: relative;
+}
+
+.joinCheck {
+    margin-left: 130px;
+}
+
+.join-detail .btnsms {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -4px;
+    line-height: 37px;
+    width: 80px;
+}
+
+.join-detail .btnsub {
+    display: inline-block;
+    width: 90px;
+    height: 40px;
+    background-color: #efefef;
+    border: 1px solid #b7b7b7;
+    box-sizing: border-box;
+    line-height: 38px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+}
+
