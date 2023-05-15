@@ -162,8 +162,7 @@
 			<div class="section group chall-board">
 				<div class="challenge_list_wrap">
 					<div class="top">
-						<div class="challenge_title">챌린지</div>
-<!-- 						<div class="btn_more">MORE</div> -->
+						<div class="challenge_title">소셜가계부</div>
 					</div>
 				</div>
 				
@@ -172,60 +171,60 @@
 						<div class="landingPickWrap">
 							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);">
 								<div class="dday">
-									마감까지 D-10
+									시작까지<br>&nbsp;&nbsp;D-10
 								</div>
 							</div>
 							<div class="contentBox">
-								<div  class="con_period">[7일]</div>
-								<div class="con_tit">챌린지명</div>
+								<div  class="con_period">[소비방]</div>
+								<div class="con_tit">한달에 100000만원쓰기~~</div>
 								<div class="con_detail">
 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
-									<div class="con_price"><span>10000</span><span class="won">&nbsp;원</span></div>	
+									<div class="con_price"><span>100000</span><span class="won">&nbsp;원</span></div>	
 								</div>
 							</div>
-							<a href="" class="clickArea">신용카드 추천 읽어보기</a>
+							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
 					</li>
 					<li class="pickedContent">
 						<div class="landingPickWrap">
 							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);"></div>
 							<div class="contentBox">
-								<div  class="con_period">[7일]</div>
-								<div class="con_tit">챌린지명</div>
+								<div  class="con_period">[저축방]</div>
+								<div class="con_tit">우리돈모아요~~~~~~</div>
 								<div class="con_detail">
-									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
-									<div class="con_price"><span>10000</span><span class="won">&nbsp;원</span></div>	
+									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;9/10<span>명</span></div>
+									<div class="con_price"><span>100,000</span><span class="won">&nbsp;원</span></div>	
 								</div>
 							</div>
-							<a href="" class="clickArea">신용카드 추천 읽어보기</a>
+							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
 					</li>
 					<li class="pickedContent">
 						<div class="landingPickWrap">
 							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);"></div>
 							<div class="contentBox">
-								<div  class="con_period">[30일]</div>
-								<div class="con_tit">챌린지명</div>
+								<div  class="con_period">[소비방]</div>
+								<div class="con_tit">대화방명</div>
 								<div class="con_detail">
 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
-									<div class="con_price"><span>10000</span><span class="won">&nbsp;원</span></div>	
+									<div class="con_price"><span>500,000</span><span class="won">&nbsp;원</span></div>	
 								</div>
 							</div>
-							<a href="" class="clickArea">신용카드 추천 읽어보기</a>
+							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
 					</li>
 					<li class="pickedContent">
 						<div class="landingPickWrap">
 							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);"></div>
 							<div class="contentBox">
-								<div  class="con_period">[60일]</div>
-								<div class="con_tit">챌린지명</div>
+								<div  class="con_period">[소비방]</div>
+								<div class="con_tit">대화방명</div>
 								<div class="con_detail">
 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
-									<div class="con_price"><span>10000</span><span class="won">&nbsp;원</span></div>	
+									<div class="con_price"><span>10,000</span><span class="won">&nbsp;원</span></div>	
 								</div>
 							</div>
-							<a href="" class="clickArea">신용카드 추천 읽어보기</a>
+							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
 					</li>
 					<li class="pickedContent">
@@ -234,56 +233,56 @@
 								<div></div>
 							</div>
 							<div class="contentBox">
-								<div  class="con_period">[7일]</div>
-								<div class="con_tit">챌린지명</div>
+								<div  class="con_period">[저축방]</div>
+								<div class="con_tit">대화방명</div>
 								<div class="con_detail">
 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
-									<div class="con_price"><span>10000</span><span class="won">&nbsp;원</span></div>	
+									<div class="con_price"><span>10,000</span><span class="won">&nbsp;원</span></div>	
 								</div>
 							</div>
-							<a href="" class="clickArea">신용카드 추천 읽어보기</a>
+							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
 					</li>
 					<li class="pickedContent">
 						<div class="landingPickWrap">
 							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);"></div>
 							<div class="contentBox">
-								<div  class="con_period">[7일]</div>
-								<div class="con_tit">챌린지명</div>
+								<div  class="con_period">[소비방]</div>
+								<div class="con_tit">대화방명</div>
 								<div class="con_detail">
 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
-									<div class="con_price"><span>10000</span><span class="won">&nbsp;원</span></div>	
+									<div class="con_price"><span>10,000</span><span class="won">&nbsp;원</span></div>	
 								</div>
 							</div>
-							<a href="" class="clickArea">신용카드 추천 읽어보기</a>
+							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
 					</li>
 					<li class="pickedContent">
 						<div class="landingPickWrap">
 							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);"></div>
 							<div class="contentBox">
-								<div  class="con_period">[30일]</div>
-								<div class="con_tit">챌린지명</div>
+								<div  class="con_period">[저축방]</div>
+								<div class="con_tit">대화방명</div>
 								<div class="con_detail">
 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
 									<div class="con_price"><span>10000</span><span class="won">&nbsp;원</span></div>	
 								</div>
 							</div>
-							<a href="" class="clickArea">신용카드 추천 읽어보기</a>
+							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
 					</li>
 					<li class="pickedContent">
 						<div class="landingPickWrap">
 							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);"></div>
 							<div class="contentBox">
-								<div  class="con_period">[60일]</div>
-								<div class="con_tit">챌린지명</div>
+								<div  class="con_period">[소비방]</div>
+								<div class="con_tit">대화방명</div>
 								<div class="con_detail">
 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
 									<div class="con_price"><span>10000</span><span class="won">&nbsp;원</span></div>	
 								</div>
 							</div>
-							<a href="" class="clickArea">신용카드 추천 읽어보기</a>
+							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
 					</li>
 				</ul>

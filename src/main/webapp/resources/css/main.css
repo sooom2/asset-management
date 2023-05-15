@@ -613,3 +613,17 @@
 .chall_more:hover {
 	background-color: #ececec;
 }
+
+.dday{
+    display: inline-block;
+    background: #bb2649;
+    /* border: 2px solid #fff; */
+    color: white;
+    padding: 12px;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 400;
+    box-shadow: 1px 1px 3px 1px rgb(0 0 0 / 43%);
+    margin-top: 98px;
+    margin-left: 152px;
+}
