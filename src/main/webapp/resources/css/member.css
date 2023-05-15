@@ -384,7 +384,7 @@ a {
 
 .section-member .wrap-member-box .join-indicator .selected {
     font-weight: 500;
-    color: #673bd4;
+    color: #BB2649;
 }
 
 .section-member .wrap-member-box .join-indicator li {
@@ -416,7 +416,7 @@ ul li {
 
 .section-member .wrap-member-box .join-indicator .selected {
     font-weight: 500;
-    color: #673bd4;
+    color: #BB2649;
 }
 
 .section-member .wrap-member-box .join-indicator li {
@@ -519,4 +519,215 @@ ul li {
     color: #666;
     text-align: center;
 }
+
+
+/* join_success */
+
+.section-member {
+    width: 100%;
+    margin: 0 auto 0 auto;
+    background-color: #f9f9f9;
+    padding: 68px 0 120px;
+}
+
+.section {
+    clear: both;
+    margin: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    /* height: 550px; */
+}
+
+.group:before, .group:after {
+    content: "";
+    display: table;
+}
+
+.section-member .wrap-member-box {
+    width: 680px;
+    background-color: #fff;
+    margin: 60px auto 0;
+    padding: 80px 170px;
+}
+
+.section-member .wrap-member-box .join-indicator {
+    display: block;
+    width: 714px;
+    height: 60px;
+    overflow: hidden;
+    background: url(../images/member/bg-join-indicator.png) center top no-repeat;
+    position: relative;
+    left: -17px;
+}
+
+.section-member .wrap-member-box .join-indicator li:nth-child(1) {
+    width: 254px;
+}
+
+.section-member .wrap-member-box .join-indicator li {
+    float: left;
+    display: block;
+    height: 60px;
+    text-align: center;
+    font-size: 16px;
+    color: #7d7d7d;
+    line-height: 60px;
+    position: relative;
+}
+
+.section-member .wrap-member-box .join-indicator li:nth-child(2) {
+    width: 207px;
+}
+
+.section-member .wrap-member-box .join-indicator li {
+    float: left;
+    display: block;
+    height: 60px;
+    text-align: center;
+    font-size: 16px;
+    color: #7d7d7d;
+    line-height: 60px;
+    position: relative;
+}
+
+.section-member .wrap-member-box .join-indicator li:nth-child(3) {
+    width: 253px;
+}
+
+.section-member .wrap-member-box .join-indicator .selected {
+    font-weight: 500;
+    color: #BB2649;
+}
+
+.section-member .wrap-member-box .join-indicator li {
+    float: left;
+    display: block;
+    height: 60px;
+    text-align: center;
+    font-size: 16px;
+    color: #7d7d7d;
+    line-height: 60px;
+    position: relative;
+}
+
+.section-member .wrap-member-box .join-indicator li.selected:before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 15px;
+    height: 2px;
+    border-radius: 6px;
+    background-color: #5d46b5;
+    left: 45%;
+    top: 10px;
+}
+
+.section-member .wrap-member-box .join-indicator .selected {
+    font-weight: 500;
+    color: #BB2649;
+}
+
+.section-member .wrap-member-box .join-indicator li {
+    float: left;
+    display: block;
+    height: 60px;
+    text-align: center;
+    font-size: 16px;
+    color: #7d7d7d;
+    line-height: 60px;
+    position: relative;
+}
+
+.join-success {
+    max-width: 100% !important;
+    /* padding: 0 20px; */
+    /* padding-top: 20px; */
+    /* margin: 0 auto !important; */
+}
+
+.member {
+    max-width: 100%;
+    padding: 0 20px;
+    padding-top: 55px;
+    margin: 0 auto;
+}
+
+.member .end {
+    padding: 40px 0 90px;
+    text-align: center;
+    /* width: 960px; */
+    margin: 0 auto;
+}
+
+.member .end .t1 {
+    padding-top: 133px;
+    background: url(../images/member/joinSucess.png) no-repeat 50% -80px;
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+b, strong {
+    font-weight: bold;
+}
+
+.member .end .t2 {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #909090;
+    margin: 15px 0 45px;
+}
+
+.member .end .btns {
+    width: 100%;
+}
+
+.member .end .btns .btn-type-main {
+    padding: 5px 40px;
+}
+
+.member .end .btns a {
+    width: calc(40% - 20px);
+    margin: 0 auto;
+    background-color: #5d46b5;
+    height: 35px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 300;
+    line-height: 35px;
+    padding-left: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    color: black;
+}
+
+a {
+    text-decoration: none;
+}
+
+.member .end .btns .btn-typep-login {
+    padding: 5px 50px;
+}
+
+.member .end .btns a {
+    width: calc(40% - 20px);
+    margin: 0 auto;
+    background-color: #5d46b5;
+    height: 35px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 300;
+    line-height: 35px;
+    padding-left: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 

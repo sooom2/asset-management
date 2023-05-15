@@ -31,127 +31,127 @@ window.onload = function(){
 
 // 입력 검증.
 $(function() {
-	let idStatus = false;
-	let nameStatus = false;
-	let passwdStatus = false;
-	let passwd2Status = false;
+// 	let idStatus = false;
+// 	let nameStatus = false;
+// 	let passwdStatus = false;
+// 	let passwd2Status = false;
 	
 	
-	// 아이디 검증.
-	$("#member_id").on("blur", function() {
-		let id = $("#member_id").val();
+// 	// 아이디 검증.
+// 	$("#member_id").on("blur", function() {
+// 		let id = $("#member_id").val();
 		
-		if(id == "") {
-			idStatus = false;
-			$("#checkIdResult").html("아이디는 필수 입력 항목입니다").css("color", "red");
-			return; 
-		} else {
-			// 영문자, 숫자, 특수문자 조합 4 ~ 8글자
-			let regex = /^[A-Za-z0-9!@#$%]{4,8}$/;
+// 		if(id == "") {
+// 			idStatus = false;
+// 			$("#checkIdResult").html("아이디는 필수 입력 항목입니다").css("color", "red");
+// 			return; 
+// 		} else {
+// 			// 영문자, 숫자, 특수문자 조합 4 ~ 8글자
+// 			let regex = /^[A-Za-z0-9!@#$%]{4,8}$/;
 			
-			if(!regex.exec(id)) { 
-				$("#checkIdResult").html("영문자, 숫자, 특수문자 조합 4 ~ 8글자").css("color", "red");
-				idStatus = false;
-			} else { 
-				$.ajax({
-					url: "MemberCheckId", 
-					data: {
-						id: $("#member_id").val()
-					},
-					success: function(result) { 
-						if(result) {
-							$("#checkIdResult").html("이미 사용중인 아이디입니다.").css("color", "red");
-							idStatus = false;
-						} else {
-							$("#checkIdResult").html("사용 가능한 아이디입니다.").css("color", "green");
-							idStatus = true;
-						}
-					}
-				}); // ajax
-			}
-		}
-	});
+// 			if(!regex.exec(id)) { 
+// 				$("#checkIdResult").html("영문자, 숫자, 특수문자 조합 4 ~ 8글자").css("color", "red");
+// 				idStatus = false;
+// 			} else { 
+// 				$.ajax({
+// 					url: "MemberCheckId", 
+// 					data: {
+// 						id: $("#member_id").val()
+// 					},
+// 					success: function(result) { 
+// 						if(result) {
+// 							$("#checkIdResult").html("이미 사용중인 아이디입니다.").css("color", "red");
+// 							idStatus = false;
+// 						} else {
+// 							$("#checkIdResult").html("사용 가능한 아이디입니다.").css("color", "green");
+// 							idStatus = true;
+// 						}
+// 					}
+// 				}); // ajax
+// 			}
+// 		}
+// 	});
 	
-	// 비밀번호 검증
-	$("#member_pw").on("change", function() {
-		let passwd = $("#member_pw").val(); 
-		let lengthRegex = /^[A-Za-z0-9!@#$%]{8,16}$/;
+// 	// 비밀번호 검증
+// 	$("#member_pw").on("change", function() {
+// 		let passwd = $("#member_pw").val(); 
+// 		let lengthRegex = /^[A-Za-z0-9!@#$%]{8,16}$/;
 		
-		if(!lengthRegex.exec(passwd)) {
-			$("#checkPasswdResult").html("영문자, 숫자, 특수문자 8 ~ 16자 필수").css("color", "red");
-			$("#member_pw").select();
-			passwdStatus = false;
-		} else {
-			$("#checkPasswdResult").html("사용가능한 비밀번호 입니다.").css("color", "green");
-			passwdStatus = true;
-		}
+// 		if(!lengthRegex.exec(passwd)) {
+// 			$("#checkPasswdResult").html("영문자, 숫자, 특수문자 8 ~ 16자 필수").css("color", "red");
+// 			$("#member_pw").select();
+// 			passwdStatus = false;
+// 		} else {
+// 			$("#checkPasswdResult").html("사용가능한 비밀번호 입니다.").css("color", "green");
+// 			passwdStatus = true;
+// 		}
 		
-	});
+// 	});
 	
 	
-	// 비밀번호확인 검증
-	$("#member_pw2").on("change", function() {
-		if($("#member_pw").val() == $("#member_pw2").val()) {
-			$("#checkPasswd2Result").html("비밀번호 일치").css("color", "green");
-			passwd2Status = true;
-		} else {
-			$("#checkPasswd2Result").html("비밀번호 불일치").css("color", "red");
-			passwd2Status = false;
-		}
-	});
+// 	// 비밀번호확인 검증
+// 	$("#member_pw2").on("change", function() {
+// 		if($("#member_pw").val() == $("#member_pw2").val()) {
+// 			$("#checkPasswd2Result").html("비밀번호 일치").css("color", "green");
+// 			passwd2Status = true;
+// 		} else {
+// 			$("#checkPasswd2Result").html("비밀번호 불일치").css("color", "red");
+// 			passwd2Status = false;
+// 		}
+// 	});
 	
-	// 이름 검증
-	$("#member_name").on("change", function() {
-		let name = $("#member_name").val(); 
-		// 한글 2 ~ 5글자
-		let regex = /^[가-힣]{2,5}$/;
+// 	// 이름 검증
+// 	$("#member_name").on("change", function() {
+// 		let name = $("#member_name").val(); 
+// 		// 한글 2 ~ 5글자
+// 		let regex = /^[가-힣]{2,5}$/;
 		
-		if(!regex.exec(name)) {
-			$("#checkNameResult").html("한글 2 ~ 5자를 입력하세요.").css("color", "red");
-			$("#member_name").select(); 
-			nameStatus = false;
-		} else {
-			$("#checkNameResult").html("사용 가능한 이름 입니다.").css("color", "green");
-			nameStatus = true;
-		}
-	});
+// 		if(!regex.exec(name)) {
+// 			$("#checkNameResult").html("한글 2 ~ 5자를 입력하세요.").css("color", "red");
+// 			$("#member_name").select(); 
+// 			nameStatus = false;
+// 		} else {
+// 			$("#checkNameResult").html("사용 가능한 이름 입니다.").css("color", "green");
+// 			nameStatus = true;
+// 		}
+// 	});
 	
 	
 	
 	$("form").submit(function() {
-		if(!nameStatus) {
-			alert("이름을 확인하세요");
-			$("#member_name").focus();
-			return false;
-		} else if(!idStatus) {
-			alert("아이디를 확인하세요");
-			$("#member_id").focus();
-			return false;
-		} else if(!passwdStatus) {
-			alert("비밀번호를 확인하세요");
-			$("#memeber_pw").focus();
-			return false;
-		} else if(!passwd2Status) {
-			alert("비밀번호확인을 확인하세요");
-			$("#member_pw2").focus();
-			return false;
-		} else if($("#member_address1").val() == "") {
-			alert("주소를 입력하세요");
-			$("#member_address1").focus();
-			return false;
-		} else if($("#member_address2").val() == "") {
-			alert("상세주소를 입력하세요");
-			$("#member_address2").focus();
-			return false;
-		} else if($("#member_bday").val() == "") {
-			alert("주소를 입력하세요");
-			$("#member_bday").focus();
-			return false;
-		} else if($("#member_tel").val() == "") {
-			alert("주소를 입력하세요");
-			$("#member_tel").focus();
-			return false;
-		}
+// 		if(!nameStatus) {
+// 			alert("이름을 확인하세요");
+// 			$("#member_name").focus();
+// 			return false;
+// 		} else if(!idStatus) {
+// 			alert("아이디를 확인하세요");
+// 			$("#member_id").focus();
+// 			return false;
+// 		} else if(!passwdStatus) {
+// 			alert("비밀번호를 확인하세요");
+// 			$("#memeber_pw").focus();
+// 			return false;
+// 		} else if(!passwd2Status) {
+// 			alert("비밀번호확인을 확인하세요");
+// 			$("#member_pw2").focus();
+// 			return false;
+// 		} else if($("#member_address1").val() == "") {
+// 			alert("주소를 입력하세요");
+// 			$("#member_address1").focus();
+// 			return false;
+// 		} else if($("#member_address2").val() == "") {
+// 			alert("상세주소를 입력하세요");
+// 			$("#member_address2").focus();
+// 			return false;
+// 		} else if($("#member_bday").val() == "") {
+// 			alert("주소를 입력하세요");
+// 			$("#member_bday").focus();
+// 			return false;
+// 		} else if($("#member_tel").val() == "") {
+// 			alert("주소를 입력하세요");
+// 			$("#member_tel").focus();
+// 			return false;
+// 		}
 		
 		return true;
 		

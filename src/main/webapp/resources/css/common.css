@@ -891,7 +891,7 @@ ul li {
 }
 
 .checkbox:checked+em {
-	border-color: #673bd4;
+	border-color: #BB2649;
 }
 
 .checkbox:checked+em:before {
@@ -923,7 +923,7 @@ ul li {
 	top: 3px;
 	bottom: 3px;
 	border-radius: 100%;
-	background: #673bd4;
+	background: #BB2649;
 	transform: scale(0.2);
 	transition: all 0.3s ease;
 	opacity: 0;
