@@ -9,6 +9,7 @@
 <link href="${path }/resources/css/common.css" rel="stylesheet">
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
 <script type="text/javascript" src="${path }/resources/js/main.js"></script>
+<script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <div id="header" data-loginstatus="0">
@@ -16,7 +17,7 @@
 			<ul>
 			<c:choose>
 				<c:when test="${empty sessionScope.sId }">
-					<li><a href="memLogin" data-reload="reload" class="">로그인</a></li>
+					<li><a href="memLogin" data-reload="reload" class=""><i class="fa-regular fa-circle-user"></i>&nbsp;로그인</a></li>
 					<li><a href="" data-reload="" class="">마이페이지</a></li>
 					<li><a href="memAuth">회원가입</a></li>
 				</c:when>
@@ -37,8 +38,8 @@
 		<nav class="primary">
 			<a href="main"><h1 id="logo">로고</h1></a>		
 			<ul class="nav_left">
-				<li><a href="accountBook" class="">가계부</a></li>
-				<li><a href="" class="">소셜가계부</a></li>
+				<li style="width: 80px"><a href="accountBook" class="">가계부</a></li>
+				<li><a href="socialBook" class="">소셜가계부</a></li>
 				<li><a href="" class="">머니또PICK</a></li>
 				<li><a href="notice_board" class="">공지사항</a></li>
 				<li><a href="free_board" class="">커뮤니티</a></li>

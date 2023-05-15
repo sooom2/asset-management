@@ -9,8 +9,9 @@
 <title>머니머니머니또</title>
 <link href="${path }/resources/css/main.css" rel="stylesheet">
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
+<link href="${path }/resources/css/common.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
-<script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="resources/js/jquery.bxslider.min.js"></script>
 <script type="text/javascript">

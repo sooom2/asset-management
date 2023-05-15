@@ -57,11 +57,6 @@ dfn {
 	font-style: italic;
 }
 
-h1 {
-	font-size: 2em;
-	margin: 0.67em 0;
-}
-
 mark {
 	background: #ff0;
 	color: #000;
@@ -324,7 +319,8 @@ header {
 }
 
 #header .nav_left {
-	margin-left: 500px!important;
+	/* margin-left: 470px!important; */
+	float: right;
 }
 
 #header .nav_right {
@@ -347,16 +343,6 @@ header {
 	/* color: #000; */
 }
 
-
-#header .nav_right .tertiary ul {
-	width: 900px;
-	/* margin: 0 auto; */
-	/* text-align: right; */
-	/* height: 30px; */
-	/* padding-right: 12px; */
-	/* position: relative; */
-	margin-right: 110px;
-}
 
 
 #header nav.secondary>ul>li {
@@ -502,7 +488,10 @@ header {
 	display: block;
 	z-index: 10;
 }
-
+#hearder ul{
+    width: 1200px;
+    margin: 0 auto;
+}
 .wrap-nav-primary {
 	width: 100%;
 	position: relative;
@@ -511,7 +500,7 @@ header {
 }
 
 .wrap-nav-primary nav.primary {
-	width: 1300px;
+	width: 1200px;
 	margin: 0 auto;
 	height: 100px;
 }
@@ -524,7 +513,7 @@ header {
 	text-indent: -10000em;
 	background: url("../images/header/logo.png") center no-repeat;
 	float: left;
-	margin-left: 56px;
+	/* margin-left: 56px; */
 	background-size: 130px 67px;
 }
 
@@ -613,159 +602,7 @@ div.tertiary.on {
 	z-index: 6;
 }
 
-div.tertiary.stay {
-	display: block !important;
-	position: absolute;
-	top: 100px;
-	left: 0;
-	z-index: 5;
-}
 
-div.tertiary ul {
-	width: 1200px;
-	margin: 0 auto;
-}
-
-div.tertiary ul li {
-	float: left;
-}
-
-div.tertiary ul li a {
-	display: block;
-	box-sizing: border-box;
-	width: 130px;
-	height: 52px;
-	line-height: 52px;
-	text-align: center;
-	color: #333;
-	font-size: 16px;
-}
-
-div.tertiary ul li a.selected {
-	border-bottom: 5px solid #5d46b5;
-	color: #5d46b5;
-}
-
-div.tertiary ul li a:hover {
-	color: #5d46b5;
-}
-
-div.tertiary ul li:first-child {
-	margin-left: 100px;
-}
-
-div.theaterInfo {
-	width: 100%;
-	background-color: #efefef;
-	height: 52px;
-	display: none;
-}
-
-div.theaterInfo.on {
-	display: block;
-	position: absolute;
-	top: 100px;
-	left: 0;
-	z-index: 99;
-}
-
-div.theaterInfo.stay {
-	display: block !important;
-	position: absolute;
-	top: 100px;
-	left: 0;
-	z-index: 98;
-}
-
-div.theaterInfo ul {
-	width: 1000px;
-	margin: 0 auto;
-}
-
-div.theaterInfo ul li {
-	float: left;
-}
-
-div.theaterInfo ul li a {
-	display: block;
-	box-sizing: border-box;
-	width: 130px;
-	height: 52px;
-	line-height: 52px;
-	text-align: center;
-	color: #333;
-	font-size: 16px;
-}
-
-div.theaterInfo ul li a.selected {
-	border-bottom: 5px solid #5d46b5;
-	color: #5d46b5;
-}
-
-div.theaterInfo ul li a:hover {
-	color: #5d46b5;
-}
-
-div.theaterInfo ul li:first-child {
-	margin-left: 0px;
-}
-
-div.theaterInfo2 {
-	width: 100%;
-	background-color: #efefef;
-	height: 50px;
-	display: none;
-}
-
-div.theaterInfo2.on {
-	display: block;
-	position: absolute;
-	top: 152px;
-	left: 0;
-	z-index: 100;
-}
-
-div.theaterInfo2.stay {
-	display: block !important;
-	position: absolute;
-	top: 152px;
-	left: 0;
-	z-index: 101;
-}
-
-div.theaterInfo2 ul {
-	width: 800px;
-	margin: 0 auto;
-	align-content: center
-}
-
-div.theaterInfo2 ul li {
-	float: left;
-}
-
-div.theaterInfo2 ul li a {
-	display: block;
-	box-sizing: border-box;
-	width: 130px;
-	height: 52px;
-	line-height: 52px;
-	text-align: center;
-	color: #333;
-	font-size: 16px;
-}
-
-div.theaterInfo2 ul li a.selected {
-	border-bottom: 5px solid #08088A;
-	color: #08088A;
-}
-
-div.theaterInfo2 ul li a:hover {
-	color: #08088A;
-}
-
-div.theaterInfo2 ul li:first-child {
-	margin-left: 0px;
-}
 
 
 
@@ -967,6 +804,7 @@ h2.tit {
 .accountBookSel li.on a, .accountBookSel li:hover a {
     z-index: 1;
     color: #111;
+    font-weight: 600;
 }
 
 .accountBookSel li.on:after, .accountBookSel li:hover:after {
@@ -993,4 +831,10 @@ h2.tit {
 	float: right;
 	font-size: 17px;
 	margin-top: 2px;
+}
+.accountLoad a{
+	color: white;
+}
+.accountLoad a:hover {
+	color:white;
 }
