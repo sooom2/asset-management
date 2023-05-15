@@ -45,7 +45,12 @@ public class MemberController {
 //		} else { // 가입 실패
 //			model.addAttribute("msg", "회원 가입 실패!");
 //			return "member/fail_back";
-//		}
-		
+		}
+			
+	//회원로그인
+	@GetMapping(value = "memLogin")
+	public String memLogin() {
+		return "member/mem_login_form";
 	}
+		
 }
