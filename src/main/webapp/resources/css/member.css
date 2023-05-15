@@ -409,7 +409,7 @@ ul li {
     width: 15px;
     height: 2px;
     border-radius: 6px;
-    background-color: #5d46b5;
+    background-color: #bb2649;
     left: 45%;
     top: 10px;
 }
@@ -617,7 +617,7 @@ ul li {
     width: 15px;
     height: 2px;
     border-radius: 6px;
-    background-color: #5d46b5;
+    background-color: #bb2649;
     left: 45%;
     top: 10px;
 }
@@ -719,7 +719,7 @@ a {
 .member .end .btns a {
     width: calc(40% - 20px);
     margin: 0 auto;
-    background-color: #5d46b5;
+    background-color: #bb2649;
     height: 35px;
     border-radius: 10px;
     color: #fff;
