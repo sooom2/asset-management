@@ -11,8 +11,29 @@ public class BookController {
 	public String accountBookMain() {
 		
 		
-		
 		return "accountBook/accountBookMain";
+	}
+	
+	@RequestMapping(value = "goalForm", method = RequestMethod.GET)
+	public String goalForm() {
+		
+		
+		return "accountBook/goalForm";
+	}
+	
+	@RequestMapping(value = "goalDetailForm", method = RequestMethod.POST)
+	public String goalDetailForm() {
+		
+		
+		return "accountBook/goalForm";
+	}
+	
+	@RequestMapping(value = "graphForm", method = RequestMethod.GET)
+	public String graphForm() {
+		
+		
+		
+		return "accountBook/graphForm";
 	}
 	
 }
