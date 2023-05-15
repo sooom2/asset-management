@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>머니머니머니또</title>
+<script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
 <link href="${path }/resources/css/socialBook.css" rel="stylesheet">
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
 </head>
@@ -138,11 +139,8 @@
 	                    </form>
 	                    <!-- 채팅 입력 관련 기능(파일 첨부, 캡쳐 등) -->
 	                    <div class="insert-menu">
-	                        <i class="icon-smile"></i>
-	                        <i class="icon-attach"></i>
-	                        <i class="icon-phone"></i>
-	                        <i class="icon-calendar-empty"></i>
-	                        <i class="icon-camera"></i>
+	                        <i class="fa-regular fa-face-smile"></i>
+	                       	<i class="fa-solid fa-paperclip"></i>
 	                    </div>
 	                </div>
                 </div>
