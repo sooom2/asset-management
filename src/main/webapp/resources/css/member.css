@@ -1055,5 +1055,266 @@ img {
 }
 
 
-    
-    
+/* 마이페이지 */
+
+
+.wrap-sitemap-title {
+    background-color: #e5e5e5;
+    width: 100%;
+    height: 134px;
+    text-align: center;
+}
+
+.wrap-sitemap-title h2.sitemap-title {
+    display: inline-block;
+    margin: 0 auto;
+    font-size: 25px;
+    color: #666;
+    font-weight: normal;
+    padding-top: 50px;
+    height: 46px;
+}
+
+.section-mypage-summary {
+    width: 100%;
+    height: 270px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.section-mypage-summary .summary-1 {
+    width: 331px;
+}
+
+.section-mypage-summary .summary {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 24px 0 0 0;
+    border-left: 1px solid #d8d8d8;
+    text-align: left;
+    position: relative;
+    vertical-align: top;
+}
+
+.section-mypage-summary .summary h3 {
+    font-size: 19px;
+    font-weight: 400px;
+    color: #BB2649;
+    border-bottom: 1px solid #f3f3f3;
+    padding: 0 0 18px 19px;
+    margin: 0 15px 21px 15px;
+}
+
+.section-mypage-summary .summary .btn-top {
+    position: absolute;
+    top: 24px;
+    right: 14px;
+}
+
+.section-mypage-summary .summary .btn {
+    width: 110px;
+    height: 32px;
+    border-radius: 11px;
+    background-color: #BB2649;
+    border: 1px solid #b7b7b7;
+    box-sizing: border-box;
+    line-height: 29px;
+    font-size: 14px;
+    color: #f9f9f9;
+    text-align: center;
+}
+
+.section-mypage-summary .summary-1 .username {
+    font-size: 18px;
+    color: #000;
+    line-height: 17px;
+    padding-left: 34px;
+    padding-bottom: 20px;
+}
+
+.section-mypage-summary .summary {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 24px 0 0 0;
+    border-left: 1px solid #d8d8d8;
+    text-align: left;
+    position: relative;
+    vertical-align: top;
+}
+
+.section-mypage-summary .summary-1 .username .point {
+    font-weight: bold;
+    color: #BB2649;
+    padding-left: 137px;
+}
+
+.section-mypage-summary .summary-1 .username {
+    font-size: 18px;
+    color: #000;
+    line-height: 17px;
+    padding-left: 34px;
+    padding-bottom: 20px;
+}
+
+.section-mypage-summary .summary-1 .username .right {
+    position: absolute;
+    font-size: 18px;
+    color: #000;
+    right: 14px;
+}
+
+.section-mypage-summary .summary-1 .username {
+    font-size: 18px;
+    color: #000;
+    line-height: 17px;
+    padding-left: 34px;
+    padding-bottom: 20px;
+}
+
+.section-mypage-summary .summary-1 .username {
+    font-size: 18px;
+    color: #000;
+    line-height: 17px;
+    padding-left: 34px;
+    padding-bottom: 20px;
+}
+
+.section-mypage-summary .summary-1 .username .right {
+    position: absolute;
+    font-size: 18px;
+    color: #000;
+    right: 14px;
+}
+
+.section-mypage-summary .summary-2 {
+    width: 341px;
+    margin-left: -4px;
+}
+
+.section-mypage-summary .summary {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 24px 0 0 0;
+    border-left: 1px solid #d8d8d8;
+    text-align: left;
+    position: relative;
+    vertical-align: top;
+}
+
+.section-mypage-summary .summary-2 h3 {
+    padding-left: 118px;
+}
+
+.section-mypage-summary .summary h3 {
+    font-size: 19px;
+    font-weight: 400px;
+    color: #BB2649;
+    border-bottom: 1px solid #f3f3f3;
+    padding: 0 0 18px 19px;
+    margin: 0 15px 21px 15px;
+}
+
+.section-mypage-summary .summary h3 .num {
+    color: #BB2649;
+    font-weight: bold;
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+.section-mypage-summary .summary h3 {
+    font-size: 19px;
+    font-weight: 400px;
+    color: #BB2649;
+    border-bottom: 1px solid #f3f3f3;
+    padding: 0 0 18px 19px;
+    margin: 0 15px 21px 15px;
+}
+
+:not(svg) {
+    transform-origin: 0px 0px;
+}
+
+
+.section-mypage-summary .summary-3 {
+    width: 340px;
+    border-right: 1px solid #d8d8d8;
+    margin-left: -4px;
+}
+
+.section-mypage-summary .summary-3 h3 {
+    padding-left: 120px;
+}
+
+.section-mypage-summary .summary h3 {
+    font-size: 19px;
+    font-weight: 400px;
+    color: #BB2649;
+    border-bottom: 1px solid #f3f3f3;
+    padding: 0 0 18px 19px;
+    margin: 0 15px 21px 15px;
+}
+
+.section-mypage-select {
+    display: block;
+    margin: 0 auto;
+    padding-top: 53px;
+    background-color: #f9f9f9;
+    height: 100px;
+}
+
+.section-mypage-select .selector-summary {
+    display: block;
+    width: 700px;
+    height: 52px;
+    margin: 0 auto;
+}
+
+.section-mypage-select .selector-summary li {
+    float: left;
+    margin-left: -1px;
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid #d8d8d8;
+    width: 135px;
+    height: 52px;
+    background-color: #fff;
+    position: relative;
+}
+
+.section-mypage-select .selector-summary li a.selected {
+    color: #BB2649;
+    border-bottom: 4px solid #BB2649;
+    box-sizing: border-box;
+}
+
+.section-mypage-select .selector-summary li a {
+    display: block;
+    color: #666;
+    height: 100%;
+    width: 100%;
+    line-height: 50px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.section-mypage {
+    background-color: #f9f9f9;
+    padding-bottom: 120px;
+}
+
+.section-mypage .wrap-list {
+    width: 960px;
+    margin: 0 auto 0;
+    padding: 103px 30px 50px 30px;
+    background-color: #fff;
+    position: relative;
+}
+

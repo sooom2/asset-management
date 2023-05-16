@@ -18,7 +18,7 @@
 			<c:choose>
 				<c:when test="${empty sessionScope.sId }">
 					<li><a href="memLogin" data-reload="reload" class=""><i class="fa-regular fa-circle-user"></i>&nbsp;로그인</a></li>
-					<li><a href="" data-reload="" class="">마이페이지</a></li>
+					<li><a href="mypage" data-reload="" class="">마이페이지</a></li>
 					<li><a href="memAuth">회원가입</a></li>
 				</c:when>
 				<c:otherwise>
