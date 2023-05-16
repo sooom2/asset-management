@@ -22,7 +22,7 @@
 					<!-- 무비 -->
 					<div class="sb-sidenav-menu-heading">ACCOUNTBOOK</div>
 						
-						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#movie" aria-expanded="false" aria-controls="movie">
+						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#account" aria-expanded="false" aria-controls="account">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-columns"></i>
 							</div> 가계부관리
@@ -30,19 +30,19 @@
 								<i class="fas fa-angle-down"></i>
 							</div>
 						</a>
-						<div class="collapse" id="movie" aria-labelledby="" data-bs-parent="#sidenavAccordion">
+						<div class="collapse" id="account" aria-labelledby="" data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" href="admin_movie_register">소셜가계부관리</a>
+								<a class="nav-link" href="adminSocialAccount">소셜가계부관리</a>
 							</nav>
 						</div>
-						<div class="collapse" id="movie" aria-labelledby="" data-bs-parent="#sidenavAccordion">
+						<div class="collapse" id="account" aria-labelledby="" data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" href="admin_movie_register">오픈채팅관리</a>
+								<a class="nav-link" href="adminSocialChat">오픈채팅관리</a>
 							</nav>
 						</div>
-						<div class="collapse" id="movie" aria-labelledby="" data-bs-parent="#sidenavAccordion">
+						<div class="collapse" id="account" aria-labelledby="" data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" href="admin_movie_register">신고관리</a>
+								<a class="nav-link" href="adminReport">신고관리</a>
 							</nav>
 						</div>
 						
@@ -58,25 +58,17 @@
 						</a>
 						<div class="collapse" id="boardMgm" aria-labelledby="" data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-								<a class="nav-link" href="admin_notice_board"> 공지사항</a>
-								<a class="nav-link" href="admin_oneOnOne">자유게시판</a>
-								<a class="nav-link" href="admin_notice_board"> 챗봇</a>
+								<a class="nav-link" href="adminNoticeBoard"> 공지사항</a>
+								<a class="nav-link" href="adminFreeBoard">자유게시판</a>
+								<a class="nav-link" href="adminChatBot"> 챗봇</a>
 							</nav>
 						</div>
 						<div class="sb-sidenav-menu-heading">MEMBER</div>
-						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#storeMgm" aria-expanded="false" aria-controls="storeMgm">
+						<a class="nav-link collapsed" href="adminMember">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-columns"></i>
 							</div> 회원관리
-							<div class="sb-sidenav-collapse-arrow">
-								<i class="fas fa-angle-down"></i>
-							</div>
 						</a>
-						<div class="collapse" id="storeMgm" aria-labelledby="" data-bs-parent="#sidenavAccordion">
-							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" href="admin_item_pay">-</a>
-							</nav>
-						</div>
 						<!-- lnb -->
 					</div>
 				</div>

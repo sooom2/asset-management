@@ -194,27 +194,6 @@ public class BoardController {
 	}
 	
 	//관리자게시판============================================================================================
-	
-	// 관리자 공지사항 목록
-	@RequestMapping(value = "admin_notice_board", method = {RequestMethod.GET, RequestMethod.POST})
-	public String adminNoticeBoard(@RequestParam HashMap<String, String> map, Model model) {
-		
-		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
-			map.put("pageNum", "1");
-			map.put("startNum", "0");
-			map.put("endNum", "10");
-		}
-		List<HashMap<String, String>> noticeBoardList = boardService.getNoticeBoardList(map);
-		if(noticeBoardList.size() > 0) {
-			HashMap<String, String> countMap = noticeBoardList.get(0);
-			map.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
-		}
-		model.addAttribute("paramMap", map);
-		model.addAttribute("noticeBoardList", noticeBoardList);
-		System.out.println("noticeBoard 컨트롤러" + model);
-		
-		return "admin/admin_notice_board";
-	}
 
 	// 관리자 공지 등록
 	@RequestMapping(value = "notice_register_pro", method = {RequestMethod.GET, RequestMethod.POST})
@@ -231,16 +210,6 @@ public class BoardController {
 		}
 	}
 	
-	// 관리자 공지 수정창
-	@RequestMapping(value = "admin_notice_update", method = {RequestMethod.GET, RequestMethod.POST})
-	public String adminNoticeUpdate(@RequestParam String notice_code, Model model) {
-		
-		HashMap<String, String> noticeBoard = boardService.getNoticeBoard(notice_code);
-		System.out.println(noticeBoard);
-		model.addAttribute("noticeBoard", noticeBoard);
-		System.out.println(model);
-		return "admin/admin_notice_update";
-	}
 	
 	// 관리자 공지 수정
 	@RequestMapping(value = "notice_update_pro", method = {RequestMethod.GET, RequestMethod.POST})
@@ -269,37 +238,6 @@ public class BoardController {
 		
 	}
 	
-	// 관리자 1:1 문의 목록
-	@RequestMapping(value = "admin_oneOnOne", method = {RequestMethod.GET, RequestMethod.POST})
-	public String adminOneOnOne(@RequestParam HashMap<String, String> map, Model model) {
-		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
-			map.put("pageNum", "1");
-			map.put("startNum", "0");
-			map.put("endNum", "10");
-		}
-		List<HashMap<String, String>> oneBoardList = boardService.getOneBoardList(map);
-		System.out.println(oneBoardList);
-		if(oneBoardList.size() > 0) {
-			HashMap<String, String> countMap = oneBoardList.get(0);
-			map.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
-		}
-		model.addAttribute("paramMap", map);
-		model.addAttribute("oneBoardList", oneBoardList);
-		System.out.println("oneBoardList 컨트롤러" + model);
-		
-		return "admin/admin_oneOnOne";
-	}
-	
-	// 관리자 1:1 답변 등록창
-	@RequestMapping(value = "admin_one_rep", method = {RequestMethod.GET, RequestMethod.POST})
-	public String adminOneRep(@RequestParam String one_code, Model model) {
-		
-		HashMap<String, String> oneBoard = boardService.getOneBoard(one_code);
-		System.out.println(oneBoard);
-		model.addAttribute("oneBoard", oneBoard);
-		System.out.println(model);
-		return "admin/admin_one_rep";
-	}
 	
 	// 관리자 1:1 답변 등록
 	@RequestMapping(value = "one_update_pro", method = {RequestMethod.GET, RequestMethod.POST})

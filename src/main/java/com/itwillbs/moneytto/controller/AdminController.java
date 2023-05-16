@@ -1,27 +1,54 @@
 package com.itwillbs.moneytto.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class AdminController {
 	
-	// 관리자 페이지
-	@RequestMapping(value = "admin", method = {RequestMethod.GET, RequestMethod.POST})
-	public String adminMain(Model model,HttpSession session) {
-			
-
+	// =============================================
+	@RequestMapping(value = "admin")
+	public String adminMain(Model model) {
 			
 		return "admin/admin_main";
 	}
+	// =============================================
+	@RequestMapping(value = "adminSocialAccount")
+	public String adminSocialAccount(Model model) {
+		return "admin/adminSocialAccount";
+	}
+	@RequestMapping(value = "adminSocialChat")
+	public String adminSocialChat() {
+		
+		return "admin/adminSocialChat";
+	}
 	
+	@RequestMapping(value = "adminReport")
+	public String adminReport() {
+		
+		return "admin/adminReport";
+	}
+	// =============================================
+	@RequestMapping(value = "adminNoticeBoard")
+	public String adminNoticeBoard(Model model) {
+		return "admin/adminNoticeBoard";
+	}
+	@RequestMapping(value = "adminFreeBoard")
+	public String adminFreeBoard() {
+		
+		return "admin/adminFreeBoard";
+	}
 	
-	
-	
-	
-
+	@RequestMapping(value = "adminChatBot")
+	public String adminChatBot() {
+		
+		return "admin/adminChatBot";
+	}
+	// =============================================
+	@RequestMapping(value = "adminMember")
+	public String adminMember() {
+		
+		return "admin/adminMember";
+	}
 }
