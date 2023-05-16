@@ -1318,3 +1318,270 @@ svg:not(:root) {
     position: relative;
 }
 
+
+/* member_info */
+
+.section-member {
+    width: 100%;
+    margin: 0 auto 0 auto;
+    background-color: #f9f9f9;
+    padding: 68px 0 120px;
+}
+
+.section-member>.title-membership, .section-member>.title-pass {
+    width: 147px;
+    height: 40px;
+    border-bottom: 2px solid #979797;
+    font-size: 25px;
+    color: #666;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section-member .wrap-member-box.wrap-membership-box {
+    padding-top: 60px;
+}
+
+.section-member .wrap-member-box {
+    width: 680px;
+    background-color: #fff;
+    margin: 60px auto 0;
+    padding: 80px 170px;
+}
+
+.section-member .wrap-member-box.wrap-membership-box .title-membership {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 1px;
+    line-height: 30px;
+    padding-left: 20px;
+    border-bottom: 1px solid #7d7d7d;
+    padding-bottom: 12px;
+}
+
+.section-member .wrap-member-box.wrap-membership-box .wrap-inside {
+    margin: 0;
+    border-width: 0 0 1px 0;
+}
+
+.section-member .wrap-member-box.wrap-membership-box .wrap-inside {
+    margin: 40px 0 0 0;
+    border-bottom: 1px solid #ececec;
+}
+
+.section-member .wrap-member-box .wrap-inside {
+    margin: 40px 0 0 0;
+    border: 1px solid #ececec;
+    border-width: 1px 0;
+}
+
+.section-member .wrap-member-box .join-detail {
+    display: inline-block;
+    margin: 20px 0;
+    height: 40px;
+    vertical-align: top;
+}
+
+.section-member .wrap-member-box .join-detail:after {
+    content: "";
+    display: block;
+    position: relative;
+    background-color: #ececec;
+    width: 680px;
+    height: 1px;
+    bottom: -20px;
+}
+
+.section-member .wrap-member-box .join-detail label.label-input {
+    width: 425px;
+    height: 40px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    border: 1px solid #d8d8d8;
+    font-size: 14px;
+    color: #666;
+    display: block;
+    line-height: 38px;
+    padding-left: 20px;
+    margin-left: 128px;
+    position: relative;
+}
+
+.section-member .wrap-member-box .join-detail label.label-input span {
+    position: absolute;
+    left: 20px;
+    top: 0;
+}
+
+.section-member .wrap-member-box .join-detail input[type=text], .section-member .wrap-member-box .join-detail input[type=password] {
+    width: 251px;
+    -webkit-appearance: none;
+    appearance: none;
+    -moz-appearance: none;
+    background-color: #f9f9f9;
+    border: 0;
+    border-left: 1px solid #b7b7b7;
+    margin-left: 122px;
+    padding-left: 14px;
+    font-size: 14px;
+    color: #3a3a3a;
+    margin-top: -5px;
+}
+
+input[type="text"], input[type="password"] {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+}
+
+.section-member .wrap-member-box .join-detail label.label-input span {
+    position: absolute;
+    left: 20px;
+    top: 0;
+}
+
+.section-member .wrap-member-box .join-detail:after {
+    content: "";
+    display: block;
+    position: relative;
+    background-color: #ececec;
+    width: 680px;
+    height: 1px;
+    bottom: -20px;
+}
+
+.section-member .wrap-member-box .join-detail {
+    display: inline-block;
+    margin: 20px 0;
+    height: 40px;
+    vertical-align: top;
+}
+
+.section-member .wrap-member-box .btn-confirm {
+    display: block;
+    width: 300px;
+    height: 35px;
+    line-height: 35px;
+    background-color: #BB2649;
+    font-size: 17px;
+    color: #fff;
+    margin: 50px auto 60px;
+    text-align: center;
+    border-radius: 18px;
+}
+
+button {
+    border: 0;
+    outline: none;
+    background: none;
+    text-align: left;
+}
+
+.section-member .wrap-member-box.wrap-membership-box .title-quit {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 54px;
+    line-height: 30px;
+    padding-left: 20px;
+    border-bottom: 1px solid #7d7d7d;
+    padding-bottom: 12px;
+}
+
+.section-member .wrap-member-box.wrap-membership-box .title-membership {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 1px;
+    line-height: 30px;
+    padding-left: 20px;
+    border-bottom: 1px solid #7d7d7d;
+    padding-bottom: 12px;
+}
+
+.section-member .wrap-member-box.wrap-membership-box .wrap-inside {
+    margin: 0;
+    border-width: 0 0 1px 0;
+}
+
+.section-member .wrap-member-box .wrap-inside.no-border {
+    border: none;
+}
+
+.section-member .wrap-member-box .quit-desc {
+    display: block;
+    font-size: 14px;
+    color: #7d7d7d;
+    padding: 23px 84px 73px 106px;
+    background: url(/images/member/icon-quit-desc.png) 84px 29px no-repeat;
+    display: block;
+    line-height: 1.86em;
+    height: 16px;
+}
+
+.section-member .wrap-member-box .btn-quit {
+    background-color: #BB2649;
+    display: block;
+    width: 300px;
+    height: 35px;
+    line-height: 35px;
+    margin: 0 auto;
+    font-size: 17px;
+    text-align: center;
+    color: #fff;
+    border-radius: 18px;
+}
+
+.section-member .wrap-member-box .join-detail .btnsms {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -4px;
+    line-height: 36px;
+    width: 79px;
+}
+
+.section-member .wrap-member-box .join-detail .btnsub {
+    display: inline-block;
+    width: 79px;
+    height: 40px;
+    background-color: #efefef;
+    border: 1px solid #b7b7b7;
+    box-sizing: border-box;
+    line-height: 38px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+}
+
+.section-member .wrap-member-box .join-detail label.label-input {
+    width: 425px;
+    height: 40px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    border: 1px solid #d8d8d8;
+    font-size: 14px;
+    color: #666;
+    display: block;
+    line-height: 38px;
+    padding-left: 20px;
+    margin-left: 128px;
+    position: relative;
+}
+
+.section-member .wrap-member-box .join-detail input[type=text], .section-member .wrap-member-box .join-detail input[type=password] {
+    width: 251px;
+    -webkit-appearance: none;
+    appearance: none;
+    -moz-appearance: none;
+    background-color: #f9f9f9;
+    border: 0;
+    border-left: 1px solid #b7b7b7;
+    margin-left: 122px;
+    padding-left: 14px;
+    font-size: 14px;
+    color: #3a3a3a;
+    margin-top: -5px;
+}
+
+
