@@ -1,6 +1,17 @@
 @charset "UTF-8";
 
 
+@font-face {
+     font-family: 'BRBA_B';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/BRBA_B.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+
+.main_title{
+	font-family: 'BRBA_B';
+	font-weight: 700;
+}
 
 #content {
 	min-height: 100%;
@@ -351,12 +362,16 @@
 
 
 /* 메인 */
+.section-main-slider .main_title{
+	font-family: 'BRBA_B';
+	font-weight: 400;
+}
 .main_title {
     position: relative;
     display: block;
     color: #0b0c0c;
     font-size: 52px;
-    font-weight: 700;
+    /* font-weight: 700; */
     line-height: 60px;
 }
 .buttons {

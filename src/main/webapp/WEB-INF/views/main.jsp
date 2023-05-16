@@ -20,19 +20,10 @@
 		if ($(".bxslider-main").length) {
 
 			var slider_main_info = [];
-			$("div.section-main-slider ul.bxslider-main li").each(function() {
-				slider_main_info[slider_main_info.length] = {
-					kind : $(this).data("kind"),
-					title_ko : $(this).data("title_ko"),
-					title_fo : $(this).data("title_fo"),
-					desc : unescape($(this).data("desc"))
-				};
-			});
-
 			slider_main = $('.bxslider-main').bxSlider(
 					{
 						auto : true,
-						speed : 500,
+						speed : 1000,
 						minSlides : 1,
 						maxSlides : 1,
 						slideWidth : 4096,
@@ -42,13 +33,7 @@
 						adaptiveHeightSpeed : 1,
 						hideControlOnEnd : false,
 						preloadImages : 'visible',
-						controls : false,
-						onSliderLoad : function() {
-						},
-						onSlideBefore : function() {
-						},
-						onSlideAfter : function() {
-						}
+						controls : false
 					});
 
 			setTimeout(function() {
@@ -109,30 +94,30 @@
 		<div class="section group section-main-slider" id="main-slider">
 			<div class="slider-main">
 				<ul class="bxslider-main">
-					<li style="background: url('resources/images/main/main1.JPG') center center no-repeat;">
+					<li style="background: url('resources/images/main/001.png') center center no-repeat;">
 						<div style="width: 980px;margin: 0 auto;height: 550px; margin-top: 160px;">
-							<div class="main_title">우리들의 금융친구<br>머니머니머니또<br><small>챌린지!!!!</small></div>
-							
+							<div class="main_title"><div style="font-size: 20px;height: 40px">우리동네 안심 중고직거래마켓<br></div>머니또</div>
+							<p class="description">머니또에서 동네 주민들과<br>가깝고 따뜻한 거래를 지금 경험해보세요</p>
 							<div class="buttons">
-								<a href="" class="whiteButton button_main" >서비스 더 알아보기</a>
+								<a href="" class="whiteButton button_main" >인기상품</a>
 							</div>
 						</div>
 					</li>
-					<li style="background: url('resources/images/main/main2.JPG') center center no-repeat;">
+					<li style="background: url('resources/images/main/002.png') center center no-repeat;">
 						<div style="width: 980px;margin: 0 auto;height: 550px; margin-top: 160px;">
-							<div class="main_title"><small>아껴쓰장아껴쓰장</small><br>머니또 가계부</div>
-							<p class="description">1분만에, 은행 방문 없이, 신용점수 영향 없이</p>
+							<div class="main_title"><div style="font-size: 20px;height: 40px">우리끼리<br></div>머니또 경매</div>
+							<p class="description">머니또와 함께 거래를 시작해보세요!</p>
 							<div class="buttons">
-								<a href="" class="violetButton button_main">가계부 바로가기</a>
+								<a href="" class="violetButton button_main">경매바로가기</a>
 							</div>
 						</div>
 					</li>
-					<li style="background: url('resources/images/main/main3.JPG') center center no-repeat;">
+					<li style="background: url('resources/images/main/003.png') center center no-repeat;">
 						<div style="width: 980px;margin: 0 auto;height: 550px; margin-top: 160px;">
-							<div class="titleCard">이벤트 응모하고<br>카드 사용하면<br>최대 73만원 받아요!</div>
-							<p class="descriptionCard">기간 한정 이벤트이니 지금 참여하세요.</p>
+							<div class="main_title"><div style="font-size: 20px;height: 40px">이웃과함께하는 동네생활<br></div>머니또 커뮤니티</div>
+							<p class="description">우리 동네의 다양한 이야기를 이웃과 함께 나누어요.</p>
 							<div class="buttons">
-								<a href="" class="mustardButton button_main" >카드추천 바로가기</a>
+								<a href="" class="whiteButton button_main" >커뮤니티바로가기</a>
 							</div>
 						</div>
 					</li>

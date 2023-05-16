@@ -319,8 +319,8 @@ header {
 }
 
 #header .nav_left {
-	/* margin-left: 470px!important; */
-	float: right;
+	margin-left: 36px!important;
+	/* float: right; */
 }
 
 #header .nav_right {
@@ -500,7 +500,7 @@ header {
 }
 
 .wrap-nav-primary nav.primary {
-	width: 1200px;
+	width: 1200PX;
 	margin: 0 auto;
 	height: 80px;
 }
@@ -838,4 +838,53 @@ h2.tit {
 }
 .accountLoad a:hover {
 	color:white;
+}
+
+.searchIconWrapper {
+    display: inline-block;
+    width: 200px;
+    height: 20px;
+    /* margin: auto 0px; */
+    cursor: pointer;
+    padding: 10px 24px;
+    background: rgb(242, 245, 247);
+    border-radius: 62px;
+    /* margin-top: 21px; */
+    /* float: right; */
+    margin-top: 21px;
+    margin-left: 38px;
+}
+
+.searchIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+
+.searchSearch {
+    font-weight: 400;
+    font-size: 14px;
+    display: inline-block;
+    height: 22px;
+    width: 170px;
+}
+
+.searchSearch input{
+	border:0;
+	background-color: rgb(242 245 247);
+}
+.searchSeacrh form{
+	display:inline-block;
+	height: 22px;
+}
+.searchSearch .goodsName{
+	height: 22px;
+    margin-top: -12px;
+}
+
+.menu-item{
+	display: inline-block;
+	float: right;
+	width: 196px;
+	margin-top: 16px;
 }

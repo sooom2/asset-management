@@ -38,12 +38,20 @@
 		<nav class="primary">
 			<a href="main"><h1 id="logo">로고</h1></a>		
 			<ul class="nav_left">
-				<li style="width: 80px"><a href="accountBook" class="">가계부</a></li>
-				<li><a href="socialBook" class="">소셜가계부</a></li>
-				<li><a href="" class="">머니또PICK</a></li>
+				<li style="width: 80px"><a href="accountBook" class="">경매</a></li>
+				<li><a href="socialBook" class="">중고거래</a></li>
+				<li><a href="" class="">커뮤니티</a></li>
 				<li><a href="notice_board" class="">공지사항</a></li>
-				<li><a href="free_board" class="">커뮤니티</a></li>
+				<li><a href="free_board" class="">마이페이지</a></li>
 			</ul>
+			<div class="searchIconWrapper">
+				<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
+				<div class="searchSearch"><form><input class="goodsName" type="text" placeholder="어떤 상품을 찾으시나요?"></form></div>
+			</div>
+			
+			<a href="" class="menu-item">
+				<img src="${path }/resources/images/main/selling_btn.png" alt="판매하기 이미지" class="MiddleNavigation__SellImg-sc-1moccpq-3 dplbBo">
+			</a>
 		</nav>
 	</div>
 </div>
