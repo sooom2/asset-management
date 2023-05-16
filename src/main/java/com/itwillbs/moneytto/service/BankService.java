@@ -2,7 +2,7 @@ package com.itwillbs.moneytto.service;
 
 import org.springframework.stereotype.Service;
 
-@Service
+//@Service
 //@RequiredArgsConstructor
 public class BankService {
 //	private final AccessTokenRepository accessTokenRepository;
@@ -49,5 +49,5 @@ public class BankService {
 //			accessTokenRepository.save(newAccessTokenRes.toEntity());
 //		}
 //	}
-//	
+	
 }
