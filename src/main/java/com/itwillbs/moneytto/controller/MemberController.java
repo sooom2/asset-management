@@ -11,8 +11,8 @@ import com.itwillbs.moneytto.service.*;
 
 @Controller
 public class MemberController {
-//	@Autowired
-//	private MailSendService mailService;
+	@Autowired
+	private MailSendService mailService;
 	
 	
 //	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -31,7 +31,9 @@ public class MemberController {
 	
 	// 회원가입폼
 	@GetMapping(value = "joinform")
-	public String joinform() {
+	public String joinform(String email, Model model) {
+		System.out.println(email);
+		model.addAttribute("email", email);
 		return "member/mem_join_form";
 	}
 	
@@ -60,10 +62,10 @@ public class MemberController {
 	}
 	
 	// 이메일 인증
-//	@GetMapping(value = "mailCheck")
-//	@ResponseBody
-//	public String mailCheck(String email) {
-//		System.out.println(email);
-//		return mailService.joinEmail(email);
-//	}
+	@GetMapping(value = "mailCheck")
+	@ResponseBody
+	public String mailCheck(String email) {
+		System.out.println(email);
+		return mailService.joinEmail(email);
+	}
 }
