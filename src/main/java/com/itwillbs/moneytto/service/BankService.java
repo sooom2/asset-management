@@ -2,10 +2,8 @@ package com.itwillbs.moneytto.service;
 
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class BankService {
 //	private final AccessTokenRepository accessTokenRepository;
 //	private final AccountInfoRepository accountInfoRepository;
