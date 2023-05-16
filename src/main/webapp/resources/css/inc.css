@@ -814,7 +814,7 @@ h2.tit {
 .accountBookSel li:after {
     content: '';
     position: absolute;
-    background-color: #f9f5ee;
+    background-color: #BB2649;
     bottom: 0;
     left: 0;
     width: 100%;

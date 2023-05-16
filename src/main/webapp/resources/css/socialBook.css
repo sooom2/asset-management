@@ -373,3 +373,29 @@ form[name="chatform"]>textarea {
     max-height: 601px;
     /*화면길이마다다름,.,*/
 }
+
+
+
+
+
+
+
+
+
+.pickedContentContainer {
+    display: inline-block;
+    width: 100%!important;
+    margin: 0 0 0 -40px;
+}
+
+.pickedContent {
+    float: left;
+    display: block;
+    position: relative;
+    width: 245px;
+    margin: 0 0 0 40px;
+    border-radius: 10px;
+}
+
+
+
