@@ -14,21 +14,21 @@ public class BookController {
 		return "accountBook/accountBookMain";
 	}
 	
-	@RequestMapping(value = "goalForm", method = RequestMethod.GET)
+	@RequestMapping(value = "goal", method = RequestMethod.GET)
 	public String goalForm() {
 		
 		
 		return "accountBook/goalForm";
 	}
 	
-	@RequestMapping(value = "goalDetailForm", method = RequestMethod.POST)
+	@RequestMapping(value = "goalPro", method = RequestMethod.POST)
 	public String goalDetailForm() {
 		
 		
 		return "accountBook/goalForm";
 	}
 	
-	@RequestMapping(value = "graphForm", method = RequestMethod.GET)
+	@RequestMapping(value = "graph", method = RequestMethod.GET)
 	public String graphForm() {
 		
 		
