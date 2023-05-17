@@ -4,7 +4,10 @@
     margin-top: 64px;
     display: flex;
 }
-
+.newSearchWrapper {
+    max-width: 1200px;
+    margin: 0px auto;
+}
 .FilterBoxWrapper-active {
     cursor: pointer;
     display: flex;
@@ -85,14 +88,29 @@
 }
 
 
+.itemListWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1200px;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+}
+
+/*	===========================================================
+	아이템 목록
+
+	===========================================================
+*/  
+
+
 .itemWrapper .item{
 	display: inline-block;
 	width: 220px;
 	margin-right: 10px;
 }
 
-.itemWrapper {
-    width: 1400px;
+.itemListWrapper .itemWrapper {
+    width: 220px;
     margin: 0px 20px 30px 0px;
 }
 
