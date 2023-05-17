@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="resources/css/main.css" rel="stylesheet">
-<link href="resources/css/common.css" rel="stylesheet">
 <link href="resources/css/inc.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -30,12 +29,12 @@
 							</div>
 		
 							<div class="username">
-								므므므믕 <span class="right"> ${member.member_prefer_branch } </span>
+								상품 <span class="right"> 6개 ${member.member_prefer_branch } </span>
 		
 							</div>
 		
 							<div class="username">
-								모모모몽 <span class="right"> ${member.member_prefer_genre } </span>
+								거래 평점 <span class="right"> 4.7점 ${member.member_prefer_genre } </span>
 							</div>
 		
 						</div>
