@@ -832,9 +832,14 @@
 }
 
 .dgPBCr {
-    text-align: right;
-    position: relative;
-    margin-right: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.dgPBCr img {
+  margin-left: 10px;
+  margin-right: 5px; /* 오른쪽 여백 설정 */
 }
 .cbridG {
     z-index: 3;

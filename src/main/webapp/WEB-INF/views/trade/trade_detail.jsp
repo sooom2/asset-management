@@ -102,10 +102,10 @@
 				<div id="rightSection"
 					class="rightSection__Wrapper-sc-1hzq192-0 dwUVsv">
 					<div class="TopNavigation__Wrapper-sc-1m8x88m-0 dgPBCr">
-						신고<img
+						<img
 							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_report.png"
 							alt="신고하기" class="TopNavigation__Icon-sc-1m8x88m-1 eawVRt">
-						공유<img
+						<img
 							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_share.png"
 							alt="공유하기" class="TopNavigation__Icon-sc-1m8x88m-1 eawVRt">
 					</div>
