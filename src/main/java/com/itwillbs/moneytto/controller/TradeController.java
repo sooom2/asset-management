@@ -13,7 +13,17 @@ public class TradeController {
 	@Autowired
 	private TradeService tradeService;
 	
-	@RequestMapping(value = "/trade_payment", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "trade_list")
+	public String tradeList() {
+		
+		return "trade/trade_list";
+	}
+	@RequestMapping(value = "trade_detail", method = RequestMethod.GET)
+	public String tradeDetail() {
+		
+		return "trade/trade_detail";
+	}
+	@RequestMapping(value = "trade_payment", method = RequestMethod.GET)
 	public String tradePayment() {
 		
 		return "trade/trade_payment";

@@ -1,0 +1,225 @@
+@charset "UTF-8";
+
+.barWrapper {
+    margin-top: 64px;
+    display: flex;
+}
+.newSearchWrapper {
+    max-width: 1200px;
+    margin: 0px auto;
+}
+.FilterBoxWrapper-active {
+    cursor: pointer;
+    display: flex;
+    width: 202px;
+    margin-right: 8px;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 12px 28px;
+    border-radius: 24px;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    border: 1.3px solid rgb(66, 112, 237);
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 4px;
+    background-color: rgb(255, 255, 255);
+}
+.FilterBoxWrapper  {
+    cursor: pointer;
+    display: flex;
+    width: 202px;
+    margin-right: 8px;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 12px 28px;
+    border-radius: 24px;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    border: 1.3px solid rgb(229, 232, 235);
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 4px;
+    background-color: rgb(255, 255, 255);
+}
+.FilterBoxTopic {
+    display: flex;
+}
+
+
+.FilterBoxName {
+    letter-spacing: -0.2px;
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: "Pretendard Variable";
+    line-height: 135%;
+    margin: auto 3px auto 0px;
+    color: rgb(66, 112, 237);
+}
+.FilterBoxTopic {
+    display: flex;
+}
+.FilterBoxName {
+    letter-spacing: -0.2px;
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: "Pretendard Variable";
+    line-height: 135%;
+    margin: auto 3px auto 0px;
+    color: rgb(66, 112, 237);
+}
+.FilterBoxCount {
+    letter-spacing: 0px;
+    font-weight: 700;
+    font-size: 0.625rem;
+    font-family: "Pretendard Variable";
+    line-height: 100%;
+    display: flex;
+    height: 18px;
+    margin-bottom: 6px;
+    border-radius: 50%;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    width: 18px;
+    background-color: rgb(66, 112, 237);
+}
+
+.FilterBoxArrow {
+    margin-bottom: 1px;
+}
+
+
+.itemListWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1200px;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+}
+
+/*	===========================================================
+	아이템 목록
+
+	===========================================================
+*/  
+
+
+.itemWrapper .item{
+	display: inline-block;
+	width: 220px;
+	margin-right: 10px;
+}
+
+.itemListWrapper .itemWrapper {
+    width: 220px;
+    margin: 0px 20px 30px 0px;
+}
+
+.itemWrapper .itemThumbnailBox {
+    position: relative;
+}
+
+.itemWrapper .itemThumbnail {
+    object-fit: cover;
+    width: 224px;
+    height: 300px;
+    cursor: pointer;
+    border-radius: 10.8606px;
+}
+
+.itemWrapper .wishWishIcon {
+    position: absolute;
+    z-index: 1;
+    width: 28px;
+    height: 25px;
+    right: 7px;
+    bottom: 7px;
+    cursor: pointer;
+}
+
+.itemWrapper .itemBrand {
+    letter-spacing: 0px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    font-family: "Pretendard Variable";
+    color: rgb(255, 255, 255);
+    max-width: 194px;
+    width: fit-content;
+    line-height: 14px;
+    padding: 6px 8px;
+    margin: 12px 0px 4px;
+    border-radius: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: rgb(44, 44, 44);
+}
+.itemWrapper .itemText {
+    letter-spacing: -0.2px;
+    font-weight: 700;
+    font-size: 1.125rem;
+    font-family: "Pretendard Variable";
+    color: rgb(51, 61, 75);
+    margin-bottom: 2px;
+    line-height: 133%;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.itemWrapper .itemPrice {
+    letter-spacing: -0.2px;
+    font-weight: 700;
+    font-size: 1.125rem;
+    font-family: "Pretendard Variable";
+    color: rgb(51, 61, 75);
+    margin-bottom: 2px;
+    line-height: 133%;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.itemWrapper .itemName {
+    letter-spacing: -0.4px;
+    font-weight: 400;
+    font-size: 0.938rem;
+    font-family: "Pretendard Variable";
+    color: rgb(51, 61, 75);
+    margin-bottom: 0px;
+    line-height: 133%;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.itemWrapper .itemTagBox {
+    display: flex;
+    margin-top: 8px;
+    line-height: 20px;
+}
+
+.itemWrapper .itemSizeTag {
+    letter-spacing: 0px;
+    font-weight: 500;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+    color: rgb(44, 44, 44);
+    margin: auto 4px auto 0px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid rgb(202, 202, 202);
+}
+
+.itemWrapper .itemTimeTag {
+    letter-spacing: -0.4px;
+    font-weight: 400;
+    font-size: 0.875rem;
+    font-family: "Pretendard Variable";
+    line-height: 145%;
+    color: rgb(107, 118, 132);
+    margin-top: 12px;
+}
