@@ -39,7 +39,7 @@
 			<a href="main"><h1 id="logo">로고</h1></a>		
 			<ul class="nav_left">
 				<li style="width: 80px"><a href="accountBook" class="">경매</a></li>
-				<li><a href="socialBook" class="">중고거래</a></li>
+				<li><a href="tradeList" class="tradeList">중고거래</a></li>
 				<li><a href="" class="">커뮤니티</a></li>
 				<li><a href="notice_board" class="">공지사항</a></li>
 				<li><a href="free_board" class="">마이페이지</a></li>
