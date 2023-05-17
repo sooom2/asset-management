@@ -469,11 +469,11 @@ div.tertiary.on {
 }
 
 
-#account_container {
+#auction_container {
     width: 1200px;
     margin: 0 auto;
 }
-#account_contents {
+#auction_contents {
     width: 100%;
     margin: 0;
     padding: 60px 0 80px 0;

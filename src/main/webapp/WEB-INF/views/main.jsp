@@ -134,7 +134,6 @@
 					</div>
 				</div>
 				<div class="itemWrapper">
-					
 					<!-- 상품 하나 -->
 					<div class="item">
 						<div class="itemThumbnailBox">
@@ -279,7 +278,6 @@
 							<div class="itemTimeTag">방금 전</div>
 						</div>
 					</div>
-					
 				</div>
 			
 				<a href="challange">

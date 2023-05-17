@@ -420,25 +420,26 @@ padding: 20px;
 	background-color: #f8f8f8;
 	padding: 20px;
 }
-
+/* 경매 메인화면*/
 .pickedContentContainer {
     display: inline-block;
-    width: 100%!important;
-    margin: 0 0 0 -40px;
+    width: 1200px;
+    margin-top: 20px;
+    /* margin: 0 auto; */
 }
+
 
 .pickedContent {
-    float: left;
-    display: block;
-    position: relative;
-    width: 245px;
-    margin: 0 0 0 40px;
-    border-radius: 10px;
+	float: left;
+	display: block;
+	position: relative;
+	width: 280px;
+	margin-right: 20px;
+	border-radius: 10px;
 }
 
 
 
-/* 경매 메인화면*/
 .auctionTab {
     display: table;
     width: 100%;
@@ -506,11 +507,16 @@ padding: 20px;
     font-size: 13px;
     font-weight: 400;
     box-shadow: 1px 1px 3px 1px rgb(0 0 0 / 43%);
-    margin-top: 98px;
-    margin-left: 186px;
+    margin-top: 156px;
+    margin-left: 220px;
     text-align: center;
     width: 30px;
 }
 
-
+.tab_content{
+	margin-left:10px;
+}
+.contentImage{
+	background-image: url('../images/auction/auction_thum.jpg');
+}
 
