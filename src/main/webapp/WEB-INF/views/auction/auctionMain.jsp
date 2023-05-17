@@ -7,34 +7,13 @@
 <head>
 <meta charset="UTF-8">
 <title>머니머니머니또</title>
-<link href="${path }/resources/css/socialBook.css" rel="stylesheet">
+<link href="${path }/resources/css/auction.css" rel="stylesheet">
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
 <link href="${path }/resources/css/main.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <style type="text/css">
-.tabcontent {
-	display: none;
-}
 
-.tabcontent.on {
-	display: block;
-}
 
-.ddday{
-    display: inline-block;
-    background: #bb2649;
-    color: white;
-    padding: 12px;
-    border-radius: 50%;
-    font-size: 13px;
-    font-weight: 400;
-    box-shadow: 1px 1px 3px 1px rgb(0 0 0 / 43%);
-    margin-top: 98px;
-    margin-left: 170px;
-    text-align: center;
-    width: 60px;
-    height: 60px;
-}
 </style>
 <script type="text/javascript">
 $(function() {
@@ -53,25 +32,16 @@ $(function() {
 	<div id="account_container">
 		<div id="account_contents" class="">
 		<!-- inner-wrap -->
+			<a href="chatPage">생성후채팅방</a>
 			<div class="inner-wrap">
-				<a href="chatPage">생성후채팅방</a>
-				<div class="accountBook_top">
-					<h2 class="tit" style="display: inline-block;">소셜 가계부</h2>
-					<div class="accountLoad"><a href=""><i class="fas fa-list" aria-hidden="true"></i>&nbsp;머니또방 생성</a></div>
-				</div>
-				<ul class="accountBookSel">
-					<li class="on" data-tab="tab1"><a href="#">머니또 모집</a></li>
-					<li data-tab="tab2"><a href="#">머니또 참여</a></li>
-					<li data-tab="tab3"><a href="#">머니또 종료</a></li>
+				<h2 class="tit" style="display: inline-block;">소셜 가계부</h2>
+				<ul class="auctionTab">
+					<li class="on" data-tab="tab1"><a href="#">실시간경매</a></li>
+					<li data-tab="tab2"><a href="#">기간경매</a></li>
+					<li data-tab="tab3"><a href="#">종료된경매</a></li>
 				</ul>
 			<div style="background-color: #f4f4f4;">
 			<div class="section group chall-board">
-				<div class="challenge_list_wrap">
-					<div class="top">
-						<div class="challenge_title">소셜가계부</div>
-					</div>
-				</div>
-				
 				<!-- Tab  -->
 				<div id="tab1" class="tabcontent on">
 				<ul class="pickedContentContainer">

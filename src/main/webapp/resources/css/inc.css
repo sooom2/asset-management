@@ -489,67 +489,7 @@ h2.tit {
     color: #222;
 }
 
-.accountBookSel {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-    position: relative;
-    background-color: #f1f1f1;
-    padding: 0;
-}
-.accountBookSel li {
-    display: table-cell;
-    height: 50px;
-    position: relative;
-    background-color: #fff;
-    border: 1px solid #e7e7e7;
-}
 
-
-.accountBookSel li a {
-    display: block;
-    position: relative;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-}
-.accountBookSel li.on a, .accountBookSel li:hover a {
-    z-index: 1;
-    color: #111;
-    font-weight: 600;
-}
-
-.accountBookSel li.on:after, .accountBookSel li:hover:after {
-    height: 100%;
-}
-.accountBookSel li:after {
-    content: '';
-    position: absolute;
-    background-color: #BB2649;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 0;
-}
-.accountBook_top{
-	margin-bottom: 20px;
-}
-.accountLoad{
-	display: inline-block;
-	padding: 6px 12px 6px 12px;
-	background: #bb2649;
-	color: white;
-	border-radius: 10px;
-	float: right;
-	font-size: 17px;
-	margin-top: 2px;
-}
-.accountLoad a{
-	color: white;
-}
-.accountLoad a:hover {
-	color:white;
-}
 
 .searchIconWrapper {
     display: inline-block;

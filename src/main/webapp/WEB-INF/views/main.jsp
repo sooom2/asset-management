@@ -18,7 +18,6 @@
 	$(function() {
 		//메인 슬라이 더
 		if ($(".bxslider-main").length) {
-
 			var slider_main_info = [];
 			slider_main = $('.bxslider-main').bxSlider(
 					{
@@ -128,159 +127,167 @@
 		
 		
 		<div class="section group main-board">
-			<div class="news_list_wrap">
-				<div class="top">
-					<div class="news_title">TODAY NEWS</div>
-					<div class="btn_more">MORE</div>
-				</div>
-				<ul class="news_list">
-					<c:forEach var="news" items ="${newsList}" >
-					<li class="news_box">
-						<div class="news_tit">${news.title}</div>
-						<div>${news.pubDate }</div>
-						<a href ="${news.link }"  target="_blank" rel="noreferrer noopener">${news.description}</a>
-					</li>
-					</c:forEach>
-				</ul>
-			</div>
-		</div>
-		<div style="background-color: #f4f4f4;">
-			<div class="section group chall-board">
-				<div class="challenge_list_wrap">
+			<div class="section group goods-board">
+				<div class="bestSell_list_wrap">
 					<div class="top">
-						<div class="challenge_title">소셜가계부</div>
+						<div class="bestSell_title"><i class="fa-regular fa-face-smile"></i>&nbsp;머니또 인기상품</div>
 					</div>
 				</div>
-				
-				<ul class="pickedContentContainer">
-					<li class="pickedContent">
-						<div class="landingPickWrap">
-							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);">
-								<div class="dday">
-									시작<br>D-10
+				<div class="itemWrapper">
+					
+					<!-- 상품 하나 -->
+					<div class="item">
+						<div class="itemThumbnailBox">
+							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
+								<div class="wishWrapper">
+									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 								</div>
-							</div>
-							<div class="contentBox">
-								<div  class="con_period">[소비방]</div>
-								<div class="con_tit">한달에 100000만원쓰기~~</div>
-								<div class="con_detail">
-									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
-									<div class="con_price"><span>100000</span><span class="won">&nbsp;원</span></div>	
-								</div>
-							</div>
-							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
-					</li>
-					<li class="pickedContent">
-						<div class="landingPickWrap">
-							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);"></div>
-							<div class="contentBox">
-								<div  class="con_period">[저축방]</div>
-								<div class="con_tit">우리돈모아요~~~~~~</div>
-								<div class="con_detail">
-									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;9/10<span>명</span></div>
-									<div class="con_price"><span>100,000</span><span class="won">&nbsp;원</span></div>	
-								</div>
+						<div class="itemTextBox">
+							<div class="itemBrand">와이드앵글</div>
+							<div class="itemText">20,000원</div>
+							<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
+							<div class="itemTagBox">
+								<div class="itemSizeTag">S</div>
 							</div>
-							<a href="" class="clickArea">대화방바로가기</a>
+							<div class="itemTimeTag">방금 전</div>
 						</div>
-					</li>
-					<li class="pickedContent">
-						<div class="landingPickWrap">
-							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);"></div>
-							<div class="contentBox">
-								<div  class="con_period">[소비방]</div>
-								<div class="con_tit">대화방명</div>
-								<div class="con_detail">
-									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
-									<div class="con_price"><span>500,000</span><span class="won">&nbsp;원</span></div>	
+					</div>
+					
+					<div class="item">
+						<div class="itemThumbnailBox">
+							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
+								<div class="wishWrapper">
+									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 								</div>
-							</div>
-							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
-					</li>
-					<li class="pickedContent">
-						<div class="landingPickWrap">
-							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);"></div>
-							<div class="contentBox">
-								<div  class="con_period">[소비방]</div>
-								<div class="con_tit">대화방명</div>
-								<div class="con_detail">
-									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
-									<div class="con_price"><span>10,000</span><span class="won">&nbsp;원</span></div>	
+						<div class="itemTextBox">
+							<div class="itemBrand">와이드앵글</div>
+							<div class="itemText">20,000원</div>
+							<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
+							<div class="itemTagBox">
+								<div class="itemSizeTag">S</div>
+							</div>
+							<div class="itemTimeTag">방금 전</div>
+						</div>
+					</div>
+					
+					<div class="item">
+						<div class="itemThumbnailBox">
+							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
+								<div class="wishWrapper">
+									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 								</div>
-							</div>
-							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
-					</li>
-					<li class="pickedContent">
-						<div class="landingPickWrap">
-							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);">
-								<div></div>
+						<div class="itemTextBox">
+							<div class="itemBrand">와이드앵글</div>
+							<div class="itemText">20,000원</div>
+							<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
+							<div class="itemTagBox">
+								<div class="itemSizeTag">S</div>
 							</div>
-							<div class="contentBox">
-								<div  class="con_period">[저축방]</div>
-								<div class="con_tit">대화방명</div>
-								<div class="con_detail">
-									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
-									<div class="con_price"><span>10,000</span><span class="won">&nbsp;원</span></div>	
+							<div class="itemTimeTag">방금 전</div>
+						</div>
+					</div>
+					
+					<div class="item">
+						<div class="itemThumbnailBox">
+							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
+								<div class="wishWrapper">
+									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 								</div>
-							</div>
-							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
-					</li>
-					<li class="pickedContent">
-						<div class="landingPickWrap">
-							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);"></div>
-							<div class="contentBox">
-								<div  class="con_period">[소비방]</div>
-								<div class="con_tit">대화방명</div>
-								<div class="con_detail">
-									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
-									<div class="con_price"><span>10,000</span><span class="won">&nbsp;원</span></div>	
+						<div class="itemTextBox">
+							<div class="itemBrand">와이드앵글</div>
+							<div class="itemText">20,000원</div>
+							<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
+							<div class="itemTagBox">
+								<div class="itemSizeTag">S</div>
+							</div>
+							<div class="itemTimeTag">방금 전</div>
+						</div>
+					</div>
+					
+					<div class="item">
+						<div class="itemThumbnailBox">
+							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
+								<div class="wishWrapper">
+									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 								</div>
-							</div>
-							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
-					</li>
-					<li class="pickedContent">
-						<div class="landingPickWrap">
-							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);"></div>
-							<div class="contentBox">
-								<div  class="con_period">[저축방]</div>
-								<div class="con_tit">대화방명</div>
-								<div class="con_detail">
-									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
-									<div class="con_price"><span>10000</span><span class="won">&nbsp;원</span></div>	
+						<div class="itemTextBox">
+							<div class="itemBrand">와이드앵글</div>
+							<div class="itemText">20,000원</div>
+							<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
+							<div class="itemTagBox">
+								<div class="itemSizeTag">S</div>
+							</div>
+							<div class="itemTimeTag">방금 전</div>
+						</div>
+					</div>
+					
+					<div class="item">
+						<div class="itemThumbnailBox">
+							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
+								<div class="wishWrapper">
+									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 								</div>
-							</div>
-							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
-					</li>
-					<li class="pickedContent">
-						<div class="landingPickWrap">
-							<div class="contentImage" style="background-image: url(&quot;https://financialshopping-cdn.banksalad.com/large-png_2023_TOP_7_850e6299f6.png&quot;);"></div>
-							<div class="contentBox">
-								<div  class="con_period">[소비방]</div>
-								<div class="con_tit">대화방명</div>
-								<div class="con_detail">
-									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/5<span>명</span></div>
-									<div class="con_price"><span>10000</span><span class="won">&nbsp;원</span></div>	
+						<div class="itemTextBox">
+							<div class="itemBrand">와이드앵글</div>
+							<div class="itemPrice">20,000원</div>
+							<div class="itemName">[64]와이드앵글 골프치마 골프스커트</div>
+							<div class="itemTagBox">
+								<div class="itemSizeTag">S</div>
+							</div>
+							<div class="itemTimeTag">방금 전</div>
+						</div>
+					</div>
+					
+					<div class="item">
+						<div class="itemThumbnailBox">
+							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
+								<div class="wishWrapper">
+									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 								</div>
-							</div>
-							<a href="" class="clickArea">대화방바로가기</a>
 						</div>
-					</li>
-				</ul>
-				
-				
+						<div class="itemTextBox">
+							<div class="itemBrand">와이드앵글</div>
+							<div class="itemText">20,000원</div>
+							<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
+							<div class="itemTagBox">
+								<div class="itemSizeTag">S</div>
+							</div>
+							<div class="itemTimeTag">방금 전</div>
+						</div>
+					</div>
+					
+					<div class="item">
+						<div class="itemThumbnailBox">
+							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
+								<div class="wishWrapper">
+									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
+								</div>
+						</div>
+						<div class="itemTextBox">
+							<div class="itemBrand">와이드앵글</div>
+							<div class="itemText">20,000원</div>
+							<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
+							<div class="itemTagBox">
+								<div class="itemSizeTag">S</div>
+							</div>
+							<div class="itemTimeTag">방금 전</div>
+						</div>
+					</div>
+					
+				</div>
+			
 				<a href="challange">
 					<div class="chall_more">MORE</div>
 				</a>
 			</div>
 		</div>
 	</div>
-
 	<jsp:include page="footer.jsp" />
 </body>
 </html>
