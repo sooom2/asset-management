@@ -29,12 +29,12 @@
 							</div>
 		
 							<div class="username">
-								므므므믕 <span class="right"> ${member.member_prefer_branch } </span>
+								상품 <span class="right"> 6개 ${member.member_prefer_branch } </span>
 		
 							</div>
 		
 							<div class="username">
-								모모모몽 <span class="right"> ${member.member_prefer_genre } </span>
+								거래 평점 <span class="right"> 4.7점 ${member.member_prefer_genre } </span>
 							</div>
 		
 						</div>
