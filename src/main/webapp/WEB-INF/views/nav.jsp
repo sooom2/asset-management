@@ -17,6 +17,7 @@
 			<ul>
 			<c:choose>
 				<c:when test="${empty sessionScope.sId }">
+					<li><a href="chat">채팅</a></li>
 					<li><a href="memLogin" data-reload="reload" class=""><i class="fa-regular fa-circle-user"></i>&nbsp;로그인</a></li>
 					<li><a href="mypage" data-reload="" class="">마이페이지</a></li>
 					<li><a href="memAuth">회원가입</a></li>
@@ -39,7 +40,7 @@
 			<a href="main"><h1 id="logo">로고</h1></a>		
 			<ul class="nav_left">
 				<li style="width: 80px"><a href="accountBook" class="">경매</a></li>
-				<li><a href="socialBook" class="">중고거래</a></li>
+				<li><a href="trade_list" class="trade_list">중고거래</a></li>
 				<li><a href="" class="">커뮤니티</a></li>
 				<li><a href="notice_board" class="">공지사항</a></li>
 				<li><a href="free_board" class="">마이페이지</a></li>
@@ -49,7 +50,7 @@
 				<div class="searchSearch"><form><input class="goodsName" type="text" placeholder="어떤 상품을 찾으시나요?"></form></div>
 			</div>
 			
-			<a href="" class="menu-item">
+			<a href="itemRegist" class="menu-item">
 				<img src="${path }/resources/images/main/selling_btn.png" alt="판매하기 이미지" class="MiddleNavigation__SellImg-sc-1moccpq-3 dplbBo">
 			</a>
 		</nav>
