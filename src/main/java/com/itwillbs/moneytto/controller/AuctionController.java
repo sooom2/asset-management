@@ -5,21 +5,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class SocialController {
+public class AuctionController {
 	
-	@RequestMapping(value = "socialBook", method = RequestMethod.GET)
+	@RequestMapping(value = "auction", method = RequestMethod.GET)
 	public String main() {
 		
 		
 		
-		return "socialBook/socialBookMain";
+		return "auction/auctionMain";
 	}
 	
 	
 	@RequestMapping(value="chatPage", method = RequestMethod.GET)
 	public String socialChat() {
 		
-		return "socialBook/socialChat";
+		return "auction/auctionChat";
 	}
 	
 }

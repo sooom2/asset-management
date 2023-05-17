@@ -8,14 +8,6 @@
 }
 
 /* 기본 배경화면은 white */
-body {
-	font-family: fontello, 'Nanum Gothic', sans-serif, Arial;
-	background-color: white;
-}
-
-* {
-	box-sizing: border-box;
-}
 
 a:visited, a:link {
 	color: gray;
@@ -302,12 +294,12 @@ main {
 .insert-content {
 	background-color: white;
 	padding: 10px;
-	/* position: fixed; */
-	/* bottom: 0; */
+	position: fixed;
+	bottom: 0;
 	/* left: 0; */
 	/* right: 0; */
 	/* height: 50px; */
-	/* width: 60%; */
+	width: 59.5%;
 	/* display: block; */
 	/* margin-right: 10px; */
 	/* margin-bottom: 10px; */
@@ -369,33 +361,162 @@ form[name="chatform"]>textarea {
 
 .main-chat{
     overflow: scroll;
-    height: 430px;
-    max-height: 601px;
-    /*화면길이마다다름,.,*/
 }
 
 
+.fullScreen .container{
+	width: 40%;background-color: #eee;display: inline-block;height: 100%;
+}
 
+.fullScreen .container .chat-content {
+	
+height: 30%;
+	
+width: 98%;
+	
+border: 1px solid #b5b5b5;
+	
+border-radius: 10px;
+	
+background-color: #f8f8f8;
+	
+padding: 20px;
+}
+.fullScreen .container .chat-info .chat_notice {
+	overflow:scroll;
+	text-overflow:ellipsis;
+	height: 100px;
+}
+.fullScreen .container .chat-info .chat_tit{
+	font-size: 25px;
+	display: inline-block;
+}
+.fullScreen .container .chat-info .con_numPeo{
+	display: inline-block;
+	float: right;
+}
+.chat-info .chat_category{
+	color: #bb2649;
+	font-weight: 600;
+}
+.chat-info .chat_period{
+	color: #bb2649;
+}
 
+.chat-chart{
+	width: 98%;
+	border: 1px solid #b5b5b5;
+	border-radius: 10px;
+	background-color: #f8f8f8;
+	padding: 20px;
+	margin-top: 10px;
+}
 
-
-
-
-
+.fullScreen .container .chat-info  {
+	height: 30%;
+	width: 98%;
+	border: 1px solid #b5b5b5;
+	border-radius: 10px;
+	background-color: #f8f8f8;
+	padding: 20px;
+}
+/* 경매 메인화면*/
 .pickedContentContainer {
     display: inline-block;
-    width: 100%!important;
-    margin: 0 0 0 -40px;
+    width: 1200px;
+    margin-top: 20px;
+    /* margin: 0 auto; */
 }
+
 
 .pickedContent {
-    float: left;
-    display: block;
-    position: relative;
-    width: 245px;
-    margin: 0 0 0 40px;
-    border-radius: 10px;
+	float: left;
+	display: block;
+	position: relative;
+	width: 280px;
+	margin-right: 20px;
+	border-radius: 10px;
 }
 
 
+
+.auctionTab {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    position: relative;
+    background-color: #f1f1f1;
+    padding: 0;
+    margin-top: 20px;
+}
+.auctionTab li {
+    display: table-cell;
+    height: 50px;
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #e7e7e7;
+}
+
+
+.auctionTab li a {
+    display: block;
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+.auctionTab li.on a, .auctionTab li:hover a {
+    z-index: 1;
+    color: #111;
+    font-weight: 600;
+}
+
+.auctionTab li.on:after, .auctionTab li:hover:after {
+    height: 100%;
+}
+.auctionTab li:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+   
+    z-index: 1;
+}
+
+
+
+.auctionTab .on{
+	 border: 1.3px solid rgb(66, 112, 237);
+}
+
+.tabcontent {
+	display: none;
+}
+
+.tabcontent.on {
+	display: block;
+}
+.ddday {
+    display: inline-block;
+    background: #bb2649;
+    color: white;
+    padding: 12px;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 400;
+    box-shadow: 1px 1px 3px 1px rgb(0 0 0 / 43%);
+    margin-top: 156px;
+    margin-left: 220px;
+    text-align: center;
+    width: 30px;
+}
+
+.tab_content{
+	margin-left:10px;
+}
+.contentImage{
+	background-image: url('../images/auction/auction_thum.jpg');
+}
 

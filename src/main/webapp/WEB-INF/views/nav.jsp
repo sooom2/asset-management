@@ -39,7 +39,7 @@
 		<nav class="primary">
 			<a href="main"><h1 id="logo">로고</h1></a>		
 			<ul class="nav_left">
-				<li style="width: 80px"><a href="accountBook" class="">경매</a></li>
+				<li style="width: 80px"><a href="auction" class="">경매</a></li>
 				<li><a href="trade_list" class="trade_list">중고거래</a></li>
 				<li><a href="" class="">커뮤니티</a></li>
 				<li><a href="notice_board" class="">공지사항</a></li>
@@ -50,7 +50,7 @@
 				<div class="searchSearch"><form><input class="goodsName" type="text" placeholder="어떤 상품을 찾으시나요?"></form></div>
 			</div>
 			
-			<a href="itemRegist" class="menu-item">
+			<a href="" class="menu-item">
 				<img src="${path }/resources/images/main/selling_btn.png" alt="판매하기 이미지" class="MiddleNavigation__SellImg-sc-1moccpq-3 dplbBo">
 			</a>
 		</nav>
