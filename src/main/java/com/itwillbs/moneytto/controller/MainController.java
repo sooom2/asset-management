@@ -30,5 +30,11 @@ public class MainController {
 		return "chat/chat";
 	}
 	
+	@GetMapping("/itemRegist")
+	public String itemRegist() {
+		
+		return "itemRegist/itemRegist";
+	}
+	
 	
 }

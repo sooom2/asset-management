@@ -50,7 +50,7 @@
 				<div class="searchSearch"><form><input class="goodsName" type="text" placeholder="어떤 상품을 찾으시나요?"></form></div>
 			</div>
 			
-			<a href="" class="menu-item">
+			<a href="itemRegist" class="menu-item">
 				<img src="${path }/resources/images/main/selling_btn.png" alt="판매하기 이미지" class="MiddleNavigation__SellImg-sc-1moccpq-3 dplbBo">
 			</a>
 		</nav>

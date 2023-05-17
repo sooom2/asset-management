@@ -13,14 +13,6 @@
 <link href="${path }/resources/css/common.css" rel="stylesheet">
 <link href="${path }/resources/css/chat.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<style type="text/css">
-	
-.content {
-	padding-top: 80px;
-}
-	
-	
-</style>
 </head>
 <body>
 <jsp:include page="../nav.jsp" />
