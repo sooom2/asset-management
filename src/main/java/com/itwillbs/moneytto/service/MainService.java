@@ -18,7 +18,7 @@ public class MainService {
 		
 		 URI uri = UriComponentsBuilder.fromUriString("https://openapi.naver.com/")
 			        .path("v1/search/news.json")
-			        .queryParam("query", "금융")
+			        .queryParam("query", "아이돌")
 			        .queryParam("display", 3)
 			        .queryParam("start", 1)
 			        .queryParam("sort", "date")
