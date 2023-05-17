@@ -40,9 +40,24 @@
 								<img src="https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png" alt="명품인증">
 							</div>
 							<div class="info">
-								<div class="nick">명품인증</div>
+								<div class="nick">아무나상</div>
 								<div class="description">안녕하세요</div>
 								<div class="time_ago">오후 01:57</div>
+							</div>
+						</li>
+					</a>
+					<div class="etc_dots"></div>
+				</div>
+				<div class="card_box">
+					<a href="/messages/00000000000022978870">
+						<li>
+							<div class="profile">
+								<img src="https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png" alt="명품인증">
+							</div>
+							<div class="info">
+								<div class="nick">아이티윌 보부상</div>
+								<div class="description">ㅎㅇ</div>
+								<div class="time_ago">오후 02:06</div>
 							</div>
 						</li>
 					</a>
@@ -60,7 +75,7 @@
 					</div>
 					<div class="info">
 						<div>
-							<span>명품인증</span>
+							<span>아무나상</span>
 							<span>판매아이템 <!-- -->8<!-- -->개</span>
 						</div>
 					</div>
