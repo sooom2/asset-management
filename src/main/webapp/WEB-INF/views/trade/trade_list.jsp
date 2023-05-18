@@ -25,28 +25,21 @@
 	           	 <div class="barWrapper">
 	           	 	<div class="FilterBoxWrapper-active">
 	           	 		<div class="FilterBoxTopic">
-		           	 		<div class="FilterBoxName">카테고리</div>
+		           	 		<div class="FilterBoxName">#내지역이름#</div>
 		           	 		<div class="FilterBoxCount">#</div>
 	           	 		</div>
            	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
 	          	 	</div>
-	           	 	<div class="FilterBoxWrapper">
-	           	 		<div class="FilterBoxTopic">
-	           	 			<div class="FilterBoxName">브랜드</div>
-	           	 			<div class="FilterBoxCount">#</div>
-	           	 		</div>
-	           	 	<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
-	          	 	</div>
 	          	 	<div class="FilterBoxWrapper">
 	           	 		<div class="FilterBoxTopic">
-	           	 			<div class="FilterBoxName">가격</div>
+	           	 			<div class="FilterBoxName">#카테고리#</div>
 	           	 			<div class="FilterBoxCount">#</div>
 	           	 		</div>
 	           	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
 	          	 	</div>
 	          	 	<div class="FilterBoxWrapper">
 	           	 		<div class="FilterBoxTopic">
-	           	 			<div class="FilterBoxName">기타</div>
+	           	 			<div class="FilterBoxName">#기타#</div>
 	           	 			<div class="FilterBoxCount">#</div>
 	           	 		</div>
            	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
@@ -74,7 +67,7 @@
                         	<span class="Count">281,414</span>개의 상품이 있습니다.                    
                         </div>
                         <!--  -->
-                        <div class="SortListWrapper">
+                        <div class="SortListWrapper" onclick="">
                         	<div class="SortListList">최근 등록순</div>
                         	<div class="SortListList">낮은 가격순</div>
                         	<div class="SortListList">높은 가격순</div>
@@ -97,7 +90,7 @@
 											<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 										</div>
 								</div>
-								<div class="itemTextBox">
+								<div class="itemTextBox" onclick="location.href='trade_detail'">
 									<div class="itemBrand">와이드앵글</div>
 									<div class="itemText">20,000원</div>
 									<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
@@ -114,7 +107,7 @@
 										<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 									</div>
 								</div>
-								<div class="itemTextBox">
+								<div class="itemTextBox" onclick="location.href='trade_detail'">
 									<div class="itemBrand">와이드앵글</div>
 									<div class="itemText">20,000원</div>
 									<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
@@ -132,7 +125,7 @@
 											<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 										</div>
 								</div>
-								<div class="itemTextBox">
+								<div class="itemTextBox" onclick="location.href='trade_detail'">
 									<div class="itemBrand">와이드앵글</div>
 									<div class="itemText">20,000원</div>
 									<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
@@ -150,7 +143,7 @@
 											<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 										</div>
 								</div>
-								<div class="itemTextBox">
+								<div class="itemTextBox" onclick="location.href='trade_detail'">
 									<div class="itemBrand">와이드앵글</div>
 									<div class="itemText">20,000원</div>
 									<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
