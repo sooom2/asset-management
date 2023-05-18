@@ -16,42 +16,6 @@
 <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 <script type="text/javascript">
 
-// 카카오 로그인
-Kakao.init('bf0c05681627cc5d65f40192f843de1b'); 
-Kakao.isInitialized(); 
-function kakaoLogin() {
-    Kakao.Auth.login({
-      success: function (response) {
-        Kakao.API.request({
-          url: '/v2/user/me',
-          success: function (response) {
-		       	console.log(response)
-		       	var accessToken = Kakao.Auth.getAccessToken();
-		       	Kakao.Auth.setAccessToken(accessToken);
-		       	var account = response.kakao_account;
-					
-				$('#form-kakao-login input[name=email]').val(account.email);
-				$('#form-kakao-login input[name=name]').val(account.profile.nickname);
-				$('#form-kakao-login input[name=gender]').val(account.gender);
-				$('#form-kakao-login input[name=accessToken]').val(accessToken);
-				// 사용자 정보가 포함된 폼을 서버로 제출.
-				document.querySelector('#form-kakao-login').submit();
-        	  
-        	  
-          },
-          fail: function (error) {
-            console.log(error)
-          },
-        })
-      },
-      fail: function (error) {
-        console.log(error)
-      },
-    })
-  }
-
-
-
 
 // 아이디 저장
 $(function() {
@@ -141,28 +105,7 @@ $(function() {
 						</div>
 					<button type="submit" class="btn-type0">로그인</button>
 				</form>
-					<div class="orther-login">
-						<p class="tit"><span><strong>간편로그인</strong></span></p>
-						<div class="btns">
-							<span onclick="kakaoLogin();">
-							<a href="#" class="btn-kakao"><img src="resources/images/member/ico_kakao.png"></a>
-							</span>
-							<span>
-							<a id="naverIdLogin_loginButton" href="javascript:void(0)" class="btn-naver"><img src="resources/images/member/ico_naver.png"></a>
-							</span>
-						</div>
-					</div>
-				</div>
-		<form id="form-kakao-login" method="post" action="kakaoLogin">
-   			<input type="hidden" name="email"/>
-   			<input type="hidden" name="name"/>
-   			<input type="hidden" name="gender"/>
-   			<input type="hidden" name="accessToken"/>
-   		</form>
-   		<form id="form-naver-login" method="post" action="naver">
-   			<input type="hidden" name="email"/>
-   			<input type="hidden" name="name"/>
-   		</form>
+			</div>
 		</div>
 	</div>
 	<jsp:include page="../footer.jsp" />

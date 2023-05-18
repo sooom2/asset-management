@@ -208,7 +208,7 @@ $(function() {
 							<div class="join-detail">
 			                    <label class="label-input" for="phone" style="width:342px;display:inline-block;">
 			                        <span>주소</span>
-			                        <input type="text" style="width:200px;display:inline-block;" id="member_address1" name="member_address1" class="input" placeholder="주소입력">
+			                        <input type="text" style="width:190px;display:inline-block;" id="member_address1" name="member_address1" class="input" placeholder="주소입력">
 			                        <span class="joinCheck"></span>
 			                    </label>
 			                    <a href="#" class="btnsub btnsms" id="postSearch">주소 검색</a>
@@ -241,7 +241,7 @@ $(function() {
 							<div class="join-detail">
 			                    <label class="label-input" for="account" style="width:342px;display:inline-block;">
 			                        <span>계좌번호</span>
-			                        <input type="text" style="width:200px;display:inline-block;" id="member_account" name="member_account" class="input" placeholder="계좌입력">
+			                        <input type="text" style="width:190px;display:inline-block;" id="member_account" name="member_account" class="input" placeholder="계좌입력">
 			                        <span class="joinCheck"></span>
 			                    </label>
 			                    <a href="#" class="btnsub btnsms" id="postSearch">인증</a>

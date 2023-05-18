@@ -298,7 +298,7 @@ a {
 
 .section-member .wrap-member-box .btn-join {
     display: block;
-    width: 77%;
+    width: 63%;
     height: 48px;
     line-height: 46px;
     border-radius: 4px;
@@ -739,8 +739,10 @@ a {
 .member {
     max-width: 100%;
     padding: 0 20px;
-    padding-top: 55px;
+    padding-top: 148px;
     margin: 0 auto;
+    /* padding-bottom: 341px; */
+    height: 52vh;
 }
 
 .member .list-tabs {
@@ -1361,7 +1363,7 @@ svg:not(:root) {
 }
 
 .section-member .wrap-member-box .wrap-inside {
-    margin: 40px 0 0 0;
+    margin: 40px 0 40px 0;
     border: 1px solid #ececec;
     border-width: 1px 0;
 }
@@ -1622,7 +1624,6 @@ a, address, b, body, center, code, dd, details, div, dl, dt, footer, form, heade
     vertical-align: baseline;
     font-weight: 400;
     color: rgb(51, 51, 51);
-    font-family: 돋움, Dotum, Arial;
     margin: 0px;
     padding: 0px;
     border-width: 0px;

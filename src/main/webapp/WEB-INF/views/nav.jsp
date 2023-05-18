@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 <link href="${path }/resources/css/common.css" rel="stylesheet">
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
-<script type="text/javascript" src="${path }/resources/js/main.js"></script>
 <script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -43,7 +42,6 @@
 				<li><a href="trade_list" class="trade_list">중고거래</a></li>
 				<li><a href="" class="">커뮤니티</a></li>
 				<li><a href="notice_board" class="">공지사항</a></li>
-				<li><a href="free_board" class="">마이페이지</a></li>
 			</ul>
 			<div class="searchIconWrapper">
 				<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
