@@ -8,11 +8,8 @@
 <meta charset="UTF-8">
 
 <title>회원정보관리</title>
-<link href="resources/css/main.css" rel="stylesheet">
-<link href="resources/css/inc.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="${path }/resources/js/main.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script>
