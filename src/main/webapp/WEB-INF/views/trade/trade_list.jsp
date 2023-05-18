@@ -81,16 +81,17 @@
                         </div>
                     </div>
                     <div>
-                    <div class="infinite-scroll-component " style="height:auto;overflow:auto;-webkit-overflow-scrolling:touch">
-						<div class="itemListWrapper">
-							<div class="itemWrapper">
-								<div class="itemThumbnailBox">
-									<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-										<div class="wishWrapper">
-											<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-										</div>
-								</div>
-								<div class="itemTextBox" onclick="location.href='trade_detail'">
+	                    <div class="infinite-scroll-component " style="height:auto;overflow:auto;-webkit-overflow-scrolling:touch">
+							<div class="itemListWrapper">
+								<div class="itemWrapper">
+									<div class="itemThumbnailBox">
+										<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
+											<div class="wishWrapper">
+												<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
+											</div>
+									</div>
+									<!-- 삭제 -->
+									<div class="itemTextBox" onclick="location.href='trade_detail'">
 									<div class="itemBrand">와이드앵글</div>
 									<div class="itemText">20,000원</div>
 									<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
@@ -98,139 +99,23 @@
 										<div class="itemSizeTag">S</div>
 									</div>
 									<div class="itemTimeTag">방금 전</div>
-								</div>
-							</div>
-							<div class="itemWrapper">
-								<div class="itemThumbnailBox">
-									<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-									<div class="wishWrapper">
-										<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 									</div>
-								</div>
-								<div class="itemTextBox" onclick="location.href='trade_detail'">
-									<div class="itemBrand">와이드앵글</div>
-									<div class="itemText">20,000원</div>
-									<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
-									<div class="itemTagBox">
-										<div class="itemSizeTag">S</div>
+									<!-- 삭제 -->			
+									<div class="itemTextBox" onclick="location.href='trade_detail'">
+									<!-- 물건이름, 지역, 가격, 시간 -->
+										<div class="itemBrand">#물건이름#</div>
+										<div class="itemPrice">#가격#</div>
+										<div class="itemSizeTag">#판매지역#</div>
+										<div class="itemTimeTag">방금 전</div>
 									</div>
-									<div class="itemTimeTag">방금 전</div>
-								</div>
-							</div>
-							
-							<div class="itemWrapper">
-								<div class="itemThumbnailBox">
-									<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-										<div class="wishWrapper">
-											<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-										</div>
-								</div>
-								<div class="itemTextBox" onclick="location.href='trade_detail'">
-									<div class="itemBrand">와이드앵글</div>
-									<div class="itemText">20,000원</div>
-									<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
-									<div class="itemTagBox">
-										<div class="itemSizeTag">S</div>
-									</div>
-									<div class="itemTimeTag">방금 전</div>
-								</div>
-							</div>
-							
-							<div class="itemWrapper">
-								<div class="itemThumbnailBox">
-									<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-										<div class="wishWrapper">
-											<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-										</div>
-								</div>
-								<div class="itemTextBox" onclick="location.href='trade_detail'">
-									<div class="itemBrand">와이드앵글</div>
-									<div class="itemText">20,000원</div>
-									<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
-									<div class="itemTagBox">
-										<div class="itemSizeTag">S</div>
-									</div>
-									<div class="itemTimeTag">방금 전</div>
-								</div>
-							</div>
-							
-							<div class="itemWrapper">
-								<div class="itemThumbnailBox">
-									<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-										<div class="wishWrapper">
-											<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-										</div>
-								</div>
-								<div class="itemTextBox">
-									<div class="itemBrand">와이드앵글</div>
-									<div class="itemText">20,000원</div>
-									<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
-									<div class="itemTagBox">
-										<div class="itemSizeTag">S</div>
-									</div>
-									<div class="itemTimeTag">방금 전</div>
-								</div>
-							</div>
-							
-							<div class="itemWrapper">
-								<div class="itemThumbnailBox">
-									<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-										<div class="wishWrapper">
-											<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-										</div>
-								</div>
-								<div class="itemTextBox">
-									<div class="itemBrand">와이드앵글</div>
-									<div class="itemPrice">20,000원</div>
-									<div class="itemName">[64]와이드앵글 골프치마 골프스커트</div>
-									<div class="itemTagBox">
-										<div class="itemSizeTag">S</div>
-									</div>
-									<div class="itemTimeTag">방금 전</div>
-								</div>
-							</div>
-							
-							<div class="itemWrapper">
-								<div class="itemThumbnailBox">
-									<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-										<div class="wishWrapper">
-											<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-										</div>
-								</div>
-								<div class="itemTextBox">
-									<div class="itemBrand">와이드앵글</div>
-									<div class="itemText">20,000원</div>
-									<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
-									<div class="itemTagBox">
-										<div class="itemSizeTag">S</div>
-									</div>
-									<div class="itemTimeTag">방금 전</div>
-								</div>
-							</div>
-							
-							<div class="itemWrapper">
-								<div class="itemThumbnailBox">
-									<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-										<div class="wishWrapper">
-											<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-										</div>
-								</div>
-								<div class="itemTextBox">
-									<div class="itemBrand">와이드앵글</div>
-									<div class="itemText">20,000원</div>
-									<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
-									<div class="itemTagBox">
-										<div class="itemSizeTag">S</div>
-									</div>
-									<div class="itemTimeTag">방금 전</div>
 								</div>
 							</div>
 						</div>
-				                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-         <jsp:include page="../footer.jsp" />
-    </body>
+					</div>
+                  </div>
+              </div>
+          </div>
+      </div>
+<jsp:include page="../footer.jsp" />
+</body>
 </html>
