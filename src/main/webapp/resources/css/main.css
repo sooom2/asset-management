@@ -504,90 +504,6 @@
     /* padding-bottom: 20px; */
 }
 
-.contentImage {
-    width: 100%;
-    height: 180px;
-    background-position: 50%;
-    background-size: cover;
-}
-
-.contentBox {
-    position: relative;
-    /* height: 130px; */
-    padding: 16px 12px;
-}
-.buttonContainer {
-    position: absolute;
-    right: 16px;
-    bottom: 16px;
-}
-
-.clickArea {
-    position: absolute;
-    top: 0;
-    right: auto;
-    bottom: auto;
-    left: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    color: transparent;
-    font-size: 0;
-}
-
-.contentBox .con_period{
-	color: #bb2649;
-	font-weight: 600;
-	font-size: 13px;
-}
-.contentBox .con_tit{
-	font-size: 17px;
-	font-weight: 700;
-}
-.user-icon{
-	background: url(../images/main/user-solid.png) center center no-repeat;
-	width: 20px;
-	height: 20px;
-	display: inline-block;
-}
-
-.contentBox .con_numPeo{
-	display: inline-block;
-	float: right;
-}
-.contentBox .con_price{
-	display: block;
-	float: right;
-}
-.contentBox .con_detail{
-	margin-top: 20px;
-}
-.chall_more{
-	border: 1px solid #bdbdbd;
-	padding: 5px;
-	text-align: center;
-	color: #000;
-}
-
-.chall_more:hover {
-	background-color: #ececec;
-}
-
-.dday{
-    display: inline-block;
-    background: #bb2649;
-    color: white;
-    padding: 12px;
-    border-radius: 50%;
-    font-size: 13px;
-    font-weight: 400;
-    box-shadow: 1px 1px 3px 1px rgb(0 0 0 / 43%);
-    margin-top: 98px;
-    margin-left: 158px;
-    text-align: center;
-    width: 40px;
-    height: 40px;
-}
 
 .itemWrapper .item{
 	display: inline-block;
@@ -710,13 +626,3 @@
     margin-top: 12px;
 }
 
-.contentBox .con_period{
-	color: #bb2649;
-	font-weight: 600;
-	font-size: 15px;
-	float: right;
-}
-
-.contentBox .con_pick{
-	float: right;
-}
