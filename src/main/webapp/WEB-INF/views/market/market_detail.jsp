@@ -5,7 +5,7 @@
 <html lang="ko">
 <head>
 
-<link href="resources/css/trade_detail.css" rel="stylesheet" />
+<link href="resources/css/market_detail.css" rel="stylesheet" />
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
