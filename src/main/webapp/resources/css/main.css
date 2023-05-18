@@ -501,7 +501,7 @@
     box-shadow: 0 0 2px 0 rgba(0,0,0,.26);
     text-align: left;
     margin-bottom : 50px;
-    padding-bottom: 20px;
+    /* padding-bottom: 20px; */
 }
 
 .contentImage {
@@ -513,7 +513,7 @@
 
 .contentBox {
     position: relative;
-    height: 85px;
+    /* height: 130px; */
     padding: 16px 12px;
 }
 .buttonContainer {
@@ -535,7 +535,6 @@
     font-size: 0;
 }
 
-
 .contentBox .con_period{
 	color: #bb2649;
 	font-weight: 600;
@@ -554,6 +553,7 @@
 
 .contentBox .con_numPeo{
 	display: inline-block;
+	float: right;
 }
 .contentBox .con_price{
 	display: block;
@@ -708,4 +708,15 @@
     line-height: 145%;
     color: rgb(107, 118, 132);
     margin-top: 12px;
+}
+
+.contentBox .con_period{
+	color: #bb2649;
+	font-weight: 600;
+	font-size: 15px;
+	float: right;
+}
+
+.contentBox .con_pick{
+	float: right;
 }

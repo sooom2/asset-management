@@ -55,10 +55,14 @@ $(function() {
 							<div class="contentBox">
 <!-- 								<div  class="con_period">[소비방]</div> -->
 								<div class="con_tit">도자기</div>
+								<hr>
 								<div class="con_detail">
-									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/20<span>명</span></div>
-									<span>현재가</span><div class="con_price"><span class="won">&nbsp;5,000원</span></div>
-									<div class="con_period"></div>
+									<div><span>시작일</span><div class="con_period">2023.06.14</div></div>
+									<div><span>현재가</span><div class="con_price"><span class="won">&nbsp;5,000원</span></div></div>
+									<div><span>즉시구매가</span><div class="con_price">&nbsp;<span class="won">35,000원</span></div></div>
+									<hr>
+									<div><div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<span>명</span></div></div><br>
+<!-- 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/20<span>명</span></div><br> -->
 								</div>
 							</div>
 							<a href="" class="clickArea">대화방바로가기</a>
