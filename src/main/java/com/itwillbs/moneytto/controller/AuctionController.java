@@ -18,7 +18,6 @@ public class AuctionController {
 	
 	@RequestMapping(value="chatPage", method = RequestMethod.GET)
 	public String socialChat() {
-		
 		return "auction/auctionChat";
 	}
 	
