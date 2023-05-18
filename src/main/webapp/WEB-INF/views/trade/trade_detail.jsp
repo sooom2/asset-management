@@ -105,7 +105,6 @@
 							alt="공유하기" class="TopNavigation__Icon-sc-1m8x88m-1 eawVRt">
 					</div>
 					<div class="Title__Wrapper-fpouy4-0 jBaMjt">
-						<div class="Title__BrandText-fpouy4-1 cwBqfH">NO BRAND</div>
 						<div class="Title__Text-fpouy4-2 gbiVER">플라워 에코백(새상품)</div>
 						<div class="Title__Text-fpouy4-2 dQSvui">10,800원</div>
 					</div>

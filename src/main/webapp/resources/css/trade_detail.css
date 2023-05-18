@@ -759,4 +759,93 @@
      -webkit-box-pack: justify;
      justify-content: space-between;
 }
- 
+
+
+.dEBCMS {
+    margin-top: 10px;
+}
+
+.emQQCU {
+    background: rgb(249, 250, 251);
+    border: 1.2px solid rgb(229, 232, 235);
+    border-radius: 10px;
+}
+
+.kGtMUL {
+    padding: 18px 20px 0px;
+}
+
+.iueNqr {
+    height: 32px;
+    border-bottom: 1px solid rgb(230, 235, 239);
+    display: flex;
+    letter-spacing: 0px;
+    font-weight: 700;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+}
+
+.gXlyjT {
+    letter-spacing: 0px;
+    font-weight: 700;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+}
+
+.eYZfEN {
+    display: flex;
+}
+
+.bpPgNC {
+    display: flex;
+    letter-spacing: 0px;
+    font-weight: 700;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+}
+
+.hEjnBN {
+    width: 12px;
+    height: 12px;
+    margin: 1.3px 1px 0px;
+}
+
+.dvVQGP {
+    margin-left: 3px;
+    letter-spacing: 0px;
+    font-weight: 700;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+}
+
+.cmyJpu {
+    padding-top: 14px;
+    display: grid;
+    grid-auto-rows: 34px;
+    grid-template-columns: auto auto auto auto auto auto;
+}
+
+.eDPfil {
+    cursor: pointer;
+    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+    color: rgb(0, 114, 244);
+}
+
+.eklQsX {
+    cursor: pointer;
+    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+    color: rgb(78, 89, 104);
+}
+
