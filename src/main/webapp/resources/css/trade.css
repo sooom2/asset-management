@@ -88,6 +88,153 @@
 }
 
 
+.searchedListWrapper {
+    margin: 55px 0px 300px;
+}
+
+.searchedListTopWrapper{
+    display: flex;
+    position: relative;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin: 0px 20px 21px 0px;
+}
+
+.CountListCount{
+    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    font-family: "Pretendard Variable";
+    line-height: 100%;
+    color: rgb(25, 31, 40);
+}
+
+
+.Count {
+    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    font-family: "Pretendard Variable";
+    line-height: 100%;
+    color: rgb(255, 97, 90);
+}
+
+.sortSortBox {
+    display: flex;
+    cursor: pointer;
+}
+
+.sortSort {
+    letter-spacing: -0.6px;
+    font-weight: 600;
+    font-size: 0.938rem;
+    font-family: "Pretendard Variable";
+    line-height: 120%;
+    color: rgb(25, 31, 40);
+    margin-right: 8px;
+}
+
+.sortSortImg {
+    width: 15px;
+    height: 15px;
+}
+
+
+.toggleWrapper {
+    margin-top: 10px;
+}
+
+
+.tagListWrapper {
+    display: flex;
+    position: relative;
+    width: 100%;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.tagListFilterBox {
+    flex-wrap: wrap;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+}
+.tagListReset {
+    cursor: pointer;
+    background: rgb(249, 250, 251);
+    border-radius: 40px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 13px 16px;
+    margin: 0px 6px 6px 0px;
+}
+.tagListResetText {
+    color: rgb(107, 118, 132);
+    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    font-family: "Pretendard Variable";
+    line-height: 100%;
+}
+.tagListResetImg {
+    margin-left: 9px;
+    width: 16px;
+    height: 18px;
+}
+.tagListTag {
+    cursor: pointer;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background: rgb(245, 249, 254);
+    margin: 0px 6px 6px 0px;
+    border-radius: 40px;
+    padding: 13px 16px;
+}
+.tagListName {
+    color: rgb(38, 139, 255);
+    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    font-family: "Pretendard Variable";
+    line-height: 100%;
+}
+.tagListRemove {
+    margin-left: 8px;
+    width: 12px;
+    height: 12px;
+}
+
+
+.SortListWrapper {
+    position: absolute;
+    top: 29px;
+    right: 0px;
+    z-index: 1;
+    padding: 8px 1px;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(25, 31, 40);
+}
+.SortListList {
+    padding: 9px 17px;
+    cursor: pointer;
+    color: rgb(25, 31, 40);
+    background: rgb(255, 255, 255);
+    letter-spacing: -0.4px;
+    font-weight: 500;
+    font-size: 0.938rem;
+    font-family: "Pretendard Variable";
+    line-height: 160%;
+}
 .itemListWrapper {
     display: flex;
     flex-wrap: wrap;
@@ -95,6 +242,9 @@
     -webkit-box-pack: start;
     justify-content: flex-start;
 }
+
+
+
 
 /*	===========================================================
 	아이템 목록
