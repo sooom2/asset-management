@@ -28,4 +28,11 @@ public class TradeController {
 		
 		return "trade/trade_payment";
 	}
+	
+	@RequestMapping(value = "itemRegist", method = RequestMethod.GET)
+	public String itemRegist() {
+		
+		return "itemRegist/itemRegist";
+	}
+	
 }
