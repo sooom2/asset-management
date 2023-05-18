@@ -25,21 +25,21 @@
 	           	 <div class="barWrapper">
 	           	 	<div class="FilterBoxWrapper-active">
 	           	 		<div class="FilterBoxTopic">
-		           	 		<div class="FilterBoxName">#내지역이름#</div>
+		           	 		<div class="FilterBoxName">#내지역이름</div>
 		           	 		<div class="FilterBoxCount">#</div>
 	           	 		</div>
            	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
 	          	 	</div>
 	          	 	<div class="FilterBoxWrapper">
 	           	 		<div class="FilterBoxTopic">
-	           	 			<div class="FilterBoxName">#카테고리#</div>
+	           	 			<div class="FilterBoxName">#카테고리</div>
 	           	 			<div class="FilterBoxCount">#</div>
 	           	 		</div>
 	           	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
 	          	 	</div>
 	          	 	<div class="FilterBoxWrapper">
 	           	 		<div class="FilterBoxTopic">
-	           	 			<div class="FilterBoxName">#기타#</div>
+	           	 			<div class="FilterBoxName">#등급</div>
 	           	 			<div class="FilterBoxCount">#</div>
 	           	 		</div>
            	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
