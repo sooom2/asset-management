@@ -14,6 +14,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
 	rel="stylesheet" />
+<link href="${pageContext.request.contextPath }/resources/css/adminAuction.css" rel="stylesheet" />
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
 	crossorigin="anonymous"></script>
@@ -61,10 +62,53 @@
 			<!-- 들어갈내용 -->
 			<main>
 				<!-- 모달 -->
-
+				<div class="regist_container">
+					<div class="content">
+						<form class="myForm">
+						<h4>물품등록</h4>
+							<div>
+								<label for="customer_name">상품명</label>
+								<input type="text" name="customer_name" id="customer_name" required placeholder="상품명을 입력하세요">
+							</div>
+							<div>
+								<label for="date">날짜</label>
+								<input type="email" name="email_address" id="email_address">
+							</div>
+							<div>
+								<label for="customer_name">가격</label>
+								<input type="text" name="customer_name" id="customer_name" required placeholder="상품명을 입력하세요">
+							</div>
+							<div>
+								<label for="customer_name">등등</label>
+								<input type="text" name="customer_name" id="customer_name" required placeholder="상품명을 입력하세요">
+							</div>
+							
+							<div class="form-group">
+							    <label for="comments">공지사항</label>
+							    <textarea name="comments" id="comments" maxlength="500"></textarea>
+							</div>
+							
+							<div>
+								<button style="border: 1px solid #8d8d8d;">등록</button>
+							</div>
+						</form>
+					</div>
+				</div>
+					
 				<!-- 테이블 -->
 				<div class="datatable-container">
 					<h3 class="text-center font-weight-light my-4">자유게시판관리</h3>
+					
+					
+										
+						
+					
+					
+					
+					
+					
+					
+					
 					<form id="iForm">
 					<div class="">
 						<div class="selectbox searchbox"

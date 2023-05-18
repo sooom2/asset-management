@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+/* 마이알림 */
+
+.alarm_container {
+    width: 100%;
+    background-color: #fff;
+}
+
+.alarm_container .scroll {
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+    height: 100vh;
+    overflow: auto;
+}
+
+.alarm_update {
+    text-align: right;
+    margin: 20px auto 5px;
+    width: 690px;
+}
+.alarm_update>button>div {
+    width: 39px;
+    height: 39px;
+    background: url(https://ccimage.hellomarket.com/web/2020/icon/btn_alram_refresh_x2.png) no-repeat 0 0;
+    vertical-align: bottom;
+    background-size: 39px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.alarm_list_box {
+    width: 690px;
+    margin: 0 auto;
+}
+
+.alarm_date {
+    padding: 15px 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+}
+
+.alarm_list {
+    position: relative;
+    margin-bottom: 15px;
+}
+.alarm_list_contents {
+    padding: 13px 48px 13px 20px;
+    z-index: 5;
+    position: relative;
+    background-color: #fff;
+    border-radius: 6px;
+    border: 1px solid #e8ebed;
+}
+.alarm_list .profile {
+    margin-right: 20px;
+    padding: 5px 0;
+   float: left;
+}
+
+.alarm_list .profile img {
+    width: 55px;
+    height: 55px;
+    float: left;
+    border-radius: 50%;
+}
+
+.alarm_list .info_no_item_img {
+    width: 540px;
+    padding: 16px 0;
+    float: left;
+    font-size: 13px;
+}
+.alarm_list .info_no_item_img .title {
+    padding-bottom: 5px;
+    color: #72787f;
+}
+.alarm_list.isRead .info .description, .alarm_list.isRead .info .description b, .alarm_list.isRead .info_no_item_img .description, .alarm_list.isRead .info_no_item_img .description b {
+    color: #9ea4aa;
+}
+
+.close {
+    display: inline-block;
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    cursor: pointer;
+    right: 16px;
+    top: 16px;
+}
+
+.close:before {
+    transform: rotate(45deg);
+    position: absolute;
+    content: " ";
+    height: 11px;
+    width: 1px;
+    background-color: #72787f;
+}
+
+.close:after {
+    transform: rotate(-45deg);
+    position: absolute;
+    content: " ";
+    height: 11px;
+    width: 1px;
+    background-color: #72787f;
+}
+
+li {
+    list-style: none;
+}

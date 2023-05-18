@@ -362,3 +362,191 @@
     color: rgb(107, 118, 132);
     margin-top: 12px;
 }
+
+
+/* sc-component-id: rightSection__Wrapper-sc-1hzq192-0 */
+ .dwUVsv {
+     width: 50%;
+}
+/* sc-component-id: newDetail__Wrapper-sc-1fgyocb-0 */
+ .eJTfOU {
+     margin: 60px auto 120px;
+     margin-top: 62px;
+     width: 100%;
+}
+/* sc-component-id: newDetail__Main-sc-1fgyocb-1 */
+ .cbridG {
+     z-index: 3;
+     max-width: 1200px;
+     margin: 0 auto 104px;
+     position: relative;
+     display: -webkit-box;
+     display: -webkit-flex;
+     display: -ms-flexbox;
+     display: flex;
+     -webkit-box-pack: justify;
+     -webkit-justify-content: space-between;
+     -ms-flex-pack: justify;
+     justify-content: space-between;
+}
+ .bCagbv {
+     border-top: 1px solid rgb(229, 232, 235);
+     margin-top: 30px;
+     display: flex;
+     -webkit-box-pack: justify;
+     justify-content: space-between;
+     -webkit-box-align: center;
+     align-items: center;
+     padding: 18px 10px 0px;
+}
+ .iwoBcJ {
+     position: sticky;
+     width: 558px;
+     height: 800px;
+     top: 130px !important;
+}
+ .kYjTOu {
+     width: 70px;
+     height: 70px;
+     border-radius: 50%;
+}
+ .sbhKT {
+     letter-spacing: -0.2px;
+     font-weight: 600;
+     font-size: 0.938rem;
+     font-family: "Pretendard Variable";
+     line-height: 134%;
+}
+ .foIEcf {
+     letter-spacing: -0.4px;
+     font-weight: 400;
+     font-size: 0.875rem;
+     font-family: "Pretendard Variable";
+     line-height: 145%;
+}
+ .jIuFeg {
+     display: flex;
+     -webkit-box-align: center;
+     align-items: center;
+     margin-top: 3px;
+}
+ .dkpZFZ {
+     letter-spacing: 0px;
+     font-weight: 700;
+     font-size: 0.875rem;
+     font-family: "Pretendard Variable";
+     line-height: 100%;
+}
+ .rhWka {
+     width: 66.71px;
+     height: 34px;
+     cursor: pointer;
+}
+ .dgPBCr {
+     display: flex;
+     align-items: center;
+     justify-content: flex-end;
+}
+ .dgPBCr img {
+     margin-left: 10px;
+     margin-right: 5px;
+    /* ������ ���� ���� */
+}
+ .cbridG {
+     z-index: 3;
+     max-width: 1200px;
+     margin: 0px auto 104px;
+     position: relative;
+     display: flex;
+     -webkit-box-pack: justify;
+     justify-content: space-between;
+}
+
+
+.dEBCMS {
+    margin-top: 10px;
+}
+
+.emQQCU {
+    background: rgb(249, 250, 251);
+    border: 1.2px solid rgb(229, 232, 235);
+    border-radius: 10px;
+}
+
+.kGtMUL {
+    padding: 18px 20px 0px;
+}
+
+.iueNqr {
+    height: 32px;
+    border-bottom: 1px solid rgb(230, 235, 239);
+    display: flex;
+    letter-spacing: 0px;
+    font-weight: 700;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+}
+
+.gXlyjT {
+    letter-spacing: 0px;
+    font-weight: 700;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+}
+
+.eYZfEN {
+    display: flex;
+}
+
+.bpPgNC {
+    display: flex;
+    letter-spacing: 0px;
+    font-weight: 700;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+}
+
+.hEjnBN {
+    width: 12px;
+    height: 12px;
+    margin: 1.3px 1px 0px;
+}
+
+.dvVQGP {
+    margin-left: 3px;
+    letter-spacing: 0px;
+    font-weight: 700;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+}
+
+.cmyJpu {
+    padding-top: 14px;
+    display: grid;
+    grid-auto-rows: 34px;
+    grid-template-columns: auto auto auto auto auto auto;
+}
+
+.eDPfil {
+    cursor: pointer;
+    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+    color: rgb(0, 114, 244);
+}
+
+.eklQsX {
+    cursor: pointer;
+    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+    color: rgb(78, 89, 104);
+}
