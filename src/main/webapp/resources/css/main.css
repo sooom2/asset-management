@@ -626,3 +626,14 @@
     margin-top: 12px;
 }
 
+.chall_more {
+	border: 1px solid #bdbdbd;
+	padding: 5px;
+	text-align: center;
+	color: #000;
+}
+
+.chall_more:hover {
+	background-color: #ececec;
+}
+
