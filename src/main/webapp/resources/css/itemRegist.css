@@ -998,7 +998,7 @@ input[type=date],input[type=email],input[type=number],input[type=password],input
     align-items: center;
 }
 
-.ccGEle {
+.MiddleDotTextWrapper {
     display: flex;
     -webkit-box-align: center;
     align-items: center;

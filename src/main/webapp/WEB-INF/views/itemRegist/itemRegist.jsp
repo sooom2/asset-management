@@ -12,6 +12,121 @@
 <link href="${path }/resources/css/itemRegist.css" rel="stylesheet">
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+		function handleFileSelect(event) {
+			var files = event.target.files;
+
+			var imageList = document.querySelector('.image_list');
+
+			// 기존의 이미지 미리보기를 모두 제거합니다.
+			imageList.innerHTML = '';
+
+			// 선택한 파일들의 미리보기를 생성하여 추가합니다.
+			for (var i = 0; i < files.length; i++) {
+				var file = files[i];
+
+				// 미리보기 컨테이너를 생성합니다.
+				var previewContainer = document.createElement('div');
+				previewContainer.classList.add('previewContainer');
+
+				// 미리보기 이미지를 생성합니다.
+				var img = document.createElement('img');
+				img.classList.add('previewImage');
+				img.src = URL.createObjectURL(file);
+
+				// 파일명을 표시하는 요소를 생성합니다.
+				var filename = document.createElement('div');
+				filename.classList.add('filename');
+				filename.textContent = file.name;
+
+				// 미리보기 컨테이너에 이미지와 파일명을 추가합니다.
+				previewContainer.appendChild(img);
+				previewContainer.appendChild(filename);
+
+				// 미리보기 이미지를 이미지 목록에 추가합니다.
+				imageList.appendChild(previewContainer);
+			}
+		}
+
+		var fileInput = document.querySelector('input[type="file"]');
+		var middleDotTextWrapper = document
+				.querySelectorAll('.MiddleDotTextWrapper');
+		var defaultImage = document.querySelector('.default');
+
+		middleDotTextWrapper.forEach(function(wrapper) {
+			wrapper.addEventListener('click', function() {
+				fileInput.click();
+			});
+		});
+
+		defaultImage.addEventListener('click', function() {
+			fileInput.click();
+		});
+
+		fileInput.addEventListener('change', handleFileSelect, false);
+	});
+	// 태그기능
+	document.addEventListener('DOMContentLoaded', function() {
+		var tagInput = document.querySelector('.tagTagInput');
+		var tagButton = document.querySelector('.tagButton');
+		var tagListWrapper = document.querySelector('.ListWrapper');
+		var tagDescContain = document.querySelector('.tagTagDescContain');
+		var tagForm = document.getElementById('tag');
+
+		var tags = [];
+
+		function updateTagList() {
+			tagListWrapper.innerHTML = '';
+
+			tags.slice(0, 5).forEach(function(tag) {
+				var tagItem = document.createElement('span');
+				tagItem.classList.add('tagItem');
+				tagItem.style.visibility = 'hidden'; // 숨김 스타일 추가
+				tagItem.textContent = '#' + tag;
+				tagListWrapper.appendChild(tagItem);
+			});
+		}
+
+		function updateTagDesc() {
+			var tagText = tags.slice(0, 5).map(function(tag) {
+				return '#' + tag;
+			}).join(' ');
+
+			tagDescContain.textContent = tagText;
+		}
+
+		function addTag() {
+			var tagValue = tagInput.value.trim();
+
+			if (tagValue === '') {
+				return;
+			}
+
+			if (tags.length >= 5 || tags.includes(tagValue)) {
+				tagInput.value = '';
+				tagInput.focus();
+				return;
+			}
+
+			tags.push(tagValue);
+			updateTagList();
+			updateTagDesc();
+
+			tagInput.value = '';
+			tagInput.focus();
+		}
+
+		tagButton.addEventListener('click', function(event) {
+			event.preventDefault();
+			addTag();
+		});
+
+		tagForm.addEventListener('submit', function(event) {
+			event.preventDefault();
+		});
+	});
+</script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
@@ -49,16 +164,16 @@
 										<ul class="image_list">
 										</ul>
 										<div class="UploadGuideBox">
-											<div class="MiddleDotTextWrapper-sc-1mu8vre-0 ccGEle">
+											<div class="MiddleDotTextWrapper">
 												<img
 													src="https://ccimage.hellomarket.com/img/common/middle_dot.svg"
-													alt="중간 도트" class="MiddleDotTextDotImg-sc-1mu8vre-1 eGfiee">
+													alt="중간 도트" class="MiddleDotTextDotImg">
 												<div class="MiddleDotText">클릭 또는 이미지를 드래그하여 등록할 수 있어요</div>
 											</div>
-											<div class="MiddleDotTextWrapper-sc-1mu8vre-0 ccGEle">
+											<div class="MiddleDotTextWrapper">
 												<img
 													src="https://ccimage.hellomarket.com/img/common/middle_dot.svg"
-													alt="중간 도트" class="MiddleDotTextDotImg-sc-1mu8vre-1 eGfiee">
+													alt="중간 도트" class="MiddleDotTextDotImg">
 												<div class="MiddleDotText">드래그하여 상품 이미지 순서를 변경할 수 있어요</div>
 											</div>
 										</div>
@@ -146,7 +261,7 @@
 										placeholder="태그를 입력해주세요(최대 5개)" class="tagTagInput" value="">
 									<button class="tagButton">추가</button>
 								</form>
-								<div class="ListWrapper-sc-77i2q1-0 ejOMKw"></div>
+								<div class="ListWrapper"></div>
 								<div class="tagTagDescContain">
 									<div class="MiddleDotText">
 										<div class="MiddleDotTextText">하나의 태그는 최대 10자까지 입력할 수
