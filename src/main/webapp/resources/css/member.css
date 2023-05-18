@@ -1622,7 +1622,7 @@ a, address, b, body, center, code, dd, details, div, dl, dt, footer, form, heade
     vertical-align: baseline;
     font-weight: 400;
     color: rgb(51, 51, 51);
-    font-family: 돋움, Dotum, Arial;
+    /* font-family: 돋움, Dotum, Arial; */
     margin: 0px;
     padding: 0px;
     border-width: 0px;
@@ -2133,11 +2133,7 @@ img {
     line-height: 30px;
 }
 
-:lang(ko) {
-    font-family: Pretendard Variable,Noto Sans KR,sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
+
 
 .QZXDX {
     display: flex;
