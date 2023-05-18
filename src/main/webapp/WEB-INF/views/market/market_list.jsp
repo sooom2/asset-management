@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="${path }/resources/css/trade.css" rel="stylesheet">
-<link href="${path }/resources/css/trade_detail.css" rel="stylesheet">
+<link href="${path }/resources/css/market.css" rel="stylesheet">
+<link href="${path }/resources/css/market_detail.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
   <body>

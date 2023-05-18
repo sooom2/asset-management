@@ -1,5 +1,5 @@
 package com.itwillbs.moneytto.mapper;
 
-public interface TradeMapper {
+public interface MarketMapper {
 
 }
