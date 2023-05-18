@@ -16,7 +16,8 @@
 			<ul>
 			<c:choose>
 				<c:when test="${empty sessionScope.sId }">
-					<li><a href="chat">채팅</a></li>
+					<li><a href="myAlarm"><i class="fa-regular fa-bell"></i> 나의알림</a></li>
+					<li><a href="marketChat"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> 채팅</a></li>
 					<li><a href="memLogin" data-reload="reload" class=""><i class="fa-regular fa-circle-user"></i>&nbsp;로그인</a></li>
 					<li><a href="mypage" data-reload="" class="">마이페이지</a></li>
 					<li><a href="memAuth">회원가입</a></li>
@@ -39,7 +40,7 @@
 			<a href="main"><h1 id="logo">로고</h1></a>		
 			<ul class="nav_left">
 				<li style="width: 80px"><a href="auction" class="">경매</a></li>
-				<li><a href="trade_list" class="trade_list">중고거래</a></li>
+				<li><a href="market_list" class="market_list">중고거래</a></li>
 				<li><a href="" class="">커뮤니티</a></li>
 				<li><a href="notice_board" class="">공지사항</a></li>
 			</ul>
