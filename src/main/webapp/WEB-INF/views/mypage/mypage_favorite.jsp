@@ -14,7 +14,55 @@
 <script type="text/javascript" src="${path}/js/main.js"></script>
 </head>
 <body>
-	<div class="filterBar__Wrapper-sc-10b47vv-0 fAXhwJ">
+	<jsp:include page="../nav.jsp" />
+
+	<div class="profile__Wrapper-sc-12nw6v6-0 hLjdoo">
+		<div class="profile__Container-sc-12nw6v6-1 cMqFPK">
+			<div class="memberInfo__Wrapper-edrwkz-0 hHYktI">
+				<div class="memberInfo__InfoArea-edrwkz-1 fNqBxy">
+					<div class="userData__Wrapper-o7673g-0 eifOUF">
+						<div>
+							<div class="userData__ImgBox-o7673g-1 fihCFR">
+								<img
+									src="${pageContext.request.contextPath }/resources/images/mypage/cute.png"
+									alt="profileImg" class="userData__ProfileImg-o7673g-2 Ikmjq">
+							</div>
+							<div class="userData__NickName-o7673g-5 kjfrAo">꾸꾸 님</div>
+						</div>
+					</div>
+					<div class="memberInfo__ProductCountBox-edrwkz-2 jZihcs">
+						<div class="memberInfo__Text-edrwkz-3 ObPLl">상품</div>
+						<div class="memberInfo__Count-edrwkz-4 bxkBQf">0</div>
+					</div>
+					<div class="memberInfo__ReviewBox-edrwkz-5 diZgaK">
+						<div class="memberInfo__Text-edrwkz-3 ObPLl">매너온도</div>
+						<div class="memberInfo__Rating-edrwkz-6 bDPsFn">
+							<div class="memberInfo__Count-edrwkz-4 bxkBQf">55.6</div>
+						</div>
+					</div>
+					<div class="memberInfo__ReviewBox-edrwkz-5 diZgaK">
+						<div class="memberInfo__Text-edrwkz-3 ObPLl">남은머니</div>
+						<div class="memberInfo__Rating-edrwkz-6 bDPsFn">
+							<div class="memberInfo__Count-edrwkz-4 bxkBQf">10,000원</div> &nbsp;&nbsp;
+							<div class="payCharge"><Input type="button" value="충전"></div> &nbsp;&nbsp;
+							<div class="payReturn"><Input type="button" value="환급"></div>
+						</div>
+					</div>
+					<div class="memberInfo__MyDataBox-edrwkz-7 hKIUbJ">
+						<div class="memberInfo__SettingMyData-edrwkz-8 krMsxi"><a href="mypageInfo">내정보 설정</a></div>
+					</div>
+				</div>
+			</div>
+			<div class="list__Wrapper-sc-1sjhuej-0 dxQuDY">
+				<div class="tab__Wrapper-sc-1arp19f-0 iKBbsw">
+					<div class="tab__Tab-sc-1arp19f-1 eoXkMa"><a href="mypage">판매 상품</a></div>
+					<div class="tab__Tab-sc-1arp19f-1 eoXkMa active"><a href="mypageFavorite">찜한 상품</a></div>
+					<div class="tab__Tab-sc-1arp19f-1 eoXkMa"><a href="#">구매 상품</a></div>
+					<div class="tab__Tab-sc-1arp19f-1 eoXkMa"><a href="#">참여 중인 경매</a></div>
+					<div class="tab__Tab-sc-1arp19f-1 eoXkMa"><a href="#">거래 후기</a></div>
+					<div class="tab__Tab-sc-1arp19f-1 eoXkMa"><a href="#">추천 상품</a></div>
+				</div>
+			<div class="filterBar__Wrapper-sc-10b47vv-0 fAXhwJ">
 					<div class="tab__PcBox-sc-1f5uogr-0 FOhDV">
 						<div class="tab__FilterTab-sc-1f5uogr-2 kKhNjD">
 							<div width="180" class="DropBox__Wrapper-lz7d36-0 PkGWZ">
@@ -33,13 +81,6 @@
 										alt="화살표 이미지" class="WishType__Arrow-sc-19r94du-1 edWYrb">
 								</div>
 							</div>
-						</div>
-						<div class="TabType__Wrapper-m4n2dm-0 xaMDp">
-							<img
-								src="https://ccimage.hellomarket.com/web/button/btn_sort_listview_selected.png"
-								alt="tabType" class="TabType__Img-m4n2dm-1 jTtWdO"><img
-								src="https://ccimage.hellomarket.com/web/button/btn_sort_thumbview_normal.png"
-								alt="tabType" class="TabType__Img-m4n2dm-1 jTtWdO">
 						</div>
 					</div>
 					<div class="tagList__Wrapper-gkczkp-0 geRbir"></div>
@@ -155,5 +196,13 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	</script>
+	
+	<jsp:include page="../footer.jsp" />
+	
 </body>
 </html>

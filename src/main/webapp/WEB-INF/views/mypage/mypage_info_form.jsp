@@ -111,49 +111,39 @@ function confirmQuit() {
 									class="input input-numeric" value="${member.member_tel }"> <span></span>
 								</label>
 							</div>
-							
-							
-						<div class="join-detail">
-								<label class="label-input" for=""> <span>선호지점</span>
-									<div class="" style="margin-left: 120px; display: block; margin-top: 3px; width: 200px;; height: 30px; overflow: hidden; border: 1px solid #ccc;">
-										<!-- selectMemberInfo  -->
-										<select name="member_prefer_branch" id="member_prefer_branch"
-											style="width: 220px; height: 30px; padding: 0 0 0 10px; box-sizing: border-box; font-size: 16px; line-height: 30px; border-radius: 0; -webkit-appearance: none; appearance: none; -moz-appearance: none; background: url(/images/customer/icon-select-off.png) right 31px center no-repeat; border: none; color: #7d7d7d; vertical-align: top;">
-										
-											<c:forEach var="cinema" items="${cinemaList }">
-											<option value="${cinema.cinema_name }" ${cinema.selected }>${cinema.cinema_name }</option>
-											</c:forEach>
-										</select>
-
-									</div> <span></span>
+							<div class="join-detail">
+								<label class="label-input" for="account"> <span>계좌인증</span>
+									<input type="text" id="member_account" name="member_account"
+									class="input input-numeric" value=""> <span></span>
 								</label>
 							</div>
+							
 							<div class="join-detail">
-								<label class="label-input" for=""> <span>선호장르</span>
+								<label class="label-input" for=""> <span>관심품목</span>
 									<div class="" style="margin-left: 120px; display: block; margin-top: 3px; width: 200px;; height: 30px; overflow: hidden; border: 1px solid #ccc;">
 										<select name="member_prefer_genre" id="member_prefer_genre"
 											style="width: 220px; height: 30px; padding: 0 0 0 10px; box-sizing: border-box; font-size: 16px; line-height: 30px; border-radius: 0; -webkit-appearance: none; appearance: none; -moz-appearance: none; background: url(/images/customer/icon-select-off.png) right 31px center no-repeat; border: none; color: #7d7d7d; vertical-align: top;">
-											<option value="액션"<c:if test="${member.member_prefer_genre eq '액션'}">selected</c:if>>액션</option>
-											<option value="드라마"<c:if test="${member.member_prefer_genre eq '드라마'}">selected</c:if>>드라마</option>
-											<option value="코메디"<c:if test="${member.member_prefer_genre eq '코메디' }">selected</c:if>>코메디</option>
-											<option value="애니메이션"<c:if test="${member.member_prefer_genre eq '애니메이션' }">selected</c:if>>애니메이션</option>
-											<option value="스릴러"<c:if test="${member.member_prefer_genre eq '스릴러' }">selected</c:if>>스릴러</option>
-											<option value="로맨스"<c:if test="${member.member_prefer_genre eq '로맨스' }">selected</c:if>>로맨스</option>
-											<option value="범죄"<c:if test="${member.member_prefer_genre eq '범죄' }">selected</c:if>>범죄</option>
+											<option value="여성의류"<c:if test="${member.member_prefer_genre eq '액션'}">selected</c:if>>여성의류</option>
+											<option value="남성의류"<c:if test="${member.member_prefer_genre eq '드라마'}">selected</c:if>>남성의류</option>
+											<option value="가방"<c:if test="${member.member_prefer_genre eq '코메디' }">selected</c:if>>가방</option>
+											<option value="신발"<c:if test="${member.member_prefer_genre eq '애니메이션' }">selected</c:if>>신발</option>
+											<option value="패션잡화"<c:if test="${member.member_prefer_genre eq '스릴러' }">selected</c:if>>패션잡화</option>
+											<option value="키즈"<c:if test="${member.member_prefer_genre eq '로맨스' }">selected</c:if>>키즈</option>
+											<option value="라이프"<c:if test="${member.member_prefer_genre eq '범죄' }">selected</c:if>>라이프</option>
 										</select>
 									</div> <span></span>
 								</label>
 							</div>
 						</div>
-
 						<a href=""  id="btn-mypage-ok" class="btn-confirm">
 							<button type="submit" style="display: inline-block; width: 300px;text-align: center;">수정</button>
 						</a>
 				 
 					<div class="title-membership title-quit">회원 탈퇴</div>
 					<div class="wrap-inside no-border">
-						<span class="quit-desc">탈퇴 신청시 환불금액등의 확인 후 탈퇴처리가 진행되며 포인트,
-							등록한 관람권 등이 삭제되고 30일 이내 재가입이 불가하오니 신중히 결정해주시기 바랍니다.</span> 
+						<span class="quit-desc">탈퇴 신청시 작성한 게시글과 댓글은 지워지지않으며
+							남은 머니가 사라지고 사용한 아이디로 재가입이 불가하오니 신중히 결정해주시기 바랍니다.
+						</span> 
 						<a href="" class="btn-quit withdrawmember">
 							<button type="submit" formaction="quitPro" onclick="confirmQuit()" style="display: inline-block; width: 300px;text-align: center;">회원 탈퇴하기</button>
 						</a>

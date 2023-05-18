@@ -1322,7 +1322,7 @@ svg:not(:root) {
     width: 147px;
     height: 40px;
     border-bottom: 2px solid #979797;
-    font-size: 25px;
+    font-size: 22px;
     color: #666;
     margin: 0 auto;
     text-align: center;
@@ -1839,21 +1839,14 @@ img {
 
 .eoXkMa {
     font-weight: 700;
-    margin-right: 40px;
+    margin-right: 30px;
     border-bottom: none;
     cursor: pointer;
 }
 
-.hIFDnf {
+.active {
     font-weight: 700;
-    margin-right: 40px;
-    border-bottom: 2px solid rgb(0, 0, 0);
-    cursor: pointer;
-}
-
-.hIFDnf {
-    font-weight: 700;
-    margin-right: 40px;
+    margin-right: 30px;
     border-bottom: 2px solid rgb(0, 0, 0);
     cursor: pointer;
 }
@@ -2428,7 +2421,7 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
 .iyOWTU {
     margin-top: 16px;
     padding: 0px 10px;
-    height: 700px;
+    height: 1000px;
     overflow: auto;
 }
 
@@ -2483,3 +2476,29 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
 }
 
 
+.payCharge {
+    letter-spacing: 0px;
+    font-weight: 500;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+    color: rgb(44, 44, 44);
+    margin: auto 0px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid rgb(44, 44, 44);
+}
+
+
+.payReturn {
+	letter-spacing: 0px;
+    font-weight: 500;
+    font-size: 0.813rem;
+    font-family: "Pretendard Variable";
+    line-height: 154%;
+    color: rgb(44, 44, 44);
+    margin: auto 0px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid rgb(44, 44, 44);
+}
