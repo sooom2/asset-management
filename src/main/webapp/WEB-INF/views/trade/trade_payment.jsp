@@ -805,6 +805,272 @@ select {
     cursor: pointer;
 }
 
+.coupon_select_modal {
+    width: 450px;
+    height: auto;
+}
+
+.modal_wrapper {
+    display: inline-block;
+    background-color: #fff;
+    position: relative;
+    text-align: left;
+    margin: 20px 0;
+}
+
+.modal_wrapper .modal_header {
+    height: auto;
+    position: relative;
+}
+
+.modal_wrapper .modal_header .modal_left_title {
+    text-align: left;
+    padding-left: 57px;
+}
+
+.modal_wrapper .modal_header .modal_left_title .label {
+    font-size: 24px;
+    color: #333;
+    padding: 24px 0 11px;
+}
+
+.coupon_select_modal .modal_body {
+    padding: 0 57px;
+    border-top: 1px solid #9ea4aa;
+    margin-top: 13px;
+}
+
+.modal_wrapper .modal_body {
+    -ms-overflow-style: none;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.coupon_select_modal .coupon_select_header {
+    float: right;
+    padding-top: 24px;
+}
+
+.coupon_select_modal .coupon_select_header .feature_option {
+    font-size: 14px;
+    color: #666;
+    padding-left: 22px;
+}
+
+.feature_option {
+    display: block;
+    padding-left: 28px;
+    font-size: 12px;
+    color: #444;
+    line-height: 21px;
+}
+
+.feature_option, .md_radio label {
+    position: relative;
+    cursor: pointer;
+}
+
+.feature_option_checkbox_indicator.checked {
+    background: #0484f6!important;
+    border: 1px solid #0484f6;
+}
+
+.feature_option_checkbox_indicator {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    background: #fff;
+    border: 1px solid #c9cdd2;
+}
+
+.feature_option_checkbox .feature_option_checkbox_indicator:after {
+    left: 5px;
+    top: 1px;
+    width: 3px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.feature_option_checkbox_indicator.checked:after {
+    display: block;
+}
+
+.feature_option_checkbox_indicator:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.coupon_select_modal .coupon_select_list {
+    float: left;
+    width: 100%;
+    border-top: 1px solid #9ea4aa;
+    margin-top: 10px;
+    min-height: 380px;
+}
+
+.coupon_select_modal .coupon_select_list ul li {
+    padding: 16px 0;
+    border-bottom: 1px solid #9ea4aa;
+    position: relative;
+}
+
+.coupon_select_modal .coupon_select_list ul li .checkbox_list {
+    float: left;
+    width: 10%;
+    position: relative;
+    line-height: 105px;
+}
+
+.coupon_select_modal .coupon_select_list ul li .checkbox_list .feature_option {
+    position: absolute;
+    transform: translate(-48%,-55%);
+    left: 48%;
+    top: 45%;
+}
+
+.feature_option_checkbox_indicator {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    background: #fff;
+    border: 1px solid #c9cdd2;
+}
+
+.coupon_select_modal .coupon_select_list ul li .title {
+    float: left;
+    width: 90%;
+    margin-top: 3px;
+}
+
+.coupon_select_modal .coupon_select_list ul li .title .sub_name {
+    color: #000;
+    letter-spacing: -.8px;
+    font-size: 14px;
+}
+
+.coupon_select_modal .coupon_select_list ul li .title span {
+    display: block;
+}
+
+.coupon_select_modal .coupon_select_list ul li .title .price {
+    color: #000;
+    font-size: 14px;
+    letter-spacing: -.8px;
+    font-weight: 700;
+    margin-top: 1px;
+}
+
+.coupon_select_modal .coupon_select_list ul li .title .period {
+    color: #454c53;
+    letter-spacing: -.8px;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.coupon_list ul li .coupon_left .condition, .coupon_select_modal .coupon_select_list ul li .title .condition {
+    margin-top: 14px;
+    position: relative;
+}
+
+.coupon_list ul li .coupon_left .condition>span, .coupon_select_modal .coupon_select_list ul li .title .condition>span {
+    color: #72787f;
+    font-size: 12px;
+    float: left;
+    line-height: 13px;
+}
+
+.coupon_list ul li .coupon_left .condition img, .coupon_select_modal .coupon_select_list ul li .title .condition img {
+    width: 13px;
+    float: left;
+    margin-left: 4px;
+}
+
+.coupon_list ul li .coupon_left .condition .history_coupon_condition, .coupon_select_modal .coupon_select_list ul li .title .condition .history_coupon_condition {
+    font-size: 12px;
+    color: #454c53;
+    letter-spacing: -.2px;
+    display: none;
+    position: absolute;
+    padding: 11px 13px;
+    text-align: left;
+    width: 213px;
+    background-color: #fff;
+    border: 1px solid #93a4aa;
+    z-index: 3;
+    top: 14px;
+    left: 0;
+}
+
+.coupon_list ul li .coupon_left .condition:after, .coupon_select_modal .coupon_select_list ul li .title .condition:after {
+    display: block;
+    clear: both;
+    content: "";
+}
+
+.coupon_select_modal .coupon_select_list ul li .title .condition.mobile_condition {
+    display: none;
+}
+
+.coupon_list ul li .coupon_left .condition, .coupon_select_modal .coupon_select_list ul li .title .condition {
+    margin-top: 14px;
+    position: relative;
+}
+
+.coupon_list ul li .coupon_left .condition .history_coupon_condition span:last-child, .coupon_select_modal .coupon_select_list ul li .title .condition span:last-child {
+    margin-bottom: 0;
+}
+
+.coupon_list ul li .coupon_left .condition>span, .coupon_select_modal .coupon_select_list ul li .title .condition>span {
+    color: #72787f;
+    font-size: 12px;
+    float: left;
+    line-height: 13px;
+}
+
+.coupon_select_modal .coupon_select_list ul li:after {
+    display: block;
+    clear: both;
+    content: "";
+}
+
+.coupon_select_modal .coupon_popup_footer {
+    float: left;
+}
+
+.coupon_select_modal .coupon_popup_footer .coupon_popup_btn_box {
+    text-align: center;
+    margin: 30px 0 40px;
+}
+
+.coupon_select_modal .coupon_popup_footer .coupon_popup_btn_cancel {
+    font-size: 15px;
+    padding: 10px 0;
+    border-radius: 3px;
+    width: 148px;
+    background-color: #a2b5bb;
+    color: #fff;
+}
+
+.coupon_select_modal .coupon_popup_footer .coupon_popup_btn_submit {
+    font-size: 15px;
+    padding: 10px 0;
+    border-radius: 3px;
+    width: 148px;
+    background-color: #0484f6;
+    color: #fff;
+    margin-left: 20px;
+}
+
+
+
 
 /* 끝 5.17cw================================================ */
 </style>
