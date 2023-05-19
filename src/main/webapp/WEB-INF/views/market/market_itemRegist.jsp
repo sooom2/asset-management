@@ -127,6 +127,58 @@
 		});
 	});
 </script>
+
+
+
+
+<!-- 금액 숫자만입력 -->
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		var priceInput = document.querySelector('.PricePriceInput');
+
+		priceInput.addEventListener('input', function() {
+			// 입력된 값에서 숫자가 아닌 문자를 제거합니다
+			var numericValue = this.value.replace(/[^\d]/g, '');
+
+			// 정제된 숫자 값을 다시 입력 상자에 할당합니다
+			this.value = numericValue;
+		});
+	});
+</script>
+
+
+
+
+<!-- 카테고리선택 -->
+<style>
+.selected {
+	font-weight: bold;
+	font-size: 18px;
+}
+</style>
+
+<script>
+	// JavaScript 코드
+	document.addEventListener('DOMContentLoaded', function() {
+		var categoryItems = document.querySelectorAll('.TextTextWrapper');
+
+		// 각 카테고리 요소에 클릭 이벤트 추가
+		categoryItems.forEach(function(item) {
+			item.addEventListener('click', function() {
+				// 다른 요소들의 선택 상태 제거
+				categoryItems.forEach(function(item) {
+					item.classList.remove('selected');
+				});
+
+				// 선택한 요소에 클래스 추가
+				this.classList.add('selected');
+			});
+		});
+	});
+</script>
+
+
+
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
