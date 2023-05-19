@@ -259,7 +259,7 @@
 .member .end .btns a {
 	width: calc(40% - 20px);
 	margin: 0 auto;
-	background-color: #5d46b5;
+	background-color: #BB2649;
 	height: 35px;
 	border-radius: 10px;
 	color: #fff;
@@ -1226,7 +1226,7 @@
 	width: 300px;
 	height: 35px;
 	line-height: 35px;
-	background-color: #673bd4;
+	background-color: #BB2649;
 	font-size: 17px;
 	color: #fff;
 	margin: 50px auto 60px;

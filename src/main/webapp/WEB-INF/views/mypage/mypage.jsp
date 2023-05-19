@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
@@ -53,6 +54,8 @@
 					</div>
 				</div>
 			</div>
+			
+			
 <!-- 			탭 -->
 			<div class="listWrapper">
 				<div class="tabWrapper-sc-1arp19f-0 iKBbsw">
