@@ -33,7 +33,7 @@ public class MarketController {
 	@GetMapping(value = "itemRegist")
 	public String itemRegist() {
 		
-		return "itemRegist/itemRegist";
+		return "market/market_itemRegist";
 	}
 	
 }

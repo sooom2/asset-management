@@ -19,32 +19,32 @@
 
 			var imageList = document.querySelector('.image_list');
 
-			// 기존의 이미지 미리보기를 모두 제거합니다.
+			// 기존의 이미지 미리보기를 모두 제거
 			imageList.innerHTML = '';
 
-			// 선택한 파일들의 미리보기를 생성하여 추가합니다.
+			// 선택한 파일들의 미리보기를 생성하여 추가
 			for (var i = 0; i < files.length; i++) {
 				var file = files[i];
 
-				// 미리보기 컨테이너를 생성합니다.
+				// 미리보기 컨테이너를 생성
 				var previewContainer = document.createElement('div');
 				previewContainer.classList.add('previewContainer');
 
-				// 미리보기 이미지를 생성합니다.
+				// 미리보기 이미지를 생성
 				var img = document.createElement('img');
 				img.classList.add('previewImage');
 				img.src = URL.createObjectURL(file);
 
-				// 파일명을 표시하는 요소를 생성합니다.
+				// 파일명을 표시하는 요소를 생성
 				var filename = document.createElement('div');
 				filename.classList.add('filename');
 				filename.textContent = file.name;
 
-				// 미리보기 컨테이너에 이미지와 파일명을 추가합니다.
+				// 미리보기 컨테이너에 이미지와 파일명을 추가
 				previewContainer.appendChild(img);
 				previewContainer.appendChild(filename);
 
-				// 미리보기 이미지를 이미지 목록에 추가합니다.
+				// 미리보기 이미지를 이미지 목록에 추가
 				imageList.appendChild(previewContainer);
 			}
 		}
@@ -211,7 +211,6 @@
 									</div>
 							</dd>
 						</dl>
-
 						<dl class="sell_method_box">
 							<dt class="TitleTitleWrapper">
 								<label class="Title">가격 입력</label>
