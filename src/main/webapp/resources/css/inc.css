@@ -495,15 +495,11 @@ h2.tit {
     display: inline-block;
     width: 200px;
     height: 20px;
-    /* margin: auto 0px; */
     cursor: pointer;
     padding: 10px 24px;
     background: rgb(242, 245, 247);
     border-radius: 62px;
-    /* margin-top: 21px; */
-    /* float: right; */
     margin-top: 21px;
-    margin-left: 38px;
 }
 
 .searchIcon {

@@ -130,7 +130,7 @@
 			<div class="section group goods-board">
 				<div class="bestSell_list_wrap">
 					<div class="top">
-						<div class="bestSell_title"><i class="fa-regular fa-face-smile"></i>&nbsp;머니또 인기상품</div>
+						<div class="bestSell_title"><i class="fa-brands fa-hotjar"></i>&nbsp;머니또 인기상품</div>
 					</div>
 				</div>
 				<div class="itemWrapper">

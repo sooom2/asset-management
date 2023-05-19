@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 <link href="${path }/resources/css/common.css" rel="stylesheet">
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
-<script type="text/javascript" src="${path }/resources/js/main.js"></script>
 <script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -40,17 +39,16 @@
 			<a href="main"><h1 id="logo">로고</h1></a>		
 			<ul class="nav_left">
 				<li style="width: 80px"><a href="auction" class="">경매</a></li>
-				<li><a href="market_list" class="trade_list">중고거래</a></li>
+				<li><a href="market_list" class="market_list">중고거래</a></li>
 				<li><a href="" class="">커뮤니티</a></li>
 				<li><a href="notice_board" class="">공지사항</a></li>
-				<li><a href="free_board" class="">마이페이지</a></li>
 			</ul>
 			<div class="searchIconWrapper">
 				<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
 				<div class="searchSearch"><form><input class="goodsName" type="text" placeholder="어떤 상품을 찾으시나요?"></form></div>
 			</div>
 			
-			<a href="itemRegist" class="menu-item">
+			<a href="" class="menu-item">
 				<img src="${path }/resources/images/main/selling_btn.png" alt="판매하기 이미지" class="MiddleNavigation__SellImg-sc-1moccpq-3 dplbBo">
 			</a>
 		</nav>

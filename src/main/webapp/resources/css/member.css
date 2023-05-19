@@ -11,10 +11,6 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pr
     background: transparent;
 }
 
-* {
-    font-family: 'Noto Sans KR';
-}
-
 div {
     display: block;
 }
@@ -1618,11 +1614,10 @@ button {
     text-align: center;
 }
 
-a, address, b, body, center, code, dd, details, div, dl, dt, footer, form, header, html, i, iframe, img, input, ins, label, li, mark, menu, object, output, p, q, s, section, select, span, strong, sub, summary, table, tbody, td, textarea, th, time, tr, u, ul, var {
+a, address, b, body, center, code, dd, details, div, dl, dt, footer, form, header, html, iframe, img, input, ins, label, li, mark, menu, object, output, p, q, s, section, select, span, strong, sub, summary, table, tbody, td, textarea, th, time, tr, u, ul, var {
     vertical-align: baseline;
     font-weight: 400;
     color: rgb(51, 51, 51);
-    /* font-family: 돋움, Dotum, Arial; */
     margin: 0px;
     padding: 0px;
     border-width: 0px;
