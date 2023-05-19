@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <link href="${path }/resources/css/market.css" rel="stylesheet">
-<link href="${path }/resources/css/market_detail.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
   <body>
@@ -25,8 +24,8 @@
 	           	 <div class="barWrapper">
 	           	 	<div class="FilterBoxWrapper-active">
 	           	 		<div class="FilterBoxTopic">
-		           	 		<div class="FilterBoxName">#내지역명</div>
-<!-- 		           	 		<div class="FilterBoxCount">#</div> -->
+		           	 		<div class="FilterBoxName">#내지역이름</div>
+		           	 		<div class="FilterBoxCount">#</div>
 	           	 		</div>
            	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
 	          	 	</div>
@@ -68,7 +67,27 @@
 										</div>
 									</div>
 									<div class="List__Wrapper-rd56hw-0 cmyJpu">
-										<div class="List__MainCategoryName-rd56hw-2 eDPfil">가방전체 (38,390)</div>
+										<div class="List__MainCategoryName-rd56hw-2 eDPfil">가방
+											전체 (38,390)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">스포츠 가방 (140)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">여성 크로스백 (5,444)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">브리프케이스 (192)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">여성 백팩 (808)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">여성 숄더백 (5,360)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">여성 토트백 (3,739)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">남성 숄더백 (122)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">파우치백 (423)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">보스턴/더플백 (229)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">남성 크로스백 (931)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">남성 웨이스트백 (58)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">캐리어 (280)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">남성 토트백 (159)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">클러치백 (1,197)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">여성 웨이스트백 (13)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">에코백 (301)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">남성 백팩 (1,098)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">메신저/크로스백 (373)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">기타 가방 (17,523)</div>
 									</div>
 								</div>
 							</div>
@@ -107,7 +126,7 @@
                         	<div class="SortListList">최근 등록순</div>
                         	<div class="SortListList">낮은 가격순</div>
                         	<div class="SortListList">높은 가격순</div>
-                        	<div class="SortListList">찜 많은 순</div>
+<!--                         	<div class="SortListList">찜 많은 순</div> -->
                        	</div>
                        	<!--  -->
                         <div class="sortSortBox">
@@ -132,7 +151,7 @@
 									<div class="itemText">20,000원</div>
 									<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
 									<div class="itemTagBox">
-										<div class="itemSizeTag">S</div>
+										<div class="itemSizeTag">부산</div>
 									</div>
 									<div class="itemTimeTag">방금 전</div>
 									</div>

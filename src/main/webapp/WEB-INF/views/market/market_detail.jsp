@@ -1,23 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 
-<link href="resources/css/market_detail.css" rel="stylesheet" />
+<link href="${path }/resources/css/market_detail.css" rel="stylesheet">
+<link href="resources/css/swiper.min.css" rel="stylesheet" />
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-1.11.3.min.js"></script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
-	<div id="__next">
+	<div id="next">
 
-		<div class="layout__Children-sc-1fg0dfe-2 jjXXzz"></div>
+		<div class="layoutChildren"></div>
 
-		<div class="newDetail__Wrapper-sc-1fgyocb-0 eJTfOU">
-			<div class="newDetail__Main-sc-1fgyocb-1 cbridG">
-
-				<div class="leftSection__Wrapper-sc-6bvzrr-0 hyqbZx">
-					<div class="MainImg__Wrapper-sc-10zeakr-0 ihxpcv">
+		<div class="newDetailWrapper">
+			<div class="newDetailMain">
+				
+				<!--왼쪽섹션 -->
+				<div class="leftSectionWrapper">
+					<div class="MainImgWrapper">
 						<div class="swiper-container"
 							modules="[object Object],[object Object]">
 							<div class="swiper-button-prev"></div>
@@ -28,136 +33,129 @@
 									<div class="swiper-wrapper">
 										<img
 											src="https://ccimg.hellomarket.com/images/2022/item/07/09/21/4656318_2647700_1.jpg?size=s6"
-											class="MainImg__ItemImg-sc-10zeakr-1 cMkFXJ">
+											class="MainImgItemImg">
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="SellStateImg__Wrapper-sc-1mccr5t-0 kZNtWi"></div>
+						<div class="SellStateImgWrapper"></div>
 					</div>
-					<div class="PreviewImgList__Wrapper-i33ueo-0 hfOvgY">
-						<div class="PreviewImgList__PreviewImgContainer-i33ueo-1 jNjtBM">
+					<div class="PreviewImgListWrapper">
+						<div class="PreviewImgListPreviewImgContainer">
 							<div class="swiper-container" modules="[object Object]">
 								<div class="swiper-wrapper">
 									<div class="swiper-slide">
 										<img
 											src="https://ccimg.hellomarket.com/images/2022/item/07/09/21/4656318_2647700_1.jpg?size=s6"
-											alt="preview" class="PreviewImgList__ItemImg-i33ueo-2 caHvDO">
+											alt="preview" class="PreviewImgListItemImg">
 									</div>
 
 								</div>
 							</div>
 						</div>
 						<div
-							class="NavigationCustom__NavigationContainer-sc-1jxpb08-2 kDHyfJ">
+							class="NavigationCustomNavigationContainer">
 							<div style="margin-left: -10.4px"
-								class="NavigationCustom__ImgBox-sc-1jxpb08-0 iuLTcm">
+								class="NavigationCustomImgBox">
 								<img
 									src="https://ccimage.hellomarket.com/img/common/arrow/left_black.png"
-									class="NavigationCustom__ArrowImg-sc-1jxpb08-1 kVlAuK">
+									class="NavigationCustomArrowImg">
 							</div>
 							<div style="margin-right: -10.4px"
-								class="NavigationCustom__ImgBox-sc-1jxpb08-0 iuLTcm">
+								class="NavigationCustomImgBox">
 								<img
 									src="https://ccimage.hellomarket.com/img/common/arrow/right_black.png"
-									class="NavigationCustom__ArrowImg-sc-1jxpb08-1 kVlAuK">
+									class="NavigationCustomArrowImg">
 							</div>
 						</div>
 					</div>
-
-					<div class="profile__Wrapper-kvbaf8-0 bCagbv">
-						<div class="profile__ProfileData-kvbaf8-1 hOLPng">
+					
+					<!--판매자정보 -->
+					<div class="profileWrapper">
+						<div class="profileProfileData">
 							<img
 								src="https://ccimg.hellomarket.com/images/2017/member_profile/s4/10/11/19/0206_2647700_1.jpg?size=s4"
-								alt="profileImg" class="profile__ProfileImg-kvbaf8-2 kYjTOu">
-							<div class="ProfileInfo__Wrapper-b9q6x7-0 jPSjWd">
-								<div class="ProfileInfo__ProfileName-b9q6x7-1 sbhKT">유이아빠</div>
-								<div class="ProfileInfo__ItemCountBox-b9q6x7-2 bVnkJX">
-									<div class="ProfileInfo__Product-b9q6x7-3 foIEcf">판매상품</div>
-									<div class="ProfileInfo__ItemQuantity-b9q6x7-4 fVqNln">62</div>
+								alt="profileImg" class="profileProfileImg">
+							<div class="ProfileInfoWrapper">
+								<div class="ProfileInfoProfileName">유이아빠</div>
+								<div class="ProfileInfoItemCountBox">
+									<div class="ProfileInfoProduct">판매상품</div>
+									<div class="ProfileInfoItemQuantity">62</div>
 								</div>
-								<div class="ProfileInfo__Rating-b9q6x7-5 jIuFeg">
+								<div class="ProfileInfoRating">
 									<img
 										src="https://ccimage.hellomarket.com/img/web/common/full_star.png"
-										alt="rating" class="ProfileInfo__StarImg-b9q6x7-7 gjntvH"><img
-										src="https://ccimage.hellomarket.com/img/web/common/full_star.png"
-										alt="rating" class="ProfileInfo__StarImg-b9q6x7-7 gjntvH"><img
-										src="https://ccimage.hellomarket.com/img/web/common/full_star.png"
-										alt="rating" class="ProfileInfo__StarImg-b9q6x7-7 gjntvH"><img
-										src="https://ccimage.hellomarket.com/img/web/common/full_star.png"
-										alt="rating" class="ProfileInfo__StarImg-b9q6x7-7 gjntvH">
-									<div class="ProfileInfo__RatingScore-b9q6x7-6 dkpZFZ">네잎</div>
+										alt="rating" class="ProfileInfoStarImg">
+									<div class="ProfileInfoRatingScore">세계수</div>
 								</div>
 							</div>
 						</div>
 					</div>
-
-
 				</div>
+				
+				<!--오른쪽섹션 -->
 				<div id="rightSection"
-					class="rightSection__Wrapper-sc-1hzq192-0 dwUVsv">
-					<div class="TopNavigation__Wrapper-sc-1m8x88m-0 dgPBCr">
+					class="rightSectionWrapper">
+					<div class="TopNavigationWrapper">
 						<img
 							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_report.png"
-							alt="신고하기" class="TopNavigation__Icon-sc-1m8x88m-1 eawVRt">
+							alt="신고하기" class="TopNavigationIcon">
 						<img
 							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_share.png"
-							alt="공유하기" class="TopNavigation__Icon-sc-1m8x88m-1 eawVRt">
+							alt="공유하기" class="TopNavigationIcon">
 					</div>
-					<div class="Title__Wrapper-fpouy4-0 jBaMjt">
-						<div class="Title__Text-fpouy4-2 gbiVER">플라워 에코백(새상품)</div>
-						<div class="Title__Text-fpouy4-2 dQSvui">10,800원</div>
+					<div class="TitleWrapper">
+						<div class="TitleText1">플라워 에코백(새상품)</div>
+						<div class="TitleText2">10,800원</div>
 					</div>
-					<div class="SubTitle__Wrapper-sc-73w2hk-0 dtefbS">
-						<div class="SubTitle__DetailBox-sc-73w2hk-1 lkBqgj">
-							<div class="SubTitle__DetailText-sc-73w2hk-3 iEKfyW">3시간 전</div>
-							<div class="SubTitle__WishBox-sc-73w2hk-2 hliMOw">
+					<div class="SubTitleWrapper">
+						<div class="SubTitleDetailBox">
+							<div class="SubTitleDetailText">3시간 전</div>
+							<div class="SubTitleWishBox">
 								<img
 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_small.png"
-									alt="좋아요 아이콘" class="SubTitle__Icon-sc-73w2hk-6 kCSCNG">
-								<div class="SubTitle__DetailText-sc-73w2hk-3 iEKfyW">0</div>
+									alt="좋아요 아이콘" class="SubTitleIcon">
+								<div class="SubTitleDetailText">0</div>
 							</div>
 						</div>
-						<div class="Category__Wrapper-sc-1a66rfh-0 geZsTq">
-						<p></p>
-						<div class="Category__Title-sc-1a66rfh-1 eHZYSn">카테고리</div>
-						<div class="Category__CategoryBox-sc-1a66rfh-2 iJsKqX">
-							<div class="DivergedLink__Title-sc-154a9w3-0 jkrKDf">가방</div>
+					<div class="CategoryWrapper">
+						<div class="CategoryTitle">카테고리</div>
+						<div class="CategoryCategoryBox">
+							<div class="DivergedLinkTitle">가방</div>
 							<img
 								src="https://ccimage.hellomarket.com/img/web/item/detail/ico_arrow_right_category.png"
-								alt="오른쪽 화살표 아이콘" class="Category__Arrow-sc-1a66rfh-3 jJIlRI">
-							<div class="DivergedLink__Title-sc-154a9w3-0 jkrKDf">기타 가방</div>
+								alt="오른쪽 화살표 아이콘" class="CategoryArrow">
+							<div class="DivergedLinkTitle">기타 가방</div>
 						</div>
 					</div>
 					</div>
-					<div class="itemController__Wrapper-dkit86-0 jRjxME">
-						<div class="SomeonesItem__Wrapper-d0pc1p-1 kmFeOp">
-							<div class="Wish__Wrapper-sc-1rxp5mk-0 kIOpLY">
+					<div class="itemControllerWrapper">
+						<div class="SomeonesItemWrapper">
+							<div class="WishWrapper">
 								<img
 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png"
-									alt="좋아요 아이콘" class="Wish__Icon-sc-1rxp5mk-1 bwDMoP">
-								<div class="Wish__Text-sc-1rxp5mk-2 crQjqv">0</div>
+									alt="좋아요 아이콘" class="WishIcon">
+<!-- 								<div class="WishText">0</div> -->
 							</div>
-							
-							<div width="42%" class="SomeonesItem__Button-d0pc1p-2 hHVRJZ"OnClick="location.href='marketChat'">
+							<div width="90%" class="SomeonesItemButton">
 								<img
 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_hellotalk.png"
-									alt="채팅 아이콘" class="SomeonesItem__Icon-d0pc1p-3 knNOuO">
-								<div color="#0072F4" class="SomeonesItem__Text-d0pc1p-4 guyjaq"><a>채팅하기</a></div>
+									alt="채팅 아이콘" class="SomeonesItemIcon">
+								<div color="#FFFFFF" class="SomeonesItemText">채팅하기</div>
 							</div>
 						</div>
 					</div>
 					<div></div>
-					<div class="Description__Wrapper-l27tpk-0 ihFWGi">
-						<div class="Description__Text-l27tpk-1 gexDlr">
+					<div class="DescriptionWrapper">
+						<div class="DescriptionText">
 							새상품 판매합니다 <br>색상 블랙 화이트 <br>사이즈 사진 참고하세요<br>안주머니에
 							지퍼 있습니다 <br>에코백은 똑딱이 단추 있습니다 <br>직거래 종암동주민센터 버스정류장 <br>한진택배
 							발송입니다 <br>반값 택배 가능 반값시 택포 8600원
 						</div>
 					</div>
-					
+
 					<div style="margin: -19px 20px 10px"
-						class="AdSense__Wrapper-arc24c-0 doRlNK">
+						class="AdSenseWrapper">
 						<ins class="adsbygoogle responsive" style="display: block"
 							data-ad-format="auto" data-ad-layout-key="+1h+s8-4-62+b3"
 							data-ad-slot="5474011742"
@@ -167,8 +165,126 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		<!-- 신고 모달창 -->
+		<div class="ReactModalPortal">
+			<div
+				class="ReactModal__Overlay ReactModal__Overlay--after-open detail_report">
+				<div
+					class="ReactModal__Content ReactModal__Content--after-open modal_main"
+					tabindex="-1" role="dialog">
+					<div class="modal_parent">
+						<div class="modal_container">
+							<div class="Report__Wrapper-sc-140fn8w-0 giZTAr">
+								<img
+									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_close_modal.png"
+									alt="닫기 아이콘" class="Report__CloseIcon-sc-140fn8w-1 close">
+								<div class="Report__Title-sc-140fn8w-2 fwaQok">신고 사유를 선택해
+									주세요.</div>
+								<div class="Report__ListWrapper-sc-140fn8w-3 gGZdRJ">
+									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
+										<img
+											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png"
+											alt="체크박스 아이콘"
+											class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<div class="Report__List-sc-140fn8w-6 ejCmPe">안전결제 거부</div>
+									</div>
+									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
+										<img
+											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png"
+											alt="체크박스 아이콘"
+											class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<div class="Report__List-sc-140fn8w-6 ejCmPe">주류, 담배</div>
+									</div>
+									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
+										<img
+											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png"
+											alt="체크박스 아이콘"
+											class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<div class="Report__List-sc-140fn8w-6 ejCmPe">전문 의약품,
+											의료기기</div>
+									</div>
+									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
+										<img
+											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png"
+											alt="체크박스 아이콘"
+											class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<div class="Report__List-sc-140fn8w-6 ejCmPe">개인정보
+											거래(신분증, 대포폰 등)</div>
+									</div>
+									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
+										<img
+											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png"
+											alt="체크박스 아이콘"
+											class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<div class="Report__List-sc-140fn8w-6 ejCmPe">음란물/성인용품(중고속옷
+											포함)</div>
+									</div>
+									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
+										<img
+											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png"
+											alt="체크박스 아이콘"
+											class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<div class="Report__List-sc-140fn8w-6 ejCmPe">위조상품</div>
+									</div>
+									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
+										<img
+											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png"
+											alt="체크박스 아이콘"
+											class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<div class="Report__List-sc-140fn8w-6 ejCmPe">총포 도검류</div>
+									</div>
+									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
+										<img
+											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png"
+											alt="체크박스 아이콘"
+											class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<div class="Report__List-sc-140fn8w-6 ejCmPe">화장품 견본품</div>
+									</div>
+									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
+										<img
+											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png"
+											alt="체크박스 아이콘"
+											class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<div class="Report__List-sc-140fn8w-6 ejCmPe">게임계정</div>
+									</div>
+									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
+										<img
+											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png"
+											alt="체크박스 아이콘"
+											class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<div class="Report__List-sc-140fn8w-6 ejCmPe">도배행위</div>
+									</div>
+									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
+										<img
+											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png"
+											alt="체크박스 아이콘"
+											class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<div class="Report__List-sc-140fn8w-6 ejCmPe">동물 분양/입양글</div>
+									</div>
+								</div>
+								<div class="Report__Button-sc-140fn8w-7 IZaFu">신고하기</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</div>
+	
+<script type="text/javascript">
+
+	$(function () {
+		$(".close").on("click", function(e) {
+			alert("sadasdas");
+		});
+	});
+
+</script>
+	
 	<jsp:include page="../footer.jsp" />
+	
 </body>
 </html>
