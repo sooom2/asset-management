@@ -32,7 +32,7 @@ $(function() {
 	<div id="auction_container">
 		<div id="auction_contents" class="">
 		<!-- inner-wrap -->
-			<a href="chatPage">생성후채팅방</a>
+<!-- 			<a href="chatPage">생성후채팅방</a> -->
 			<div class="inner-wrap">
 				<h2 class="tit" style="display: inline-block;">소셜 가계부</h2>
 				<ul class="auctionTab">
@@ -40,45 +40,94 @@ $(function() {
 					<li data-tab="tab2"><a href="#">기간경매</a></li>
 					<li data-tab="tab3"><a href="#">종료된경매</a></li>
 				</ul>
-			<div class="section group chall-board">
-			<div class="tab_content">
-				<!-- Tab  -->
-				<div id="tab1" class="tabcontent on">
-				<ul class="pickedContentContainer">
-					<li class="pickedContent">
-						<div class="landingPickWrap">
-							<div class="contentImage">
-								<div class="ddday">
-									시작<br>D-10
-								</div>
-							</div>
-							<div class="contentBox">
-<!-- 								<div  class="con_period">[소비방]</div> -->
-								<div class="con_tit">도자기</div>
-								<hr>
-								<div class="con_detail">
-									<div><span>시작일</span><div class="con_period">2023.06.14</div></div>
-									<div><span>현재가</span><div class="con_price"><span class="won">&nbsp;5,000원</span></div></div>
-									<div><span>즉시구매가</span><div class="con_price">&nbsp;<span class="won">35,000원</span></div></div>
-									<hr>
-									<div><div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<span>명</span></div></div><br>
-<!-- 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/20<span>명</span></div><br> -->
-								</div>
-							</div>
-							<a href="" class="clickArea">대화방바로가기</a>
+				<div class="section group chall-board">
+					<div class="tab_content">
+						<!-- Tab  -->
+						<div id="tab1" class="tabcontent on">
+							<ul class="pickedContentContainer">
+								<li class="pickedContent">
+									<div class="landingPickWrap">
+										<div class="contentImage">
+											<div class="ddday">
+												시작<br>D-10
+											</div>
+										</div>
+										<div class="contentBox">
+			<!-- 								<div  class="con_period">[소비방]</div> -->
+											<div class="con_tit">도자기</div>
+											<hr>
+											<div class="con_detail">
+												<div><span>시작일</span><div class="con_period">2023.06.14</div></div>
+												<div><span>현재가</span><div class="con_price"><span class="won">&nbsp;5,000원</span></div></div>
+												<div><span>즉시구매가</span><div class="con_price">&nbsp;<span class="won">35,000원</span></div></div>
+												<hr>
+												<div><div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<span>명</span></div></div><br>
+			<!-- 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/20<span>명</span></div><br> -->
+											</div>
+										</div>
+										<a href="chatPage" class="clickArea">대화방바로가기</a>
+									</div>
+								</li>
+							</ul>
 						</div>
-					</li>
-				</ul>
-			</div>
-			
-			<div id="tab2" class="tabcontent">
-			</div>
-			
-			<div id="tab3" class="tabcontent">
-			</div>
-			</div>
-		</div>
-				
+					
+						<div id="tab2" class="tabcontent">
+							<ul class="pickedContentContainer">
+								<li class="pickedContent">
+									<div class="landingPickWrap">
+										<div class="contentImage">
+											<div class="ddday">
+												시작<br>D-10
+											</div>
+										</div>
+										<div class="contentBox">
+			<!-- 								<div  class="con_period">[소비방]</div> -->
+											<div class="con_tit">도자기</div>
+											<hr>
+											<div class="con_detail">
+												<div><span>시작일</span><div class="con_period">2023.06.14</div></div>
+												<div><span>현재가</span><div class="con_price"><span class="won">&nbsp;5,000원</span></div></div>
+												<div><span>즉시구매가</span><div class="con_price">&nbsp;<span class="won">35,000원</span></div></div>
+												<hr>
+												<div><div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<span>명</span></div></div><br>
+			<!-- 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/20<span>명</span></div><br> -->
+											</div>
+										</div>
+										<a href="" class="clickArea">대화방바로가기</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+						
+						<div id="tab3" class="tabcontent">
+							<ul class="pickedContentContainer">
+								<li class="pickedContent">
+									<div class="landingPickWrap">
+										<div class="contentImage">
+											<div class="ddday">
+												시작<br>D-10
+											</div>
+										</div>
+										<div class="contentBox">
+			<!-- 								<div  class="con_period">[소비방]</div> -->
+											<div class="con_tit">도자기</div>
+											<hr>
+											<div class="con_detail">
+												<div><span>시작일</span><div class="con_period">2023.06.14</div></div>
+												<div><span>현재가</span><div class="con_price"><span class="won">&nbsp;5,000원</span></div></div>
+												<div><span>즉시구매가</span><div class="con_price">&nbsp;<span class="won">35,000원</span></div></div>
+												<hr>
+												<div><div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<span>명</span></div></div><br>
+			<!-- 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/20<span>명</span></div><br> -->
+											</div>
+										</div>
+										<a href="" class="clickArea">대화방바로가기</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
