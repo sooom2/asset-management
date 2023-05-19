@@ -12,8 +12,8 @@
 <body>
 	<jsp:include page="../nav.jsp" />
 
-	<div class="profileWrapper-sc-12nw6v6-0 hLjdoo">
-		<div class="profileContainer-sc-12nw6v6-1 cMqFPK">
+	<div class="profileWrapper">
+		<div class="profileContainer">
 			<div class="memberInfoWrapper">
 				<div class="memberInfoInfoArea">
 					<div class="userDataWrapper">
@@ -75,6 +75,7 @@
 										alt="화살표 이미지" class="CategoryArrow">
 								</div>
 							</div>
+							
 							<div width="130px" class="DropBoxWrapper">
 								<div class="DropBoxBox">
 									<div class="SellStatusText">판매상태</div>
@@ -83,6 +84,7 @@
 										alt="화살표 이미지" class="SellStatusArrow">
 								</div>
 							</div>
+							
 							<div width="140px" class="DropBoxWrapper">
 								<div class="DropBoxBox">
 									<div class="PriceText">가격</div>

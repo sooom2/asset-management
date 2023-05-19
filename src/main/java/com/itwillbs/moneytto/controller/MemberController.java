@@ -49,11 +49,12 @@ public class MemberController {
 //		int insertCount = service.registMember(member);
 //		if(insertCount > 0) { // 가입 성공
 //			service.insertPoint(member.get("member_id"));
-			return "member/mem_join_success";
+//			return "member/mem_join_success";
 //		} else { // 가입 실패
 //			model.addAttribute("msg", "회원 가입 실패!");
 //			return "member/fail_back";
-		}
+		return "member/mem_join_success";
+	}
 			
 	//회원로그인
 	@GetMapping(value = "memLogin")

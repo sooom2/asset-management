@@ -6,12 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="resources/css/main.css" rel="stylesheet">
-<link href="resources/css/common.css" rel="stylesheet">
-<link href="resources/css/inc.css" rel="stylesheet">
+<!-- <link href="resources/css/main.css" rel="stylesheet"> -->
+<!-- <link href="resources/css/common.css" rel="stylesheet"> -->
+<!-- <link href="resources/css/inc.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="resources/js/main.js"></script>
+<!-- <script type="text/javascript" src="resources/js/main.js"></script> -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 <script type="text/javascript">
@@ -81,7 +81,7 @@ $(function() {
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
-	<div class="member mem-login">
+	<div class="member mem-login" >
 		<div class="list-tabs">
 			<a href="memLogin" class="active">회원 로그인</a>
 <!-- 			<a href="guestRsv">비회원 예매 및 확인</a> -->
@@ -105,6 +105,7 @@ $(function() {
 						</div>
 					<button type="submit" class="btn-type0">로그인</button>
 				</form>
+				
 			</div>
 		</div>
 	</div>
