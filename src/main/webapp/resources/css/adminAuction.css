@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+.regist_container {
+	padding: 20px;
+}
+
+.content {
+	width: 41%;
+	margin: 0 auto;
+	float: center;
+}
+
+.myForm {
+	background: #eee;
+	padding: 1.2em;
+}
+
+
+.myForm div label{
+	width: 120px;
+	text-align: right;
+	line-height: 55px;
+	font-weight: 800;
+	padding-right: 15px;
+}
+
+.myForm div button{
+	display: inherit;
+	border: none;
+	width: 200px;
+	height: 50px;
+	margin: 0 auto;
+}
+
+.myForm>input, .myForm>textarea, .myForm>button {
+	border: none;
+	padding: 1em;
+}
+
+.myForm div input{
+	border: 1px solid #a9a9a9ee;
+	width: 449px;
+	height: 35px;
+	margin-left: -4px;
+}
+.myForm div textarea{
+	height: 100px;
+	width: 450px;
+	border: 1px solid #a9a9a9ee;
+}
+
+ .form-group {
+    display: flex;
+    /* flex-direction: column; */
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    /* margin-bottom: 5px; */
+    /* height: 40px; */
+    line-height: 26px!important;
+}
+
+.form-group textarea {
+    height: 200px; /* 원하는 높이 값으로 변경하세요 */
+}
