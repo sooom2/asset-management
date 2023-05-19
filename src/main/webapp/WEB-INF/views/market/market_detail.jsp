@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 
-<link href="resources/css/trade_detail.css" rel="stylesheet" />
+<link href="${path }/resources/css/market_detail.css" rel="stylesheet">
 <link href="resources/css/swiper.min.css" rel="stylesheet" />
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 </head>
@@ -89,16 +90,11 @@
 										src="https://ccimage.hellomarket.com/img/web/common/full_star.png"
 										alt="rating" class="ProfileInfoStarImg"><img
 										src="https://ccimage.hellomarket.com/img/web/common/full_star.png"
-										alt="rating" class="ProfileInfoStarImg"><img
-										src="https://ccimage.hellomarket.com/img/web/common/full_star.png"
 										alt="rating" class="ProfileInfoStarImg">
-									<div class="ProfileInfoRatingScore">(10)</div>
+									<div class="ProfileInfoRatingScore">네잎</div>
 								</div>
 							</div>
 						</div>
-						<img
-							src="https://ccimage.hellomarket.com/img/web/common/not_following.png"
-							class="FollowFollowingImg">
 					</div>
 				</div>
 				
@@ -114,7 +110,6 @@
 							alt="공유하기" class="TopNavigationIcon">
 					</div>
 					<div class="TitleWrapper">
-						<div class="TitleBrandText">NO BRAND</div>
 						<div class="TitleText1">플라워 에코백(새상품)</div>
 						<div class="TitleText2">10,800원</div>
 					</div>
@@ -128,9 +123,16 @@
 								<div class="SubTitleDetailText">0</div>
 							</div>
 						</div>
-						<div class="SubTitleTagBox">
-							<div class="SubTitleTagText">새 상품(미개봉)</div>
+					<div class="CategoryWrapper">
+						<div class="CategoryTitle">카테고리</div>
+						<div class="CategoryCategoryBox">
+							<div class="DivergedLinkTitle">가방</div>
+							<img
+								src="https://ccimage.hellomarket.com/img/web/item/detail/ico_arrow_right_category.png"
+								alt="오른쪽 화살표 아이콘" class="CategoryArrow">
+							<div class="DivergedLinkTitle">기타 가방</div>
 						</div>
+					</div>
 					</div>
 					<div class="itemControllerWrapper">
 						<div class="SomeonesItemWrapper">
@@ -138,20 +140,13 @@
 								<img
 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png"
 									alt="좋아요 아이콘" class="WishIcon">
-								<div class="WishText">0</div>
+<!-- 								<div class="WishText">0</div> -->
 							</div>
-							<div width="42%" class="SomeonesItemButton">
+							<div width="90%" class="SomeonesItemButton">
 								<img
 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_hellotalk.png"
 									alt="채팅 아이콘" class="SomeonesItemIcon">
 								<div color="#FFFFFF" class="SomeonesItemText">채팅하기</div>
-							</div>
-							<div width="58%" class="SomeonesItemButton">
-								<img
-									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_purchase_default.png"
-									alt="안전결제 아이콘" class="SomeonesItemIcon">
-								<div color="#FFFFFF" class="SomeonesItemText">안전결제
-								</div>
 							</div>
 						</div>
 					</div>
@@ -163,42 +158,7 @@
 							발송입니다 <br>반값 택배 가능 반값시 택포 8600원
 						</div>
 					</div>
-					<div class="CategoryWrapper">
-						<div class="CategoryTitle">카테고리</div>
-						<div class="CategoryCategoryBox">
-							<div class="DivergedLinkTitle">가방</div>
-							<img
-								src="https://ccimage.hellomarket.com/img/web/item/detail/ico_arrow_right_category.png"
-								alt="오른쪽 화살표 아이콘" class="CategoryArrow">
-							<div class="DivergedLinkTitle">기타 가방</div>
-						</div>
-					</div>
-					<div class="DeliveryWrapper">
-						<div class="DeliveryTitle">배송정보</div>
-						<div class="DeliveryDeliveryBox">
-							<img
-								src="https://ccimage.hellomarket.com/img/web/item/detail/img_delivery_method.png"
-								alt="배송방법 이미지" class="DeliveryImg">
-							<div width="63px" class="DeliveryText1">배송방법</div>
-							<div class="DeliveryText">판매자가 알아서 배송</div>
-						</div>
-						<div class="DeliveryDeliveryBox">
-							<img
-								src="https://ccimage.hellomarket.com/img/web/item/detail/img_delivery_fee.png"
-								alt="배송비 이미지" class="DeliveryImg">
-							<div width="63px" class="DeliveryText1">배송비</div>
-							<div class="DeliveryText2">무료배송</div>
-						</div>
-					</div>
-					<div class="SafePaymentWrapper">
-						<img
-							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_safe_payment.svg"
-							alt="안전결제 노티스 아이콘" class="SafePaymentImg">
-						<div class="SafePaymentTextWrapper">
-							<div class="SafePaymentText">안전결제</div>
-							외 거래는 사기피해 보호를 받을 수 없습니다.
-						</div>
-					</div>
+
 					<div style="margin: -19px 20px 10px"
 						class="AdSenseWrapper">
 						<ins class="adsbygoogle responsive" style="display: block"

@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <link href="${path }/resources/css/market.css" rel="stylesheet">
-<link href="${path }/resources/css/market_detail.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
   <body>
@@ -127,7 +126,7 @@
                         	<div class="SortListList">최근 등록순</div>
                         	<div class="SortListList">낮은 가격순</div>
                         	<div class="SortListList">높은 가격순</div>
-                        	<div class="SortListList">찜 많은 순</div>
+<!--                         	<div class="SortListList">찜 많은 순</div> -->
                        	</div>
                        	<!--  -->
                         <div class="sortSortBox">
@@ -147,7 +146,7 @@
 											</div>
 									</div>
 									<!-- 삭제 -->
-									<div class="itemTextBox" onclick="location.href='trade_detail'">
+									<div class="itemTextBox" onclick="location.href='market_detail'">
 									<div class="itemBrand">와이드앵글</div>
 									<div class="itemText">20,000원</div>
 									<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
@@ -157,7 +156,7 @@
 									<div class="itemTimeTag">방금 전</div>
 									</div>
 									<!-- 삭제 -->			
-									<div class="itemTextBox" onclick="location.href='trade_detail'">
+									<div class="itemTextBox" onclick="location.href='market_detail'">
 									<!-- 물건이름, 지역, 가격, 시간 -->
 										<div class="itemBrand">#물건이름#</div>
 										<div class="itemPrice">#가격#</div>
