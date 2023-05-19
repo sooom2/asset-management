@@ -30,7 +30,11 @@ public class MainController {
 		return "chat/chat";
 	}
 	
-
+	@GetMapping("/adminAuction")
+	public String adminAuction() {
+		
+		return "adminAuction";
+	}
 	
 	
 }

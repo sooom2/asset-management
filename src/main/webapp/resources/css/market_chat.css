@@ -27,9 +27,12 @@
 }
 
 .left_main .left_main_header {
-    display: none
+/*     display: none */
+	text-align: center;
 }
-
+.left_main .left_main_header .title{
+	line-height: 100px;
+}
 .left_main ul {
     height: 77vh;
     overflow-y: auto;
@@ -228,8 +231,9 @@
 .reight_main .chat_header .scheduling{
 	display: inline-block;
 }
-.chat_header .scheduling a{
+.chat_header .scheduling .sch_date{
 	color: #BB2649;
+	margin-left: 60px;
 }
 
 
@@ -872,5 +876,106 @@
 
 .chat_empty .chat_empty_image {
     text-align: center
+}
+
+
+.chat_description .chat_opponent {
+        overflow: hidden;
+        margin-top: 20px
+    }
+
+.chat_description .chat_opponent_message:after {
+    content: "";
+    position: absolute;
+    border-color: transparent transparent #ebebeb!important;
+    border: 10px solid #000;
+    transform-origin: 0 0;
+    left: 4px;
+    top: -14px;
+    -webkit-transform: rotate(-315deg);
+    -moz-transform: rotate(-315deg);
+    transform: rotate(-315deg)
+}
+
+.chat_description .chat_opponent_image_box {
+    float: left;
+    margin: 0 9px 0 11px
+}
+
+.chat_description .chat_opponent_title {
+    float: left;
+    width: 85%;
+    font-size: 12px;
+    color: #4e4e4c;
+    margin-bottom: 5px
+}
+
+.chat_description .chat_opponent_message {
+    max-width: 200px;
+    background-color: #ebebeb;
+    padding: 9px 12px;
+    margin-right: 10px;
+    word-break: break-all
+}
+
+.chat_description .chat_opponent_emoticon,.chat_description .chat_opponent_message {
+    position: relative;
+    float: left;
+    text-align: left;
+    border-radius: 0 10px 10px 10px;
+    margin-left: 10px
+}
+
+.chat_description .chat_opponent_emoticon {
+    max-width: 232px;
+    padding: 0
+}
+
+.chat_description .chat_opponent_image {
+    position: relative;
+    float: left;
+    text-align: left;
+    max-width: 232px;
+    padding: 0;
+    border-radius: 0 10px 10px 10px
+}
+
+.chat_description .chat_opponent_emoticon_image {
+    width: 100px
+}
+
+.chat_description .chat_opponent_image_file {
+    width: 170px;
+    border-radius: 5px;
+    cursor: pointer
+}
+
+.chat_description .chat_opponent_message span {
+    font-size: 13.5px;
+    color: #000
+}
+
+.chat_description .chat_opponent_image_box .chat_opponent_profile_image {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer
+}
+
+.chat_description .chat_opponent_timeago {
+    position: absolute;
+    font-size: 11px;
+    color: #b4b4b4;
+    right: -70px;
+    bottom: 3px;
+    width: 60px;
+    text-align: left
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+::-webkit-scrollbar-thumb {
+    background: #a9a9a9;
 }
 
