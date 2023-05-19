@@ -24,10 +24,10 @@ public class MainController {
 		return "main";
 	}
 	
-	@GetMapping("/myAlarm")
+	@GetMapping("/chat")
 	public String chat() {
 		
-		return "mypage/my_alarm";
+		return "chat/chat";
 	}
 	
 	@GetMapping("/itemRegist")

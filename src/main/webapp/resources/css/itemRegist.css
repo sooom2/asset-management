@@ -1,10 +1,24 @@
 @charset "UTF-8";
 
+:lang(ko) {
+    font-family: Pretendard Variable,Noto Sans KR,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
 
 body {
     bgproperties: fixed
 }
 
+a,address,b,body,center,code,dd,details,div,dl,dt,footer,form,header,html,i,iframe,img,input,ins,label,li,mark,menu,object,output,p,q,s,section,select,span,strong,sub,summary,table,tbody,td,textarea,th,time,tr,u,ul,var {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    font-weight: 400;
+    color: #333;
+    font-family: ë‹ì›€,Dotum,Arial
+}
 
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -109,6 +123,7 @@ input[type=date],input[type=email],input[type=number],input[type=password],input
 }
 
 
+@media (min-width: 801px) {
 
 
     .regist_top .regist_box_top {
@@ -214,7 +229,7 @@ input[type=date],input[type=email],input[type=number],input[type=password],input
 
     #images_box .count_img {
         position: absolute;
-        margin-top: 43px;
+        margin-top: 32px
     }
 
     #images_box .count_img,#images_box .count_img span {
@@ -441,8 +456,10 @@ input[type=date],input[type=email],input[type=number],input[type=password],input
         position: absolute;
         background-color: #0484f6;
     }
+}
 
 
+@media (min-width: 801px) {
     .paging ul {
         text-align:center;
         margin: 20px 0 0
@@ -943,6 +960,7 @@ input[type=date],input[type=email],input[type=number],input[type=password],input
     }
 
     
+}
 
 
 
@@ -1020,7 +1038,6 @@ input[type=date],input[type=email],input[type=number],input[type=password],input
     cursor: pointer;
 }
 
-<<<<<<< main
 .IizqB {
     margin-left: 20px;
     width: 400px;
@@ -1028,20 +1045,6 @@ input[type=date],input[type=email],input[type=number],input[type=password],input
     overflow-y: scroll;
     box-sizing: border-box;
 }
-=======
-.MiddleDotTextText {
-    color: #A1A8AF;
-    -webkit-letter-spacing: -0.6px;
-    -moz-letter-spacing: -0.6px;
-    -ms-letter-spacing: -0.6px;
-    letter-spacing: -0.6px;
-    font-weight: 400;
-    font-size: 0.875rem;
-    font-family: Pretendard Variable;
-    line-height: 120%;
-}
-
->>>>>>> 7739957 market
 
 .itemStatus_description {
     font-size: 17px;
@@ -1139,7 +1142,6 @@ input[type=date],input[type=email],input[type=number],input[type=password],input
     padding-left: 20px;
 }
 
-<<<<<<< main
 
 .fWsLxb {
     width: 15px;
@@ -1190,9 +1192,6 @@ input[type=date],input[type=email],input[type=number],input[type=password],input
 
 
 .dHybRK {
-=======
-.PricePriceInput {
->>>>>>> 7739957 market
     color: rgb(51, 61, 75);
     font-size: 1.5rem;
     width: 96%;
@@ -1216,28 +1215,4 @@ input[type=date],input[type=email],input[type=number],input[type=password],input
 
 .gXwkHI {
     position: relative;
-<<<<<<< main
-=======
-}
-
-
-.priceCheckbox label {
-    font-size: 16px;
-    font-weight: bold;
-}
-input[type=checkbox] {
-    width: 20px;
-    height: 20px;
-}
-.introduce::placeholder {
-    color: gray;
-    font-style: italic;
-}
-.default, .image_list li {
-    width: 160px;
-    float: left;
-    margin-right: 8px;
-    margin-bottom: 20px;
-    border-radius: 12px;
->>>>>>> 7739957 market
 }
