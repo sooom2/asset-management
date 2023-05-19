@@ -81,10 +81,6 @@ header {
 		no-repeat;
 }
 
-#header nav.secondary>ul>li a:hover {
-	color: #000;
-}
-
 #header nav.secondary>ul>li .sub {
 	display: none;
 	position: absolute;
@@ -105,76 +101,6 @@ header {
 	font-size: 16px;
 }
 
-#header nav.secondary>ul>li .sub li:nth-child(1) {
-	background-color: #3a3a3a;
-}
-
-#header nav.secondary>ul>li .sub li:nth-child(1) a {
-	color: #ccc;
-	display: block;
-	position: relative;
-	line-height: 31px;
-}
-
-#header nav.secondary>ul>li .sub li:nth-child(1) a:after {
-	content: "";
-	width: 160px;
-	height: 1px;
-	background-color: #555;
-	position: absolute;
-	left: -15px;
-	bottom: 0;
-}
-
-#header nav.secondary>ul>li .sub li:nth-child(2) {
-	background-color: #3a3a3a;
-}
-
-#header nav.secondary>ul>li .sub li:nth-child(2) a {
-	color: #ccc;
-	display: block;
-	position: relative;
-	line-height: 31px;
-}
-
-#header nav.secondary>ul>li .sub li:nth-child(2) a:after {
-	content: "";
-	width: 160px;
-	height: 1px;
-	background-color: #555;
-	position: absolute;
-	left: -15px;
-	bottom: 0;
-}
-
-#header nav.secondary>ul>li .sub li:nth-child(3) {
-	background-color: #3a3a3a;
-}
-
-#header nav.secondary>ul>li .sub li:nth-child(3) a {
-	color: #ccc;
-	line-height: 31px;
-}
-
-#header nav.secondary>ul>li .sub li:nth-child(4) {
-	background-color: #fff;
-	color: #333;
-	box-sizing: border-box;
-	border: solid 1px #d8d8d8;
-	border-width: 0 1px;
-	line-height: 31px;
-}
-
-#header nav.secondary>ul>li .sub li:nth-child(4) a:hover {
-	color: #7d7d7d;
-}
-
-#header nav.secondary>ul>li .sub li:nth-child(5) {
-	background-color: #f3f3f3;
-	height: 66px;
-	line-height: 31px;
-	color: #7d7d7d;
-}
 
 #header nav.secondary>ul>li .sub li .info {
 	position: absolute;
@@ -272,10 +198,6 @@ header {
 
 .wrap-nav-primary nav.primary>ul>li>a.selected {
 	color: #c39c71;
-}
-
-.wrap-nav-primary nav.primary>ul>li>a:hover {
-	color: #bb2649;
 }
 
 .wrap-nav-primary nav.primary>ul>li:last-child>a {
@@ -376,10 +298,6 @@ div.tertiary.on {
 	overflow: hidden;
 	text-indent: -10000em;
 	float: right;
-}
-
-#footer .footer-social .btn-to-top:hover {
-	background-image: url("../images/footer/btn-to-top-on.png");
 }
 
 #footer .footer-service {

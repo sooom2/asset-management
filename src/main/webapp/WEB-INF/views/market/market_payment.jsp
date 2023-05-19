@@ -8,10 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>머니머니머니또</title>
-<link href="${path }/resources/css/socialBook.css" rel="stylesheet">
-<link href="${path }/resources/css/inc.css" rel="stylesheet">
 <link href="${path }/resources/css/main.css" rel="stylesheet">
-<link href="${path }/resources/css/trade_payment.css" rel="stylesheet">
+<link href="${path }/resources/css/market_payment.css" rel="stylesheet">
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>

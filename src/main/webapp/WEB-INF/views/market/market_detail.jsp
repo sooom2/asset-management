@@ -138,11 +138,12 @@
 									alt="좋아요 아이콘" class="Wish__Icon-sc-1rxp5mk-1 bwDMoP">
 								<div class="Wish__Text-sc-1rxp5mk-2 crQjqv">0</div>
 							</div>
-							<div width="42%" class="SomeonesItem__Button-d0pc1p-2 hHVRJZ">
+							
+							<div width="42%" class="SomeonesItem__Button-d0pc1p-2 hHVRJZ"OnClick="location.href='marketChat'">
 								<img
 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_hellotalk.png"
 									alt="채팅 아이콘" class="SomeonesItem__Icon-d0pc1p-3 knNOuO">
-								<div color="#0072F4" class="SomeonesItem__Text-d0pc1p-4 guyjaq">채팅하기</div>
+								<div color="#0072F4" class="SomeonesItem__Text-d0pc1p-4 guyjaq"><a>채팅하기</a></div>
 							</div>
 						</div>
 					</div>

@@ -2,54 +2,6 @@
 
 
 
-header {
-    border-bottom:1px solid #ebebeb
-}
-
-.header_top {
-    max-width: 980px;
-    margin: 44px auto 15px;
-    background-color: #fff;
-    height: 37px;
-    position: relative
-}
-
-.header_top:after {
-    clear: both;
-    content: "";
-    display: block
-}
-
-.header_top .log_box {
-    float: left
-}
-
-.header_top .profile_box {
-    float: right;
-    cursor: pointer
-}
-
-.header_top .profile_box .info:after {
-    display: block;
-    clear: both;
-    content: ""
-}
-
-.header_top .profile_box .info img {
-    width: 36px;
-    height: 36px;
-    float: left;
-    border-radius: 50%
-}
-
-.header_top .profile_box .info span {
-    float: left;
-    line-height: 36px;
-    font-size: 14px;
-    color: #000;
-    margin-left: 10px
-}
-
 .content .main_area {
     width: 980px;
     margin: 0 auto;
@@ -61,6 +13,8 @@ header {
     clear: both;
     content: ""
 }
+
+
 
 .left_main {
     width: 270px;
@@ -221,6 +175,8 @@ header {
     text-align: center
 }
 
+
+
 .right_main {
     width: 686px;
     height: 77vh;
@@ -233,7 +189,7 @@ header {
 .right_main .chat_header {
     border-bottom: 1px solid #ebebeb;
     padding: 15px 20px;
-    height: 50px
+    height: 65px;
 }
 
 .right_main .chat_header:after {
@@ -267,6 +223,17 @@ header {
     display: table-cell;
     vertical-align: middle
 }
+
+
+.reight_main .chat_header .scheduling{
+	display: inline-block;
+}
+.chat_header .scheduling a{
+	color: #BB2649;
+}
+
+
+
 
 .right_main .chat_header .info span:first-child {
     color: #000;
@@ -906,5 +873,4 @@ header {
 .chat_empty .chat_empty_image {
     text-align: center
 }
-
 

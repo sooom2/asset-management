@@ -1211,9 +1211,7 @@ img {
     font-weight: bold;
 }
 
-svg:not(:root) {
-    overflow: hidden;
-}
+
 
 .section-mypage-summary .summary h3 {
     font-size: 19px;
@@ -1222,10 +1220,6 @@ svg:not(:root) {
     border-bottom: 1px solid #f3f3f3;
     padding: 0 0 18px 19px;
     margin: 0 15px 21px 15px;
-}
-
-:not(svg) {
-    transform-origin: 0px 0px;
 }
 
 
