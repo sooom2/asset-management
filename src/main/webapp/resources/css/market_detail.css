@@ -739,8 +739,105 @@
 }
 
 
+/* 신고 */
+
+.detail_report, .overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.75);
+    z-index: 9999;
+    outline: 0;
+}
 
 
+.modal_main {
+    width: 100%;
+    height: 100%;
+    outline: 0;
+}
+
+.modal_parent {
+    display: table;
+    height: 100%;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.modal_parent .modal_container {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.giZTAr {
+    width: 490px;
+    margin: 0px auto;
+    background: rgb(255, 255, 255);
+    border-radius: 17px;
+    border: 1px solid rgb(25, 31, 40);
+}
+
+.close {
+    width: 17px;
+    height: 17px;
+    display: flex;
+    cursor: pointer;
+    margin: 34px 34px 10px auto;
+}
+
+.fwaQok {
+    letter-spacing: 0px;
+    font-weight: 800;
+    font-size: 1.75rem;
+    font-family: "Pretendard Variable";
+    color: rgb(25, 31, 40);
+    -webkit-box-align: center;
+    align-items: center;
+    margin: 0px 68px;
+}
+
+.gGZdRJ {
+    margin: 34px 68px 32px;
+}
+
+.ezioIF {
+    display: flex;
+    cursor: pointer;
+}
+
+.hzjjbI {
+    width: 22px;
+    height: 22px;
+    margin: 0px 12px 15px;
+}
+
+.ejCmPe {
+    letter-spacing: -0.4px;
+    font-weight: 500;
+    font-size: 1rem;
+    font-family: "Pretendard Variable";
+    line-height: 150%;
+    color: rgb(51, 61, 75);
+}
+
+.IZaFu {
+    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    font-family: "Pretendard Variable";
+    line-height: 100%;
+    color: rgb(255, 255, 255);
+    padding: 11px 53px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 0px 67px 60px 69px;
+    cursor: pointer;
+    background: rgb(185, 218, 254);
+}
 
 
 
