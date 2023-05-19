@@ -65,6 +65,7 @@
 				<div class="regist_container">
 					<div class="content">
 						<form class="myForm">
+						<h4>물품등록</h4>
 							<div>
 								<label for="customer_name">상품명</label>
 								<input type="text" name="customer_name" id="customer_name" required placeholder="상품명을 입력하세요">
