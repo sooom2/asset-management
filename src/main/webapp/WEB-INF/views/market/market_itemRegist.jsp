@@ -152,7 +152,7 @@
 <style>
 .selected {
 	font-weight: bold;
-	font-size: 18px;
+	color: #bb2649;
 }
 </style>
 
