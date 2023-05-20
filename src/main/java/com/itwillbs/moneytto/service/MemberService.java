@@ -54,10 +54,9 @@ public class MemberService {
 	}
 	
 	// 유저 확인
-	public HashMap<String, String> checkUser(HashMap<String, String> login) {
+	public HashMap<String, String> checkMember(HashMap<String, String> user) {
 		
-		return login; //  DB생겻을때 바꿀것
-		//return mapper.chekUser(login);
+		return mapper.chekMember(user);
 		
 	}
 	// 	아이디 조회

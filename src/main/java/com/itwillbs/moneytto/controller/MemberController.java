@@ -38,6 +38,7 @@ public class MemberController {
 	@GetMapping(value = "joinform")
 	public String joinform(String email, Model model) {
 		System.out.println(email);
+		
 		model.addAttribute("email", email);
 		return "member/mem_join_form";
 	}
@@ -72,30 +73,30 @@ public class MemberController {
 	}
 	
 	//회원 로그인 확인 
-	@RequestMapping(value = "loginPro", method = RequestMethod.GET)
-	public String loginPro(@RequestParam HashMap<String, String> login, Model model, HttpSession session) {
-	    String memberId = login.get("member_id");
-	    String password = login.get("member_pw");
+	@RequestMapping(value = "loginPro", method = RequestMethod.POST)
+	public String loginPro(@RequestParam HashMap<String, String> user, Model model, HttpSession session) {
+		System.out.println(" login : " + user);
+	    String memberId = user.get("member_id");
+	    String password = user.get("member_pw");
 
-	    HashMap<String, String> member = memberService.checkUser(login);
+	    HashMap<String, String> member = memberService.checkMember(user);
+		System.out.println(" member : " + member);
+	    if (member != null) {
+	        String hashedPassword = member.get("member_pw");
+		    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-	    if (member == null) {
-	        model.addAttribute("msg", "아이디와 비밀번호가 일치하지 않습니다.");
-	        return "fail_back";
-	    }
-
-	    String hashedPassword = member.get("member_pw");
-	    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-	    if (passwordEncoder.matches(password, hashedPassword)) {
-	        session.setAttribute("sId", memberId);
-	        session.setAttribute("token", "true");
-	        return "redirect:/main";
+		    if (passwordEncoder.matches(password, hashedPassword)) {
+		        session.setAttribute("sId", memberId);
+		        session.setAttribute("token", "true");
+		        return "redirect:/main";
+		    }
+	    
 	    }
 
 	    model.addAttribute("msg", "아이디와 비밀번호가 일치하지 않습니다.");
 	    return "fail_back";
-	}		
+	}
+	
 // ******************************************************************
 // 네이버 로그인 확인
 //		@RequestMapping(value = "naverLogin", method = {RequestMethod.GET, RequestMethod.POST})

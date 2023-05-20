@@ -9,6 +9,20 @@
 <link href="${path }/resources/css/common.css" rel="stylesheet">
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
+<script>
+	function logout() {
+		// 카카오 로그인 아닐시 session "token" = true
+		if(${sessionScope.token == true}){
+			let isLogout = confirm("로그아웃 하시겠습니까?");
+			
+			if(isLogout) {
+				location.href = "logout";
+			}
+		} else {
+// 			location.href="https://kauth.kakao.com/oauth/logout?client_id=bf0c05681627cc5d65f40192f843de1b&logout_redirect_uri=http://192.168.3.126:8080/movie/logout";
+		}
+	}
+</script>
 </head>
 <body>
 <div id="header" data-loginstatus="0">

@@ -19,8 +19,6 @@ public class MypageController {
 	
 	@Autowired
 	private MemberService service;
-//	@Autowired
-//	private BoardService boardService;
 
 	// 마이페이지 메인
 	@RequestMapping(value ="mypage", method = RequestMethod.GET)
@@ -35,6 +33,7 @@ public class MypageController {
 //		member= service.getMemberInfo(id);
 //		model.addAttribute("member", member);
 		List<HashMap<String,String>> wishList = service.getWishList(id);
+		
 		return "mypage/mypage";
 	} 
 	
