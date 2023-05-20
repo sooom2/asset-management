@@ -1,27 +1,24 @@
 package com.itwillbs.moneytto.controller;
 
-import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
+
+import com.itwillbs.moneytto.service.MemberService;
 
 @Controller
 public class MypageController {
 	
-//	@Autowired
-//	private MypageService service;
+	@Autowired
+	private MemberService service;
 //	@Autowired
 //	private BoardService boardService;
 
@@ -37,7 +34,7 @@ public class MypageController {
 //		
 //		member= service.getMemberInfo(id);
 //		model.addAttribute("member", member);
-		
+		List<HashMap<String,String>> wishList = service.getWishList(id);
 		return "mypage/mypage";
 	} 
 	

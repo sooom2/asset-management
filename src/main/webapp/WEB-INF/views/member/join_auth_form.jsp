@@ -6,14 +6,41 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="resources/css/main.css" rel="stylesheet">
-<link href="resources/css/common.css" rel="stylesheet">
-<link href="resources/css/inc.css" rel="stylesheet">
+<link href="${path}/resources/css/member.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="resources/js/main.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
+//카카오
+Kakao.init('bf0c05681627cc5d65f40192f843de1b'); 
+Kakao.isInitialized(); 
+function kakaoLogin() {
+    Kakao.Auth.login({
+      success: function (response) {
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function (response) {
+		       	console.log(response)
+		       	var accessToken = Kakao.Auth.getAccessToken();
+		       	Kakao.Auth.setAccessToken(accessToken);
+		       	var account = response.kakao_account;
+					
+				$('#form-kakao-login input[name=email]').val(account.email);
+				$('#form-kakao-login input[name=accessToken]').val(accessToken);
+				// 사용자 정보가 포함된 폼을 서버로 제출.
+				document.querySelector('#form-kakao-login').submit();
+        	  
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  }
   
 $(function() {
 	// 인증번호 확인.
@@ -85,6 +112,21 @@ $(function() {
 					</ul>
 					<form name="form-join" id="form-join" method="post" action="#">
 						<div class="wrap-inside">
+							<div class="join-social-desc">
+								<span>소셜 계정으로 가입</span>
+							</div>
+							<div class="join-social">
+								<div id="naver_id_login" class="nv">
+									<a
+										href="https://nid.naver.com/oauth2.0/authorize?response_type=token&amp;client_id=i5vJc9KektcyYpcRyM5n&amp;redirect_uri=https%3A%2F%2Fcineq.co.kr%2FPopup%2FNaverLogin&amp;state=63fbad94-92d6-45b2-9eb3-b879e454a289"
+										onclick="window.open(this.href, 'naverloginpop', 'titlebar=1, resizable=1, scrollbars=yes, width=600, height=550'); return false"
+										id="naver_id_login_anchor" class="social-connect nv">네이버</a>
+								</div>
+								<span onclick="kakaoLogin();">
+								<a id="custom-login-btn" href="#" class="kt">카카오 톡</a>
+								</span>
+							</div>
+							<br>
 							<div class="join-email-desc" style="margin-top: 60px;">
 								<span>이메일 주소로 가입</span>
 							</div>
@@ -103,7 +145,6 @@ $(function() {
 								</div>
 							</div>
 						</div>
-						<br>
 						<a href="#" id="btn-join" class="btn-join">가입하기</a> 
 						<input type="hidden" id="userFrom" name="userFrom" value="4">
 						<input type="hidden" id="socialId" name="socialId" value="">

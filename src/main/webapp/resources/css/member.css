@@ -679,15 +679,15 @@
 }
 
 .section-member .wrap-member-box .join-social a.nv {
-	background-image: url("/images/member/btn-social-nv.png");
+	background-image: url("../images/member/btn-social-nv.png");
 }
 
 .section-member .wrap-member-box .join-social a.kt {
-	background-image: url("/images/member/btn-social-kt.png");
+	background-image: url("../images/member/btn-social-kt.png");
 }
 
 .section-member .wrap-member-box .join-social a.fb {
-	background-image: url("/images/member/btn-social-fb.png");
+	background-image: url("../images/member/btn-social-fb.png");
 }
 
 .section-member .wrap-member-box .join-social #naver_id_login {
@@ -1619,30 +1619,20 @@ img {
     letter-spacing: -0.2px;
 }
 
-.iKBbsw {
-    margin-top: 16px;
-    padding: 0px 20px;
-}
 
-.iKBbsw {
+.tabWrapper {
     display: flex;
 }
 
-.eoXkMa {
+.tabTab {
     font-weight: 700;
     margin-right: 40px;
     border-bottom: none;
     cursor: pointer;
 }
 
-.eoXkMa {
-    font-weight: 700;
-    margin-right: 30px;
-    border-bottom: none;
-    cursor: pointer;
-}
 
-.active {
+.tabTab active {
     font-weight: 700;
     margin-right: 30px;
     border-bottom: 2px solid rgb(0, 0, 0);
@@ -1747,12 +1737,7 @@ img {
     flex-wrap: wrap;
 }
 
-.ZnVII {
-    margin-left: 20px;
-    margin-top: 0px;
-}
-
-.ZnVII {
+.listControlBox {
     margin-top: 26px;
     display: flex;
     -webkit-box-pack: justify;
@@ -1761,7 +1746,7 @@ img {
     align-items: center;
 }
 
-.ikbVGV {
+.listCount {
     font-weight: 700;
     font-size: 0.938rem;
     font-family: "Pretendard Variable";
@@ -2177,21 +2162,6 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
 }
 
 
-.ZnVII {
-    margin-top: 26px;
-    display: flex;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: center;
-    align-items: center;
-}
-
-.ikbVGV {
-    font-weight: 700;
-    font-size: 0.938rem;
-    font-family: "Pretendard Variable";
-    line-height: 134%;
-}
 
 .kEbDVd {
     display: flex;
@@ -2210,11 +2180,9 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     line-height: 145%;
 }
 
-.iyOWTU {
+.itemWrapper {
     margin-top: 16px;
     padding: 0px 10px;
-    height: 1000px;
-    overflow: auto;
 }
 
 .FnzNS {

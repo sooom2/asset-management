@@ -27,6 +27,7 @@ public class MemberController {
 	@Autowired
 	private MailSendService mailService;
 	
+	
 	//회원인증폼
 	@GetMapping(value = "memAuth")
 	public String memAuth() {
@@ -51,25 +52,23 @@ public class MemberController {
 		
 		String member_address = member.get("member_address1") + "/" + member.get("member_address2");
 		// 좌표
-		HashMap<String, String> coord = memberService.setCoord(member.get("member_address1"));
+		HashMap<String, String> coord = memberService.setCoord(member.get("member_address"));
 		member.putAll(coord);
 		
-		
 		member.put("member_pw", securePasswd);
-		member.put("member_address", member_address);
-		
-		
+		member.put("member_email", "test@test.com");
+		int insertCount = memberService.registMember(member);
 		
 		System.out.println(member);
-		model.addAttribute("member", member);
-//		int insertCount = service.registMember(member);
-//		if(insertCount > 0) { // 가입 성공
-//			service.insertPoint(member.get("member_id"));
-//			return "member/mem_join_success";
-//		} else { // 가입 실패
-//			model.addAttribute("msg", "회원 가입 실패!");
-//			return "member/fail_back";
-		return "member/mem_join_success";
+		if(insertCount > 0) { // 가입 성공
+			//memberService.insertPoint(member.get("member_id"));
+			model.addAttribute("member", member);
+			return "member/mem_join_success";
+		} else { // 가입 실패
+			model.addAttribute("msg", "회원 가입 실패!");
+			return "member/fail_back";
+		}
+//		return "member/mem_join_success";
 	}
 	
 	//회원 로그인 확인 

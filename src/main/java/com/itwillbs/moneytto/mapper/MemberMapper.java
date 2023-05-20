@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface MemberMapper {
-
-	
+	// 찜목록 조회
+	//List<HashMap<String, String>> selectWishList(String id);
+	int insertMember(HashMap<String, String> member);
 }

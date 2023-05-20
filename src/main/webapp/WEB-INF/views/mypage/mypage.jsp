@@ -20,7 +20,7 @@
 					<div class="userDataWrapper">
 						<div>
 							<div class="userDataImgBox">
-								<img src="${pageContext.request.contextPath }/resources/images/mypage/cute.png"
+								<img src="${path}/resources/images/mypage/cute.png"
 									alt="profileImg" class="userDataProfileImg ">
 							</div>
 							<div class="userDataNickName">꾸꾸 님</div>
@@ -58,19 +58,19 @@
 			
 <!-- 			탭 -->
 			<div class="listWrapper">
-				<div class="tabWrapper-sc-1arp19f-0 iKBbsw">
-					<div class="tabTab-sc-1arp19f-1 eoXkMa active"><a href="mypage">판매 상품</a></div>
-					<div class="tabTab-sc-1arp19f-1 eoXkMa"><a href="mypageFavorite">찜한 상품</a></div>
-					<div class="tabTab-sc-1arp19f-1 eoXkMa"><a href="#">구매 상품</a></div>
-					<div class="tabTab-sc-1arp19f-1 eoXkMa"><a href="#">참여 중인 경매</a></div>
-					<div class="tabTab-sc-1arp19f-1 eoXkMa"><a href="#">거래 후기</a></div>
-					<div class="tabTab-sc-1arp19f-1 eoXkMa"><a href="#">추천 상품</a></div>
+				<div class="tabWrapper">
+					<div class="tabTab active"><a href="mypage">판매 상품</a></div>
+					<div class="tabTab"><a href="mypageFavorite">찜한 상품</a></div>
+					<div class="tabTab"><a href="#">구매 상품</a></div>
+					<div class="tabTab"><a href="#">참여 중인 경매</a></div>
+					<div class="tabTab"><a href="#">거래 후기</a></div>
+					<div class="tabTab"><a href="#">추천 상품</a></div>
 				</div>
 				
 				<div class="filterBarWrapper">
 					<div class="tabPcBox">
 						<div class="tabFilterTab">
-							<div width="180px" class="DropBoxWrapper">
+							<div style = "width:180px" class="DropBoxWrapper">
 								<div class="DropBoxBox">
 									<div class="CategoryText">카테고리 전체</div>
 									<img
@@ -79,7 +79,7 @@
 								</div>
 							</div>
 							
-							<div width="130px" class="DropBoxWrapper">
+							<div style = "width:130px" class="DropBoxWrapper">
 								<div class="DropBoxBox">
 									<div class="SellStatusText">판매상태</div>
 									<img
@@ -88,7 +88,7 @@
 								</div>
 							</div>
 							
-							<div width="140px" class="DropBoxWrapper">
+							<div style = "width:140px" class="DropBoxWrapper">
 								<div class="DropBoxBox">
 									<div class="PriceText">가격</div>
 									<img
@@ -96,7 +96,7 @@
 										alt="화살표 이미지" class="PriceArrow">
 								</div>
 							</div>
-							<form class="SearchWrapper">
+							<form class="SearchWrapper" style="width: 257px">
 								<input type="text" placeholder="상품명 검색"
 									class="SearchInput-ukztbj-1 inqgpT" value=""><img
 									src="https://ccimage.hellomarket.com/img/web/common/black_glass.svg"
@@ -108,18 +108,11 @@
 				</div>
 				
 				
-				<div class="listControlBox-sc-1sjhuej-1 ZnVII">
-					<div class="listCount-sc-1sjhuej-2 ikbVGV">전체 0</div>
-					<div class="BulkEditBarWrapper-sc-1qgk0ra-0 dRZslQ">
-						<div class="BulkEditBarContents-sc-1qgk0ra-1 kEbDVd">
-							<div class="BulkEditBarText-sc-1qgk0ra-2 kBXJCm">일괄편집</div>
-							<img
-								src="https://ccimage.hellomarket.com/img/web/member/edit_arrow.svg"
-								alt="일괄편집" class="BulkEditBarArrowImg-sc-1qgk0ra-3 gmqVpv">
-						</div>
-					</div>
+				<div class="listControlBox">
+					<div class="listCount">전체 0</div>
+					
 				</div>
-				<div class="itemWrapper-sc-1e3j2mi-0 iyOWTU">
+				<div class="itemWrapper">
 					<div class="EmptyEmptyBox-xvqyzf-0 FnzNS">
 						<div class="EmptyTitle-xvqyzf-1 JxliI">아쉽게도, 현재 검색된 상품이
 							없어요</div>

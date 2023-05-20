@@ -1,23 +1,27 @@
 package com.itwillbs.moneytto.service;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.itwillbs.moneytto.mapper.MemberMapper;
+
 @Service
 public class MemberService {
-/*	
+	
 	@Autowired
 	private MemberMapper mapper;
-*/
 	// 좌표 가져오기
 	public HashMap<String, String> setCoord(String member_address) {
 		
@@ -39,8 +43,8 @@ public class MemberService {
 		try {
 			jsonArray = new JSONObject(resp.getBody()).getJSONArray("documents");
 			
-			coord.put("x", jsonArray.getJSONObject(0).getString("x"));
-		    coord.put("y", jsonArray.getJSONObject(0).getString("y"));
+			coord.put("member_X", jsonArray.getJSONObject(0).getString("x"));
+		    coord.put("member_Y", jsonArray.getJSONObject(0).getString("y"));
 		} catch (JSONException e) {
 			System.out.println("MemberService - setCoord null");
 			e.printStackTrace();
@@ -48,6 +52,7 @@ public class MemberService {
 	    
 	    return coord;
 	}
+	
 	// 유저 확인
 	public HashMap<String, String> checkUser(HashMap<String, String> login) {
 		
@@ -65,10 +70,12 @@ public class MemberService {
 //	public List<HashMap<String, String>> selectMember() {
 //		return mapper.selectMember();
 //	}
+	
 	/*회원추가수정*/
-//	public int registMember(HashMap<String, String> member) {
-//		return mapper.insertMember(member);
-//	}
+	
+	public int registMember(HashMap<String, String> member) {
+		return mapper.insertMember(member);
+	}
 	/*
 	// 카카오 회원 확인
 	public HashMap<String, String> kakaoMember(String email) {
@@ -140,4 +147,11 @@ public class MemberService {
 		return mapper.memberCount();
 	}
 	*/
+	public List<HashMap<String, String>> getWishList(String id) {
+		// TODO return
+		//return mapper.selectMember(id);
+//		return null;
+		List<HashMap<String, String>> wishList = new ArrayList<HashMap<String,String>>();
+		return wishList;
+	}
 }
