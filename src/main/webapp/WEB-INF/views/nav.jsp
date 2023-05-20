@@ -49,6 +49,12 @@
 				<div class="searchSearch"><form><input class="goodsName" type="text" placeholder="어떤 상품을 찾으시나요?"></form></div>
 			</div>
 			
+			<div class="mem_profile">
+				<img src="https://ccimg.hellomarket.com/images/2023/member_profile/05/16/19/3558056_5873301_1.jpg?size=s4" alt="프로필 이미지" class="profileImg">
+				<div class="mem_nickName">추누공주</div>
+			</div>	
+			
+			
 			<a href="itemRegist" class="menu-item">
 				<img src="${path }/resources/images/main/selling_btn.png" alt="판매하기 이미지" class="MiddleNavigation__SellImg-sc-1moccpq-3 dplbBo">
 			</a>
