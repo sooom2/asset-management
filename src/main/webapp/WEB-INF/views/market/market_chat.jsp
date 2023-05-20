@@ -15,6 +15,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
+
+
+
+
 $(function() {
 	
 	$(".sch_date").click(function() { // 일정 잡기 버튼을 클릭했을 때
@@ -34,6 +38,8 @@ $(function() {
 	    });
 	});
 });
+
+
 
 </script>
 </head>
