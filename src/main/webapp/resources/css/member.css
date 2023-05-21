@@ -1275,11 +1275,6 @@
     font-size: 15px;
 }
 
-.memberInfoCount {
-    margin-left: 10px;
-    font-weight: 700;
-    cursor: pointer;
-}
 .memberInfoReviewBox {
     margin-top: 5px;
     display: flex;
@@ -1289,18 +1284,15 @@
     align-items: center;
 }
 
-.memberInfoText {
-    font-size: 15px;
-}
 .memberInfoRating {
-    cursor: pointer;
+    margin-top: 5px;
     display: flex;
+    -webkit-box-pack: justify;
+    justify-content: end;
+    -webkit-box-align: center;
+    align-items: center;
 }
 
-.memberInfoRating {
-    cursor: pointer;
-    display: flex;
-}
 .memberInfoCount {
     margin-left: 10px;
     font-weight: 700;
@@ -1486,24 +1478,12 @@ img {
     margin-top: 43px;
 }
 
-.ObPLl {
-    font-size: 15px;
-}
-
 .bxkBQf {
     margin-left: 10px;
     font-weight: 700;
     cursor: pointer;
 }
 
-.diZgaK {
-    margin-top: 5px;
-    display: flex;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: center;
-    align-items: center;
-}
 
 .ObPLl {
     font-size: 15px;
@@ -1754,52 +1734,39 @@ img {
 }
 
 
-.ggppXW {
-    grid-template-columns: 48.5% 48.5%;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-}
-
-.ggppXW {
+.itemItemWrapper {
     width: 100%;
     display: grid;
     grid-template-columns: 247px 247px 247px;
 }
 
-.fneRMy {
-    width: 100%;
-}
 
-.fneRMy {
+.ThumbNailTypeItemBox {
     width: 230px;
     margin-bottom: 20px;
     cursor: pointer;
 }
 
-.iVHRFl {
+.ThumbNailTypeImgBox {
     position: relative;
 }
 
-.guqHsj {
-    width: 100%;
-    height: 171px;
-}
 
-.guqHsj {
+.ThumbNailTypeItemImg {
     width: 231px;
     height: 231px;
     border-radius: 5px;
     object-fit: cover;
 }
 
-.iRhXcK {
+.SellStateImgWrapper {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0px;
 }
 
-.ildnCD {
+.SellStateImgStateBox {
     display: flex;
     height: 100%;
     -webkit-box-align: center;
@@ -1809,11 +1776,7 @@ img {
     border-radius: 5px;
 }
 
-.dttiYe {
-    right: 5px;
-}
-
-.dttiYe {
+.WishWishImg {
     position: absolute;
     bottom: 10px;
     right: 5px;
@@ -1821,38 +1784,28 @@ img {
     height: 25px;
 }
 
-.bvJFcV {
+.WishWishImg {
     display: flex;
     -webkit-box-pack: justify;
     justify-content: space-between;
 }
 
-.ljKqnY {
-    font-size: 14px;
-    margin-top: 5px;
-}
-
-.ljKqnY {
+.ThumbNailTypeTitle {
     margin-top: 7px;
     color: rgb(69, 76, 83);
     font-size: 17px;
 }
-
-.bKFesW {
-    font-size: 16px;
+.ThumbNailTypeItemInfoBox {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
 }
-
-.bKFesW {
+.ThumbNailTypePrice {
     color: rgb(0, 0, 0);
     font-size: 22px;
 }
 
-.fPDVWA {
-    width: 33px;
-    height: 33px;
-}
-
-.fPDVWA {
+.SearchIconWrapper {
     width: 39px;
     height: 39px;
     border: 1px solid rgb(235, 235, 235);
@@ -1865,7 +1818,7 @@ img {
     margin-top: 7px;
 }
 
-.dfwPrT {
+.SearchIcon {
     width: 16px;
     height: 16px;
 }
@@ -2185,7 +2138,7 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     padding: 0px 10px;
 }
 
-.FnzNS {
+.EmptyEmptyBox {
     height: 500px;
     display: grid;
     justify-items: center;
@@ -2193,7 +2146,7 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     overflow: auto;
 }
 
-.JxliI {
+.EmptyTitle {
     color: rgb(52, 58, 63);
     margin-bottom: 8px;
     letter-spacing: 0px;
@@ -2203,7 +2156,7 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     line-height: 100%;
 }
 
-.ekpKDQ {
+.EmptyGuide {
     color: rgb(105, 112, 119);
     letter-spacing: -0.4px;
     font-weight: 400;
@@ -2212,7 +2165,7 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     line-height: 145%;
 }
 
-.gkrTC {
+.EmptyBtnBox {
     margin-top: 16px;
     width: 158px;
     height: 42px;
@@ -2226,7 +2179,7 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     cursor: pointer;
 }
 
-.iUdVkN {
+.EmptyShowAllText {
     color: rgb(52, 58, 63);
     letter-spacing: -0.6px;
     font-weight: 500;
@@ -2235,6 +2188,14 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     line-height: 120%;
 }
 
+.EmptyNoticeBox {
+    height: 500px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
 
 .payCharge {
     letter-spacing: 0px;

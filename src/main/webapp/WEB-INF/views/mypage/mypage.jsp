@@ -8,7 +8,19 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
 
+	$(document).ready(function(){
+		$(".ThumbNailTypeImgBox").on("click",function(){
+			location.href="market_detail"
+		})
+		
+		$(".ThumbNailTypeItemInfoBox").on("click",function(){
+			location.href="market_detail"
+		})	
+	})
+
+</script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
@@ -23,7 +35,7 @@
 								<img src="${path}/resources/images/mypage/cute.png"
 									alt="profileImg" class="userDataProfileImg ">
 							</div>
-							<div class="userDataNickName">꾸꾸 님</div>
+							<div class="userDataNickName">${member.member_nickname } 님</div>
 						</div>
 					</div>
 					<div class="memberInfoProductCountBox">
@@ -31,23 +43,21 @@
 						<div class="memberInfoCount">0</div>
 					</div>
 					<div class="memberInfoReviewBox">
-						<div class="memberInfoText">매너온도</div>
+						<div class="memberInfoText">등급</div>
 						<div class="memberInfoRating">
-							<img src="https://ccimage.hellomarket.com/web/2019/member/img_review_star_blank_16x16_x2.png" alt="프로필 별점 없는 이미지 1">
-							<img src="https://ccimage.hellomarket.com/web/2019/member/img_review_star_blank_16x16_x2.png" alt="프로필 별점 없는 이미지 2">
-							<img src="https://ccimage.hellomarket.com/web/2019/member/img_review_star_blank_16x16_x2.png" alt="프로필 별점 없는 이미지 3">
-							<img src="https://ccimage.hellomarket.com/web/2019/member/img_review_star_blank_16x16_x2.png" alt="프로필 별점 없는 이미지 4">
-							<img src="https://ccimage.hellomarket.com/web/2019/member/img_review_star_blank_16x16_x2.png" alt="프로필 별점 없는 이미지 5">
-							<div class="memberInfoCount">55.6</div>
+							<!-- 이미지 태그 넣을 부분 -->
+							
+							<!--  -->
+							<div class="memberInfoCount">${member.grade_score }등급</div>
 						</div>
 					</div>
-					<div class="memberInfoReviewBox-edrwkz-5 diZgaK">
-						<div class="memberInfoText-edrwkz-3 ObPLl">남은머니</div>
-						<div class="memberInfoRating-edrwkz-6 bDPsFn">
-							<div class="memberInfoCount-edrwkz-4 bxkBQf">10,000원</div> &nbsp;&nbsp;
-							<div class="payCharge"><Input type="button" value="충전"></div> &nbsp;&nbsp;
-							<div class="payReturn"><Input type="button" value="환급"></div>
-						</div>
+					<div class="memberInfoReviewBox">
+						<div class="memberInfoText">남은머니</div>
+						<div class="memberInfoCount">${member.member_point }원</div>
+					</div>
+					<div class="memberInfoRating">
+						<div class="payCharge"><Input type="button" value="충전"></div> &nbsp;&nbsp;
+						<div class="payReturn"><Input type="button" value="환급"></div>
 					</div>
 					<div class="memberInfoMyDataBox" onclick='location.href="mypageInfo"'>
 						<div class="memberInfoSettingMyData">내정보 설정</div>
@@ -105,32 +115,123 @@
 						</div>
 					</div>
 					<div class="tagListWrapper-gkczkp-0 geRbir"></div>
-				</div>
-				
-				
-				<div class="listControlBox">
-					<div class="listCount">전체 0</div>
 					
 				</div>
+				<div class="listControlBox"><div class="listCount">전체 0</div>
+				</div>
+				
 				<div class="itemWrapper">
-					<div class="EmptyEmptyBox-xvqyzf-0 FnzNS">
-						<div class="EmptyTitle-xvqyzf-1 JxliI">아쉽게도, 현재 검색된 상품이
-							없어요</div>
-						<div class="EmptyGuide-xvqyzf-5 ekpKDQ">필터를 재설정하거나 전체 상품
-							보기를 선택해주세요</div>
-						<div class="EmptyBtnBox-xvqyzf-2 gkrTC">
-							<img
-								src="https://ccimage.hellomarket.com/img/web/common/refresh_mark.svg"
-								alt="초기화 마크" class="EmptyResetMark-xvqyzf-4 YrGaN">
-							<div class="EmptyShowAllText-xvqyzf-3 iUdVkN">전체 상품 보기</div>
-						</div>
+				  	<div class="itemItemWrapper">
+						<c:forEach var="item" items="itemList">
+						<!-- c:if itemList -> item으로 수정해주기 -->
+							<c:if test='${not empty itemList }'>
+							<div class="itemItemBox">
+	                          <div class="ThumbNailTypeWrapper">
+	                              <div class="ThumbNailTypeItemBox">
+	                                  <div class="ThumbNailTypeImgBox">
+	                                      <img src="https://ccimg.hellomarket.com/images/2023/item/05/20/00/5015019_5421001_1.jpg?size=s4" alt="itemImg" class="ThumbNailTypeItemImg"/>
+	                                      <div class="SellStateImgWrapper">
+	                                          <div class="SellStateImgStateBox"></div>
+	                                      </div>
+	                                      <img src="https://ccimage.hellomarket.com/img/web/feed/tag/ico_heart_on.svg" class="WishWishImg"/>
+	                                  </div>
+	                                  <div class="ThumbNailTypeItemInfoBox">
+	                                      <div class="ThumbNailTypeItemInfo">
+	                                          <div class="ThumbNailTypeTitle">${item.name }</div>
+	                                          <div class="ThumbNailTypePrice">${item.price }원</div>
+	                                      </div>
+	                                      <div class="SearchIconWrapper">
+	                                         <img src="https://ccimage.hellomarket.com/web/2017/common/img_search_n.png" class="SearchIcon"/>
+	                                     </div>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	                      </c:if>
+						</c:forEach>				  		
+	                      	<div class="itemItemBox">
+	                          <div class="ThumbNailTypeWrapper">
+	                              <div class="ThumbNailTypeItemBox">
+	                                  <div class="ThumbNailTypeImgBox">
+	                                      <img src="https://ccimg.hellomarket.com/images/2023/item/05/20/00/5015019_5421001_1.jpg?size=s4" alt="itemImg" class="ThumbNailTypeItemImg"/>
+	                                      <div class="SellStateImgWrapper">
+	                                          <div class="SellStateImgStateBox"></div>
+	                                      </div>
+	                                      <img src="https://ccimage.hellomarket.com/img/web/feed/tag/ico_heart_on.svg" class="WishWishImg"/>
+	                                  </div>
+	                                  <div class="ThumbNailTypeItemInfoBox">
+	                                      <div class="ThumbNailTypeItemInfo">
+	                                          <div class="ThumbNailTypeTitle">세인트루이스 뉴에라...</div>
+	                                          <div class="ThumbNailTypePrice">5,000원</div>
+	                                      </div>
+	                                      <div class="SearchIconWrapper">
+	                                         <img src="https://ccimage.hellomarket.com/web/2017/common/img_search_n.png" class="SearchIcon"/>
+	                                     </div>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	                      <div class="itemItemBox">
+	                          <div class="ThumbNailTypeWrapper">
+	                              <div class="ThumbNailTypeItemBox">
+	                                  <div class="ThumbNailTypeImgBox">
+	                                      <img src="https://ccimg.hellomarket.com/images/2023/item/05/20/00/5015019_5421001_1.jpg?size=s4" alt="itemImg" class="ThumbNailTypeItemImg"/>
+	                                      <div class="SellStateImgWrapper">
+	                                          <div class="SellStateImgStateBox"></div>
+	                                      </div>
+	                                      <img src="https://ccimage.hellomarket.com/img/web/feed/tag/ico_heart_on.svg" class="WishWishImg"/>
+	                                  </div>
+	                                  <div class="ThumbNailTypeItemInfoBox">
+	                                      <div class="ThumbNailTypeItemInfo">
+	                                          <div class="ThumbNailTypeTitle">세인트루이스 뉴에라...</div>
+	                                          <div class="ThumbNailTypePrice">5,000원</div>
+	                                      </div>
+	                                      <div class="SearchIconWrapper">
+	                                         <img src="https://ccimage.hellomarket.com/web/2017/common/img_search_n.png" class="SearchIcon"/>
+	                                     </div>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	                      <div class="itemItemBox">
+	                          <div class="ThumbNailTypeWrapper">
+	                              <div class="ThumbNailTypeItemBox">
+	                                  <div class="ThumbNailTypeImgBox">
+	                                      <img src="https://ccimg.hellomarket.com/images/2023/item/05/20/00/5015019_5421001_1.jpg?size=s4" alt="itemImg" class="ThumbNailTypeItemImg"/>
+	                                      <div class="SellStateImgWrapper">
+	                                          <div class="SellStateImgStateBox"></div>
+	                                      </div>
+	                                      <img src="https://ccimage.hellomarket.com/img/web/feed/tag/ico_heart_on.svg" class="WishWishImg"/>
+	                                  </div>
+	                                  <div class="ThumbNailTypeItemInfoBox">
+	                                      <div class="ThumbNailTypeItemInfo">
+	                                          <div class="ThumbNailTypeTitle">세인트루이스 뉴에라...</div>
+	                                          <div class="ThumbNailTypePrice">5,000원</div>
+	                                      </div>
+	                                      <div class="SearchIconWrapper">
+	                                         <img src="https://ccimage.hellomarket.com/web/2017/common/img_search_n.png" class="SearchIcon"/>
+	                                     </div>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	                      <!-- TODO -->
+	<!-- 					<div class="EmptyEmptyBox"> -->
+	<!-- 						<div class="EmptyTitle">아쉽게도, 현재 검색된 상품이 없어요</div> -->
+	<!-- 						<div class="EmptyGuide">필터를 재설정하거나 전체 상품 보기를 선택해주세요</div> -->
+	<!-- 						<div class="EmptyBtnBox"> -->
+	<!-- 							<img -->
+	<!-- 								src="https://ccimage.hellomarket.com/img/web/common/refresh_mark.svg" -->
+	<!-- 								alt="초기화 마크" class="EmptyResetMark-xvqyzf-4 YrGaN"> -->
+	<!-- 							<div class="EmptyShowAllText">전체 상품 보기</div> -->
+	<!-- 						</div> -->
+	<!-- 					</div> -->
+	<!-- 					<div class="EmptyNoticeBox"></div> -->
 					</div>
-					<div class="EmptyNoticeBox-xvqyzf-6 gLROrj"></div>
 				</div>
-				</div>
-<!-- 				탭 end -->
 			</div>
 		</div>
-<jsp:include page="../footer.jsp" />
+	</div>
+	<jsp:include page="../footer.jsp" />
 </body>
 </html>

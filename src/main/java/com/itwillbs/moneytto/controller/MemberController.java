@@ -74,19 +74,17 @@ public class MemberController {
 	
 	//회원 로그인 확인 
 	@RequestMapping(value = "loginPro", method = RequestMethod.POST)
-	public String loginPro(@RequestParam HashMap<String, String> user, Model model, HttpSession session) {
-		System.out.println(" login : " + user);
-	    String memberId = user.get("member_id");
-	    String password = user.get("member_pw");
+	public String loginPro(@RequestParam String member_id, @RequestParam String member_pw
+							, Model model, HttpSession session) {
 
-	    HashMap<String, String> member = memberService.checkMember(user);
-		System.out.println(" member : " + member);
+	    HashMap<String, String> member = memberService.getMember(member_id);
+	    
 	    if (member != null) {
 	        String hashedPassword = member.get("member_pw");
 		    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-		    if (passwordEncoder.matches(password, hashedPassword)) {
-		        session.setAttribute("sId", memberId);
+		    if (passwordEncoder.matches(member_pw, hashedPassword)) {
+		        session.setAttribute("sId", member.get("member_id"));
 		        session.setAttribute("token", "true");
 		        return "redirect:/main";
 		    }
@@ -210,7 +208,7 @@ public class MemberController {
 		
 		model.addAttribute("msg", "비밀번호 재설정이 완료되었습니다.");
 		model.addAttribute("target", "memLogin");
-		return "member/success";
+		return "success";
 	}
 	
 	// 아이디 사용 조회

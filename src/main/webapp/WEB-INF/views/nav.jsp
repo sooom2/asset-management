@@ -33,7 +33,8 @@
 					<li><a href="myAlarm"><i class="fa-regular fa-bell"></i> 나의알림</a></li>
 					<li><a href="marketChat"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> 채팅</a></li>
 					<li><a href="memLogin" data-reload="reload" class=""><i class="fa-regular fa-circle-user"></i>&nbsp;로그인</a></li>
-					<li><a href="mypage" data-reload="" class="">마이페이지</a></li>
+					<%-- 밑줄 나중에  --%>
+<!-- 					<li><a href="mypage" data-reload="" class="">마이페이지</a></li> -->
 					<li><a href="memAuth">회원가입</a></li>
 				</c:when>
 				<c:otherwise>
@@ -44,8 +45,10 @@
 <%-- 					</c:if> --%>
 				</c:otherwise>
 			</c:choose>
-					<%-- 실제 서비스시 없앨것 --%>
+					<%-- 실제 서비스시 없애는 부분 --%>
 					<li><a href="admin" class="">관리자</a></li>
+					<li><a href="mypage" data-reload="" class="">마이페이지</a></li>
+					
 			</ul>
 		</nav>
 	

@@ -53,12 +53,6 @@ public class MemberService {
 	    return coord;
 	}
 	
-	// 유저 확인
-	public HashMap<String, String> checkMember(HashMap<String, String> user) {
-		
-		return mapper.chekMember(user);
-		
-	}
 	// 	아이디 조회
 	public HashMap<String, String> findId(HashMap<String, String> member) {
 		
@@ -152,5 +146,10 @@ public class MemberService {
 //		return null;
 		List<HashMap<String, String>> wishList = new ArrayList<HashMap<String,String>>();
 		return wishList;
+	}
+
+	public HashMap<String, String> getMember(String id) {
+		
+		return mapper.selectMember(id);
 	}
 }

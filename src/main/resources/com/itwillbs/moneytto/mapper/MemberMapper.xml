@@ -23,8 +23,8 @@
 				   , #{member_Y}
 			)
 	</insert>
-	<select id="chekMember" resultType="hashmap">
-		SELECT * 
+	<select id="selectMember" resultType="hashmap">
+		SELECT 	*
 			FROM member
 				WHERE member_id = #{member_id} 
 	</select>
