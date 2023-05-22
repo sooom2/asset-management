@@ -2,45 +2,118 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itwillbs.moneytto.mapper.MarketMapper">
 
-<insert id ="insertItem">
-	INSERT 
-		INTO item
-		VALUES (
-		1
-		,null
-		,null
-		,null
-		,null
-		,null
-		,null
-		,null
-		,null
-		,null
-		,now()
-		)
-<!-- 	INSERT  -->
-<!-- 		INTO item -->
-<!-- 		VALUES ( -->
-<!-- 		#{item_code} -->
-<!-- 		,#{member_id} -->
-<!-- 		,#{item_name} -->
-<!-- 		,#{item_subject} -->
-<!-- 		,#{item_content} -->
-<!-- 		,#{item_price} -->
-<!-- 		,#{item_price_offer} -->
-<!-- 		,#{item_tag} -->
-<!-- 		,#{item_category} -->
-<!-- 		,#{item_status} -->
-<!-- 		,now() -->
-<!-- 		) -->
-</insert>
-
-
-<select id="getItem" resultType="hashmap">
- 	SELECT *
- 		 FROM market_chat_rooms
-  			WHERE item_code=#{item_code};
-</select>
-
+	<insert id ="insertItem">
+		INSERT 
+			INTO item
+			VALUES (
+			1
+			,null
+			,null
+			,null
+			,null
+			,null
+			,null
+			,null
+			,null
+			,null
+			,now()
+			)
+	<!-- 	INSERT  -->
+	<!-- 		INTO item -->
+	<!-- 		VALUES ( -->
+	<!-- 		#{item_code} -->
+	<!-- 		,#{member_id} -->
+	<!-- 		,#{item_name} -->
+	<!-- 		,#{item_subject} -->
+	<!-- 		,#{item_content} -->
+	<!-- 		,#{item_price} -->
+	<!-- 		,#{item_price_offer} -->
+	<!-- 		,#{item_tag} -->
+	<!-- 		,#{item_category} -->
+	<!-- 		,#{item_status} -->
+	<!-- 		,now() -->
+	<!-- 		) -->
+	</insert>
+	
+	
+	<!-- 채팅관련 -->
+	<select id="getItem" resultType="hashmap">
+	 	SELECT *
+	 		 FROM market_chat_rooms
+	  			WHERE item_code=#{item_code};
+	</select>
+	
+	<select id="sellDetail" resultType="hashmap">
+		SELECT item.*,member.member_nickname 
+			FROM item 
+				LEFT JOIN member
+					ON member.member_id=item.member_id 
+			WHERE item_code =#{item_code};
+	</select>
+	
+	
+	
+	<select id="getAllItem" resultType="hashmap">
+		SELECT *
+	 		 FROM market_chat_rooms
+	</select>
+	
+	
+	
+	
+	
+	<select id="sellCount" resultType="int">
+		SELECT count(*)
+			FROM item
+				WHERE member_id = #{member_id}
+	</select>
+	
+	<!-- 내채팅목록 -->
+	<select id="myChatList" resultType="hashmap">
+		SELECT
+			market_chat_messages.*,member.member_nickname 
+		FROM
+			market_chat_messages
+		LEFT JOIN member
+		       ON member.member_id = market_chat_messages.buy_member_id 
+		WHERE
+			(room_code,
+			chat_code) IN (
+			SELECT
+				room_code, MAX(chat_code)
+			FROM
+				market_chat_messages
+			WHERE
+				sell_member_id = #{id}
+			GROUP BY
+				room_code  
+		   	);
+	
+	</select>
+	
+	
+	<select id="myChatAllList" resultType="hashmap">
+		SELECT
+			market_chat_messages.*,member.member_nickname 
+		FROM
+			market_chat_messages
+		LEFT JOIN member
+		       ON member.member_id = market_chat_messages.buy_member_id 
+		WHERE
+			(room_code,
+			chat_code) IN (
+			SELECT
+				room_code, MAX(chat_code)
+			FROM
+				market_chat_messages
+			WHERE
+				sell_member_id = #{id}
+				or buy_member_id=#{id}
+			GROUP BY
+				room_code  
+		   	);
+	
+	
+	</select>
 
 </mapper>

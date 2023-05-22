@@ -1,7 +1,9 @@
 package com.itwillbs.moneytto.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,7 +28,7 @@ public class MarketController {
 	private MarketService service;
 	
 	@Autowired
-	private MarketChatService marketChatservice;
+	private MarketChatService marketChatService;
 	
 	@Autowired
 	private MemberService memberService;
@@ -56,39 +58,59 @@ public class MarketController {
 	
 	@GetMapping(value = "marketChat")
 	public String marketChat(Model model,HttpSession session,@RequestParam(defaultValue = "") String item_code) {
-		System.out.println(item_code);
-		
-		//내닉네임
 		String id = (String)session.getAttribute("sId");
 		HashMap<String, String> member = memberService.getMember(id);
+		
+		
+		//내닉네임
 		String nickname = member.get("member_nickname");
 		model.addAttribute("nickname",nickname);
 		
 		
-		//상대방정보
-		String sellNick = "보부상";
-		model.addAttribute("sellNick",sellNick);
+		List<HashMap<String, String>> myChatList =null;
 		
-		//물건조회
-		HashMap<String, String> itemDetail = marketChatservice.getItem(item_code);
-		
-		//전체목록
-		if(item_code==null) {
+		if(item_code.equals("")) {
+			System.out.println("========================================");
+			myChatList = marketChatService.getMyChatAllList(id);
+			System.out.println(myChatList);
+		}else {
 			
+		
+		//아이템상세정보
+		HashMap<String, String> itemDetail = marketChatService.getItem(item_code);
+		
+		
+		//판매상세정보
+		HashMap<String, String> sellDetail = marketChatService.getSellDetail(item_code);
+		model.addAttribute("sellDetail",sellDetail);
+		model.addAttribute("itemDetail",itemDetail);
+		
+		//판매자 판매상품개수
+		int sellCount = marketChatService.getSellCount(sellDetail.get("member_id"));
+		model.addAttribute("sellCount",sellCount);
+		
+		//내채팅목록
+		
+		myChatList = marketChatService.getMyChatList(id);
+
 		}
-		System.out.println(itemDetail);
+
+		model.addAttribute("myChatList",myChatList);
+		
 		
 		//오늘날짜
 		Date now = new Date();
 		System.out.println(now);
 		model.addAttribute("now",now);
+		
+		
+		
+		
 		return "market/market_chat";
 		 
 	}
 	
-	
-	
-	
+
 	
 	@PostMapping(value="itemRegistPro")
 	public String itemRegistPro(@RequestParam HashMap<String, String> item, Model model) {

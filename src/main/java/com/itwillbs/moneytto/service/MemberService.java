@@ -152,5 +152,7 @@ public class MemberService {
 		
 		return mapper.selectMember(id);
 	}
+
+
 	
 }

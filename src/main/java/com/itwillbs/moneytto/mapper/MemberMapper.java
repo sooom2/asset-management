@@ -12,4 +12,6 @@ public interface MemberMapper {
 	// 로그인 확인
 	HashMap<String, String> selectMember(String id);
 	
-	}
+
+	
+}

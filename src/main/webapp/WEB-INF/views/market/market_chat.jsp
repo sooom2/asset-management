@@ -10,36 +10,36 @@
 <meta charset="UTF-8">
 <title>머니또</title>
 <link href="${path }/resources/css/market_chat.css" rel="stylesheet">
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 
-
-
-
 $(function() {
-	
-	$(".sch_date").click(function() { // 일정 잡기 버튼을 클릭했을 때
-	    $(".scheduling").datepicker({
-	       dateFormat: 'yy-mm-dd' //달력 날짜 형태
-	            ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-	            ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
-	            ,changeYear: true //option값 년 선택 가능
-	            ,changeMonth: true //option값  월 선택 가능                
-	            ,yearSuffix: "년" //달력의 년도 부분 뒤 텍스트
-	            ,monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 텍스트
-	            ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip
-	            ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 텍스트
-	            ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 Tooltip
-	            ,minDate: "0D" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-	            ,maxDate: "+30D" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-	    });
-	});
+    $(".sch_date").click(function() {
+        var schBox = $(".sch_box");
+
+        $(".scheduling").datepicker({
+            dateFormat: 'yy-mm-dd',
+            showOtherMonths: true,
+            showMonthAfterYear: true,
+            changeYear: true,
+            changeMonth: true,
+            yearSuffix: "년",
+            monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            dayNamesMin: ['일','월','화','수','목','금','토'],
+            dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+            minDate: "0D",
+            maxDate: "+30D",
+            onSelect: function(dateText, inst) {
+                schBox.val(dateText);
+                // datepicker 창 숨기기
+                $(".scheduling").datepicker("hide"); // 현재 선택한 datepicker를 닫음
+            }
+        });
+    });
 });
-
-
 
 </script>
 </head>
@@ -57,22 +57,7 @@ $(function() {
 				<ul>
 					<!-- 채팅방 목록-->
 					<!--  선택된채팅에 active처리  -->
-					<div class="card_box active">
-						<a href="">
-							<li>
-								<div class="profile">
-									<img src="${path }/resources/images/chat/defaultProfile.png" alt="명품인증">
-								</div>
-								<div class="info">
-									<div class="nick">아무나상</div>
-									<div class="description">안녕하세요</div>
-									<div class="time_ago">오후 01:57</div>
-								</div>
-							</li>
-						</a>
-						<div class="etc_dots"></div>
-					</div>
-					
+				<c:forEach var="chatList" items="${myChatList }">
 					<div class="card_box">
 						<a href="">
 							<li>
@@ -80,15 +65,22 @@ $(function() {
 									<img src="${path }/resources/images/chat/defaultProfile.png" alt="명품인증">
 								</div>
 								<div class="info">
-									<div class="nick">아이티윌 보부상</div>
-									<div class="description">ㅎㅇ</div>
-									<div class="time_ago">오후 02:06</div>
+
+									<div class="nick">${chatList.get('member_nickname') }</div>
+									<div class="description">${chatList.get('chat_content') }</div>
+<%-- 									<div class="time_ago"><fmt:formatDate value="${chatList.chat_time}" pattern="yyyy년 MM월 dd일" /></div> --%>
+									<div class="time_ago">${chatList.chat_time}</div>
+														
+
+<%-- 									<div class="time_ago">${chatList.get('chat_time') }</div> --%>
+									
+									
 								</div>
 							</li>
 						</a>
 						<div class="etc_dots"></div>
 					</div>
-					
+				</c:forEach>
 					
 				</ul>
 			</div>
@@ -105,8 +97,8 @@ $(function() {
 						</div>
 						<div class="info">
 							<div>
-								<span>${sellNick }</span>
-								<span>판매아이템 <!-- -->8<!-- -->개</span>
+								<span>${sellDetail.member_nickname }</span>
+								<span>판매아이템 <!-- -->${sellCount }<!-- -->개</span>
 							</div>
 						</div>
 					</a>
@@ -116,7 +108,12 @@ $(function() {
 							<img src="${path }/resources/images/chat/btn_report_x2.png" alt="신고 이미지">
 						</div>
 					</div>
-					<div class="scheduling"><a class="sch_date"><i class="fa-regular fa-calendar"></i> 일정잡기</a></div>
+				    <div class="scheduling">
+				        <a class="sch_date">
+				            <i class="fa-regular fa-calendar"></i> 일정잡기
+				        </a>
+				        <input type="text" class="sch_box" style="border:none" readonly/>
+				    </div>
 				</div>
 				
 				<!-- 채팅영역 -->
@@ -143,11 +140,12 @@ $(function() {
 											</div>
 										</div>
 										<div class="chat_item_message_main">
-											<div class="chat_item_message_title">서류가방</div>
-											<div class="chat_item_message_price">80,000원</div>
+											<div class="chat_item_message_title">${sellDetail.item_name }</div>
+											<div class="chat_item_message_price">${sellDetail.item_price }원</div>
 										</div>
 										<div class="chat_item_message_link">안전결제</div>
 									</div>
+									<!-- 채팅연결한 시간 -->
 									<div class="chat_item_timeago">오후 1:57</div>
 								</div>
 							</div>

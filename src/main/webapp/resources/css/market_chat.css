@@ -160,7 +160,7 @@
 .left_main ul li .info .time_ago {
     position: absolute;
     top: 0;
-    right: 11px;
+    right: -12px;
     font-size: 11px;
     color: #b4b4b4
 }
