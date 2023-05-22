@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1e29d96072ee2bce354a10f8ac53225f"></script>
 <script>
 $(document).ready(function(){
 	$(".ThumbNailTypeImgBox , .ThumbNailTypeItemInfoBox").on("click",function(){
@@ -18,36 +19,65 @@ $(document).ready(function(){
 		var itemList = $(this).attr('data-attr');
 		$('.tabTab').removeClass('active');
 		$(this).addClass('active');
+	$(document).ready(function(){
+		$(".ThumbNailTypeImgBox, .ThumbNailTypeItemInfoBox").on("click",function(){
+			location.href="market_detail"
+		})
+
 	})
-})
-function memberAuth(){
-	var tmpWindow = window.open('about:blank')
-	tmpWindow.location="https://openapi.openbanking.or.kr/oauth/2.0/authorize?"+
-	   "response_type=code&"+
-       "client_id=bd507152-7d5b-4954-be9e-ef67beadb7eb&"+  
-       "redirect_uri=http://localhost:8080/moneytto/memberAuth&"+
-       "scope=login inquiry transfer&"+
-       "state=12345678901234567890123456789012&"+
-       "auth_type=0"
 	
+function memberAuth(){
+	let authWindow = window.open("about:blank","authWindow","width=500, height=700");
+	authWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize"
+	+"?response_type=code"
+	+"&client_id=bd507152-7d5b-4954-be9e-ef67beadb7eb"
+	+"&redirect_uri=http://localhost:8080/moneytto/memberAuth"
+	+"&scope=login inquiry transfer"
+	+"&state=11111111111111111111111111111111"
+	+"&auth_type=0";
+	// 산업은행 - 12345678
 }
+	/* 	거리구하는 스크립트 잘라둔것
+	var circle = new kakao.maps.Circle({
+		center : new kakao.maps.LatLng(${member.member_X}, ${member.member_Y}),
+		radius: 50,
+	});
+	var latlng = new kakao.maps.LatLng(129.059035752371, 35.157764059003);
+	var bounds = circle.getBounds();
+	var result = bounds.contain(latlng);
+	var polyline = new kakao.maps.Polyline({
+		path : [
+			new kakao.maps.LatLng(${member.member_X}, ${member.member_Y}),
+	        new kakao.maps.LatLng(129.059035752371, 35.157764059005),
+		]
+	})
+
+	var polylineLength = polyline.getLength();
+	*/
 </script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
-
+							
 	<div class="profileWrapper">
 		<div class="profileContainer">
 			<div class="memberInfoWrapper">
 				<div class="memberInfoInfoArea">
 					<div class="userDataWrapper">
-						<div>
-							<div class="userDataImgBox">
-								<img src="${path}/resources/images/mypage/cute.png"
-									alt="profileImg" class="userDataProfileImg ">
+<!-- 						<div> -->
+<!-- 							<div class="userDataImgBox"> -->
+<%-- 								<img src="${path}/resources/images/mypage/cute.png" --%>
+<!-- 									alt="profileImg" class="userDataProfileImg "> -->
+<!-- 							</div> -->
+							<div class="profile_edit_image">
+							<div class="profile_edit_image_box">
+								<img src="${path}/resources/images/mypage/cute.png" alt="머니또의 프로필 이미지">
+								<img src="https://ccimage.hellomarket.com/img/web/member/edit_camera.svg" alt="프로필 사진 등록 이미지">
+								<input type="file" class="pf_img" name="file" id="upFile" accept="image/jpeg, image/png">
+							</div>
 							</div>
 							<div class="userDataNickName">${member.member_nickname } 님</div>
-						</div>
+<!-- 						</div> -->
 					</div>
 					<div class="memberInfoProductCountBox">
 						<div class="memberInfoText">상품</div>

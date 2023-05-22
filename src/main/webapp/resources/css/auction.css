@@ -6,6 +6,8 @@
 }
 
 .fullScreen {
+	/*0522 - width: 1600px; 에서 1200 으로 수정함*/
+/* 	width: 1200px; */
 	width: 1600px;
 	margin: 0 auto;
 	height: 85vh;
@@ -20,6 +22,8 @@
 }
 
 .fullScreen>div {
+/* 	0522 - width: calc(100%/ 3);에서 /2로 수정함 */
+/* 	width: calc(100%/ 2); */
 	width: calc(100%/ 3);
 	height: 100%;
 	box-sizing: border-box;
@@ -51,7 +55,7 @@
 	background-color: #fff;
 	/* 	text-align: center; */
 	margin-bottom: 15px;
-	height: 644px;
+	height: 645px;
 }
 
 .con_period {
@@ -332,7 +336,7 @@
 
 .fullScreen .auction_center .auction_realTime {
 	text-align: center;
-	padding: 30px;
+	padding: 8px;
 	background-color: #fff;
 	height: 20%;
 	margin-bottom: 12px;

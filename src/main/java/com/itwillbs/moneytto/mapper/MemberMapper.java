@@ -9,6 +9,12 @@ public interface MemberMapper {
 	
 	int insertMember(HashMap<String, String> member);
 	// 로그인 확인
+	
 	HashMap<String, String> selectMember(String id);
 	
+	int updateAuth(String member_id);
+	
+	HashMap<String, String> selectKakao(String email);
+
+	HashMap<String, String> findId(HashMap<String, String> member);
 }

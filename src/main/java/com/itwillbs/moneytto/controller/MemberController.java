@@ -52,6 +52,7 @@ public class MemberController {
 		String securePasswd = passwordEncoder.encode(member.get("member_pw"));
 		
 		String member_address = member.get("member_address1") + "/" + member.get("member_address2");
+		
 		// 좌표
 		HashMap<String, String> coord = memberService.setCoord(member.get("member_address"));
 		member.putAll(coord);
@@ -96,27 +97,27 @@ public class MemberController {
 	}
 	
 // ******************************************************************
-// 네이버 로그인 확인
-//		@RequestMapping(value = "naverLogin", method = {RequestMethod.GET, RequestMethod.POST})
-//		public String naver(@RequestParam HashMap<String, String> naver) {
-//			System.out.println(naver);
-//			return "";
-//		}
+ //네이버 로그인 확인
+		@RequestMapping(value = "naverLogin", method = {RequestMethod.GET, RequestMethod.POST})
+		public String naver(@RequestParam HashMap<String, String> naver) {
+			System.out.println(naver);
+			return "";
+		}
 	
-/*	
 // 카카오 로그인 확인
 	@PostMapping(value = "kakaoLogin")
 	public String kakao(@RequestParam HashMap<String, String> kakao, Model model, HttpSession session) {
 		
+		
 		HashMap<String, String> member = memberService.kakaoMember(kakao.get("email"));
 		session.setAttribute("token", kakao.get("accessToken"));
-		
+		System.out.println(member);
 		// 회원 판별
 		if(member == null) {
 			model.addAttribute("msg", "회원이 아닙니다. 회원가입 페이지로 이동합니다.");
 			model.addAttribute("target", "joinform?email=" + kakao.get("email"));
 			
-			return "member/success";
+			return "success";
 			
 		} else {
 			session.setAttribute("sId", member.get("member_id"));
@@ -132,7 +133,6 @@ public class MemberController {
 		
 		return "member/mem_join_form";
 	}
-*/
 // ******************************************************************	
 	//회원로그인
 	@GetMapping(value = "memLogin")

@@ -20,7 +20,9 @@ header {
 /*=============================*/
 /*  헤 더  */
 /*=============================*/
-
+#header .secondary ul{
+	background-color: #BB2649;
+} 
 #top{
 	margin:0;
 }
@@ -81,6 +83,8 @@ header {
 		no-repeat;
 }
 
+
+
 #header nav.secondary>ul>li .sub {
 	display: none;
 	position: absolute;
@@ -100,7 +104,6 @@ header {
 	position: relative;
 	font-size: 16px;
 }
-
 
 #header nav.secondary>ul>li .sub li .info {
 	position: absolute;
@@ -200,6 +203,10 @@ header {
 	color: #c39c71;
 }
 
+.wrap-nav-primary nav.primary>ul>li>a:hover {
+	color: #bb2649;
+}
+
 .wrap-nav-primary nav.primary>ul>li:last-child>a {
 	border-right: none;
 }
@@ -248,6 +255,7 @@ div.tertiary.on {
     background-color: #3a3a3a;
     height: 220px;
     padding-top: 20px;
+    min-width: 1200px;
 }
 
 #footer .footer-social {
@@ -300,22 +308,29 @@ div.tertiary.on {
 	float: right;
 }
 
+#footer .footer-social .btn-to-top:hover {
+	background-image: url("../images/footer/btn-to-top-on.png");
+}
+
 #footer .footer-service {
 	background-color: #3a3a3a;
+	/* width: 1200px; */
+	margin: 0 auto;
+	width: 1200px;
 }
 
 #footer .footer-service .logo-footer {
 	display: block;
 	overflow: hidden;
 	text-indent: -10000em;
-	width: 890px;
+	width: 100%;
 	height: 55px;
 	background: url("../images/footer/logo.png") left center no-repeat;
 	margin: 21px auto 13px auto;
 }
 
 #footer .footer-service ul {
-	width: 890px;
+	width: 1200px;
 	margin: 0 auto 0 auto;
 }
 
@@ -344,6 +359,8 @@ div.tertiary.on {
 
 #footer .footer-contact {
 	background-color: #3a3a3a;
+	margin: 0 auto;
+	width: 1200px;
 }
 
 #footer .footer-contact .addr {
@@ -355,7 +372,7 @@ div.tertiary.on {
 }
 
 #footer .footer-contact ul {
-	width: 890px;
+	/* width: 890px; */
 	margin: 0 auto 0 auto;
 }
 
@@ -376,11 +393,13 @@ div.tertiary.on {
 
 #footer .footer-copyright {
 	background-color: #3a3a3a;
+	width: 1200px;
+	margin: 0 auto;
 }
 
 #footer .footer-copyright span {
 	display: block;
-	width: 890px;
+	/* width: 890px; */
 	margin: 17px auto 47px auto;
 	font-size: 13px;
 	color: #7d7d7d;
@@ -411,13 +430,17 @@ h2.tit {
 
 .searchIconWrapper {
     display: inline-block;
-    width: 200px;
+    width: 195px;
     height: 20px;
+    /* margin: auto 0px; */
     cursor: pointer;
-    padding: 10px 24px;
+    padding: 10px 15px;
     background: rgb(242, 245, 247);
     border-radius: 62px;
+    /* margin-top: 21px; */
+    /* float: right; */
     margin-top: 21px;
+    margin-left: 25px;
 }
 
 .searchIcon {
@@ -452,4 +475,30 @@ h2.tit {
 	float: right;
 	width: 196px;
 	margin-top: 16px;
+}
+
+.mem_profile {
+    display: inline-block;
+    width: 145px;
+    height: 47px;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.profileImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    /* margin: 0px 8px 0px -30px; */
+    display: inline-block;
+    /* margin-top: 19px; */
+}
+
+.mem_nickName {
+    margin: 0;
+    vertical-align: top;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 7px;
 }

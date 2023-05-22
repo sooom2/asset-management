@@ -44,9 +44,9 @@ function kakaoLogin() {
   
 $(function() {
 	// 인증번호 확인.
-	let mailStatus = false;
+// 	let mailStatus = false;
 	
-	// 이메일 인증
+// 	이메일 인증
 // 	$('#mail-Check-Btn').click(function() {
 // 		const email = $('#join-id').val() // 이메일 주소값 얻어오기
 // 		const checkInput = $('.mail-check-input') // 인증번호 입력하는곳
@@ -82,16 +82,16 @@ $(function() {
 // 		}
 // 	});
 	
-	$("#btn-join").on("click", function() {
+// 	$("#btn-join").on("click", function() {
 // 		if(!mailStatus) {
 // 			alert("이메일 인증을 확인해주시기 바랍니다.");
 // 			return false;
 // 		} else {
-			location.href="joinform?email=" + $('#join-id').val();
+// 			location.href="joinform?email=" + $('#join-id').val();
 // 			return true;
 // 		}
 		
-	});
+// 	});
 });
 
 

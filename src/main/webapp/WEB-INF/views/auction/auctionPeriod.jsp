@@ -19,6 +19,7 @@
 				<div class="auction_left">
 					<div class="left_main">
 						<div class="remainTime"> 
+<!-- 							(몇일 남아도 전부 시간으로 표시(27시간)? 일단위 하다 시간으로 표시(2일 -> 23시간)? 그럼 분은?) -->
 							<span>경매종료 까지 남은시간</span>
 							<div class="con_countDown"><i class="fa-regular fa-clock fa-xs"></i>&nbsp;10분 30초</div>
 						</div>
@@ -37,7 +38,13 @@
 								<div class="contentImage" style="height: 300px"></div><br>
 								<!-- 상품정보 -->
 								<div>
-									<span>경매날짜</span>
+									<div>
+										<span>상품정보</span>
+										<div class="con_price">상세정보 창 열기</div>
+									</div>
+									<span>경매 시작일</span>
+									<div class="con_period">2023.05.14</div><br>
+									<span>경매 종료일</span>
 									<div class="con_period">2023.06.14</div>
 									<div>
 										<span>시작가</span>
@@ -55,6 +62,7 @@
 				<div class="auction_center">
 				
 					<div class="auction_realTime">
+						<span style="font-size: 25px;">기간 경매</span>
 						<div class="auction_price"><span>30,000</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
 						<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
 						<div class="auction_id"><span>'추누공주'님</span></div>

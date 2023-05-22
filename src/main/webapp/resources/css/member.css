@@ -1261,7 +1261,7 @@
     font-weight: 700;
     font-size: 1.5rem;
     font-family: "Pretendard Variable";
-    margin-top: 22px;
+    margin-top: 0px;
     color: rgb(33, 39, 42);
 }
 .memberInfoProductCountBox {
@@ -2223,6 +2223,7 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     border-radius: 4px;
     border: 1px solid rgb(44, 44, 44);
 }
+<<<<<<< HEAD
 
 /* =========================================================================
 	마이페이지 정보 수정
@@ -2261,3 +2262,45 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     float: left;
     display: none;
 }
+=======
+/* =========================================================================
+	마이페이지 정보 수정
+   =========================================================================*/
+.profile_edit_image {
+    text-align: center;
+    position: relative;
+}
+.profile_edit_image .profile_edit_image_box {
+/*     position: absolute; */
+/*     top: -150px; */
+    left: 41%;
+}
+.profile_edit_image .profile_edit_image_box img:first-child {
+	position : relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 1px solid #ebebeb;
+    display: inline !important;
+}
+.profile_edit_image .profile_edit_image_box img:nth-child(2) {
+    position: relative;
+    bottom: 29px;
+    right: -134px;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+}
+.pf_img {
+    width: 33px;
+    height: 33px;
+    margin-top: -100px;
+    margin-left: 237px;
+    opacity: 0;
+    direction: ltr;
+    cursor: pointer;
+    float: left;
+    display: none;
+}
+
+>>>>>>> branch 'main' of https://github.com/sooom2/moneytto.git

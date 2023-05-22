@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itwillbs.moneytto.mapper.AdminMapper">
+
+	<insert id="registAuction">
+		INSERT INTO auction
+			VALUES(
+				   #{auction_code}
+				   , #{auction_type}
+				   , #{auction_item_name}
+				   , #{auction_content}
+				   , #{auction_present_price}
+				   , #{auction_immediate_price}
+				   , now()
+				   , DATE_FORMAT(#{auction_start_date}, '%Y.%m.%d %H:%i')
+				   , DATE_FORMAT(#{auction_end_date}, '%Y.%m.%d %H:%i')
+				   , 'N'
+				   , #{auction_notice}
+				   , #{auction_category}
+			)
+	</insert>
+	
+	<insert id="registImage">
+		INSERT INTO images
+			VALUES(
+				   #{image_code}
+				   , #{table_code}
+				   , #{image_name}
+				   , #{image_path}
+			)
+	</insert>
+
+</mapper>
