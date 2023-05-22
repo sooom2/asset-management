@@ -20,6 +20,7 @@ $(function() {
 });
 </script>
 <script type="text/javascript" src="${path }/resources/js/jquery-3.6.4.js"></script>
+<script type="text/javascript" src="${path }/resources/js/jquery-3.6.4.js"></script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
@@ -178,18 +179,9 @@ $(function() {
 		
 		
 		<!-- 신고 모달창 -->
-<<<<<<< HEAD
 		<div class="ReactModalPortal">
 			<div class="detail_report">
 				<div class="modal_main" tabindex="-1" role="dialog">
-=======
-		<div class="ReactModalPortal" style="display: none;">
-			<div
-				class="ReactModal__Overlay ReactModal__Overlay--after-open detail_report">
-				<div
-					class="ReactModal__Content ReactModal__Content--after-open modal_main"
-					tabindex="-1" role="dialog">
->>>>>>> branch 'market' of https://github.com/sooom2/asset-management.git
 					<div class="modal_parent">
 						<div class="modal_container">
 							<div class="ReportWrapper">
