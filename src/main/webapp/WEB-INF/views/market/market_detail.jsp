@@ -19,6 +19,7 @@ $(function() {
 	});
 });
 </script>
+<script type="text/javascript" src="${path }/resources/js/jquery-3.6.4.js"></script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
@@ -108,7 +109,7 @@ $(function() {
 					<div class="TopNavigationWrapper">
 						<img
 							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_report.png"
-							alt="신고하기" class="TopNavigationIcon">
+							alt="신고하기" class="TopNavigationIcon report">
 						<img
 							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_share.png"
 							alt="공유하기" class="TopNavigationIcon">
@@ -177,9 +178,18 @@ $(function() {
 		
 		
 		<!-- 신고 모달창 -->
+<<<<<<< HEAD
 		<div class="ReactModalPortal">
 			<div class="detail_report">
 				<div class="modal_main" tabindex="-1" role="dialog">
+=======
+		<div class="ReactModalPortal" style="display: none;">
+			<div
+				class="ReactModal__Overlay ReactModal__Overlay--after-open detail_report">
+				<div
+					class="ReactModal__Content ReactModal__Content--after-open modal_main"
+					tabindex="-1" role="dialog">
+>>>>>>> branch 'market' of https://github.com/sooom2/asset-management.git
 					<div class="modal_parent">
 						<div class="modal_container">
 							<div class="ReportWrapper">
@@ -245,8 +255,14 @@ $(function() {
 <script type="text/javascript">
 
 	$(function () {
+		// 신고하기
+		$(".report").on("click", function(e) {
+			$(".ReactModalPortal").show();
+		});
+		
+		// 모달창 닫기
 		$(".close").on("click", function(e) {
-			alert("sadasdas");
+			$(".ReactModalPortal").remove();
 		});
 	});
 
