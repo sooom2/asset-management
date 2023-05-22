@@ -11,32 +11,47 @@
 <script>
 
 	$(document).ready(function(){
-		$(".ThumbNailTypeImgBox").on("click",function(){
+		$(".ThumbNailTypeImgBox, .ThumbNailTypeItemInfoBox").on("click",function(){
 			location.href="market_detail"
 		})
-		
-		$(".ThumbNailTypeItemInfoBox").on("click",function(){
-			location.href="market_detail"
-		})	
-	})
 
+	})
+function memberAuth(){
+	let authWindow = window.open("about:blank","authWindow","width=500, height=700");
+	authWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize"
+	+"?response_type=code"
+	+"&client_id=bd507152-7d5b-4954-be9e-ef67beadb7eb"
+	+"&redirect_uri=http://localhost:8080/moneytto/memberAuth"
+	+"&scope=login inquiry transfer"
+	+"&state=11111111111111111111111111111111"
+	+"&auth_type=0";
+	// 산업은행 - 12345678
+}
+	
 </script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
-
+							
 	<div class="profileWrapper">
 		<div class="profileContainer">
 			<div class="memberInfoWrapper">
 				<div class="memberInfoInfoArea">
 					<div class="userDataWrapper">
-						<div>
-							<div class="userDataImgBox">
-								<img src="${path}/resources/images/mypage/cute.png"
-									alt="profileImg" class="userDataProfileImg ">
+<!-- 						<div> -->
+<!-- 							<div class="userDataImgBox"> -->
+<%-- 								<img src="${path}/resources/images/mypage/cute.png" --%>
+<!-- 									alt="profileImg" class="userDataProfileImg "> -->
+<!-- 							</div> -->
+							<div class="profile_edit_image">
+							<div class="profile_edit_image_box">
+								<img src="${path}/resources/images/mypage/cute.png" alt="머니또의 프로필 이미지">
+								<img src="https://ccimage.hellomarket.com/img/web/member/edit_camera.svg" alt="프로필 사진 등록 이미지">
+								<input type="file" class="pf_img" name="file" id="upFile" accept="image/jpeg, image/png">
+							</div>
 							</div>
 							<div class="userDataNickName">${member.member_nickname } 님</div>
-						</div>
+<!-- 						</div> -->
 					</div>
 					<div class="memberInfoProductCountBox">
 						<div class="memberInfoText">상품</div>
@@ -54,9 +69,19 @@
 					<div class="memberInfoReviewBox">
 						<div class="memberInfoText">남은머니</div>
 						<div class="memberInfoCount">${member.member_point }원</div>
+					</div><div class="memberInfoReviewBox">
+						<div class="memberInfoText">계좌 인증하기</div>
+						<c:choose>
+							<c:when test="${member.member_auth_status == N }">
+								<div class="memberInfoCount" onclick="memberAuth()">계좌 인증하기</div>
+							</c:when>
+							<c:otherwise>
+								<div class="memberInfoCount" >계좌 인증완료</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<div class="memberInfoRating">
-						<div class="payCharge"><Input type="button" value="충전"></div> &nbsp;&nbsp;
+						<div class="payCharge"><Input type="button" value="충전" onclick="location.href='pay'"></div> &nbsp;&nbsp;
 						<div class="payReturn"><Input type="button" value="환급"></div>
 					</div>
 					<div class="memberInfoMyDataBox" onclick='location.href="mypageInfo"'>

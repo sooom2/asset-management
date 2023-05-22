@@ -152,4 +152,9 @@ public class MemberService {
 		
 		return mapper.selectMember(id);
 	}
+
+	public int setAuth(String id) {
+	
+		return mapper.updateAuth(id);
+	}
 }

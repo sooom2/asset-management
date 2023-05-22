@@ -28,4 +28,10 @@
 			FROM member
 				WHERE member_id = #{member_id} 
 	</select>
+	<update id="updateAuth">
+		UPDATE member
+			SET member_auth_status = 'Y'
+			WHERE member_id = #{member_id} 
+	
+	</update>
 </mapper>
