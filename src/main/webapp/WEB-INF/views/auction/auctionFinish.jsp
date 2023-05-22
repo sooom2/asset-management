@@ -23,7 +23,7 @@
 <!-- 						<span>경매종료 까지 남은시간</span> -->
 <!-- 						<div class="con_countDown"><i class="fa-regular fa-clock fa-xs"></i>&nbsp;10분 30초</div> -->
 <!-- 					</div> -->
-					<div class="auction_info" style="height: 752px;">
+					<div class="auction_info" style="height: 772px;">
 						<div class="auction_realTime">
 							<div class="remainTime"> 
 								<span style="font-size: 25px;">완료된 경매</span>

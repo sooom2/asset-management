@@ -25,10 +25,10 @@
 						<div class="auction_info">
 							<span class="notice_title"><i class="fa-solid fa-bookmark"></i>&nbsp;공지사항</span><br>
 							<p class="auction_notice">
-							1. 아ㅓㅇㅇㅇ잉ㅂ력해주세요<br>
-							2. 가가가가가가ㅏ가가가<br>
-							3. 나나난나나나나난나<br>
-							4. 다다다다다다
+							1. 참가 신청을 하셔야 경매에 참여 가능합니다<br>
+							2. 경매가의 10%의 보증금을 받습니다<br>
+							3. 경매가 끝난 후 낙찰자를 제외하고 보증금을 돌려드립니다<br>
+							4. 낙찰 후 구매 취소 시 보증금을 받을 수 없습니다
 							</p>
 							<hr>
 							<div class="con_tit">도자기</div>
