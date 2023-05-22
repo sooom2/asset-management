@@ -20,7 +20,9 @@ header {
 /*=============================*/
 /*  헤 더  */
 /*=============================*/
-
+#header .secondary ul{
+	background-color: #BB2649;
+} 
 #top{
 	margin:0;
 }
@@ -253,6 +255,7 @@ div.tertiary.on {
     background-color: #3a3a3a;
     height: 220px;
     padding-top: 20px;
+    min-width: 1200px;
 }
 
 #footer .footer-social {
@@ -311,20 +314,23 @@ div.tertiary.on {
 
 #footer .footer-service {
 	background-color: #3a3a3a;
+	/* width: 1200px; */
+	margin: 0 auto;
+	width: 1200px;
 }
 
 #footer .footer-service .logo-footer {
 	display: block;
 	overflow: hidden;
 	text-indent: -10000em;
-	width: 890px;
+	width: 100%;
 	height: 55px;
 	background: url("../images/footer/logo.png") left center no-repeat;
 	margin: 21px auto 13px auto;
 }
 
 #footer .footer-service ul {
-	width: 890px;
+	width: 1200px;
 	margin: 0 auto 0 auto;
 }
 
@@ -353,6 +359,8 @@ div.tertiary.on {
 
 #footer .footer-contact {
 	background-color: #3a3a3a;
+	margin: 0 auto;
+	width: 1200px;
 }
 
 #footer .footer-contact .addr {
@@ -364,7 +372,7 @@ div.tertiary.on {
 }
 
 #footer .footer-contact ul {
-	width: 890px;
+	/* width: 890px; */
 	margin: 0 auto 0 auto;
 }
 
@@ -385,11 +393,13 @@ div.tertiary.on {
 
 #footer .footer-copyright {
 	background-color: #3a3a3a;
+	width: 1200px;
+	margin: 0 auto;
 }
 
 #footer .footer-copyright span {
 	display: block;
-	width: 890px;
+	/* width: 890px; */
 	margin: 17px auto 47px auto;
 	font-size: 13px;
 	color: #7d7d7d;

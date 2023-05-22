@@ -148,7 +148,27 @@
 		    <artifactId>javaSDK</artifactId>
 		    <version>2.2</version>
 		</dependency>
+	
+		<!-- Web Socket -->
+		<dependency> 
+		    <groupId>org.springframework</groupId> 
+		    <artifactId>spring-websocket</artifactId> 
+		    <version>${org.springframework-version}</version> 
+		</dependency>
+		<dependency> 
+		    <groupId>javax.websocket</groupId> 
+		    <artifactId>javax.websocket-api</artifactId> 
+		    <version>1.1</version> 
+		</dependency>
 		
+		<!-- lombok라이브러리 추가 -->			
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.26</version>
+		    <scope>provided</scope>
+		</dependency>
             
       <!-- ===================================================================== -->
             
