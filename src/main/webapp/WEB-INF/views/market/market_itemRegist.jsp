@@ -152,7 +152,7 @@
 <style>
 .selected {
 	font-weight: bold;
-	font-size: 18px;
+	color: #bb2649;
 }
 </style>
 
@@ -185,6 +185,7 @@
 		<section class="content">
 			<h1>중고거래의 시작 머니또마켓</h1>
 			<h2>상품 등록 페이지</h2>
+			<form class="insertItem" action="itemRegistPro" method="post">
 			<div class="regist_main_area">
 				<div class="regist_top">
 					<div class="regist_box_top">
@@ -358,10 +359,11 @@
 						<a href="/">
 							<button class="btn_item_cancel" type="button">취소</button>
 						</a>
-						<button class="btn_item_submit" type="button">상품 등록 완료</button>
+						<button class="btn_item_submit" type="submit">상품 등록 완료</button>
 					</div>
 				</div>
 			</div>
+			</form>
 		</section>
 	</div>
 

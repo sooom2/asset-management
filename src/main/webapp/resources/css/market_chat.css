@@ -980,3 +980,8 @@
 }
 
 
+.ui-widget.ui-widget-content {
+    border: 1px solid #c5c5c5;
+    position: absolute;
+    z-index: 1;
+}

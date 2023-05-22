@@ -81,6 +81,8 @@ header {
 		no-repeat;
 }
 
+
+
 #header nav.secondary>ul>li .sub {
 	display: none;
 	position: absolute;
@@ -100,7 +102,6 @@ header {
 	position: relative;
 	font-size: 16px;
 }
-
 
 #header nav.secondary>ul>li .sub li .info {
 	position: absolute;
@@ -198,6 +199,10 @@ header {
 
 .wrap-nav-primary nav.primary>ul>li>a.selected {
 	color: #c39c71;
+}
+
+.wrap-nav-primary nav.primary>ul>li>a:hover {
+	color: #bb2649;
 }
 
 .wrap-nav-primary nav.primary>ul>li:last-child>a {
@@ -298,6 +303,10 @@ div.tertiary.on {
 	overflow: hidden;
 	text-indent: -10000em;
 	float: right;
+}
+
+#footer .footer-social .btn-to-top:hover {
+	background-image: url("../images/footer/btn-to-top-on.png");
 }
 
 #footer .footer-service {
@@ -411,13 +420,17 @@ h2.tit {
 
 .searchIconWrapper {
     display: inline-block;
-    width: 200px;
+    width: 195px;
     height: 20px;
+    /* margin: auto 0px; */
     cursor: pointer;
-    padding: 10px 24px;
+    padding: 10px 15px;
     background: rgb(242, 245, 247);
     border-radius: 62px;
+    /* margin-top: 21px; */
+    /* float: right; */
     margin-top: 21px;
+    margin-left: 25px;
 }
 
 .searchIcon {
@@ -452,4 +465,30 @@ h2.tit {
 	float: right;
 	width: 196px;
 	margin-top: 16px;
+}
+
+.mem_profile {
+    display: inline-block;
+    width: 145px;
+    height: 47px;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.profileImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    /* margin: 0px 8px 0px -30px; */
+    display: inline-block;
+    /* margin-top: 19px; */
+}
+
+.mem_nickName {
+    margin: 0;
+    vertical-align: top;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 7px;
 }
