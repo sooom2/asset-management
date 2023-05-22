@@ -19,6 +19,7 @@
 				<div class="auction_left">
 					<div class="left_main">
 						<div class="remainTime"> 
+<!-- 							(몇일 남아도 전부 시간으로 표시(27시간)? 일단위 하다 시간으로 표시(2일 -> 23시간)? 그럼 분은?) -->
 							<span>경매종료 까지 남은시간</span>
 							<div class="con_countDown"><i class="fa-regular fa-clock fa-xs"></i>&nbsp;10분 30초</div>
 						</div>
@@ -37,7 +38,9 @@
 								<div class="contentImage" style="height: 300px"></div><br>
 								<!-- 상품정보 -->
 								<div>
-									<span>경매날짜</span>
+									<span>경매 시작일</span>
+									<div class="con_period">2023.05.14</div><br>
+									<span>경매 종료일</span>
 									<div class="con_period">2023.06.14</div>
 									<div>
 										<span>시작가</span>
