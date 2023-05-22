@@ -47,6 +47,13 @@ function confirmQuit() {
 				<div class="wrap-member-box wrap-membership-box">
 					<div class="title-membership">회원정보</div>
 					<form method="post" name="form-join2" action="updatePro">
+						<div class="profile_edit_image">
+							<div class="profile_edit_image_box">
+								<img src="https://ccimage.hellomarket.com/img/web/common/empty_profile.svg" alt="머니또의 프로필 이미지">
+								<img src="https://ccimage.hellomarket.com/img/web/member/edit_camera.svg" alt="프로필 사진 등록 이미지">
+								<input type="file" class="pf_img" name="file" id="upFile" accept="image/jpeg, image/png">
+							</div>
+						</div>
 						<div class="wrap-inside">
 							<div class="join-detail">
 								<label class="label-input" for="id"> <span>아이디</span>
@@ -62,7 +69,7 @@ function confirmQuit() {
 							</div>
 							<div class="join-detail">
 								<label class="label-input" for="pass2"> 
-								<span>변경하실 비밀번호</span> 
+								<span>변경할 비밀번호</span> 
 								<input type="password" id="member_pw2" name="member_pw2" class="input" placeholder="암호를 변경하시려면 입력하세요">
 								<span></span>
 								</label>

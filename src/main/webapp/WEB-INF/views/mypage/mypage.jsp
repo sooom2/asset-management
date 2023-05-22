@@ -9,17 +9,28 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
-
-	$(document).ready(function(){
-		$(".ThumbNailTypeImgBox").on("click",function(){
-			location.href="market_detail"
-		})
-		
-		$(".ThumbNailTypeItemInfoBox").on("click",function(){
-			location.href="market_detail"
-		})	
+$(document).ready(function(){
+	$(".ThumbNailTypeImgBox , .ThumbNailTypeItemInfoBox").on("click",function(){
+		location.href="market_detail"
 	})
-
+	
+	$('.tabTab').click(function() {
+		var itemList = $(this).attr('data-attr');
+		$('.tabTab').removeClass('active');
+		$(this).addClass('active');
+	})
+})
+function memberAuth(){
+	var tmpWindow = window.open('about:blank')
+	tmpWindow.location="https://openapi.openbanking.or.kr/oauth/2.0/authorize?"+
+	   "response_type=code&"+
+       "client_id=bd507152-7d5b-4954-be9e-ef67beadb7eb&"+  
+       "redirect_uri=http://localhost:8080/moneytto/memberAuth&"+
+       "scope=login inquiry transfer&"+
+       "state=12345678901234567890123456789012&"+
+       "auth_type=0"
+	
+}
 </script>
 </head>
 <body>
@@ -54,9 +65,12 @@
 					<div class="memberInfoReviewBox">
 						<div class="memberInfoText">남은머니</div>
 						<div class="memberInfoCount">${member.member_point }원</div>
+					</div><div class="memberInfoReviewBox">
+						<div class="memberInfoText">계좌 인증하기</div>
+						<div class="memberInfoCount" onclick="memberAuth()">계좌 인증하기</div>
 					</div>
 					<div class="memberInfoRating">
-						<div class="payCharge"><Input type="button" value="충전"></div> &nbsp;&nbsp;
+						<div class="payCharge"><Input type="button" value="충전" onclick="location.href='pay'"></div> &nbsp;&nbsp;
 						<div class="payReturn"><Input type="button" value="환급"></div>
 					</div>
 					<div class="memberInfoMyDataBox" onclick='location.href="mypageInfo"'>
@@ -65,13 +79,12 @@
 				</div>
 			</div>
 			
-			
-<!-- 			탭 -->
+			<!-- 탭 -->
 			<div class="listWrapper">
 				<div class="tabWrapper">
-					<div class="tabTab active"><a href="mypage">판매 상품</a></div>
-					<div class="tabTab"><a href="mypageFavorite">찜한 상품</a></div>
-					<div class="tabTab"><a href="#">구매 상품</a></div>
+					<div class="tabTab active"  data-attr="sellItem"><a href="#">판매 상품</a></div>
+					<div class="tabTab" data-attr="wishItem"><a href="#">찜한 상품</a></div>
+					<div class="tabTab" data-attr="buyItem"><a href="#">구매 상품</a></div>
 					<div class="tabTab"><a href="#">참여 중인 경매</a></div>
 					<div class="tabTab"><a href="#">거래 후기</a></div>
 					<div class="tabTab"><a href="#">추천 상품</a></div>
@@ -122,9 +135,8 @@
 				
 				<div class="itemWrapper">
 				  	<div class="itemItemWrapper">
-						<c:forEach var="item" items="itemList">
-						<!-- c:if itemList -> item으로 수정해주기 -->
-							<c:if test='${not empty itemList }'>
+						<c:forEach var="item" items="${itemList}">
+							<c:if test='${not empty item }'>
 							<div class="itemItemBox">
 	                          <div class="ThumbNailTypeWrapper">
 	                              <div class="ThumbNailTypeItemBox">
@@ -216,18 +228,19 @@
 	                          </div>
 	                      </div>
 	                      <!-- TODO -->
-	<!-- 					<div class="EmptyEmptyBox"> -->
-	<!-- 						<div class="EmptyTitle">아쉽게도, 현재 검색된 상품이 없어요</div> -->
-	<!-- 						<div class="EmptyGuide">필터를 재설정하거나 전체 상품 보기를 선택해주세요</div> -->
-	<!-- 						<div class="EmptyBtnBox"> -->
-	<!-- 							<img -->
-	<!-- 								src="https://ccimage.hellomarket.com/img/web/common/refresh_mark.svg" -->
-	<!-- 								alt="초기화 마크" class="EmptyResetMark-xvqyzf-4 YrGaN"> -->
-	<!-- 							<div class="EmptyShowAllText">전체 상품 보기</div> -->
-	<!-- 						</div> -->
-	<!-- 					</div> -->
-	<!-- 					<div class="EmptyNoticeBox"></div> -->
-					</div>
+                     </div>
+						<div class="EmptyEmptyBox">
+							<div class="EmptyTitle">아쉽게도, 현재 검색된 상품이 없어요</div>
+							<div class="EmptyGuide">필터를 재설정하거나 전체 상품 보기를 선택해주세요</div>
+							<div class="EmptyBtnBox">
+								<img
+									src="https://ccimage.hellomarket.com/img/web/common/refresh_mark.svg"
+									alt="초기화 마크" class="EmptyResetMark-xvqyzf-4 YrGaN">
+								<div class="EmptyShowAllText">전체 상품 보기</div>
+							</div>
+						</div>
+						<div class="EmptyNoticeBox"></div>
+					
 				</div>
 			</div>
 		</div>

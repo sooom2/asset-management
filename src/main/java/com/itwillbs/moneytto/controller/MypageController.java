@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.moneytto.service.MarketService;
 import com.itwillbs.moneytto.service.MemberService;
@@ -44,7 +45,10 @@ public class MypageController {
 		List<HashMap<String,String>> itemList = marketService.getItemList(id);
 		model.addAttribute("itemList", itemList);
 		*/
-
+		List<HashMap<String,String>> sellItemList = new ArrayList<HashMap<String,String>>();
+		sellItemList.add(member);
+		model.addAttribute("itemList", sellItemList);
+		
 		List<HashMap<String,String>> wishList = memberService.getWishList(id);
 		model.addAttribute("wishList", wishList);
 		
@@ -80,5 +84,29 @@ public class MypageController {
 		return "mypage/mypage_info_form";
 	}
 	
+	// 결제
+	@RequestMapping(value = "pay", method = {RequestMethod.GET, RequestMethod.POST})
+	public String store_pay(HttpSession session, Model model) {
+//		HashMap<String, String> item = service.selectCode(item_code);
+		String id = (String)session.getAttribute("sId");
+//		HashMap<String, String> member = service.selectMemberId(id);
+//		model.addAttribute("item", item);
+//		model.addAttribute("item_price", item_price);
+//		model.addAttribute("member", member);
+//		
+//		// 포인트 조회
+//		String point = service.selectPoint(id);
+//		model.addAttribute("point", point);
+//		model.addAttribute("item_count", item_count);
+//		if(id == null) {
+//			model.addAttribute("msg", "로그인 후 이용가능합니다.");
+//			model.addAttribute("target", "memLogin");
+//			return "success";
+//		} else {
+//			return "store/store_pay";
+//		}
+		return "mypage/mypage_pay";
+	}
+
 
 }
