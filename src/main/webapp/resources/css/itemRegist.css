@@ -1263,12 +1263,39 @@ input[type=checkbox] {
     margin-right: 10px;
 }
 
+.ImgFormDeleteImg {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-color: black;
+    border-radius: 50%;
+}
 
+.ImgFormThumbNailImg {
+    border-radius: 12px;
+    width: 162px;
+    height: 162px;
+    position: relative;
+    cursor: pointer;
+}
 
+.ImgFormRepresentImgBox {
+    width: 100%;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 12px;
+}
 
-
-
-
+.ImgFormDefaultImg {
+    width: 57px;
+    z-index: 1;
+}
 
 
 

@@ -12,58 +12,92 @@
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
-	document.addEventListener('DOMContentLoaded', function() {
+	document.addEventListener('DOMContentLoaded',function() {
+		var maxImageCount = 5; // 최대 이미지 개수 설정
+		var fileInput = document
+				.querySelector('input[type="file"]');
+		var imageList = document.querySelector('.image_list');
+		var countImg = document
+				.querySelector('.count_img span');
+		var defaultImage = document.querySelector('.default');
+
 		function handleFileSelect(event) {
 			var files = event.target.files;
 
-			var imageList = document.querySelector('.image_list');
-
-			// 기존의 이미지 미리보기를 모두 제거
-			imageList.innerHTML = '';
+			// 이미지 개수가 최대 개수를 초과하는 경우 파일 선택을 제한
+			if (files.length + imageList.children.length > maxImageCount) {
+				alert('최대 ' + maxImageCount
+						+ '장의 사진만 업로드할 수 있습니다.');
+				fileInput.value = '';
+				return;
+			}
 
 			// 선택한 파일들의 미리보기를 생성하여 추가
 			for (var i = 0; i < files.length; i++) {
 				var file = files[i];
 
-				// 미리보기 컨테이너를 생성
-				var previewContainer = document.createElement('div');
-				previewContainer.classList.add('previewContainer');
+				// 이미지 개수가 최대 개수에 도달한 경우 파일 선택을 제한
+				if (imageList.children.length >= maxImageCount) {
+					alert('최대 ' + maxImageCount
+							+ '장의 사진만 업로드할 수 있습니다.');
+					fileInput.value = '';
+					return;
+				}
 
-				// 미리보기 이미지를 생성
+				// 미리보기 컨테이너를 생성
+				var previewContainer = document
+						.createElement('li');
+
+				// 이미지를 생성
 				var img = document.createElement('img');
-				img.classList.add('previewImage');
+				img.classList.add('item_img');
 				img.src = URL.createObjectURL(file);
 
-				// 파일명을 표시하는 요소를 생성
-				var filename = document.createElement('div');
-				filename.classList.add('filename');
-				filename.textContent = file.name;
+				// 이미지 삭제 아이콘을 생성
+				var deleteIcon = document.createElement('img');
+				deleteIcon.classList.add('img_delete_icon');
+				deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
+				deleteIcon.alt = '상품 썸네일 제거 아이콘';
 
-				// 미리보기 컨테이너에 이미지와 파일명을 추가
-				previewContainer.appendChild(img);
-				previewContainer.appendChild(filename);
+				// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
+				deleteIcon
+						.addEventListener(
+								'click',
+								function() {
+									var imageContainer = this
+											.closest('li');
+									imageList
+											.removeChild(imageContainer);
+									updateImageCount();
+								});
 
-				// 미리보기 이미지를 이미지 목록에 추가
+				// 이미지와 삭제 아이콘을 감싸는 상자를 생성
+				var imageBox = document.createElement('div');
+				imageBox.classList.add('up_img_box');
+				imageBox.appendChild(deleteIcon);
+				imageBox.appendChild(img);
+
+				// 미리보기 컨테이너에 이미지 상자를 추가
+				previewContainer.appendChild(imageBox);
+
+				// 미리보기 컨테이너를 이미지 목록에 추가
 				imageList.appendChild(previewContainer);
+
+				updateImageCount();
 			}
 		}
 
-		var fileInput = document.querySelector('input[type="file"]');
-		var middleDotTextWrapper = document
-				.querySelectorAll('.MiddleDotTextWrapper');
-		var defaultImage = document.querySelector('.default');
+		function updateImageCount() {
+			countImg.textContent = imageList.children.length;
+		}
 
-		middleDotTextWrapper.forEach(function(wrapper) {
-			wrapper.addEventListener('click', function() {
-				fileInput.click();
-			});
-		});
-
+		// default 버튼 클릭 시 파일 입력 필드를 클릭하여 파일 선택 창을 열도록 설정
 		defaultImage.addEventListener('click', function() {
 			fileInput.click();
 		});
 
-		fileInput.addEventListener('change', handleFileSelect, false);
+		fileInput.addEventListener('change', handleFileSelect,
+				false);
 	});
 
 	// 태그기능
@@ -246,47 +280,26 @@
 											src="https://ccimage.hellomarket.com/img/web/regist/image_camera_x3.png"
 											alt="기본 상품 등록 이미지" class="default">
 										<ul class="image_list">
-
-
-											<ul class="image_list">
-												<li class="imgFormWrapper">
-													<div class="imgFormContent">
-														<img
-															src="https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png"
-															alt="상품 썸네일 제거 아이콘"
-															class="ImgForm__DeleteImg-sc-1xnba2h-5 liDElp"> <img
-															src="https://ccimg.hellomarket.com/upload_temp/item/05/19/ac754ed7-fe81-41a7-b648-c9e3064525d4_1684491304138.png"
-															alt="상품 썸네일"
-															class="ImgForm__ThumbNailImg-sc-1xnba2h-2 QhYbP">
-														<div class="ImgForm__RepresentImgBox-sc-1xnba2h-3 leHIKE">
-															<img
-																src="https://ccimage.hellomarket.com/img/web/regist/present.svg"
-																alt="대표사진 아이콘"
-																class="ImgForm__DefaultImg-sc-1xnba2h-4 fEzKKt">
-														</div>
-													</div>
-												</li>
-											</ul>
-
-
-											<div class="UploadGuideBox">
-												<div class="MiddleDotTextWrapper">
-													<img
-														src="https://ccimage.hellomarket.com/img/common/middle_dot.svg"
-														alt="중간 도트" class="MiddleDotTextDotImg">
-													<div class="MiddleDotText">클릭 또는 이미지를 드래그하여 등록할 수 있어요</div>
-												</div>
-												<div class="MiddleDotTextWrapper">
-													<img
-														src="https://ccimage.hellomarket.com/img/common/middle_dot.svg"
-														alt="중간 도트" class="MiddleDotTextDotImg">
-													<div class="MiddleDotText">드래그하여 상품 이미지 순서를 변경할 수 있어요</div>
-												</div>
-											</div>
+											<!-- 이미지 미리보기 영역 -->
 										</ul>
+										<div class="UploadGuideBox">
+											<div class="MiddleDotTextWrapper">
+												<img
+													src="https://ccimage.hellomarket.com/img/common/middle_dot.svg"
+													alt="중간 도트" class="MiddleDotTextDotImg">
+												<div class="MiddleDotText">클릭 또는 이미지를 드래그하여 등록할 수 있어요</div>
+											</div>
+											<div class="MiddleDotTextWrapper">
+												<img
+													src="https://ccimage.hellomarket.com/img/common/middle_dot.svg"
+													alt="중간 도트" class="MiddleDotTextDotImg">
+												<div class="MiddleDotText">드래그하여 상품 이미지 순서를 변경할 수 있어요</div>
+											</div>
+										</div>
 									</div>
 								</dd>
 							</dl>
+
 							<dl class="regist_title" id="title">
 								<dt class="TitleTitleWrapper">
 									<label class="Title">상품제목</label>
@@ -354,15 +367,17 @@
 									</div>
 								</dd>
 							</dl>
-							
+
 							<dl class="regist_tag">
 								<dt class="TitleTitleWrapper">
 									<label class="Title">태그(선택사항)</label>
 								</dt>
 								<dd>
 									<div class="tagWrapper">
-										<img src="https://ccimage.hellomarket.com/img/web/regist/tag_icon_x3.png" class="tagTagIcon">
-										<input placeholder="태그를 입력해주세요(최대 5개)" class="tagTagInput" value="">
+										<img
+											src="https://ccimage.hellomarket.com/img/web/regist/tag_icon_x3.png"
+											class="tagTagIcon"> <input
+											placeholder="태그를 입력해주세요(최대 5개)" class="tagTagInput" value="">
 									</div>
 									<button class="tagButton">추가</button>
 									<div class="ListWrapper"></div>
