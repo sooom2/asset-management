@@ -13,92 +13,92 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
 	document.addEventListener('DOMContentLoaded',function() {
-		var maxImageCount = 5; // 최대 이미지 개수 설정
-		var fileInput = document
-				.querySelector('input[type="file"]');
-		var imageList = document.querySelector('.image_list');
-		var countImg = document
-				.querySelector('.count_img span');
-		var defaultImage = document.querySelector('.default');
+			var maxImageCount = 5; // 최대 이미지 개수 설정
+			var fileInput = document
+					.querySelector('input[type="file"]');
+			var imageList = document.querySelector('.image_list');
+			var countImg = document
+					.querySelector('.count_img span');
+			var defaultImage = document.querySelector('.default');
 
-		function handleFileSelect(event) {
-			var files = event.target.files;
+			function handleFileSelect(event) {
+				var files = event.target.files;
 
-			// 이미지 개수가 최대 개수를 초과하는 경우 파일 선택을 제한
-			if (files.length + imageList.children.length > maxImageCount) {
-				alert('최대 ' + maxImageCount
-						+ '장의 사진만 업로드할 수 있습니다.');
-				fileInput.value = '';
-				return;
-			}
-
-			// 선택한 파일들의 미리보기를 생성하여 추가
-			for (var i = 0; i < files.length; i++) {
-				var file = files[i];
-
-				// 이미지 개수가 최대 개수에 도달한 경우 파일 선택을 제한
-				if (imageList.children.length >= maxImageCount) {
+				// 이미지 개수가 최대 개수를 초과하는 경우 파일 선택을 제한
+				if (files.length + imageList.children.length > maxImageCount) {
 					alert('최대 ' + maxImageCount
 							+ '장의 사진만 업로드할 수 있습니다.');
 					fileInput.value = '';
 					return;
 				}
 
-				// 미리보기 컨테이너를 생성
-				var previewContainer = document
-						.createElement('li');
+				// 선택한 파일들의 미리보기를 생성하여 추가
+				for (var i = 0; i < files.length; i++) {
+					var file = files[i];
 
-				// 이미지를 생성
-				var img = document.createElement('img');
-				img.classList.add('item_img');
-				img.src = URL.createObjectURL(file);
+					// 이미지 개수가 최대 개수에 도달한 경우 파일 선택을 제한
+					if (imageList.children.length >= maxImageCount) {
+						alert('최대 ' + maxImageCount
+								+ '장의 사진만 업로드할 수 있습니다.');
+						fileInput.value = '';
+						return;
+					}
 
-				// 이미지 삭제 아이콘을 생성
-				var deleteIcon = document.createElement('img');
-				deleteIcon.classList.add('img_delete_icon');
-				deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
-				deleteIcon.alt = '상품 썸네일 제거 아이콘';
+					// 미리보기 컨테이너를 생성
+					var previewContainer = document
+							.createElement('li');
 
-				// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
-				deleteIcon
-						.addEventListener(
-								'click',
-								function() {
-									var imageContainer = this
-											.closest('li');
-									imageList
-											.removeChild(imageContainer);
-									updateImageCount();
-								});
+					// 이미지를 생성
+					var img = document.createElement('img');
+					img.classList.add('item_img');
+					img.src = URL.createObjectURL(file);
 
-				// 이미지와 삭제 아이콘을 감싸는 상자를 생성
-				var imageBox = document.createElement('div');
-				imageBox.classList.add('up_img_box');
-				imageBox.appendChild(deleteIcon);
-				imageBox.appendChild(img);
+					// 이미지 삭제 아이콘을 생성
+					var deleteIcon = document.createElement('img');
+					deleteIcon.classList.add('img_delete_icon');
+					deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
+					deleteIcon.alt = '상품 썸네일 제거 아이콘';
 
-				// 미리보기 컨테이너에 이미지 상자를 추가
-				previewContainer.appendChild(imageBox);
+					// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
+					deleteIcon
+							.addEventListener(
+									'click',
+									function() {
+										var imageContainer = this
+												.closest('li');
+										imageList
+												.removeChild(imageContainer);
+										updateImageCount();
+									});
 
-				// 미리보기 컨테이너를 이미지 목록에 추가
-				imageList.appendChild(previewContainer);
+					// 이미지와 삭제 아이콘을 감싸는 상자를 생성
+					var imageBox = document.createElement('div');
+					imageBox.classList.add('up_img_box');
+					imageBox.appendChild(deleteIcon);
+					imageBox.appendChild(img);
 
-				updateImageCount();
+					// 미리보기 컨테이너에 이미지 상자를 추가
+					previewContainer.appendChild(imageBox);
+
+					// 미리보기 컨테이너를 이미지 목록에 추가
+					imageList.appendChild(previewContainer);
+
+					updateImageCount();
+				}
 			}
-		}
 
-		function updateImageCount() {
-			countImg.textContent = imageList.children.length;
-		}
+			function updateImageCount() {
+				countImg.textContent = imageList.children.length;
+			}
 
-		// default 버튼 클릭 시 파일 입력 필드를 클릭하여 파일 선택 창을 열도록 설정
-		defaultImage.addEventListener('click', function() {
-			fileInput.click();
+			// default 버튼 클릭 시 파일 입력 필드를 클릭하여 파일 선택 창을 열도록 설정
+			defaultImage.addEventListener('click', function() {
+				fileInput.click();
+			});
+
+			fileInput.addEventListener('change', handleFileSelect,
+					false);
 		});
-
-		fileInput.addEventListener('change', handleFileSelect,
-				false);
-	});
 
 	// 태그기능
 	document.addEventListener('DOMContentLoaded', function() {
