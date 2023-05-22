@@ -14,4 +14,5 @@ public interface MemberMapper {
 	
 	int updateAuth(String member_id);
 	
+	HashMap<String, String> selectKakao(String email);
 }

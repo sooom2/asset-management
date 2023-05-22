@@ -34,4 +34,8 @@
 			WHERE member_id = #{member_id} 
 	
 	</update>
+	<select id="selectKakao" resultType="hashmap">
+		SELECT * FROM member
+			WHERE member_email = #{email}
+	</select>
 </mapper>

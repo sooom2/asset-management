@@ -8,14 +8,15 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1e29d96072ee2bce354a10f8ac53225f"></script>
 <script>
-
 	$(document).ready(function(){
 		$(".ThumbNailTypeImgBox, .ThumbNailTypeItemInfoBox").on("click",function(){
 			location.href="market_detail"
 		})
 
 	})
+	
 function memberAuth(){
 	let authWindow = window.open("about:blank","authWindow","width=500, height=700");
 	authWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize"
@@ -27,7 +28,22 @@ function memberAuth(){
 	+"&auth_type=0";
 	// 산업은행 - 12345678
 }
-	
+	/* 	거리구하는 스크립트 잘라둔것
+	var circle = new kakao.maps.Circle({
+		center : new kakao.maps.LatLng(${member.member_X}, ${member.member_Y}),
+		radius: 50,
+	});
+	var latlng = new kakao.maps.LatLng(129.059035752371, 35.157764059003);
+	var bounds = circle.getBounds();
+	var result = bounds.contain(latlng);
+	var polyline = new kakao.maps.Polyline({
+		path : [
+			new kakao.maps.LatLng(${member.member_X}, ${member.member_Y}),
+	        new kakao.maps.LatLng(129.059035752371, 35.157764059005),
+		]
+	})
+	var polylineLength = polyline.getLength();
+	*/
 </script>
 </head>
 <body>
@@ -70,13 +86,14 @@ function memberAuth(){
 						<div class="memberInfoText">남은머니</div>
 						<div class="memberInfoCount">${member.member_point }원</div>
 					</div><div class="memberInfoReviewBox">
-						<div class="memberInfoText">계좌 인증하기</div>
 						<c:choose>
-							<c:when test="${member.member_auth_status == N }">
+							<c:when test="${member.member_auth_status == 'N' }">
+								<div class="memberInfoText">계좌 인증하기</div>
 								<div class="memberInfoCount" onclick="memberAuth()">계좌 인증하기</div>
 							</c:when>
 							<c:otherwise>
-								<div class="memberInfoCount" >계좌 인증완료</div>
+								<div class="memberInfoText">남은 포인트</div>
+								<div class="memberInfoCount" >${member.member_point } 포인트</div>
 							</c:otherwise>
 						</c:choose>
 					</div>

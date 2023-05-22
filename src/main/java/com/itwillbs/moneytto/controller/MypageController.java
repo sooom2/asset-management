@@ -42,11 +42,9 @@ public class MypageController {
 		HashMap<String,String> member = memberService.getMember(id);
 		model.addAttribute("member", member);
 		/*
-		//TODO 
 		List<HashMap<String,String>> itemList = marketService.getItemList(id);
 		model.addAttribute("itemList", itemList);
 		*/
-
 		List<HashMap<String,String>> wishList = memberService.getWishList(id);
 		model.addAttribute("wishList", wishList);
 		
