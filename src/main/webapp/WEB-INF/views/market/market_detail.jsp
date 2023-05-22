@@ -9,7 +9,7 @@
 <link href="${path }/resources/css/market_detail.css" rel="stylesheet">
 <link href="resources/css/swiper.min.css" rel="stylesheet" />
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="${path }/resources/js/jquery-3.6.4.js"></script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
@@ -99,7 +99,7 @@
 					<div class="TopNavigationWrapper">
 						<img
 							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_report.png"
-							alt="신고하기" class="TopNavigationIcon">
+							alt="신고하기" class="TopNavigationIcon report">
 						<img
 							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_share.png"
 							alt="공유하기" class="TopNavigationIcon">
@@ -168,7 +168,7 @@
 		
 		
 		<!-- 신고 모달창 -->
-		<div class="ReactModalPortal">
+		<div class="ReactModalPortal" style="display: none;">
 			<div
 				class="ReactModal__Overlay ReactModal__Overlay--after-open detail_report">
 				<div
@@ -277,8 +277,14 @@
 <script type="text/javascript">
 
 	$(function () {
+		// 신고하기
+		$(".report").on("click", function(e) {
+			$(".ReactModalPortal").show();
+		});
+		
+		// 모달창 닫기
 		$(".close").on("click", function(e) {
-			alert("sadasdas");
+			$(".ReactModalPortal").remove();
 		});
 	});
 
