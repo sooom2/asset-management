@@ -5,14 +5,21 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.itwillbs.moneytto.mapper.BoardMapper;
+import com.itwillbs.moneytto.mapper.MemberMapper;
+
 @Service
 public class MainService {
+	
+	@Autowired
+	private MemberMapper mapper;
 
 	public List getNewsInfo() {
 		
@@ -39,5 +46,6 @@ public class MainService {
 	    
 		return jsonArray.toList();
 	}
+
 	
 }
