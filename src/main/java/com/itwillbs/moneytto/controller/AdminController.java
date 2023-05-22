@@ -73,46 +73,12 @@ public class AdminController {
 	
 	
 	@PostMapping("/auction_regist")
-	public String auction_regist(@RequestParam Map<String, String> auction, MultipartFile file, HttpSession session, Model model) {
+	public String auction_regist(@RequestParam Map<String, String> auction, HttpSession session, Model model) {
 		
 		
-		String uploadDir = "/resources/upload"; 
-		String saveDir = session.getServletContext().getRealPath(uploadDir);
-		System.out.println("실제 업로드 경로 : " + saveDir);
-		
-		try {
-			Date date = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			String file_path = "/" + sdf.format(date);
-			
-			// 저장될 경로 저장
-			saveDir = saveDir + file_path;
-			// -----------------------------------------------------------------------
-			
-			// java.nio.file.Paths 클래스의 get() 메서드를 호출하여  
-			// 실제 경로를 관리하는 java.nio.file.Path 타입 객체를 리턴받기(파라미터 : 실제 업로드 경로)
-			Path path = Paths.get(saveDir);
-			// Files 클래스의 createDirectories() 메서드를 호출하여 Path 객체가 관리하는 경로 없으면 생성
-			Files.createDirectories(path);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		MultipartFile mFile = file;
-		
-		String originalFileName = mFile.getOriginalFilename();
-		
-		String uuid = UUID.randomUUID().toString();
-		
-		String file_name = uuid.substring(0, 8) + "_" + originalFileName;
-		System.out.println("실제 업로드 될 파일명 : " + file_name);
-		
-		
-		
-		// -------------------------------------------------------------------------------
-		
-		// auction_code 추가
-		auction.put("auction_code", uuid.substring(0, 8));
+		// auction_code 생성, 추가
+		String uuid = UUID.randomUUID().toString().substring(0, 8);
+		auction.put("auction_code", uuid);
 		
 		int insertCount = service.registAuction(auction);
 		
@@ -121,22 +87,15 @@ public class AdminController {
 			// 이미지 테이블 추가.
 			Map<String, String> images = new HashMap<String, String>();
 			images.put("image_code", (new Random().nextInt(1000000) + 1) + "");
-			images.put("table_code", uuid.substring(0, 8));
-			images.put("image_name", file_name);
-			images.put("image_path", saveDir);
+			images.put("table_code", uuid);
+			images.put("image_name", auction.get("image_name"));
 			
 			int insertImage = service.registImage(images);
 			
 			// 이미지 등록 성공
 			if(insertImage > 0) {
-				try {
-					mFile.transferTo(new File(saveDir, file_name));
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				return "redirect:/adminFreeBoard";
+				return "redirect:/adminAuction";
+				
 			} else {
 				model.addAttribute("msg", "이미지 등록 실패!");
 				return "fail_back";

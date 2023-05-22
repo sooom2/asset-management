@@ -112,7 +112,7 @@
 							</div>
 							<div>
 								<label for="customer_name">이미지 등록</label>
-								<input type="file" name="file">
+								<input type="text" name="image_name" required placeholder="상품 이미지를 등록하세요.">
 							</div>
 							<div>
 								<input type="submit" value="등록" style="border: 1px solid #8d8d8d;">

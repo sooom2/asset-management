@@ -26,7 +26,6 @@
 				   #{image_code}
 				   , #{table_code}
 				   , #{image_name}
-				   , #{image_path}
 			)
 	</insert>
 

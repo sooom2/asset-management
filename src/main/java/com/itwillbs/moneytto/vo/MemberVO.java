@@ -23,4 +23,5 @@ public class MemberVO {
 	private String userPassword;	// 비밀번호
 	private String userPic;			// 사진
 	
+	
 }
