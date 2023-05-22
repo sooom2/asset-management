@@ -51,8 +51,8 @@ public class MarketController {
 	}
 	
 	@GetMapping(value = "marketChat")
-	public String marketChat(Model model,HttpSession session) {
-		
+	public String marketChat(Model model,HttpSession session,@RequestParam String item_code) {
+		System.out.println(item_code);
 		//내닉네임
 		String id = (String)session.getAttribute("sId");
 		HashMap<String, String> member = memberService.getMember(id);

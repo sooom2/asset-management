@@ -1,4 +1,4 @@
-@charset "EUC-KR";
+@charset "UTF-8";
 
 .MainImgWrapper {
     position: relative;
@@ -307,7 +307,7 @@
  .TopNavigationWrapper img {
      margin-left: 10px;
      margin-right: 5px;
-    /* ������ ���� ���� */
+    /* 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 */
 }
  .TopNavigationIcon {
      width: 24px;
@@ -739,7 +739,7 @@
 }
 
 
-/* 신고 */
+/* 모달 ? */
 
 .detail_report, .overlay {
     position: fixed;
@@ -773,7 +773,7 @@
     width: 100%;
 }
 
-.giZTAr {
+.ReportWrapper {
     width: 490px;
     margin: 0px auto;
     background: rgb(255, 255, 255);
@@ -781,7 +781,7 @@
     border: 1px solid rgb(25, 31, 40);
 }
 
-.close {
+.ReportCloseIcon {
     width: 17px;
     height: 17px;
     display: flex;

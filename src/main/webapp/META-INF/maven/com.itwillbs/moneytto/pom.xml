@@ -83,27 +83,27 @@
             
       <!-- 5. SQL 로그에 사용할 log4jdbc-log4j2 라이브러리 -->
       <!-- https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1 -->
-      <dependency>
-          <groupId>org.bgee.log4jdbc-log4j2</groupId>
-          <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
-          <version>1.16</version>
-      </dependency>
+      	<dependency>
+			<groupId>org.bgee.log4jdbc-log4j2</groupId>
+			<artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+			<version>1.16</version>
+      	</dependency>
       
-     <!-- 올리는김에 -->
-	<!-- 6.암호화(해싱)에 사용할 BCryptPasswordEncoder 클래스 활용 -->
-	<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
-	<dependency>
-	    <groupId>org.springframework.security</groupId>
-	    <artifactId>spring-security-web</artifactId>
-	    <version>5.8.2</version>
-	</dependency>
+    	 <!-- 올리는김에 -->
+		<!-- 6.암호화(해싱)에 사용할 BCryptPasswordEncoder 클래스 활용 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-web</artifactId>
+		    <version>5.8.2</version>
+		</dependency>
 	
-     <!-- ajax할때..  --> 
-      <dependency>
-         <groupId>com.fasterxml.jackson.core</groupId>
-         <artifactId>jackson-databind</artifactId>
-         <version>2.9.9</version>
-      </dependency>
+     	<!-- ajax할때..  --> 
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+	         <artifactId>jackson-databind</artifactId>
+	         <version>2.9.9</version>
+		</dependency>
       
    		<!-- JSON 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
@@ -133,7 +133,27 @@
 		    <artifactId>javaSDK</artifactId>
 		    <version>2.2</version>
 		</dependency>
+	
+		<!-- Web Socket -->
+		<dependency> 
+		    <groupId>org.springframework</groupId> 
+		    <artifactId>spring-websocket</artifactId> 
+		    <version>${org.springframework-version}</version> 
+		</dependency>
+		<dependency> 
+		    <groupId>javax.websocket</groupId> 
+		    <artifactId>javax.websocket-api</artifactId> 
+		    <version>1.1</version> 
+		</dependency>
 		
+		<!-- lombok라이브러리 추가 -->			
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.26</version>
+		    <scope>provided</scope>
+		</dependency>
             
       <!-- ===================================================================== -->
             
