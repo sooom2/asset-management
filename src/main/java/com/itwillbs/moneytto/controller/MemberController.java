@@ -15,14 +15,6 @@ public class MemberController {
 	private MailSendService mailService;
 	
 	
-//	@RequestMapping(value = "/", method = RequestMethod.GET)
-//	public String main() {
-//		
-//		
-//		
-//		return "";
-//	}
-	
 	//회원인증폼
 	@GetMapping(value = "memAuth")
 	public String memAuth() {

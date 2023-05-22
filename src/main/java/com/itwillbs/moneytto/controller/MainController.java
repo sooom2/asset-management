@@ -24,13 +24,17 @@ public class MainController {
 		return "main";
 	}
 	
-	@GetMapping("/chat")
+	@GetMapping("/myAlarm")
 	public String chat() {
 		
-		return "chat/chat";
+		return "mypage/my_alarm";
 	}
 	
-
+	@GetMapping("/adminAuction")
+	public String adminAuction() {
+		
+		return "adminAuction";
+	}
 	
 	
 }

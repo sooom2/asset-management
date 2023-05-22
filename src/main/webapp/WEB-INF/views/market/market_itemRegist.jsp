@@ -8,7 +8,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="${path }/resources/css/inc.css" rel="stylesheet">
 <link href="${path }/resources/css/itemRegist.css" rel="stylesheet">
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -171,7 +170,7 @@
 <style>
 .selected {
 	font-weight: bold;
-	font-size: 18px;
+	color: #bb2649;
 }
 
 /* 태그 아이콘 */
@@ -223,6 +222,7 @@
 		<section class="content">
 			<h1>중고거래의 시작 머니또마켓</h1>
 			<h2>상품 등록 페이지</h2>
+			<form class="insertItem" action="itemRegistPro" method="post">
 			<div class="regist_main_area">
 				<div class="regist_top">
 					<div class="regist_box_top">
@@ -240,7 +240,7 @@
 								<div class="TitleEssentialMark">*</div>
 							</dt>
 							<div class="count_img">
-								(<span>0</span>/10)
+								(<span>0</span>/5)
 							</div>
 							<dd>
 								<input type="file" multiple="" class="multiple">
@@ -250,8 +250,21 @@
 										src="https://ccimage.hellomarket.com/img/web/regist/image_camera_x3.png"
 										alt="기본 상품 등록 이미지" class="default">
 									<ul class="image_list">
+										
+										
 										<ul class="image_list">
+											<li class="imgFormWrapper">
+												<div class="imgFormContent">
+													<img src="https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png" alt="상품 썸네일 제거 아이콘" class="ImgForm__DeleteImg-sc-1xnba2h-5 liDElp">
+													<img src="https://ccimg.hellomarket.com/upload_temp/item/05/19/ac754ed7-fe81-41a7-b648-c9e3064525d4_1684491304138.png" alt="상품 썸네일" class="ImgForm__ThumbNailImg-sc-1xnba2h-2 QhYbP">
+														<div class="ImgForm__RepresentImgBox-sc-1xnba2h-3 leHIKE">
+															<img src="https://ccimage.hellomarket.com/img/web/regist/present.svg" alt="대표사진 아이콘" class="ImgForm__DefaultImg-sc-1xnba2h-4 fEzKKt">
+														</div>
+												</div>
+											</li>
 										</ul>
+										
+										
 										<div class="UploadGuideBox">
 											<div class="MiddleDotTextWrapper">
 												<img
@@ -383,10 +396,11 @@
 						<a href="main">
 							<button class="btn_item_cancel" type="button">취소</button>
 						</a>
-						<button class="btn_item_submit" type="button">상품 등록 완료</button>
+						<button class="btn_item_submit" type="submit">상품 등록 완료</button>
 					</div>
 				</div>
 			</div>
+			</form>
 		</section>
 	</div>
 
