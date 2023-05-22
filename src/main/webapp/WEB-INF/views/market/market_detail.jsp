@@ -178,13 +178,16 @@ $(function() {
 		
 		
 		<!-- 신고 모달창 -->
-		<div class="ReactModalPortal">
-			<div class="detail_report">
-				<div class="modal_main" tabindex="-1" role="dialog">
+		<div class="ReactModalPortal" style="display: none;">
+			<div
+				class="ReactModal__Overlay ReactModal__Overlay--after-open detail_report">
+				<div
+					class="ReactModal__Content ReactModal__Content--after-open modal_main"
+					tabindex="-1" role="dialog">
 					<div class="modal_parent">
 						<div class="modal_container">
 							<div class="ReportWrapper">
-								<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_close_modal.png" alt="닫기 아이콘" class="ReportCloseIcon">
+								<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_close_modal.png" alt="닫기 아이콘" class="ReportCloseIcon close">
 								<div class="Report__Title-sc-140fn8w-2 fwaQok">신고 사유를 선택해 주세요.</div>
 								<div class="Report__ListWrapper-sc-140fn8w-3 gGZdRJ">
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
