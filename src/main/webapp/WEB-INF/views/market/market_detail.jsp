@@ -20,7 +20,6 @@ $(function() {
 });
 </script>
 <script type="text/javascript" src="${path }/resources/js/jquery-3.6.4.js"></script>
-<script type="text/javascript" src="${path }/resources/js/jquery-3.6.4.js"></script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
