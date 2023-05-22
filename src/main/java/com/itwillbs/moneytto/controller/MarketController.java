@@ -3,6 +3,8 @@ package com.itwillbs.moneytto.controller;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.moneytto.service.MarketService;
+import com.itwillbs.moneytto.service.MemberService;
+
+
 
 
 @Controller
@@ -18,6 +23,10 @@ public class MarketController {
 	
 	@Autowired
 	private MarketService service;
+	
+	@Autowired
+	private MemberService memberService;
+	
 	
 	@GetMapping(value = "market_list")
 	public String marketList() {
@@ -42,19 +51,25 @@ public class MarketController {
 	}
 	
 	@GetMapping(value = "marketChat")
-	public String marketChat(Model model) {
+	public String marketChat(Model model,HttpSession session) {
 		
-		String myNick = "홍길동";
+		//내닉네임
+		String id = (String)session.getAttribute("sId");
+		HashMap<String, String> member = memberService.getMember(id);
+		String nickname = member.get("member_nickname");
+		model.addAttribute("nickname",nickname);
+		
+		
+		//상대방정보
 		String sellNick = "보부상";
-		model.addAttribute("myNick",myNick);
 		model.addAttribute("sellNick",sellNick);
 		
 		//오늘날짜
-		
 		Date now = new Date();
 		System.out.println(now);
 		model.addAttribute("now",now);
 		return "market/market_chat";
+		 
 	}
 	
 	

@@ -27,14 +27,18 @@ public class MainController {
 		List newsList = mainService.getNewsInfo();
 		
 		String id = (String)session.getAttribute("sId");
-		System.out.println(id);
-//		HashMap<String, String> member = memberService.getMember(id);
-//		System.out.println(member);
-//		String nickname = member.get("member_nickname");
+		
+		String nickname = null;
+		
+		if (id != null) {
+		    HashMap<String, String> member = memberService.getMember(id);
+		    System.out.println(member);
+		    nickname = member.get("member_nickname");
+		}
 		
 		
-//		model.addAttribute("nickname",nickname);
-//		model.addAttribute("newsList", newsList);
+		model.addAttribute("nickname",nickname);
+		model.addAttribute("newsList", newsList);
 		
 		return "main";
 	}
@@ -49,6 +53,23 @@ public class MainController {
 	public String adminAuction() {
 		
 		return "adminAuction";
+	}
+	
+	// 로그아웃
+	@GetMapping(value = "/logout")
+	public String logout(HttpSession session) {
+		System.out.println("================================");
+		System.out.println(session.getAttribute("sId"));
+		System.out.println("================================");
+		try {
+	        if (session != null) {
+	            session.invalidate();
+	        }
+	    } catch (IllegalStateException e) {
+	        // 세션이 이미 만료된 경우 처리
+	        e.printStackTrace();
+	    }
+	    return "redirect:/main";
 	}
 	
 	

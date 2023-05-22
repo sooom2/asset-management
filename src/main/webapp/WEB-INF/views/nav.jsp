@@ -23,7 +23,7 @@
 				<c:otherwise>
 					<li><a href="myAlarm"><i class="fa-regular fa-bell"></i> 나의알림</a></li>
 					<li><a href="marketChat"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> 채팅</a></li>
-					<li><a href="javascript:logout()" data-reload="reload" class="">로그아웃</a></li>
+					<li><a href="logout" data-reload="reload" class="">로그아웃</a></li>
 					<%-- 관리자페이지 접근 서비스시 주석 해지할것  --%>
 <%-- 					<c:if test="${sessionScope.sId eq 'admin' }"> --%>
 <!-- 						<li><a href="admin" class="">관리자</a></li> -->
@@ -50,6 +50,8 @@
 			</div>
 			<c:choose>
 				<c:when test="${empty sessionScope.sId }">
+				<div class="mem_profile">
+					</div>	
 				</c:when>
 				<c:otherwise>
 					<div class="mem_profile">
