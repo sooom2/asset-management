@@ -5,7 +5,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
 <link href="${path }/resources/css/market_detail.css" rel="stylesheet">
 <link href="resources/css/swiper.min.css" rel="stylesheet" />
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
@@ -19,7 +18,6 @@ $(function() {
 	});
 });
 </script>
-<script type="text/javascript" src="${path }/resources/js/jquery-3.6.4.js"></script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
