@@ -38,4 +38,10 @@
 		SELECT * FROM member
 			WHERE member_email = #{email}
 	</select>
+	<select id="findId" resultType="hashmap">
+		SELECT * FROM member
+			WHERE member_name = #{member_name}
+				AND member_bday = #{member_bday}
+				AND member_tel = #{member_tel}
+	</select>
 </mapper>

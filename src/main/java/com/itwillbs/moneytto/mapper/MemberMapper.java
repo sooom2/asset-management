@@ -15,4 +15,6 @@ public interface MemberMapper {
 	int updateAuth(String member_id);
 	
 	HashMap<String, String> selectKakao(String email);
+
+	HashMap<String, String> findId(HashMap<String, String> member);
 }

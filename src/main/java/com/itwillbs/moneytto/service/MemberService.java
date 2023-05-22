@@ -54,11 +54,9 @@ public class MemberService {
 	}
 	
 	// 	아이디 조회
-//	public HashMap<String, String> findId(HashMap<String, String> member) {
-//		
-//		return member;
-		//return mapper.findId(member);
-//	}
+	public HashMap<String, String> findId(HashMap<String, String> member) {
+		return mapper.findId(member);
+	}
 	/*회원 목록 조회*/
 //	public List<HashMap<String, String>> selectMember() {
 //		return mapper.selectMember();

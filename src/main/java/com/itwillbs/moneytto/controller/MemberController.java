@@ -157,20 +157,20 @@ public class MemberController {
 		
 		return "member/mem_find_id";
 	}
-//	
-//	// 아이디 찾기pro
-//	@PostMapping(value = "findIdPro")
-//	public String findIdPro(@RequestParam HashMap<String, String> member, Model model) {
-//		HashMap<String, String> success = memberService.findId(member);
-//		
-//		if(success == null) {
-//			model.addAttribute("msg", "회원정보가 일치하지 않습니다");
-//			return "fail_back";
-//		} else {
-//			model.addAttribute("member_id", success.get("member_id"));
-//			return "member/mem_find_idSuccess";
-//		}
-//	}
+	
+	// 아이디 찾기pro
+	@PostMapping(value = "findIdPro")
+	public String findIdPro(@RequestParam HashMap<String, String> member, Model model) {
+		HashMap<String, String> success = memberService.findId(member);
+		
+		if(success == null) {
+			model.addAttribute("msg", "회원정보가 일치하지 않습니다");
+			return "fail_back";
+		} else {
+			model.addAttribute("member_id", success.get("member_id"));
+			return "member/mem_find_idSuccess";
+		}
+	}
 /*
 	// SMS 인증
 	@GetMapping(value = "phoneCheck")
