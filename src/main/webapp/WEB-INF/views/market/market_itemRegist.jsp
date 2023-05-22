@@ -390,10 +390,9 @@
 						</div>
 					</div>
 				</div>
-<!-- 			</form> -->
+			</form>
 		</section>
 	</div>
-
 
 
 	<jsp:include page="../footer.jsp" />

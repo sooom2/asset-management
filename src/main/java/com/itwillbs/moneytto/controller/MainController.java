@@ -28,13 +28,13 @@ public class MainController {
 		
 		String id = (String)session.getAttribute("sId");
 		System.out.println(id);
-		HashMap<String, String> member = memberService.getMember(id);
-		System.out.println(member);
-		String nickname = member.get("member_nickname");
+//		HashMap<String, String> member = memberService.getMember(id);
+//		System.out.println(member);
+//		String nickname = member.get("member_nickname");
 		
 		
-		model.addAttribute("nickname",nickname);
-		model.addAttribute("newsList", newsList);
+//		model.addAttribute("nickname",nickname);
+//		model.addAttribute("newsList", newsList);
 		
 		return "main";
 	}
