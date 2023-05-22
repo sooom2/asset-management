@@ -39,7 +39,7 @@
 						<div class="collapse" id="tradeMgm" aria-labelledby="" data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
 								<a class="nav-link" href="adminNoticeBoard">중고거래</a>
-								<a class="nav-link" href="adminFreeBoard">경매관리</a>
+								<a class="nav-link" href="adminAuction">경매관리</a>
 								<a class="nav-link" href="adminFreeBoard">오픈채팅</a>
 							</nav>
 						</div>

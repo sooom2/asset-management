@@ -64,32 +64,58 @@
 				<!-- 모달 -->
 				<div class="regist_container">
 					<div class="content">
-						<form class="myForm">
-						<h4>물품등록</h4>
+						<form action="auction_regist" class="myForm" method="post" enctype="multipart/form-data">
+						<h4>경매 등록</h4>
 							<div>
-								<label for="customer_name">상품명</label>
-								<input type="text" name="customer_name" id="customer_name" required placeholder="상품명을 입력하세요">
+								<label for="auction_name">상품명</label>
+								<input type="text" name="auction_item_name" required placeholder="상품명을 입력하세요.">
+							</div>
+							<div class="form-group">
+							    <label for="comments">상품 설명</label>
+							    <textarea name="auction_content" maxlength="500"></textarea>
 							</div>
 							<div>
-								<label for="date">날짜</label>
-								<input type="email" name="email_address" id="email_address">
+								<label for="auction_type">경매 타입</label>
+								<input type="radio" name="auction_type" value="실시간 경매" checked="checked">
+								<input type="radio" name="auction_type" value="기간 경매">
 							</div>
 							<div>
-								<label for="customer_name">가격</label>
-								<input type="text" name="customer_name" id="customer_name" required placeholder="상품명을 입력하세요">
+								<label for="auction_category">카테고리</label>
+								<select name="auction_category">
+									<option value="">항목선택</option>
+									<option value="의류">의류</option>
+									<option value="시계/쥬얼리">시계/쥬얼리</option>
+									<option value="디지털/가전">디지털/가전</option>
+									<option value="스포츠/레저">스포츠/레저</option>
+									<option value="차량/오토바이">차량/오토바이</option>
+								</select>
 							</div>
 							<div>
-								<label for="customer_name">등등</label>
-								<input type="text" name="customer_name" id="customer_name" required placeholder="상품명을 입력하세요">
+								<label for="customer_name">시작가</label>
+								<input type="text" name="auction_present_price" required placeholder="시작가를 입력하세요.">
 							</div>
-							
+							<div>
+								<label for="customer_name">즉시 구매가</label>
+								<input type="text" name="auction_immediate_price" required placeholder="즉시 구매가를 입력하세요.">
+							</div>
+							<div>
+								<label for="customer_name">시작일</label>
+								<input type="datetime-local" name="auction_start_date" required="required">
+							</div>
+							<div>
+								<label for="customer_name">종료일</label>
+								<input type="datetime-local" name="auction_end_date" required="required">
+							</div>
 							<div class="form-group">
 							    <label for="comments">공지사항</label>
-							    <textarea name="comments" id="comments" maxlength="500"></textarea>
+							    <textarea name="auction_notice" maxlength="500"></textarea>
 							</div>
-							
 							<div>
-								<button style="border: 1px solid #8d8d8d;">등록</button>
+								<label for="customer_name">이미지 등록</label>
+								<input type="file" name="file">
+							</div>
+							<div>
+								<input type="submit" value="등록" style="border: 1px solid #8d8d8d;">
 							</div>
 						</form>
 					</div>

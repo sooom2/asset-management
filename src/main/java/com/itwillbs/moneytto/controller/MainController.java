@@ -30,11 +30,6 @@ public class MainController {
 		return "mypage/my_alarm";
 	}
 	
-	@GetMapping("/adminAuction")
-	public String adminAuction() {
-		
-		return "adminAuction";
-	}
 	
 	
 }
