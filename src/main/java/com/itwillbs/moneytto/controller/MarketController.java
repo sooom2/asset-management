@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.itwillbs.moneytto.service.MarketChatService;
 import com.itwillbs.moneytto.service.MarketService;
 import com.itwillbs.moneytto.service.MemberService;
 
@@ -23,6 +24,9 @@ public class MarketController {
 	
 	@Autowired
 	private MarketService service;
+	
+	@Autowired
+	private MarketChatService marketChatservice;
 	
 	@Autowired
 	private MemberService memberService;
@@ -51,8 +55,9 @@ public class MarketController {
 	}
 	
 	@GetMapping(value = "marketChat")
-	public String marketChat(Model model,HttpSession session,@RequestParam String item_code) {
+	public String marketChat(Model model,HttpSession session,@RequestParam(defaultValue = "") String item_code) {
 		System.out.println(item_code);
+		
 		//내닉네임
 		String id = (String)session.getAttribute("sId");
 		HashMap<String, String> member = memberService.getMember(id);
@@ -64,6 +69,15 @@ public class MarketController {
 		String sellNick = "보부상";
 		model.addAttribute("sellNick",sellNick);
 		
+		//물건조회
+		HashMap<String, String> itemDetail = marketChatservice.getItem(item_code);
+		
+		//전체목록
+		if(item_code==null) {
+			
+		}
+		System.out.println(itemDetail);
+		
 		//오늘날짜
 		Date now = new Date();
 		System.out.println(now);
@@ -71,6 +85,9 @@ public class MarketController {
 		return "market/market_chat";
 		 
 	}
+	
+	
+	
 	
 	
 	@PostMapping(value="itemRegistPro")

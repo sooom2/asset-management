@@ -36,7 +36,11 @@
 </insert>
 
 
-
+<select id="getItem" resultType="hashmap">
+ 	SELECT *
+ 		 FROM market_chat_rooms
+  			WHERE item_code=#{item_code};
+</select>
 
 
 </mapper>

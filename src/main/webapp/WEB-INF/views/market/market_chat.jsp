@@ -127,30 +127,31 @@ $(function() {
 								<span class="chat_timeago_text"><fmt:formatDate value="${now }" pattern="yyyy년 MM월 dd일" /></span>
 							</div>
 						</div>
-<!-- 						<div class="chat_item"> -->
-<!-- 							<div class="chat_item_box"> -->
-<!-- 								<div class="chat_item_image_box"> -->
-<!-- 									<img class="chat_item_image" src="https://ccimg.hellomarket.com/images/2023/member_profile/03/08/13/2823905_171_1.jpg?size=s4" alt="상대방이미지"> -->
-<!-- 								</div> -->
-<!-- 								<div class="chat_item_message"> -->
-<!-- 									<div class="chat_item_message_box"> -->
-<!-- 										<div class="image_wrapper"> -->
-<!-- 											<div class="image_outside"> -->
-<!-- 												<div class="image_centerbox"> -->
-<!-- 													<img src="https://ccimg.hellomarket.com/images/2023/item/05/15/17/3324332_5222579_1.jpg" alt="채팅아이템이미지" class="chat_item_message_image"> -->
-<!-- 												</div> -->
-<!-- 											</div> -->
-<!-- 										</div> -->
-<!-- 										<div class="chat_item_message_main"> -->
-<!-- 											<div class="chat_item_message_title">서류가방</div> -->
-<!-- 											<div class="chat_item_message_price">80,000원</div> -->
-<!-- 										</div> -->
-<!-- 										<div class="chat_item_message_link">안전결제</div> -->
-<!-- 									</div> -->
-<!-- 									<div class="chat_item_timeago">오후 1:57</div> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
+						<!-- 처음에 아이템이미지무조건 출력 -->
+						<div class="chat_item">
+							<div class="chat_item_box">
+								<div class="chat_item_image_box">
+									<img class="chat_item_image" src="https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png" alt="상대방이미지">
+								</div>
+								<div class="chat_item_message">
+									<div class="chat_item_message_box">
+										<div class="image_wrapper">
+											<div class="image_outside">
+												<div class="image_centerbox">
+													<img src="https://ccimg.hellomarket.com/images/2023/item/05/15/17/3324332_5222579_1.jpg" alt="채팅아이템이미지" class="chat_item_message_image">
+												</div>
+											</div>
+										</div>
+										<div class="chat_item_message_main">
+											<div class="chat_item_message_title">서류가방</div>
+											<div class="chat_item_message_price">80,000원</div>
+										</div>
+										<div class="chat_item_message_link">안전결제</div>
+									</div>
+									<div class="chat_item_timeago">오후 1:57</div>
+								</div>
+							</div>
+						</div>
 						<div class="chat_myself">
 							<div class="chat_myself_box">
 								<div class="chat_myself_message">
