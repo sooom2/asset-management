@@ -27,6 +27,7 @@ public class MemberController {
 	@Autowired
 	private MailSendService mailService;
 	
+	
 	//회원인증폼
 	@GetMapping(value = "memAuth")
 	public String memAuth() {
@@ -37,6 +38,7 @@ public class MemberController {
 	@GetMapping(value = "joinform")
 	public String joinform(String email, Model model) {
 		System.out.println(email);
+		
 		model.addAttribute("email", email);
 		return "member/mem_join_form";
 	}
@@ -51,52 +53,48 @@ public class MemberController {
 		
 		String member_address = member.get("member_address1") + "/" + member.get("member_address2");
 		// 좌표
-		HashMap<String, String> coord = memberService.setCoord(member.get("member_address1"));
+		HashMap<String, String> coord = memberService.setCoord(member.get("member_address"));
 		member.putAll(coord);
 		
-		
 		member.put("member_pw", securePasswd);
-		member.put("member_address", member_address);
-		
-		
+		member.put("member_email", "test@test.com");
+		int insertCount = memberService.registMember(member);
 		
 		System.out.println(member);
-		model.addAttribute("member", member);
-//		int insertCount = service.registMember(member);
-//		if(insertCount > 0) { // 가입 성공
-//			service.insertPoint(member.get("member_id"));
-//			return "member/mem_join_success";
-//		} else { // 가입 실패
-//			model.addAttribute("msg", "회원 가입 실패!");
-//			return "member/fail_back";
-		return "member/mem_join_success";
+		if(insertCount > 0) { // 가입 성공
+			//memberService.insertPoint(member.get("member_id"));
+			model.addAttribute("member", member);
+			return "member/mem_join_success";
+		} else { // 가입 실패
+			model.addAttribute("msg", "회원 가입 실패!");
+			return "member/fail_back";
+		}
+//		return "member/mem_join_success";
 	}
 	
 	//회원 로그인 확인 
-	@RequestMapping(value = "loginPro", method = RequestMethod.GET)
-	public String loginPro(@RequestParam HashMap<String, String> login, Model model, HttpSession session) {
-	    String memberId = login.get("member_id");
-	    String password = login.get("member_pw");
+	@RequestMapping(value = "loginPro", method = RequestMethod.POST)
+	public String loginPro(@RequestParam String member_id, @RequestParam String member_pw
+							, Model model, HttpSession session) {
 
-	    HashMap<String, String> member = memberService.checkUser(login);
+	    HashMap<String, String> member = memberService.getMember(member_id);
+	    
+	    if (member != null) {
+	        String hashedPassword = member.get("member_pw");
+		    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-	    if (member == null) {
-	        model.addAttribute("msg", "아이디와 비밀번호가 일치하지 않습니다.");
-	        return "fail_back";
-	    }
-
-	    String hashedPassword = member.get("member_pw");
-	    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-	    if (passwordEncoder.matches(password, hashedPassword)) {
-	        session.setAttribute("sId", memberId);
-	        session.setAttribute("token", "true");
-	        return "redirect:/main";
+		    if (passwordEncoder.matches(member_pw, hashedPassword)) {
+		        session.setAttribute("sId", member.get("member_id"));
+		        session.setAttribute("token", "true");
+		        return "redirect:/main";
+		    }
+	    
 	    }
 
 	    model.addAttribute("msg", "아이디와 비밀번호가 일치하지 않습니다.");
 	    return "fail_back";
-	}		
+	}
+	
 // ******************************************************************
 // 네이버 로그인 확인
 //		@RequestMapping(value = "naverLogin", method = {RequestMethod.GET, RequestMethod.POST})
@@ -210,7 +208,7 @@ public class MemberController {
 		
 		model.addAttribute("msg", "비밀번호 재설정이 완료되었습니다.");
 		model.addAttribute("target", "memLogin");
-		return "member/success";
+		return "success";
 	}
 	
 	// 아이디 사용 조회

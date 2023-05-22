@@ -21,8 +21,8 @@ window.onload = function(){
        
         new daum.Postcode({
             oncomplete: function(data) { 
-                document.getElementById("member_address1").value = data.address; // 주소 넣기
-                document.querySelector("#member_address2").focus(); //상세입력 포커싱
+                document.getElementById("member_address").value = data.address; // 주소 넣기
+                document.querySelector("#member_address_detail").focus(); //상세입력 포커싱
             }
         }).open();
     });
@@ -187,6 +187,12 @@ $(function() {
 							    <span id="checkIdResult" class="joinCheck"></span>
 							</div>
 							<div class="join-detail">
+								<label class="label-input" for="nickname"> <span>닉네임</span>
+								<input type="text" id="member_nickname" name="member_nickname" class="input" placeholder="닉네임을 입력해주세요">
+								</label>
+							    <span id="checkIdResult" class="joinCheck"></span>
+							</div>
+							<div class="join-detail">
 								<label class="label-input" for="pass"> <span>비밀번호</span>
 									<input type="password" id="member_pw" name="member_pw" class="input" placeholder="영문, 숫자, 특수문자 중 2개 조합 8자 이상">
 								</label>
@@ -208,14 +214,14 @@ $(function() {
 							<div class="join-detail">
 			                    <label class="label-input" for="phone" style="width:342px;display:inline-block;">
 			                        <span>주소</span>
-			                        <input type="text" style="width:190px;display:inline-block;" id="member_address1" name="member_address1" class="input" placeholder="주소입력">
+			                        <input type="text" style="width:190px;display:inline-block;" id="member_address" name="member_address" class="input" placeholder="주소입력">
 			                        <span class="joinCheck"></span>
 			                    </label>
 			                    <a href="#" class="btnsub btnsms" id="postSearch">주소 검색</a>
 			                </div>
 							<div class="join-detail" style="margin-top:4px">
 								<label class="label-input" for="address"> <span>상세주소</span>
-									<input type="text" id="member_address2" name="member_address2" class="input" value="" placeholder="상세주소입력">
+									<input type="text" id="member_address_detail" name="member_address_detail" class="input" value="" placeholder="상세주소입력">
 									<span class="joinCheck"></span>
 								</label>
 							</div>

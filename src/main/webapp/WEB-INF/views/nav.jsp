@@ -9,6 +9,20 @@
 <link href="${path }/resources/css/common.css" rel="stylesheet">
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
+<script>
+	function logout() {
+		// 카카오 로그인 아닐시 session "token" = true
+		if(${sessionScope.token == true}){
+			let isLogout = confirm("로그아웃 하시겠습니까?");
+			
+			if(isLogout) {
+				location.href = "logout";
+			}
+		} else {
+// 			location.href="https://kauth.kakao.com/oauth/logout?client_id=bf0c05681627cc5d65f40192f843de1b&logout_redirect_uri=http://192.168.3.126:8080/movie/logout";
+		}
+	}
+</script>
 </head>
 <body>
 <div id="header" data-loginstatus="0">
@@ -19,7 +33,8 @@
 					<li><a href="myAlarm"><i class="fa-regular fa-bell"></i> 나의알림</a></li>
 					<li><a href="marketChat"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> 채팅</a></li>
 					<li><a href="memLogin" data-reload="reload" class=""><i class="fa-regular fa-circle-user"></i>&nbsp;로그인</a></li>
-					<li><a href="mypage" data-reload="" class="">마이페이지</a></li>
+					<%-- 밑줄 나중에  --%>
+<!-- 					<li><a href="mypage" data-reload="" class="">마이페이지</a></li> -->
 					<li><a href="memAuth">회원가입</a></li>
 				</c:when>
 				<c:otherwise>
@@ -30,8 +45,10 @@
 <%-- 					</c:if> --%>
 				</c:otherwise>
 			</c:choose>
-					<%-- 실제 서비스시 없앨것 --%>
+					<%-- 실제 서비스시 없애는 부분 --%>
 					<li><a href="admin" class="">관리자</a></li>
+					<li><a href="mypage" data-reload="" class="">마이페이지</a></li>
+					
 			</ul>
 		</nav>
 	

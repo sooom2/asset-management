@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 
 <title>회원정보관리</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
+<link rel="stylesheet" href="${path }/resources/css/member.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -119,7 +119,7 @@ function confirmQuit() {
 								<label class="label-input" for=""> <span>관심품목</span>
 									<div class="" style="margin-left: 120px; display: block; margin-top: 3px; width: 200px;; height: 30px; overflow: hidden; border: 1px solid #ccc;">
 										<select name="member_prefer_genre" id="member_prefer_genre"
-											style="width: 220px; height: 30px; padding: 0 0 0 10px; box-sizing: border-box; font-size: 16px; line-height: 30px; border-radius: 0; -webkit-appearance: none; appearance: none; -moz-appearance: none; background: url(/images/customer/icon-select-off.png) right 31px center no-repeat; border: none; color: #7d7d7d; vertical-align: top;">
+											style="width: 220px; height: 30px; padding: 0 0 0 10px; box-sizing: border-box; font-size: 16px; line-height: 30px; border-radius: 0; -webkit-appearance: none; appearance: none; -moz-appearance: none; background: url(${path}/resources/images/member/icon-select-off.png) right 31px center no-repeat; border: none; color: #7d7d7d; vertical-align: top;">
 											<option value="여성의류"<c:if test="${member.member_prefer_genre eq '액션'}">selected</c:if>>여성의류</option>
 											<option value="남성의류"<c:if test="${member.member_prefer_genre eq '드라마'}">selected</c:if>>남성의류</option>
 											<option value="가방"<c:if test="${member.member_prefer_genre eq '코메디' }">selected</c:if>>가방</option>
