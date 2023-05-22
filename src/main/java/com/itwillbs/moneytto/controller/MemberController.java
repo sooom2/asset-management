@@ -239,15 +239,5 @@ public class MemberController {
 			
 		return "redirect:/main";
 	}
-	// 계좌인증
-	@GetMapping(value = "memberAuth")
-	@ResponseBody
-	public String memberAuth(HttpSession session) {
-		//bd507152-7d5b-4954-be9e-ef67beadb7eb
-		//987f315c-f5f2-4e33-9d25-ee37ec1df522
-		//http://localhost:8080/moneytto/memberAuth
-		//https://openapi.openbanking.or.kr/oauth/2.0/authorize
-		return "";
-	}
 	
 }

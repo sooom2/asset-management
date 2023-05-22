@@ -103,7 +103,8 @@ public class MypageController {
 			model.addAttribute("msg", "인증에 실패하였습니다.\n 다시 시도해주세요.");
 			return "mypage/close_redirect";
 		}
-		/ 결제
+	}
+		// 결제
 		@RequestMapping(value = "pay", method = {RequestMethod.GET, RequestMethod.POST})
 		public String store_pay(HttpSession session, Model model) {
 //			HashMap<String, String> item = service.selectCode(item_code);
@@ -127,8 +128,6 @@ public class MypageController {
 			return "mypage/mypage_pay";
 		}
 		
-		
-	}
 	
 	@GetMapping(value = "payCharge")
 	public String payCharge() {
