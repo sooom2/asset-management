@@ -20,11 +20,10 @@ function kakaoLogin() {
         Kakao.API.request({
           url: '/v2/user/me',
           success: function (response) {
-		       	console.log(response)
 		       	var accessToken = Kakao.Auth.getAccessToken();
 		       	Kakao.Auth.setAccessToken(accessToken);
 		       	var account = response.kakao_account;
-					
+		       	console.log(account)
 				$('#form-kakao-login input[name=email]').val(account.email);
 				$('#form-kakao-login input[name=accessToken]').val(accessToken);
 				// 사용자 정보가 포함된 폼을 서버로 제출.

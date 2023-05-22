@@ -129,5 +129,11 @@ public class MypageController {
 		
 		
 	}
+	
+	@GetMapping(value = "payCharge")
+	public String payCharge() {
+		return "market/market_payment";
+	}
+ 
 
 }

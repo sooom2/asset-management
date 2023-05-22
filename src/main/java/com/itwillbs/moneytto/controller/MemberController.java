@@ -129,8 +129,13 @@ public class MemberController {
 // 카카오 회원가입
 	@PostMapping(value = "kakaoJoin")
 	public String kakaoJoin(@RequestParam HashMap<String, String> kakao, Model model) {
-		model.addAttribute("email", kakao.get("email"));
 		
+		if(kakao.get("email") != null) {
+			model.addAttribute("email", kakao.get("email"));	
+		}
+		
+		
+		System.out.println(kakao);
 		return "member/mem_join_form";
 	}
 // ******************************************************************	

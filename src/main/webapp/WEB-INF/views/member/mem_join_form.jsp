@@ -6,12 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="resources/css/main.css" rel="stylesheet">
-<link href="resources/css/common.css" rel="stylesheet">
-<link href="resources/css/inc.css" rel="stylesheet">
+<link href="${path }/resources/css/main.css" rel="stylesheet">
+<link href="${path }/resources/css/common.css" rel="stylesheet">
+<link href="${path }/resources/css/inc.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="resources/js/main.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 
@@ -214,7 +213,7 @@ $(function() {
 							<div class="join-detail">
 			                    <label class="label-input" for="phone" style="width:342px;display:inline-block;">
 			                        <span>주소</span>
-			                        <input type="text" style="width:190px;display:inline-block;" id="member_address" name="member_address" class="input" placeholder="주소입력">
+			                        <input type="text" style="width:190px;display:inline-block;" id="member_address" name="member_address" class="input" placeholder="주소입력" readonly="readonly">
 			                        <span class="joinCheck"></span>
 			                    </label>
 			                    <a href="#" class="btnsub btnsms" id="postSearch">주소 검색</a>
@@ -227,7 +226,8 @@ $(function() {
 							</div>
 							<div class="join-detail">
 								<label class="label-input" for="email"> <span>이메일</span>
-									<input type="text" id="member_email" name="member_email" class="input" value="${email }" placeholder="인증받은 이메일자동입력" readonly="readonly">
+									<input type="text" id="member_email" name="member_email" class="input" value="${email }" 
+									<c:if test="${not empty email }"> placeholder="인증받은 이메일자동입력" readonly="readonly" </c:if>>
 									<span class="joinCheck"></span>
 								</label>
 							</div>

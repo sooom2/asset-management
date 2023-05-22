@@ -10,15 +10,6 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1e29d96072ee2bce354a10f8ac53225f"></script>
 <script>
-$(document).ready(function(){
-	$(".ThumbNailTypeImgBox , .ThumbNailTypeItemInfoBox").on("click",function(){
-		location.href="market_detail"
-	})
-	
-	$('.tabTab').click(function() {
-		var itemList = $(this).attr('data-attr');
-		$('.tabTab').removeClass('active');
-		$(this).addClass('active');
 	$(document).ready(function(){
 		$(".ThumbNailTypeImgBox, .ThumbNailTypeItemInfoBox").on("click",function(){
 			location.href="market_detail"
@@ -92,6 +83,7 @@ function memberAuth(){
 							<div class="memberInfoCount">${member.grade_score }등급</div>
 						</div>
 					</div>
+					
 					<div class="memberInfoReviewBox">
 						<div class="memberInfoText">남은머니</div>
 						<div class="memberInfoCount">${member.member_point }원</div>
@@ -100,7 +92,7 @@ function memberAuth(){
 						<div class="memberInfoCount" onclick="memberAuth()">계좌 인증하기</div>
 					</div>
 					<div class="memberInfoRating">
-						<div class="payCharge"><Input type="button" value="충전" onclick="location.href='pay'"></div> &nbsp;&nbsp;
+						<div class="payCharge"><Input type="button" value="충전" onclick="location.href='payCharge'"></div> &nbsp;&nbsp;
 						<div class="payReturn"><Input type="button" value="환급"></div>
 					</div>
 					<div class="memberInfoMyDataBox" onclick='location.href="mypageInfo"'>
