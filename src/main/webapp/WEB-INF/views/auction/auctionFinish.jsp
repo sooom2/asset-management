@@ -28,9 +28,9 @@
 							<div class="remainTime"> 
 								<span style="font-size: 25px;">완료된 경매</span>
 		<!-- 							<div class="con_countDown"><i class="fa-regular fa-clock fa-xs"></i>&nbsp;10분 30초</div> -->
-							<div class="auction_price"><span>30,000</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
-<!-- 							<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div> -->
-							<div class="auction_id"><span>'추누공주'님</span></div>
+								<div class="auction_price"><span>30,000</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
+	<!-- 							<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div> -->
+								<div class="auction_id"><span>'추누공주'님</span></div>
 							</div>
 						</div>
 						<div class="con_tit">도자기</div>

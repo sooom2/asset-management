@@ -37,6 +37,10 @@
 								<div class="contentImage" style="height: 300px"></div><br>
 								<!-- 상품정보 -->
 								<div>
+									<div>
+										<span>상품정보</span>
+										<div class="con_price">상세정보 창 열기</div>
+									</div>
 									<span>경매날짜</span>
 									<div class="con_period">2023.06.14</div>
 									<div>
@@ -53,8 +57,9 @@
 				</div>
 				<!-- 가운데 -->
 				<div class="auction_center">
-				
+					
 					<div class="auction_realTime">
+						<span style="font-size: 25px;">실시간 경매</span>
 						<div class="auction_price"><span>30,000</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
 						<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
 						<div class="auction_id"><span>'추누공주'님</span></div>
@@ -73,6 +78,8 @@
 					<div class="auction_input">
 						<div class="auction_input_title">입찰입찰입찰 제목좀바꿔죠</div>
 						<hr>
+<!-- 						<div style="float: right;"> -->
+<!-- 						<div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<span>명</span></div></div><br> -->
 						<div class="bid">
 							<div class="bid_left">
 								<div>MY 보증금</div>
