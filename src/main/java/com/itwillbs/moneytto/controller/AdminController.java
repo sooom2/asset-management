@@ -85,7 +85,7 @@ public class AdminController {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 			String file_path = "/" + sdf.format(date);
 			
-			// 기본 업로드 경로와 서브 디렉토리 경로 결합하여 저장
+			// 저장될 경로 저장
 			saveDir = saveDir + file_path;
 			// -----------------------------------------------------------------------
 			
