@@ -66,6 +66,7 @@
 
 		fileInput.addEventListener('change', handleFileSelect, false);
 	});
+	
 	// 태그기능
 	document.addEventListener('DOMContentLoaded', function() {
 		var tagInput = document.querySelector('.tagTagInput');
@@ -79,11 +80,18 @@
 		function updateTagList() {
 			tagListWrapper.innerHTML = '';
 
-			tags.slice(0, 5).forEach(function(tag) {
+			tags.slice(0, 5).forEach(function(tag, index) {
 				var tagItem = document.createElement('span');
 				tagItem.classList.add('tagItem');
-				tagItem.style.visibility = 'hidden'; // 숨김 스타일 추가
 				tagItem.textContent = '#' + tag;
+
+				// X 아이콘 추가
+				var removeIcon = document.createElement('span');
+				removeIcon.classList.add('removeIcon');
+				removeIcon.textContent = 'X';
+				removeIcon.setAttribute('data-index', index);
+				tagItem.appendChild(removeIcon);
+
 				tagListWrapper.appendChild(tagItem);
 			});
 		}
@@ -117,18 +125,28 @@
 			tagInput.focus();
 		}
 
+		function removeTag(event) {
+			if (event.target.classList.contains('removeIcon')) {
+				var index = event.target.getAttribute('data-index');
+				tags.splice(index, 1);
+				updateTagList();
+				updateTagDesc();
+			}
+		}
+
 		tagButton.addEventListener('click', function(event) {
 			event.preventDefault();
 			addTag();
 		});
 
+		tagListWrapper.addEventListener('click', removeTag);
+
 		tagForm.addEventListener('submit', function(event) {
 			event.preventDefault();
 		});
 	});
+	
 </script>
-
-
 
 
 <!-- 금액 숫자만입력 -->
@@ -154,6 +172,25 @@
 .selected {
 	font-weight: bold;
 	font-size: 18px;
+}
+
+/* 태그 아이콘 */
+.removeIcon {
+	display: inline-block;
+	margin-left: 5px;
+	font-family: "Arial", sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #999;
+	cursor: pointer;
+}
+
+/* .removeIcon::before { */
+/* 	content: "x"; */
+/* } */
+
+.removeIcon:hover {
+	color: #ff0000;
 }
 </style>
 
@@ -343,7 +380,7 @@
 				</div>
 				<div class="item_submit_box">
 					<div class="item_area_submit_box">
-						<a href="/">
+						<a href="main">
 							<button class="btn_item_cancel" type="button">취소</button>
 						</a>
 						<button class="btn_item_submit" type="button">상품 등록 완료</button>
