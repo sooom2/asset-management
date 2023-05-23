@@ -61,6 +61,10 @@ public class MarketController {
 		String id = (String)session.getAttribute("sId");
 		HashMap<String, String> member = memberService.getMember(id);
 		
+		if(id==null) {
+			model.addAttribute("msg","로그인해주세요");
+			return "fail_back";
+		}
 		
 		//내닉네임
 		String nickname = member.get("member_nickname");
@@ -84,6 +88,12 @@ public class MarketController {
 		HashMap<String, String> sellDetail = marketChatService.getSellDetail(item_code);
 		model.addAttribute("sellDetail",sellDetail);
 		model.addAttribute("itemDetail",itemDetail);
+		
+//		//아이템 상세정보
+		HashMap<String, String> itemList = marketChatService.getItemList(item_code);
+		model.addAttribute("itemList",itemList);
+		
+		
 		
 		//판매자 판매상품개수
 		int sellCount = marketChatService.getSellCount(sellDetail.get("member_id"));

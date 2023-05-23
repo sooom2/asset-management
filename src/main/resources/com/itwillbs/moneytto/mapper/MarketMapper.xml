@@ -115,5 +115,11 @@
 	
 	
 	</select>
+	<!-- 아이템상세정보 -->
+	<select id="itemList" resultType="hashmap">
+		SELECT *
+			 FROM item
+		 		WHERE item_code = #{item_code}
+	</select>
 
 </mapper>

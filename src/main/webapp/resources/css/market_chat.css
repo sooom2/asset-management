@@ -32,6 +32,7 @@
 }
 .left_main .left_main_header .title{
 	line-height: 100px;
+	background: #f1f1f1;
 }
 .left_main ul {
     height: 77vh;
@@ -103,8 +104,8 @@
     content: "\2807";
     font-size: 20px;
     position: absolute;
-    top: 15px;
-    right: 13px;
+    top: 13px;
+    right: 5px;
     color: #757575;
     cursor: pointer
 }
@@ -228,7 +229,7 @@
 }
 
 
-.reight_main .chat_header .scheduling{
+.right_main .chat_header .scheduling{
 	display: inline-block;
 }
 .chat_header .scheduling .sch_date{
@@ -985,3 +986,37 @@
     position: absolute;
     z-index: 1;
 }
+.trade_status{
+	display: block;
+	float: right;
+	margin-top: -6px;
+}
+.trade_status .active{
+    background: #bb2649;
+    color: #fff!important;
+    border: 1px solid #b6b6b6;
+}
+.trade_status input[type="button"]{
+	padding: 4px 7px;
+	border-radius: 6px;
+	border: none;
+}
+.trade_status input[type="button"]:disabled{
+	background: #fff;
+	border: 1px solid #a3a3a3;
+	color: #939393;
+	border-radius: 6px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

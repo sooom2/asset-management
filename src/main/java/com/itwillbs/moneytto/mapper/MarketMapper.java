@@ -23,5 +23,6 @@ public interface MarketMapper {
 
 	List<HashMap<String, String>> myChatAllList(String id);
 
-
+	//아이템상세목록
+	HashMap<String, String> itemList(String item_code);
 }
