@@ -26,4 +26,8 @@ public interface MemberMapper {
 	List<HashMap<String, String>> selectSellItemList(String member_id);
 	
 	List<HashMap<String, String>> selectBuyItemList(String member_id);
+<<<<<<< Upstream, based on branch 'main' of https://github.com/sooom2/moneytto.git
 }
+=======
+}
+>>>>>>> 85e0de6 mypage

@@ -154,4 +154,8 @@ public class MemberService {
 		
 		return mapper.selectBuyItemList(id);
 	}
+<<<<<<< Upstream, based on branch 'main' of https://github.com/sooom2/moneytto.git
 }
+=======
+}
+>>>>>>> 85e0de6 mypage

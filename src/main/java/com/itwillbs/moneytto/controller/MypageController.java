@@ -42,6 +42,13 @@ public class MypageController {
 		
 		HashMap<String,String> member = memberService.getMember(id);
 		model.addAttribute("member", member);
+<<<<<<< Upstream, based on branch 'main' of https://github.com/sooom2/moneytto.git
+=======
+		
+		List<HashMap<String,String>> sellItemList = new ArrayList<HashMap<String,String>>();
+		sellItemList.add(member);
+		model.addAttribute("itemList", sellItemList);
+>>>>>>> 85e0de6 mypage
 		
 		System.out.println(itemType);
 		

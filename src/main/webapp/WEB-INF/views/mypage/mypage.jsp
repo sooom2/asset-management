@@ -10,6 +10,7 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1e29d96072ee2bce354a10f8ac53225f"></script>
 <script>
+<<<<<<< Upstream, based on branch 'main' of https://github.com/sooom2/moneytto.git
 	$(document).ready(function(){
 		$(".ThumbNailTypeImgBox, .ThumbNailTypeItemInfoBox").on("click",function(){
 			location.href="market_detail"
@@ -21,7 +22,22 @@
 		// active된 탭에 대한 css 작업 필요
 		location.href = "mypage?itemList="+itemType;
 		})
+=======
+$(document).ready(function(){
+	
+	$(".ThumbNailTypeImgBox, .ThumbNailTypeItemInfoBox").on("click",function(){
+		location.href="market_detail"
+>>>>>>> 85e0de6 mypage
 	})
+	
+	$(".tabTab").on("click",function(){
+		var itemType = $(this).attr('data-attr');
+		$(".tabTab").removeClass("active")
+		$(this).addClass("active")
+		location.href = "mypage?itemList="+itemType;
+	})
+
+})
 	
 function memberAuth(){
 	let authWindow = window.open("about:blank","authWindow","width=500, height=700");
@@ -160,14 +176,13 @@ function memberAuth(){
 				</div>
 				<div class="listControlBox"><div class="listCount">전체 0</div>
 				</div>
-				
 				<div class="itemWrapper">
+				
 				  	<div class="itemItemWrapper">
-						<c:forEach var="item" items="${itemList}">
-							<c:if test='${not empty item }'>
-							<div class="itemItemBox">
-	                          <div class="ThumbNailTypeWrapper">
-	                              <div class="ThumbNailTypeItemBox">
+				  		  		
+                      	<div class="itemItemBox">
+                            <div class="ThumbNailTypeWrapper">
+                              	<div class="ThumbNailTypeItemBox">
 	                                  <div class="ThumbNailTypeImgBox">
 	                                      <img src="https://ccimg.hellomarket.com/images/2023/item/05/20/00/5015019_5421001_1.jpg?size=s4" alt="itemImg" class="ThumbNailTypeItemImg"/>
 	                                      <div class="SellStateImgWrapper">
@@ -177,8 +192,8 @@ function memberAuth(){
 	                                  </div>
 	                                  <div class="ThumbNailTypeItemInfoBox">
 	                                      <div class="ThumbNailTypeItemInfo">
-	                                          <div class="ThumbNailTypeTitle">${item.name }</div>
-	                                          <div class="ThumbNailTypePrice">${item.price }원</div>
+	                                          <div class="ThumbNailTypeTitle">세인트루이스 뉴에라...</div>
+	                                          <div class="ThumbNailTypePrice">5,000원</div>
 	                                      </div>
 	                                      <div class="SearchIconWrapper">
 	                                         <img src="https://ccimage.hellomarket.com/web/2017/common/img_search_n.png" class="SearchIcon"/>
@@ -186,10 +201,8 @@ function memberAuth(){
 	                                  </div>
 	                              </div>
 	                          </div>
-	                      </div>
-	                      </c:if>
-						</c:forEach>				  		
-	                      	<div class="itemItemBox">
+	                    </div>
+	                    <div class="itemItemBox">
 	                          <div class="ThumbNailTypeWrapper">
 	                              <div class="ThumbNailTypeItemBox">
 	                                  <div class="ThumbNailTypeImgBox">
@@ -210,8 +223,8 @@ function memberAuth(){
 	                                  </div>
 	                              </div>
 	                          </div>
-	                      </div>
-	                      <div class="itemItemBox">
+	                    </div>
+	                    <div class="itemItemBox">
 	                          <div class="ThumbNailTypeWrapper">
 	                              <div class="ThumbNailTypeItemBox">
 	                                  <div class="ThumbNailTypeImgBox">
@@ -232,6 +245,7 @@ function memberAuth(){
 	                                  </div>
 	                              </div>
 	                          </div>
+<<<<<<< Upstream, based on branch 'main' of https://github.com/sooom2/moneytto.git
 	                      </div>
 	                      <div class="itemItemBox">
 	                          <div class="ThumbNailTypeWrapper">
@@ -256,6 +270,10 @@ function memberAuth(){
 	                          </div>
 	                      </div>
 	                      <c:if test='${not empty itemList }'>
+=======
+	                    </div>
+							<c:if test='${not empty itemList }'>
+>>>>>>> 85e0de6 mypage
 								<c:forEach var="item" items="${itemList}">
 									<div class="itemItemBox">
 			                          <div class="ThumbNailTypeWrapper">
@@ -282,7 +300,11 @@ function memberAuth(){
 	                      		</c:forEach>
                       		</c:if>
                      </div>
+<<<<<<< Upstream, based on branch 'main' of https://github.com/sooom2/moneytto.git
 						<c:if test= '${empty itemList }'>
+=======
+					<c:if test= '${empty itemList }'>
+>>>>>>> 85e0de6 mypage
                       	<div class="EmptyEmptyBox">
 							<div class="EmptyTitle">아쉽게도, 현재 검색된 상품이 없어요</div>
 							<div class="EmptyGuide">필터를 재설정하거나 전체 상품 보기를 선택해주세요</div>

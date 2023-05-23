@@ -34,7 +34,6 @@
 	<select id="selectCloseMemberList" resultType="hashmap">
 		SELECT 	*
 			FROM member
-			WHERE  
 	</select>
 	<!-- 비밀번호 재설정 -->
 	<update id="renewPw">
