@@ -13,7 +13,7 @@
 $(function() {
 	$(".SomeonesItemButton").click(function() {
 		//아이템코드
-		item_code="market_0001";
+		item_code="market0001";
 		location.href="marketChat?item_code="+item_code;
 	});
 });
