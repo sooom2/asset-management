@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itwillbs.moneytto.mapper.AuctionMapper">
+
+	<select id="selectAuction" resultType="hashmap">
+	 SELECT 
+		 auction_code
+	   , auction_type
+	   , auction_item_name
+	   , auction_content
+	   , auction_present_price
+	   , auction_immediate_price
+	   , DATE_FORMAT(auction_date, '%Y.%m.%d %H:%i') 'auction_date'
+	   , DATE_FORMAT(auction_start_date, '%Y.%m.%d %H:%i') 'auction_start_date'
+	   , DATE_FORMAT(auction_end_date, '%Y.%m.%d %H:%i') 'auction_end_date'
+	   , auction_status
+	   , auction_notice
+	   , auction_category
+	   , image_code
+	   , table_code
+	   , image_name
+	 		FROM auction a JOIN images i
+	 			ON a.auction_code = i.table_code
+	</select>
+	
+	<select id="selectAuctionCode" resultType="hashmap">
+		SELECT 
+			 auction_code
+		   , auction_type
+		   , auction_item_name
+		   , auction_content
+		   , auction_present_price
+		   , auction_immediate_price
+		   , DATE_FORMAT(auction_date, '%Y.%m.%d %H:%i') 'auction_date'
+		   , DATE_FORMAT(auction_start_date, '%Y.%m.%d %H:%i') 'auction_start_date'
+		   , DATE_FORMAT(auction_end_date, '%Y.%m.%d %H:%i') 'auction_end_date'
+		   , auction_status
+		   , auction_notice
+		   , auction_category
+		   , image_code
+		   , table_code
+		   , image_name
+		 		FROM auction a JOIN images i
+		 			ON a.auction_code = i.table_code
+	 					WHERE auction_code = #{auction_code}
+	</select>
+
+</mapper>

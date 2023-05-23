@@ -14,7 +14,13 @@
 		$(".ThumbNailTypeImgBox, .ThumbNailTypeItemInfoBox").on("click",function(){
 			location.href="market_detail"
 		})
-
+	$(".tabTab").on("click",function(){
+		var itemType = $(this).attr('data-attr');
+		$(".tabTab").removeClass("active")
+		$(this).addClass("active")
+		// active된 탭에 대한 css 작업 필요
+		location.href = "mypage?itemList="+itemType;
+		})
 	})
 	
 function memberAuth(){
@@ -249,9 +255,35 @@ function memberAuth(){
 	                              </div>
 	                          </div>
 	                      </div>
-	                      <!-- TODO -->
+	                      <c:if test='${not empty itemList }'>
+								<c:forEach var="item" items="${itemList}">
+									<div class="itemItemBox">
+			                          <div class="ThumbNailTypeWrapper">
+			                              <div class="ThumbNailTypeItemBox">
+			                                  <div class="ThumbNailTypeImgBox">
+			                                      <img src="https://ccimg.hellomarket.com/images/2023/item/05/20/00/5015019_5421001_1.jpg?size=s4" alt="itemImg" class="ThumbNailTypeItemImg"/>
+			                                      <div class="SellStateImgWrapper">
+			                                          <div class="SellStateImgStateBox"></div>
+			                                      </div>
+			                                      <img src="https://ccimage.hellomarket.com/img/web/feed/tag/ico_heart_on.svg" class="WishWishImg"/>
+			                                  </div>
+			                                  <div class="ThumbNailTypeItemInfoBox">
+			                                      <div class="ThumbNailTypeItemInfo">
+			                                          <div class="ThumbNailTypeTitle">${item.name }</div>
+			                                          <div class="ThumbNailTypePrice">${item.price }원</div>
+			                                      </div>
+			                                      <div class="SearchIconWrapper">
+			                                         <img src="https://ccimage.hellomarket.com/web/2017/common/img_search_n.png" class="SearchIcon"/>
+			                                     </div>
+			                                  </div>
+			                              </div>
+			                          </div>
+			                      	</div>
+	                      		</c:forEach>
+                      		</c:if>
                      </div>
-						<div class="EmptyEmptyBox">
+						<c:if test= '${empty itemList }'>
+                      	<div class="EmptyEmptyBox">
 							<div class="EmptyTitle">아쉽게도, 현재 검색된 상품이 없어요</div>
 							<div class="EmptyGuide">필터를 재설정하거나 전체 상품 보기를 선택해주세요</div>
 							<div class="EmptyBtnBox">
@@ -262,7 +294,7 @@ function memberAuth(){
 							</div>
 						</div>
 						<div class="EmptyNoticeBox"></div>
-					
+					</c:if>
 				</div>
 			</div>
 		</div>

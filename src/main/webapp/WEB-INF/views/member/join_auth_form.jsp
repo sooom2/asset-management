@@ -8,8 +8,11 @@
 <title>Insert title here</title>
 <link href="${path}/resources/css/member.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
+
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
 <script>
 //카카오
 Kakao.init('bf0c05681627cc5d65f40192f843de1b'); 
@@ -40,7 +43,18 @@ function kakaoLogin() {
       },
     })
   }
-  
+function naverLogin(){
+	let naverloginpop = window.open("about:blank","authWindow","width=500, height=700");
+	naverloginpop.location = "https://nid.naver.com/oauth2.0/authorize"
+	+"?response_type=code"
+	+"&client_id=mV2ILHR9EiZ5mjCPt4vg"
+	+"&redirect_uri=http://localhost:8080/moneytto/naverLogin"
+	+"&state=63fbad94-92d6-45b2-9eb3-b879e454a289"
+	
+	
+}  
+
+
 $(function() {
 	// 인증번호 확인.
 // 	let mailStatus = false;
@@ -115,11 +129,8 @@ $(function() {
 								<span>소셜 계정으로 가입</span>
 							</div>
 							<div class="join-social">
-								<div id="naver_id_login" class="nv">
-									<a
-										href="https://nid.naver.com/oauth2.0/authorize?response_type=token&amp;client_id=i5vJc9KektcyYpcRyM5n&amp;redirect_uri=https%3A%2F%2Fcineq.co.kr%2FPopup%2FNaverLogin&amp;state=63fbad94-92d6-45b2-9eb3-b879e454a289"
-										onclick="window.open(this.href, 'naverloginpop', 'titlebar=1, resizable=1, scrollbars=yes, width=600, height=550'); return false"
-										id="naver_id_login_anchor" class="social-connect nv">네이버</a>
+								<div id="naver_id_login" class="nv" onclick ="naverLogin()">
+									<a id="naver_id_login_anchor" class="social-connect nv">네이버</a>
 								</div>
 								<span onclick="kakaoLogin();">
 								<a id="custom-login-btn" href="#" class="kt">카카오 톡</a>
@@ -149,7 +160,7 @@ $(function() {
 						<input type="hidden" id="socialId" name="socialId" value="">
 						<input type="hidden" id="name" name="name" value="">
 						<input type="hidden" id="token" name="token" value=""> 
-						<input type="hidden" id="isPayment" name="isPayment" value="0">
+<!-- 						<input type="hidden" id="isPayment" name="isPayment" value="0"> -->
 					</form>
 				</div>
 			</div>

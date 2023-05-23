@@ -1,12 +1,5 @@
 package com.itwillbs.moneytto.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -21,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.itwillbs.moneytto.service.AdminService;
 
@@ -74,7 +66,6 @@ public class AdminController {
 	
 	@PostMapping("/auction_regist")
 	public String auction_regist(@RequestParam Map<String, String> auction, HttpSession session, Model model) {
-		
 		
 		// auction_code 생성, 추가
 		String uuid = UUID.randomUUID().toString().substring(0, 8);
