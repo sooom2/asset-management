@@ -101,12 +101,13 @@
      width: 470px;
 }
 
- .PreviewImgListItemImg {
-     width: 90px;
-     height: 90px;
-     margin-right: 4px;
-     object-fit: cover;
-     opacity: 40%;
+.PreviewImgListItemImg {
+    width: 90px;
+    height: 90px;
+    margin-right: 4px;
+    object-fit: cover;
+    opacity: 40%;
+    display: inline-flex;
 }
 
  .NavigationCustomNavigationContainer {
