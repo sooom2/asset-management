@@ -10,7 +10,8 @@
 /* 	width: 1200px; */
 	width: 1600px;
 	margin: 0 auto;
-	height: 85vh;
+/* 	height: 85vh; 0523 - 수정 */
+	height: 817px;
 	padding: 20px;
 	/* padding-bottom: 50px; */
 }
@@ -475,7 +476,8 @@
 /* 채팅 */
 .right_main {
 	width: 92%;
-	height: 84.5vh;
+/* 	height: 84.5vh; 5/23 수정*/
+	height: 811px;
 	border: 1px solid #ebebeb;
 	background-color: #fff;
 	float: right;
