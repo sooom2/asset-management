@@ -75,7 +75,6 @@ public class AdminController {
 	@PostMapping("/auction_regist")
 	public String auction_regist(@RequestParam Map<String, String> auction, HttpSession session, Model model) {
 		
-		
 		// auction_code 생성, 추가
 		String uuid = UUID.randomUUID().toString().substring(0, 8);
 		auction.put("auction_code", uuid);

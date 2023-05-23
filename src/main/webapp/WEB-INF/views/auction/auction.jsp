@@ -10,6 +10,11 @@
 <script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
 <link href="${path }/resources/css/auction.css" rel="stylesheet">
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
+<style type="text/css">
+.contentImage {
+	height: 300px;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
@@ -31,10 +36,10 @@
 							4. 낙찰 후 구매 취소 시 보증금을 받을 수 없습니다
 							</p>
 							<hr>
-							<div class="con_tit">도자기</div>
+							<div class="con_tit">${auction.get("auction_item_name") }</div>
 							<div class="con_detail">
 								<!-- 상품이미지 -->
-								<div class="contentImage" style="height: 300px"></div><br>
+								<div class="contentImage" style="background-image:url('http://c3d2212t3.itwillbs.com/images/${auction.get('image_name')}')"></div><br>
 								<!-- 상품정보 -->
 								<div>
 									<div>
@@ -42,10 +47,10 @@
 										<div class="con_price">상세정보 창 열기</div>
 									</div>
 									<span>경매날짜</span>
-									<div class="con_period">2023.06.14</div>
+									<div class="con_period">${auction.get('auction_start_date') }</div>
 									<div>
 										<span>시작가</span>
-										<div class="con_price">1,000원</div>
+										<div class="con_price">${auction.get('auction_present_price') }원</div>
 									</div>
 								</div>
 								<hr>

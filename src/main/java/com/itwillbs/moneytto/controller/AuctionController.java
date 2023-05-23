@@ -1,9 +1,14 @@
 package com.itwillbs.moneytto.controller;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.moneytto.service.*;
 
@@ -15,16 +20,22 @@ public class AuctionController {
 	
 	// 경매 메인페이지
 	@RequestMapping(value = "auctionMain", method = RequestMethod.GET)
-	public String auctionMain() { 
+	public String auctionMain(Model model) { 
 		// 이미지 코드와 경매 코드를 찾아서 목록 뿌리기
+		List<HashMap<String, String>> auction = service.selectAuction();
+		System.out.println(auction);
+		model.addAttribute("auction", auction);
+		
 		
 		return "auction/auctionMain";
 	}
 	
 	// 실시간 경매
 	@RequestMapping(value="auction", method = RequestMethod.GET)
-	public String auction() { // 이미지 코드와 경매 코드를 받아서 목록 상세
-		
+	public String auction(@RequestParam String auction_code, Model model) { // 이미지 코드와 경매 코드를 받아서 목록 상세
+		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
+		System.out.println(auction);
+		model.addAttribute("auction", auction);
 		
 		
 		return "auction/auction";
