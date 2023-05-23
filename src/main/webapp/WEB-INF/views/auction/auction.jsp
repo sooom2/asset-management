@@ -138,37 +138,22 @@
 										<span class="chat_timeago_text">2023년 05월 17일</span>
 									</div>
 								</div>
-								<div class="chat_item">
-									<div class="chat_item_box">
-										<div class="chat_item_image_box">
-											<img class="chat_item_image" src="https://ccimg.hellomarket.com/images/2023/member_profile/03/08/13/2823905_171_1.jpg?size=s4" alt="상대방이미지">
-										</div>
-										<div class="chat_item_message">
-											<div class="chat_item_message_box">
-												<div class="image_wrapper">
-													<div class="image_outside">
-														<div class="image_centerbox">
-															<img src="https://ccimg.hellomarket.com/images/2023/item/05/15/17/3324332_5222579_1.jpg" alt="채팅아이템이미지" class="chat_item_message_image">
-														</div>
-													</div>
-												</div>
-												<div class="chat_item_message_main">
-													<div class="chat_item_message_title">서류가방</div>
-													<div class="chat_item_message_price">80,000원</div>
-												</div>
-												<div class="chat_item_message_link">안전결제</div>
-											</div>
-											<div class="chat_item_timeago">오후 1:57</div>
-										</div>
-									</div>
-								</div>
 								<div class="chat_myself">
 									<div class="chat_myself_box">
 										<div class="chat_myself_message">
 											<span>안녕하세요</span>
 											<div class="chat_myself_ack"></div>
 											<div class="chat_myself_timeago">오후 1:57</div>
-											<div class="chat_myself_timeago">오후 1:57</div>
+										</div>
+									</div>
+								</div>
+								<div class="OpponentChat__Wrapper-qv8pn4-0 cFvuGS">
+									<img src="https://ccimage.hellomarket.com/img/web/common/empty_profile.svg" alt="상대방 프로필 이미지" class="OpponentChat__ProfileImage-qv8pn4-2 eLwuXd">
+									<div class="OpponentChat__Nick-qv8pn4-3 hYaaYd"> 명품인증</div>
+									<div class="OpponentChat__MyChatList-qv8pn4-1 lecfCu">
+										<div class="OpponentChat__TextBox-qv8pn4-5 giIZqy">
+											<span class="OpponentChat__Text-qv8pn4-6 ZPeEt">네 안녕하세요</span>
+											<div class="OpponentChat__TimeAgo-qv8pn4-7 jXWPOW">오후 2:06 </div>
 										</div>
 									</div>
 								</div>
