@@ -12,100 +12,99 @@
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
-	document.addEventListener('DOMContentLoaded',function() {
-			var maxImageCount = 5; // 최대 이미지 개수 설정
-			var fileInput = document
-					.querySelector('input[type="file"]');
-			var imageList = document.querySelector('.image_list');
-			var countImg = document
-					.querySelector('.count_img span');
-			var defaultImage = document.querySelector('.default');
+document.addEventListener('DOMContentLoaded', function() {
+    var maxImageCount = 5; // 최대 이미지 개수 설정
+    var fileInput = document
+        .querySelector('input[type="file"]');
+    var imageList = document.querySelector('.image_list');
+    var countImg = document
+        .querySelector('.count_img span');
+    var defaultImage = document.querySelector('.default');
 
-			function handleFileSelect(event) {
-				var files = event.target.files;
+    function handleFileSelect(event) {
+        var files = event.target.files;
 
-				// 이미지 개수가 최대 개수를 초과하는 경우 파일 선택을 제한
-				if (files.length + imageList.children.length > maxImageCount) {
-					alert('최대 ' + maxImageCount
-							+ '장의 사진만 업로드할 수 있습니다.');
-					fileInput.value = '';
-					return;
-				}
+        // 이미지 개수가 최대 개수를 초과하는 경우 파일 선택을 제한
+        if (files.length + imageList.children.length > maxImageCount) {
+            alert('최대 ' + maxImageCount +
+                '장의 사진만 업로드할 수 있습니다.');
+            fileInput.value = '';
+            return;
+        }
 
-				// 선택한 파일들의 미리보기를 생성하여 추가
-				for (var i = 0; i < files.length; i++) {
-					var file = files[i];
+        // 선택한 파일들의 미리보기를 생성하여 추가
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
 
-					// 이미지 개수가 최대 개수에 도달한 경우 파일 선택을 제한
-					if (imageList.children.length >= maxImageCount) {
-						alert('최대 ' + maxImageCount
-								+ '장의 사진만 업로드할 수 있습니다.');
-						fileInput.value = '';
-						return;
-					}
+            // 이미지 개수가 최대 개수에 도달한 경우 파일 선택을 제한
+            if (imageList.children.length >= maxImageCount) {
+                alert('최대 ' + maxImageCount +
+                    '장의 사진만 업로드할 수 있습니다.');
+                fileInput.value = '';
+                return;
+            }
 
-					// 미리보기 컨테이너를 생성
-					var previewContainer = document
-							.createElement('li');
+            // 미리보기 컨테이너를 생성
+            var previewContainer = document
+                .createElement('li');
 
-					// 이미지를 생성
-					var img = document.createElement('img');
-					img.classList.add('item_img');
-					img.src = URL.createObjectURL(file);
+            // 이미지를 생성
+            var img = document.createElement('img');
+            img.classList.add('item_img');
+            img.src = URL.createObjectURL(file);
 
-					// 이미지 삭제 아이콘을 생성
-					var deleteIcon = document.createElement('img');
-					deleteIcon.classList.add('img_delete_icon');
-					deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
-					deleteIcon.alt = '상품 썸네일 제거 아이콘';
+            // 이미지 삭제 아이콘을 생성
+            var deleteIcon = document.createElement('img');
+            deleteIcon.classList.add('img_delete_icon');
+            deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
+            deleteIcon.alt = '상품 썸네일 제거 아이콘';
 
-					// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
-					deleteIcon
-							.addEventListener(
-									'click',
-									function() {
-										var imageContainer = this
-												.closest('li');
-										imageList
-												.removeChild(imageContainer);
-										updateImageCount();
-									});
+            // 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
+            deleteIcon
+                .addEventListener(
+                    'click',
+                    function() {
+                        var imageContainer = this
+                            .closest('li');
+                        imageList
+                            .removeChild(imageContainer);
+                        updateImageCount();
+                    });
 
-					// 이미지와 삭제 아이콘을 감싸는 상자를 생성
-					var imageBox = document.createElement('div');
-					imageBox.classList.add('up_img_box');
-					imageBox.appendChild(deleteIcon);
-					imageBox.appendChild(img);
+            // 이미지와 삭제 아이콘을 감싸는 상자를 생성
+            var imageBox = document.createElement('div');
+            imageBox.classList.add('up_img_box');
+            imageBox.appendChild(deleteIcon);
+            imageBox.appendChild(img);
 
-					// 미리보기 컨테이너에 이미지 상자를 추가
-					previewContainer.appendChild(imageBox);
+            // 미리보기 컨테이너에 이미지 상자를 추가
+            previewContainer.appendChild(imageBox);
 
-					// 미리보기 컨테이너를 이미지 목록에 추가
-					imageList.appendChild(previewContainer);
+            // 미리보기 컨테이너를 이미지 목록에 추가
+            imageList.appendChild(previewContainer);
 
-					updateImageCount();
-				}
-			}
+            updateImageCount();
+        }
+    }
 
-			function updateImageCount() {
-				countImg.textContent = imageList.children.length;
-			}
+    function updateImageCount() {
+        countImg.textContent = imageList.children.length;
+    }
 
-			// default 버튼 클릭 시 파일 입력 필드를 클릭하여 파일 선택 창을 열도록 설정
-			defaultImage.addEventListener('click', function() {
-				fileInput.click();
-			});
+    // default 버튼 클릭 시 파일 입력 필드를 클릭하여 파일 선택 창을 열도록 설정
+    defaultImage.addEventListener('click', function() {
+        fileInput.click();
+    });
 
-			fileInput.addEventListener('change', handleFileSelect,
-					false);
-		});
-
-	// 태그기능
+    fileInput.addEventListener('change', handleFileSelect,
+        false);
+});
+	//태그기능 
+	
 	document.addEventListener('DOMContentLoaded', function() {
 		var tagInput = document.querySelector('.tagTagInput');
 		var tagButton = document.querySelector('.tagButton');
 		var tagListWrapper = document.querySelector('.ListWrapper');
-		var tagDescContain = document.querySelector('.tagTagDescContain');
 		var tagForm = document.getElementById('tag');
 
 		var tags = [];
@@ -127,14 +126,10 @@
 
 				tagListWrapper.appendChild(tagItem);
 			});
-		}
 
-		function updateTagDesc() {
-			var tagText = tags.slice(0, 5).map(function(tag) {
-				return '#' + tag;
-			}).join(' ');
-
-			tagDescContain.textContent = tagText;
+			// 수정된 부분: hidden input의 값을 업데이트
+			var hiddenInput = document.querySelector('input[name="item_tag"]');
+			hiddenInput.setAttribute('value', tags.join(','));
 		}
 
 		function addTag() {
@@ -152,7 +147,6 @@
 
 			tags.push(tagValue);
 			updateTagList();
-			updateTagDesc();
 
 			tagInput.value = '';
 			tagInput.focus();
@@ -163,7 +157,11 @@
 				var index = event.target.getAttribute('data-index');
 				tags.splice(index, 1);
 				updateTagList();
-				updateTagDesc();
+
+				// 수정된 부분: hidden input의 값을 업데이트
+				var hiddenInput = document
+						.querySelector('input[name="item_tag"]');
+				hiddenInput.setAttribute('value', tags.join(','));
 			}
 		}
 
@@ -183,17 +181,38 @@
 
 <!-- 금액 숫자만입력 -->
 <script>
-	document.addEventListener('DOMContentLoaded', function() {
-		var priceInput = document.querySelector('.PricePriceInput');
+// 	document.addEventListener('DOMContentLoaded', function() {
+// 		var priceInput = document.querySelector('.PricePriceInput');
 
-		priceInput.addEventListener('input', function() {
-			// 입력된 값에서 숫자가 아닌 문자를 제거합니다
-			var numericValue = this.value.replace(/[^\d]/g, '');
+// 		priceInput.addEventListener('input', function() {
+// 			// 입력된 값에서 숫자가 아닌 문자를 제거합니다
+// 			var numericValue = this.value.replace(/[^\d]/g, '');
 
-			// 정제된 숫자 값을 다시 입력 상자에 할당합니다
-			this.value = numericValue;
-		});
-	});
+// 			// 정제된 숫자 값을 다시 입력 상자에 할당합니다
+// 			this.value = numericValue;
+// 		});
+// 	});
+<!-- 금액 숫자만입력 -->
+  document.addEventListener('DOMContentLoaded', function() {
+    var priceInput = document.querySelector('.PricePriceInput');
+
+    priceInput.addEventListener('input', function() {
+      // 입력된 값에서 숫자가 아닌 문자를 제거합니다
+      var numericValue = this.value.replace(/[^\d]/g, '');
+
+      // 천단위 컴마 표시를 추가합니다
+      var formattedValue = addCommas(numericValue);
+
+      // 정제된 숫자 값을 다시 입력 상자에 할당합니다
+      this.value = formattedValue;
+    });
+
+    function addCommas(value) {
+      // 세 자리마다 쉼표를 추가하는 함수
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+  });
+
 </script>
 
 
@@ -224,26 +243,43 @@
 </style>
 
 <script>
-	// JavaScript 코드
-	document.addEventListener('DOMContentLoaded', function() {
-		var categoryItems = document.querySelectorAll('.TextTextWrapper');
 
-		// 각 카테고리 요소에 클릭 이벤트 추가
-		categoryItems.forEach(function(item) {
-			item.addEventListener('click', function() {
-				// 다른 요소들의 선택 상태 제거
-				categoryItems.forEach(function(item) {
-					item.classList.remove('selected');
-				});
+document.addEventListener('DOMContentLoaded', function() {
+  // 카테고리 요소들을 선택합니다.
+  const items = document.querySelectorAll('.TextTextWrapper');
+  // 컬럼의 입력 필드를 선택합니다.
+  
+   
+  const input = document.querySelector('#item_category input[name="item_category"]');
 
-				// 선택한 요소에 클래스 추가
-				this.classList.add('selected');
-			});
-		});
-	});
+  // 각 카테고리 요소에 클릭 이벤트를 추가합니다.
+  items.forEach(function(item) {
+    item.addEventListener('click', function() {
+      // 다른 요소들의 선택 상태를 제거합니다.
+      items.forEach(function(otherItem) {
+        otherItem.classList.remove('selected');
+      });
+
+      // 선택한 요소에 클래스를 추가합니다.
+      this.classList.add('selected');
+
+      // 선택한 카테고리를 변수에 저장합니다.
+      const category = this.textContent;
+
+      // 선택한 카테고리를 저장합니다.
+      saveCategory(category);
+    });
+  });
+	//커밋
+  // 선택한 카테고리를 저장하는 함수입니다.
+  function saveCategory(category) {
+    console.log('Category saved:', category);
+    input.value = category;
+  } 
+});
+
+
 </script>
-
-
 
 </head>
 <body>
@@ -306,12 +342,12 @@
 									<div class="TitleEssentialMark">*</div>
 								</dt>
 								<dd>
-									<input type="text" name="title" class="title_input"
+									<input type="text" name="item_subject" class="title_input"
 										placeholder="상품 제목을 입력해주세요" value="">
 									<ul class="item_recommend_box"></ul>
 								</dd>
 							</dl>
-							<dl id="category"
+							<dl id="item_category"
 								class="categoryCategoryWrapper-sc-1qdv6sn-0 cGwZbp">
 								<dt class="TitleTitleWrapper">
 									<label class="Title">카테고리</label>
@@ -319,7 +355,7 @@
 								</dt>
 								<dd>
 									<div class="categoryCategoryBox">
-										<div class="ListListWrapper">
+										<div class="ListListWrapper" >
 											<div class="TextTextWrapper">패션의류잡화뷰티</div>
 											<div class="TextTextWrapper">가전제품/모바일/PC</div>
 											<div class="TextTextWrapper">가구/인테리어</div>
@@ -328,6 +364,7 @@
 											<div class="TextTextWrapper">유아동/반려동물</div>
 											<div class="TextTextWrapper">그외기타</div>
 										</div>
+										<input type="hidden" name="item_category" value="">
 								</dd>
 							</dl>
 							<dl class="sell_method_box">
@@ -342,7 +379,7 @@
 												<img
 													src="https://ccimage.hellomarket.com/img/web/regist/price_icon_x3.png"
 													class="price_icon" alt="가격 아이콘"> <input type="text"
-													name="price" placeholder="숫자를 입력해주세요"
+													name="item_price" placeholder="숫자를 입력해주세요"
 													class="PricePriceInput" value=""
 													style="width: 100%; height: 58px;">
 											</div>
@@ -360,8 +397,9 @@
 									<div class="box_sell_method box_area">
 										<div id="price" class="PricePriceContainer">
 											<div class="priceCheckbox">
-												<input type="checkbox" id="priceCheckbox"> <label
-													for="priceCheckbox">가격 제안하기</label>
+												<input type="checkbox" id="priceCheckbox"
+													name="item_price_offer"> <label for="priceCheckbox">가격
+													제안하기</label>
 											</div>
 										</div>
 									</div>
@@ -381,6 +419,7 @@
 									</div>
 									<button class="tagButton">추가</button>
 									<div class="ListWrapper"></div>
+									<input type="hidden" name="item_tag" value="">
 								</dd>
 							</dl>
 							<dl class="text_area" id="desc">
@@ -389,7 +428,7 @@
 									<div class="TitleEssentialMark">*</div>
 								</dt>
 								<dd>
-									<textarea rows="5" class="introduce"
+									<textarea rows="5" class="introduce" name="item_content"
 										placeholder="상품의 상태를 정확하게 알 수 있는 정보를 꼭 포함해 주세요!   (최대 2,500자)"></textarea>
 								</dd>
 							</dl>
@@ -408,8 +447,6 @@
 			</form>
 		</section>
 	</div>
-
-
 	<jsp:include page="../footer.jsp" />
 </body>
 </html>
