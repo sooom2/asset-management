@@ -1,38 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itwillbs.moneytto.mapper.MarketMapper">
-
-	<insert id ="insertItem">
-		INSERT 
-			INTO item
-			VALUES (
-			1
-			,null
-			,null
-			,null
-			,null
-			,null
-			,null
-			,null
-			,null
-			,null
-			,now()
-			)
-	<!-- 	INSERT  -->
-	<!-- 		INTO item -->
-	<!-- 		VALUES ( -->
-	<!-- 		#{item_code} -->
-	<!-- 		,#{member_id} -->
-	<!-- 		,#{item_name} -->
-	<!-- 		,#{item_subject} -->
-	<!-- 		,#{item_content} -->
-	<!-- 		,#{item_price} -->
-	<!-- 		,#{item_price_offer} -->
-	<!-- 		,#{item_tag} -->
-	<!-- 		,#{item_category} -->
-	<!-- 		,#{item_status} -->
-	<!-- 		,now() -->
-	<!-- 		) -->
+	<insert id="insertItem">
+	INSERT INTO item 
+	SELECT CONCAT('market', LPAD(CAST(SUBSTRING(item_code, 7) AS UNSIGNED) + 1, 4, '0')),
+		'admin',
+		#{item_subject},
+		#{item_content},
+		#{item_price},
+			IFNULL((SELECT CASE WHEN #{item_price_offer} = 'on' THEN 'Y' ELSE 'N' END), 'N'),
+		#{item_tag},
+		#{item_category},	
+		'판매중',
+		NOW()
+	FROM item
+	ORDER BY item_code DESC
+	LIMIT 1
 	</insert>
 	
 	
