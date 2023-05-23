@@ -1,13 +1,13 @@
 package com.itwillbs.moneytto.service;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +16,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.itwillbs.moneytto.mapper.MemberMapper;
+
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Service
 public class MemberService {
@@ -53,10 +56,6 @@ public class MemberService {
 	    return coord;
 	}
 	
-	// 	아이디 조회
-	public HashMap<String, String> findId(HashMap<String, String> member) {
-		return mapper.findId(member);
-	}
 	/*회원 목록 조회*/
 //	public List<HashMap<String, String>> selectMember() {
 //		return mapper.selectMember();
@@ -72,42 +71,42 @@ public class MemberService {
 		return mapper.selectKakao(email);
 	}
 	
-//	// 아이디 조회
-//	public HashMap<String, String> findId(HashMap<String, String> member) {
-//		return mapper.findId(member);
-//	}
+	// 아이디 조회
+	public HashMap<String, String> findId(HashMap<String, String> member) {
+		return mapper.findId(member);
+	}
 	// 비밀번호 재설정
 	public int renewPw(HashMap<String, String> member) {
-		return 0;// Quest
-//		return mapper.renewPw(member);
+		
+		return mapper.renewPw(member);
 	}
 //
 //	public int insertPoint(String id) {
 //		return mapper.insertPoint(id);
 //	}
 //	
-//	// SMS 인증
-//	public void certifiedPhoneNumber(String phone, int randomNumber) {
-//		String api_key = "NCSQU2TAT8POKQ76";
-//	    String api_secret = "N5KAV8MZDEGWQZYSQGJI27HQIQLB06VH";
-//	    Message coolsms = new Message(api_key, api_secret);
-//
-//	    HashMap<String, String> params = new HashMap<String, String>();
-//	    params.put("to", phone);    // 수신전화번호
-//	    params.put("from", "01076110230");    // 발신전화번호
-//	    params.put("type", "SMS");
-//	    params.put("text", "[머니또] 인증번호는" + "["+randomNumber+"]" + "입니다."); // 문자 내용 입력
-//	    params.put("app_version", "test app 1.2"); 
-//
-//	    try {
-//	        JSONObject obj = (JSONObject)coolsms.send(params);
-//	        System.out.println(obj.toString());
-//	      } catch (CoolsmsException e) {
-//	        System.out.println(e.getMessage());
-//	        System.out.println(e.getCode());
-//	      }
-//		
-//	}
+	// SMS 인증
+	public void certifiedPhoneNumber(String phone, int randomNumber) {
+		String api_key = "NCSQU2TAT8POKQ76";
+	    String api_secret = "N5KAV8MZDEGWQZYSQGJI27HQIQLB06VH";
+	    Message coolsms = new Message(api_key, api_secret);
+
+	    HashMap<String, String> params = new HashMap<String, String>();
+	    params.put("to", phone);    // 수신전화번호
+	    params.put("from", "01076110230");    // 발신전화번호
+	    params.put("type", "SMS");
+	    params.put("text", "[머니또] 인증번호는" + "["+randomNumber+"]" + "입니다."); // 문자 내용 입력
+	    params.put("app_version", "test app 1.2"); 
+
+	    try {
+	        org.json.simple.JSONObject obj = (org.json.simple.JSONObject)coolsms.send(params);
+	        System.out.println(obj.toString());
+	      } catch (CoolsmsException e) {
+	        System.out.println(e.getMessage());
+	        System.out.println(e.getCode());
+	      }
+		
+	}
 
 	// 아이디 검증.
 	public HashMap<String, String> checkId(String id) {
@@ -117,27 +116,20 @@ public class MemberService {
 	}
 	// 비밀번호 찾기 회원 인증.
 		public HashMap<String, String> phoneCheck(HashMap<String, String> member) {
-			return member;// Quest
-//			return mapper.phoneCheck(member);
+			
+			return mapper.phoneCheck(member);
 	}
-//	
+	
 //	//회원 이름검색
 //	public int getMemberListCount(String searchKeyword) {
 //		return mapper.selectMemberListCount(searchKeyword);
 //	}
-//
+
 //	//회원수
 //	public int selectMemCount() {
 //		return mapper.memberCount();
 //	}
 
-	public List<HashMap<String, String>> getWishList(String id) {
-		// TODO return
-		//return mapper.selectMember(id);
-//		return null;
-		List<HashMap<String, String>> wishList = new ArrayList<HashMap<String,String>>();
-		return wishList;
-	}
 
 	public HashMap<String, String> getMember(String id) {
 		
@@ -147,5 +139,19 @@ public class MemberService {
 	public int setAuth(String id) {
 	
 		return mapper.updateAuth(id);
+	}
+
+	public List<HashMap<String, String>> getSellItemList(String id) {
+		
+		return mapper.selectSellItemList(id);
+	}
+	public List<HashMap<String, String>> getWishItemList(String id) {
+		
+		return mapper.selectWishItemList(id);
+	}
+
+	public List<HashMap<String, String>> getBuyItemList(String id) {
+		
+		return mapper.selectBuyItemList(id);
 	}
 }

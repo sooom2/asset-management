@@ -28,6 +28,34 @@
 			FROM member
 				WHERE member_id = #{member_id} 
 	</select>
+	
+	
+	
+	<select id="selectCloseMemberList" resultType="hashmap">
+		SELECT 	*
+			FROM member
+			WHERE  
+	</select>
+	<!-- 비밀번호 재설정 -->
+	<update id="renewPw">
+		UPDATE member
+			SET member_pw = #{member_pw}
+				WHERE member_id = #{member_id}
+	</update>
+	
+	<!-- 비밀번호 찾기 회원 인증 -->
+	<select id="phoneCheck" resultType="hashmap">
+		SELECT *
+			FROM member
+				WHERE 
+					member_id = #{member_id}
+					AND member_name = #{member_name}
+					AND member_bday = #{member_bday}
+					AND member_tel = #{member_tel}
+	</select>	
+	
+	
+	
 	<update id="updateAuth">
 		UPDATE member
 			SET member_auth_status = 'Y'
@@ -43,5 +71,21 @@
 			WHERE member_name = #{member_name}
 				AND member_bday = #{member_bday}
 				AND member_tel = #{member_tel}
+	</select>
+	
+	<select id="selectWishItemList" resultType="hashmap">
+		SELECT 	*
+			FROM wish
+				WHERE member_id = #{member_id} 
+	</select>
+	<select id="selectSellItemList" resultType="hashmap">
+		SELECT 	*
+			FROM market_paid
+				WHERE sell_id = #{member_id} 
+	</select>
+	<select id="selectBuyItemList" resultType="hashmap">
+		SELECT 	*
+			FROM market_paid
+				WHERE buy_id = #{member_id} 
 	</select>
 </mapper>
