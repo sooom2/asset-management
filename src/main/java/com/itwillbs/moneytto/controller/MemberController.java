@@ -63,7 +63,6 @@ public class MemberController {
 		
 		System.out.println(member);
 		if(insertCount > 0) { // 가입 성공
-			//memberService.insertPoint(member.get("member_id"));
 			model.addAttribute("member", member);
 			return "member/mem_join_success";
 		} else { // 가입 실패
@@ -95,15 +94,16 @@ public class MemberController {
 	    return "fail_back";
 	}
 	
-// ******************************************************************
- //네이버 로그인 확인
+	// ******************************************************************
+	//네이버 로그인 확인
 		@RequestMapping(value = "naverLogin", method = {RequestMethod.GET, RequestMethod.POST})
 		public String naver(@RequestParam HashMap<String, String> naver) {
+			
 			System.out.println(naver);
 			return "member/mem_join_form";
 		}
 	
-// 카카오 로그인 확인
+	// 카카오 로그인 확인
 	@PostMapping(value = "kakaoLogin")
 	public String kakao(@RequestParam HashMap<String, String> kakao, Model model, HttpSession session) {
 		
@@ -151,8 +151,8 @@ public class MemberController {
 	public String mailCheck(String email) {
 		
 		System.out.println(email);
-		return email;	//밑에걸로 수정 할 예정
-//		return mailService.joinEmail(email);
+		
+		return mailService.joinEmail(email);
 	}
 	
 	// 아이디 찾기
@@ -178,7 +178,9 @@ public class MemberController {
 	// 비밀번호 찾기
 	@GetMapping(value = "findPw")
 	public String findPw() {
+		
 		return "member/mem_find_pw";
+		
 	}
 	
 	// SMS 인증
@@ -227,10 +229,9 @@ public class MemberController {
 		boolean result = false;
 		
 		HashMap<String, String> member = memberService.checkId(id);
-		if(member == null) {
-			result = false;
-		} else {
-			result = true;
+		
+		if(member != null)	{
+			result = true; 
 		}
 		
 		return result;

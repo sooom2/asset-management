@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itwillbs.moneytto.mapper.MemberMapper">
+	<!-- 회원가입 과정 -->
 	<insert id="insertMember">
 		INSERT INTO member
 			VALUES(
@@ -23,13 +24,20 @@
 				   , #{member_Y}
 			)
 	</insert>
+	
+	<select id="checkId" resultType="hashmap">
+		SELECT member_id
+		 FROM member
+			WHERE member_id = #{member_id} 
+	</select>
+	
+	
+	
 	<select id="selectMember" resultType="hashmap">
 		SELECT 	*
 			FROM member
 				WHERE member_id = #{member_id} 
 	</select>
-	
-	
 	
 	<select id="selectCloseMemberList" resultType="hashmap">
 		SELECT 	*

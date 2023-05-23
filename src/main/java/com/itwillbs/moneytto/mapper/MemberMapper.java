@@ -18,6 +18,8 @@ public interface MemberMapper {
 	int renewPw(HashMap<String, String> member);
 	
 	HashMap<String, String> selectKakao(String email);
+	
+	HashMap<String, String> checkId(String member_id);
 
 	HashMap<String, String> findId(HashMap<String, String> member);
 	
@@ -26,8 +28,6 @@ public interface MemberMapper {
 	List<HashMap<String, String>> selectSellItemList(String member_id);
 	
 	List<HashMap<String, String>> selectBuyItemList(String member_id);
-<<<<<<< Upstream, based on branch 'main' of https://github.com/sooom2/moneytto.git
+
+	
 }
-=======
-}
->>>>>>> 85e0de6 mypage

@@ -56,7 +56,13 @@ function naverLogin(){
 
 
 $(function() {
-	// 인증번호 확인.
+	// 테스트 용
+	$("#btn-join").on("click", function() {
+			location.href="joinform"
+		
+	});
+// 실제용
+// 인증번호 확인.
 // 	let mailStatus = false;
 	
 // 	이메일 인증
@@ -133,7 +139,7 @@ $(function() {
 									<a id="naver_id_login_anchor" class="social-connect nv">네이버</a>
 								</div>
 								<span onclick="kakaoLogin();">
-								<a id="custom-login-btn" href="#" class="kt">카카오 톡</a>
+									<a id="custom-login-btn" href="#" class="kt">카카오 톡</a>
 								</span>
 							</div>
 							<br>

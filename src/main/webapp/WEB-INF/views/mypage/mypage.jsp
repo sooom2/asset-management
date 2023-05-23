@@ -269,11 +269,8 @@ function memberAuth(){
 	                              </div>
 	                          </div>
 	                      </div>
-	                      <c:if test='${not empty itemList }'>
-=======
 	                    </div>
 							<c:if test='${not empty itemList }'>
->>>>>>> 85e0de6 mypage
 								<c:forEach var="item" items="${itemList}">
 									<div class="itemItemBox">
 			                          <div class="ThumbNailTypeWrapper">
@@ -300,11 +297,7 @@ function memberAuth(){
 	                      		</c:forEach>
                       		</c:if>
                      </div>
-<<<<<<< Upstream, based on branch 'main' of https://github.com/sooom2/moneytto.git
-						<c:if test= '${empty itemList }'>
-=======
 					<c:if test= '${empty itemList }'>
->>>>>>> 85e0de6 mypage
                       	<div class="EmptyEmptyBox">
 							<div class="EmptyTitle">아쉽게도, 현재 검색된 상품이 없어요</div>
 							<div class="EmptyGuide">필터를 재설정하거나 전체 상품 보기를 선택해주세요</div>
