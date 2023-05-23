@@ -14,15 +14,15 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
-// function NotReload(){
-//     if( (event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) {
-//         event.keyCode = 0;
-//         event.cancelBubble = true;
-//         event.returnValue = false;
-//        	alert("이미 회원가입이 완료되었습니다.");
-//     } 
-// }
-// document.onkeydown = NotReload;
+function NotReload(){
+    if( (event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) {
+        event.keyCode = 0;
+        event.cancelBubble = true;
+        event.returnValue = false;
+       	alert("이미 회원가입이 완료되었습니다.");
+    } 
+}
+document.onkeydown = NotReload;
 </script>
 </head>
 <body>
@@ -42,7 +42,6 @@
 					<div class="member join-success">
 						<div class="end">
 							<div class="t1">
-							${member.member_name }
 								<strong>${member.member_name }</strong> 님<br>회원가입이 완료되었습니다.
 							</div>
 							<div class="t2">

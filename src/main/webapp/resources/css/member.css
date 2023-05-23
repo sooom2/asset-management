@@ -2232,20 +2232,22 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     position: relative;
 }
 .profile_edit_image .profile_edit_image_box {
-    position: absolute;
-    top: -150px;
+/*     position: absolute; */
+/*     top: -150px; */
     left: 41%;
 }
 .profile_edit_image .profile_edit_image_box img:first-child {
+	position : relative;
     width: 120px;
     height: 120px;
     border-radius: 50%;
     border: 1px solid #ebebeb;
+    display: inline !important;
 }
 .profile_edit_image .profile_edit_image_box img:nth-child(2) {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    position: relative;
+    bottom: 29px;
+    right: -134px;
     cursor: pointer;
     width: 36px;
     height: 36px;

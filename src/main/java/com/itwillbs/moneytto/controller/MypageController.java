@@ -29,7 +29,8 @@ public class MypageController {
 	
 	// 마이페이지 메인
 	@RequestMapping(value ="mypage", method = RequestMethod.GET)
-	public String mypage(HttpSession session, Model model) {
+	public String mypage(@RequestParam(name ="itemList" , defaultValue = "sellItem") String itemType
+						,HttpSession session, Model model) {
 		String id = (String)session.getAttribute("sId");
 		
 		if(id == null) {
@@ -41,26 +42,25 @@ public class MypageController {
 		
 		HashMap<String,String> member = memberService.getMember(id);
 		model.addAttribute("member", member);
-		/*
-		List<HashMap<String,String>> itemList = marketService.getItemList(id);
-		model.addAttribute("itemList", itemList);
-		*/
-		List<HashMap<String,String>> sellItemList = new ArrayList<HashMap<String,String>>();
-		sellItemList.add(member);
-		model.addAttribute("itemList", sellItemList);
 		
-		List<HashMap<String,String>> wishList = memberService.getWishList(id);
-		model.addAttribute("wishList", wishList);
+		System.out.println(itemType);
 		
-		System.out.println(member);
+		List<HashMap<String,String>> itemList = null;
 		
+
+	    switch (itemType) {
+	        case "sellItem": itemList = memberService.getSellItemList(id); break;
+	        case "wishItem": itemList = memberService.getWishItemList(id); break;
+	        case "buyItem": itemList = memberService.getBuyItemList(id); break;
+	    }
+	    
+	    System.out.println(itemType);
+	    System.out.println(itemList);
+	    
+	    model.addAttribute("itemList", itemList);
+
 		return "mypage/mypage";
 	} 
-		
-	@GetMapping(value = "mypageFavorite")
-	public String mypageFavorite() {
-		return "mypage/mypage_favorite";
-	}
  
 	//회원정보수정
 	@GetMapping(value = "mypageInfo")

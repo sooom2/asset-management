@@ -70,7 +70,6 @@ public class MemberController {
 			model.addAttribute("msg", "회원 가입 실패!");
 			return "member/fail_back";
 		}
-//		return "member/mem_join_success";
 	}
 	
 	//회원 로그인 확인 
@@ -101,7 +100,7 @@ public class MemberController {
 		@RequestMapping(value = "naverLogin", method = {RequestMethod.GET, RequestMethod.POST})
 		public String naver(@RequestParam HashMap<String, String> naver) {
 			System.out.println(naver);
-			return "";
+			return "member/mem_join_form";
 		}
 	
 // 카카오 로그인 확인
@@ -176,17 +175,21 @@ public class MemberController {
 			return "member/mem_find_idSuccess";
 		}
 	}
-/*
+	// 비밀번호 찾기
+	@GetMapping(value = "findPw")
+	public String findPw() {
+		return "member/mem_find_pw";
+	}
+	
 	// SMS 인증
 	@GetMapping(value = "phoneCheck")
 	@ResponseBody
 	public String sendSMS(@RequestParam String phone) { // 휴대폰 문자보내기
 		int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
-		service.certifiedPhoneNumber(phone, randomNumber);
+		memberService.certifiedPhoneNumber(phone, randomNumber);
 		
 		return Integer.toString(randomNumber);
 	}
-*/
 	
 	// 비밀번호 재설정
 	@RequestMapping(value = "renewPw", method = {RequestMethod.GET, RequestMethod.POST})
@@ -196,6 +199,7 @@ public class MemberController {
 		if(result == null) {
 			model.addAttribute("msg", "회원정보가 일치하지 않습니다");
 			return "member/fail_back";
+			
 		} else {
 			model.addAttribute("member_id", member.get("member_id"));
 			return "member/mem_find_renewPw";
