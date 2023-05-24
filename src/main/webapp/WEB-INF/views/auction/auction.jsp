@@ -110,7 +110,7 @@ $(function(){ // 물건 금액 5% 가격으로 입찰
 								<div>즉시구매가</div>
 							</div>
 							<div class="bid_right">
-								<div>200,000원</div>
+								<div>${deposit }원</div>
 								<div><input type="button" id="btnAskingPrice" value="입찰(+${askingPrice })" style="width: 228px"></div>
 								<div><input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="금액입력"><input type="button" value="입찰" id="btnBid"></div>
 								<div class="my_bid">28,000원</div>

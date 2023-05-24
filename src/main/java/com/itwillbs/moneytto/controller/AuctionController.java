@@ -3,6 +3,10 @@ package com.itwillbs.moneytto.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +40,12 @@ public class AuctionController {
 		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
 		System.out.println(auction);
 		model.addAttribute("auction", auction);
-		
+		// 물건 호가 계산
+		String askingPrice = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.05) + "";
+		// 보증금 계산
+		String deposit = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.1) + "";
+		model.addAttribute("askingPrice", askingPrice);
+		model.addAttribute("deposit", deposit);
 		
 		return "auction/auction";
 	}
@@ -53,6 +62,18 @@ public class AuctionController {
 		return "auction/auctionFinish";
 	}
 	
+	
+	
+	// 0524 test 여기서==========================
+//	@Controller
+//	public class ChatController {
+		@RequestMapping(value = "/chat.action", method = { RequestMethod.GET })
+		public String chat (HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+			return "auction/chat";
+		}
+//	}
+	
+	// 0524 test 여기까지==========================
 	
 }
 
