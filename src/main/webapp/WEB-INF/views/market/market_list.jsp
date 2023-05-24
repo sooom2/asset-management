@@ -22,13 +22,13 @@
     	    <!-- 카테고리 -->
             <div class="webWrapper">
 	           	 <div class="barWrapper">
-	           	 	<div class="FilterBoxWrapper-active">
-	           	 		<div class="FilterBoxTopic">
-		           	 		<div class="FilterBoxName">#내지역이름</div>
-		           	 		<div class="FilterBoxCount">#</div>
-	           	 		</div>
-           	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
-	          	 	</div>
+<!-- 	           	 	<div class="FilterBoxWrapper-active"> -->
+<!-- 	           	 		<div class="FilterBoxTopic"> -->
+<!-- 		           	 		<div class="FilterBoxName">#내지역이름</div> -->
+<!-- 		           	 		<div class="FilterBoxCount">#</div> -->
+<!-- 	           	 		</div> -->
+<!--            	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow"> -->
+<!-- 	          	 	</div> -->
 	          	 	<div class="FilterBoxWrapper">
 	           	 		<div class="FilterBoxTopic">
 	           	 			<div class="FilterBoxName">#카테고리</div>
@@ -38,12 +38,23 @@
 	          	 	</div>
 	          	 	<div class="FilterBoxWrapper">
 	           	 		<div class="FilterBoxTopic">
+	           	 			<div class="FilterBoxName">#가격</div>
+	           	 			<div class="FilterBoxCount">#</div>
+	           	 		</div>
+           	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
+	          	 	</div>
+	          	 	<div class="FilterBoxWrapper">
+	           	 		<div class="FilterBoxTopic">
 	           	 			<div class="FilterBoxName">#등급</div>
 	           	 			<div class="FilterBoxCount">#</div>
 	           	 		</div>
            	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
 	          	 	</div>
 	          	 	
+		               <div class="searchIconWrapper marketListSearch">
+						<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
+						<div class="searchSearch"><form><input class="goodsName tag" type="text" placeholder="찾으시는 상품을 태그로 검색해보세요!"></form></div>
+					</div>
                </div>
 	         </div>
 	         <!-- 카테고리 end -->
@@ -55,39 +66,26 @@
 						<div class="toggle__Wrapper-skglus-0 dEBCMS">
 							<div class="category__Wrapper-sc-187sq7k-0 emQQCU">
 								<div class="category__CategoryBox-sc-187sq7k-1 kGtMUL">
-									<div class="Top__Wrapper-oe65rr-0 iueNqr">
-										<div class="Top__Title-oe65rr-1 gXlyjT">전체 카테고리</div>
-										<div class="Top__CategoryBox-oe65rr-3 eYZfEN">
-											<div class="Top__MainCategory-oe65rr-4 bpPgNC">
-												<img
-													src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/arrow_right.svg"
-													alt="우측 화살표" class="Top__ArrowRIght-oe65rr-5 hEjnBN">가방
-											</div>
-											<div class="Top__Count-oe65rr-6 dvVQGP">(38,390)</div>
-										</div>
-									</div>
+<!-- 									<div class="Top__Wrapper-oe65rr-0 iueNqr"> -->
+<!-- 										<div class="Top__Title-oe65rr-1 gXlyjT">전체 카테고리</div> -->
+<!-- 										<div class="Top__CategoryBox-oe65rr-3 eYZfEN"> -->
+<!-- 											<div class="Top__MainCategory-oe65rr-4 bpPgNC"> -->
+<!-- 												<img -->
+<!-- 													src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/arrow_right.svg" -->
+<!-- 													alt="우측 화살표" class="Top__ArrowRIght-oe65rr-5 hEjnBN">가방 -->
+<!-- 											</div> -->
+<!-- 											<div class="Top__Count-oe65rr-6 dvVQGP">(38,390)</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
 									<div class="List__Wrapper-rd56hw-0 cmyJpu">
-										<div class="List__MainCategoryName-rd56hw-2 eDPfil">가방
-											전체 (38,390)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">스포츠 가방 (140)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">여성 크로스백 (5,444)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">브리프케이스 (192)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">여성 백팩 (808)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">여성 숄더백 (5,360)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">여성 토트백 (3,739)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">남성 숄더백 (122)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">파우치백 (423)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">보스턴/더플백 (229)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">남성 크로스백 (931)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">남성 웨이스트백 (58)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">캐리어 (280)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">남성 토트백 (159)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">클러치백 (1,197)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">여성 웨이스트백 (13)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">에코백 (301)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">남성 백팩 (1,098)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">메신저/크로스백 (373)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">기타 가방 (17,523)</div>
+										<div class="List__MainCategoryName-rd56hw-2 eDPfil">전체 (38,390)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">패션/의류/잡화/뷰티 (140)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">가전제품/모바일/PC (5,444)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">가구/인테리어 (192)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">도서/음반/문구/티켓 (192)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">게임/스포츠/취미 (192)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">유아동/반려동물 (192)</div>
+										<div class="List__Name-rd56hw-3 eklQsX">기타 (192)</div>
 									</div>
 								</div>
 							</div>
@@ -108,12 +106,12 @@
 							src="https://ccimage.hellomarket.com/img/web/search/filter/refresh.svg"
 							alt="reset" class="tagListResetImg">
 					</div>
-					<div class="tagListTag">
-						<div class="tagListName">남성 의류 전체</div>
-						<img
-							src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png"
-							alt="remove" class="tagListRemove">
-					</div>
+<!-- 					<div class="tagListTag"> -->
+<!-- 						<div class="tagListName">남성 의류 전체</div> -->
+<!-- 						<img -->
+<!-- 							src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" -->
+<!-- 							alt="remove" class="tagListRemove"> -->
+<!-- 					</div> -->
 				</div>
 			</div>
 			<div class="searchedListWrapper">
@@ -126,7 +124,7 @@
                         	<div class="SortListList">최근 등록순</div>
                         	<div class="SortListList">낮은 가격순</div>
                         	<div class="SortListList">높은 가격순</div>
-<!--                         	<div class="SortListList">찜 많은 순</div> -->
+                        	<div class="SortListList">높은 등급순</div>
                        	</div>
                        	<!--  -->
                         <div class="sortSortBox">
@@ -147,22 +145,26 @@
 									</div>
 									<!-- 삭제 -->
 									<div class="itemTextBox" onclick="location.href='market_detail'">
-									<div class="itemBrand">와이드앵글</div>
+									<div class="itemCategory">여기는카테고리</div>
+									<div class="itemText">플라워에코백(새상품) 이름이 길어진다면</div>
 									<div class="itemText">20,000원</div>
-									<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
 									<div class="itemTagBox">
-										<div class="itemSizeTag">부산</div>
+										<div class="itemSizeTag">태그목록</div>
+										<div class="itemSizeTag">ㅇㅅㅇ</div>
+										<div class="itemSizeTag">태그는</div>
+										<div class="itemSizeTag">5개까지</div>
+										<div class="itemSizeTag">쓸 수 있어용</div>
 									</div>
 									<div class="itemTimeTag">방금 전</div>
 									</div>
 									<!-- 삭제 -->			
-									<div class="itemTextBox" onclick="location.href='market_detail'">
-									<!-- 물건이름, 지역, 가격, 시간 -->
-										<div class="itemBrand">#물건이름#</div>
-										<div class="itemPrice">#가격#</div>
-										<div class="itemSizeTag">#판매지역#</div>
-										<div class="itemTimeTag">방금 전</div>
-									</div>
+<!-- 									<div class="itemTextBox" onclick="location.href='market_detail'"> -->
+<!-- 									물건이름, 지역, 가격, 시간 -->
+<!-- 										<div class="itemBrand">#물건이름#</div> -->
+<!-- 										<div class="itemPrice">#가격#</div> -->
+<!-- 										<div class="itemSizeTag">#판매지역#</div> -->
+<!-- 										<div class="itemTimeTag">방금 전</div> -->
+<!-- 									</div> -->
 								</div>
 							</div>
 						</div>

@@ -30,25 +30,23 @@
 			<ul>
 			<c:choose>
 				<c:when test="${empty sessionScope.sId }">
-					<li><a href="myAlarm"><i class="fa-regular fa-bell"></i> 나의알림</a></li>
 					<li><a href="marketChat"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> 채팅</a></li>
 					<li><a href="memLogin" data-reload="reload" class=""><i class="fa-regular fa-circle-user"></i>&nbsp;로그인</a></li>
-					<%-- 밑줄 나중에  --%>
-<!-- 					<li><a href="mypage" data-reload="" class="">마이페이지</a></li> -->
+					<li><a href="mypage" data-reload="" class="">마이페이지</a></li>
 					<li><a href="memAuth">회원가입</a></li>
 				</c:when>
 				<c:otherwise>
-					<li><a href="javascript:logout()" data-reload="reload" class="">로그아웃</a></li>
+					<li><a href="myAlarm"><i class="fa-regular fa-bell"></i> 나의알림</a></li>
+					<li><a href="marketChat"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> 채팅</a></li>
+					<li><a href="logout" data-reload="reload" class="">로그아웃</a></li>
 					<%-- 관리자페이지 접근 서비스시 주석 해지할것  --%>
 <%-- 					<c:if test="${sessionScope.sId eq 'admin' }"> --%>
 <!-- 						<li><a href="admin" class="">관리자</a></li> -->
 <%-- 					</c:if> --%>
 				</c:otherwise>
 			</c:choose>
-					<%-- 실제 서비스시 없애는 부분 --%>
+					<%-- 실제 서비스시 없앨것 --%>
 					<li><a href="admin" class="">관리자</a></li>
-					<li><a href="mypage" data-reload="" class="">마이페이지</a></li>
-					
 			</ul>
 		</nav>
 	
@@ -65,13 +63,12 @@
 				<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
 				<div class="searchSearch"><form><input class="goodsName" type="text" placeholder="어떤 상품을 찾으시나요?"></form></div>
 			</div>
-			
-			<div class="mem_profile">
-				<img src="https://ccimg.hellomarket.com/images/2023/member_profile/05/16/19/3558056_5873301_1.jpg?size=s4" alt="프로필 이미지" class="profileImg">
-				<div class="mem_nickName">추누공주</div>
-			</div>	
-			
-			
+			<c:if test="${not empty sessionScope.sId }">
+				<div class="mem_profile">
+					<img src="https://ccimg.hellomarket.com/images/2023/member_profile/05/16/19/3558056_5873301_1.jpg?size=s4" alt="프로필 이미지" class="profileImg">
+					<div class="mem_nickName" onclick="location.href='mypage'">${nickname }</div>
+				</div>	
+			</c:if>
 			<a href="itemRegist" class="menu-item">
 				<img src="${path }/resources/images/main/selling_btn.png" alt="판매하기 이미지" class="MiddleNavigation__SellImg-sc-1moccpq-3 dplbBo">
 			</a>
