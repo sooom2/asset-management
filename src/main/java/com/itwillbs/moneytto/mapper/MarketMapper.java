@@ -25,4 +25,7 @@ public interface MarketMapper {
 
 	//아이템상세목록
 	HashMap<String, String> itemList(String item_code);
+
+	// 마켓 메인 아이템 리스트
+	List<HashMap<String, String>> marketItemList();
 }

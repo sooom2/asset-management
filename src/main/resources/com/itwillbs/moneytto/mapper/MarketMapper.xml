@@ -105,4 +105,15 @@
 		 		WHERE item_code = #{item_code}
 	</select>
 
+
+
+	<!-- 마켓 메인 아이템 리스트 -->
+	<select id="marketItemList" resultType="hashmap">
+		SELECT * 
+			FROM 
+				item
+			ORDER BY
+				item_code desc
+	</select>
+	
 </mapper>

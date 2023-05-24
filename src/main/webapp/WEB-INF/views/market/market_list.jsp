@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -134,40 +135,35 @@
                         </div>
                     </div>
                     <div>
+                    	<!-- 목록 -->
 	                    <div class="infinite-scroll-component " style="height:auto;overflow:auto;-webkit-overflow-scrolling:touch">
 							<div class="itemListWrapper">
 								<div class="itemWrapper">
+									<c:forEach  var="item" items="${marketItemList }">
 									<div class="itemThumbnailBox">
-										<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
+										<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail" onclick="location.href='market_detail'">
 											<div class="wishWrapper">
 												<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 											</div>
 									</div>
 									<!-- 삭제 -->
-									<div class="itemTextBox" onclick="location.href='market_detail'">
-									<div class="itemCategory">여기는카테고리</div>
-									<div class="itemText">플라워에코백(새상품) 이름이 길어진다면</div>
-									<div class="itemText">20,000원</div>
+									<div class="itemTextBox">
+									<div class="itemCategory">${item.item_category }</div>
+									<div class="itemText" onclick="location.href='market_detail'">${item.item_subject }</div>
+									<div class="itemText">${item.item_price }원</div>
 									<div class="itemTagBox">
-										<div class="itemSizeTag">태그목록</div>
-										<div class="itemSizeTag">ㅇㅅㅇ</div>
-										<div class="itemSizeTag">태그는</div>
-										<div class="itemSizeTag">5개까지</div>
-										<div class="itemSizeTag">쓸 수 있어용</div>
+									<c:forTokens items="${item.item_tag }" delims="," var="itemTag">
+										<div class="itemSizeTag">${itemTag}</div>
+									</c:forTokens>
 									</div>
-									<div class="itemTimeTag">방금 전</div>
+									<div class="itemTimeTag">${item.item_date }</div>
 									</div>
-									<!-- 삭제 -->			
-<!-- 									<div class="itemTextBox" onclick="location.href='market_detail'"> -->
-<!-- 									물건이름, 지역, 가격, 시간 -->
-<!-- 										<div class="itemBrand">#물건이름#</div> -->
-<!-- 										<div class="itemPrice">#가격#</div> -->
-<!-- 										<div class="itemSizeTag">#판매지역#</div> -->
-<!-- 										<div class="itemTimeTag">방금 전</div> -->
-<!-- 									</div> -->
+									</c:forEach>
 								</div>
 							</div>
 						</div>
+						
+						<!-- 목록 end -->
 					</div>
                   </div>
               </div>

@@ -35,10 +35,13 @@ public class MarketController {
 	
 	
 	@GetMapping(value = "market_list")
-	public String marketList() {
-		
+	public String marketList(Model model) {
+		// 마켓 메인 아이템 리스트
+		List<HashMap<String, String>> marketItemList = marketChatService.getMarketItemList();
+		model.addAttribute("marketItemList", marketItemList);
 		return "market/market_list";
 	}
+	
 	@GetMapping(value = "market_detail")
 	public String marketDetail() {
 		
