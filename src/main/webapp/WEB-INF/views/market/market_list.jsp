@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <link href="${path }/resources/css/market.css" rel="stylesheet">
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.4.js"></script>
 <title>Insert title here</title>
 </head>
   <body>
@@ -30,31 +31,30 @@
 <!-- 	           	 		</div> -->
 <!--            	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow"> -->
 <!-- 	          	 	</div> -->
-	          	 	<div class="FilterBoxWrapper">
-	           	 		<div class="FilterBoxTopic">
+	          	 	<div class="FilterBoxWrapper FilterCategory">
+	           	 		<div class="FilterBoxTopic" >
 	           	 			<div class="FilterBoxName">#카테고리</div>
 	           	 			<div class="FilterBoxCount">#</div>
 	           	 		</div>
 	           	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
 	          	 	</div>
-	          	 	<div class="FilterBoxWrapper">
+	          	 	<div class="FilterBoxWrapper FilterPrice">
 	           	 		<div class="FilterBoxTopic">
 	           	 			<div class="FilterBoxName">#가격</div>
 	           	 			<div class="FilterBoxCount">#</div>
 	           	 		</div>
            	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
 	          	 	</div>
-	          	 	<div class="FilterBoxWrapper">
-	           	 		<div class="FilterBoxTopic">
-	           	 			<div class="FilterBoxName">#등급</div>
-	           	 			<div class="FilterBoxCount">#</div>
-	           	 		</div>
-           	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
-	          	 	</div>
-	          	 	
+					<!-- 등급 -->
+			        <label for="grade" style="cursor: pointer;"><input type="checkbox" value="checked" id="grade"/>새싹등급 이상 판매자</label>
+			          	 
+			        <!-- 거래완료 제외하고 보기 -->
+			        <label for="complete" style="cursor: pointer;"><input type="checkbox" value="checked" id="complete"/>거래완료물품제외</label>
+			        
+			        	
 		               <div class="searchIconWrapper marketListSearch">
 						<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
-						<div class="searchSearch"><form><input class="goodsName tag" type="text" placeholder="찾으시는 상품을 태그로 검색해보세요!"></form></div>
+						<div class="searchSearch"><form><input class="goodsName tag" type="text" placeholder="태그검색"></form></div>
 					</div>
                </div>
 	         </div>
@@ -65,31 +65,35 @@
 				<div class="newSearch__Wrapper-sc-1v1g3nr-0 dVIBtK">
 					<div class="web__Wrapper-sc-5x22ci-0 jDBdAO">
 						<div class="toggle__Wrapper-skglus-0 dEBCMS">
-							<div class="category__Wrapper-sc-187sq7k-0 emQQCU">
+							<!-- 카테고리상세 -->
+							<div class="categoryDetail" style="display: none;">
 								<div class="category__CategoryBox-sc-187sq7k-1 kGtMUL">
-<!-- 									<div class="Top__Wrapper-oe65rr-0 iueNqr"> -->
-<!-- 										<div class="Top__Title-oe65rr-1 gXlyjT">전체 카테고리</div> -->
-<!-- 										<div class="Top__CategoryBox-oe65rr-3 eYZfEN"> -->
-<!-- 											<div class="Top__MainCategory-oe65rr-4 bpPgNC"> -->
-<!-- 												<img -->
-<!-- 													src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/arrow_right.svg" -->
-<!-- 													alt="우측 화살표" class="Top__ArrowRIght-oe65rr-5 hEjnBN">가방 -->
-<!-- 											</div> -->
-<!-- 											<div class="Top__Count-oe65rr-6 dvVQGP">(38,390)</div> -->
-<!-- 										</div> -->
-<!-- 									</div> -->
 									<div class="List__Wrapper-rd56hw-0 cmyJpu">
-										<div class="List__MainCategoryName-rd56hw-2 eDPfil">전체 (38,390)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">패션/의류/잡화/뷰티 (140)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">가전제품/모바일/PC (5,444)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">가구/인테리어 (192)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">도서/음반/문구/티켓 (192)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">게임/스포츠/취미 (192)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">유아동/반려동물 (192)</div>
-										<div class="List__Name-rd56hw-3 eklQsX">기타 (192)</div>
+										<div class="ListNonSelected" id="all">전체 (38,390)</div>
+										<div class="ListNonSelected" id="fashion">패션/의류/잡화/뷰티 (140)</div>
+										<div class="ListNonSelected" id="pc">가전제품/모바일/PC (5,444)</div>
+										<div class="ListNonSelected" id="interior">가구/인테리어 (192)</div>
+										<div class="ListNonSelected" id="book">도서/음반/문구/티켓 (192)</div>
+										<div class="ListNonSelected" id="game">게임/스포츠/취미 (192)</div>
+										<div class="ListNonSelected" id="child">유아동/반려동물 (192)</div>
+										<div class="ListNonSelected" id="etc">기타 (192)</div>
 									</div>
 								</div>
 							</div>
+							<!-- 카테고리상세 end -->
+							
+							<!-- 가격상세 -->
+							<div class="priceDetail fEjcIX" style="display: none;">
+								<input type="text" placeholder="최저금액"
+									class="price__MinPrice-sc-1yxjw4n-2 cRHAEh" value="">
+								<div class="price__StartPointText-sc-1yxjw4n-1 cOhRDO">원
+									부터~</div>
+								<input type="text" placeholder="최고금액"
+									class="price__MaxPrice-sc-1yxjw4n-3 dfgaGw" value="">
+								<div class="price__EndPointText-sc-1yxjw4n-4 ecxgoB">원 까지</div>
+								<button class="price__ApplyBtn-sc-1yxjw4n-5 ezrKUu">적용하기</button>
+							</div>
+
 						</div>
 					</div>
 				</div>
@@ -156,7 +160,7 @@
 										<div class="itemSizeTag">${itemTag}</div>
 									</c:forTokens>
 									</div>
-									<div class="itemTimeTag">${item.item_date }</div>
+									<div class="itemTimeTag">item 테이블 date type 시간으로 바꿔야함</div>
 									</div>
 									</c:forEach>
 								</div>
@@ -168,6 +172,43 @@
                   </div>
               </div>
           </div>
+          
+	<script type="text/javascript">
+		function category(categoryId) {
+			switch(categoryId) {
+				case "all": console.log(categoryId); break;
+				case "fashion": console.log(categoryId); break;
+				case "pc": console.log(categoryId); break;
+				case "interior": console.log(categoryId); break;
+				case "book": console.log(categoryId); break;
+				case "game": console.log(categoryId); break;
+				case "child": console.log(categoryId); break;
+				case "etc": console.log(categoryId); break;
+				default: console.log("엥");
+			}
+		}
+		$(function () {
+			$(".FilterCategory").on("click", function(e) {
+				$(".priceDetail").hide();
+				$(".categoryDetail").show();
+			});
+			$(".FilterPrice").on("click", function(e) {
+				$(".categoryDetail").hide();
+				$(".priceDetail").show();
+			});
+			
+			
+			// 카테고리 선택
+			$(".ListNonSelected").on("click", function(e) {
+				$(".ListSelected").attr("class", "ListNonSelected");
+				$(this).attr("class", "ListSelected");
+				var categoryId = $(this).attr("id");
+				category(categoryId);
+			});
+			
+		});
+	
+	</script>
 <jsp:include page="../footer.jsp" />
 </body>
 </html>
