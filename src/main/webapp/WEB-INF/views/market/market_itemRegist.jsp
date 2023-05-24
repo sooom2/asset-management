@@ -179,19 +179,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 
-<!-- 금액 숫자만입력 -->
 <script>
-// 	document.addEventListener('DOMContentLoaded', function() {
-// 		var priceInput = document.querySelector('.PricePriceInput');
 
-// 		priceInput.addEventListener('input', function() {
-// 			// 입력된 값에서 숫자가 아닌 문자를 제거합니다
-// 			var numericValue = this.value.replace(/[^\d]/g, '');
-
-// 			// 정제된 숫자 값을 다시 입력 상자에 할당합니다
-// 			this.value = numericValue;
-// 		});
-// 	});
 <!-- 금액 숫자만입력 -->
   document.addEventListener('DOMContentLoaded', function() {
     var priceInput = document.querySelector('.PricePriceInput');
@@ -356,7 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
 								<dd>
 									<div class="categoryCategoryBox">
 										<div class="ListListWrapper" >
-											<div class="TextTextWrapper">패션의류잡화뷰티</div>
+											<div class="TextTextWrapper">패션/의류/잡화/뷰티</div>
 											<div class="TextTextWrapper">가전제품/모바일/PC</div>
 											<div class="TextTextWrapper">가구/인테리어</div>
 											<div class="TextTextWrapper">도서/음반/문구/티켓</div>
@@ -367,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
 										<input type="hidden" name="item_category" value="">
 								</dd>
 							</dl>
-							<dl class="sell_method_box">
+							<dl class="sell_method_box"> 
 								<dt class="TitleTitleWrapper">
 									<label class="Title">가격 입력</label>
 									<div class="TitleEssentialMark">*</div>
