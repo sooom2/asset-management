@@ -46,6 +46,9 @@ public class MarketChatService {
 	public HashMap<String, String> getItemList(String item_code){
 		return mapper.itemList(item_code);
 	}
+//	public List<HashMap<String, String>> getChatSubject(String id) {
+//		return mapper.chatSubject(id);
+//	}
 
 
 

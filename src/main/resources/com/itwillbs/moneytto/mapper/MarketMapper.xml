@@ -53,51 +53,41 @@
 	
 	<!-- 내채팅목록 -->
 	<select id="myChatList" resultType="hashmap">
-		SELECT
-			market_chat_messages.*,member.member_nickname 
-		FROM
-			market_chat_messages
-		LEFT JOIN member
-		       ON member.member_id = market_chat_messages.buy_member_id 
-		WHERE
-			(room_code,
-			chat_code) IN (
-			SELECT
-				room_code, MAX(chat_code)
-			FROM
-				market_chat_messages
-			WHERE
-				sell_member_id = #{id}
-			GROUP BY
-				room_code  
-		   	);
+		SELECT room_code, chat_code, chat_content, oppenent_nick
+			FROM (
+			    SELECT room_code, chat_code, chat_content, oppenent_nick,
+			           ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num
+			    FROM (
+			        SELECT room_code,
+					       chat_code,
+					       chat_content,
+					       member.member_nickname AS oppenent_nick
+					FROM   market_chat_messages
+					       LEFT JOIN member
+					              ON member.member_id = market_chat_messages.sell_member_id
+					WHERE  buy_member_id = #{id}
+					UNION
+					SELECT room_code,
+					       chat_code,
+					       chat_content,
+					       member.member_nickname AS oppenent_nick
+					FROM   market_chat_messages
+					       LEFT JOIN member
+					              ON member.member_id = market_chat_messages.buy_member_id
+					WHERE  sell_member_id = #{id}
+			    ) AS a
+			) AS b
+		WHERE row_num = 1;
 	
 	</select>
 	
+<!-- 	<select id="chatSubject"> -->
+<!-- 		SELECT market_chat_rooms.*,item.member_id ,item.item_subject FROM market_chat_rooms -->
+<!-- 			LEFT JOIN item -->
+<!-- 					ON item.item_code = market_chat_rooms.item_code  -->
+<!-- 		WHERE item.member_id=#{id} -->
+<!-- 	</select> -->
 	
-	<select id="myChatAllList" resultType="hashmap">
-		SELECT
-			market_chat_messages.*,member.member_nickname 
-		FROM
-			market_chat_messages
-		LEFT JOIN member
-		       ON member.member_id = market_chat_messages.buy_member_id 
-		WHERE
-			(room_code,
-			chat_code) IN (
-			SELECT
-				room_code, MAX(chat_code)
-			FROM
-				market_chat_messages
-			WHERE
-				sell_member_id = #{id}
-				or buy_member_id=#{id}
-			GROUP BY
-				room_code  
-		   	);
-	
-	
-	</select>
 	<!-- 아이템상세정보 -->
 	<select id="itemList" resultType="hashmap">
 		SELECT *
