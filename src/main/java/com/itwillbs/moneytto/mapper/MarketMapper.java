@@ -3,11 +3,8 @@ package com.itwillbs.moneytto.mapper;
 import java.util.HashMap;
 import java.util.List;
 
-<<<<<<< HEAD
 import org.apache.ibatis.annotations.Param;
-=======
 import org.apache.ibatis.annotations.*;
->>>>>>> branch 'market' of https://github.com/sooom2/moneytto.git
 
 public interface MarketMapper {
 
