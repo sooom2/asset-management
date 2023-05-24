@@ -28,4 +28,8 @@ public interface MarketMapper {
 
 	// 마켓 메인 아이템 리스트
 	List<HashMap<String, String>> marketItemList();
+
+	void savePhotoInfo(HashMap<String, String> photoInfo);
+
+
 }

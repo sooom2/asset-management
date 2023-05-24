@@ -18,6 +18,19 @@
 	LIMIT 1
 	</insert>
 	
+	<insert id="savePhotoInfo">
+	
+	INSERT INTO photo
+		VALUES (
+			#{photo_code}
+			,#{item_code}
+			,#{photo_name}
+			,#{photo_path}
+		)
+
+	</insert>
+	
+	
 	
 	<!-- 채팅관련 -->
 	<select id="getItem" resultType="hashmap">

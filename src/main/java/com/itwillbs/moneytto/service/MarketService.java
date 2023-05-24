@@ -17,4 +17,17 @@ public class MarketService {
 		
 		return mapper.insertItem(item);
 	}
+
+	public void savePhoto(HashMap<String, String> photo) {
+		
+	}
+
+    public void savePhotoInfo(HashMap<String, String> photoInfo) {
+    	
+        mapper.savePhotoInfo(photoInfo);
+    }
+
+
+	
+	
 }
