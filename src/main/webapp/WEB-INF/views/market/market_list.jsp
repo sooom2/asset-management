@@ -69,14 +69,14 @@
 							<div class="categoryDetail" style="display: none;">
 								<div class="category__CategoryBox-sc-187sq7k-1 kGtMUL">
 									<div class="List__Wrapper-rd56hw-0 cmyJpu">
-										<div class="ListNonSelected" id="all">전체 (38,390)</div>
-										<div class="ListNonSelected" id="fashion">패션/의류/잡화/뷰티 (140)</div>
-										<div class="ListNonSelected" id="pc">가전제품/모바일/PC (5,444)</div>
-										<div class="ListNonSelected" id="interior">가구/인테리어 (192)</div>
-										<div class="ListNonSelected" id="book">도서/음반/문구/티켓 (192)</div>
-										<div class="ListNonSelected" id="game">게임/스포츠/취미 (192)</div>
-										<div class="ListNonSelected" id="child">유아동/반려동물 (192)</div>
-										<div class="ListNonSelected" id="etc">기타 (192)</div>
+										<div class="ListNonSelected" id="all" title="전체">전체 (38,390)</div>
+										<div class="ListNonSelected" id="fashion" title="패션/의류/잡화/뷰티">패션/의류/잡화/뷰티 (140)</div>
+										<div class="ListNonSelected" id="pc" title="가전제품/모바일/PC">가전제품/모바일/PC (5,444)</div>
+										<div class="ListNonSelected" id="interior" title="가구/인테리어">가구/인테리어 (192)</div>
+										<div class="ListNonSelected" id="book" title="도서/음반/문구/티켓">도서/음반/문구/티켓 (192)</div>
+										<div class="ListNonSelected" id="game" title="게임/스포츠/취미">게임/스포츠/취미 (192)</div>
+										<div class="ListNonSelected" id="child" title="유아동/반려동물">유아동/반려동물 (192)</div>
+										<div class="ListNonSelected" id="etc" title="기타">기타 (192)</div>
 									</div>
 								</div>
 							</div>
@@ -111,12 +111,18 @@
 							src="https://ccimage.hellomarket.com/img/web/search/filter/refresh.svg"
 							alt="reset" class="tagListResetImg">
 					</div>
-<!-- 					<div class="tagListTag"> -->
-<!-- 						<div class="tagListName">남성 의류 전체</div> -->
-<!-- 						<img -->
-<!-- 							src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" -->
-<!-- 							alt="remove" class="tagListRemove"> -->
-<!-- 					</div> -->
+					<div class="tagListTag">
+						<div class="tagListName">파란글씨는</div>
+						<img
+							src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png"
+							alt="remove" class="tagListRemove">
+					</div>
+					<div class="tagListTag">
+						<div class="tagListName">.tagListName</div>
+						<img
+							src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png"
+							alt="remove" class="tagListRemove">
+					</div>
 				</div>
 			</div>
 			<div class="searchedListWrapper">
@@ -202,9 +208,29 @@
 			$(".ListNonSelected").on("click", function(e) {
 				$(".ListSelected").attr("class", "ListNonSelected");
 				$(this).attr("class", "ListSelected");
+				
 				var categoryId = $(this).attr("id");
 				category(categoryId);
+				
+				// 필터에 추가
+				var title = $(this).attr("title");
+				var tagStr = '';
+				tagStr += '<div class="tagListTag">';
+				tagStr += '<div class="tagListName">';
+				tagStr += title;
+				tagStr += '</div>';
+				tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div>';
+				$(".tagListFilterBox").append(tagStr);
+				
+				
+				
 			});
+			
+			// 필터 remove
+			$(document).on("click", ".tagListRemove", function(e) {
+				$(this).parent().remove();
+			});
+			
 			
 		});
 	
