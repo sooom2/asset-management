@@ -5,7 +5,31 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="resources/css/find.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/css/member.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/css/find.css" rel="stylesheet">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	
+	$("form").submit(function() {
+		if($("#member_name").val() == "") {
+			alert("이름을 입력하세요.");
+			$("#member_name").focus();
+			return false;
+		} else if($("#member_bday").val() == "") {
+			alert("생년월일을 입력하세요.");
+			$("#member_bday").focus();
+			return false;
+		} else if($("#member_tel").val() == "") {
+			alert("휴대폰번호를 입력하세요.");
+			$("#member_tel").focus();
+			return false;
+		}
+		return true;
+	});
+});
+
+</script>
 </head>
 <body>
 <jsp:include page="../nav.jsp" />
@@ -18,7 +42,7 @@
 		<div class="cont">
 			<form action="findIdPro" id="findIdPro" name="findForm" method="post" autocomplete="off">
 				<h3 class="h3-member">이름</h3>
-				<div class="mb30"><input type="text" id="MemberNm" name="member_name" class="inp-member" placeholder="이름 입력"></div>
+				<div class="mb30"><input type="text" id="member_name" name="member_name" class="inp-member" placeholder="이름 입력"></div>
 				<h3 class="h3-member">생년월일</h3>
 				<div class="mb30"><input type="text" id="member_bday" name="member_bday" class="inp-member onlyNumber" placeholder="생년월일 8자리(19810101)" maxlength="8"></div>
 				<h3 class="h3-member">휴대폰번호</h3>

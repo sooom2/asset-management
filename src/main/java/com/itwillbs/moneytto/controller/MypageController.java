@@ -33,6 +33,8 @@ public class MypageController {
 						,HttpSession session, Model model) {
 		String id = (String)session.getAttribute("sId");
 		
+	
+		
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 시도해주세요.");
 			model.addAttribute("target","memLogin");
@@ -41,17 +43,19 @@ public class MypageController {
 		
 		
 		HashMap<String,String> member = memberService.getMember(id);
+		System.out.println(member);
+		System.out.println(member.get("member_X") +" " + member.get("member_Y"));
 		model.addAttribute("member", member);
 		
-		System.out.println(itemType);
+		System.out.println("itemType : " + itemType);
 		
-		List<HashMap<String,String>> itemList = null;
+		List<HashMap<String,String>> itemList = memberService.getSellItemList(id);
+		
+		List<HashMap<String,String>> wishItem = memberService.getWishItemList(id);
 		
 
 	    switch (itemType) {
-	        case "sellItem": itemList = memberService.getSellItemList(id); break;
-	        case "wishItem": itemList = memberService.getWishItemList(id); break;
-	        case "buyItem": itemList  = memberService.getBuyItemList(id);  break;
+	        case "buyItem" : itemList  = memberService.getBuyItemList(id); break;
 	    }
 	    
 	    System.out.println(itemType);
@@ -131,8 +135,10 @@ public class MypageController {
 	
 	@GetMapping(value = "payCharge")
 	public String payCharge() {
+		
 		return "market/market_payment";
+		
 	}
- 
+	
 
 }

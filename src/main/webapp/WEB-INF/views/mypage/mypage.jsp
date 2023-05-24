@@ -10,35 +10,19 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1e29d96072ee2bce354a10f8ac53225f"></script>
 <script>
-<<<<<<< Upstream, based on branch 'main' of https://github.com/sooom2/moneytto.git
-	$(document).ready(function(){
-		$(".ThumbNailTypeImgBox, .ThumbNailTypeItemInfoBox").on("click",function(){
-			location.href="market_detail"
-		})
-	$(".tabTab").on("click",function(){
-		var itemType = $(this).attr('data-attr');
-		$(".tabTab").removeClass("active")
-		$(this).addClass("active")
-		// active된 탭에 대한 css 작업 필요
-		location.href = "mypage?itemList="+itemType;
-		})
-=======
+
 $(document).ready(function(){
-	
 	$(".ThumbNailTypeImgBox, .ThumbNailTypeItemInfoBox").on("click",function(){
 		location.href="market_detail"
->>>>>>> 85e0de6 mypage
 	})
-	
-	$(".tabTab").on("click",function(){
-		var itemType = $(this).attr('data-attr');
-		$(".tabTab").removeClass("active")
-		$(this).addClass("active")
-		location.href = "mypage?itemList="+itemType;
+$(".tabTab").on("click",function(){
+	var itemType = $(this).attr('data-attr');
+	$(".tabTab").removeClass("active")
+	$(this).addClass("active")
+	// active된 탭에 대한 css 작업 필요
+	location.href = "mypage?itemList="+itemType;
 	})
-
 })
-	
 function memberAuth(){
 	let authWindow = window.open("about:blank","authWindow","width=500, height=700");
 	authWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize"
@@ -50,23 +34,14 @@ function memberAuth(){
 	+"&auth_type=0";
 	// 산업은행 - 12345678
 }
-	/* 	거리구하는 스크립트 잘라둔것
-	var circle = new kakao.maps.Circle({
-		center : new kakao.maps.LatLng(${member.member_X}, ${member.member_Y}),
-		radius: 50,
-	});
-	var latlng = new kakao.maps.LatLng(129.059035752371, 35.157764059003);
-	var bounds = circle.getBounds();
-	var result = bounds.contain(latlng);
-	var polyline = new kakao.maps.Polyline({
-		path : [
-			new kakao.maps.LatLng(${member.member_X}, ${member.member_Y}),
-	        new kakao.maps.LatLng(129.059035752371, 35.157764059005),
-		]
-	})
-
-	var polylineLength = polyline.getLength();
-	*/
+	// 망했어요 모르겟어요	
+	var polylineLength = new kakao.maps.Polyline({
+					path : [
+							new kakao.maps.LatLng(${member.member_X}, ${member.member_Y}),
+					        new kakao.maps.LatLng(120, 35)
+							]
+					}).getLength();
+	// 망했어요 모르겟어요
 </script>
 </head>
 <body>
@@ -130,8 +105,8 @@ function memberAuth(){
 					<div class="tabTab" data-attr="wishItem"><a href="#">찜한 상품</a></div>
 					<div class="tabTab" data-attr="buyItem"><a href="#">구매 상품</a></div>
 					<div class="tabTab"><a href="#">참여 중인 경매</a></div>
-					<div class="tabTab"><a href="#">거래 후기</a></div>
-					<div class="tabTab"><a href="#">추천 상품</a></div>
+<!-- 					<div class="tabTab"><a href="#">거래 후기</a></div> -->
+<!-- 					<div class="tabTab"><a href="#">추천 상품</a></div> -->
 				</div>
 				
 				<div class="filterBarWrapper">
@@ -177,126 +152,34 @@ function memberAuth(){
 				<div class="listControlBox"><div class="listCount">전체 0</div>
 				</div>
 				<div class="itemWrapper">
-				
 				  	<div class="itemItemWrapper">
-				  		  		
-                      	<div class="itemItemBox">
-                            <div class="ThumbNailTypeWrapper">
-                              	<div class="ThumbNailTypeItemBox">
-	                                  <div class="ThumbNailTypeImgBox">
-	                                      <img src="https://ccimg.hellomarket.com/images/2023/item/05/20/00/5015019_5421001_1.jpg?size=s4" alt="itemImg" class="ThumbNailTypeItemImg"/>
-	                                      <div class="SellStateImgWrapper">
-	                                          <div class="SellStateImgStateBox"></div>
-	                                      </div>
-	                                      <img src="https://ccimage.hellomarket.com/img/web/feed/tag/ico_heart_on.svg" class="WishWishImg"/>
-	                                  </div>
-	                                  <div class="ThumbNailTypeItemInfoBox">
-	                                      <div class="ThumbNailTypeItemInfo">
-	                                          <div class="ThumbNailTypeTitle">세인트루이스 뉴에라...</div>
-	                                          <div class="ThumbNailTypePrice">5,000원</div>
-	                                      </div>
-	                                      <div class="SearchIconWrapper">
-	                                         <img src="https://ccimage.hellomarket.com/web/2017/common/img_search_n.png" class="SearchIcon"/>
-	                                     </div>
-	                                  </div>
-	                              </div>
-	                          </div>
-	                    </div>
-	                    <div class="itemItemBox">
-	                          <div class="ThumbNailTypeWrapper">
-	                              <div class="ThumbNailTypeItemBox">
-	                                  <div class="ThumbNailTypeImgBox">
-	                                      <img src="https://ccimg.hellomarket.com/images/2023/item/05/20/00/5015019_5421001_1.jpg?size=s4" alt="itemImg" class="ThumbNailTypeItemImg"/>
-	                                      <div class="SellStateImgWrapper">
-	                                          <div class="SellStateImgStateBox"></div>
-	                                      </div>
-	                                      <img src="https://ccimage.hellomarket.com/img/web/feed/tag/ico_heart_on.svg" class="WishWishImg"/>
-	                                  </div>
-	                                  <div class="ThumbNailTypeItemInfoBox">
-	                                      <div class="ThumbNailTypeItemInfo">
-	                                          <div class="ThumbNailTypeTitle">세인트루이스 뉴에라...</div>
-	                                          <div class="ThumbNailTypePrice">5,000원</div>
-	                                      </div>
-	                                      <div class="SearchIconWrapper">
-	                                         <img src="https://ccimage.hellomarket.com/web/2017/common/img_search_n.png" class="SearchIcon"/>
-	                                     </div>
-	                                  </div>
-	                              </div>
-	                          </div>
-	                    </div>
-	                    <div class="itemItemBox">
-	                          <div class="ThumbNailTypeWrapper">
-	                              <div class="ThumbNailTypeItemBox">
-	                                  <div class="ThumbNailTypeImgBox">
-	                                      <img src="https://ccimg.hellomarket.com/images/2023/item/05/20/00/5015019_5421001_1.jpg?size=s4" alt="itemImg" class="ThumbNailTypeItemImg"/>
-	                                      <div class="SellStateImgWrapper">
-	                                          <div class="SellStateImgStateBox"></div>
-	                                      </div>
-	                                      <img src="https://ccimage.hellomarket.com/img/web/feed/tag/ico_heart_on.svg" class="WishWishImg"/>
-	                                  </div>
-	                                  <div class="ThumbNailTypeItemInfoBox">
-	                                      <div class="ThumbNailTypeItemInfo">
-	                                          <div class="ThumbNailTypeTitle">세인트루이스 뉴에라...</div>
-	                                          <div class="ThumbNailTypePrice">5,000원</div>
-	                                      </div>
-	                                      <div class="SearchIconWrapper">
-	                                         <img src="https://ccimage.hellomarket.com/web/2017/common/img_search_n.png" class="SearchIcon"/>
-	                                     </div>
-	                                  </div>
-	                              </div>
-	                          </div>
-<<<<<<< Upstream, based on branch 'main' of https://github.com/sooom2/moneytto.git
-	                      </div>
-	                      <div class="itemItemBox">
-	                          <div class="ThumbNailTypeWrapper">
-	                              <div class="ThumbNailTypeItemBox">
-	                                  <div class="ThumbNailTypeImgBox">
-	                                      <img src="https://ccimg.hellomarket.com/images/2023/item/05/20/00/5015019_5421001_1.jpg?size=s4" alt="itemImg" class="ThumbNailTypeItemImg"/>
-	                                      <div class="SellStateImgWrapper">
-	                                          <div class="SellStateImgStateBox"></div>
-	                                      </div>
-	                                      <img src="https://ccimage.hellomarket.com/img/web/feed/tag/ico_heart_on.svg" class="WishWishImg"/>
-	                                  </div>
-	                                  <div class="ThumbNailTypeItemInfoBox">
-	                                      <div class="ThumbNailTypeItemInfo">
-	                                          <div class="ThumbNailTypeTitle">세인트루이스 뉴에라...</div>
-	                                          <div class="ThumbNailTypePrice">5,000원</div>
-	                                      </div>
-	                                      <div class="SearchIconWrapper">
-	                                         <img src="https://ccimage.hellomarket.com/web/2017/common/img_search_n.png" class="SearchIcon"/>
-	                                     </div>
-	                                  </div>
-	                              </div>
-	                          </div>
-	                      </div>
-	                    </div>
-							<c:if test='${not empty itemList }'>
-								<c:forEach var="item" items="${itemList}">
-									<div class="itemItemBox">
-			                          <div class="ThumbNailTypeWrapper">
-			                              <div class="ThumbNailTypeItemBox">
-			                                  <div class="ThumbNailTypeImgBox">
-			                                      <img src="https://ccimg.hellomarket.com/images/2023/item/05/20/00/5015019_5421001_1.jpg?size=s4" alt="itemImg" class="ThumbNailTypeItemImg"/>
-			                                      <div class="SellStateImgWrapper">
-			                                          <div class="SellStateImgStateBox"></div>
-			                                      </div>
-			                                      <img src="https://ccimage.hellomarket.com/img/web/feed/tag/ico_heart_on.svg" class="WishWishImg"/>
-			                                  </div>
-			                                  <div class="ThumbNailTypeItemInfoBox">
-			                                      <div class="ThumbNailTypeItemInfo">
-			                                          <div class="ThumbNailTypeTitle">${item.name }</div>
-			                                          <div class="ThumbNailTypePrice">${item.price }원</div>
-			                                      </div>
-			                                      <div class="SearchIconWrapper">
-			                                         <img src="https://ccimage.hellomarket.com/web/2017/common/img_search_n.png" class="SearchIcon"/>
-			                                     </div>
-			                                  </div>
-			                              </div>
-			                          </div>
-			                      	</div>
-	                      		</c:forEach>
-                      		</c:if>
-                     </div>
+						<c:if test='${not empty itemList }'>
+							<c:forEach var="item" items="${itemList}">
+								<div class="itemItemBox">
+		                          <div class="ThumbNailTypeWrapper">
+		                              <div class="ThumbNailTypeItemBox">
+		                                  <div class="ThumbNailTypeImgBox">
+		                                      <img src="https://ccimg.hellomarket.com/images/2023/item/05/20/00/5015019_5421001_1.jpg?size=s4" alt="itemImg" class="ThumbNailTypeItemImg"/>
+		                                      <div class="SellStateImgWrapper">
+		                                          <div class="SellStateImgStateBox"></div>
+		                                      </div>
+		                                      <img src="https://ccimage.hellomarket.com/img/web/feed/tag/ico_heart_on.svg" class="WishWishImg"/>
+		                                  </div>
+		                                  <div class="ThumbNailTypeItemInfoBox">
+		                                      <div class="ThumbNailTypeItemInfo">
+		                                          <div class="ThumbNailTypeTitle">${item.item_subject }</div>
+		                                          <div class="ThumbNailTypePrice">${item.item_price }원</div>
+		                                      </div>
+		                                      <div class="SearchIconWrapper">
+		                                         <img src="https://ccimage.hellomarket.com/web/2017/common/img_search_n.png" class="SearchIcon"/>
+		                                     </div>
+		                                  </div>
+		                              </div>
+		                          </div>
+		                      	</div>
+                      		</c:forEach>
+                   		</c:if>
+                   	</div>
 					<c:if test= '${empty itemList }'>
                       	<div class="EmptyEmptyBox">
 							<div class="EmptyTitle">아쉽게도, 현재 검색된 상품이 없어요</div>
