@@ -3,6 +3,8 @@ package com.itwillbs.moneytto.mapper;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.*;
+
 public interface MarketMapper {
 
 	int insertItem(HashMap<String, String> item);
@@ -30,7 +32,8 @@ public interface MarketMapper {
 //	List<HashMap<String, String>> chatSubject(String id);
 
 	// 마켓 메인 아이템 리스트
-	List<HashMap<String, String>> marketItemList();
+	List<HashMap<String, String>> marketItemList(@Param("item_category") String item_category, @Param("item_status") String item_status, 
+			@Param("item_price_min") String item_price_min, @Param("item_price_max") String item_price_max);
 
 	void savePhotoInfo(HashMap<String, String> photoInfo);
 

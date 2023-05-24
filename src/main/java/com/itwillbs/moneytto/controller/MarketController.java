@@ -14,12 +14,11 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
+import org.json.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -46,9 +45,25 @@ public class MarketController {
 	@GetMapping(value = "market_list")
 	public String marketList(Model model) {
 		// 마켓 메인 아이템 리스트
-		List<HashMap<String, String>> marketItemList = marketChatService.getMarketItemList();
-		model.addAttribute("marketItemList", marketItemList);
+//		List<HashMap<String, String>> marketItemList = marketService.getMarketItemList();
+//		model.addAttribute("marketItemList", marketItemList);
 		return "market/market_list";
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "marketItemList")
+	public String selectList(Model model, @RequestParam(defaultValue = "") String item_category, @RequestParam(defaultValue = "") String item_status, 
+			@RequestParam(defaultValue = "") String item_price_min, @RequestParam(defaultValue = "") String item_price_max) {
+		
+		System.out.println("item_category : " + item_category);
+		System.out.println("item_status : " + item_status);
+		System.out.println("item_price_min : " + item_price_min);
+		System.out.println("item_price_max : " + item_price_max);
+		// 마켓 메인 아이템 리스트
+		List<HashMap<String, String>> marketItemList = service.getMarketItemList(item_category, item_status, item_price_min, item_price_max);
+		model.addAttribute("marketItemList", marketItemList);
+		JSONArray ja = new JSONArray(marketItemList);
+		return ja.toString();
 	}
 	
 	@GetMapping(value = "market_detail")

@@ -49,10 +49,7 @@ public class MarketChatService {
 //	public List<HashMap<String, String>> getChatSubject(String id) {
 //		return mapper.chatSubject(id);
 //	}
-	// 마켓 메인 아이템 리스트
-	public List<HashMap<String, String>> getMarketItemList() {
-		return mapper.marketItemList();
-	}
+
 
 
 
