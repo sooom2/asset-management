@@ -14,12 +14,14 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -86,6 +88,7 @@ public class MarketController {
 		List<HashMap<String, String>> myChatList =null;
 		List<HashMap<String, String>> myChatSubject =null;
 		
+		//nav에서 들어갈때 -  최근에 열린 채팅 내역 보이게
 		if(item_code.equals("")) {
 			
 			System.out.println("========================================");
@@ -94,7 +97,6 @@ public class MarketController {
 			System.out.println("========================================");
 		}else {
 			
-		
 		//아이템상세정보
 		HashMap<String, String> itemDetail = marketChatService.getItem(item_code);
 		
@@ -110,8 +112,8 @@ public class MarketController {
 		
 		
 		//판매자 판매상품개수
-		int sellCount = marketChatService.getSellCount(sellDetail.get("member_id"));
-		model.addAttribute("sellCount",sellCount);
+//		int sellCount = marketChatService.getSellCount(sellDetail.get("member_id"));
+//		model.addAttribute("sellCount",sellCount);
 		
 		//내채팅목록
 		myChatList = marketChatService.getMyChatList(id);
@@ -124,10 +126,34 @@ public class MarketController {
 		
 		
 		
+		
+		
 		return "market/market_chat";
-		 
 	}
 	
+	@GetMapping("chatDetail")
+	@ResponseBody
+	public String chatDetail(Model model, @RequestParam(defaultValue="0") int room_code,HttpSession session) {
+		
+		String sId = (String)session.getAttribute("sId");
+		
+		List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
+		
+		//상대방id
+//		HashMap<String, String> oppenentId  = marketChatService.getOppenentId(room_code,sId);
+		
+		//판매자 판매상품개수
+//		int sellCount = marketChatService.getSellCount(oppenentId.get("oppenent_id"));
+//		System.out.println("==============================================");
+//		System.out.println(sellCount);
+//		model.addAttribute("sellCount",sellCount);
+//		System.out.println("==============================================");
+		
+		
+		JSONArray arrChatDetail = new JSONArray(chatDetail);
+		System.out.println(arrChatDetail);
+		return arrChatDetail.toString();
+	}
 
 	
 //	@PostMapping(value="itemRegistPro")
