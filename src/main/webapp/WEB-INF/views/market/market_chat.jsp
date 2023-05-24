@@ -65,6 +65,7 @@ $(function() {
 				<ul>
 					<!-- 채팅방 목록-->
 					<!--  선택된채팅에 active처리  -->
+					
 				<c:forEach var="chatList" items="${myChatList }">
 					<div class="card_box">
 						<a href="">
@@ -74,14 +75,11 @@ $(function() {
 								</div>
 								<div class="info">
 
-									<div class="nick">${chatList.get('member_nickname') }</div>
+									<div class="nick">${chatList.get('item_code') }<span style="float:right;">${chatList.get('oppenent_nick') }</span></div>
 									<div class="description">${chatList.get('chat_content') }</div>
 <%-- 									<div class="time_ago"><fmt:formatDate value="${chatList.chat_time}" pattern="yyyy년 MM월 dd일" /></div> --%>
 									<div class="time_ago">${chatList.chat_time}</div>
-
 <%-- 									<div class="time_ago">${chatList.get('chat_time') }</div> --%>
-									
-									
 								</div>
 							</li>
 						</a>
@@ -153,7 +151,9 @@ $(function() {
 					<div>
 						<div class="chat_timeago">
 							<div class="chat_timeago_box">
-								<span class="chat_timeago_text"><fmt:formatDate value="${now }" pattern="yyyy년 MM월 dd일" /></span>
+								<span class="chat_timeago_text">
+<%-- 									<fmt:formatDate value="${now }" pattern="yyyy년 MM월 dd일" /> --%>
+								</span>
 							</div>
 						</div>
 						

@@ -148,7 +148,11 @@
     left: 0;
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow: hidden
+    overflow: hidden;
+    width: 100%;
+}
+.left_main ul li .nick{
+    width:100%;
 }
 
 .left_main ul li .info .description {
