@@ -28,6 +28,5 @@ public interface MemberMapper {
 	List<HashMap<String, String>> selectSellItemList(String member_id);
 	
 	List<HashMap<String, String>> selectBuyItemList(String member_id);
-
 	
 }

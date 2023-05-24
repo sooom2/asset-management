@@ -153,4 +153,5 @@ public class MemberService {
 		
 		return mapper.selectBuyItemList(id);
 	}
+	
 }
