@@ -13,12 +13,10 @@ public class AuctionService {
 	@Autowired
 	private AuctionMapper mapper;
 	
-	// 경매 메인페이지
 	public List<HashMap<String, String>> selectAuction() {
 		return mapper.selectAuction();
 	}
 
-	// 실시간 경매
 	public HashMap<String, String> selectAuctionCode(String auction_code) {
 		return mapper.selectAuctionCode(auction_code);
 	}
