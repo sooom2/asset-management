@@ -149,26 +149,26 @@
 	                    <div class="infinite-scroll-component " style="height:auto;overflow:auto;-webkit-overflow-scrolling:touch">
 							<div class="itemListWrapper">
 								<div class="itemWrapper">
-									<c:forEach  var="item" items="${marketItemList }">
-									<div class="itemThumbnailBox">
-										<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail" onclick="location.href='market_detail'">
-											<div class="wishWrapper">
-												<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-											</div>
-									</div>
-									<!-- 삭제 -->
-									<div class="itemTextBox">
-									<div class="itemCategory">${item.item_category }</div>
-									<div class="itemText" onclick="location.href='market_detail'">${item.item_subject }</div>
-									<div class="itemText">${item.item_price }원</div>
-									<div class="itemTagBox">
-									<c:forTokens items="${item.item_tag }" delims="," var="itemTag">
-										<div class="itemSizeTag">${itemTag}</div>
-									</c:forTokens>
-									</div>
-									<div class="itemTimeTag">item 테이블 date type 시간으로 바꿔야함</div>
-									</div>
-									</c:forEach>
+<%-- 									<c:forEach  var="item" items="${marketItemList }"> --%>
+<!-- 									<div class="itemThumbnailBox"> -->
+<%-- 										<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail" onclick="location.href='market_detail'"> --%>
+<!-- 											<div class="wishWrapper"> -->
+<%-- 												<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon"> --%>
+<!-- 											</div> -->
+<!-- 									</div> -->
+<!-- 									삭제 -->
+<!-- 									<div class="itemTextBox"> -->
+<%-- 									<div class="itemCategory">${item.item_category }</div> --%>
+<%-- 									<div class="itemText" onclick="location.href='market_detail'">${item.item_subject }</div> --%>
+<%-- 									<div class="itemText">${item.item_price }원</div> --%>
+<!-- 									<div class="itemTagBox"> -->
+<%-- 									<c:forTokens items="${item.item_tag }" delims="," var="itemTag"> --%>
+<%-- 										<div class="itemSizeTag">${itemTag}</div> --%>
+<%-- 									</c:forTokens> --%>
+<!-- 									</div> -->
+<!-- 									<div class="itemTimeTag">item 테이블 date type 시간으로 바꿔야함</div> -->
+<!-- 									</div> -->
+<%-- 									</c:forEach> --%>
 								</div>
 							</div>
 						</div>
@@ -193,7 +193,80 @@
 				default: console.log("엥");
 			}
 		}
+		
+		function marketItemList() {
+			$.ajax({													
+	 			type: "GET",
+	 			url: "marketItemList",
+	 			data: { 
+	 				item_category : "패션",
+	 				item_status : "판매중",
+	 				item_price_min : "10000",
+	 				item_price_max : "23000"
+	 			},
+	 			dataType: "json",
+	 			success: function(response) { 
+	 				console.log("marketItemList : 요청처리성공");
+	 				for(let item of response) {
+						let category = item.item_category;
+						let subject = item.item_subject;
+						let price = item.item_price;
+						let tags = item.item_tag;
+						let tag = tags.split(',');
+
+						var str = '<div class="itemThumbnailBox">';
+						str += '<div class="itemThumbnailBox">';
+						str += '<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">';
+						str += '<div class="wishWrapper">';
+						str += '<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">';
+						str += '</div>';
+						str += '</div>';
+						str += '<div class="itemTextBox">';
+						str += '<div class="itemCategory">';
+						str += category;
+						str += '</div>';
+						str += '<div class="itemText" onclick="location.href=';
+						str += "'market_detail'";
+						str += '">';
+						str += subject;
+						str += '</div>';
+						str += '<div class="itemText">';
+						str += price + '원';
+						str += '</div>';
+						
+						if(tag.length >= 2) {
+							for(var i = 0; i < tag.length; i++) {
+								str += '<div class="itemTagBox">';
+								str += '<div class="itemSizeTag">';
+								str += tag[i];
+								str += '</div>';
+							}
+						} else {
+							str += '<div class="itemTagBox">';
+							str += '<div class="itemSizeTag">';
+							str += tag;
+							str += '</div>';
+						}
+						
+						str += '</div>';
+						str += '<div class="itemTimeTag">';
+						str += 'item 테이블 date type 시간으로 바꿔야함';
+						str += '</div>';
+						str += '</div>';
+						
+						$(".itemWrapper").append(str);
+						
+	 				}
+	 			},
+	 			error: function(xhr, textStatus, errorThrown) {
+	 				console.log("preferMoviesList : 요청처리실패");
+	 			}
+	 		});
+		}
 		$(function () {
+			marketItemList();
+
+			
 			$(".FilterCategory").on("click", function(e) {
 				$(".priceDetail").hide();
 				$(".categoryDetail").show();
