@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <link href="${path }/resources/css/market.css" rel="stylesheet">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <title>Insert title here</title>
 </head>
   <body>
@@ -140,33 +139,10 @@
 								<div class="itemWrapper">
 									<div class="itemThumbnailBox">
 										<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-											<div class="wishWrapper" onclick="itemWish(this)">
+											<div class="wishWrapper">
 												<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 											</div>
 									</div>
-<script type="text/javascript">
-function itemWish(wish){
-// 	$.ajax({
-// 		type: "POST",
-// 		url : "clickWish",
-// 		data : "wish",
-// 		success:function(responseData){
-// 			retVal = responseData;
-// 		},
-// 		error:function(jqXHR, textStatus, err){
-// 			throw new KobisOpenAPIError(jqXHR.responseText);
-// 		},
-// 		dataType: isJson?"json":"xml",
-// 		async : false
-// 	});
-		
-		$(wish).find('img').toggleClass("wish").attr("src", "${path }/resources/images/main/Ico_wish_on.png");	
-	
-	
-}
-
-</script>
-
 									<!-- 삭제 -->
 									<div class="itemTextBox" onclick="location.href='market_detail'">
 									<div class="itemCategory">여기는카테고리</div>
