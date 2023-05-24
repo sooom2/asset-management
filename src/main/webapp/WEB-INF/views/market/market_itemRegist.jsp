@@ -12,95 +12,99 @@
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function() {
-    var maxImageCount = 5; // 최대 이미지 개수 설정
-    var fileInput = document
-        .querySelector('input[type="file"]');
-    var imageList = document.querySelector('.image_list');
-    var countImg = document
-        .querySelector('.count_img span');
-    var defaultImage = document.querySelector('.default');
+	document
+			.addEventListener(
+					'DOMContentLoaded',
+					function() {
+						var maxImageCount = 5; // 최대 이미지 개수 설정
+						var fileInput = document
+								.querySelector('input[type="file"]');
+						var imageList = document.querySelector('.image_list');
+						var countImg = document
+								.querySelector('.count_img span');
+						var defaultImage = document.querySelector('.default');
 
-    function handleFileSelect(event) {
-        var files = event.target.files;
+						function handleFileSelect(event) {
+							var files = event.target.files;
 
-        // 이미지 개수가 최대 개수를 초과하는 경우 파일 선택을 제한
-        if (files.length + imageList.children.length > maxImageCount) {
-            alert('최대 ' + maxImageCount +
-                '장의 사진만 업로드할 수 있습니다.');
-            fileInput.value = '';
-            return;
-        }
+							// 이미지 개수가 최대 개수를 초과하는 경우 파일 선택을 제한
+							if (files.length + imageList.children.length > maxImageCount) {
+								alert('최대 ' + maxImageCount
+										+ '장의 사진만 업로드할 수 있습니다.');
+								fileInput.value = '';
+								return;
+							}
 
-        // 선택한 파일들의 미리보기를 생성하여 추가
-        for (var i = 0; i < files.length; i++) {
-            var file = files[i];
+							// 선택한 파일들의 미리보기를 생성하여 추가
+							for (var i = 0; i < files.length; i++) {
+								var file = files[i];
 
-            // 이미지 개수가 최대 개수에 도달한 경우 파일 선택을 제한
-            if (imageList.children.length >= maxImageCount) {
-                alert('최대 ' + maxImageCount +
-                    '장의 사진만 업로드할 수 있습니다.');
-                fileInput.value = '';
-                return;
-            }
+								// 이미지 개수가 최대 개수에 도달한 경우 파일 선택을 제한
+								if (imageList.children.length >= maxImageCount) {
+									alert('최대 ' + maxImageCount
+											+ '장의 사진만 업로드할 수 있습니다.');
+									fileInput.value = '';
+									return;
+								}
 
-            // 미리보기 컨테이너를 생성
-            var previewContainer = document
-                .createElement('li');
+								// 미리보기 컨테이너를 생성
+								var previewContainer = document
+										.createElement('li');
 
-            // 이미지를 생성
-            var img = document.createElement('img');
-            img.classList.add('item_img');
-            img.src = URL.createObjectURL(file);
+								// 이미지를 생성
+								var img = document.createElement('img');
+								img.classList.add('item_img');
+								img.src = URL.createObjectURL(file);
 
-            // 이미지 삭제 아이콘을 생성
-            var deleteIcon = document.createElement('img');
-            deleteIcon.classList.add('img_delete_icon');
-            deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
-            deleteIcon.alt = '상품 썸네일 제거 아이콘';
+								// 이미지 삭제 아이콘을 생성
+								var deleteIcon = document.createElement('img');
+								deleteIcon.classList.add('img_delete_icon');
+								deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
+								deleteIcon.alt = '상품 썸네일 제거 아이콘';
 
-            // 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
-            deleteIcon
-                .addEventListener(
-                    'click',
-                    function() {
-                        var imageContainer = this
-                            .closest('li');
-                        imageList
-                            .removeChild(imageContainer);
-                        updateImageCount();
-                    });
+								// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
+								deleteIcon
+										.addEventListener(
+												'click',
+												function() {
+													var imageContainer = this
+															.closest('li');
+													imageList
+															.removeChild(imageContainer);
+													updateImageCount();
+												});
 
-            // 이미지와 삭제 아이콘을 감싸는 상자를 생성
-            var imageBox = document.createElement('div');
-            imageBox.classList.add('up_img_box');
-            imageBox.appendChild(deleteIcon);
-            imageBox.appendChild(img);
+								// 이미지와 삭제 아이콘을 감싸는 상자를 생성
+								var imageBox = document.createElement('div');
+								imageBox.classList.add('up_img_box');
+								imageBox.appendChild(deleteIcon);
+								imageBox.appendChild(img);
 
-            // 미리보기 컨테이너에 이미지 상자를 추가
-            previewContainer.appendChild(imageBox);
+								// 미리보기 컨테이너에 이미지 상자를 추가
+								previewContainer.appendChild(imageBox);
 
-            // 미리보기 컨테이너를 이미지 목록에 추가
-            imageList.appendChild(previewContainer);
+								// 미리보기 컨테이너를 이미지 목록에 추가
+								imageList.appendChild(previewContainer);
 
-            updateImageCount();
-        }
-    }
+								updateImageCount();
+							}
+						}
 
-    function updateImageCount() {
-        countImg.textContent = imageList.children.length;
-    }
+						function updateImageCount() {
+							countImg.textContent = imageList.children.length;
+						}
 
-    // default 버튼 클릭 시 파일 입력 필드를 클릭하여 파일 선택 창을 열도록 설정
-    defaultImage.addEventListener('click', function() {
-        fileInput.click();
-    });
+						// default 버튼 클릭 시 파일 입력 필드를 클릭하여 파일 선택 창을 열도록 설정
+						defaultImage.addEventListener('click', function() {
+							fileInput.click();
+						});
 
-    fileInput.addEventListener('change', handleFileSelect,
-        false);
-});
+						fileInput.addEventListener('change', handleFileSelect,
+								false);
+					});
+
 	//태그기능 
-	
+
 	document.addEventListener('DOMContentLoaded', function() {
 		var tagInput = document.querySelector('.tagTagInput');
 		var tagButton = document.querySelector('.tagButton');
@@ -176,32 +180,43 @@ document.addEventListener('DOMContentLoaded', function() {
 			event.preventDefault();
 		});
 	});
+	
+	//파일 인풋 
+
+	var fileInput = document.querySelector('input[type="file"]');
+
+	function handleFileSelect(event) {
+		var files = event.target.files;
+
+		// 파일 선택된 후에 처리할 로직 작성
+		// 파일 객체(files)를 활용하여 원하는 동작 수행
+	}
+
+	fileInput.addEventListener('change', handleFileSelect, false);
 </script>
 
 
 <script>
-
 <!-- 금액 숫자만입력 -->
-  document.addEventListener('DOMContentLoaded', function() {
-    var priceInput = document.querySelector('.PricePriceInput');
+	document.addEventListener('DOMContentLoaded', function() {
+		var priceInput = document.querySelector('.PricePriceInput');
 
-    priceInput.addEventListener('input', function() {
-      // 입력된 값에서 숫자가 아닌 문자를 제거합니다
-      var numericValue = this.value.replace(/[^\d]/g, '');
+		priceInput.addEventListener('input', function() {
+			// 입력된 값에서 숫자가 아닌 문자를 제거합니다
+			var numericValue = this.value.replace(/[^\d]/g, '');
 
-      // 천단위 컴마 표시를 추가합니다
-      var formattedValue = addCommas(numericValue);
+			// 천단위 컴마 표시를 추가합니다
+			var formattedValue = addCommas(numericValue);
 
-      // 정제된 숫자 값을 다시 입력 상자에 할당합니다
-      this.value = formattedValue;
-    });
+			// 정제된 숫자 값을 다시 입력 상자에 할당합니다
+			this.value = formattedValue;
+		});
 
-    function addCommas(value) {
-      // 세 자리마다 쉼표를 추가하는 함수
-      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
-  });
-
+		function addCommas(value) {
+			// 세 자리마다 쉼표를 추가하는 함수
+			return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		}
+	});
 </script>
 
 
@@ -232,42 +247,39 @@ document.addEventListener('DOMContentLoaded', function() {
 </style>
 
 <script>
+	document.addEventListener('DOMContentLoaded', function() {
+		// 카테고리 요소들을 선택합니다.
+		const items = document.querySelectorAll('.TextTextWrapper');
+		// 컬럼의 입력 필드를 선택합니다.
 
-document.addEventListener('DOMContentLoaded', function() {
-  // 카테고리 요소들을 선택합니다.
-  const items = document.querySelectorAll('.TextTextWrapper');
-  // 컬럼의 입력 필드를 선택합니다.
-  
-   
-  const input = document.querySelector('#item_category input[name="item_category"]');
+		const input = document
+				.querySelector('#item_category input[name="item_category"]');
 
-  // 각 카테고리 요소에 클릭 이벤트를 추가합니다.
-  items.forEach(function(item) {
-    item.addEventListener('click', function() {
-      // 다른 요소들의 선택 상태를 제거합니다.
-      items.forEach(function(otherItem) {
-        otherItem.classList.remove('selected');
-      });
+		// 각 카테고리 요소에 클릭 이벤트를 추가합니다.
+		items.forEach(function(item) {
+			item.addEventListener('click', function() {
+				// 다른 요소들의 선택 상태를 제거합니다.
+				items.forEach(function(otherItem) {
+					otherItem.classList.remove('selected');
+				});
 
-      // 선택한 요소에 클래스를 추가합니다.
-      this.classList.add('selected');
+				// 선택한 요소에 클래스를 추가합니다.
+				this.classList.add('selected');
 
-      // 선택한 카테고리를 변수에 저장합니다.
-      const category = this.textContent;
+				// 선택한 카테고리를 변수에 저장합니다.
+				const category = this.textContent;
 
-      // 선택한 카테고리를 저장합니다.
-      saveCategory(category);
-    });
-  });
-	//커밋
-  // 선택한 카테고리를 저장하는 함수입니다.
-  function saveCategory(category) {
-    console.log('Category saved:', category);
-    input.value = category;
-  } 
-});
-
-
+				// 선택한 카테고리를 저장합니다.
+				saveCategory(category);
+			});
+		});
+		//커밋
+		// 선택한 카테고리를 저장하는 함수입니다.
+		function saveCategory(category) {
+			console.log('Category saved:', category);
+			input.value = category;
+		}
+	});
 </script>
 
 </head>
@@ -277,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		<section class="content">
 			<h1>중고거래의 시작 머니또마켓</h1>
 			<h2>상품 등록 페이지</h2>
-			<form class="insertItem" action="itemRegistPro" method="post">
+			<form class="insertItem" action="itemRegistPro" method="post" enctype="multipart/form-data">
 				<div class="regist_main_area">
 					<div class="regist_top">
 						<div class="regist_box_top">
@@ -298,13 +310,15 @@ document.addEventListener('DOMContentLoaded', function() {
 									(<span>0</span>/5)
 								</div>
 								<dd>
-									<input type="file" multiple="" class="multiple">
+
+									<input type="file" name="file" multiple class="multiple">
 									<div role="presentation" tabindex="0">
-										<input multiple="" type="file" tabindex="-1"
+										<input multiple type="file" tabindex="-1"
 											style="display: none;"> <img
 											src="https://ccimage.hellomarket.com/img/web/regist/image_camera_x3.png"
 											alt="기본 상품 등록 이미지" class="default">
 										<ul class="image_list">
+										
 											<!-- 이미지 미리보기 영역 -->
 										</ul>
 										<div class="UploadGuideBox">
@@ -325,6 +339,7 @@ document.addEventListener('DOMContentLoaded', function() {
 								</dd>
 							</dl>
 
+
 							<dl class="regist_title" id="title">
 								<dt class="TitleTitleWrapper">
 									<label class="Title">상품제목</label>
@@ -344,7 +359,7 @@ document.addEventListener('DOMContentLoaded', function() {
 								</dt>
 								<dd>
 									<div class="categoryCategoryBox">
-										<div class="ListListWrapper" >
+										<div class="ListListWrapper">
 											<div class="TextTextWrapper">패션/의류/잡화/뷰티</div>
 											<div class="TextTextWrapper">가전제품/모바일/PC</div>
 											<div class="TextTextWrapper">가구/인테리어</div>
@@ -356,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
 										<input type="hidden" name="item_category" value="">
 								</dd>
 							</dl>
-							<dl class="sell_method_box"> 
+							<dl class="sell_method_box">
 								<dt class="TitleTitleWrapper">
 									<label class="Title">가격 입력</label>
 									<div class="TitleEssentialMark">*</div>
