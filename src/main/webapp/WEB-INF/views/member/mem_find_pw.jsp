@@ -5,13 +5,31 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="resources/css/find.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/css/member.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/css/find.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(function() {
 	//휴대폰 번호 인증
 	var code2 = "";
 	$("#btnSend").click(function(){
+		if($("#member_id").val() == "") {
+			alert("아이디를 입력하세요.");
+			$("#member_id").focus();
+			return false;
+		} else if($("#member_name").val() == "") {
+			alert("이름을 입력하세요.");
+			$("#member_name").focus();
+			return false;
+		} else if($("#member_bday").val() == "") {
+			alert("생년월일을 입력하세요.");
+			$("#member_bday").focus();
+			return false;
+		} else if($("#member_tel").val() == "") {
+			alert("휴대폰번호를 입력하세요.");
+			$("#member_tel").focus();
+			return false;
+		}
 		alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
 		var phone = $("#member_tel").val();
 		$.ajax({
@@ -38,6 +56,10 @@ $(function() {
 	
 	//휴대폰 인증번호 대조
 	$("#btnAuth").click(function(){
+		if(code2 == ""){
+			alert("인증 요청을 진행해주세요.");
+			return false;	
+		}
 		if($("#member_tel2").val() == code2){
 			$("#phoneCheck2").text("인증번호가 일치합니다.");
 			$("#phoneCheck2").css("color","green");

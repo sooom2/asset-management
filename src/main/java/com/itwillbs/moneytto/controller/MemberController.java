@@ -27,7 +27,7 @@ public class MemberController {
 	@Autowired
 	private MailSendService mailService;
 	
-	
+// 회원가입==========================================================================================================================	
 	//회원인증폼
 	@GetMapping(value = "memAuth")
 	public String memAuth() {
@@ -44,33 +44,41 @@ public class MemberController {
 	}
 	
 	// 회원가입
-	@PostMapping(value = "joinPro")
+	@RequestMapping(value = "joinPro", method = RequestMethod.POST)
 	public String joinPro(@RequestParam HashMap<String, String> member, Model model) {
 		
-		
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String securePasswd = passwordEncoder.encode(member.get("member_pw"));
-		
-		String member_address = member.get("member_address1") + "/" + member.get("member_address2");
+		String securePasswd = new BCryptPasswordEncoder().encode(member.get("member_pw"));
 		
 		// 좌표
 		HashMap<String, String> coord = memberService.setCoord(member.get("member_address"));
 		member.putAll(coord);
 		
 		member.put("member_pw", securePasswd);
-		member.put("member_email", "test@test.com");
+		
 		int insertCount = memberService.registMember(member);
 		
-		System.out.println(member);
 		if(insertCount > 0) { // 가입 성공
 			model.addAttribute("member", member);
 			return "member/mem_join_success";
+			
 		} else { // 가입 실패
 			model.addAttribute("msg", "회원 가입 실패!");
+			
 			return "member/fail_back";
 		}
 	}
-	
+// 카카오 회원가입
+	@PostMapping(value = "kakaoJoin")
+	public String kakaoJoin(@RequestParam HashMap<String, String> kakao, Model model) {
+		
+		if(kakao.get("email") != null) {
+			model.addAttribute("email", kakao.get("email"));	
+		}
+		
+		System.out.println(kakao);
+		return "member/mem_join_form";
+	}
+// ==============================================================================================================================	
 	//회원 로그인 확인 
 	@RequestMapping(value = "loginPro", method = RequestMethod.POST)
 	public String loginPro(@RequestParam String member_id, @RequestParam String member_pw
@@ -101,16 +109,16 @@ public class MemberController {
 			
 			System.out.println(naver);
 			return "member/mem_join_form";
-		}
+	}
 	
 	// 카카오 로그인 확인
 	@PostMapping(value = "kakaoLogin")
 	public String kakao(@RequestParam HashMap<String, String> kakao, Model model, HttpSession session) {
 		
-		
 		HashMap<String, String> member = memberService.kakaoMember(kakao.get("email"));
 		session.setAttribute("token", kakao.get("accessToken"));
 		System.out.println(member);
+		
 		// 회원 판별
 		if(member == null) {
 			model.addAttribute("msg", "회원이 아닙니다. 회원가입 페이지로 이동합니다.");
@@ -125,18 +133,7 @@ public class MemberController {
 		}
 		
 	}
-// 카카오 회원가입
-	@PostMapping(value = "kakaoJoin")
-	public String kakaoJoin(@RequestParam HashMap<String, String> kakao, Model model) {
-		
-		if(kakao.get("email") != null) {
-			model.addAttribute("email", kakao.get("email"));	
-		}
-		
-		
-		System.out.println(kakao);
-		return "member/mem_join_form";
-	}
+
 // ******************************************************************	
 	//회원로그인
 	@GetMapping(value = "memLogin")
@@ -165,6 +162,7 @@ public class MemberController {
 	// 아이디 찾기pro
 	@PostMapping(value = "findIdPro")
 	public String findIdPro(@RequestParam HashMap<String, String> member, Model model) {
+		
 		HashMap<String, String> success = memberService.findId(member);
 		
 		if(success == null) {
@@ -210,16 +208,35 @@ public class MemberController {
 	}
 	// 비밀번호 재설정pro
 	@RequestMapping(value = "renewPwPro", method = {RequestMethod.GET, RequestMethod.POST})
-	public String renewPwPro(@RequestParam HashMap<String, String> member, Model model) {
+	public String renewPwPro(@RequestParam String member_id
+							,@RequestParam String member_pw
+							,Model model) {
+							 
 		// 해싱 -> success 페이지 -> memLogin
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String securePasswd = passwordEncoder.encode(member.get("member_pw"));
+		
+		HashMap<String, String> member = memberService.getMember(member_id);
+		
+	    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	    String hashedPassword = member.get("member_pw");
+		String securePasswd = passwordEncoder.encode(member_pw);
+		
+		
+	   if (passwordEncoder.matches(member_pw, hashedPassword)) {
+		   	model.addAttribute("msg", "기존 비밀번호와 동일하게 설정할 수 없습니다.");
+			return "fail_back";
+	    }
+		   
 		member.put("member_pw", securePasswd);
 		int updateCount = memberService.renewPw(member);
+		if(updateCount > 0) {
+			model.addAttribute("msg", "비밀번호 재설정이 완료되었습니다.");
+			model.addAttribute("target", "memLogin");
+			return "success";
+		}else {
+			model.addAttribute("msg", "비밀번호를 확인해주세요.");
+			return "fail_back";
+		}
 		
-		model.addAttribute("msg", "비밀번호 재설정이 완료되었습니다.");
-		model.addAttribute("target", "memLogin");
-		return "success";
 	}
 	
 	// 아이디 사용 조회

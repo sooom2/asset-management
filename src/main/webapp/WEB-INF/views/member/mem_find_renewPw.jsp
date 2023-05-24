@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="resources/css/find.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/css/member.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/css/find.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(function() {
@@ -68,7 +69,7 @@ $(function() {
 	</div>
 	<div class="tabs-cont">
 		<div class="cont">
-			<form action="renewPwPro" id="findIdPro" name="findForm" method="post" autocomplete="off">
+			<form action="renewPwPro" id="renewPwPro" name="findForm" method="post" autocomplete="off">
 				<input type="hidden" name="member_id" value="${member_id }">
 				<h3 class="h3-member">새 비밀번호</h3>
 				<div class="mb30"><input type="password" id="member_pw" name="member_pw" class="inp-member" placeholder="영문자, 숫자, 특수문자 8자 이상"><span id="pw-check"></span></div>
