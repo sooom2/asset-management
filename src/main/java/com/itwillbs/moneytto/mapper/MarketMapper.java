@@ -28,4 +28,7 @@ public interface MarketMapper {
 
 	// 아이템제목
 //	List<HashMap<String, String>> chatSubject(String id);
+
+	// 마켓 메인 아이템 리스트
+	List<HashMap<String, String>> marketItemList();
 }
