@@ -44,8 +44,11 @@ public class AuctionController {
 		String askingPrice = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.05) + "";
 		// 보증금 계산
 		String deposit = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.1) + "";
+		// 즉시 구매
+		String purchase = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.1) + "";
 		model.addAttribute("askingPrice", askingPrice);
 		model.addAttribute("deposit", deposit);
+		model.addAttribute("purchase", purchase);
 		
 		return "auction/auction";
 	}

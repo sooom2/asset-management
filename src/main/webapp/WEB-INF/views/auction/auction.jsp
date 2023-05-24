@@ -17,13 +17,18 @@
 }
 </style>
 <script type="text/javascript">
-$(function(){ // 물건 금액 5% 가격으로 입찰
-	$('#btnAskingPrice').click(function(askingPrice) {
+$(function(){ 
+	$('#btnAskingPrice').click(function(askingPrice) { // 물건 금액 5% 가격으로 입찰
 		console.log(${askingPrice })
 		
 	});
 	
 	$('#btnBid').click(function() { // 입찰하기
+// 		console.log(" du dd")
+		
+	});
+	
+	$('#btnBid').click(function() { // 즉시구매
 // 		console.log(" du dd")
 		
 	});
@@ -114,7 +119,7 @@ $(function(){ // 물건 금액 5% 가격으로 입찰
 								<div><input type="button" id="btnAskingPrice" value="입찰(+${askingPrice })" style="width: 228px"></div>
 								<div><input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="금액입력"><input type="button" value="입찰" id="btnBid"></div>
 								<div class="my_bid">28,000원</div>
-								<div class="buy_now"><span style="color:#bb2649">35,000원</span><input type="button" value="즉시구매" style="float: right;margin-right: 11px;"></div>
+								<div class="buy_now"><span style="color:#bb2649">${purchase }원</span><input type="button" id="btnPurchase" value="즉시구매" style="float: right;margin-right: 11px;"></div>
 							</div>
 						</div>
 					</div>
