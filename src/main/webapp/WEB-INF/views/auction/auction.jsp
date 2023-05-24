@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>머니머니머니또</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
 <link href="${path }/resources/css/auction.css" rel="stylesheet">
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
@@ -15,6 +16,19 @@
 	height: 300px;
 }
 </style>
+<script type="text/javascript">
+$(function(){ // 물건 금액 5% 가격으로 입찰
+	$('#btnAskingPrice').click(function(askingPrice) {
+		console.log(${askingPrice })
+		
+	});
+	
+	$('#btnBid').click(function() { // 입찰하기
+// 		console.log(" du dd")
+		
+	});
+});
+</script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
@@ -35,7 +49,7 @@
 							3. 경매가 끝난 후 낙찰자를 제외하고 보증금을 돌려드립니다<br>
 							4. 낙찰 후 구매 취소 시 보증금을 받을 수 없습니다<br>
 							5. 즉시 구매 시 경매가 종료됩니다<br>
-							6. 현재 페이지를 나가면 기록이 사라집니다
+							6. 현재 페이지를 나가면 기록이 사라집니다(새로고침)
 							</p>
 							<hr>
 							<div class="con_tit">${auction.get("auction_item_name") }</div>
@@ -90,15 +104,15 @@
 						<div class="bid">
 							<div class="bid_left">
 								<div>MY 보증금</div>
-								<div>경매단가로 입찰하기</div>
-								<div>입찰가격</div>
+								<div>입찰하기</div>
+								<div>가격 입찰</div>
 								<div>내 입찰가</div>
 								<div>즉시구매가</div>
 							</div>
 							<div class="bid_right">
 								<div>200,000원</div>
-								<div><input type="button" value="단가입찰(상품금액의 5%)" style="width: 228px"></div>
-								<div><input type="text" placeholder="금액입력"><input type="button" value="입찰"></div>
+								<div><input type="button" id="btnAskingPrice" value="입찰(+${askingPrice })" style="width: 228px"></div>
+								<div><input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="금액입력"><input type="button" value="입찰" id="btnBid"></div>
 								<div class="my_bid">28,000원</div>
 								<div class="buy_now"><span style="color:#bb2649">35,000원</span><input type="button" value="즉시구매" style="float: right;margin-right: 11px;"></div>
 							</div>
