@@ -18,10 +18,10 @@
 	<resources mapping="/resources/**" location="/resources/" />
 	
 	<!-- 웹 소켓 -->
-	<beans:bean id="replyEchochoHandler" class="com.itwillbs.moneytto.socket.WebSocketHandler" />
+	<beans:bean id="auctionChatHandler" class="com.itwillbs.moneytto.socket.AuctionChatSocketHandler" />
 
     <websocket:handlers>
-        <websocket:mapping handler="replyEchochoHandler" path="/echo" />
+        <websocket:mapping handler="auctionChatHandler" path="/auctionChat" />
         <websocket:handshake-interceptors>
             <beans:bean
                 class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>

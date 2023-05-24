@@ -15,9 +15,9 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 @RequestMapping("/echo")
-public class WebSocketHandler extends TextWebSocketHandler {
+public class AuctionChatSocketHandler extends TextWebSocketHandler {
 
-	private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(AuctionChatSocketHandler.class);
 	
 	List<WebSocketSession> sessionList = new ArrayList<>();
 	
@@ -43,7 +43,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
         
 		
 		for(WebSocketSession sess: sessionList) {
-			sess.sendMessage(new TextMessage(name + ":" + messages + ":" + i));
+			sess.sendMessage(new TextMessage(name + ":" + messages));
 		}
 		
 	}
