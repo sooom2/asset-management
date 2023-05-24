@@ -33,14 +33,13 @@ public class MypageController {
 						,HttpSession session, Model model) {
 		String id = (String)session.getAttribute("sId");
 		
-	
-		
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 시도해주세요.");
 			model.addAttribute("target","memLogin");
 			return "success";
 		}
 		
+		List<HashMap<String,String>> itemList = null;
 		
 		HashMap<String,String> member = memberService.getMember(id);
 		System.out.println(member);
@@ -48,14 +47,11 @@ public class MypageController {
 		model.addAttribute("member", member);
 		
 		System.out.println("itemType : " + itemType);
-		
-		List<HashMap<String,String>> itemList = memberService.getSellItemList(id);
-		
-		List<HashMap<String,String>> wishItem = memberService.getWishItemList(id);
-		
 
 	    switch (itemType) {
-	        case "buyItem" : itemList  = memberService.getBuyItemList(id); break;
+		    case "sellItem" : itemList  = memberService.getSellItemList(id); break;
+		    case "wishItem" : itemList  = memberService.getWishItemList(id); break;
+	        case "buyItem" 	: itemList  = memberService.getBuyItemList(id); break;
 	    }
 	    
 	    System.out.println(itemType);

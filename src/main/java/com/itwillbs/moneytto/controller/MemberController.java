@@ -1,6 +1,7 @@
 package com.itwillbs.moneytto.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -93,6 +94,7 @@ public class MemberController {
 		    if (passwordEncoder.matches(member_pw, hashedPassword)) {
 		        session.setAttribute("sId", member.get("member_id"));
 		        session.setAttribute("token", "true");
+		        session.setAttribute("nickname", member.get("member_nickname"));
 		        return "redirect:/main";
 		    }
 	    
@@ -104,11 +106,11 @@ public class MemberController {
 	
 	// ******************************************************************
 	//네이버 로그인 확인
-		@RequestMapping(value = "naverLogin", method = {RequestMethod.GET, RequestMethod.POST})
-		public String naver(@RequestParam HashMap<String, String> naver) {
-			
-			System.out.println(naver);
-			return "member/mem_join_form";
+	@RequestMapping(value = "naverLogin", method = {RequestMethod.GET, RequestMethod.POST})
+	public String naver(@RequestParam HashMap<String, String> naver) {
+		
+		System.out.println(naver);
+		return "member/mem_join_form";
 	}
 	
 	// 카카오 로그인 확인
@@ -262,4 +264,11 @@ public class MemberController {
 		return "redirect:/main";
 	}
 	
+	@PostMapping(value = "clickWish")
+	@ResponseBody
+	public void clickWish(@RequestParam String id) {
+		
+		List<HashMap<String,String>> wishItem = memberService.getWishItemList(id);
+		
+	}
 }

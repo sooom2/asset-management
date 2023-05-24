@@ -79,23 +79,38 @@
 				AND member_bday = #{member_bday}
 				AND member_tel = #{member_tel}
 	</select>
-	
-	<select id="selectWishItemList" resultType="hashmap">
-		SELECT 	*
-			FROM wish
-				WHERE member_id = #{member_id} 
+<!-- 마이페이지 조회 -->
+	<select id="selectSellItemList" resultType="hashmap">
+		SELECT 	
+			i.*,
+			w.wish_code
+		FROM
+			item i
+		LEFT JOIN
+			wish w ON i.item_code = w.wish_item_code
+		WHERE
+			i.member_id = #{member_id}
 	</select>
 	
-	<select id="selectSellItemList" resultType="hashmap">
-		SELECT 	*
-			FROM item
-				WHERE member_id = #{member_id} 
+	<select id="selectWishItemList" resultType="hashmap">
+		SELECT 	
+			i.*,
+			w.wish_code
+		FROM
+			item i
+		INNER JOIN
+			wish w ON i.item_code = w.wish_item_code
+		WHERE
+			i.member_id = #{member_id}
 	</select>
 	
 	<select id="selectBuyItemList" resultType="hashmap">
-		SELECT 	*
-			FROM market_paid
-				WHERE buy_id = #{member_id} 
+		SELECT
+		 	*
+		FROM
+			market_paid
+		WHERE
+			buy_id = #{member_id} 
 	</select>
-	
+<!-- 마이페이지 조회 -->	
 </mapper>

@@ -23,9 +23,9 @@ public interface MemberMapper {
 
 	HashMap<String, String> findId(HashMap<String, String> member);
 	
-	List<HashMap<String, String>> selectWishItemList(String member_id);
-	
 	List<HashMap<String, String>> selectSellItemList(String member_id);
+	
+	List<HashMap<String, String>> selectWishItemList(String member_id);
 	
 	List<HashMap<String, String>> selectBuyItemList(String member_id);
 	

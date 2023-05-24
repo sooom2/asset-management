@@ -159,20 +159,24 @@ function memberAuth(){
 		                          <div class="ThumbNailTypeWrapper">
 		                              <div class="ThumbNailTypeItemBox">
 		                                  <div class="ThumbNailTypeImgBox">
-		                                      <img src="https://ccimg.hellomarket.com/images/2023/item/05/20/00/5015019_5421001_1.jpg?size=s4" alt="itemImg" class="ThumbNailTypeItemImg"/>
+		                                      <img src="${path }/resources/images/main/noThumbnail.jpg" alt="itemImg" class="ThumbNailTypeItemImg"/>
 		                                      <div class="SellStateImgWrapper">
 		                                          <div class="SellStateImgStateBox"></div>
 		                                      </div>
-		                                      <img src="https://ccimage.hellomarket.com/img/web/feed/tag/ico_heart_on.svg" class="WishWishImg"/>
+		                                    	<c:choose>
+	                                      	 		<c:when test="${not empty item.wish_code }">
+	                                      	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg"/>
+		                                      		</c:when>
+                                   	 		   		<c:otherwise>
+                                   	 		   			<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="WishWishImg"/>
+                                   	 		   		</c:otherwise>
+	                                         </c:choose>
 		                                  </div>
 		                                  <div class="ThumbNailTypeItemInfoBox">
 		                                      <div class="ThumbNailTypeItemInfo">
 		                                          <div class="ThumbNailTypeTitle">${item.item_subject }</div>
 		                                          <div class="ThumbNailTypePrice">${item.item_price }원</div>
 		                                      </div>
-		                                      <div class="SearchIconWrapper">
-		                                         <img src="https://ccimage.hellomarket.com/web/2017/common/img_search_n.png" class="SearchIcon"/>
-		                                     </div>
 		                                  </div>
 		                              </div>
 		                          </div>
