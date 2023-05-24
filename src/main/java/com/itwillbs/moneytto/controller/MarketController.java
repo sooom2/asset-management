@@ -80,11 +80,14 @@ public class MarketController {
 		
 		
 		List<HashMap<String, String>> myChatList =null;
+		List<HashMap<String, String>> myChatSubject =null;
 		
 		if(item_code.equals("")) {
+			
 			System.out.println("========================================");
-			myChatList = marketChatService.getMyChatAllList(id);
+			myChatList = marketChatService.getMyChatList(id);
 			System.out.println(myChatList);
+			System.out.println("========================================");
 		}else {
 			
 		
@@ -97,10 +100,9 @@ public class MarketController {
 		model.addAttribute("sellDetail",sellDetail);
 		model.addAttribute("itemDetail",itemDetail);
 		
-//		//아이템 상세정보
+		//아이템 상세정보
 		HashMap<String, String> itemList = marketChatService.getItemList(item_code);
 		model.addAttribute("itemList",itemList);
-		
 		
 		
 		//판매자 판매상품개수
@@ -108,18 +110,12 @@ public class MarketController {
 		model.addAttribute("sellCount",sellCount);
 		
 		//내채팅목록
-		
 		myChatList = marketChatService.getMyChatList(id);
-
+//		myChatSubject = marketChatService.getChatSubject(id);
+//		System.out.println(myChatSubject);
 		}
 
 		model.addAttribute("myChatList",myChatList);
-		
-		
-		//오늘날짜
-		Date now = new Date();
-		System.out.println(now);
-		model.addAttribute("now",now);
 		
 		
 		
