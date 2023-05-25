@@ -30,9 +30,9 @@ public class MarketChatService {
 
 
 	//판매자 물건 판매갯수
-	public int getSellCount(String member_id) {
-		return mapper.sellCount(member_id);
-	}
+//	public int getSellCount(String member_id) {
+//		return mapper.sellCount(member_id);
+//	}
 
 	//내 채팅목록
 	public List<HashMap<String, String>> getMyChatList(String id) {
@@ -42,6 +42,13 @@ public class MarketChatService {
 		return mapper.myChatAllList(id);
 	}
 	
+	//채팅상세정보
+	public List<HashMap<String, String>> getChatDetail(int room_code) {
+		return mapper.chatDetail(room_code);
+	}
+	
+	/*======================================================================*/
+	
 	//아이템 상세 리스트
 	public HashMap<String, String> getItemList(String item_code){
 		return mapper.itemList(item_code);
@@ -49,10 +56,17 @@ public class MarketChatService {
 //	public List<HashMap<String, String>> getChatSubject(String id) {
 //		return mapper.chatSubject(id);
 //	}
-	// 마켓 메인 아이템 리스트
-	public List<HashMap<String, String>> getMarketItemList() {
-		return mapper.marketItemList();
+	//상대방 물건 판매개수
+	public int getSellCount(String openentId) {
+		return mapper.sellCount(openentId);
 	}
+	
+	//상대방 아이디 알아내기
+	public HashMap<String, String> getOppenentId(int room_code,String ssesion_id) {
+		return mapper.opponentId(room_code,ssesion_id);
+	}
+	
+
 
 
 

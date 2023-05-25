@@ -2,11 +2,6 @@ package com.itwillbs.moneytto.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +9,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.moneytto.service.MarketChatService;
 import com.itwillbs.moneytto.service.MarketService;
@@ -45,15 +41,52 @@ public class MarketController {
 	
 	
 	@GetMapping(value = "market_list")
-	public String marketList(Model model) {
+	public String marketList(Model model,HttpSession session) {
+		
+		//session아이디로 닉네임 얻기
+		String id = (String)session.getAttribute("sId");
+		if (id != null) {
+		    HashMap<String, String> member = memberService.getMember(id);
+		    String nickname = member.get("member_nickname");
+		    model.addAttribute("nickname",nickname);
+		}
+		
+		
+		
 		// 마켓 메인 아이템 리스트
-		List<HashMap<String, String>> marketItemList = marketChatService.getMarketItemList();
-		model.addAttribute("marketItemList", marketItemList);
+//		List<HashMap<String, String>> marketItemList = marketService.getMarketItemList();
+//		model.addAttribute("marketItemList", marketItemList);
 		return "market/market_list";
 	}
 	
+	@ResponseBody
+	@GetMapping(value = "marketItemList")
+	public String selectList(Model model, @RequestParam(defaultValue = "") String item_category, @RequestParam(defaultValue = "") String item_status, 
+			@RequestParam(defaultValue = "") String item_price_min, @RequestParam(defaultValue = "") String item_price_max) {
+		
+		System.out.println("item_category : " + item_category);
+		System.out.println("item_status : " + item_status);
+		System.out.println("item_price_min : " + item_price_min);
+		System.out.println("item_price_max : " + item_price_max);
+		// 마켓 메인 아이템 리스트
+		List<HashMap<String, String>> marketItemList = service.getMarketItemList(item_category, item_status, item_price_min, item_price_max);
+		model.addAttribute("marketItemList", marketItemList);
+		JSONArray ja = new JSONArray(marketItemList);
+		return ja.toString();
+	}
+	
 	@GetMapping(value = "market_detail")
-	public String marketDetail() {
+	public String marketDetail(Model model,HttpSession session) {
+		
+		//session아이디로 닉네임 얻기
+		String id = (String)session.getAttribute("sId");
+		if (id != null) {
+		    HashMap<String, String> member = memberService.getMember(id);
+		    String nickname = member.get("member_nickname");
+		    model.addAttribute("nickname",nickname);
+		}
+		
+		
 		
 		return "market/market_detail";
 	}
@@ -64,7 +97,15 @@ public class MarketController {
 	}
 	 
 	@GetMapping(value = "itemRegist")
-	public String itemRegist() {
+	public String itemRegist(Model model,HttpSession session) {
+		
+		//session아이디로 닉네임 얻기
+		String id = (String)session.getAttribute("sId");
+		if (id != null) {
+		    HashMap<String, String> member = memberService.getMember(id);
+		    String nickname = member.get("member_nickname");
+		    model.addAttribute("nickname",nickname);
+		}
 		
 		return "market/market_itemRegist";
 	}
@@ -87,6 +128,7 @@ public class MarketController {
 		List<HashMap<String, String>> myChatList =null;
 		List<HashMap<String, String>> myChatSubject =null;
 		
+		//nav에서 들어갈때 -  최근에 열린 채팅 내역 보이게
 		if(item_code.equals("")) {
 			
 			System.out.println("========================================");
@@ -95,7 +137,6 @@ public class MarketController {
 			System.out.println("========================================");
 		}else {
 			
-		
 		//아이템상세정보
 		HashMap<String, String> itemDetail = marketChatService.getItem(item_code);
 		
@@ -111,8 +152,8 @@ public class MarketController {
 		
 		
 		//판매자 판매상품개수
-		int sellCount = marketChatService.getSellCount(sellDetail.get("member_id"));
-		model.addAttribute("sellCount",sellCount);
+//		int sellCount = marketChatService.getSellCount(sellDetail.get("member_id"));
+//		model.addAttribute("sellCount",sellCount);
 		
 		//내채팅목록
 		myChatList = marketChatService.getMyChatList(id);
@@ -125,10 +166,34 @@ public class MarketController {
 		
 		
 		
+		
+		
 		return "market/market_chat";
-		 
 	}
 	
+	@GetMapping("chatDetail")
+	@ResponseBody
+	public String chatDetail(Model model, @RequestParam(defaultValue="0") int room_code,HttpSession session) {
+		
+		String sId = (String)session.getAttribute("sId");
+		
+		List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
+		
+		//상대방id
+//		HashMap<String, String> oppenentId  = marketChatService.getOppenentId(room_code,sId);
+		
+		//판매자 판매상품개수
+//		int sellCount = marketChatService.getSellCount(oppenentId.get("oppenent_id"));
+//		System.out.println("==============================================");
+//		System.out.println(sellCount);
+//		model.addAttribute("sellCount",sellCount);
+//		System.out.println("==============================================");
+		
+		
+		JSONArray arrChatDetail = new JSONArray(chatDetail);
+		System.out.println(arrChatDetail);
+		return arrChatDetail.toString();
+	}
 
 
 	@PostMapping(value = "itemRegistPro")
