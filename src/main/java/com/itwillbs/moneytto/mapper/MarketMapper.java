@@ -40,7 +40,9 @@ public interface MarketMapper {
 	List<HashMap<String, String>> marketItemList(@Param("item_category") String item_category, @Param("item_status") String item_status, 
 			@Param("item_price_min") String item_price_min, @Param("item_price_max") String item_price_max);
 
-	void savePhotoInfo(HashMap<String, String> photoInfo);
+	void saveImage(HashMap<String, String> saveImage);
+
+	String selectItem();
 
 	
 	
