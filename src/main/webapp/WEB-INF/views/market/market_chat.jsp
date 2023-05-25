@@ -24,19 +24,13 @@
 
 $(function() {
 	
-	 let sId = "${sessionScope.sId}";
-	
-	//채팅 목록 클릭 > 채팅 상세내역 
+	let sId = "${sessionScope.sId}";
+	var room_code = <%= request.getAttribute("room_code") %>;
 	$(".card_box").on("click", function() {
 	    let room_code = $(this).find('.room_code').val();
 	    chatDetail(room_code);
 	});
 	
-	
-	// 판매상태 버튼 처리 >> db에 상태 업데이트
-	$(".trade_status").on("click",function(){
-		alert("Ddd");
-	});
 	
     $(".sch_date").click(function() {
         var schBox = $(".sch_box");
@@ -67,6 +61,8 @@ $(function() {
     function chatDetail(room_code){
     	console.log(sId);
     	console.log(room_code);
+    	
+    	
 	    $.ajax({
 	        type: "GET",
 	        url: "chatDetail",
@@ -77,7 +73,10 @@ $(function() {
 	        success: function(result){
 				console.log(result);
 	        	let dateString = result[0].chat_openDate;
-
+	
+				alert("2 ajax안에 룸코드 : " + result[0].room_code);	        	
+	        	room_code = result[0].room_code;
+	        	
 	        	let date = new Date(dateString);
 	        	let formatDate = date.toLocaleDateString("ko-KR", { year: 'numeric', month: 'long', day: 'numeric' });
 	        	
@@ -146,7 +145,9 @@ $(function() {
 						    "<div class='chat_opponent_timeago'>" + formatChatTime + "</div></div></div></div>";
 					  		$(".chat_timeago").append(str);
 					}
-				}
+					
+				
+				}//success
 	        	
 	        },
 	        error:function(request,status,error){
@@ -154,7 +155,29 @@ $(function() {
 	        }
 	    });
     
-    }
+    }//function chatDetail()
+    alert("3룸코드 :"+room_code);
+	
+	// 판매상태 버튼 처리 >> db에 상태 업데이트
+	$(".trade_status input").on("click",function(){
+    alert("4룸코드 :"+room_code);
+		
+		
+		let item_status = $(this).val();
+		alert(room_code);
+		$.ajax({
+			type: "GET",
+	        url: "itemStatus_update",
+	        dataType: "json",
+	        data: {
+	        	item_status: item_status
+			},
+			success: function(result){
+				
+			}
+		});
+		
+	});
     
 });
 
@@ -162,7 +185,7 @@ $(function() {
 </head>
 <body>
 <jsp:include page="../nav.jsp" />
-
+<input type="hidden" value="${room_code }">
 	<section class="content">
 		<div class="main_area">
 			<!-- left -->

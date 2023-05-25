@@ -227,6 +227,14 @@
       	WHERE row_num = 1 
       	ORDER BY room_code DESC LIMIT 1
 	</select>
+	
+	<update id="updateStatus">
+		UPDATE item
+			SET
+				item_status = #{itme_status}
+			 WHERE
+			 	item_code=#{item_code} 
+	</update>
 
 	<!-- 마켓 아이템 리스트 -->
 	<select id="marketItemList" resultType="hashmap">

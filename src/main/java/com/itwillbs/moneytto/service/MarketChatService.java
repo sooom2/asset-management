@@ -70,6 +70,11 @@ public class MarketChatService {
 		return mapper.chatRecentList(id);
 	}
 	
+	//판매상태관리
+//	public int updateStatus(String item_status) {
+//		return mapper.updateStatus(item_status);
+//	}
+	
 
 
 

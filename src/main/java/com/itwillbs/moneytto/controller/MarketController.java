@@ -2,11 +2,6 @@ package com.itwillbs.moneytto.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -15,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 import org.json.JSONArray;
-import org.json.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -126,6 +120,17 @@ public class MarketController {
 		return "market/market_itemRegist";
 	}
 	
+	// 아이템상태 업데이트
+	@GetMapping("itemStatus_update")
+	@ResponseBody
+	public void itemStatusUpdate(String item_status,Model model) {
+		System.out.println("====================================");
+		System.out.println(item_status);
+		System.out.println("====================================");
+//		int updateStatus = marketChatService.updateStatus(item_status,item_code);
+		
+	}
+	
 	@GetMapping(value = "marketChat")
 	public String marketChat(Model model,HttpSession session,@RequestParam(defaultValue = "") String item_code) {
 		String id = (String)session.getAttribute("sId");
@@ -149,7 +154,10 @@ public class MarketController {
 		HashMap<String, Integer> chatList = marketChatService.getMyChatRecentList(id);	
 		
 		int room_code = chatList.get("room_code");
-		
+		System.out.println("=========================");
+		System.out.println(room_code);
+		System.out.println("=========================");
+		model.addAttribute("room_code",room_code);
 		//2. room_code로 채팅내용조회
 		List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
 		model.addAttribute("chatDetail",chatDetail);
@@ -163,10 +171,6 @@ public class MarketController {
 		model.addAttribute("myChatList",myChatList);
 		model.addAttribute("chatList",chatList);
 		
-		
-		
-		
-		
 		return "market/market_chat";
 	}
 	
@@ -177,17 +181,6 @@ public class MarketController {
 		String sId = (String)session.getAttribute("sId");
 		
 		List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
-		
-		//상대방id
-//		HashMap<String, String> oppenentId  = marketChatService.getOppenentId(room_code,sId);
-		
-		//판매자 판매상품개수
-//		int sellCount = marketChatService.getSellCount(oppenentId.get("oppenent_id"));
-//		System.out.println("==============================================");
-//		System.out.println(sellCount);
-//		model.addAttribute("sellCount",sellCount);
-//		System.out.println("==============================================");
-		
 		
 		JSONArray arrChatDetail = new JSONArray(chatDetail);
 		System.out.println(arrChatDetail);
