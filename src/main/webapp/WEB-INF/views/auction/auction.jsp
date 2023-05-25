@@ -41,7 +41,8 @@ $(document).ready(function() {
 		
 	function chatSend() {
 		const data = {
-			"name" : "${ sessionScope.sId }",
+			"id" : "${ sessionScope.sId }",
+			"name" : "${ sessionScope.nickname }",
 			"message"   : $('#message').val()
 		};
 		let jsonData = JSON.stringify(data);
@@ -50,14 +51,19 @@ $(document).ready(function() {
 	};
 	
 	// 버튼 누름 전송
+	$('#btnAskingPrice').on("click", function(evt) {
+		chatSend();
+		evt.preventDefault();
+	});
+	// 버튼 누름 전송
 	$('#btnBid').on("click", function(evt) {
 		chatSend();
 		evt.preventDefault();
 	});
 	connect();
 });
-</script>
-<script type="text/javascript">
+
+
 //채팅 시간
 let today = new Date();
 let h = today.getHours();
@@ -70,7 +76,7 @@ let minutes = m < 10 ? "0" + m : m;  // 분
 
 var socket = null;
 function connect() {
-	var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/chatserver");
+	var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/auctionChat");
 	socket = ws;
 	
 	ws.onopen = function() {
@@ -82,35 +88,32 @@ function connect() {
 	ws.onmessage = function (msg) {
 		var data = msg.data;
 		var sessionId = null; //데이터를 보낸 사람
+		var sessionName = null; 
 		var message = null;
 		
 		var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
 		
 		sessionId = data.split(":")[0];
-		message = data.split(":")[1];
+		sessionName = data.split(":")[1];
+		message = data.split(":")[2];
 		
-	    //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
-		if(sessionId == cur_session) {
-			var str = "<div class='chat_myself'>";
-			str += "<div class='chat_myself_box'>";
-			str += "<div class='chat_myself_message'>";
-			str += "<span>" + message + "</span>";
-			str += "<div class='chat_myself_timeago'>" + amPm + " " + hours + ":" + minutes + "</div></div></div></div>";
-			
-			$(".chatBox").append(str);
-		} else {
-			var str = "<div class='OpponentChat__Wrapper-qv8pn4-0 cFvuGS'>";
-			str += "<div class='OpponentChat__Nick-qv8pn4-3 hYaaYd'>" + sessionId + "</div>";
-			str += "<div class='OpponentChat__MyChatList-qv8pn4-1 lecfCu'>";
-			str += "<div class='OpponentChat__TextBox-qv8pn4-5 giIZqy'>";
-			str += "<span class='OpponentChat__Text-qv8pn4-6 ZPeEt'>" + message + "</span>";
-			str += "<div class='OpponentChat__TimeAgo-qv8pn4-7 jXWPOW'>" + amPm + " " + hours + ":" + minutes + "</div></div></div></div>";
-			
-			$(".chatBox").append(str);
-		};
+		// 경매 로그
+		var str = "<div class='chat_myself'>" + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + amPm + " " + hours + ":" + minutes + "</div>";
+		$(".chatBox").append(str);
 		
+		// 낙찰 최대금액 닉네임
+		var str1 = "<span>" + sessionName + "님</span>";
+		$(".auction_id").html(str1);
 		
+		// 낙찰 최대금액
+		var str2 = "<span>" + message + "</span>원&nbsp;<i class='fa-solid fa-comment-dollar'></i>";
+		$(".auction_price").html(str2);
 		
+		if(sessionId == cur_session) { // 세션 ID 와 입력된 금액의 ID가 같을 경우
+			// 내가 입력한 낙찰가
+			var str3 =  message + "원";
+			$(".my_bid").html(str3);
+		}
 	};
 	
 	ws.onclose = function (event) { console.log('Info: connection closed'); };
@@ -171,33 +174,19 @@ function connect() {
 					
 					<div class="auction_realTime">
 						<span style="font-size: 25px;">실시간 경매</span>
-						<div class="auction_price"><span>30,000</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
+						<div class="auction_price"><span>${auction.auction_present_price }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
 						<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
-						<div class="auction_id"><span>'추누공주'님</span></div>
+						<div class="auction_id">
+<!-- 						<span>'추누공주'님</span> -->
+						</div>
 					</div>
 					<div class="auction_realStatus">
 						<div class="auction_log_title">경매로그</div>
 						<div class="auction_log">
 							<div class="chatBox">
-								<div class="chat_timeago">
-									<div class="chat_timeago_box">
-										<span class="chat_timeago_text">2023년 05월 24일</span>
-									</div>
-								</div>
 								<div class="chat_myself">
-									<div class="chat_myself_box">
-										<div class="chat_myself_message">
-											<span>안녕하세요</span>
-											<div class="chat_myself_timeago">오후 1:57</div>
-										</div>
-									</div>
 								</div>
 							</div>
-<!-- 							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div> -->
-<!-- 							<div>ㅇㅇㅇ님 ㅇdddddㅇㅇㅇ원 입찰 !</div> -->
-<!-- 							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div> -->
-<!-- 							<div>ㅇddddㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div> -->
-<!-- 							<div>ㅇㅇddddㅇ님 ㅇㅇㅇㅇ원 입찰 !</div> -->
 <!-- 							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div> -->
 						</div>
 					</div>
@@ -215,6 +204,8 @@ function connect() {
 								<div>즉시구매가</div>
 							</div>
 							<div class="bid_right">
+							
+<%-- 								<div>${prince * 0.1 }원 소수점 지워지나?</div> --%>
 								<div>${deposit }원</div>
 								<div><input type="button" id="btnAskingPrice" value="입찰(+${askingPrice })" style="width: 228px"></div>
 								<div><input type="text" id="message" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="금액입력"><input type="button" value="입찰" id="btnBid"></div>

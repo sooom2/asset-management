@@ -40,14 +40,16 @@ public class AuctionController {
 		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
 		System.out.println(auction);
 		model.addAttribute("auction", auction);
-		// 물건 호가 계산
-		String askingPrice = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.01) + "";
+//		int prince = Integer.parseInt(auction.get("auction_present_price").replace(",", ""));
+//		model.addAttribute("prince", prince);
 		// 보증금 계산
 		String deposit = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.1) + "";
+		// 물건 호가 계산
+		String askingPrice = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.01) + "";
 		// 즉시 구매
 		String purchase = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 1.5) + "";
-		model.addAttribute("askingPrice", askingPrice);
 		model.addAttribute("deposit", deposit);
+		model.addAttribute("askingPrice", askingPrice);
 		model.addAttribute("purchase", purchase);
 		
 		return "auction/auction";

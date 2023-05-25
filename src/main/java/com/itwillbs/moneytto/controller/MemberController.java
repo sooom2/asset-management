@@ -85,6 +85,7 @@ public class MemberController {
 		    if (passwordEncoder.matches(member_pw, hashedPassword)) {
 		        session.setAttribute("sId", member.get("member_id"));
 		        session.setAttribute("token", "true");
+		        session.setAttribute("nickname", member.get("member_nickname"));
 		        return "redirect:/main";
 		    }
 	    
