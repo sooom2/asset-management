@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itwillbs.moneytto.mapper.MarketMapper">
+
+<!-- 등록될 상품코드조회 -->
+	<select id="selectItem" resultType="String" >
+		SELECT CONCAT('market', LPAD(CAST(SUBSTRING(item_code, 7) AS UNSIGNED) + 1, 4, '0')) 
+		FROM item
+		ORDER BY item_code DESC
+		LIMIT 1;
+	</select>
+	
+<!-- 상품등록 -->
 	<insert id="insertItem">
-	INSERT INTO item 
-	SELECT CONCAT('market', LPAD(CAST(SUBSTRING(item_code, 7) AS UNSIGNED) + 1, 4, '0')),
-		'admin',
-		#{item_subject},
-		#{item_content},
-		#{item_price},
-			IFNULL((SELECT CASE WHEN #{item_price_offer} = 'on' THEN 'Y' ELSE 'N' END), 'N'),
-		#{item_tag},
-		#{item_category},	
-		'판매중',
-		NOW()
-	FROM item
-	ORDER BY item_code DESC
-	LIMIT 1
+    INSERT INTO item 
+	    VALUES (
+	        #{item_code},
+	        'admin',
+	        #{item_subject},
+	        #{item_content},
+	        #{item_price},
+	        IFNULL((SELECT CASE WHEN #{item_price_offer} = 'on' THEN 'Y' ELSE 'N' END), 'N'),
+	        #{item_tag},
+	        #{item_category},
+	        '판매중',
+	        NOW()
+	    )
 	</insert>
+
+<!-- 상품이미지등록 -->	
+	<insert id="saveImage">
 	
-	<insert id="savePhotoInfo">
-	
-	INSERT INTO photo
+	INSERT INTO images
 		VALUES (
-			#{photo_code}
+			#{image_code}
 			,#{item_code}
-			,#{photo_name}
-			,#{photo_path}
+			,#{image_name}
 		)
 
 	</insert>

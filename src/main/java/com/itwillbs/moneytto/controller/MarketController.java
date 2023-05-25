@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,7 +62,7 @@ public class MarketController {
 		
 		return "market/market_payment";
 	}
-	
+	 
 	@GetMapping(value = "itemRegist")
 	public String itemRegist() {
 		
@@ -129,130 +130,24 @@ public class MarketController {
 	}
 	
 
-	
-//	@PostMapping(value="itemRegistPro")
-//	public String itemRegistPro(@RequestParam HashMap<String, String> item, Model model) {
-//	
-//		int insertCount = service.insertItem(item);
-//		
-//		if(insertCount > 0) {
-//			
-//			model.addAttribute("msg", "상품이 등록되었습니다.");
-//			model.addAttribute("target", "main");
-//			
-//			return "success";
-//		} else {
-//			model.addAttribute("msg", "상품 등록에 실패하였습니다.");
-//			
-//			return "fail_back";
-//		}
-//		
-//	}
-	
-//	@PostMapping(value = "itemRegistPro")
-//	public String itemRegistPro(@RequestParam HashMap<String, String> item, @RequestParam HashMap<String, String> photo, Model model, HttpSession session, @RequestParam("file") List<MultipartFile> files) {
-//	    String uploadDir = session.getServletContext().getRealPath("/resources/upload");
-//
-//	    try {
-//	        for (int i = 0; i < files.size(); i++) {
-//	            MultipartFile file = files.get(i);
-//	            if (!file.isEmpty()) {
-//	                String fileName = file.getOriginalFilename();
-//	                String fileExtension = FilenameUtils.getExtension(fileName);
-//	                String storedFileName = UUID.randomUUID().toString() + "." + fileExtension;
-//	                String filePath = uploadDir + "/" + storedFileName;
-//
-//	                File dest = new File(filePath);
-//	                file.transferTo(dest);
-//
-//	                // 파일 URL을 생성
-//	                String fileUrl = storedFileName;
-//
-//	                // 파일 정보를 photo 맵에 저장
-//	                photo.put("fileName" + i, fileName);
-//	                photo.put("filePath" + i, fileUrl);
-//	            }
-//	        }
-//
-//	        // photo 맵을 DB에 저장하는 로직을 구현
-//	        // 예: service.savePhotoInfo(photo);
-//	    } catch (IOException e) {
-//	        e.printStackTrace();
-//	    }
-//
-//	    int insertCount = service.insertItem(item);
-//
-//	    if (insertCount > 0) {
-//	        // 상품 등록 성공 시 파일 정보를 DB에 저장
-//	        service.savePhotoInfo(photo);
-//
-//	        model.addAttribute("msg", "상품이 등록되었습니다.");
-//	        model.addAttribute("target", "main");
-//	        return "success";
-//	    } else {
-//	        model.addAttribute("msg", "상품 등록에 실패하였습니다.");
-//	        return "fail_back";
-//	    }
-//
-//	}
 
-//	@PostMapping(value = "itemRegistPro")
-//	public String itemRegistPro(@RequestParam HashMap<String, String> item, @RequestParam HashMap<String, String> photo, Model model, HttpSession session, @RequestParam("file") List<MultipartFile> files) {
-//	    String uploadDir = session.getServletContext().getRealPath("/resources/upload");
-//
-//	    try {
-//	        for (MultipartFile file : files) {
-//	            if (!file.isEmpty()) {
-//	                String fileName = file.getOriginalFilename();
-//	                String fileExtension = FilenameUtils.getExtension(fileName);
-//	                String storedFileName = UUID.randomUUID().toString() + "." + fileExtension;
-//	                String filePath = uploadDir + "/" + storedFileName;
-//
-//	                File dest = new File(filePath);
-//	                file.transferTo(dest);
-//
-//	                // 파일 URL을 생성
-//	                String fileUrl = storedFileName;
-//
-//	                // 사진 정보를 저장
-//	                HashMap<String, String> photoInfo = new HashMap<>();
-//	                photoInfo.put("photo_code", UUID.randomUUID().toString());
-//	                photoInfo.put("table_code", item.get("item_code"));
-//	                photoInfo.put("photo_name", fileName);
-//	                photoInfo.put("photo_path", fileUrl);
-//	                
-//	                // 사진 정보 저장 메서드 호출
-//	                service.savePhotoInfo(photoInfo);
-//	            }
-//	        }
-//	    } catch (IOException e) {
-//	        e.printStackTrace();
-//	    }
-//
-//	    int insertCount = service.insertItem(item);
-//
-//	    if (insertCount > 0) {
-//	        model.addAttribute("msg", "상품이 등록되었습니다.");
-//	        model.addAttribute("target", "main");
-//	        return "success";
-//	    } else {
-//	        model.addAttribute("msg", "상품 등록에 실패하였습니다.");
-//	        return "fail_back";
-//	    }
-//	}
-	
 	@PostMapping(value = "itemRegistPro")
 	public String itemRegistPro(@RequestParam HashMap<String, String> item, Model model, HttpSession session, @RequestParam("file") List<MultipartFile> files) {
 	    String uploadDir = session.getServletContext().getRealPath("/resources/upload");
-
+	    System.out.println(item);
 	    try {
+	        // 아이템 등록 전에 아이템 코드를 생성하여 저장
+	        String itemCode = service.selectItem();
+	        item.put("item_code", itemCode);
+
 	        // 아이템 등록
 	        int insertCount = service.insertItem(item);
 
 	        // 아이템 등록에 성공한 경우에만 사진 정보 저장
 	        if (insertCount > 0) {
 	            // 사진 정보를 저장
-	            for (MultipartFile file : files) {
+	            for (int i = 0; i < files.size(); i++) {
+	                MultipartFile file = files.get(i);
 	                if (!file.isEmpty()) {
 	                    String fileName = file.getOriginalFilename();
 	                    String fileExtension = FilenameUtils.getExtension(fileName);
@@ -262,18 +157,14 @@ public class MarketController {
 	                    File dest = new File(filePath);
 	                    file.transferTo(dest);
 
-	                    // 파일 URL을 생성
-	                    String fileUrl = storedFileName;
-
 	                    // 사진 정보를 저장
-	                    HashMap<String, String> photoInfo = new HashMap<>();
-	                    photoInfo.put("photo_code", UUID.randomUUID().toString());
-	                    photoInfo.put("item_code", item.get("item_code"));
-	                    photoInfo.put("photo_name", fileName);
-	                    photoInfo.put("photo_path", fileUrl);
+	                    HashMap<String, String> saveImage = new HashMap<>();
+	                    saveImage.put("image_code", UUID.randomUUID().toString());
+	                    saveImage.put("item_code", itemCode);
+	                    saveImage.put("image_name", fileName);
 
 	                    // 사진 정보 저장 메서드 호출
-	                    service.savePhotoInfo(photoInfo);
+	                    service.saveImage(saveImage);
 	                }
 	            }
 
@@ -294,75 +185,8 @@ public class MarketController {
 
 
 
-	
-//	@PostMapping(value = "itemRegistPro")
-//	public String itemRegistPro(@RequestParam HashMap<String, String> item, Model model, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-//	    int insertCount = service.insertItem(item);
-//
-//	    if (insertCount > 0) {
-//	        // 파일을 저장할 경로 설정
-//	        String uploadDir = "/path/to/upload/directory/";
-//	        try {
-//	            // 파일 저장
-//	            String fileName = file.getOriginalFilename();
-//	            file.transferTo(new File(uploadDir + fileName));
-//
-//	            // 파일 경로 DB에 저장
-//	            String filePath = "http://c3d2212t3.itwillbs.com/images/" + fileName;
-//	            // DB에 파일 경로를 저장하는 로직을 구현합니다.
-//
-//	            model.addAttribute("msg", "상품이 등록되었습니다.");
-//	            model.addAttribute("target", "main");
-//
-//	            return "success";
-//	        } catch (IOException e) {
-//	            e.printStackTrace();
-//	        }
-//	    }
-//
-//	    model.addAttribute("msg", "상품 등록에 실패하였습니다.");
-//
-//	    return "fail_back";
-//	}
-	
-//	@PostMapping(value = "itemRegistPro")
-//	public String itemRegistPro(@RequestParam HashMap<String, String> item, Model model, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-//	    int insertCount = service.insertItem(item);
-//	  
-//	    if (insertCount > 0) {
-//	        // 파일을 저장할 실제 디렉토리 경로 설정
-//	        String uploadDir = "/resources/upload/";
-//
-//	        try {
-//	            // 파일 저장
-//	            String fileName = file.getOriginalFilename();
-//	            String fileExtension = FilenameUtils.getExtension(fileName); // 파일 확장자 추출
-//	            String storedFileName = UUID.randomUUID().toString() + "." + fileExtension; // 저장할 파일명 생성
-//	            String filePath = uploadDir + storedFileName; // 저장할 파일의 경로
-//
-//	            File dest = new File(filePath);
-//	            file.transferTo(dest);
-//
-//	            // 파일 URL 생성
-//	            String fileUrl = "http://c3d2212t3.itwillbs.com/images/" + storedFileName;
-//	            	
-//	            System.out.println(fileUrl);
-//	            // 파일 URL을 DB에 저장하는 로직을 구현합니다.
-//	            // 예: service.saveFileUrl(fileUrl);
-//
-//	            model.addAttribute("msg", "상품이 등록되었습니다.");
-//	            model.addAttribute("target", "main");
-//
-//	            return "success";
-//	        } catch (IOException e) {
-//	            e.printStackTrace();
-//	        }
-//	    }
-//
-//	    model.addAttribute("msg", "상품 등록에 실패하였습니다.");
-//
-//	    return "fail_back";
-//
-//	}
+
+
+
 	
 }
