@@ -12,17 +12,56 @@
 <script>
 
 $(document).ready(function(){
-	$(".ThumbNailTypeImgBox, .ThumbNailTypeItemInfoBox").on("click",function(){
-		location.href="market_detail"
+// 	$(".ThumbNailTypeImgBox, .ThumbNailTypeItemInfoBox").on("click",function(){
+// 		location.href="market_detail"
+// 	})
+	$('.WishWishImg').click(function(){
+				
+		$(this).closest('img').hasClass("wish")
+		
+			$.ajax({
+	       		url : 'wishClick',
+	       		type : 'POST',
+	       		context : this,
+	       		data : {
+	       			info_movie_code : info_movie_code
+	       		},
+	       		success : function(result){
+	       			alert(result.msg)		// [좋아요 성공, 좋아요 취소]
+       	
+	       			
+	       			if(result.resultType == "insert"){
+	       				$(this).find('img').attr({
+	       					'src' : '${pageContext.request.contextPath}/resources/images/ico/after-like.png',
+	       					alt : '찜하기 완료'
+	       				})
+	       			}else if(result.resultType = "delete"){
+	       				$(this).find('img').attr({
+	       					'src' : '${pageContext.request.contextPath}/resources/images/ico/before-like.png',
+	       					alt : "찜하기"
+	       				})
+	       			}
+	       			$(this).find('span').html(result.like_count)
+	       		}
+	       	}) 
+		
+		
+		
+		$(this).find('img').toggleClass("wish").attr("src", "${path }/resources/images/main/Ico_wish_on.png");
 	})
-$(".tabTab").on("click",function(){
-	var itemType = $(this).attr('data-attr');
-	$(".tabTab").removeClass("active")
-	$(this).addClass("active")
-	// active된 탭에 대한 css 작업 필요
-	location.href = "mypage?itemList="+itemType;
+	
+	
+	$(".tabTab").on("click",function(){
+		var itemType = $(this).attr('data-attr');
+		$(".tabTab").removeClass("active")
+		$(this).addClass("active")
+		// active된 탭에 대한 css 작업 필요
+		location.href = "mypage?itemList="+itemType;
+		})
 	})
-})
+	
+	
+	
 function memberAuth(){
 	let authWindow = window.open("about:blank","authWindow","width=500, height=700");
 	authWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize"
@@ -42,6 +81,7 @@ function memberAuth(){
 							]
 					}).getLength();
 	// 망했어요 모르겟어요
+
 </script>
 </head>
 <body>
@@ -165,10 +205,12 @@ function memberAuth(){
 		                                      </div>
 		                                    	<c:choose>
 	                                      	 		<c:when test="${not empty item.wish_code }">
-	                                      	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg"/>
+	                                      	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" 
+	                                      	 			alt="좋아요 아이콘" class="WishWishImg" />
 		                                      		</c:when>
                                    	 		   		<c:otherwise>
-                                   	 		   			<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="WishWishImg"/>
+                                   	 		   			<img src="${path }/resources/images/main/ico_heart_off_x3.png"
+                                   	 		   			 alt="좋아요 아이콘" class="WishWishImg wish" />
                                    	 		   		</c:otherwise>
 	                                         </c:choose>
 		                                  </div>
