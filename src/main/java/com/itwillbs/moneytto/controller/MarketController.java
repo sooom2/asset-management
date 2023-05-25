@@ -2,7 +2,6 @@ package com.itwillbs.moneytto.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -192,6 +191,7 @@ public class MarketController {
 	        // 아이템 등록 전에 아이템 코드를 생성하여 저장
 	        String itemCode = service.selectItem();
 	        item.put("item_code", itemCode);
+	        item.put("member_id",id);
 	        
 	        // 가격에서 쉼표 제거
 	        String itemPrice = item.get("item_price");
