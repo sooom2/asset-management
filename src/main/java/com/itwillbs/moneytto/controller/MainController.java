@@ -32,7 +32,6 @@ public class MainController {
 		
 		if (id != null) {
 		    HashMap<String, String> member = memberService.getMember(id);
-		    System.out.println(member);
 		    nickname = member.get("member_nickname");
 		}
 		
@@ -44,7 +43,16 @@ public class MainController {
 	}
 	
 	@GetMapping("/myAlarm")
-	public String chat() {
+	public String chat(Model model,HttpSession session) {
+		
+		//session아이디로 닉네임
+		String id = (String)session.getAttribute("sId");
+		if (id != null) {
+		    HashMap<String, String> member = memberService.getMember(id);
+		    String nickname = member.get("member_nickname");
+		    model.addAttribute("nickname",nickname);
+		}
+		
 		
 		return "mypage/my_alarm";
 	}

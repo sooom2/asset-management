@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.moneytto.service.BoardService;
+import com.itwillbs.moneytto.service.MemberService;
 
 @Controller
 public class BoardController {
@@ -23,9 +24,21 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
+	@Autowired
+	private MemberService memberService;
 	// 공지사항 목록
 	@RequestMapping(value = "notice_board", method = {RequestMethod.GET, RequestMethod.POST})
-	public String noticeBoard(@RequestParam HashMap<String, String> map, Model model) {
+	public String noticeBoard(@RequestParam HashMap<String, String> map, Model model,HttpSession session) {
+		
+		//session아이디로 닉네임
+		String id = (String)session.getAttribute("sId");
+		if (id != null) {
+		    HashMap<String, String> member = memberService.getMember(id);
+		    String nickname = member.get("member_nickname");
+		    model.addAttribute("nickname",nickname);
+		}
+		
+		
 		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
 			map.put("pageNum", "1");
 			map.put("startNum", "0");
