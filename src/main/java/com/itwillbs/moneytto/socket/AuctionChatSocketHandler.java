@@ -49,7 +49,7 @@ public class AuctionChatSocketHandler extends TextWebSocketHandler {
 		// 채팅 세션 목록에 채팅방이 존재 X
 		if(auctionList.get(auctionCode) == null && messages.equals("ENTER")) {
             
-            // 채팅방에 들어갈 session들
+            // 채팅방에 들어갈 sessionList 생성
             ArrayList<WebSocketSession> sessionTwo = new ArrayList<>();
             // session 추가
             sessionTwo.add(session);
@@ -57,31 +57,27 @@ public class AuctionChatSocketHandler extends TextWebSocketHandler {
             sessionList.put(session, auctionCode);
             // RoomList에 추가
             auctionList.put(auctionCode, sessionTwo);
-            // 확인용
             System.out.println("채팅방 생성");
         }
         
         // 채팅방이 존재 할 때
         else if(auctionList.get(auctionCode) != null && messages.equals("ENTER")) {
             
-            // RoomList에서 해당 방번호를 가진 방이 있는지 확인.
+            // RoomList 코드 확인
             auctionList.get(auctionCode).add(session);
             // sessionList에 추가
             sessionList.put(session, auctionCode);
-            // 확인용
             System.out.println("생성된 채팅방으로 입장");
         }
         
         // 채팅 메세지 입력 시
         else if(auctionList.get(auctionCode) != null && !messages.equals("ENTER")) {
-            
-            // 메세지에 이름, 이메일, 내용을 담는다.
+            // 채팅 출력
             TextMessage textMessage = new TextMessage(name + ":" + messages);
             
-            // 현재 session 수
             int sessionCount = 0;
  
-            // 해당 채팅방의 session에 뿌려준다.
+            // 해당 코드에 session에 뿌려줌.
             for(WebSocketSession sess : auctionList.get(auctionCode)) {
                 sess.sendMessage(textMessage);
                 sessionCount++;

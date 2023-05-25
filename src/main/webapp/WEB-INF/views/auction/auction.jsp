@@ -82,7 +82,6 @@
 	let minutes = m < 10 ? "0" + m : m;  // 분
 	
 	
-	
 	var socket = null;
 	function connect() {
 		var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/auctionChat");
@@ -247,7 +246,7 @@
 								<div class="info">
 									<div id="sessionCount">
 										<span>${sessionScope.sId }</span>
-										<span>4/100명</span>
+										<span id="sessionCount2">0/100명</span>
 									</div>
 								</div>
 							</a>
