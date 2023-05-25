@@ -260,6 +260,7 @@
     height: 300px;
     cursor: pointer;
     border-radius: 10.8606px;
+    margin-bottom: 15px;
 }
 
 .itemWrapper .wishWishIcon {
@@ -273,6 +274,7 @@
 }
 
 .itemWrapper .itemCategory {
+    /* margin-top: 10px; */
     letter-spacing: 0px;
     font-weight: 500;
     font-size: 0.875rem;
@@ -333,7 +335,7 @@
 
 .itemWrapper .itemTagBox {
     display: flex;
-    margin-top: 8px;
+    /* margin-top: 8px; */
     line-height: 20px;
     flex-wrap: wrap;
 }
