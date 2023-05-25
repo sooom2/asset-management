@@ -56,10 +56,6 @@ public class MarketChatService {
 //	public List<HashMap<String, String>> getChatSubject(String id) {
 //		return mapper.chatSubject(id);
 //	}
-	// 마켓 메인 아이템 리스트
-	public List<HashMap<String, String>> getMarketItemList() {
-		return mapper.marketItemList();
-	}
 	//상대방 물건 판매개수
 	public int getSellCount(String openentId) {
 		return mapper.sellCount(openentId);
