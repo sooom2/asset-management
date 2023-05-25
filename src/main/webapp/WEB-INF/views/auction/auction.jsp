@@ -1,3 +1,5 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -20,12 +22,31 @@
 .OpponentChat__Wrapper-qv8pn4-0 {
 	margin-left: 10px;
 }
+
+#message {
+  width: 70%;
+  height: 60px;
+  font-size: 15px;
+  margin-left: 10px;
+  border: 0;
+  border-radius: 15px;
+  outline: none;
+  padding-left: 10px;
+  background-color: rgb(233, 233, 233);
+}
+
+#message::placeholder {
+  color: black;
+  font-family: 'Pretendard-Regular';
+}
+
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
 		
 		function chatSend() {
 			const data = {
+					"auctionCode" :  "${auction.get('auction_code') }",
 	                "name" : "${ sessionScope.sId }",
 	                "message"   : $('#message').val()
 	            };
@@ -64,11 +85,18 @@
 	
 	var socket = null;
 	function connect() {
-		var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}//auctionChat");
+		var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/auctionChat");
 		socket = ws;
 		
 		ws.onopen = function() {
 			console.log('Info: connection opened');
+			const data = {
+					"auctionCode" :  "${auction.get('auction_code') }",
+	                "name" : "${ sessionScope.sId }",
+	                "message"   : "ENTER"
+	            };
+	        let jsonData = JSON.stringify(data);
+			socket.send(jsonData);
 			
 		};
 		
@@ -94,6 +122,7 @@
 				$(".chatBox").append(str);
 			} else {
 				var str = "<div class='OpponentChat__Wrapper-qv8pn4-0 cFvuGS'>";
+				str += "<img src='https://ccimage.hellomarket.com/img/web/common/empty_profile.svg' alt='상대방 프로필 이미지' class='OpponentChat__ProfileImage-qv8pn4-2 eLwuXd'>";
 				str += "<div class='OpponentChat__Nick-qv8pn4-3 hYaaYd'>" + sessionId + "</div>";
 				str += "<div class='OpponentChat__MyChatList-qv8pn4-1 lecfCu'>";
 				str += "<div class='OpponentChat__TextBox-qv8pn4-5 giIZqy'>";
@@ -209,7 +238,7 @@
 				<div class="auction_right">
 					<div class="right_main">
 						<div class="chat_header">
-							<a href="https://www.hellomarket.com/s/5222579" target="_blank" rel="noopener noreferrer">
+							<a href="mypage" target="_blank" rel="noopener noreferrer">
 								<div class="image_box">
 									<div class="image_table">
 										<img src="https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png" alt="명품인증님의 프로필 이미지">
@@ -235,7 +264,7 @@
 							<div class="chatBox">
 								<div class="chat_timeago">
 									<div class="chat_timeago_box">
-										<span class="chat_timeago_text">2023년 05월 24일</span>
+										<span class="chat_timeago_text">${formatedNow }</span>
 									</div>
 								</div>
 								<div class="chat_myself">
@@ -260,7 +289,7 @@
 						</div>
 						<div class="chat_footer">
 							<div class="chat_footer_area">
-								<input type="text" id="message" class="chat_input" contenteditable="true" placeholder="메세지를 입력해주세요.">
+								<input type="text" id="message" contenteditable="true" placeholder="메세지를 입력해주세요.">
 								<button id="btnSend" type="button">전송</button>
 							</div>
 						</div>

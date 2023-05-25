@@ -1,5 +1,7 @@
 package com.itwillbs.moneytto.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,6 +37,13 @@ public class AuctionController {
 	public String auction(@RequestParam String auction_code, Model model) { // 이미지 코드와 경매 코드를 받아서 목록 상세
 		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
 		System.out.println(auction);
+		
+		// 년 월 일
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+		String formatedNow = now.format(formatter);
+		
+		model.addAttribute("formatedNow", formatedNow);
 		model.addAttribute("auction", auction);
 		
 		
