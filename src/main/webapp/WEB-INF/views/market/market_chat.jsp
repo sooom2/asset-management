@@ -32,6 +32,12 @@ $(function() {
 	    chatDetail(room_code);
 	});
 	
+	
+	// 판매상태 버튼 처리 >> db에 상태 업데이트
+	$(".trade_status").on("click",function(){
+		
+	});
+	
     $(".sch_date").click(function() {
         var schBox = $(".sch_box");
 
@@ -84,7 +90,19 @@ $(function() {
 	        	$(".chat_header a .info div").empty();
 	        	$(".chat_header a .info div").append("<span>"+oppenent_nickname+"</span>");
 						
-	        	
+				
+// 				<input type="button" value="거래완료">
+// 	        	$(".trade_status").append("<input type="button" class='active' value="+result[0].item_status+">");
+				
+				// 상품판매상태 버튼
+				$(".trade_status").empty();
+				$(".trade_status").append("<input type='button' value='판매중' onclick='item_status'> <input type='button' value='거래중' onclick='item_status'> <input type='button' value='거래완료' onclick='item_status'>");
+				
+				$(".trade_status input").each(function() {
+				    if ($(this).val() === result[0].item_status) {
+				        $(this).addClass('active');
+				    }
+				});
 	        	//날짜표시
 	        	$(".chat_wrapper").empty();
 	            let str = "<div class='chat_timeago'>" +
@@ -122,7 +140,7 @@ $(function() {
 						    "<div class='chat_opponent_box'>" +
 						    "<div class='chat_opponent_image_box'>" +
 						    "<img class='chat_opponent_profile_image' src='https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png' alt='상대방이미지'></div>" +
-						    "<div class='chat_opponent_title'>" + result[i].buy_member_id + "</div>" +
+						    "<div class='chat_opponent_title'>" + result[i].buy_nickname + "</div>" +
 						    "<div class='chat_opponent_message'>" +
 						    "<span>" + result[i].chat_content + "</span>" +
 						    "<div class='chat_opponent_timeago'>" + result[i].chat_time + "</div></div></div></div>";
@@ -168,7 +186,6 @@ $(function() {
 									<div class="nick">[${chatList.get('oppenent_nick') }]</div>
 									<div class="subject"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.get('item_subject') }</div>
 									<div class="description">${chatList.get('chat_content') }</div>
-<%-- 									<div class="time_ago"><fmt:formatDate value="${chatList.chat_time}" pattern="yyyy년 MM월 dd일" /></div> --%>
 									<div class="time_ago">${chatList.chat_time}</div>
 									<input type="hidden" value="${chatList.get('room_code')}" class="room_code">
 								</div>
@@ -195,7 +212,8 @@ $(function() {
 						<div class="info">
 							<div>
 								<!-- 상대방 닉네임 -->
-<%-- 								<span>판매아이템${sellCount }</span> --%>
+								<span>${sellDetail.member_nickname }</span>
+								<span>판매아이템${sellCount }</span>
 							</div>
 						</div>
 					</a>
@@ -219,7 +237,6 @@ $(function() {
 					    			<input type="button" class="active" value="판매중">
 				    				<input type="button" value="거래중">
 				    				<input type="button" value="거래완료">
-					    	
 					    		</c:when>
 					    		<c:when test="${itemList.item_status eq '거래중' }">
  						    		<input type="button" value="판매중">

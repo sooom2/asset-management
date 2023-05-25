@@ -118,28 +118,32 @@ public class MarketController {
 	public String marketChat(Model model,HttpSession session,@RequestParam(defaultValue = "") String item_code) {
 		String id = (String)session.getAttribute("sId");
 		HashMap<String, String> member = memberService.getMember(id);
-		
 		if(id==null) {
 			model.addAttribute("msg","로그인해주세요");
 			return "fail_back";
 		}
-		
 		//내닉네임
 		String nickname = member.get("member_nickname");
 		model.addAttribute("nickname",nickname);
 		
 		
+		
+		
+		
+		
+		//마지막 채팅 내역 
+		
 		List<HashMap<String, String>> myChatList =null;
 		List<HashMap<String, String>> myChatSubject =null;
 		
 		//nav에서 들어갈때 -  최근에 열린 채팅 내역 보이게
-		if(item_code.equals("")) {
-			
-			System.out.println("========================================");
-			myChatList = marketChatService.getMyChatList(id);
-			System.out.println(myChatList);
-			System.out.println("========================================");
-		}else {
+//		if(item_code.equals("")) {
+//			
+//			System.out.println("========================================");
+//			myChatList = marketChatService.getMyChatList(id);
+//			System.out.println(myChatList);
+//			System.out.println("========================================");
+//		}else {
 			
 		//아이템상세정보
 		HashMap<String, String> itemDetail = marketChatService.getItem(item_code);
@@ -154,18 +158,17 @@ public class MarketController {
 		HashMap<String, String> itemList = marketChatService.getItemList(item_code);
 		model.addAttribute("itemList",itemList);
 		
-		
 		//판매자 판매상품개수
 //		int sellCount = marketChatService.getSellCount(sellDetail.get("member_id"));
 //		model.addAttribute("sellCount",sellCount);
 		
 		//내채팅목록
-		myChatList = marketChatService.getMyChatList(id);
+//		myChatList = marketChatService.getMyChatList(id);
 //		myChatSubject = marketChatService.getChatSubject(id);
 //		System.out.println(myChatSubject);
-		}
+//		}
 
-		model.addAttribute("myChatList",myChatList);
+//		model.addAttribute("myChatList",myChatList);
 		
 		
 		
