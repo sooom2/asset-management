@@ -44,6 +44,9 @@ public interface MarketMapper {
 
 	String selectItem();
 
+	//채팅
+	HashMap<String, Integer> chatRecentList(String id);
+
 	
 	
 

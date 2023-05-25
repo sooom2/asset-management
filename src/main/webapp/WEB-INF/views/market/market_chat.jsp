@@ -35,7 +35,7 @@ $(function() {
 	
 	// 판매상태 버튼 처리 >> db에 상태 업데이트
 	$(".trade_status").on("click",function(){
-		
+		alert("Ddd");
 	});
 	
     $(".sch_date").click(function() {
@@ -96,7 +96,7 @@ $(function() {
 				
 				// 상품판매상태 버튼
 				$(".trade_status").empty();
-				$(".trade_status").append("<input type='button' value='판매중' onclick='item_status'> <input type='button' value='거래중' onclick='item_status'> <input type='button' value='거래완료' onclick='item_status'>");
+				$(".trade_status").append("<input type='button' value='판매중'> <input type='button' value='거래중'> <input type='button' value='거래완료'>");
 				
 				$(".trade_status input").each(function() {
 				    if ($(this).val() === result[0].item_status) {
@@ -132,7 +132,7 @@ $(function() {
 						    "<div class='chat_myself_box'>" +
 						    "<div class='chat_myself_message'>" +
 						    "<span>" + result[i].chat_content + "</span>" +
-						    "<div class='chat_myself_timeago'>" + result[i].chat_time + "</div></div></div></div>";
+						    "<div class='chat_myself_timeago'>" +formatChatTime + "</div></div></div></div>";
 						 	$(".chat_timeago").append(str);
 					} else {
 						let str =
@@ -143,7 +143,7 @@ $(function() {
 						    "<div class='chat_opponent_title'>" + result[i].buy_nickname + "</div>" +
 						    "<div class='chat_opponent_message'>" +
 						    "<span>" + result[i].chat_content + "</span>" +
-						    "<div class='chat_opponent_timeago'>" + result[i].chat_time + "</div></div></div></div>";
+						    "<div class='chat_opponent_timeago'>" + formatChatTime + "</div></div></div></div>";
 					  		$(".chat_timeago").append(str);
 					}
 				}
@@ -187,6 +187,12 @@ $(function() {
 									<div class="subject"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.get('item_subject') }</div>
 									<div class="description">${chatList.get('chat_content') }</div>
 									<div class="time_ago">${chatList.chat_time}</div>
+									
+<%-- 									<c:set var="chat_time" value="${chatDetail.chat_time}" /> --%>
+<%-- 									<fmt:parseDate var="formattedDate" value="${chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" /> --%>
+<%-- 									<div class="chat_myself_timeago"><fmt:formatDate value="${formattedDate}" pattern="a hh:mm" /></div> --%>
+									
+									
 									<input type="hidden" value="${chatList.get('room_code')}" class="room_code">
 								</div>
 							</li>
@@ -212,8 +218,8 @@ $(function() {
 						<div class="info">
 							<div>
 								<!-- 상대방 닉네임 -->
-								<span>${sellDetail.member_nickname }</span>
-								<span>판매아이템${sellCount }</span>
+								<span>${chatList.oppenent_nick }</span>
+<%-- 								<span>판매아이템${sellCount }</span> --%>
 							</div>
 						</div>
 					</a>
@@ -232,25 +238,25 @@ $(function() {
 					    </div>
 					    <div class="trade_status">
 <!-- 					    선택하는걸로 업데이트 될수있게해야함  -->
-					    	<c:choose>
-					    		<c:when test="${itemList.item_status eq '판매중' }">
-					    			<input type="button" class="active" value="판매중">
-				    				<input type="button" value="거래중">
-				    				<input type="button" value="거래완료">
-					    		</c:when>
-					    		<c:when test="${itemList.item_status eq '거래중' }">
- 						    		<input type="button" value="판매중">
-					    			<input type="button" class="active"  value="거래중">
-					    			<input type="button" value="거래완료">
-					    		</c:when>
-					    		<c:when test="${itemList.item_status eq '거래완료' }">
-					    			<input type="button" value="판매중">
-					    			<input type="button" value="거래중">
-					    			<input type="button" class="active"  value="거래완료">
-					    		</c:when>
-					    	</c:choose>
-				    		
-					    
+							<c:forEach var="chatDetail" items="${chatDetail }">
+						    	<c:choose>
+						    		<c:when test="${chatDetail.item_status eq '판매중' }">
+						    			<input type="button" class="active" value="판매중">
+					    				<input type="button" value="거래중">
+					    				<input type="button" value="거래완료">
+						    		</c:when>
+						    		<c:when test="${chatDetail.item_status eq '거래중' }">
+	 						    		<input type="button" value="판매중">
+						    			<input type="button" class="active"  value="거래중">
+						    			<input type="button" value="거래완료">
+						    		</c:when>
+						    		<c:when test="${chatDetail.item_status eq '거래완료' }">
+						    			<input type="button" value="판매중">
+						    			<input type="button" value="거래중">
+						    			<input type="button" class="active"  value="거래완료">
+						    		</c:when>
+						    	</c:choose>
+					    	</c:forEach>
 					    </div>
 					</div>
 				</div>
@@ -258,13 +264,6 @@ $(function() {
 				<!-- 채팅영역 -->
 				<div class="chat_description" style="bottom:49px">
 					<div class="chat_wrapper">
-<!-- 						<div class="chat_timeago"> -->
-<!-- 							<div class="chat_timeago_box"> -->
-<!-- 								<span class="chat_timeago_text"> -->
-<%-- 									<fmt:formatDate value="${chatDetail.chat_opendate }" pattern="yyyy년 MM월 dd일" /> --%>
-<!-- 								</span> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
 						
 						<!-- 처음에 아이템이미지무조건 출력 -->
 <!-- 						<div class="chat_item"> -->
@@ -301,16 +300,34 @@ $(function() {
 						
 						
 						<!-- 나 -->
-<!-- 						<div class="chat_myself"> -->
-<!-- 							<div class="chat_myself_box"> -->
-<!-- 								<div class="chat_myself_message"> -->
-<!-- 									<span>안녕하세요</span> -->
-<!-- 									읽음처리 -->
-<!-- 									<div class="chat_myself_ack"></div> -->
-<!-- 									<div class="chat_myself_timeago">오후 1:57</div> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
+						<c:forEach var="chatDetail" items="${chatDetail }">
+							<div class="chat_timeago">
+								<div class="chat_timeago_box">
+									<span class="chat_timeago_text">
+										<fmt:formatDate value="${chatDetail.chat_openDate }" pattern="yyyy년 MM월 dd일" />
+									</span>
+								</div>
+							</div>
+							<c:choose>
+								<c:when test="${sessionScope.sId eq chatDetail.chat_mem_id }">
+									<div class="chat_myself">
+										<div class="chat_myself_box">
+											<div class="chat_myself_message">
+												<span>${chatDetail.chat_content }</span>
+												<c:set var="chat_time" value="${chatDetail.chat_time}" />
+												<fmt:parseDate var="formattedDate" value="${chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+												<div class="chat_myself_timeago"><fmt:formatDate value="${formattedDate}" pattern="a hh:mm" /></div>
+											</div>
+										</div>
+									</div>
+								</c:when>
+								<c:otherwise>
+									
+									
+								</c:otherwise>
+							</c:choose>
+						
+						
 						
 						
 						
@@ -328,7 +345,7 @@ $(function() {
 <!-- 							</div> -->
 <!-- 						</div> -->
 						
-						
+						</c:forEach>
 						
 						
 						

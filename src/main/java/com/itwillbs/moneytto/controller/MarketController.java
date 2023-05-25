@@ -2,6 +2,7 @@ package com.itwillbs.moneytto.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -124,48 +124,28 @@ public class MarketController {
 		
 		
 		
-		
-		
-		
 		//마지막 채팅 내역 
 		
 		List<HashMap<String, String>> myChatList =null;
-		List<HashMap<String, String>> myChatSubject =null;
 		
-		//nav에서 들어갈때 -  최근에 열린 채팅 내역 보이게
-//		if(item_code.equals("")) {
-//			
-//			System.out.println("========================================");
-//			myChatList = marketChatService.getMyChatList(id);
-//			System.out.println(myChatList);
-//			System.out.println("========================================");
-//		}else {
-			
-		//아이템상세정보
-		HashMap<String, String> itemDetail = marketChatService.getItem(item_code);
+		//최근에 열린 채팅 내역 보이게
+		//1. 최근 room_code조회
+		HashMap<String, Integer> chatList = marketChatService.getMyChatRecentList(id);	
+		
+		int room_code = chatList.get("room_code");
+		
+		//2. room_code로 채팅내용조회
+		List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
+		model.addAttribute("chatDetail",chatDetail);
 		
 		
-		//판매상세정보
-		HashMap<String, String> sellDetail = marketChatService.getSellDetail(item_code);
-		model.addAttribute("sellDetail",sellDetail);
-		model.addAttribute("itemDetail",itemDetail);
+		//3. 상대방 판매상품갯수조회
 		
-		//아이템 상세정보
-		HashMap<String, String> itemList = marketChatService.getItemList(item_code);
-		model.addAttribute("itemList",itemList);
 		
-		//판매자 판매상품개수
-//		int sellCount = marketChatService.getSellCount(sellDetail.get("member_id"));
-//		model.addAttribute("sellCount",sellCount);
-		
-		//내채팅목록
-//		myChatList = marketChatService.getMyChatList(id);
-//		myChatSubject = marketChatService.getChatSubject(id);
-//		System.out.println(myChatSubject);
-//		}
 
-//		model.addAttribute("myChatList",myChatList);
-		
+		myChatList = marketChatService.getMyChatList(id);
+		model.addAttribute("myChatList",myChatList);
+		model.addAttribute("chatList",chatList);
 		
 		
 		

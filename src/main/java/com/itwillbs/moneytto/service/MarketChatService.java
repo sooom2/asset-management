@@ -65,6 +65,10 @@ public class MarketChatService {
 	public HashMap<String, String> getOppenentId(int room_code,String ssesion_id) {
 		return mapper.opponentId(room_code,ssesion_id);
 	}
+	// 최근 채팅내역
+	public HashMap<String, Integer> getMyChatRecentList(String id) {
+		return mapper.chatRecentList(id);
+	}
 	
 
 

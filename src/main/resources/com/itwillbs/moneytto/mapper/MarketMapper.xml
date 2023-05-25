@@ -145,7 +145,7 @@
              	) AS a
          	) AS b
       	WHERE row_num = 1
-	
+     		ORDER BY room_code desc
 	</select>
 	
 	
@@ -164,6 +164,7 @@
 			chat_mem_id,
 			seller.member_nickname as sell_nickname,
 			buyer.member_nickname as buy_nickname,
+			chat_time,
 			item.item_status
 		FROM
 			market_chat_messages
@@ -183,6 +184,49 @@
 			market_chat_messages.room_code = #{room_code}
 	</select>
 
+	<!-- 제일마지막에생성된 방 -->
+	<select id="chatRecentList" resultType="hashmap">
+		SELECT b.room_code, chat_code, chat_content, oppenent_nick,chat_time,b.item_subject,chat_openDate
+         FROM (
+             SELECT room_code, chat_code, chat_content, oppenent_nick,
+                    ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate
+             FROM (
+                 SELECT market_chat_rooms.room_code,
+                        chat_code,
+                        market_chat_rooms.chat_content,
+                        member.member_nickname AS oppenent_nick,
+                        chat_time,
+                        item.item_subject ,
+                        market_chat_rooms.chat_openDate
+           	   		FROM   market_chat_messages
+	                      LEFT JOIN member
+	                             ON member.member_id = market_chat_messages.sell_member_id
+	                      LEFT JOIN market_chat_rooms
+	                      		 ON market_chat_rooms.room_code = market_chat_messages.room_code
+	                      LEFT JOIN item 
+	                      		 ON item.item_code=market_chat_rooms.item_code 
+              		 WHERE  buy_member_id = #{id}
+               UNION
+	             SELECT market_chat_rooms.room_code,
+	                    chat_code,
+	                    market_chat_rooms.chat_content,
+	                    member.member_nickname AS oppenent_nick,
+	                    chat_time,
+	                    item.item_subject,
+	                    market_chat_rooms.chat_openDate
+	             	FROM   market_chat_messages
+		                    LEFT JOIN member
+		                           ON member.member_id = market_chat_messages.buy_member_id
+		                    LEFT JOIN market_chat_rooms
+	                      		   ON market_chat_rooms.room_code = market_chat_messages.room_code
+                  		   	LEFT JOIN item 
+	                      		 ON item.item_code=market_chat_rooms.item_code 
+              		 WHERE  sell_member_id = #{id}
+             	) AS a
+         	) AS b
+      	WHERE row_num = 1 
+      	ORDER BY room_code DESC LIMIT 1
+	</select>
 
 	<!-- 마켓 아이템 리스트 -->
 	<select id="marketItemList" resultType="hashmap">
