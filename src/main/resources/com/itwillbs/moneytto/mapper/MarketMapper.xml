@@ -150,24 +150,28 @@
 	<!-- 채팅상세내용 -->
 	<select id="chatDetail" resultType="hashmap">
 		SELECT
-		market_chat_messages.*,
-		market_chat_rooms.chat_openDate,
-		chat_mem_id,
-		seller.member_nickname as sell_nickname,
-		buyer.member_nickname as buy_nickname
-	FROM
-		market_chat_messages
-	LEFT JOIN market_chat_rooms
-	  ON
-		market_chat_messages.room_code = market_chat_rooms.room_code
-	LEFT JOIN member as seller
-	  ON
-		seller.member_id = market_chat_messages.sell_member_id
-	LEFT JOIN member as buyer
-	  ON
-		buyer.member_id = market_chat_messages.buy_member_id
-	WHERE
-		market_chat_messages.room_code = #{room_code}
+			market_chat_messages.*,
+			market_chat_rooms.chat_openDate,
+			chat_mem_id,
+			seller.member_nickname as sell_nickname,
+			buyer.member_nickname as buy_nickname,
+			item.item_status
+		FROM
+			market_chat_messages
+				LEFT JOIN market_chat_rooms
+				  ON
+					market_chat_messages.room_code = market_chat_rooms.room_code
+				LEFT JOIN member as seller
+				  ON
+					seller.member_id = market_chat_messages.sell_member_id
+				LEFT JOIN member as buyer
+				  ON
+					buyer.member_id = market_chat_messages.buy_member_id
+				LEFT JOIN item 
+				  ON
+				  	item.item_code = market_chat_rooms.item_code 
+		WHERE
+			market_chat_messages.room_code = #{room_code}
 	</select>
 
 
