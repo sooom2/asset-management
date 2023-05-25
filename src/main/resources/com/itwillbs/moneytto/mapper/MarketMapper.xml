@@ -230,12 +230,6 @@
 
 	<!-- 마켓 아이템 리스트 -->
 	<select id="marketItemList" resultType="hashmap">
-<!-- 		SELECT *  -->
-<!-- 			FROM  -->
-<!-- 				item  -->
-<!-- 			ORDER BY  -->
-<!-- 				item_code desc -->
-		<!-- 수정중 -->
 		SELECT i.*, m.grade_score
 			FROM 
 				item i
@@ -244,15 +238,49 @@
 			ON
 				i.member_id = m.member_id
 			WHERE 
-				i.item_category like CONCAT('%',#{item_category},'%')
+			<choose>
+			<when test = 'item_category eq null or item_category eq ""'>
+				1 = 1
+			</when>
+			<otherwise>
+				i.item_category REGEXP replace(#{item_category}, '/', '|')
+			</otherwise>
+			</choose>
 			AND
+			<choose>
+			<when test = 'item_status eq null or item_status eq ""'>
+				1 = 1
+			</when>
+			<otherwise>
 				i.item_status = #{item_status}
+			</otherwise>
+			</choose>	
 			AND
-				replace(i.item_price,',','') BETWEEN #{item_price_min} AND #{item_price_max}
+				replace(i.item_price,',','') BETWEEN ${item_price_min} AND ${item_price_max}
 			AND
-				m.grade_score >= "50"
-			ORDER BY 
-				i.item_code DESC
+			<choose>
+			<when test = 'member_grade eq null or member_grade eq ""'>
+				1 = 1
+			</when>
+			<otherwise>
+				m.grade_score >= 50
+			</otherwise>
+			</choose>	
+			ORDER BY
+			   <choose>
+			      <when test='sort.equals("lowPrice")'>
+			           replace(i.item_price,',','')+0 ASC
+			      </when> 
+			      <when test='sort.equals("highPrice")'>
+				      	replace(i.item_price,',','')+0 DESC
+			      </when>
+			      <when test='sort.equals("highGrade")'>
+			      		m.grade_score DESC
+			      </when>
+			      <otherwise>
+			      		i.item_code DESC
+			   	  </otherwise> 
+			   </choose> 
 	</select>
 	
 </mapper>
