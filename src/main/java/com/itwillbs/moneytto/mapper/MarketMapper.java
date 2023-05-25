@@ -44,7 +44,12 @@ public interface MarketMapper {
 			@Param("member_grade") String member_grade,
 			@Param("sort") String sort);
 
-	void savePhotoInfo(HashMap<String, String> photoInfo);
+	void saveImage(HashMap<String, String> saveImage);
+
+	String selectItem();
+
+	//채팅
+	HashMap<String, Integer> chatRecentList(String id);
 
 	
 	

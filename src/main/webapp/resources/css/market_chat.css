@@ -159,7 +159,7 @@
     position: absolute;
     bottom: -13px;
     font-size: 13px;
-    color: #5c5c5c;
+    color: #bb2649;
     width: 123px;
     /* display: inline-block; */
 }
@@ -386,7 +386,7 @@
     color: #b4b4b4;
     left: -70px;
     bottom: 3px;
-    width: 60px;
+    width: 63px;
     text-align: right
 }
 
@@ -1016,11 +1016,6 @@
 	border-radius: 6px;
 }
 
-
-
-
-
-
 .card_box .info .subject{
 	
 text-decoration: solid;
@@ -1037,7 +1032,9 @@ color: #000;
 }
 
 
-
+.trade_status input[type="button"]{
+	cursor:pointer;
+}
 
 
 

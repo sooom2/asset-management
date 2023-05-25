@@ -17,6 +17,18 @@ $(function() {
 		location.href="marketChat?item_code="+item_code;
 	});
 });
+
+//좋아요 
+function toggleLike(element) {
+  var imgSrc = element.getAttribute('src');
+  if (imgSrc === 'https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png') {
+    element.setAttribute('src', 'https://ccimage.hellomarket.com/img/web/item/detail/Ico_wish_on.png');
+  } else {
+    element.setAttribute('src', 'https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png');
+  }
+}
+
+
 </script>
 </head>
 <body>
@@ -184,12 +196,15 @@ $(function() {
 
 					<div class="itemControllerWrapper">
 						<div class="SomeonesItemWrapper">
-							<div class="WishWrapper">
-								<img
-									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png"
-									alt="좋아요 아이콘" class="WishIcon">
-<!-- 								<div class="WishText">0</div> -->
-							</div>
+<!-- 							<div class="WishWrapper"> -->
+<!-- 								<img -->
+<!-- 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png" -->
+<!-- 									alt="좋아요 아이콘" class="WishIcon"> -->
+<!-- 								<div class="WishText">0</div> --> 
+<!-- 							</div> -->
+								<div class="WishWrapper">
+								  <img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png" alt="좋아요 아이콘" class="WishIcon" onclick="toggleLike(this)">
+								</div>
 							<div width="90%" class="SomeonesItemButton">
 								<img
 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_hellotalk.png"
