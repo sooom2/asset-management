@@ -200,6 +200,7 @@
     padding: 8px 1px;
     background: rgb(255, 255, 255);
     border: 1px solid rgb(25, 31, 40);
+    display: none;
 }
 .SortListList {
     padding: 9px 17px;
