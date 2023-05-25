@@ -96,16 +96,20 @@ public class MarketController {
 		return "market/market_payment";
 	}
 	 
+	// 상품 등록 페이지로 이동 
 	@GetMapping(value = "itemRegist")
 	public String itemRegist(Model model,HttpSession session) {
 		
 		//session아이디로 닉네임 얻기
 		String id = (String)session.getAttribute("sId");
-		if (id != null) {
-		    HashMap<String, String> member = memberService.getMember(id);
+		HashMap<String, String> member = memberService.getMember(id);
+		
+		if(id==null) {
+			model.addAttribute("msg","로그인해주세요");
+			return "fail_back";
+		}
 		    String nickname = member.get("member_nickname");
 		    model.addAttribute("nickname",nickname);
-		}
 		
 		return "market/market_itemRegist";
 	}
@@ -195,9 +199,10 @@ public class MarketController {
 		return arrChatDetail.toString();
 	}
 
-
+	// 상품등록
 	@PostMapping(value = "itemRegistPro")
 	public String itemRegistPro(@RequestParam HashMap<String, String> item, Model model, HttpSession session, @RequestParam("file") List<MultipartFile> files) {
+		String id = (String)session.getAttribute("sId");
 	    String uploadDir = session.getServletContext().getRealPath("/resources/upload");
 	    System.out.println(item);
 	    try {
