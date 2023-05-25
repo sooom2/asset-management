@@ -153,7 +153,7 @@
                     </div>
                     <div>
                     	<!-- 목록 -->
-	                    <div class="infinite-scroll-component " style="height:auto;overflow:auto;-webkit-overflow-scrolling:touch">
+	                    <div class="infinite-scroll-component " style="height:auto;">
 							<div class="itemListWrapper">
 								<div class="itemWrapper">
 <%-- 									<c:forEach  var="item" items="${marketItemList }"> --%>
