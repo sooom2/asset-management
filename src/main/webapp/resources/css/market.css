@@ -9,19 +9,7 @@
     margin: 0px auto;
 }
 .FilterBoxWrapper-active {
-    cursor: pointer;
-    display: flex;
-    width: 202px;
-    margin-right: 8px;
-    -webkit-box-align: center;
-    align-items: center;
-    padding: 12px 28px;
-    border-radius: 24px;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    border: 1.3px solid #BB2649;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 4px;
-    background-color:  rgb(255, 255, 255);
+    border: 1.3px solid #BB2649 !important;
 }
 .FilterBoxWrapper  {
     cursor: pointer;
@@ -275,7 +263,7 @@
     cursor: pointer;
 }
 
-.itemWrapper .itemBrand {
+.itemWrapper .itemCategory {
     letter-spacing: 0px;
     font-weight: 500;
     font-size: 0.875rem;
@@ -338,6 +326,7 @@
     display: flex;
     margin-top: 8px;
     line-height: 20px;
+    flex-wrap: wrap;
 }
 
 .itemWrapper .itemSizeTag {
@@ -531,7 +520,7 @@
     grid-template-columns: auto auto auto auto auto auto;
 }
 
-.eDPfil {
+.ListSelected {
     cursor: pointer;
     letter-spacing: 0px;
     font-weight: 600;
@@ -541,7 +530,7 @@
     color: rgb(0, 114, 244);
 }
 
-.eklQsX {
+.ListNonSelected {
     cursor: pointer;
     letter-spacing: 0px;
     font-weight: 600;
@@ -550,3 +539,122 @@
     line-height: 154%;
     color: rgb(78, 89, 104);
 }
+
+
+.marketListSearch {
+    display: inline-block;
+    width: 200px !important;
+    height: 20px;
+    /* margin: auto 0px; */
+    cursor: pointer;
+    padding: 10px 15px;
+    background: rgb(242, 245, 247);
+    border-radius: 62px;
+    /* margin-top: 21px; */
+    /* float: right; */
+    margin-top: 21px;
+    margin-left: 25px;
+}
+
+.searchSearch .tag {
+    height: 22px;
+    margin-top: -12px;
+    width: 174px !important;
+}
+
+
+.fEjcIX {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 103px;
+    background: rgb(249, 250, 251);
+    border: 1.2px solid rgb(229, 232, 235);
+    border-radius: 10px;
+}
+
+.fEjcIX input {
+    padding: 0px;
+    width: 188px;
+    height: 44px;
+    border-radius: 8px;
+    text-align: center;
+    letter-spacing: -0.2px;
+    font-weight: 700;
+    font-size: 0.938rem;
+    font-family: "Pretendard Variable";
+    line-height: 134%;
+}
+
+input[type=date], input[type=email], input[type=number], input[type=password], input[type=tel], input[type=text], textarea {
+    -webkit-appearance: none;
+    padding: 8px 0 8px 16px;
+    font-size: 14px;
+    outline: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    line-height: 20px;
+    border: 1px solid #e8ebed;
+}
+
+.cRHAEh {
+    border: 1px solid rgb(25, 31, 40);
+    margin-left: 20px !important;
+}
+
+.cOhRDO {
+    margin-left: 8px;
+    letter-spacing: -0.2px;
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: "Pretendard Variable";
+    line-height: 135%;
+}
+
+.fEjcIX input {
+    padding: 0px !important;
+    width: 188px;
+    height: 44px;
+    border-radius: 8px !important;
+    text-align: center;
+    letter-spacing: -0.2px;
+    font-weight: 700;
+    font-size: 0.938rem;
+    font-family: "Pretendard Variable";
+    line-height: 134%;
+}
+
+.ecxgoB {
+    margin-left: 8px;
+    width: 65px;
+    letter-spacing: -0.2px;
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: "Pretendard Variable";
+    line-height: 135%;
+}
+
+.ezrKUu {
+    width: 164px;
+    height: 44px;
+    background: rgb(176, 184, 193);
+    border-radius: 8px;
+    margin-left: 10px;
+    letter-spacing: -0.2px;
+    font-weight: 700;
+    font-size: 0.938rem;
+    font-family: "Pretendard Variable";
+    line-height: 134%;
+    color: rgb(255, 255, 255);
+    text-align: center !important;
+}
+
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: 0;
+    padding: 0;
+}
+

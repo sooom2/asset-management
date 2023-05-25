@@ -256,14 +256,6 @@ public class MemberController {
 		return result;
 	}
 	
-	// 로그아웃
-	@GetMapping(value = "logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
-			
-		return "redirect:/main";
-	}
-	
 	@PostMapping(value = "clickWish")
 	@ResponseBody
 	public void clickWish(@RequestParam String id) {

@@ -42,11 +42,11 @@
 
 .left_main ul li {
     margin: 0 20px;
-    padding: 20px 0;
+    padding: 15px 0 25px 0;
     cursor: pointer;
     background-color: #fff;
     border-bottom: 1px solid #ebebeb;
-    height: 40px
+    height: 49px;
 }
 
 .left_main .card_box,.left_main ul li {
@@ -144,26 +144,34 @@
 }
 
 .left_main ul li .info .description,.left_main ul li .info .nick {
-    position: absolute;
+    /* position: absolute; */
     left: 0;
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow: hidden
+    overflow: hidden;
+    width: 100%;
+}
+.left_main ul li .nick{
+    width:100%;
 }
 
 .left_main ul li .info .description {
-    bottom: 0;
+    position: absolute;
+    bottom: -13px;
     font-size: 13px;
-    color: #4e4e4c;
-    width: 123px
+    color: #5c5c5c;
+    width: 123px;
+    /* display: inline-block; */
 }
 
 .left_main ul li .info .time_ago {
     position: absolute;
-    top: 0;
-    right: -12px;
+    /* top: 0; */
+    /* right: -12px; */
     font-size: 11px;
-    color: #b4b4b4
+    color: #b4b4b4;
+    /* display: inline-block; */
+    bottom: -29px;
 }
 
 .left_main ul li .info .count {
@@ -1008,12 +1016,20 @@
 	border-radius: 6px;
 }
 
-
-
-
-
-
-
+.card_box .info .subject{
+	
+text-decoration: solid;
+	
+font-size: 14px;
+	
+position: absolute;
+	
+bottom: 5px;
+	
+text-decoration: underline;
+	
+color: #000;
+}
 
 
 
