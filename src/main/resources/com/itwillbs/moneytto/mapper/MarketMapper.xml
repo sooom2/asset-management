@@ -78,7 +78,7 @@
 					WHERE 1=1
 					  AND market_chat_rooms.item_code = #{item_code}
 					  AND (sell_member_id = #{id}
-					  or buy_member_id= #{id})
+					  OR buy_member_id= #{id})
 	</select>
 	
 	<select id="opponentId" resultType="hashmap">

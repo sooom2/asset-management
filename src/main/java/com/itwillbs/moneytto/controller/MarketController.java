@@ -148,40 +148,53 @@ public class MarketController {
 		model.addAttribute("nickname",nickname);
 		
 		
-		
-		// 채팅방이있는지 조회한후 채팅방 생성
-		int createRoom = marketChatService.insertChatRoom(item_code,id);
-		System.out.println(createRoom);
 		System.out.println("===============================");
-		System.out.println(createRoom);
+		System.out.println(item_code+" 가있나요 ");
 		System.out.println("===============================");
 		
 		
+		if(item_code !="") {
+			
+			// 아이템선택후 들어가야함
+			// 채팅방이있는지 조회한후 채팅방 생성 //
+			int createRoom = marketChatService.insertChatRoom(item_code,id);
+			System.out.println(createRoom);
+			if(createRoom > 0 ) {
+			//마지막 채팅 내역 
+				
+			List<HashMap<String, String>> myChatList =null;
+			
+			//최근에 열린 채팅 내역 보이게
+			//1. 최근 room_code조회
+			HashMap<String, Integer> chatList = marketChatService.getMyChatRecentList(id);	
+			
+			int room_code = chatList.get("room_code");
+			model.addAttribute("room_code",room_code);
+			//2. room_code로 채팅내용조회
+			List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
+			model.addAttribute("chatDetail",chatDetail);
+			
+			
+			//3. 상대방 판매상품갯수조회
+			//상대방의 아이디 조회
+			HashMap<String, String> oppenentId = marketChatService.getOppenentId(room_code, id);
+			// 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
+			int sellCount = marketChatService.getSellCount(oppenentId.get("oppenent_id"));
+			
+			
+			
+			
+			myChatList = marketChatService.getMyChatList(id);
+			model.addAttribute("myChatList",myChatList);
+			model.addAttribute("chatList",chatList);
+			model.addAttribute("sellCount",sellCount);
+			} else {
+				
+			}
 		
-		//마지막 채팅 내역 
-		List<HashMap<String, String>> myChatList =null;
-		
-		//최근에 열린 채팅 내역 보이게
-		//1. 최근 room_code조회
-		HashMap<String, Integer> chatList = marketChatService.getMyChatRecentList(id);	
-		
-		int room_code = chatList.get("room_code");
-		model.addAttribute("room_code",room_code);
-		//2. room_code로 채팅내용조회
-		List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
-		model.addAttribute("chatDetail",chatDetail);
+		}
 		
 		
-		//3. 상대방 판매상품갯수조회
-		//상대방의 아이디 조회
-		HashMap<String, String> oppenentId = marketChatService.getOppenentId(room_code, id);
-		// 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
-		int sellCount = marketChatService.getSellCount(oppenentId.get("oppenent_id"));
-		
-		myChatList = marketChatService.getMyChatList(id);
-		model.addAttribute("myChatList",myChatList);
-		model.addAttribute("chatList",chatList);
-		model.addAttribute("sellCount",sellCount);
 		return "market/market_chat";
 	}
 	
