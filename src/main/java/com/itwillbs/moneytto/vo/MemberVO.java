@@ -1,3 +1,4 @@
+
 package com.itwillbs.moneytto.vo;
 
 import org.springframework.stereotype.Component;
@@ -22,6 +23,5 @@ public class MemberVO {
 	private String userName;		// 이름
 	private String userPassword;	// 비밀번호
 	private String userPic;			// 사진
-	
 	
 }

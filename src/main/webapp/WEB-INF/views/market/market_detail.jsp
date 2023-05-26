@@ -11,12 +11,24 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.4.js"></script>
 <script type="text/javascript">
 $(function() {
+	
 	$(".SomeonesItemButton").click(function() {
-		//아이템코드
-		item_code="market0001";
-		location.href="marketChat?item_code="+item_code;
+		
+		location.href="marketChat?item_code="+$(this).data("cd");
 	});
 });
+
+//좋아요 
+function toggleLike(element) {
+  var imgSrc = element.getAttribute('src');
+  if (imgSrc === 'https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png') {
+    element.setAttribute('src', 'https://ccimage.hellomarket.com/img/web/item/detail/Ico_wish_on.png');
+  } else {
+    element.setAttribute('src', 'https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png');
+  }
+}
+
+
 </script>
 </head>
 <body>
@@ -39,9 +51,7 @@ $(function() {
 							<div class="swiper-wrapper">
 								<div class="swiper-slide">
 									<div class="swiper-wrapper">
-										<img
-											src="https://ccimg.hellomarket.com/images/2022/item/07/09/21/4656318_2647700_1.jpg?size=s6"
-											class="MainImgItemImg">
+										<img src="http://c3d2212t3.itwillbs.com/images/${marketItem}" class="MainImgItemImg">
 									</div>
 								</div>
 							</div>
@@ -85,9 +95,10 @@ $(function() {
 								src="https://ccimg.hellomarket.com/images/2017/member_profile/s4/10/11/19/0206_2647700_1.jpg?size=s4"
 								alt="profileImg" class="profileProfileImg">
 							<div class="ProfileInfoWrapper">
-								<div class="ProfileInfoProfileName">유이아빠</div>
+								<div class="ProfileInfoProfileName">왜 닉네임 안뜸</div>
 								<div class="ProfileInfoItemCountBox">
-									<div class="ProfileInfoProduct">판매상품</div>
+									<div class="ProfileInfoProduct">${marketItem.item_subject}</div>
+<%-- 									<div class="ProfileInfoProduct">${marketItem.get(0)}</div> --%>
 									<div class="ProfileInfoItemQuantity">62</div>
 								</div>
 								<div class="ProfileInfoRating">
@@ -162,7 +173,6 @@ $(function() {
 						</div>
 					</div>
 					
-					
 					<!-- 가격 제안-->
 					<div class="Delivery__Wrapper-sc-1og3un6-0 ddxgBm">
 						<div class="Delivery__Title-sc-1og3un6-1 iijbrT">가격제안</div>
@@ -184,13 +194,16 @@ $(function() {
 
 					<div class="itemControllerWrapper">
 						<div class="SomeonesItemWrapper">
-							<div class="WishWrapper">
-								<img
-									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png"
-									alt="좋아요 아이콘" class="WishIcon">
-<!-- 								<div class="WishText">0</div> -->
-							</div>
-							<div width="90%" class="SomeonesItemButton">
+<!-- 							<div class="WishWrapper"> -->
+<!-- 								<img -->
+<!-- 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png" -->
+<!-- 									alt="좋아요 아이콘" class="WishIcon"> -->
+<!-- 								<div class="WishText">0</div> --> 
+<!-- 							</div> -->
+								<div class="WishWrapper">
+								  <img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png" alt="좋아요 아이콘" class="WishIcon" onclick="toggleLike(this)">
+								</div>
+							<div width="90%" class="SomeonesItemButton"data-cd="${marketItem.item_code }">
 								<img
 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_hellotalk.png"
 									alt="채팅 아이콘" class="SomeonesItemIcon">

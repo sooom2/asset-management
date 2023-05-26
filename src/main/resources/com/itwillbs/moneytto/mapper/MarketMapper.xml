@@ -295,4 +295,17 @@
 			   </choose> 
 	</select>
 	
+	
+	<select id="marketItem" resultType="hashmap">
+		SELECT i.*, m.*
+			FROM 
+				item i
+			JOIN
+				member m
+			ON
+				i.member_id = m.member_id
+			WHERE
+				i.item_code = #{item_code}
+	</select>
+	
 </mapper>

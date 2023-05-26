@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -84,7 +83,7 @@ public class MarketController {
 	}
 	
 	@GetMapping(value = "market_detail")
-	public String marketDetail(Model model,HttpSession session) {
+	public String marketDetail(Model model, HttpSession session, String item_code) {
 		
 		//session아이디로 닉네임 얻기
 		String id = (String)session.getAttribute("sId");
@@ -93,6 +92,11 @@ public class MarketController {
 		    String nickname = member.get("member_nickname");
 		    model.addAttribute("nickname",nickname);
 		}
+		
+		// 아이템 상세
+		HashMap<String, String> marketItem = service.getMarketItem(item_code);
+		model.addAttribute("marketItem", marketItem);
+		
 		
 		
 		
@@ -198,6 +202,7 @@ public class MarketController {
 	        // 아이템 등록 전에 아이템 코드를 생성하여 저장
 	        String itemCode = service.selectItem();
 	        item.put("item_code", itemCode);
+	        item.put("id", id);
 	        
 	        // 가격에서 쉼표 제거
 	        String itemPrice = item.get("item_price");

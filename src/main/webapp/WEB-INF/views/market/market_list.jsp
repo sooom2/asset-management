@@ -11,6 +11,14 @@
 <title>Insert title here</title>
 </head>
   <body>
+  <input type="hidden" id="item_category" name="item_category" value="">
+  <input type="hidden" id="item_status" name="item_status" value="판매중">
+  <input type="hidden" id="item_price_min" name="item_price_min" value="0">
+  <input type="hidden" id="item_price_max" name="item_price_max" value="999999999999999">
+  <input type="hidden" id="member_grade" name="member_grade" value="">
+  <input type="hidden" id="sort" name="sort" value="default">
+  <input type="hidden" id="item_code" name="item_code" value="">
+  
   <jsp:include page="../nav.jsp" />
         <div id="__next">
             <div class="layout__Header-sc-1fg0dfe-0 iSTjqT">
@@ -49,7 +57,7 @@
 			        <label for="grade" style="cursor: pointer;"><input type="checkbox" value="checked" id="grade"/>새싹등급 이상 판매자</label>
 			          	 
 			        <!-- 거래완료 제외하고 보기 -->
-			        <label for="complete" style="cursor: pointer;"><input type="checkbox" value="checked" id="complete"/>거래완료물품제외</label>
+			        <label for="complete" style="cursor: pointer;"><input type="checkbox" value="checked" id="complete" checked="checked"/>거래완료물품제외</label>
 			        
 			        	
 		               <div class="searchIconWrapper marketListSearch">
@@ -85,13 +93,13 @@
 							<!-- 가격상세 -->
 							<div class="priceDetail fEjcIX" style="display: none;">
 								<input type="text" placeholder="최저금액"
-									class="price__MinPrice-sc-1yxjw4n-2 cRHAEh" value="">
+									class="item_price_min cRHAEh" value="">
 								<div class="price__StartPointText-sc-1yxjw4n-1 cOhRDO">원
 									부터~</div>
 								<input type="text" placeholder="최고금액"
-									class="price__MaxPrice-sc-1yxjw4n-3 dfgaGw" value="">
+									class="item_price_max dfgaGw" value="">
 								<div class="price__EndPointText-sc-1yxjw4n-4 ecxgoB">원 까지</div>
-								<button class="price__ApplyBtn-sc-1yxjw4n-5 ezrKUu">적용하기</button>
+								<button class="priceApplyBtn ezrKUu">적용하기</button>
 							</div>
 
 						</div>
@@ -111,18 +119,6 @@
 							src="https://ccimage.hellomarket.com/img/web/search/filter/refresh.svg"
 							alt="reset" class="tagListResetImg">
 					</div>
-					<div class="tagListTag">
-						<div class="tagListName">파란글씨는</div>
-						<img
-							src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png"
-							alt="remove" class="tagListRemove">
-					</div>
-					<div class="tagListTag">
-						<div class="tagListName">.tagListName</div>
-						<img
-							src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png"
-							alt="remove" class="tagListRemove">
-					</div>
 				</div>
 			</div>
 			<div class="searchedListWrapper">
@@ -131,11 +127,11 @@
                         	<span class="Count">281,414</span>개의 상품이 있습니다.                    
                         </div>
                         <!--  -->
-                        <div class="SortListWrapper" onclick="">
-                        	<div class="SortListList">최근 등록순</div>
-                        	<div class="SortListList">낮은 가격순</div>
-                        	<div class="SortListList">높은 가격순</div>
-                        	<div class="SortListList">높은 등급순</div>
+                        <div class="SortListWrapper">
+                        	<div class="SortListList" id="default" title="최근 등록순">최근 등록순</div>
+                        	<div class="SortListList" id="lowPrice" title="낮은 가격순">낮은 가격순</div>
+                        	<div class="SortListList" id="highPrice" title="높은 가격순">높은 가격순</div>
+                        	<div class="SortListList" id="highGrade" title="높은 등급순">높은 등급순</div>
                        	</div>
                        	<!--  -->
                         <div class="sortSortBox">
@@ -146,29 +142,9 @@
                     </div>
                     <div>
                     	<!-- 목록 -->
-	                    <div class="infinite-scroll-component " style="height:auto;overflow:auto;-webkit-overflow-scrolling:touch">
+	                    <div class="infinite-scroll-component " style="height:auto;">
 							<div class="itemListWrapper">
 								<div class="itemWrapper">
-<%-- 									<c:forEach  var="item" items="${marketItemList }"> --%>
-<!-- 									<div class="itemThumbnailBox"> -->
-<%-- 										<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail" onclick="location.href='market_detail'"> --%>
-<!-- 											<div class="wishWrapper"> -->
-<%-- 												<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon"> --%>
-<!-- 											</div> -->
-<!-- 									</div> -->
-<!-- 									삭제 -->
-<!-- 									<div class="itemTextBox"> -->
-<%-- 									<div class="itemCategory">${item.item_category }</div> --%>
-<%-- 									<div class="itemText" onclick="location.href='market_detail'">${item.item_subject }</div> --%>
-<%-- 									<div class="itemText">${item.item_price }원</div> --%>
-<!-- 									<div class="itemTagBox"> -->
-<%-- 									<c:forTokens items="${item.item_tag }" delims="," var="itemTag"> --%>
-<%-- 										<div class="itemSizeTag">${itemTag}</div> --%>
-<%-- 									</c:forTokens> --%>
-<!-- 									</div> -->
-<!-- 									<div class="itemTimeTag">item 테이블 date type 시간으로 바꿔야함</div> -->
-<!-- 									</div> -->
-<%-- 									</c:forEach> --%>
 								</div>
 							</div>
 						</div>
@@ -181,28 +157,62 @@
           
 	<script type="text/javascript">
 		function category(categoryId) {
+			//기존값에 카테고리 추가
+			var category = $("#item_category").val();
+			var str = '';
 			switch(categoryId) {
-				case "all": console.log(categoryId); break;
-				case "fashion": console.log(categoryId); break;
-				case "pc": console.log(categoryId); break;
-				case "interior": console.log(categoryId); break;
-				case "book": console.log(categoryId); break;
-				case "game": console.log(categoryId); break;
-				case "child": console.log(categoryId); break;
-				case "etc": console.log(categoryId); break;
-				default: console.log("엥");
+				case "fashion": str += "패션/의류/잡화/뷰티"; break;
+				case "pc": str += "가전제품/모바일/PC"; break;
+				case "interior": str += "가구/인테리어"; break;
+				case "book": str += "도서/음반/문구/티켓"; break;
+				case "game": str += "게임/스포츠/취미"; break;
+				case "child": str += "유아동/반려동물"; break;
+				case "etc": str += "기타"; break;
+				case "all": 
 			}
+			
+			// all이면 null 넘김
+			if(categoryId == "all") {
+				$("#item_category").val("");
+			} else {
+				if(category != ""){
+					category += "/";
+				}
+				category += str;
+				$("#item_category").val(category);
+			}
+			marketItemList();
 		}
 		
+		// 상품 리스트 불러오기
 		function marketItemList() {
+			$(".itemThumbnailBox").remove();
+
+			var item_category = $("#item_category").val();
+			var item_status = $("#item_status").val();
+			var item_price_min = $("#item_price_min").val();
+			var item_price_max = $("#item_price_max").val();
+			var member_grade = $("#member_grade").val();
+			var sort = $("#sort").val();
+			
+			console.log("---var---")
+			console.log(item_category);
+			console.log(item_status);
+			console.log(item_price_min);
+			console.log(item_price_max);
+			console.log(member_grade);
+			console.log(sort);
+			
 			$.ajax({													
 	 			type: "GET",
 	 			url: "marketItemList",
 	 			data: { 
-	 				item_category : "패션",
-	 				item_status : "판매중",
-	 				item_price_min : "10000",
-	 				item_price_max : "23000"
+	 				item_category : item_category,
+	 				item_status : item_status,
+	 				item_price_min : item_price_min,
+	 				item_price_max : item_price_max,
+	 				member_grade : member_grade,
+	 				sort : sort
 	 			},
 	 			dataType: "json",
 	 			success: function(response) { 
@@ -213,10 +223,21 @@
 						let price = item.item_price;
 						let tags = item.item_tag;
 						let tag = tags.split(',');
+						let date = item.item_date;
+						let code = item.item_code;
+						let image = item.image_name;
+						
+						if(image == null) {
+							image = "${path }/resources/images/main/noThumbnail.jpg";
+						} else {
+					        image = "http://c3d2212t3.itwillbs.com/images/" + image;
+					    }
 
-						var str = '<div class="itemThumbnailBox">';
+						var str = '<div class="itemThumbnailBox" data-cd="';
+						str += code;
+						str +=	'">';
 						str += '<div class="itemThumbnailBox">';
-						str += '<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">';
+						str += '<img src="' + image + '" alt="썸네일" class="itemThumbnail" style="cursor: pointer">';
 						str += '<div class="wishWrapper">';
 						str += '<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">';
 						str += '</div>';
@@ -225,9 +246,7 @@
 						str += '<div class="itemCategory">';
 						str += category;
 						str += '</div>';
-						str += '<div class="itemText" onclick="location.href=';
-						str += "'market_detail'";
-						str += '">';
+						str += '<div class="itemText subject">';
 						str += subject;
 						str += '</div>';
 						str += '<div class="itemText">';
@@ -249,9 +268,9 @@
 						}
 						
 						str += '</div>';
-						str += '<div class="itemTimeTag">';
-						str += 'item 테이블 date type 시간으로 바꿔야함';
 						str += '</div>';
+						str += '<div class="itemTimeTag">';
+						str += date;
 						str += '</div>';
 						
 						$(".itemWrapper").append(str);
@@ -259,13 +278,15 @@
 	 				}
 	 			},
 	 			error: function(xhr, textStatus, errorThrown) {
-	 				console.log("preferMoviesList : 요청처리실패");
+	 				console.log("marketItemList : 요청처리실패");
 	 			}
 	 		});
 		}
+		
+		
 		$(function () {
 			marketItemList();
-
+			
 			
 			$(".FilterCategory").on("click", function(e) {
 				$(".priceDetail").hide();
@@ -278,7 +299,7 @@
 			
 			
 			// 카테고리 선택
-			$(".ListNonSelected").on("click", function(e) {
+			$(document).on("click", ".ListNonSelected", function(e) {
 				$(".ListSelected").attr("class", "ListNonSelected");
 				$(this).attr("class", "ListSelected");
 				
@@ -296,13 +317,119 @@
 				$(".tagListFilterBox").append(tagStr);
 				
 				
-				
 			});
-			
+
+
 			// 필터 remove
 			$(document).on("click", ".tagListRemove", function(e) {
 				$(this).parent().remove();
 			});
+			$(document).on("click", ".tagListResetImg", function(e) {
+				$(".tagListTag").remove();
+			});
+			
+			
+			// 가격 설정
+			$(document).on("click", ".priceApplyBtn", function(e) {
+				$("#item_price_min").val(0);
+				$("#item_price_max").val(999999999999999);
+				
+				var item_price_min = $(".item_price_min").val();
+				var item_price_max = $(".item_price_max").val();
+				
+				console.log(item_price_min);
+				console.log(item_price_max);
+				// 필터에 추가
+				$(".tagPrice").remove();
+				var tagStr = '';
+				tagStr += '<div class="tagPrice">';
+				tagStr += '<div class="tagListTag">';
+				tagStr += '<div class="tagListName">';
+				tagStr += item_price_min;
+				tagStr += '원~';
+				tagStr += item_price_max;
+				tagStr += '원';
+				tagStr += '</div>';
+				tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div></div>';
+				$(".tagListFilterBox").append(tagStr);
+				
+				
+				$("#item_price_min").val(item_price_min);
+				$("#item_price_max").val(item_price_max);
+				marketItemList();
+			});
+			
+			
+			// 거래완료 체크
+			$(document).on("click", "#complete", function(e) {
+				var completeChecked = $("#complete").prop("checked")
+				if(completeChecked) {
+					$("#item_status").val("판매중");
+				} else {
+					$("#item_status").val("");
+				}
+				marketItemList();
+			});
+			
+			
+			// 등급 체크
+			$(document).on("click", "#grade", function(e) {
+				var gradeChecked = $("#grade").prop("checked")
+				if(gradeChecked) {
+					$("#member_grade").val("새싹");
+				} else {
+					$("#member_grade").val("");
+				}
+				marketItemList();
+			});
+			
+			
+			// 정렬 박스 열기
+			$(document).on("click", ".sortSortBox", function(e) {
+				if($('.SortListWrapper').css('display') == 'none' ) {
+					  $('.SortListWrapper').show();
+					} else {
+					  $('.SortListWrapper').hide();
+					}
+			});
+			
+			
+			// 정렬 선택
+			$(document).on("click", ".SortListList", function(e) {
+				$(".sortSortBox").remove();
+				var title = $(this).attr("title");
+				// 정렬 글자 변경
+				var str = '';
+				str += '<div class="sortSortBox">';
+				str += '<div class="sortSort">';
+				str += title;
+				str += '</div>';
+				str += '<img src="https://ccimage.hellomarket.com/img/web/search/itemList/ico_sort.png" alt="정렬 아이콘" class="sortSortImg"/></div>';
+				
+				$(".SortListWrapper").after(str);
+				
+				var sort = $(this).attr("id");
+				$("#sort").val(sort);
+				marketItemList();
+			});
+			
+			
+			
+			
+			// 제목 클릭
+			$(document).on("click", ".subject", function(e) {
+				location.href="market_detail";
+				
+			});
+			
+			
+			// 이미지 클릭
+			$(document).on("click", ".itemThumbnail", function(e) {
+				var item_code = $(this).parent().parent().data("cd");
+				$("#item_code").val(item_code);
+				location.href="market_detail?item_code=" + $("#item_code").val();
+			});
+			
 			
 			
 		});
