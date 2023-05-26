@@ -38,29 +38,84 @@
 
 // ==========================================================
 $(document).ready(function() {
-		
+// 	var message = ${price};
+	var message;
+	var nowPrice = ${price};
+	
 	function chatSend() {
+// 		console.log(" 옥션 프라이스 텍스트" + $(".auction_price").text())
+	
 		const data = {
 			"id" : "${ sessionScope.sId }",
 			"name" : "${ sessionScope.nickname }",
-			"message"   : $('#message').val()
+			"message"   : message
+// 				if($('#message').val() != null && $('#message').val() != "") {
+// 				$('#message').val()
+// 				}
 		};
 		let jsonData = JSON.stringify(data);
 		socket.send(jsonData);
 		$('#message').val('');
+		
 	};
 	
-	// 버튼 누름 전송
-	$('#btnAskingPrice').on("click", function(evt) {
+// 	// 버튼 누름 전송
+// 	$('#btnAskingPrice').on("click", function(evt) {
+// 		chatSend();
+// 		evt.preventDefault();
+// 	});
+// 	// 버튼 누름 전송
+// 	$('#btnBid').on("click", function(evt) {
+// 		chatSend();
+// 		evt.preventDefault();
+// 	});
+	
+
+	$(".btn").click(function(){
+		
+		
+		//버튼을 눌렀을때 data-price가 없으면	
+		// data-price 없는게 직접 입력 버튼
+		if($(this).attr("data-price") == ""){ // 가격 직접 입력시 
+			// id = message 값을 message에
+			message = $("#message").val();			
+		}else{ // 입찰하기(1%값) 버튼 클릭시 
+// 			message = $(".auction_price").find("span").html();
+			// 누른 값에 해당하는 data-price 속성의 값을 메시지에
+			// 현재 상황 입찰하기 버튼을 눌렀을 때 입찰하기 버튼에 data-price속성이 있어서 그 값을 가져오는것
+			console.log("1번" + message);
+			console.log("1-1번" + typeof message); // number
+// 			if(message == null || message == "") {
+// 				message = (parseInt($(this).attr("data-price"), 10) + ${price }) + ""; // 3300
+// 				console.log("4번" + message + typeof message); // 303000  string
+// 			} else {
+// 				console.log("else도착");
+				message = (parseInt($(this).attr("data-price"), 10) + parseInt(nowPrice, 10) + "");
+				console.log("2번" + message);
+// 			}
+		}
+		
+		if(message == ""){
+			alert("금액을 입력해주세요")
+			return false;
+		}
+		else if(message < ${price} ) {
+			alert("최소금액 보다 높게 입력해주세요")
+			$("#message").val("");
+			message = nowPrice;
+			return false;
+		}
+		
+		if(nowPrice < message) {
+			nowPrice = message;
+		}
+		
+		console.log(message);
 		chatSend();
-		evt.preventDefault();
-	});
-	// 버튼 누름 전송
-	$('#btnBid').on("click", function(evt) {
-		chatSend();
-		evt.preventDefault();
-	});
+	})
+	
 	connect();
+	
 });
 
 
@@ -92,27 +147,33 @@ function connect() {
 		var message = null;
 		
 		var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
-		
+		console.log(data);
 		sessionId = data.split(":")[0];
 		sessionName = data.split(":")[1];
 		message = data.split(":")[2];
-		
-		// 경매 로그
-		var str = "<div class='chat_myself'>" + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + amPm + " " + hours + ":" + minutes + "</div>";
-		$(".chatBox").append(str);
-		
-		// 낙찰 최대금액 닉네임
-		var str1 = "<span>" + sessionName + "님</span>";
-		$(".auction_id").html(str1);
+
 		
 		// 낙찰 최대금액
-		var str2 = "<span>" + message + "</span>원&nbsp;<i class='fa-solid fa-comment-dollar'></i>";
-		$(".auction_price").html(str2);
+	//	var auctionMax = "<span>" + message + "</span>원&nbsp;<i class='fa-solid fa-comment-dollar'></i>";
+	//	$(".auction_price").html(auctionMax);
+		$(".auction_price").find("span").html(message);
+// 		$("#btnAskingPrice").attr("data-price",message);
+		//  입찰하기 부분이 현재 최고가 기준으로 변경됨 (속성만)
+		// 보여주는 부분을 변경하려면 val()을 수정해야하는것
+// 		$("btnAskingPrice").attr("data-price", message);
+		
+		// 낙찰 최대금액 닉네임
+		var auctionNic = "<span>" + sessionName + "님</span>";
+		$(".auction_id").html(auctionNic);
+		
+		// 경매 로그
+		var auctionLog = "<div class='chat_myself'>" + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + amPm + " " + hours + ":" + minutes + "</div>";
+		$(".chatBox").append(auctionLog);
 		
 		if(sessionId == cur_session) { // 세션 ID 와 입력된 금액의 ID가 같을 경우
 			// 내가 입력한 낙찰가
-			var str3 =  message + "원";
-			$(".my_bid").html(str3);
+			var auctionMyPrice =  message + "원";
+			$(".my_bid").html(auctionMyPrice);
 		}
 	};
 	
@@ -177,7 +238,7 @@ function connect() {
 						<div class="auction_price"><span>${auction.auction_present_price }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
 						<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
 						<div class="auction_id">
-<!-- 						<span>'추누공주'님</span> -->
+						<span>추누공주님</span>
 						</div>
 					</div>
 					<div class="auction_realStatus">
@@ -207,10 +268,19 @@ function connect() {
 							
 <%-- 								<div>${prince * 0.1 }원 소수점 지워지나?</div> --%>
 								<div>${deposit }원</div>
-								<div><input type="button" id="btnAskingPrice" value="입찰(+${askingPrice })" style="width: 228px"></div>
-								<div><input type="text" id="message" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="금액입력"><input type="button" value="입찰" id="btnBid"></div>
-								<div class="my_bid">28,000원</div>
-								<div class="buy_now"><span style="color:#bb2649">${purchase }원</span><input type="button" id="btnPurchase" value="즉시구매" style="float: right;margin-right: 11px;"></div>
+								<div>
+									<input type="button" id="btnAskingPrice" value="즉시입찰(+${askingPrice })" style="width: 228px"
+									data-price="${askingPrice }" class="btn">
+								</div><!-- 실시간 변동 금액에 대한 호가 계산 -->
+								<div>
+									<input type="text" id="message" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="금액입력">
+									<input type="button" value="입찰" id="btnBid" class="btn" data-price="">
+								</div>
+								<div class="my_bid"></div>
+								<div class="buy_now">
+									<span style="color:#bb2649">${purchase }원</span>
+									<input type="button" id="btnPurchase" value="즉시구매" style="float: right;margin-right: 11px;">
+								</div>
 							</div>
 						</div>
 					</div>
