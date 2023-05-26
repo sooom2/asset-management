@@ -10,11 +10,326 @@
 <script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
 <link href="${path }/resources/css/auction.css" rel="stylesheet">
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <style type="text/css">
 .contentImage {
 	height: 300px;
 }
 </style>
+
+<script type="text/javascript">
+// $(function(){ 
+// 	$('#btnAskingPrice').click(function(askingPrice) { // 물건 금액 5% 가격으로 입찰
+// 		console.log(${askingPrice })
+		
+// 	});
+	
+// 	$('#btnBid').click(function() { // 입찰하기
+// // 		console.log(" du dd")
+		
+// 	});
+	
+// 	$('#btnBid').click(function() { // 즉시구매
+// // 		console.log(" du dd")
+		
+// 	});
+// });
+
+// ==========================================================
+$(document).ready(function() {
+		
+	function chatSend() {
+		const data = {
+			"id" : "${ sessionScope.sId }",
+			"name" : "${ sessionScope.nickname }",
+			"message"   : $('#message').val()
+		};
+		let jsonData = JSON.stringify(data);
+		socket.send(jsonData);
+		$('#message').val('');
+	};
+	
+	// 버튼 누름 전송
+	$('#btnAskingPrice').on("click", function(evt) {
+		chatSend();
+		evt.preventDefault();
+	});
+	// 버튼 누름 전송
+	$('#btnBid').on("click", function(evt) {
+		chatSend();
+		evt.preventDefault();
+	});
+	connect();
+});
+
+
+//채팅 시간
+let today = new Date();
+let h = today.getHours();
+let m = today.getMinutes();
+
+let amPm = h < 12 ? "오전" : "오후";
+let hours = h < 12 ? h : h - 12; // 시
+let minutes = m < 10 ? "0" + m : m;  // 분
+
+
+var socket = null;
+function connect() {
+	var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/auctionChat");
+	socket = ws;
+	
+	ws.onopen = function() {
+		console.log('Info: connection opened');
+		
+	};
+	
+	// 메세지 수신
+	ws.onmessage = function (msg) {
+		var data = msg.data;
+		var sessionId = null; //데이터를 보낸 사람
+		var sessionName = null; 
+		var message = null;
+		
+		var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
+		
+		sessionId = data.split(":")[0];
+		sessionName = data.split(":")[1];
+		message = data.split(":")[2];
+		
+		// 경매 로그
+		var str = "<div class='chat_myself'>" + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + amPm + " " + hours + ":" + minutes + "</div>";
+		$(".chatBox").append(str);
+		
+		// 낙찰 최대금액 닉네임
+		var str1 = "<span>" + sessionName + "님</span>";
+		$(".auction_id").html(str1);
+		
+		// 낙찰 최대금액
+		var str2 = "<span>" + message + "</span>원&nbsp;<i class='fa-solid fa-comment-dollar'></i>";
+		$(".auction_price").html(str2);
+		
+		if(sessionId == cur_session) { // 세션 ID 와 입력된 금액의 ID가 같을 경우
+			// 내가 입력한 낙찰가
+			var str3 =  message + "원";
+			$(".my_bid").html(str3);
+		}
+	};
+	
+	ws.onclose = function (event) { console.log('Info: connection closed'); };
+	ws.onerror = function (event) { console.log('Info: connection closed'); };
+}
+// ==========================================================
+
+</script>
+<script type="text/javascript">
+// $(function(){ 
+// 	$('#btnAskingPrice').click(function(askingPrice) { // 물건 금액 5% 가격으로 입찰
+// 		console.log(${askingPrice })
+		
+// 	});
+	
+// 	$('#btnBid').click(function() { // 입찰하기
+// // 		console.log(" du dd")
+		
+// 	});
+	
+// 	$('#btnBid').click(function() { // 즉시구매
+// // 		console.log(" du dd")
+		
+// 	});
+// });
+
+// ==========================================================
+$(document).ready(function() {
+		
+	function chatSend() {
+		const data = {
+			"id" : "${ sessionScope.sId }",
+			"name" : "${ sessionScope.nickname }",
+			"message"   : $('#message').val()
+		};
+		let jsonData = JSON.stringify(data);
+		socket.send(jsonData);
+		$('#message').val('');
+	};
+	
+	// 버튼 누름 전송
+	$('#btnAskingPrice').on("click", function(evt) {
+		chatSend();
+		evt.preventDefault();
+	});
+	// 버튼 누름 전송
+	$('#btnBid').on("click", function(evt) {
+		chatSend();
+		evt.preventDefault();
+	});
+	connect();
+});
+
+
+//채팅 시간
+let today = new Date();
+let h = today.getHours();
+let m = today.getMinutes();
+
+let amPm = h < 12 ? "오전" : "오후";
+let hours = h < 12 ? h : h - 12; // 시
+let minutes = m < 10 ? "0" + m : m;  // 분
+
+
+var socket = null;
+function connect() {
+	var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/auctionChat");
+	socket = ws;
+	
+	ws.onopen = function() {
+		console.log('Info: connection opened');
+		
+	};
+	
+	// 메세지 수신
+	ws.onmessage = function (msg) {
+		var data = msg.data;
+		var sessionId = null; //데이터를 보낸 사람
+		var sessionName = null; 
+		var message = null;
+		
+		var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
+		
+		sessionId = data.split(":")[0];
+		sessionName = data.split(":")[1];
+		message = data.split(":")[2];
+		
+		// 경매 로그
+		var str = "<div class='chat_myself'>" + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + amPm + " " + hours + ":" + minutes + "</div>";
+		$(".chatBox").append(str);
+		
+		// 낙찰 최대금액 닉네임
+		var str1 = "<span>" + sessionName + "님</span>";
+		$(".auction_id").html(str1);
+		
+		// 낙찰 최대금액
+		var str2 = "<span>" + message + "</span>원&nbsp;<i class='fa-solid fa-comment-dollar'></i>";
+		$(".auction_price").html(str2);
+		
+		if(sessionId == cur_session) { // 세션 ID 와 입력된 금액의 ID가 같을 경우
+			// 내가 입력한 낙찰가
+			var str3 =  message + "원";
+			$(".my_bid").html(str3);
+		}
+	};
+	
+	ws.onclose = function (event) { console.log('Info: connection closed'); };
+	ws.onerror = function (event) { console.log('Info: connection closed'); };
+}
+// ==========================================================
+
+</script>
+<script type="text/javascript">
+// $(function(){ 
+// 	$('#btnAskingPrice').click(function(askingPrice) { // 물건 금액 5% 가격으로 입찰
+// 		console.log(${askingPrice })
+		
+// 	});
+	
+// 	$('#btnBid').click(function() { // 입찰하기
+// // 		console.log(" du dd")
+		
+// 	});
+	
+// 	$('#btnBid').click(function() { // 즉시구매
+// // 		console.log(" du dd")
+		
+// 	});
+// });
+
+// ==========================================================
+$(document).ready(function() {
+		
+	function chatSend() {
+		const data = {
+			"id" : "${ sessionScope.sId }",
+			"name" : "${ sessionScope.nickname }",
+			"message"   : $('#message').val()
+		};
+		let jsonData = JSON.stringify(data);
+		socket.send(jsonData);
+		$('#message').val('');
+	};
+	
+	// 버튼 누름 전송
+	$('#btnAskingPrice').on("click", function(evt) {
+		chatSend();
+		evt.preventDefault();
+	});
+	// 버튼 누름 전송
+	$('#btnBid').on("click", function(evt) {
+		chatSend();
+		evt.preventDefault();
+	});
+	connect();
+});
+
+
+//채팅 시간
+let today = new Date();
+let h = today.getHours();
+let m = today.getMinutes();
+
+let amPm = h < 12 ? "오전" : "오후";
+let hours = h < 12 ? h : h - 12; // 시
+let minutes = m < 10 ? "0" + m : m;  // 분
+
+
+var socket = null;
+function connect() {
+	var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/auctionChat");
+	socket = ws;
+	
+	ws.onopen = function() {
+		console.log('Info: connection opened');
+		
+	};
+	
+	// 메세지 수신
+	ws.onmessage = function (msg) {
+		var data = msg.data;
+		var sessionId = null; //데이터를 보낸 사람
+		var sessionName = null; 
+		var message = null;
+		
+		var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
+		
+		sessionId = data.split(":")[0];
+		sessionName = data.split(":")[1];
+		message = data.split(":")[2];
+		
+		// 경매 로그
+		var str = "<div class='chat_myself'>" + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + amPm + " " + hours + ":" + minutes + "</div>";
+		$(".chatBox").append(str);
+		
+		// 낙찰 최대금액 닉네임
+		var str1 = "<span>" + sessionName + "님</span>";
+		$(".auction_id").html(str1);
+		
+		// 낙찰 최대금액
+		var str2 = "<span>" + message + "</span>원&nbsp;<i class='fa-solid fa-comment-dollar'></i>";
+		$(".auction_price").html(str2);
+		
+		if(sessionId == cur_session) { // 세션 ID 와 입력된 금액의 ID가 같을 경우
+			// 내가 입력한 낙찰가
+			var str3 =  message + "원";
+			$(".my_bid").html(str3);
+		}
+	};
+	
+	ws.onclose = function (event) { console.log('Info: connection closed'); };
+	ws.onerror = function (event) { console.log('Info: connection closed'); };
+}
+// ==========================================================
+
+</script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
@@ -67,19 +382,20 @@
 					
 					<div class="auction_realTime">
 						<span style="font-size: 25px;">실시간 경매</span>
-						<div class="auction_price"><span>30,000</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
+						<div class="auction_price"><span>${auction.auction_present_price }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
 						<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
-						<div class="auction_id"><span>'추누공주'님</span></div>
+						<div class="auction_id">
+<!-- 						<span>'추누공주'님</span> -->
+						</div>
 					</div>
 					<div class="auction_realStatus">
 						<div class="auction_log_title">경매로그</div>
 						<div class="auction_log">
-							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇㅇ님 ㅇdddddㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇddddㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇddddㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
+							<div class="chatBox">
+								<div class="chat_myself">
+								</div>
+							</div>
+<!-- 							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div> -->
 						</div>
 					</div>
 					<div class="auction_input">
@@ -90,17 +406,21 @@
 						<div class="bid">
 							<div class="bid_left">
 								<div>MY 보증금</div>
-								<div>경매단가로 입찰하기</div>
-								<div>입찰가격</div>
+								<div>입찰하기</div>
+								<div>가격 입찰</div>
 								<div>내 입찰가</div>
 								<div>즉시구매가</div>
 							</div>
 							<div class="bid_right">
-								<div>200,000원</div>
+							
+<%-- 								<div>${prince * 0.1 }원 소수점 지워지나?</div> --%>
+								<div>${deposit }원</div>
 								<div><input type="button" value="단가입찰(상품금액의 5%)" style="width: 228px"></div>
 								<div><input type="text" placeholder="금액입력"><input type="button" value="입찰"></div>
+								<div><input type="button" id="btnAskingPrice" value="입찰(+${askingPrice })" style="width: 228px"></div>
+								<div><input type="text" id="message" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="금액입력"><input type="button" value="입찰" id="btnBid"></div>
 								<div class="my_bid">28,000원</div>
-								<div class="buy_now"><span style="color:#bb2649">35,000원</span><input type="button" value="즉시구매" style="float: right;margin-right: 11px;"></div>
+								<div class="buy_now"><span style="color:#bb2649">${purchase }원</span><input type="button" id="btnPurchase" value="즉시구매" style="float: right;margin-right: 11px;"></div>
 							</div>
 						</div>
 					</div>
