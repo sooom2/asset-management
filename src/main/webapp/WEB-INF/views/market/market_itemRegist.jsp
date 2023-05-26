@@ -282,6 +282,32 @@
 	});
 </script>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // 양식 요소 가져오기
+    var form = document.querySelector(".insertItem");
+
+    // 양식에 제출 이벤트 리스너 추가
+    form.addEventListener("submit", function(event) {
+      // 입력 필드 가져오기
+      var titleInput = form.querySelector('input[name="item_subject"]');
+      var categoryInput = form.querySelector('input[name="item_category"]');
+      var priceInput = form.querySelector('input[name="item_price"]');
+      var contentInput = form.querySelector('textarea[name="item_content"]');
+
+      // 입력 필드 유효성 검사
+      if (titleInput.value.trim() === "" || categoryInput.value.trim() === "" || priceInput.value.trim() === "" || contentInput.value.trim() === "") {
+        // 양식 제출 방지
+        event.preventDefault();
+
+        // 오류 메시지 표시 또는 원하는 작업 수행
+        alert("필수 항목을 모두 입력해주세요.");
+      }
+    });
+  });
+</script>
+
+
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />

@@ -252,6 +252,7 @@
     width: 240px;
     /* height: 500px; */
     float: left;
+    margin-bottom: 10px;
 }
 
 .itemWrapper .itemThumbnail {

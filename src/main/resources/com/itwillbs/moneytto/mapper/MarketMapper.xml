@@ -70,6 +70,17 @@
 				WHERE member_id = #{openentId}
 	</select>
 	
+	<select id="isInsertChatRoom" resultType="int">
+		SELECT count(*)
+			FROM market_chat_rooms
+				LEFT JOIN market_chat_messages
+						ON market_chat_rooms.room_code = market_chat_messages.room_code
+					WHERE 1=1
+					  AND market_chat_rooms.item_code = #{item_code}
+					  AND (sell_member_id = #{id}
+					  OR buy_member_id= #{id})
+	</select>
+	
 	<select id="opponentId" resultType="hashmap">
 		SELECT oppenent_id
          FROM (
@@ -228,13 +239,21 @@
       	ORDER BY room_code DESC LIMIT 1
 	</select>
 	
+	<select id="item_code" resultType="hashmap">
+		SELECT item_code
+			FROM market_chat_rooms
+				WHERE room_code=#{item_code}
+	</select>
+	
 	<update id="updateStatus">
 		UPDATE item
 			SET
-				item_status = #{itme_status}
+				item_status = #{item_status}
 			 WHERE
 			 	item_code=#{item_code} 
 	</update>
+	
+	
 
 	<!-- 마켓 아이템 리스트 -->
 	<select id="marketItemList" resultType="hashmap">
