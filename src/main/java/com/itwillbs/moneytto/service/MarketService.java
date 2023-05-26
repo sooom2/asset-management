@@ -36,6 +36,11 @@ public class MarketService {
 	}
 
 
+	public HashMap<String, String> getMarketItem(String item_code) {
+		return mapper.marketItem(item_code);
+	}
+
+
 	
 	
 }

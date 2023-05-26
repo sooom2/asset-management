@@ -17,6 +17,7 @@
   <input type="hidden" id="item_price_max" name="item_price_max" value="999999999999999">
   <input type="hidden" id="member_grade" name="member_grade" value="">
   <input type="hidden" id="sort" name="sort" value="default">
+  <input type="hidden" id="item_code" name="item_code" value="">
   
   <jsp:include page="../nav.jsp" />
         <div id="__next">
@@ -118,18 +119,6 @@
 							src="https://ccimage.hellomarket.com/img/web/search/filter/refresh.svg"
 							alt="reset" class="tagListResetImg">
 					</div>
-					<div class="tagListTag">
-						<div class="tagListName">파란글씨는</div>
-						<img
-							src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png"
-							alt="remove" class="tagListRemove">
-					</div>
-					<div class="tagListTag">
-						<div class="tagListName">.tagListName</div>
-						<img
-							src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png"
-							alt="remove" class="tagListRemove">
-					</div>
 				</div>
 			</div>
 			<div class="searchedListWrapper">
@@ -156,26 +145,6 @@
 	                    <div class="infinite-scroll-component " style="height:auto;">
 							<div class="itemListWrapper">
 								<div class="itemWrapper">
-<%-- 									<c:forEach  var="item" items="${marketItemList }"> --%>
-<!-- 									<div class="itemThumbnailBox"> -->
-<%-- 										<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail" onclick="location.href='market_detail'"> --%>
-<!-- 											<div class="wishWrapper"> -->
-<%-- 												<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon"> --%>
-<!-- 											</div> -->
-<!-- 									</div> -->
-<!-- 									삭제 -->
-<!-- 									<div class="itemTextBox"> -->
-<%-- 									<div class="itemCategory">${item.item_category }</div> --%>
-<%-- 									<div class="itemText" onclick="location.href='market_detail'">${item.item_subject }</div> --%>
-<%-- 									<div class="itemText">${item.item_price }원</div> --%>
-<!-- 									<div class="itemTagBox"> -->
-<%-- 									<c:forTokens items="${item.item_tag }" delims="," var="itemTag"> --%>
-<%-- 										<div class="itemSizeTag">${itemTag}</div> --%>
-<%-- 									</c:forTokens> --%>
-<!-- 									</div> -->
-<!-- 									<div class="itemTimeTag">item 테이블 date type 시간으로 바꿔야함</div> -->
-<!-- 									</div> -->
-<%-- 									</c:forEach> --%>
 								</div>
 							</div>
 						</div>
@@ -254,10 +223,21 @@
 						let price = item.item_price;
 						let tags = item.item_tag;
 						let tag = tags.split(',');
+						let date = item.item_date;
+						let code = item.item_code;
+						let image = item.image_name;
+						
+						if(image == null) {
+							image = "${path }/resources/images/main/noThumbnail.jpg";
+						} else {
+					        image = "http://c3d2212t3.itwillbs.com/images/" + image;
+					    }
 
-						var str = '<div class="itemThumbnailBox">';
+						var str = '<div class="itemThumbnailBox" data-cd="';
+						str += code;
+						str +=	'">';
 						str += '<div class="itemThumbnailBox">';
-						str += '<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">';
+						str += '<img src="' + image + '" alt="썸네일" class="itemThumbnail" style="cursor: pointer">';
 						str += '<div class="wishWrapper">';
 						str += '<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">';
 						str += '</div>';
@@ -266,9 +246,7 @@
 						str += '<div class="itemCategory">';
 						str += category;
 						str += '</div>';
-						str += '<div class="itemText" onclick="location.href=';
-						str += "'market_detail'";
-						str += '">';
+						str += '<div class="itemText subject">';
 						str += subject;
 						str += '</div>';
 						str += '<div class="itemText">';
@@ -290,9 +268,9 @@
 						}
 						
 						str += '</div>';
-						str += '<div class="itemTimeTag">';
-						str += 'item 테이블 date type 시간으로 바꿔야함';
 						str += '</div>';
+						str += '<div class="itemTimeTag">';
+						str += date;
 						str += '</div>';
 						
 						$(".itemWrapper").append(str);
@@ -434,6 +412,25 @@
 				$("#sort").val(sort);
 				marketItemList();
 			});
+			
+			
+			
+			
+			// 제목 클릭
+			$(document).on("click", ".subject", function(e) {
+				location.href="market_detail";
+				
+			});
+			
+			
+			// 이미지 클릭
+			$(document).on("click", ".itemThumbnail", function(e) {
+				var item_code = $(this).parent().parent().data("cd");
+				$("#item_code").val(item_code);
+				location.href="market_detail?item_code=" + $("#item_code").val();
+			});
+			
+			
 			
 		});
 	

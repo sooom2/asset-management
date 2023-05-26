@@ -254,13 +254,17 @@
 
 	<!-- 마켓 아이템 리스트 -->
 	<select id="marketItemList" resultType="hashmap">
-		SELECT i.*, m.grade_score
+		SELECT i.*, m.grade_score, im.*
 			FROM 
 				item i
-			JOIN
+			LEFT JOIN
 				member m
 			ON
 				i.member_id = m.member_id
+			LEFT JOIN 
+				images im
+			ON
+				i.item_code = im.table_code
 			WHERE 
 			<choose>
 			<when test = 'item_category eq null or item_category eq ""'>
@@ -305,6 +309,19 @@
 			      		i.item_code DESC
 			   	  </otherwise> 
 			   </choose> 
+	</select>
+	
+	
+	<select id="marketItem" resultType="hashmap">
+		SELECT i.*, m.*
+			FROM 
+				item i
+			JOIN
+				member m
+			ON
+				i.member_id = m.member_id
+			WHERE
+				i.item_code = #{item_code}
 	</select>
 	
 </mapper>

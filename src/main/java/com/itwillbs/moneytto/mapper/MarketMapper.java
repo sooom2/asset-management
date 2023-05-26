@@ -57,6 +57,9 @@ public interface MarketMapper {
 	// 아이템코드 알아내기
 	HashMap<String, String> item_code(String room_code);
 
+	// 아이템 상세
+	HashMap<String, String> marketItem(String item_code);
+
 	
 	
 
