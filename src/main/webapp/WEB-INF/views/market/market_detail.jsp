@@ -16,6 +16,10 @@ $(function() {
 		
 		location.href="marketChat?item_code="+$(this).data("cd");
 	});
+	$(".SomeonesModifyButton").click(function() {
+		
+		alert("수정페이지 만들면 이동");
+	});
 });
 
 //좋아요 
@@ -95,7 +99,7 @@ function toggleLike(element) {
 								src="https://ccimg.hellomarket.com/images/2017/member_profile/s4/10/11/19/0206_2647700_1.jpg?size=s4"
 								alt="profileImg" class="profileProfileImg">
 							<div class="ProfileInfoWrapper">
-								<div class="ProfileInfoProfileName">왜 닉네임 안뜸</div>
+								<div class="ProfileInfoProfileName">이름이뭐예요</div>
 								<div class="ProfileInfoItemCountBox">
 									<div class="ProfileInfoProduct">${marketItem.item_subject}</div>
 <%-- 									<div class="ProfileInfoProduct">${marketItem.get(0)}</div> --%>
@@ -203,12 +207,27 @@ function toggleLike(element) {
 								<div class="WishWrapper">
 								  <img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png" alt="좋아요 아이콘" class="WishIcon" onclick="toggleLike(this)">
 								</div>
-							<div width="90%" class="SomeonesItemButton"data-cd="${marketItem.item_code }">
+								
+							<c:choose>
+								<c:when test = "${sId } neq ${marketItem.member_id}">
+									<div width="90%" class="SomeonesItemButton"data-cd="${marketItem.item_code }">
 								<img
 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_hellotalk.png"
 									alt="채팅 아이콘" class="SomeonesItemIcon">
 								<div color="#FFFFFF" class="SomeonesItemText">채팅하기</div>
-							</div>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div width="90%" class="SomeonesModifyButton"data-cd="${marketItem.item_code }">
+								<img
+									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_hellotalk.png"
+									alt="채팅 아이콘" class="SomeonesItemIcon">
+								<div color="#FFFFFF" class="SomeonesItemText">수정하기</div>
+									</div>
+								</c:otherwise>
+							</c:choose>
+							
+							
 						</div>
 					</div>
 					
@@ -328,6 +347,10 @@ function toggleLike(element) {
 		$(".close").on("click", function(e) {
 			$(".ReactModalPortal").remove();
 		});
+		
+		
+
+	
 	});
 
 </script>
