@@ -70,10 +70,21 @@ public class MarketChatService {
 		return mapper.chatRecentList(id);
 	}
 	
+	//  roomcode로 아이템코드 알아내기 얻기
+	public HashMap<String, String> getItem_code(String room_code) {
+		return mapper.item_code(room_code);
+	}
+	
 	//판매상태관리
-//	public int updateStatus(String item_status) {
-//		return mapper.updateStatus(item_status);
-//	}
+	public int updateStatus(String item_status, String item_code) {
+		return mapper.updateStatus(item_status,item_code);
+	}
+	
+	// 채팅방 생성 가능한지 유무확인
+	public int insertChatRoom(String item_code, String id) {
+		return mapper.isInsertChatRoom(item_code,id);
+	}
+	
 	
 
 

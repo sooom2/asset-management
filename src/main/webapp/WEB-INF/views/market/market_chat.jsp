@@ -21,15 +21,23 @@
 
 <script type="text/javascript">
 
-
 $(function() {
 	
 	let sId = "${sessionScope.sId}";
 	var room_code = <%= request.getAttribute("room_code") %>;
+// 	alert(room_code);
+	$('.card_box input.room_code[value="'+room_code+'"]').closest('.card_box').addClass('active');
+
 	$(".card_box").on("click", function() {
 	    let room_code = $(this).find('.room_code').val();
-	    chatDetail(room_code);
+	    $(".card_box").removeClass("active");
+		$(this).addClass("active");
+
+		//채팅내역을 눌렀을때 > 상세보기
+		chatDetail(room_code);
 	});
+	
+	
 	
 	
     $(".sch_date").click(function() {
@@ -50,134 +58,135 @@ $(function() {
             maxDate: "+30D",
             onSelect: function(dateText, inst) {
                 schBox.val(dateText);
-                // datepicker 창 숨기기
+                // datepicker 창 숨기기 왜안숨겨지냐 선택한 
                 $(".scheduling").datepicker("hide"); // 현재 선택한 datepicker를 닫음
-                
-                //ajax로 거래상태(거래중으로)를 바꿔야함
             }
         });
     });
     
-    function chatDetail(room_code){
-    	console.log(sId);
-    	console.log(room_code);
-    	
-    	
-	    $.ajax({
-	        type: "GET",
-	        url: "chatDetail",
-	        dataType: "json",
-	        data: {
-	        	room_code: room_code
-	        },
-	        success: function(result){
-				console.log(result);
-	        	let dateString = result[0].chat_openDate;
-	
-				alert("2 ajax안에 룸코드 : " + result[0].room_code);	        	
-	        	room_code = result[0].room_code;
-	        	
-	        	let date = new Date(dateString);
-	        	let formatDate = date.toLocaleDateString("ko-KR", { year: 'numeric', month: 'long', day: 'numeric' });
-	        	
-	        	
-	        	let oppenent_nickname = result[0].buy_nickname;
-	        	if (sId == result[0].buy_member_id){
-	        		oppenent_nickname = result[0].sell_nickname;
-	        	}
-	        	
-	        	$(".chat_header a .info div").empty();
-	        	$(".chat_header a .info div").append("<span>"+oppenent_nickname+"</span>");
-						
-				
-// 				<input type="button" value="거래완료">
-// 	        	$(".trade_status").append("<input type="button" class='active' value="+result[0].item_status+">");
-				
-				// 상품판매상태 버튼
-				$(".trade_status").empty();
-				$(".trade_status").append("<input type='button' value='판매중'> <input type='button' value='거래중'> <input type='button' value='거래완료'>");
-				
-				$(".trade_status input").each(function() {
-				    if ($(this).val() === result[0].item_status) {
-				        $(this).addClass('active');
-				    }
-				});
-	        	//날짜표시
-	        	$(".chat_wrapper").empty();
-	            let str = "<div class='chat_timeago'>" +
-	                       "<div class='chat_timeago_box'>" +
-	                       "<span class='chat_timeago_text'>" + formatDate + "</span></div></div>";
-	                       
-	            $(".chat_description .chat_wrapper").append(str);
-	            
-				
-				for(var i=0; i<result.length; i++){
-					let time = new Date(result[i].chat_time);
-					let hours = time.getHours();
-					let minutes = time.getMinutes();
-					let amPm = hours < 12 ? "오전" : "오후";
-					hours = hours % 12 || 12;
-					let formatChatTime = amPm + " " + hours + "시" + minutes + "분";	        	   
-					
-					console.log(formatChatTime);
-					
-                	
-				
-					
-					
-					if (sId == result[i].chat_mem_id) {
-						let str =
-							"<div class='chat_myself'>" +
-						    "<div class='chat_myself_box'>" +
-						    "<div class='chat_myself_message'>" +
-						    "<span>" + result[i].chat_content + "</span>" +
-						    "<div class='chat_myself_timeago'>" +formatChatTime + "</div></div></div></div>";
-						 	$(".chat_timeago").append(str);
-					} else {
-						let str =
-						    "<div class='chat_opponent'>" +
-						    "<div class='chat_opponent_box'>" +
-						    "<div class='chat_opponent_image_box'>" +
-						    "<img class='chat_opponent_profile_image' src='https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png' alt='상대방이미지'></div>" +
-						    "<div class='chat_opponent_title'>" + result[i].buy_nickname + "</div>" +
-						    "<div class='chat_opponent_message'>" +
-						    "<span>" + result[i].chat_content + "</span>" +
-						    "<div class='chat_opponent_timeago'>" + formatChatTime + "</div></div></div></div>";
-					  		$(".chat_timeago").append(str);
-					}
-					
-				
-				}//success
-	        	
-	        },
-	        error:function(request,status,error){
-	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	        }
-	    });
     
+    function chatDetail(room_code){
+    	
+    	
+    	new Promise( (succ, fail)=>{
+		    $.ajax({
+		        type: "GET",
+		        url: "chatDetail",
+		        dataType: "json",
+		        data: {
+		        	room_code: room_code
+		        },
+		        success: function(result){
+		        	
+		        	//조회한 채팅방 내용에서의 room_code는 동일함 그래서 젤첨값인 resul[0]으로 조회
+		        	room_code = result[0].room_code;
+		        	
+		        	// 채팅 생성 날짜 (처음에 날짜 지정 포맷으로 변경)
+		        	let dateString = result[0].chat_openDate;
+		        	let date = new Date(dateString);
+		        	let formatDate = date.toLocaleDateString("ko-KR", { year: 'numeric', month: 'long', day: 'numeric' });
+		        	
+		        	
+		        	// 채팅 헤더 상대방 닉네임
+		        	let oppenent_nickname = result[0].buy_nickname;
+		        	if (sId == result[0].buy_member_id) { oppenent_nickname = result[0].sell_nickname; }
+		        	$(".chat_header a .info div").empty();
+		        	$(".chat_header a .info div").append("<span>"+oppenent_nickname+"</span>");
+							
+					
+					// 상품판매상태 버튼
+					$(".trade_status").empty();
+					$(".trade_status").append("<input type='button' value='판매중'> <input type='button' value='거래중'> <input type='button' value='거래완료'>");
+					
+					$(".trade_status input").each(function() {
+					    if ($(this).val() === result[0].item_status) {
+					        $(this).addClass('active');
+					    }
+					});
+		        	//날짜표시
+		        	$(".chat_wrapper").empty();
+		            let str = "<div class='chat_timeago'>" +
+		                       "<div class='chat_timeago_box'>" +
+		                       "<span class='chat_timeago_text'>" + formatDate + "</span></div></div>";
+		                       
+		            $(".chat_description .chat_wrapper").append(str);
+		            
+		            //대화내역 상대방인지 나인지 구분하며 표시
+					for(var i=0; i<result.length; i++){
+						let time = new Date(result[i].chat_time);
+						let hours = time.getHours();
+						let minutes = time.getMinutes();
+						let amPm = hours < 12 ? "오전" : "오후";
+						hours = hours % 12 || 12;
+						let formatChatTime = amPm + " " + hours + "시" + minutes + "분";	        	   
+						
+						
+						if (sId == result[i].chat_mem_id) {
+							let str =
+								"<div class='chat_myself'>" +
+							    "<div class='chat_myself_box'>" +
+							    "<div class='chat_myself_message'>" +
+							    "<span>" + result[i].chat_content + "</span>" +
+							    "<div class='chat_myself_timeago'>" +formatChatTime + "</div></div></div></div>";
+							 	$(".chat_timeago").append(str);
+						} else {
+							let str =
+							    "<div class='chat_opponent'>" +
+							    "<div class='chat_opponent_box'>" +
+							    "<div class='chat_opponent_image_box'>" +
+							    "<img class='chat_opponent_profile_image' src='https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png' alt='상대방이미지'></div>" +
+							    "<div class='chat_opponent_title'>" + result[i].buy_nickname + "</div>" +
+							    "<div class='chat_opponent_message'>" +
+							    "<span>" + result[i].chat_content + "</span>" +
+							    "<div class='chat_opponent_timeago'>" + formatChatTime + "</div></div></div></div>";
+						  		$(".chat_timeago").append(str);
+						}
+					}//success
+		        },
+		        error:function(request,status,error){
+		            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		        }
+		    }); //ajax
+		    
+    		}).then((arg) =>{    //두번째 ajax
+		    
+		    alert("ddd");
+		    
+		});    
+		    
+		    
     }//function chatDetail()
-    alert("3룸코드 :"+room_code);
+//     alert("3룸코드 :"+room_code);
 	
 	// 판매상태 버튼 처리 >> db에 상태 업데이트
 	$(".trade_status input").on("click",function(){
-    alert("4룸코드 :"+room_code);
-		
+//     alert("4룸코드 :"+room_code);
 		
 		let item_status = $(this).val();
-		alert(room_code);
-		$.ajax({
-			type: "GET",
-	        url: "itemStatus_update",
-	        dataType: "json",
-	        data: {
-	        	item_status: item_status
-			},
-			success: function(result){
-				
-			}
-		});
+		let result = confirm(item_status+"으로 변경하시겠습니까");
+		
+		if(result){
+			$.ajax({
+				type: "GET",
+		        url: "itemStatus_update",
+		        dataType: "text",
+		        data: {
+		        	item_status: item_status,
+		        	room_code: room_code
+				},
+				success: function(result){
+					 location.reload();
+				},
+				error:function(request,status,error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		        }
+			});
+		}
 		
 	});
+	
+	
+	
     
 });
 
@@ -201,7 +210,6 @@ $(function() {
 				<c:forEach var="chatList" items="${myChatList }">
 					<div class="card_box">
 							<li>
-							
 								<div class="profile">
 									<img src="${path }/resources/images/chat/defaultProfile.png" alt="명품인증">
 								</div>
@@ -210,12 +218,6 @@ $(function() {
 									<div class="subject"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.get('item_subject') }</div>
 									<div class="description">${chatList.get('chat_content') }</div>
 									<div class="time_ago">${chatList.chat_time}</div>
-									
-<%-- 									<c:set var="chat_time" value="${chatDetail.chat_time}" /> --%>
-<%-- 									<fmt:parseDate var="formattedDate" value="${chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" /> --%>
-<%-- 									<div class="chat_myself_timeago"><fmt:formatDate value="${formattedDate}" pattern="a hh:mm" /></div> --%>
-									
-									
 									<input type="hidden" value="${chatList.get('room_code')}" class="room_code">
 								</div>
 							</li>
@@ -242,7 +244,7 @@ $(function() {
 							<div>
 								<!-- 상대방 닉네임 -->
 								<span>${chatList.oppenent_nick }</span>
-<%-- 								<span>판매아이템${sellCount }</span> --%>
+								<span>판매아이템 ${sellCount }개</span>
 							</div>
 						</div>
 					</a>
