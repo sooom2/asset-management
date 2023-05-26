@@ -42,6 +42,59 @@
 
 </style>
 <script type="text/javascript">
+	window.onload = function(){
+		let clock = null;
+		var time = window.setInterval(function(){
+			
+				now = new Date();
+				let year = now.getFullYear();
+				let month = now.getMonth() < 10 ? "0" + (now.getMonth() + 1) : now.getMonth() + 1;
+				let day = now.getDate();
+				let hours = now.getHours();
+				let minutes = now.getMinutes() < 10 ? "0" + now.getMinutes() : now.getMinutes();  
+				let seconds = now.getSeconds() < 10 ? "0" + now.getSeconds() : now.getSeconds();  
+				
+				
+				clock = year + "."
+						+ month + "."
+						+ day + " "
+						+ hours + ":"
+						+ minutes + ":"
+						+ seconds
+				
+				let start_time = new Date("${auction.get('auction_start_date') }");	// 경매 시작 시간
+				let current_time = new Date(clock); // 현재시간
+				
+				
+				// 경매 남은시간 분, 초 
+				let diffMinutes = 10 - parseInt(((current_time - start_time) / (1000 * 60)));
+				let diffSeconds = 60 - (((current_time - start_time) % (1000 * 60)) / 1000);
+				let resultClock = (diffMinutes - 1) + ":" + (diffSeconds - 1);
+				
+				console.log(current_time - start_time);
+				
+				
+				// 경매시작 시간 지나면 (시간 카운트)
+				if(start_time <= current_time) {
+					$("#con_countDown").html(resultClock);
+				} 
+				
+				// 경매 시작 후 (10분 이 지나면 종료)
+				if(current_time - start_time > 600000) {
+					
+					window.setTimeout(function(){ // setInterval 함수 종료
+						window.clearInterval(time);
+						$("#con_countDown").html("경매가 종료 되었습니다.");
+					});
+				}
+			
+			
+			},1000);
+		
+	};
+
+
+
 	$(document).ready(function() {
 		
 		function chatSend() {
@@ -78,7 +131,7 @@
 	let m = today.getMinutes();
 	
 	let amPm = h < 12 ? "오전" : "오후";
-	let hours = h < 12 ? h : h - 12; // 시
+	let hours = h < 13 ? h : h - 12; // 시
 	let minutes = m < 10 ? "0" + m : m;  // 분
 	
 	
@@ -153,7 +206,7 @@
 					<div class="left_main">
 						<div class="remainTime"> 
 							<span>경매종료 까지 남은시간</span>
-							<div class="con_countDown"><i class="fa-regular fa-clock fa-xs"></i>&nbsp;10분 30초</div>
+							<div id="con_countDown" class="con_countDown"><i class="fa-regular fa-clock fa-xs"></i>&nbsp;경매 시작 전 입니다.</div>
 						</div>
 						<div class="auction_info">
 							<span class="notice_title"><i class="fa-solid fa-bookmark"></i>&nbsp;공지사항</span><br>
