@@ -6,42 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
+<link rel="stylesheet" href="${path }/resources/css/member.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="${path }/resources/js/wish.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1e29d96072ee2bce354a10f8ac53225f"></script>
 <script>
 
 $(document).ready(function(){
 	
-	// 위시(좋아요) 기능 설명
-	// .WishWishImg 이미지 클래스 이름 클릭시 실행
-	$('.WishWishImg').click(function(){
-		// .WishWishImg 부모 선택자 "data-code" 속성에 넣어준 item_code를 item_code 변수로 저장
-		var $btnWish = $(this)
-		var item_code = $(this).parent().attr("data-code");
-		console.log(item_code);
-		// /clickWish MemberController에 매핑
-		$.ajax({
-       		url : 'clickWish',
-       		type : 'POST',
-       		data : {item_code : item_code}
-		}).done(function(result){
-			$btnWish.toggleClass("wish");
-			
-  			if($btnWish.hasClass("wish")){
-				  				$btnWish.attr({'src' : '${path }/resources/images/main/ico_heart_off_x3.png',
-  								alt : '찜하기 완료'
-  							})	
-  			}else{
-  				$btnWish.attr({'src' : '${path }/resources/images/main/ico_heart_on_x3.png',
-  								alt : '찜하기'
-  							})
-  			}
-		}).fail(function(){
-			alert("ERROR 위시리스트 추가 실패");
-		})
-  	})
-  		
   	$(".ThumbNailTypeItemImg, .ThumbNailTypeItemInfoBox").on("click",function(){
 		location.href="market_detail"
 	})
