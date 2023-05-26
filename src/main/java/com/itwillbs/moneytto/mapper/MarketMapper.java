@@ -54,6 +54,9 @@ public interface MarketMapper {
 	//상태업데이트
 	int updateStatus(String item_status,String item_code);
 
+	// 아이템 상세
+	HashMap<String, String> marketItem(String item_code);
+
 	
 	
 

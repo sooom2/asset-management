@@ -268,9 +268,9 @@
 						}
 						
 						str += '</div>';
+						str += '</div>';
 						str += '<div class="itemTimeTag">';
 						str += date;
-						str += '</div>';
 						str += '</div>';
 						
 						$(".itemWrapper").append(str);
