@@ -185,8 +185,11 @@ $(function() {
 		
 	});
 	
-	
-	
+	//리뷰작성
+	$(".review").on("click",function(){
+		let options = "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=400,height=400,left=350,top=200";
+		window.open('market_review','리뷰작성',options);
+	});
     
 });
 
@@ -279,8 +282,11 @@ $(function() {
 						    			<input type="button" value="판매중">
 						    			<input type="button" value="거래중">
 						    			<input type="button" class="active"  value="거래완료">
+						    			<br>
+						    			<div class="review" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>
 						    		</c:when>
 						    	</c:choose>
+						    		
 					    	</c:forEach>
 					    </div>
 					</div>

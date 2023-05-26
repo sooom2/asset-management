@@ -71,11 +71,14 @@
 	</select>
 	
 	<select id="isInsertChatRoom" resultType="int">
-		SELECT count(*) 
+		SELECT count(*)
 			FROM market_chat_rooms
 				LEFT JOIN market_chat_messages
 						ON market_chat_rooms.room_code = market_chat_messages.room_code
-					WHERE market_chat_rooms.item_code = #{item_code} ANd sell_member_id = #{id} OR buy_member_id= #{id}
+					WHERE 1=1
+					  AND market_chat_rooms.item_code = #{item_code}
+					  AND (sell_member_id = #{id}
+					  or buy_member_id= #{id})
 	</select>
 	
 	<select id="opponentId" resultType="hashmap">

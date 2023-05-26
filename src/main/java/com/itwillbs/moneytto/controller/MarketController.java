@@ -152,7 +152,7 @@ public class MarketController {
 		
 		// 채팅방이있는지 조회한후 채팅방 생성
 		int createRoom = marketChatService.insertChatRoom(item_code,id);
-		
+		System.out.println(createRoom);
 		System.out.println("===============================");
 		System.out.println(createRoom);
 		System.out.println("===============================");
@@ -184,6 +184,11 @@ public class MarketController {
 		model.addAttribute("chatList",chatList);
 		model.addAttribute("sellCount",sellCount);
 		return "market/market_chat";
+	}
+	
+	@GetMapping("market_review")
+	public String marketReview() {
+		return "market/market_review";
 	}
 	
 	@GetMapping("chatDetail")
