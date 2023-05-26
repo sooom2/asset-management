@@ -18,7 +18,7 @@ $(function() {
 	});
 	$(".SomeonesModifyButton").click(function() {
 		
-		alert("수정페이지 만들면 이동");
+		alert("수정페이지 만들면 이동 : 판매자랑 세션 아이디랑 같을 경우 채팅하기 버튼 없어요!");
 	});
 });
 
