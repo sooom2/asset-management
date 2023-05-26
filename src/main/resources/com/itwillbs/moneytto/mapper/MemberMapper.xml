@@ -59,9 +59,32 @@
 					AND member_name = #{member_name}
 					AND member_bday = #{member_bday}
 					AND member_tel = #{member_tel}
-	</select>	
-	
-	
+	</select>
+	<select id="selectWish" resultType="hashmap">
+		SELECT 	*
+			FROM wish
+				WHERE member_id = #{member_id}
+				AND	wish_item_code = #{wish_item_code}
+	</select>
+		
+	<insert id="insertWish">
+		INSERT INTO 
+				wish
+		VALUES	(
+					CONCAT(#{wish_item_code},'_',#{member_id})
+					, #{member_id}
+					, #{wish_item_code}
+					, now()	
+				)
+	</insert>
+	<delete id="deleteWish">
+		DELETE FROM 
+				wish
+		WHERE 
+				member_id = #{member_id}
+				AND	wish_item_code = #{wish_item_code}
+									
+	</delete>
 	
 	<update id="updateAuth">
 		UPDATE member

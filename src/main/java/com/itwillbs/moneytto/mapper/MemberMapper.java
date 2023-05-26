@@ -3,6 +3,8 @@ package com.itwillbs.moneytto.mapper;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface MemberMapper {
 	// 찜목록 조회
 	List<HashMap<String, String>> selectWishList(String id);
@@ -28,5 +30,11 @@ public interface MemberMapper {
 	List<HashMap<String, String>> selectWishItemList(String member_id);
 	
 	List<HashMap<String, String>> selectBuyItemList(String member_id);
+
+	int insertWish(@Param("member_id") String member_id,@Param("wish_item_code") String wish_item_code);
+
+	int deleteWish(@Param("member_id") String member_id,@Param("wish_item_code") String wish_item_code);
+
+	List<HashMap<String, String>> selectWish(@Param("member_id") String member_id,@Param("wish_item_code") String wish_item_code);
 	
 }

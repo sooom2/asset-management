@@ -37,12 +37,22 @@ public interface MarketMapper {
 	List<HashMap<String, String>> chatDetail(int room_code);
 
 	// 마켓 메인 아이템 리스트
-	List<HashMap<String, String>> marketItemList(@Param("item_category") String item_category, @Param("item_status") String item_status, 
-			@Param("item_price_min") String item_price_min, @Param("item_price_max") String item_price_max);
+	List<HashMap<String, String>> marketItemList(@Param("item_category") String item_category, 
+			@Param("item_status") String item_status, 
+			@Param("item_price_min") String item_price_min,
+			@Param("item_price_max") String item_price_max, 
+			@Param("member_grade") String member_grade,
+			@Param("sort") String sort);
 
 	void saveImage(HashMap<String, String> saveImage);
 
 	String selectItem();
+
+	//채팅
+	HashMap<String, Integer> chatRecentList(String id);
+
+	//상태업데이트
+	int updateStatus(String item_status,String item_code);
 
 	
 	

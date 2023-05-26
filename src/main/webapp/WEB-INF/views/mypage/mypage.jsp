@@ -12,44 +12,39 @@
 <script>
 
 $(document).ready(function(){
-// 	$(".ThumbNailTypeImgBox, .ThumbNailTypeItemInfoBox").on("click",function(){
-// 		location.href="market_detail"
-// 	})
-	$('.WishWishImg').click(function(){
-				
-		$(this).closest('img').hasClass("wish")
-		
-			$.ajax({
-	       		url : 'wishClick',
-	       		type : 'POST',
-	       		context : this,
-	       		data : {
-	       			info_movie_code : info_movie_code
-	       		},
-	       		success : function(result){
-	       			alert(result.msg)		// [좋아요 성공, 좋아요 취소]
-       	
-	       			
-	       			if(result.resultType == "insert"){
-	       				$(this).find('img').attr({
-	       					'src' : '${pageContext.request.contextPath}/resources/images/ico/after-like.png',
-	       					alt : '찜하기 완료'
-	       				})
-	       			}else if(result.resultType = "delete"){
-	       				$(this).find('img').attr({
-	       					'src' : '${pageContext.request.contextPath}/resources/images/ico/before-like.png',
-	       					alt : "찜하기"
-	       				})
-	       			}
-	       			$(this).find('span').html(result.like_count)
-	       		}
-	       	}) 
-		
-		
-		
-		$(this).find('img').toggleClass("wish").attr("src", "${path }/resources/images/main/Ico_wish_on.png");
-	})
 	
+	// 위시(좋아요) 기능 설명
+	// .WishWishImg 이미지 클래스 이름 클릭시 실행
+	$('.WishWishImg').click(function(){
+		// .WishWishImg 부모 선택자 "data-code" 속성에 넣어준 item_code를 item_code 변수로 저장
+		var $btnWish = $(this)
+		var item_code = $(this).parent().attr("data-code");
+		console.log(item_code);
+		// /clickWish MemberController에 매핑
+		$.ajax({
+       		url : 'clickWish',
+       		type : 'POST',
+       		data : {item_code : item_code}
+		}).done(function(result){
+			$btnWish.toggleClass("wish");
+			
+  			if($btnWish.hasClass("wish")){
+				  				$btnWish.attr({'src' : '${path }/resources/images/main/ico_heart_off_x3.png',
+  								alt : '찜하기 완료'
+  							})	
+  			}else{
+  				$btnWish.attr({'src' : '${path }/resources/images/main/ico_heart_on_x3.png',
+  								alt : '찜하기'
+  							})
+  			}
+		}).fail(function(){
+			alert("ERROR 위시리스트 추가 실패");
+		})
+  	})
+  		
+  	$(".ThumbNailTypeItemImg, .ThumbNailTypeItemInfoBox").on("click",function(){
+		location.href="market_detail"
+	})
 	
 	$(".tabTab").on("click",function(){
 		var itemType = $(this).attr('data-attr');
@@ -59,9 +54,6 @@ $(document).ready(function(){
 		location.href = "mypage?itemList="+itemType;
 		})
 	})
-	
-	
-	
 function memberAuth(){
 	let authWindow = window.open("about:blank","authWindow","width=500, height=700");
 	authWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize"
@@ -198,7 +190,7 @@ function memberAuth(){
 								<div class="itemItemBox">
 		                          <div class="ThumbNailTypeWrapper">
 		                              <div class="ThumbNailTypeItemBox">
-		                                  <div class="ThumbNailTypeImgBox">
+		                                  <div class="ThumbNailTypeImgBox"  data-code="${item.item_code }">
 		                                      <img src="${path }/resources/images/main/noThumbnail.jpg" alt="itemImg" class="ThumbNailTypeItemImg"/>
 		                                      <div class="SellStateImgWrapper">
 		                                          <div class="SellStateImgStateBox"></div>

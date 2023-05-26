@@ -4,10 +4,10 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -152,6 +152,23 @@ public class MemberService {
 	public List<HashMap<String, String>> getBuyItemList(String id) {
 		
 		return mapper.selectBuyItemList(id);
+	}
+	
+	
+
+	public int insertWish(String id, String item_code) {
+		
+		return mapper.insertWish(id, item_code);
+	}
+	
+	public int deleteWish(String id, String item_code) {
+		
+		return mapper.deleteWish(id, item_code);
+	}
+
+	public List<HashMap<String, String>> getWishItem(String id, String item_code) {
+		
+		return mapper.selectWish(id, item_code);
 	}
 	
 }

@@ -258,9 +258,24 @@ public class MemberController {
 	
 	@PostMapping(value = "clickWish")
 	@ResponseBody
-	public void clickWish(@RequestParam String id) {
+	public boolean clickWish(@RequestParam("item_code") String item_code, HttpSession session) {
+		boolean result = false;
+		String id = (String)session.getAttribute("sId");
+		System.out.println("컨트롤러 확인");
+		System.out.println(item_code);
+		List<HashMap<String, String>> wishitem = memberService.getWishItem(id,item_code);
 		
-		List<HashMap<String,String>> wishItem = memberService.getWishItemList(id);
+		if(wishitem != null) {
+			memberService.deleteWish(id, item_code);
+			System.out.println("삭제");
+			result = true;
+		}else {
+			memberService.insertWish(id, item_code);
+			System.out.println("성공");
+			result = true;
+		}
 		
+		
+		return result; 
 	}
 }

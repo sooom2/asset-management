@@ -15,7 +15,7 @@
     INSERT INTO item 
 	    VALUES (
 	        #{item_code},
-	        'admin',
+	        #{id},
 	        #{item_subject},
 	        #{item_content},
 	        #{item_price},
@@ -145,7 +145,7 @@
              	) AS a
          	) AS b
       	WHERE row_num = 1
-	
+     		ORDER BY room_code desc
 	</select>
 	
 	
@@ -164,6 +164,7 @@
 			chat_mem_id,
 			seller.member_nickname as sell_nickname,
 			buyer.member_nickname as buy_nickname,
+			chat_time,
 			item.item_status
 		FROM
 			market_chat_messages
@@ -183,32 +184,115 @@
 			market_chat_messages.room_code = #{room_code}
 	</select>
 
+	<!-- 제일마지막에생성된 방 -->
+	<select id="chatRecentList" resultType="hashmap">
+		SELECT b.room_code, chat_code, chat_content, oppenent_nick,chat_time,b.item_subject,chat_openDate
+         FROM (
+             SELECT room_code, chat_code, chat_content, oppenent_nick,
+                    ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate
+             FROM (
+                 SELECT market_chat_rooms.room_code,
+                        chat_code,
+                        market_chat_rooms.chat_content,
+                        member.member_nickname AS oppenent_nick,
+                        chat_time,
+                        item.item_subject ,
+                        market_chat_rooms.chat_openDate
+           	   		FROM   market_chat_messages
+	                      LEFT JOIN member
+	                             ON member.member_id = market_chat_messages.sell_member_id
+	                      LEFT JOIN market_chat_rooms
+	                      		 ON market_chat_rooms.room_code = market_chat_messages.room_code
+	                      LEFT JOIN item 
+	                      		 ON item.item_code=market_chat_rooms.item_code 
+              		 WHERE  buy_member_id = #{id}
+               UNION
+	             SELECT market_chat_rooms.room_code,
+	                    chat_code,
+	                    market_chat_rooms.chat_content,
+	                    member.member_nickname AS oppenent_nick,
+	                    chat_time,
+	                    item.item_subject,
+	                    market_chat_rooms.chat_openDate
+	             	FROM   market_chat_messages
+		                    LEFT JOIN member
+		                           ON member.member_id = market_chat_messages.buy_member_id
+		                    LEFT JOIN market_chat_rooms
+	                      		   ON market_chat_rooms.room_code = market_chat_messages.room_code
+                  		   	LEFT JOIN item 
+	                      		 ON item.item_code=market_chat_rooms.item_code 
+              		 WHERE  sell_member_id = #{id}
+             	) AS a
+         	) AS b
+      	WHERE row_num = 1 
+      	ORDER BY room_code DESC LIMIT 1
+	</select>
+	
+	<update id="updateStatus">
+		UPDATE item
+			SET
+				item_status = #{itme_status}
+			 WHERE
+			 	item_code=#{item_code} 
+	</update>
 
 	<!-- 마켓 아이템 리스트 -->
 	<select id="marketItemList" resultType="hashmap">
-<!-- 		SELECT *  -->
-<!-- 			FROM  -->
-<!-- 				item  -->
-<!-- 			ORDER BY  -->
-<!-- 				item_code desc -->
-		<!-- 수정중 -->
-		SELECT i.*, m.grade_score
+		SELECT i.*, m.grade_score, im.*
 			FROM 
 				item i
-			JOIN
+			LEFT JOIN
 				member m
 			ON
 				i.member_id = m.member_id
+			LEFT JOIN 
+				images im
+			ON
+				i.item_code = im.table_code
 			WHERE 
-				i.item_category like CONCAT('%',#{item_category},'%')
+			<choose>
+			<when test = 'item_category eq null or item_category eq ""'>
+				1 = 1
+			</when>
+			<otherwise>
+				i.item_category REGEXP replace(#{item_category}, '/', '|')
+			</otherwise>
+			</choose>
 			AND
+			<choose>
+			<when test = 'item_status eq null or item_status eq ""'>
+				1 = 1
+			</when>
+			<otherwise>
 				i.item_status = #{item_status}
+			</otherwise>
+			</choose>	
 			AND
-				replace(i.item_price,',','') BETWEEN #{item_price_min} AND #{item_price_max}
+				replace(i.item_price,',','') BETWEEN ${item_price_min} AND ${item_price_max}
 			AND
-				m.grade_score >= "50"
-			ORDER BY 
-				i.item_code DESC
+			<choose>
+			<when test = 'member_grade eq null or member_grade eq ""'>
+				1 = 1
+			</when>
+			<otherwise>
+				m.grade_score >= 50
+			</otherwise>
+			</choose>	
+			ORDER BY
+			   <choose>
+			      <when test='sort.equals("lowPrice")'>
+			           replace(i.item_price,',','')+0 ASC
+			      </when> 
+			      <when test='sort.equals("highPrice")'>
+				      	replace(i.item_price,',','')+0 DESC
+			      </when>
+			      <when test='sort.equals("highGrade")'>
+			      		m.grade_score DESC
+			      </when>
+			      <otherwise>
+			      		i.item_code DESC
+			   	  </otherwise> 
+			   </choose> 
 	</select>
 	
 </mapper>
