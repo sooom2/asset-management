@@ -16,6 +16,10 @@ $(function() {
 		
 		location.href="marketChat?item_code="+$(this).data("cd");
 	});
+	$(".SomeonesModifyButton").click(function() {
+		
+		alert("수정페이지 만들면 이동 : 판매자랑 세션 아이디랑 같을 경우 채팅하기 버튼 없어요!");
+	});
 });
 
 //좋아요 
@@ -92,20 +96,19 @@ function toggleLike(element) {
 					<div class="profileWrapper">
 						<div class="profileProfileData">
 							<img
-								src="https://ccimg.hellomarket.com/images/2017/member_profile/s4/10/11/19/0206_2647700_1.jpg?size=s4"
+								src="${pageContext.request.contextPath }/resources/images/mypage/cute.png"
 								alt="profileImg" class="profileProfileImg">
 							<div class="ProfileInfoWrapper">
-								<div class="ProfileInfoProfileName">왜 닉네임 안뜸</div>
+								<div class="ProfileInfoProfileName">${marketItem.member_nickname}</div>
 								<div class="ProfileInfoItemCountBox">
-									<div class="ProfileInfoProduct">${marketItem.item_subject}</div>
-<%-- 									<div class="ProfileInfoProduct">${marketItem.get(0)}</div> --%>
-									<div class="ProfileInfoItemQuantity">62</div>
+<%-- 									<div class="ProfileInfoProduct"></div> --%>
+<!-- 									<div class="ProfileInfoItemQuantity">62</div> -->
 								</div>
 								<div class="ProfileInfoRating">
 									<img
 										src="https://ccimage.hellomarket.com/img/web/common/full_star.png"
 										alt="rating" class="ProfileInfoStarImg">
-									<div class="ProfileInfoRatingScore">세계수</div>
+									<div class="ProfileInfoRatingScore">${marketItem.grade_score}</div>
 								</div>
 							</div>
 						</div>
@@ -124,12 +127,12 @@ function toggleLike(element) {
 							alt="공유하기" class="TopNavigationIcon">
 					</div>
 					<div class="TitleWrapper">
-						<div class="TitleText1">플라워 에코백(새상품)</div>
-						<div class="TitleText2">10,800원</div>
+						<div class="TitleText1">${marketItem.item_subject}</div>
+						<div class="TitleText2">${marketItem.item_price}원</div>
 					</div>
 					<div class="SubTitleWrapper">
 						<div class="SubTitleDetailBox">
-							<div class="SubTitleDetailText">3시간 전</div>
+							<div class="SubTitleDetailText">${marketItem.item_date}</div>
 <!-- 							<div class="SubTitleWishBox"> -->
 <!-- 								<img -->
 <!-- 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_small.png" -->
@@ -144,7 +147,7 @@ function toggleLike(element) {
 					<div class="CategoryWrapper">
 						<div class="CategoryTitle">카테고리</div>
 						<div class="CategoryCategoryBox">
-							<div class="DivergedLinkTitle">패션/의류/잡화/뷰티</div>
+							<div class="DivergedLinkTitle">${marketItem.item_category}</div>
 <!-- 							<img -->
 <!-- 								src="https://ccimage.hellomarket.com/img/web/item/detail/ico_arrow_right_category.png" -->
 <!-- 								alt="오른쪽 화살표 아이콘" class="CategoryArrow"> -->
@@ -155,40 +158,29 @@ function toggleLike(element) {
 					<div class="Tag__Wrapper-td2hyd-0 jLVEzu">
 						<div class="Tag__Title-td2hyd-1 irWNGN">태그</div>
 						<div class="Tag__TagWrapper-td2hyd-2 TitNF">
-							<div class="Tag__TagBox-td2hyd-3 jsrScO">
-								<div class="Tag-td2hyd-4 fKGvTO">#태그목록</div>
+							<c:forEach var="tag" items="${marketItem.item_tag}">
+								<div class="Tag__TagBox-td2hyd-3 jsrScO">
+								<div class="Tag-td2hyd-4 fKGvTO">${tag}</div>
 							</div>
-							<div class="Tag__TagBox-td2hyd-3 jsrScO">
-								<div class="Tag-td2hyd-4 fKGvTO">#태그는</div>
-							</div>
-							<div class="Tag__TagBox-td2hyd-3 jsrScO">
-								<div class="Tag-td2hyd-4 fKGvTO">#5개까지</div>
-							</div>
-							<div class="Tag__TagBox-td2hyd-3 jsrScO">
-								<div class="Tag-td2hyd-4 fKGvTO">#쓸수있어용</div>
-							</div>
-							<div class="Tag__TagBox-td2hyd-3 jsrScO">
-								<div class="Tag-td2hyd-4 fKGvTO">#길어지면내려간당!!!!!</div>
-							</div>
+							</c:forEach>
 						</div>
 					</div>
 					
 					<!-- 가격 제안-->
 					<div class="Delivery__Wrapper-sc-1og3un6-0 ddxgBm">
 						<div class="Delivery__Title-sc-1og3un6-1 iijbrT">가격제안</div>
-<!-- 						<div class="Delivery__DeliveryBox-sc-1og3un6-2 jOMSSb"> -->
-<!-- 							<img -->
-<!-- 								src="https://ccimage.hellomarket.com/img/web/item/detail/img_delivery_method.png" -->
-<!-- 								alt="배송방법 이미지" class="Delivery__Img-sc-1og3un6-3 jfdQdb"> -->
-<!-- 							<div width="63px" class="Delivery__Text-sc-1og3un6-4 bOvaxU">배송방법</div> -->
-<!-- 							<div class="Delivery__Text-sc-1og3un6-4 fZGjYa">판매자가 알아서 배송</div> -->
-<!-- 						</div> -->
 						<div class="Delivery__DeliveryBox-sc-1og3un6-2 jOMSSb">
 							<img
 								src="https://ccimage.hellomarket.com/img/web/item/detail/img_delivery_fee.png"
 								alt="배송비 이미지" class="Delivery__Img-sc-1og3un6-3 jfdQdb">
-							<div width="63px" class="Delivery__Text-sc-1og3un6-4 bOvaxU">가능</div>
-<!-- 							<div class="Delivery__Text-sc-1og3un6-4 fZGjYa">가능</div> -->
+							<c:choose>
+							<c:when test = "${marketItem.item_price_offer eq 'Y'}">
+								<div width="63px" class="Delivery__Text-sc-1og3un6-4 bOvaxU">가능</div>
+							</c:when>
+							<c:otherwise>
+								<div width="63px" class="Delivery__Text-sc-1og3un6-4 bOvaxU">불가능</div>
+							</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 
@@ -203,12 +195,27 @@ function toggleLike(element) {
 								<div class="WishWrapper">
 								  <img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png" alt="좋아요 아이콘" class="WishIcon" onclick="toggleLike(this)">
 								</div>
-							<div width="90%" class="SomeonesItemButton"data-cd="${marketItem.item_code }">
+								
+							<c:choose>
+								<c:when test = "${sId } neq ${marketItem.member_id}">
+									<div width="90%" class="SomeonesItemButton"data-cd="${marketItem.item_code }">
 								<img
 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_hellotalk.png"
 									alt="채팅 아이콘" class="SomeonesItemIcon">
 								<div color="#FFFFFF" class="SomeonesItemText">채팅하기</div>
-							</div>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div width="90%" class="SomeonesModifyButton"data-cd="${marketItem.item_code }">
+								<img
+									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_hellotalk.png"
+									alt="채팅 아이콘" class="SomeonesItemIcon">
+								<div color="#FFFFFF" class="SomeonesItemText">수정하기</div>
+									</div>
+								</c:otherwise>
+							</c:choose>
+							
+							
 						</div>
 					</div>
 					
@@ -228,9 +235,7 @@ function toggleLike(element) {
 					<div></div>
 					<div class="DescriptionWrapper">
 						<div class="DescriptionText">
-							새상품 판매합니다 <br>색상 블랙 화이트 <br>사이즈 사진 참고하세요<br>안주머니에
-							지퍼 있습니다 <br>에코백은 똑딱이 단추 있습니다 <br>직거래 종암동주민센터 버스정류장 <br>한진택배
-							발송입니다 <br>반값 택배 가능 반값시 택포 8600원
+							${marketItem.item_content }
 						</div>
 					</div>
 
@@ -328,6 +333,10 @@ function toggleLike(element) {
 		$(".close").on("click", function(e) {
 			$(".ReactModalPortal").remove();
 		});
+		
+		
+
+	
 	});
 
 </script>

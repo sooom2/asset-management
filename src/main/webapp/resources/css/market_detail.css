@@ -505,6 +505,22 @@
     -ms-flex-pack: center;
     justify-content: center;
 }
+.SomeonesModifyButton {
+    margin-left: 6px;
+    cursor: pointer;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    background: #268BFF;
+    border-radius: 10px;
+    padding: 18px 0;
+    width: 100%;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
 
  .SomeonesItemIcon {
      width: 20px;

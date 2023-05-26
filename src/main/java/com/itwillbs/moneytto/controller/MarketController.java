@@ -99,7 +99,6 @@ public class MarketController {
 		
 		
 		
-		
 		return "market/market_detail";
 	}
 	@GetMapping(value = "market_payment")
