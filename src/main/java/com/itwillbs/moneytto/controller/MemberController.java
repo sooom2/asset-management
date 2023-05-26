@@ -264,14 +264,14 @@ public class MemberController {
 		System.out.println("컨트롤러 확인");
 		System.out.println(item_code);
 		List<HashMap<String, String>> wishitem = memberService.getWishItem(id,item_code);
-		
-		if(wishitem != null) {
-			memberService.deleteWish(id, item_code);
-			System.out.println("삭제");
-			result = true;
-		}else {
+		System.out.println(wishitem);
+		if(wishitem.isEmpty()) {
 			memberService.insertWish(id, item_code);
 			System.out.println("성공");
+			result = true;
+		}else {
+			memberService.deleteWish(id, item_code);
+			System.out.println("삭제");
 			result = true;
 		}
 		
