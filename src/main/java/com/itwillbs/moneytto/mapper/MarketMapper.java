@@ -18,10 +18,10 @@ public interface MarketMapper {
 	// item_code 없을때 
 	HashMap<String, String> getAllItem();
 	
-	// 판매갯수
-//	int sellCount(String member_id);
 	//상대방물건판매갯수
 	int sellCount(String openentId);
+	// 채팅방개설가능한지
+	int isInsertChatRoom(@Param("item_code") String item_code,@Param("id") String id);
 
 	// 내채팅목록
 	List<HashMap<String, String>> myChatList(String id);
@@ -52,7 +52,10 @@ public interface MarketMapper {
 	HashMap<String, Integer> chatRecentList(String id);
 
 	//상태업데이트
-	int updateStatus(String item_status,String item_code);
+	int updateStatus(@Param("item_status") String item_status,@Param("item_code") String item_code);
+
+	// 아이템코드 알아내기
+	HashMap<String, String> item_code(String room_code);
 
 	
 	

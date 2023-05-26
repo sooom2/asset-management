@@ -336,7 +336,7 @@
 
 .chat_description .chat_myself_message {
     max-width: 200px;
-    background-color: #0484f6;
+    background-color: #bb2649;
     margin-right: 21px;
     word-break: break-all
 }
@@ -370,7 +370,7 @@
 .chat_description .chat_myself_message:after {
     content: "";
     position: absolute;
-    border-color: transparent transparent #0484f6!important;
+    border-color: transparent transparent #bb2649!important;
     border: 10px solid #000;
     transform-origin: 0 0;
     right: 0;
@@ -870,7 +870,7 @@
 
 .chat_footer button {
     color: #fff;
-    background-color: #0484f6;
+    background-color: #bb2649;
     border-radius: 3px;
     font-size: 15px;
     font-weight: 700;
@@ -1035,6 +1035,3 @@ color: #000;
 .trade_status input[type="button"]{
 	cursor:pointer;
 }
-
-
-
