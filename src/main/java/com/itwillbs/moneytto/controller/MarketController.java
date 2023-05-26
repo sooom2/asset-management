@@ -202,6 +202,7 @@ public class MarketController {
 	        // 아이템 등록 전에 아이템 코드를 생성하여 저장
 	        String itemCode = service.selectItem();
 	        item.put("item_code", itemCode);
+	        item.put("id", id);
 	        
 	        // 가격에서 쉼표 제거
 	        String itemPrice = item.get("item_price");
