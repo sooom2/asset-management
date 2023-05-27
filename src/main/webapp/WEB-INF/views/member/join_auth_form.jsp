@@ -6,13 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="resources/css/main.css" rel="stylesheet">
-<link href="resources/css/common.css" rel="stylesheet">
-<link href="resources/css/inc.css" rel="stylesheet">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
+<link href="${path}/resources/css/member.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="resources/js/main.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
 <script>
 //카카오
 Kakao.init('bf0c05681627cc5d65f40192f843de1b'); 
@@ -23,11 +21,10 @@ function kakaoLogin() {
         Kakao.API.request({
           url: '/v2/user/me',
           success: function (response) {
-		       	console.log(response)
 		       	var accessToken = Kakao.Auth.getAccessToken();
 		       	Kakao.Auth.setAccessToken(accessToken);
 		       	var account = response.kakao_account;
-					
+		       	console.log(account)
 				$('#form-kakao-login input[name=email]').val(account.email);
 				$('#form-kakao-login input[name=accessToken]').val(accessToken);
 				// 사용자 정보가 포함된 폼을 서버로 제출.
@@ -44,13 +41,29 @@ function kakaoLogin() {
       },
     })
   }
-  
-  
-$(function() {
-	// 인증번호 확인.
-	let mailStatus = false;
+function naverLogin(){
+	let naverloginpop = window.open("about:blank","authWindow","width=500, height=700");
+	naverloginpop.location = "https://nid.naver.com/oauth2.0/authorize"
+	+"?response_type=code"
+	+"&client_id=mV2ILHR9EiZ5mjCPt4vg"
+	+"&redirect_uri=http://localhost:8080/moneytto/naverLogin"
+	+"&state=63fbad94-92d6-45b2-9eb3-b879e454a289"
 	
-	// 이메일 인증
+	
+}  
+
+
+$(function() {
+	// 테스트 용
+	$("#btn-join").on("click", function() {
+			location.href="joinform"
+		
+	});
+// 실제용
+// 인증번호 확인.
+// 	let mailStatus = false;
+	
+// 	이메일 인증
 // 	$('#mail-Check-Btn').click(function() {
 // 		const email = $('#join-id').val() // 이메일 주소값 얻어오기
 // 		const checkInput = $('.mail-check-input') // 인증번호 입력하는곳
@@ -86,16 +99,16 @@ $(function() {
 // 		}
 // 	});
 	
-	$("#btn-join").on("click", function() {
+// 	$("#btn-join").on("click", function() {
 // 		if(!mailStatus) {
 // 			alert("이메일 인증을 확인해주시기 바랍니다.");
 // 			return false;
 // 		} else {
-			location.href="joinform?email=" + $('#join-id').val();
+// 			location.href="joinform?email=" + $('#join-id').val();
 // 			return true;
 // 		}
 		
-	});
+// 	});
 });
 
 
@@ -120,14 +133,11 @@ $(function() {
 								<span>소셜 계정으로 가입</span>
 							</div>
 							<div class="join-social">
-								<div id="naver_id_login" class="nv">
-									<a
-										href="https://nid.naver.com/oauth2.0/authorize?response_type=token&amp;client_id=i5vJc9KektcyYpcRyM5n&amp;redirect_uri=https%3A%2F%2Fcineq.co.kr%2FPopup%2FNaverLogin&amp;state=63fbad94-92d6-45b2-9eb3-b879e454a289"
-										onclick="window.open(this.href, 'naverloginpop', 'titlebar=1, resizable=1, scrollbars=yes, width=600, height=550'); return false"
-										id="naver_id_login_anchor" class="social-connect nv">네이버</a>
+								<div id="naver_id_login" class="nv" onclick ="naverLogin()">
+									<a id="naver_id_login_anchor" class="social-connect nv">네이버</a>
 								</div>
 								<span onclick="kakaoLogin();">
-								<a id="custom-login-btn" href="#" class="kt">카카오 톡</a>
+									<a id="custom-login-btn" href="#" class="kt">카카오 톡</a>
 								</span>
 							</div>
 							<br>
@@ -149,13 +159,12 @@ $(function() {
 								</div>
 							</div>
 						</div>
-						<br>
 						<a href="#" id="btn-join" class="btn-join">가입하기</a> 
 						<input type="hidden" id="userFrom" name="userFrom" value="4">
 						<input type="hidden" id="socialId" name="socialId" value="">
 						<input type="hidden" id="name" name="name" value="">
 						<input type="hidden" id="token" name="token" value=""> 
-						<input type="hidden" id="isPayment" name="isPayment" value="0">
+<!-- 						<input type="hidden" id="isPayment" name="isPayment" value="0"> -->
 					</form>
 				</div>
 			</div>

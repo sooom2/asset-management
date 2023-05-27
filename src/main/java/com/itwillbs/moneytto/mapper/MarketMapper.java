@@ -1,4 +1,4 @@
-package com.itwillbs.moneytto.mapper;
+ package com.itwillbs.moneytto.mapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,13 +36,14 @@ public interface MarketMapper {
 	//채팅상세내용
 	List<HashMap<String, String>> chatDetail(int room_code);
 
-	// 마켓 메인 아이템 리스트
+	// 마켓 메인 아이템 리스트	//05.27 id 추가
 	List<HashMap<String, String>> marketItemList(@Param("item_category") String item_category, 
 			@Param("item_status") String item_status, 
 			@Param("item_price_min") String item_price_min,
 			@Param("item_price_max") String item_price_max, 
 			@Param("member_grade") String member_grade,
-			@Param("sort") String sort);
+			@Param("sort") String sort,
+			@Param("member_id") String member_id);
 
 	void saveImage(HashMap<String, String> saveImage);
 
