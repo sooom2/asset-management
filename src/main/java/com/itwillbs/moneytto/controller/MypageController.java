@@ -43,7 +43,7 @@ public class MypageController {
 		
 		HashMap<String,String> member = memberService.getMember(id);
 		System.out.println(member);
-		System.out.println(member.get("member_X") +" " + member.get("member_Y"));
+		
 		model.addAttribute("member", member);
 		
 		System.out.println("itemType : " + itemType);

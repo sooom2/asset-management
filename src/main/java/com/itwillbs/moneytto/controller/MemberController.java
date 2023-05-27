@@ -51,11 +51,10 @@ public class MemberController {
 		String securePasswd = new BCryptPasswordEncoder().encode(member.get("member_pw"));
 		
 		// 좌표
-		HashMap<String, String> coord = memberService.setCoord(member.get("member_address"));
-		member.putAll(coord);
+		String location = memberService.setLocation(member.get("member_address"));
+		member.put("member_location",location);
 		
 		member.put("member_pw", securePasswd);
-		
 		int insertCount = memberService.registMember(member);
 		
 		if(insertCount > 0) { // 가입 성공

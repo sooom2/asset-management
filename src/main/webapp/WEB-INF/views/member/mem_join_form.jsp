@@ -118,39 +118,39 @@ $(function() {
 	
 	
 	$("form").submit(function() {
-// 		if(!nameStatus) {
-// 			alert("이름을 확인하세요");
-// 			$("#member_name").focus();
-// 			return false;
-// 		} else if(!idStatus) {
-// 			alert("아이디를 확인하세요");
-// 			$("#member_id").focus();
-// 			return false;
-// 		} else if(!passwdStatus) {
-// 			alert("비밀번호를 확인하세요");
-// 			$("#memeber_pw").focus();
-// 			return false;
-// 		} else if(!passwd2Status) {
-// 			alert("비밀번호확인을 확인하세요");
-// 			$("#member_pw2").focus();
-// 			return false;
-// 		} else if($("#member_address1").val() == "") {
-// 			alert("주소를 입력하세요");
-// 			$("#member_address1").focus();
-// 			return false;
-// 		} else if($("#member_address2").val() == "") {
-// 			alert("상세주소를 입력하세요");
-// 			$("#member_address2").focus();
-// 			return false;
-// 		} else if($("#member_bday").val() == "") {
-// 			alert("주소를 입력하세요");
-// 			$("#member_bday").focus();
-// 			return false;
-// 		} else if($("#member_tel").val() == "") {
-// 			alert("주소를 입력하세요");
-// 			$("#member_tel").focus();
-// 			return false;
-// 		}
+		if(!nameStatus) {
+			alert("이름을 확인하세요");
+			$("#member_name").focus();
+			return false;
+		} else if(!idStatus) {
+			alert("아이디를 확인하세요");
+			$("#member_id").focus();
+			return false;
+		} else if(!passwdStatus) {
+			alert("비밀번호를 확인하세요");
+			$("#memeber_pw").focus();
+			return false;
+		} else if(!passwd2Status) {
+			alert("비밀번호확인을 확인하세요");
+			$("#member_pw2").focus();
+			return false;
+		} else if($("#member_address1").val() == "") {
+			alert("주소를 입력하세요");
+			$("#member_address1").focus();
+			return false;
+		} else if($("#member_address2").val() == "") {
+			alert("상세주소를 입력하세요");
+			$("#member_address2").focus();
+			return false;
+		} else if($("#member_bday").val() == "") {
+			alert("주소를 입력하세요");
+			$("#member_bday").focus();
+			return false;
+		} else if($("#member_tel").val() == "") {
+			alert("주소를 입력하세요");
+			$("#member_tel").focus();
+			return false;
+		}
 		
 		return true;
 		

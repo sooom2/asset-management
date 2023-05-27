@@ -25,7 +25,8 @@ $(document).ready(function(){
 		// active된 탭에 대한 css 작업 필요
 		location.href = "mypage?itemList="+itemType;
 		})
-	})
+		
+})
 function memberAuth(){
 	let authWindow = window.open("about:blank","authWindow","width=500, height=700");
 	authWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize"
@@ -37,14 +38,6 @@ function memberAuth(){
 	+"&auth_type=0";
 	// 산업은행 - 12345678
 }
-	// 망했어요 모르겟어요	
-	var polylineLength = new kakao.maps.Polyline({
-					path : [
-							new kakao.maps.LatLng(${member.member_X}, ${member.member_Y}),
-					        new kakao.maps.LatLng(120, 35)
-							]
-					}).getLength();
-	// 망했어요 모르겟어요
 
 </script>
 </head>

@@ -20,8 +20,9 @@
 				   , ''	-- member_image
 				   , '0' -- grade_score
 				   , '0' -- declare_count
-				   , #{member_X}
-				   , #{member_Y}
+				   , '' -- 삭제예정
+				   , '' -- 삭제예정
+				   , POINT(${member_location})
 			)
 	</insert>
 	

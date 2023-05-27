@@ -26,9 +26,9 @@ public class MemberService {
 	@Autowired
 	private MemberMapper mapper;
 	// 좌표 가져오기
-	public HashMap<String, String> setCoord(String member_address) {
+	public String setLocation(String member_address) {
 		
-		HashMap<String, String> coord = new HashMap<String, String>();
+		String member_location = "";
 		
 		URI uri = UriComponentsBuilder.fromUriString("https://dapi.kakao.com/v2/local/search/address.json")
 			 	.queryParam("query",member_address).encode().build().toUri();
@@ -45,15 +45,15 @@ public class MemberService {
 	    JSONArray jsonArray;
 		try {
 			jsonArray = new JSONObject(resp.getBody()).getJSONArray("documents");
-			
-			coord.put("member_X", jsonArray.getJSONObject(0).getString("x"));
-		    coord.put("member_Y", jsonArray.getJSONObject(0).getString("y"));
+		// 05.27 x, y 좌표를 바로 member_location에 넣도록 수정되었음
+//			coord.put("member_X", jsonArray.getJSONObject(0).getString("x"));
+//		    coord.put("member_Y", jsonArray.getJSONObject(0).getString("y"));
+		    member_location = jsonArray.getJSONObject(0).getString("x") + ", " + jsonArray.getJSONObject(0).getString("y");
 		} catch (JSONException e) {
 			System.out.println("MemberService - setCoord null");
 			e.printStackTrace();
 		}
-	    
-	    return coord;
+	    return member_location;
 	}
 	
 	/*회원 목록 조회*/
