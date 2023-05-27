@@ -15,7 +15,8 @@
 $(document).ready(function(){
 	
   	$(".ThumbNailTypeItemImg, .ThumbNailTypeItemInfoBox").on("click",function(){
-		location.href="market_detail"
+  		var item_code = $(this).parent().attr("data-code");
+		location.href="market_detail?item_code="+item_code
 	})
 	
 	$(".tabTab").on("click",function(){
@@ -157,9 +158,6 @@ function memberAuth(){
 		                              <div class="ThumbNailTypeItemBox">
 		                                  <div class="ThumbNailTypeImgBox"  data-code="${item.item_code }">
 		                                      <img src="${path }/resources/images/main/noThumbnail.jpg" alt="itemImg" class="ThumbNailTypeItemImg"/>
-		                                      <div class="SellStateImgWrapper">
-		                                          <div class="SellStateImgStateBox"></div>
-		                                      </div>
 		                                    	<c:choose>
 	                                      	 		<c:when test="${not empty item.wish_code }">
 	                                      	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" 
