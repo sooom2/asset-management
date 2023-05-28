@@ -1,123 +1,115 @@
 package com.itwillbs.moneytto.socket;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.itwillbs.moneytto.vo.MemberVO;
+public class WebSocketHandler extends TextWebSocketHandler {
 
-public class WebSocketHandler implements org.springframework.web.socket.WebSocketHandler {
-
-	private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(AuctionChatSocketHandler.class);
 	
-	// 로그인 유저 목록 : <User, WebSocketSession>
-	private Map<MemberVO, WebSocketSession> sessionMap = new HashMap<MemberVO, WebSocketSession>();
-	// 채팅방 목록 : <String, WebSocketSession>
-	private Map<String, MemberVO> userMap = new HashMap<String, MemberVO>();
+	// 채팅방 목록 <경매 코드, ArrayList<session> >
+	private Map<String, ArrayList<WebSocketSession>> auctionList = new ConcurrentHashMap<String, ArrayList<WebSocketSession>>();
+	// 세션, 경매코드
+	private Map<WebSocketSession, String> sessionList = new ConcurrentHashMap<WebSocketSession, String>();
+	
+	private static int i;
+	
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+		i++;
 		
-		MemberVO user = (MemberVO)session.getAttributes().get("loginUser");
-		
-		
-		logger.debug("\n아이디 : " + session.getAttributes().get("loginUser") + 
-					 "\n웹소켓 세션 : " + session.getId() + 
-					 "\n연결 성공");
-		
-		// 유저 - 세션 목록에 추가
-		sessionMap.put(user, session);
-		// uuid - 유저 목록에 추가
-		userMap.put(user.getUserUuid(), user);
-		 
-		logger.debug("총 로그인 유저 : " + sessionMap.size());
 	}
 
 	@Override  
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-		// 메세지(JSON) 파싱
-		JSONParser jParser = new JSONParser();
-		JSONObject jObject = (JSONObject) jParser.parse((String)message.getPayload());
+		String msg = (String)message.getPayload();
+		JSONObject jObject = new JSONObject(msg);
+	    String name = jObject.getString("name");
+	    String messages = jObject.getString("message");
+	    String auctionCode = jObject.getString("auctionCode");
+		System.out.println("name : " + name);
+		System.out.println("messages : " + messages);
+		System.out.println("auctionCode : " + auctionCode);
 		
-		// 보낸 사람 (나)
-		MemberVO sender = (MemberVO)session.getAttributes().get("loginUser");
-		String senderName = sender.getUserName();
-		String senderUuid = sender.getUserUuid();
-				
-		if(jObject.get("handle").toString().equals("message")) {
-			
-			// 채팅 메세지
-			message = new TextMessage("message" + "," + sender.getUserName() + "," + jObject.get("content").toString() + "," + sender.getUserUuid());
-			// 메세지 전송
-			logger.debug("1");
-			sessionMap.get(userMap.get(jObject.get("uuid"))).sendMessage(message);
-			
-		}else if(jObject.get("handle").toString().equals("login")) {
-			
-			// [나 → 상대방] 로그인 알림 메세지
-			message = new TextMessage("login" + "," + senderUuid);
-			// [로그인목록 → 나]
-			String loginedUsers = "onLineList";
-			
-			// 로그인 되어 있는 유저들의 채팅방 화면에 전송하여 로그인 알림
-			for (MemberVO users : sessionMap.keySet()) {
-				// 자기 자신은 제외
-				if(users.getUserUuid().equals(senderUuid)) continue;
-				sessionMap.get(users).sendMessage(message); 
-				loginedUsers += "," + users.getUserUuid();
-			}
-			
-			message = new TextMessage(loginedUsers);
-			sessionMap.get(sender).sendMessage(message);  
-			
-		}else if(jObject.get("handle").toString().equals("logout")) {
-			
-			// [나 → 상대방] 로그아웃 알림 메세지
-			message = new TextMessage("logout" + "," + senderUuid);                 
-			                      
-			// 로그인 되어 있는 유저들의 채팅방 화면에 전송하여 로그아웃 알림
-			for (MemberVO users : sessionMap.keySet()) {
-				// 자기 자신은 제외 (아직 로그인 session 종료 X)
-				if(users.getUserName().equals(senderName)) continue;
-				sessionMap.get(users).sendMessage(message);
-			}
-			
-		}else if(jObject.get("handle").toString().equals("onLineList")) {	
-			
-			String loginedUsers = "onLineList";
-			// 로그인 되어 있는 유저 불러오기
-			for (MemberVO users : sessionMap.keySet()) {
-				// 자기 자신은 제외
-				if(users.getUserName().equals(senderName)) continue;
-				loginedUsers += "," + users.getUserUuid();
-			}
-			message = new TextMessage(loginedUsers);
-			sessionMap.get(sender).sendMessage(message);
-		}
+		
+		// 채팅 세션 목록에 채팅방이 존재 X
+		if(auctionList.get(auctionCode) == null && messages.equals("ENTER")) {
+            
+            // 채팅방에 들어갈 sessionList 생성
+            ArrayList<WebSocketSession> sessionTwo = new ArrayList<>();
+            // session 추가
+            sessionTwo.add(session);
+            // sessionList에 추가
+            sessionList.put(session, auctionCode);
+            // RoomList에 추가
+            auctionList.put(auctionCode, sessionTwo);
+            System.out.println("채팅방 생성");
+        }
+        
+        // 채팅방이 존재 할 때
+        else if(auctionList.get(auctionCode) != null && messages.equals("ENTER")) {
+            
+            // RoomList 코드 확인
+            auctionList.get(auctionCode).add(session);
+            // sessionList에 추가
+            sessionList.put(session, auctionCode);
+            System.out.println("생성된 채팅방으로 입장");
+        }
+        
+        // 채팅 메세지 입력 시
+        else if(auctionList.get(auctionCode) != null && !messages.equals("ENTER")) {
+            // 채팅 출력
+            TextMessage textMessage = new TextMessage(name + ":" + messages);
+            
+            int sessionCount = 0;
+ 
+            // 해당 코드에 session에 뿌려줌.
+            for(WebSocketSession sess : auctionList.get(auctionCode)) {
+                sess.sendMessage(textMessage);
+                sessionCount++;
+            }
+            System.out.println("현재 접속 인원 수 : " + sessionCount);
+        }
+		
+        
+		
+		
+	}
+	
+	
+	@Override
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
+		i--;
+		System.out.println(session.getId() + " 연결 종료 / 총 접속 인원 : " + i + "명");
+        // sessionList에 session이 있다면
+        if(sessionList.get(session) != null) {
+            // 해당 session의 방 번호를 가져와서, 방을 찾고, 그 방의 ArrayList<session>에서 해당 session을 지운다.
+            auctionList.get(sessionList.get(session)).remove(session);
+            sessionList.remove(session);
+        }
+		
+		
 	}
 	
 	@Override
 	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
 	}
 
-	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-		
-		MemberVO u = (MemberVO)session.getAttributes().get("loginUser");
-		
-		sessionMap.remove(u);
-		userMap.remove(u.getUserUuid());
-		
-		logger.debug((MemberVO)session.getAttributes().get("loginUser") + "님의 웹소켓 연결 해제");
-	}
+	
 
 	@Override
 	public boolean supportsPartialMessages() {
