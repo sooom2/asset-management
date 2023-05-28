@@ -41,6 +41,12 @@ public class MarketService {
 	}
 
 
+
+	public int updateItem(HashMap<String, String> item) {
+		return mapper.updateItem(item);
+	}
+
+
 	
 	
 }

@@ -12,187 +12,217 @@
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
-	document
-			.addEventListener(
-					'DOMContentLoaded',
-					function() {
-						var maxImageCount = 5; // 최대 이미지 개수 설정
-						var fileInput = document
-								.querySelector('input[type="file"]');
-						var imageList = document.querySelector('.image_list');
-						var countImg = document
-								.querySelector('.count_img span');
-						var defaultImage = document.querySelector('.default');
-
-						function handleFileSelect(event) {
-							var files = event.target.files;
-
-							// 이미지 개수가 최대 개수를 초과하는 경우 파일 선택을 제한
-							if (files.length + imageList.children.length > maxImageCount) {
-								alert('최대 ' + maxImageCount
-										+ '장의 사진만 업로드할 수 있습니다.');
-								fileInput.value = '';
-								return;
-							}
-
-							// 선택한 파일들의 미리보기를 생성하여 추가
-							for (var i = 0; i < files.length; i++) {
-								var file = files[i];
-
-								// 이미지 개수가 최대 개수에 도달한 경우 파일 선택을 제한
-								if (imageList.children.length >= maxImageCount) {
-									alert('최대 ' + maxImageCount
-											+ '장의 사진만 업로드할 수 있습니다.');
-									fileInput.value = '';
-									return;
-								}
-
-								// 미리보기 컨테이너를 생성
-								var previewContainer = document
-										.createElement('li');
-
-								// 이미지를 생성
-								var img = document.createElement('img');
-								img.classList.add('item_img');
-								img.src = URL.createObjectURL(file);
-
-								// 이미지 삭제 아이콘을 생성
-								var deleteIcon = document.createElement('img');
-								deleteIcon.classList.add('img_delete_icon');
-								deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
-								deleteIcon.alt = '상품 썸네일 제거 아이콘';
-
-								// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
-								deleteIcon
-										.addEventListener(
-												'click',
-												function() {
-													var imageContainer = this
-															.closest('li');
-													imageList
-															.removeChild(imageContainer);
-													updateImageCount();
-												});
-
-								// 이미지와 삭제 아이콘을 감싸는 상자를 생성
-								var imageBox = document.createElement('div');
-								imageBox.classList.add('up_img_box');
-								imageBox.appendChild(deleteIcon);
-								imageBox.appendChild(img);
-
-								// 미리보기 컨테이너에 이미지 상자를 추가
-								previewContainer.appendChild(imageBox);
-
-								// 미리보기 컨테이너를 이미지 목록에 추가
-								imageList.appendChild(previewContainer);
-
-								updateImageCount();
-							}
-						}
-
-						function updateImageCount() {
-							countImg.textContent = imageList.children.length;
-						}
-
-						// default 버튼 클릭 시 파일 입력 필드를 클릭하여 파일 선택 창을 열도록 설정
-						defaultImage.addEventListener('click', function() {
-							fileInput.click();
-						});
-
-						fileInput.addEventListener('change', handleFileSelect,
-								false);
-					});
-
-	//태그기능 
-
-	document.addEventListener('DOMContentLoaded', function() {
-		var tagInput = document.querySelector('.tagTagInput');
-		var tagButton = document.querySelector('.tagButton');
-		var tagListWrapper = document.querySelector('.ListWrapper');
-		var tagForm = document.getElementById('tag');
-
-		var tags = [];
-
-		function updateTagList() {
-			tagListWrapper.innerHTML = '';
-
-			tags.slice(0, 5).forEach(function(tag, index) {
-				var tagItem = document.createElement('span');
-				tagItem.classList.add('tagItem');
-				tagItem.textContent = '#' + tag;
-
-				// X 아이콘 추가
-				var removeIcon = document.createElement('span');
-				removeIcon.classList.add('removeIcon');
-				removeIcon.textContent = 'X';
-				removeIcon.setAttribute('data-index', index);
-				tagItem.appendChild(removeIcon);
-
-				tagListWrapper.appendChild(tagItem);
-			});
-
-			// 수정된 부분: hidden input의 값을 업데이트
-			var hiddenInput = document.querySelector('input[name="item_tag"]');
-			hiddenInput.setAttribute('value', tags.join(','));
-		}
-
-		function addTag() {
-			var tagValue = tagInput.value.trim();
-
-			if (tagValue === '') {
-				return;
-			}
-
-			if (tags.length >= 5 || tags.includes(tagValue)) {
-				tagInput.value = '';
-				tagInput.focus();
-				return;
-			}
-
-			tags.push(tagValue);
-			updateTagList();
-
-			tagInput.value = '';
-			tagInput.focus();
-		}
-
-		function removeTag(event) {
-			if (event.target.classList.contains('removeIcon')) {
-				var index = event.target.getAttribute('data-index');
-				tags.splice(index, 1);
-				updateTagList();
-
-				// 수정된 부분: hidden input의 값을 업데이트
-				var hiddenInput = document
-						.querySelector('input[name="item_tag"]');
-				hiddenInput.setAttribute('value', tags.join(','));
-			}
-		}
-
-		tagButton.addEventListener('click', function(event) {
-			event.preventDefault();
-			addTag();
-		});
-
-		tagListWrapper.addEventListener('click', removeTag);
-
-		tagForm.addEventListener('submit', function(event) {
-			event.preventDefault();
-		});
-	});
-	
-	//파일 인풋 
-
-	var fileInput = document.querySelector('input[type="file"]');
+document.addEventListener('DOMContentLoaded',function() {
+	var maxImageCount = 5; // 최대 이미지 개수 설정
+	var fileInput = document
+			.querySelector('input[type="file"]');
+	var imageList = document.querySelector('.image_list');
+	var countImg = document
+			.querySelector('.count_img span');
+	var defaultImage = document.querySelector('.default');
+	var draggedItem = null;
 
 	function handleFileSelect(event) {
 		var files = event.target.files;
 
-		// 파일 선택된 후에 처리할 로직 작성
-		// 파일 객체(files)를 활용하여 원하는 동작 수행
+		// 이미지 개수가 최대 개수를 초과하는 경우 파일 선택을 제한
+		if (files.length + imageList.children.length > maxImageCount) {
+			alert('최대 ' + maxImageCount
+					+ '장의 사진만 업로드할 수 있습니다.');
+			fileInput.value = '';
+			return;
+		}
+
+		// 선택한 파일들의 미리보기를 생성하여 추가
+		for (var i = 0; i < files.length; i++) {
+			var file = files[i];
+
+			// 이미지 개수가 최대 개수에 도달한 경우 파일 선택을 제한
+			if (imageList.children.length >= maxImageCount) {
+				alert('최대 ' + maxImageCount
+						+ '장의 사진만 업로드할 수 있습니다.');
+				fileInput.value = '';
+				return;
+			}
+
+			var previewContainer = document
+					.createElement('li');
+			var img = document.createElement('img');
+			img.classList.add('item_img');
+			img.src = URL.createObjectURL(file);
+
+			var deleteIcon = document.createElement('img');
+			deleteIcon.classList.add('img_delete_icon');
+			deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
+			deleteIcon.alt = '상품 썸네일 제거 아이콘';
+
+			// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
+			deleteIcon
+					.addEventListener(
+							'click',
+							function() {
+								var imageContainer = this
+										.closest('li');
+								imageList
+										.removeChild(imageContainer);
+								updateImageCount();
+							});
+
+			var imageBox = document.createElement('div');
+			imageBox.classList.add('up_img_box');
+			imageBox.appendChild(deleteIcon);
+			imageBox.appendChild(img);
+
+			previewContainer.appendChild(imageBox);
+			imageList.appendChild(previewContainer);
+
+			updateImageCount();
+		}
 	}
 
-	fileInput.addEventListener('change', handleFileSelect, false);
+	function updateImageCount() {
+		countImg.textContent = imageList.children.length;
+	}
+
+	// default 버튼 클릭 시 파일 입력 필드를 클릭하여 파일 선택 창을 열도록 설정
+	defaultImage.addEventListener('click', function() {
+		fileInput.click();
+	});
+
+	fileInput.addEventListener('change', handleFileSelect,
+			false);
+
+	// 드래그 앤 드롭 이벤트 처리
+	imageList.addEventListener('dragstart',
+			function(event) {
+				draggedItem = event.target.closest('li');
+			});
+
+	imageList.addEventListener('dragover', function(event) {
+		event.preventDefault();
+	});
+
+	imageList.addEventListener('drop', function(event) {
+		event.preventDefault();
+		var droppedItem = event.target.closest('li');
+
+		if (draggedItem && imageList.contains(draggedItem)
+				&& droppedItem
+				&& imageList.contains(droppedItem)) {
+			var draggedIndex = Array.from(
+					imageList.children)
+					.indexOf(draggedItem);
+			var droppedIndex = Array.from(
+					imageList.children)
+					.indexOf(droppedItem);
+
+			if (draggedIndex !== droppedIndex) {
+				// 드래그된 이미지를 드롭된 위치로 이동
+				if (draggedIndex < droppedIndex) {
+					imageList.insertBefore(droppedItem,
+							draggedItem);
+				} else {
+					imageList.insertBefore(draggedItem,
+							droppedItem);
+				}
+
+				updateImageCount();
+			}
+		}
+
+		draggedItem = null;
+	});
+});
+
+	//태그기능 
+document.addEventListener('DOMContentLoaded', function() {
+	var tagInput = document.querySelector('.tagTagInput');
+	var tagButton = document.querySelector('.tagButton');
+	var tagListWrapper = document.querySelector('.ListWrapper');
+	var tagForm = document.getElementById('tag');
+
+	var tags = [];
+
+	function updateTagList() {
+		tagListWrapper.innerHTML = '';
+
+		tags.slice(0, 5).forEach(function(tag, index) {
+			var tagItem = document.createElement('span');
+			tagItem.classList.add('tagItem');
+			tagItem.textContent = '#' + tag;
+
+			// X 아이콘 추가
+			var removeIcon = document.createElement('span');
+			removeIcon.classList.add('removeIcon');
+			removeIcon.textContent = 'X';
+			removeIcon.setAttribute('data-index', index);
+			tagItem.appendChild(removeIcon);
+
+			tagListWrapper.appendChild(tagItem);
+		});
+
+		// 수정된 부분: hidden input의 값을 업데이트
+		var hiddenInput = document.querySelector('input[name="item_tag"]');
+		hiddenInput.setAttribute('value', tags.join(','));
+	}
+
+	function addTag() {
+		var tagValue = tagInput.value.trim();
+
+		if (tagValue === '') {
+			return;
+		}
+
+		if (tags.length >= 5 || tags.includes(tagValue)) {
+			tagInput.value = '';
+			tagInput.focus();
+			return;
+		}
+
+		tags.push(tagValue);
+		updateTagList();
+
+		tagInput.value = '';
+		tagInput.focus();
+	}
+
+	function removeTag(event) {
+		if (event.target.classList.contains('removeIcon')) {
+			var index = event.target.getAttribute('data-index');
+			tags.splice(index, 1);
+			updateTagList();
+
+			// 수정된 부분: hidden input의 값을 업데이트
+			var hiddenInput = document
+					.querySelector('input[name="item_tag"]');
+			hiddenInput.setAttribute('value', tags.join(','));
+		}
+	}
+
+	tagButton.addEventListener('click', function(event) {
+		event.preventDefault();
+		addTag();
+	});
+
+	tagListWrapper.addEventListener('click', removeTag);
+
+	tagForm.addEventListener('submit', function(event) {
+		event.preventDefault();
+	});
+});
+
+//파일 인풋 
+
+var fileInput = document.querySelector('input[type="file"]');
+
+function handleFileSelect(event) {
+	var files = event.target.files;
+
+	// 파일 선택된 후에 처리할 로직 작성
+	// 파일 객체(files)를 활용하여 원하는 동작 수행
+}
+
+fileInput.addEventListener('change', handleFileSelect, false);
 </script>
 
 

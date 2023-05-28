@@ -73,6 +73,8 @@ public interface MarketMapper {
 
 	HashMap<String, Integer> itemDetail(String item_code);
 
+	int updateItem(HashMap<String, String> item);
+
 	
 
 

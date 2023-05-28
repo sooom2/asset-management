@@ -110,6 +110,7 @@ public class MarketController {
 		
 		return "market/market_detail";
 	}
+	
 	@GetMapping(value = "market_payment")
 	public String marketPayment() {
 		
@@ -384,6 +385,84 @@ public class MarketController {
 	        return "fail_back";
 	    }
 	}
+	
+	@GetMapping(value = "itemModify")
+	public String marketModify(Model model, HttpSession session, String item_code) {
+		
+		//session아이디로 닉네임 얻기
+		String id = (String)session.getAttribute("sId");
+		if (id != null) {
+		    HashMap<String, String> member = memberService.getMember(id);
+		    String nickname = member.get("member_nickname");
+		    model.addAttribute("nickname",nickname);
+		}
+		
+		// 아이템 상세
+		HashMap<String, String> marketItem = service.getMarketItem(item_code);
+		model.addAttribute("marketItem", marketItem);
+		
+		
+		return "market/market_itemModify";
+	}
+	
+	//상품 수정 
+	@PostMapping(value = "itemModifyPro")
+	public String itemModifyPro(@RequestParam HashMap<String, String> item, Model model, HttpSession session, @RequestParam("file") List<MultipartFile> files) {
+	    String id = (String) session.getAttribute("sId");
+	    String uploadDir = session.getServletContext().getRealPath("/resources/upload");
+	    System.out.println(item);
+	    try {
+	        String itemCode = item.get("item_code");
+	        item.put("id", id);
+
+	        // 가격에서 쉼표 제거
+	        String itemPrice = item.get("item_price");
+	        itemPrice = itemPrice.replace(",", "");
+	        item.put("item_price", itemPrice);
+
+	        // 아이템 수정
+	        int updateCount = service.updateItem(item);
+
+	        // 아이템 수정에 성공한 경우에만 사진 정보 저장
+	        if (updateCount > 0) {
+	            // 사진 정보를 저장
+	            for (int i = 0; i < files.size(); i++) {
+	                MultipartFile file = files.get(i);
+	                if (!file.isEmpty()) {
+	                    String fileName = file.getOriginalFilename();
+	                    String fileExtension = FilenameUtils.getExtension(fileName);
+	                    String storedFileName = UUID.randomUUID().toString() + "." + fileExtension;
+	                    String filePath = uploadDir + "/" + storedFileName;
+
+	                    File dest = new File(filePath);
+	                    file.transferTo(dest);
+
+	                    // 사진 정보를 저장
+	                    HashMap<String, String> saveImage = new HashMap<>();
+	                    saveImage.put("image_code", UUID.randomUUID().toString());
+	                    saveImage.put("item_code", itemCode);
+	                    saveImage.put("image_name", fileName);
+
+	                    // 사진 정보 저장 메서드 호출
+	                    service.saveImage(saveImage);
+	                }
+	            }
+
+	            model.addAttribute("msg", "상품이 수정되었습니다.");
+	            model.addAttribute("target", "main");
+	            return "success";
+	        } else {
+	            model.addAttribute("msg", "상품 수정에 실패하였습니다.");
+	            return "fail_back";
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        model.addAttribute("msg", "상품 수정에 실패하였습니다.");
+	        return "fail_back";
+	    }
+	}
+
+	
 
 
 	
