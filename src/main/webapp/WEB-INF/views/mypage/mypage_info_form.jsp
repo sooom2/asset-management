@@ -6,87 +6,88 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
 <title>회원정보관리</title>
-<link href="resources/css/main.css" rel="stylesheet">
-<link href="resources/css/inc.css" rel="stylesheet">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member.css">
+<link  href="${path }/resources/css/member.css" rel="stylesheet">
+<link href="${path }/resources/css/member.css" rel="stylesheet" >
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="${path }/resources/js/main.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="${path }/resources/js/member.js"></script>
 <script>
 window.onload = function(){
     document.getElementById("postSearch").addEventListener("click", function(){ //주소입력칸을 클릭하면
         //카카오 지도 발생
         new daum.Postcode({
             oncomplete: function(data) { //선택시 입력값 세팅
-                document.getElementById("member_address1").value = data.address; // 주소 넣기
-                document.querySelector("#member_address2").focus(); //상세입력 포커싱
+                document.getElementById("member_address").value = data.address; // 주소 넣기
+                document.querySelector("#member_address_detail").value = "";
+                document.querySelector("#member_address_detail").focus(); //상세입력 포커싱
             }
         }).open();
     });
+    swal("비밀번호를 변경하실 경우 비밀번호 확인란에 새 비밀번호를 입력해주세요.");
+
 }
-
-function confirmQuit() {
-	    // 탈퇴를 처리하는 코드 작성
-		  if (confirm("정말로 탈퇴하시겠습니까?")) {
-			  document.getElementById("quitPro").submit();
-			
-	  }
-	}
-
 
 </script>
 </head>
 <body>
-
 	<jsp:include page="../nav.jsp" />
-	
 	<div id="container">
 		<div id="content">
 			<div class="section group section-member" id="memberInfo">
 				<div class="title-membership">회원정보 관리</div>
 				<div class="wrap-member-box wrap-membership-box">
-					<div class="title-membership">회원정보</div>
-					<form method="post" name="form-join2" action="updatePro">
+					<div class="title-membership">회원정보 수정</div>
+					<form method="post" name="form-join2" action="memberUpdatePro">
+						<div class="profile_edit_image">
+							<div class="profile_edit_image_box">
+								<img src="https://ccimage.hellomarket.com/img/web/common/empty_profile.svg" alt="머니또의 프로필 이미지">
+								<img src="https://ccimage.hellomarket.com/img/web/member/edit_camera.svg" alt="프로필 사진 등록 이미지">
+								<input type="file" class="pf_img" name="file" id="upFile" accept="image/jpeg, image/png">
+							</div>
+						</div>
 						<div class="wrap-inside">
 							<div class="join-detail">
-								<label class="label-input" for="id"> <span>아이디</span>
-									<input type="text" id="member_id" name="member_id" readonly="readonly"					
-									value="${member.member_id}"> <span></span>
+								<label class="label-input" for="id"> <span>닉네임</span>
+									<input type="text" id="member_nickname" name="member_nickname" 		
+									value="${member.member_nickname}"> <span></span>
 								</label>
 							</div>
 
 							<div class="join-detail">
 								<label class="label-input" for="pass"> <span>기존 비밀번호</span>
-									<input type="password" id="member_pw" name="member_pw" class="input" placeholder="정보수정시 비밀번호 입력 필수!!">
+									<input type="password" id="member_pw" name="member_pw" class="input" placeholder="정보수정시 비밀번호를 입력해주세요.">
 								</label>
+								<span id="checkPasswdResult" class="joinCheck"></span>
 							</div>
+							
 							<div class="join-detail">
 								<label class="label-input" for="pass2"> 
-								<span>변경하실 비밀번호</span> 
-								<input type="password" id="member_pw2" name="member_pw2" class="input" placeholder="암호를 변경하시려면 입력하세요">
+								<span>비밀번호 확인</span> 
+								<input type="password" id="member_pw3" name="member_pw3" class="input" placeholder="비밀번호를 입력해주세요.">
 								<span></span>
 								</label>
+								<span id="checkPasswd2Result" class="joinCheck"></span>
 							</div>
 							<div class="join-detail">
 								<label class="label-input" for="username"> <span>이름</span>
-									<input type="text" id="member_name" name="member_name" class="input" value="${member.member_name }" >
+									<input type="text" id="member_name" name="member_name" class="input" value="${member.member_name }"  readonly="readonly">
 									 <span></span>
 								</label>
 							</div>
 							<div class="join-detail">
 			                    <label class="label-input" for="phone" style="width:342px;display:inline-block;">
 			                        <span>주소</span>
-			                        <input type="text" style="width:180px;display:inline-block;"  id="member_address1" name="member_address1"class="input" value="${member.member_address1 }">
+			                        <input type="text" style="width:180px;display:inline-block;"  id="member_address" name="member_address"class="input" value="${member.member_address }"
+			                        readonly="readonly">
 			                        <span class="joinCheck"></span>
 			                    </label>
 			                    <a href="#" class="btnsub btnsms" id="postSearch">주소 검색</a>
 			                </div>
 							<div class="join-detail" style="margin-top:4px">
 								<label class="label-input" for="address"> <span>상세주소</span>
-									<input type="text" id="member_address2" name="member_address2" class="input" value="${member.member_address2 }">
+									<input type="text" id="member_address_detail" name="member_address_detail" class="input" value="${member.member_address_detail }">
 									<span class="joinCheck"></span>
 								</label>
 							</div>
@@ -103,35 +104,10 @@ function confirmQuit() {
 									placeholder="예) 20170101"> <span></span>
 								</label>
 							</div>
-
-
 							<div class="join-detail">
 								<label class="label-input" for="phone"> <span>휴대폰번호</span>
 									<input type="text" id="member_tel" name="member_tel"
 									class="input input-numeric" value="${member.member_tel }"> <span></span>
-								</label>
-							</div>
-							<div class="join-detail">
-								<label class="label-input" for="account"> <span>계좌인증</span>
-									<input type="text" id="member_account" name="member_account"
-									class="input input-numeric" value=""> <span></span>
-								</label>
-							</div>
-							
-							<div class="join-detail">
-								<label class="label-input" for=""> <span>관심품목</span>
-									<div class="" style="margin-left: 120px; display: block; margin-top: 3px; width: 200px;; height: 30px; overflow: hidden; border: 1px solid #ccc;">
-										<select name="member_prefer_genre" id="member_prefer_genre"
-											style="width: 220px; height: 30px; padding: 0 0 0 10px; box-sizing: border-box; font-size: 16px; line-height: 30px; border-radius: 0; -webkit-appearance: none; appearance: none; -moz-appearance: none; background: url(/images/customer/icon-select-off.png) right 31px center no-repeat; border: none; color: #7d7d7d; vertical-align: top;">
-											<option value="여성의류"<c:if test="${member.member_prefer_genre eq '액션'}">selected</c:if>>여성의류</option>
-											<option value="남성의류"<c:if test="${member.member_prefer_genre eq '드라마'}">selected</c:if>>남성의류</option>
-											<option value="가방"<c:if test="${member.member_prefer_genre eq '코메디' }">selected</c:if>>가방</option>
-											<option value="신발"<c:if test="${member.member_prefer_genre eq '애니메이션' }">selected</c:if>>신발</option>
-											<option value="패션잡화"<c:if test="${member.member_prefer_genre eq '스릴러' }">selected</c:if>>패션잡화</option>
-											<option value="키즈"<c:if test="${member.member_prefer_genre eq '로맨스' }">selected</c:if>>키즈</option>
-											<option value="라이프"<c:if test="${member.member_prefer_genre eq '범죄' }">selected</c:if>>라이프</option>
-										</select>
-									</div> <span></span>
 								</label>
 							</div>
 						</div>
@@ -145,7 +121,7 @@ function confirmQuit() {
 							남은 머니가 사라지고 사용한 아이디로 재가입이 불가하오니 신중히 결정해주시기 바랍니다.
 						</span> 
 						<a href="" class="btn-quit withdrawmember">
-							<button type="submit" formaction="quitPro" onclick="confirmQuit()" style="display: inline-block; width: 300px;text-align: center;">회원 탈퇴하기</button>
+							<button type="submit"  id ="quitPro" onclick="confirmQuit()" formaction="memberQuitPro" style="display: inline-block; width: 300px;text-align: center;">회원 탈퇴하기</button>
 						</a>
 					</div>
 					</form>

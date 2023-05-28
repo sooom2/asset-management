@@ -295,9 +295,17 @@ public class MarketController {
 	
 	@GetMapping("market_review")
 	public String marketReview() {
+		
+		
 		return "market/market_review";
 	}
 	
+	@GetMapping("reviewRegist")
+	public String reviewRegist() {
+		
+		
+		return "market/market_review";
+	}
 	@GetMapping("chatDetail")
 	@ResponseBody
 	public String chatDetail(Model model, @RequestParam(defaultValue="0") int room_code,HttpSession session) {
