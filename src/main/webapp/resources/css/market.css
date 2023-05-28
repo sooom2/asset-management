@@ -659,13 +659,12 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     margin-left: 10px;
     letter-spacing: -0.2px;
     font-weight: 700;
-    font-size: 0.938rem;
+    font-size: 0.937rem;
     font-family: "Pretendard Variable";
     line-height: 134%;
     color: rgb(255, 255, 255);
     text-align: center !important;
 }
-
 button {
     border: none;
     background: none;
