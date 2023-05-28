@@ -103,43 +103,6 @@ h2{
 
 </style>
 </head>
-<script type="text/javascript">
-	$(function() {
-		$(".star-rating label").on("click", function() {
-			// 선택된 별점 값을 가져옵니다.
-			var ratingValue = $(this).prev('input').val();
-
-			// 이전에 추가된 이모지를 제거합니다.
-			$(".selected-emoji").remove();
-
-			// 선택된 별점 값에 따라 이모지를 추가합니다.
-			var emoji = '';
-			switch (ratingValue) {
-				case '5':
-					emoji = '😍';
-					break;
-				case '4':
-					emoji = '🤩';
-					break;
-				case '3':
-					emoji = '🤔';
-					break;
-				case '2':
-					emoji = '😑';
-					break;
-				case '1':
-					emoji = '&#128545';
-					break;
-				default:
-					emoji="";
-					break;
-			}
-
-			// 이모지를 추가합니다.
-			$(".star-rating").after('<span class="selected-emoji">' + emoji + '</span>');
-		});
-	});
-</script>
 </head>
 <script type="text/javascript">
 	$(function() {

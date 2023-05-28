@@ -1,10 +1,10 @@
 package com.itwillbs.moneytto.service;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,15 +17,18 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.itwillbs.moneytto.mapper.MemberMapper;
 
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+
 @Service
 public class MemberService {
 	
 	@Autowired
 	private MemberMapper mapper;
 	// 좌표 가져오기
-	public HashMap<String, String> setCoord(String member_address) {
+	public String setLocation(String member_address) {
 		
-		HashMap<String, String> coord = new HashMap<String, String>();
+		String member_location = "";
 		
 		URI uri = UriComponentsBuilder.fromUriString("https://dapi.kakao.com/v2/local/search/address.json")
 			 	.queryParam("query",member_address).encode().build().toUri();
@@ -42,23 +45,17 @@ public class MemberService {
 	    JSONArray jsonArray;
 		try {
 			jsonArray = new JSONObject(resp.getBody()).getJSONArray("documents");
-			
-			coord.put("member_X", jsonArray.getJSONObject(0).getString("x"));
-		    coord.put("member_Y", jsonArray.getJSONObject(0).getString("y"));
+		// 05.27 x, y 좌표를 바로 member_location에 넣도록 수정되었음
+//			coord.put("member_X", jsonArray.getJSONObject(0).getString("x"));
+//		    coord.put("member_Y", jsonArray.getJSONObject(0).getString("y"));
+		    member_location = jsonArray.getJSONObject(0).getString("x") + ", " + jsonArray.getJSONObject(0).getString("y");
 		} catch (JSONException e) {
 			System.out.println("MemberService - setCoord null");
 			e.printStackTrace();
 		}
-	    
-	    return coord;
+	    return member_location;
 	}
 	
-	// 	아이디 조회
-	public HashMap<String, String> findId(HashMap<String, String> member) {
-		
-		return member;
-		//return mapper.findId(member);
-	}
 	/*회원 목록 조회*/
 //	public List<HashMap<String, String>> selectMember() {
 //		return mapper.selectMember();
@@ -69,7 +66,6 @@ public class MemberService {
 	public int registMember(HashMap<String, String> member) {
 		return mapper.insertMember(member);
 	}
-	/*
 	// 카카오 회원 확인
 	public HashMap<String, String> kakaoMember(String email) {
 		return mapper.selectKakao(email);
@@ -79,17 +75,16 @@ public class MemberService {
 	public HashMap<String, String> findId(HashMap<String, String> member) {
 		return mapper.findId(member);
 	}
-	*/
 	// 비밀번호 재설정
 	public int renewPw(HashMap<String, String> member) {
-		return 0;// Quest
-//		return mapper.renewPw(member);
+		
+		return mapper.renewPw(member);
 	}
-	/*
-	public int insertPoint(String id) {
-		return mapper.insertPoint(id);
-	}
-	
+//
+//	public int insertPoint(String id) {
+//		return mapper.insertPoint(id);
+//	}
+//	
 	// SMS 인증
 	public void certifiedPhoneNumber(String phone, int randomNumber) {
 		String api_key = "NCSQU2TAT8POKQ76";
@@ -100,11 +95,11 @@ public class MemberService {
 	    params.put("to", phone);    // 수신전화번호
 	    params.put("from", "01076110230");    // 발신전화번호
 	    params.put("type", "SMS");
-	    params.put("text", "[아이무비] 인증번호는" + "["+randomNumber+"]" + "입니다."); // 문자 내용 입력
+	    params.put("text", "[머니또] 인증번호는" + "["+randomNumber+"]" + "입니다."); // 문자 내용 입력
 	    params.put("app_version", "test app 1.2"); 
 
 	    try {
-	        JSONObject obj = (JSONObject)coolsms.send(params);
+	        org.json.simple.JSONObject obj = (org.json.simple.JSONObject)coolsms.send(params);
 	        System.out.println(obj.toString());
 	      } catch (CoolsmsException e) {
 	        System.out.println(e.getMessage());
@@ -112,40 +107,31 @@ public class MemberService {
 	      }
 		
 	}
-	*/
+
 	// 아이디 검증.
 	public HashMap<String, String> checkId(String id) {
 		
-		return new HashMap<String, String>();
-//		return mapper.checkId(id);
+		return mapper.checkId(id);
 	}
 	// 비밀번호 찾기 회원 인증.
 		public HashMap<String, String> phoneCheck(HashMap<String, String> member) {
-			return member;// Quest
-//			return mapper.phoneCheck(member);
+			
+			return mapper.phoneCheck(member);
 	}
-	/*
 	
-	
-	/*
-	
-	/*
-	//회원 이름검색
-	public int getMemberListCount(String searchKeyword) {
-		return mapper.selectMemberListCount(searchKeyword);
-	}
+//	//회원 이름검색
+//	public int getMemberListCount(String searchKeyword) {
+//		return mapper.selectMemberListCount(searchKeyword);
+//	}
 
-	//회원수
-	public int selectMemCount() {
-		return mapper.memberCount();
-	}
-	*/
-	public List<HashMap<String, String>> getWishList(String id) {
-		// TODO return
-		//return mapper.selectMember(id);
-//		return null;
-		List<HashMap<String, String>> wishList = new ArrayList<HashMap<String,String>>();
-		return wishList;
+//	//회원수
+//	public int selectMemCount() {
+//		return mapper.memberCount();
+//	}
+	// 회원 정보 수정
+	public int updateMember(HashMap<String, String> member) {
+		
+		return mapper.updateMember(member);
 	}
 
 	public HashMap<String, String> getMember(String id) {
@@ -153,8 +139,40 @@ public class MemberService {
 		return mapper.selectMember(id);
 	}
 
+	public int setAuth(String id) {
+	
+		return mapper.updateAuth(id);
+	}
+
+	public List<HashMap<String, String>> getSellItemList(String id) {
+		
+		return mapper.selectSellItemList(id);
+	}
+	public List<HashMap<String, String>> getWishItemList(String id) {
+		
+		return mapper.selectWishItemList(id);
+	}
+
+	public List<HashMap<String, String>> getBuyItemList(String id) {
+		
+		return mapper.selectBuyItemList(id);
+	}
+	
 	
 
+	public int insertWish(String id, String item_code) {
+		
+		return mapper.insertWish(id, item_code);
+	}
+	
+	public int deleteWish(String id, String item_code) {
+		
+		return mapper.deleteWish(id, item_code);
+	}
 
+	public List<HashMap<String, String>> getWishItem(String id, String item_code) {
+		
+		return mapper.selectWish(id, item_code);
+	}
 	
 }
