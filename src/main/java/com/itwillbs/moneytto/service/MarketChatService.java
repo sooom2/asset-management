@@ -71,7 +71,7 @@ public class MarketChatService {
 	}
 	
 	//  roomcode로 아이템코드 알아내기 얻기
-	public HashMap<String, String> getItem_code(String room_code) {
+	public HashMap<String, String> getItem_code(int room_code) {
 		return mapper.item_code(room_code);
 	}
 	
@@ -86,6 +86,20 @@ public class MarketChatService {
 	}
 	
 	
+	//거래내역업데이트
+	public int insertMarketPaid(HashMap<String, String> item_detail, String oppenentId) {
+		return mapper.insertMarketPaid(item_detail,oppenentId);
+	}
+	// 거래내역삭제
+	public int deltMarketPaid(HashMap<String, String> item_detail, String oppenentId) {
+		return mapper.delMarketPaid(item_detail,oppenentId);
+	}
+	
+	// 거래내역업데이트가능한지확인
+	public int isUpdate(String item_code) {
+		return mapper.isUpdate(item_code);
+	
+	}
 
 
 

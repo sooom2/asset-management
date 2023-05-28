@@ -85,13 +85,15 @@ $(function() {
 		        	let dateString = result[0].chat_openDate;
 		        	let date = new Date(dateString);
 		        	let formatDate = date.toLocaleDateString("ko-KR", { year: 'numeric', month: 'long', day: 'numeric' });
-		        	
+		        	console.log(result);
 		        	
 		        	// 채팅 헤더 상대방 닉네임
 		        	let oppenent_nickname = result[0].buy_nickname;
+		        	let item_subject = result[0].item_subject;
+		        	
 		        	if (sId == result[0].buy_member_id) { oppenent_nickname = result[0].sell_nickname; }
 		        	$(".chat_header a .info div").empty();
-		        	$(".chat_header a .info div").append("<span>"+oppenent_nickname+"</span>");
+		        	$(".chat_header a .info div").append("<span>["+oppenent_nickname+"]<br><i class='fa-regular fa-comment-dots fa-flip-horizontal'></i> "+item_subject+"</span>");
 							
 					
 					// 상품판매상태 버튼
@@ -141,6 +143,8 @@ $(function() {
 							    "<div class='chat_opponent_timeago'>" + formatChatTime + "</div></div></div></div>";
 						  		$(".chat_timeago").append(str);
 						}
+						
+						succ(result);
 					}//success
 		        },
 		        error:function(request,status,error){
@@ -149,8 +153,28 @@ $(function() {
 		    }); //ajax
 		    
     		}).then((arg) =>{    //두번째 ajax
-		    
-		    alert("ddd");
+		    	alert("ajax > 두번째 ajax 작업처리중");
+    			alert(result);
+		    	let item_status = $(this).val();
+				let result = confirm(item_status+"으로 변경하시겠습니까");
+    		
+    		
+    		
+    			$.ajax({
+    				type: "GET",
+    		        url: "itemStatus_update",
+    		        dataType: "text",
+    		        data: {
+    		        	item_status: item_status,
+    		        	room_code: room_code
+    				},
+    				success: function(result){
+    					 location.reload();
+    				},
+    				error:function(request,status,error){
+    					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    		        }
+    			});
 		    
 		});    
 		    
@@ -198,6 +222,8 @@ $(function() {
 <body>
 <jsp:include page="../nav.jsp" />
 <input type="hidden" value="${room_code }">
+	<!-- 대화내역이있을때 -->
+	<c:if test="${not empty myChatList }">
 	<section class="content">
 		<div class="main_area">
 			<!-- left -->
@@ -209,12 +235,13 @@ $(function() {
 				<ul>
 					<!-- 채팅방 목록-->
 					<!--  선택된채팅에 active처리  -->
-					
+				
 				<c:forEach var="chatList" items="${myChatList }">
 					<div class="card_box">
 							<li>
 								<div class="profile">
 									<img src="${path }/resources/images/chat/defaultProfile.png" alt="명품인증">
+									<div style="font-size: 13px;  text-align: center;}">${chatList.get('item_status')}</div>
 								</div>
 								<div class="info">
 									<div class="nick">[${chatList.get('oppenent_nick') }]</div>
@@ -227,7 +254,6 @@ $(function() {
 						<div class="etc_dots"></div>
 					</div>
 				</c:forEach>
-					
 				</ul>
 			</div>
 			<!-- 나중에 세션아이디로(내아이디) -->
@@ -246,8 +272,8 @@ $(function() {
 						<div class="info">
 							<div>
 								<!-- 상대방 닉네임 -->
-								<span>${chatList.oppenent_nick }</span>
-								<span>판매아이템 ${sellCount }개</span>
+								<span>[${chatList.oppenent_nick }]<br><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.item_subject }</span>
+<%-- 								<span>판매아이템 ${sellCount }개</span> --%>
 							</div>
 						</div>
 					</a>
@@ -353,11 +379,9 @@ $(function() {
 									</div>
 								</c:when>
 								<c:otherwise>
-									
-									
-								</c:otherwise>
+ 								</c:otherwise>
 							</c:choose>
-						
+						</c:forEach>
 						
 						
 						
@@ -376,9 +400,6 @@ $(function() {
 <!-- 							</div> -->
 <!-- 						</div> -->
 						
-						</c:forEach>
-						
-						
 						
 					</div>
 				</div>
@@ -393,6 +414,23 @@ $(function() {
 			</div>
 		</div>
 	</section>
+	</c:if>
+	
+	<!--  대화내역이 존재하지않을때 -->
+	<c:if test="${empty myChatList}">
+	
+		<section class="content">
+			<div class="main_area">
+				<div class="content_area">
+					<p>
+					<span style="font-size: 50px;">🧐</span><br>
+					<span>대화 내역이 존재하지 않습니다</span>
+					</p>
+				</div>
+			</div>
+		</section>
+	
+	</c:if>
 	
 	<jsp:include page="../footer.jsp" />
 </body>

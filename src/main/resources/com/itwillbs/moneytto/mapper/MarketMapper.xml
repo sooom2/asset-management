@@ -117,10 +117,10 @@
 	
 	<!-- 내채팅목록 -->
 	<select id="myChatList" resultType="hashmap">
-		SELECT b.room_code, chat_code, chat_content, oppenent_nick,chat_time,b.item_subject,chat_openDate
+		SELECT b.room_code, chat_code, chat_content, oppenent_nick,chat_time,b.item_subject,chat_openDate,item_status
          FROM (
              SELECT room_code, chat_code, chat_content, oppenent_nick,
-                    ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate
+                    ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate,item_status
              FROM (
                  SELECT market_chat_rooms.room_code,
                         chat_code,
@@ -128,7 +128,8 @@
                         member.member_nickname AS oppenent_nick,
                         chat_time,
                         item.item_subject ,
-                        market_chat_rooms.chat_openDate
+                        market_chat_rooms.chat_openDate,
+                        item.item_status 
            	   		FROM   market_chat_messages
 	                      LEFT JOIN member
 	                             ON member.member_id = market_chat_messages.sell_member_id
@@ -144,7 +145,8 @@
 	                    member.member_nickname AS oppenent_nick,
 	                    chat_time,
 	                    item.item_subject,
-	                    market_chat_rooms.chat_openDate
+	                    market_chat_rooms.chat_openDate,
+	                     item.item_status 
 	             	FROM   market_chat_messages
 		                    LEFT JOIN member
 		                           ON member.member_id = market_chat_messages.buy_member_id
@@ -166,6 +168,48 @@
 			 FROM item
 		 		WHERE item_code = #{item_code}
 	</select>
+	
+	<insert id="insertMarketPaid">
+		<selectKey keyProperty="market_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(market_code), 0) FROM market_paid
+		</selectKey>
+		INSERT 
+			INTO market_paid (
+				market_code
+				, member_id
+				, item_code
+				, buy_id, sell_id
+				, market_price
+				, market_pay_type
+				, market_date
+			)
+			VALUES(
+			#{market_code} + 1
+			, #{item_detail.member_id}
+			, #{item_detail.item_code}
+			, #{oppenentId}
+			, #{item_detail.member_id}
+			, #{item_detail.item_price}
+			, '직접거래'
+			, now()
+			)
+	
+	</insert>
+	
+	<select id="isUpdate" resultType="int">
+		SELECT count(*)
+			FROM market_paid
+				WHERE 1=1
+					AND item_code = #{item_detail} 
+	</select>
+	
+	<delete id="delMarketPaid">
+		DELETE 
+			FROM market_paid
+				WHERE 1=1
+					AND item_code=#{item_detail.item_code}
+					AND buy_id=#{oppenentId};
+	</delete>
 
 	<!-- 채팅상세내용 -->
 	<select id="chatDetail" resultType="hashmap">
@@ -176,7 +220,8 @@
 			seller.member_nickname as sell_nickname,
 			buyer.member_nickname as buy_nickname,
 			chat_time,
-			item.item_status
+			item.item_status,
+			item.item_subject
 		FROM
 			market_chat_messages
 				LEFT JOIN market_chat_rooms
@@ -252,6 +297,8 @@
 			 WHERE
 			 	item_code=#{item_code} 
 	</update>
+	
+	
 	
 	
 

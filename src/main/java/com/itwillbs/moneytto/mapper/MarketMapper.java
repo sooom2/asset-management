@@ -56,13 +56,20 @@ public interface MarketMapper {
 	int updateStatus(@Param("item_status") String item_status,@Param("item_code") String item_code);
 
 	// 아이템코드 알아내기
-	HashMap<String, String> item_code(String room_code);
+	HashMap<String, String> item_code(int room_code);
 
 	// 아이템 상세
 	HashMap<String, String> marketItem(String item_code);
 
 	
+	// 거래내역업데이트
+	int insertMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("oppenentId") String oppenentId);
 	
+	// 거래내역 삭제
+	int delMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("oppenentId") String oppenentId);
+
+	//업데이트 가능한지
+	int isUpdate(String item_detail);
 
 	
 

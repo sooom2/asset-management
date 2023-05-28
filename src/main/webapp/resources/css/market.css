@@ -267,11 +267,12 @@
 .itemWrapper .wishWishIcon {
     position: absolute;
     z-index: 1;
-    width: 28px;
+    /* width: 28px; */
     height: 25px;
-    right: 7px;
-    bottom: 7px;
-    cursor: pointer;
+    /* left: 15px; */
+    bottom: 46px;
+    /* cursor: pointer; */
+    margin-left: 10px;
 }
 
 .itemWrapper .itemCategory {
@@ -673,3 +674,10 @@ button {
     padding: 0;
 }
 
+.itemWrapper .itemTextBox{
+
+    display: inline-block;
+    width: 240px;
+    height: 200px;
+    
+}
