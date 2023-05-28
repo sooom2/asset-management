@@ -60,10 +60,10 @@
 			        <label for="complete" style="cursor: pointer;"><input type="checkbox" value="checked" id="complete" checked="checked"/>거래완료물품제외</label>
 			        
 			        	
-		               <div class="searchIconWrapper marketListSearch">
-						<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
-						<div class="searchSearch"><form><input class="goodsName tag" type="text" placeholder="태그검색"></form></div>
-					</div>
+	                <div class="searchIconWrapper marketListSearch">
+					<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
+					<div class="searchSearch"><form><input class="goodsName tag" type="text" placeholder="태그검색"></form></div>
+				 </div>
                </div>
 	         </div>
 	         <!-- 카테고리 end -->
