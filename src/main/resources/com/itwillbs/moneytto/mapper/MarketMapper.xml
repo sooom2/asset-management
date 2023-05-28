@@ -285,7 +285,7 @@
 						(SELECT member_location
 						 FROM 	member
 						 WHERE 	member_id = #{member_id})
-						 , member_location) BETWEEN 1 AND 100000
+						 , member_location) <![CDATA[<]]>  100000
 			</if>
 			
 		   <choose>

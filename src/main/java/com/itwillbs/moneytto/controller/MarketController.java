@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.moneytto.service.MarketChatService;
 import com.itwillbs.moneytto.service.MarketService;
@@ -255,8 +253,9 @@ public class MarketController {
 	                    String fileExtension = FilenameUtils.getExtension(fileName);
 	                    String storedFileName = UUID.randomUUID().toString() + "." + fileExtension;
 	                    String filePath = uploadDir + "/" + storedFileName;
-
+	                    
 	                    File dest = new File(filePath);
+	                    dest.mkdir();
 	                    file.transferTo(dest);
 
 	                    // 사진 정보를 저장

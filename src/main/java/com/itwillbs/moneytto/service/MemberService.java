@@ -128,7 +128,11 @@ public class MemberService {
 //	public int selectMemCount() {
 //		return mapper.memberCount();
 //	}
-
+	// 회원 정보 수정
+	public int updateMember(HashMap<String, String> member) {
+		
+		return mapper.updateMember(member);
+	}
 
 	public HashMap<String, String> getMember(String id) {
 		

@@ -8,9 +8,11 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,24 +65,24 @@ public class MypageController {
 	} 
  
 	//회원정보수정
-	@GetMapping(value = "mypageInfo")
-	public String mypageI(HttpSession session, Model model) {
+	@RequestMapping(value = "memberUpdateForm" , method = RequestMethod.GET)
+	public String memberUpdate(HttpSession session, Model model) {
 		String id = (String)session.getAttribute("sId");
 		
-		if(id ==null) {
+		if(id == null) {
 			
 			model.addAttribute("msg", "잘못된 접근입니다.");
 			return "fail_back";
 			
 		}
-//		
-//		MemberVO member = service.getMemberInfo(id);
-//		model.addAttribute("member", member);
-//		
+		HashMap<String, String>member = memberService.getMember(id);
+		
+		model.addAttribute("member", member);
+		
 		return "mypage/mypage_info_form";
 	}
-// 계좌인증
-	@GetMapping(value = "memberAuth")
+	// 계좌인증
+	@RequestMapping(value = "memberAuth", method = RequestMethod.GET)
 	public String memberAuth(@RequestParam Map<String, String> authResponse, Model model, HttpSession session) {
 		String id = (String)session.getAttribute("sId");
 		if(id ==null) {
@@ -134,6 +136,94 @@ public class MypageController {
 		
 		return "market/market_payment";
 		
+	}
+	//회원정보수정
+	@PostMapping(value = "memberUpdatePro")
+	public String updatePro(@RequestParam HashMap<String, String> paramMember, Model model, HttpSession session ) {
+		//기존 정보
+		String id = (String)session.getAttribute("sId");
+		HashMap<String, String> member = memberService.getMember(id);
+
+		//입력한 정보
+		System.out.println(paramMember);
+		
+		String member_pw = paramMember.get("member_pw");
+		String member_pw2 = paramMember.get("member_pw3");
+		
+
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encodedMember_pw = member.get("member_pw");
+		
+					
+		if(member_pw == null || !passwordEncoder.matches(member_pw2, encodedMember_pw)){
+			
+			model.addAttribute("msg", "정보를 수정하려면 기존의 비밀번호와 일치해야 합니다!");
+			return "fail_back";
+		}
+		// 비밀번호 검증 끝
+		// 수정되는 항목 : 닉네임 & 비밀번호 & 주소 & location & 생년월일 & 휴대번호
+		// 2. member_pw2를 새 비밀번호로  
+		paramMember.put("member_pw2", passwordEncoder.encode(member_pw2));
+		// 입력한 주소로 location 설정
+		paramMember.put("member_location", memberService.setLocation(paramMember.get("member_address")));
+		
+		member.putAll(paramMember);
+		
+		int updateCount = memberService.updateMember(member);
+		
+		if(updateCount > 0) {
+			model.addAttribute("msg", "회원정보수정성공!");
+			model.addAttribute("target", "mypage");
+			return "success";
+			
+		} else {
+			model.addAttribute("msg", "회원정보수정 실패!");
+			return "fail_back";
+		}
+		
+	}
+	
+	//회원탈퇴
+	@RequestMapping(value = "memberQuitPro", method = RequestMethod.POST)
+	public String quitPro(@RequestParam HashMap<String, String> member, HttpSession session, Model model ) {
+		
+		//세션아이디 저장
+		String id = (String)session.getAttribute("sId");
+		System.out.println(member);
+//		String password = quit.get("member_pw");
+//		
+//		//아이디와 일치하는 레코드의 패스워드 조회
+//		String dbPasswd = service.getPasswd(id);
+//		
+//		System.out.println("평문 암호 : " + password + ", 해싱 암호 : " + dbPasswd);
+//		
+//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//		
+//		if(passwordEncoder.matches(password, dbPasswd)) {	
+//			int deleteCount = service.quitMember(quit);
+//			
+//			if(deleteCount > 0) {
+//				
+//				session.invalidate();
+//				model.addAttribute("msg", "탈퇴가 완료되었습니다!");
+//				model.addAttribute("target", "main");
+//				
+//				return "success";
+//			} else {
+//				
+//				model.addAttribute("msg", "탈퇴 실패!");
+//				return "fail_back";
+//				
+//			}
+//		
+//		} else {
+//			
+//			model.addAttribute("msg", "권한이 없습니다!");
+//			return "fail_back";
+//		
+//		}
+		return "";
 	}
 
 }

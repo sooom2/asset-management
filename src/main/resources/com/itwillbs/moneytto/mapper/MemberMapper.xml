@@ -51,6 +51,23 @@
 				WHERE member_id = #{member_id}
 	</update>
 	
+	
+	<!-- 회원정보수정 -->
+	<update id="updateMember" >
+		UPDATE member
+		SET
+		member_nickname = #{member_nickname}
+		,member_pw = #{member_pw2}
+		,member_address = #{member_address}
+		,member_address_detail = #{member_address_detail} 
+		,member_bday = #{member_bday}
+		,member_tel = #{member_tel}
+		,member_location = POINT(${member_location})
+		WHERE member_id = #{member_id}
+		
+	</update>
+	
+	
 	<!-- 비밀번호 찾기 회원 인증 -->
 	<select id="phoneCheck" resultType="hashmap">
 		SELECT *

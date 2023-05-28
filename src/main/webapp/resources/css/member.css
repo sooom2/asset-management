@@ -855,8 +855,8 @@
 	{
 	content: "";
 	display: block;
-	background: url("/images/member/icon-join-focus.png") center center
-		no-repeat;
+/* 	background: url("/images/member/icon-join-focus.png") center center */
+/* 		no-repeat; */
 	width: 31px;
 	height: 21px;
 	position: absolute;
@@ -1006,7 +1006,7 @@
 	font-size: 14px;
 	color: #7d7d7d;
 	padding: 23px 84px 73px 106px;
-	background: url("/images/member/icon-quit-desc.png") 84px 29px no-repeat;
+/* 	background: url("/images/member/icon-quit-desc.png") 84px 29px no-repeat; */
 	display: block;
 	line-height: 1.86em;
 	height: 16px;
