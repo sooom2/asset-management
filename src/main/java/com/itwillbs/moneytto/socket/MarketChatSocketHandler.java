@@ -1,24 +1,21 @@
 package com.itwillbs.moneytto.socket;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-public class WebSocketHandler extends TextWebSocketHandler {
+public class MarketChatSocketHandler extends TextWebSocketHandler {
 
-	private static final Logger logger = LoggerFactory.getLogger(AuctionChatSocketHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(MarketChatSocketHandler.class);
 	
 	// 채팅방 목록 <경매 코드, ArrayList<session> >
 	private Map<String, ArrayList<WebSocketSession>> auctionList = new ConcurrentHashMap<String, ArrayList<WebSocketSession>>();
