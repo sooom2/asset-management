@@ -258,7 +258,7 @@ $(function() {
 									<div style="font-size: 13px;  text-align: center;}">${chatList.get('item_status')}</div>
 								</div>
 								<div class="info">
-									<div class="nick">[${chatList.get('oppenent_nick') }]</div>
+									<div class="nick">[${chatList.get('member_nickname') }]</div>
 									<div class="subject"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.get('item_subject') }</div>
 									<div class="description">${chatList.get('chat_content') }</div>
 									<fmt:parseDate var="formattedDate" value="${chatList.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
@@ -287,7 +287,7 @@ $(function() {
 						<div class="info">
 							<div>
 								<!-- 상대방 닉네임 -->
-								<span>[${chatList.oppenent_nick }]<br><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.item_subject }</span>
+								<span>[${chatList.member_nickname }]<br><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.item_subject }</span>
 <%-- 								<span>판매아이템 ${sellCount }개</span> --%>
 							</div>
 						</div>

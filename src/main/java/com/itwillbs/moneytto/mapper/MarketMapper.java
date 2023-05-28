@@ -71,6 +71,8 @@ public interface MarketMapper {
 	//업데이트 가능한지
 	int isUpdate(String item_detail);
 
+	HashMap<String, Integer> itemDetail(String item_code);
+
 	
 
 

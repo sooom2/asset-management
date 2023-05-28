@@ -100,8 +100,9 @@ public class MarketChatService {
 		return mapper.isUpdate(item_code);
 	
 	}
-
-
+	public HashMap<String, Integer> getItemDetail(String item_code) {
+		return mapper.itemDetail(item_code);
+	}
 
 
 

@@ -244,8 +244,15 @@ public class MarketController {
 				System.out.println(myChatList);
 			} else { // 방이없을때 
 				
-				
+				// 해당 상품 조회
+				chatList = marketChatService.getItemDetail(item_code);
+				System.out.println("chatList ==========================================");
+				System.out.println(chatList);
+				myChatList = marketChatService.getMyChatList(id);
+				System.out.println("myChatList ==========================================");
 				System.out.println(myChatList);
+				System.out.println("==========================================");
+				
 			}
 		} else {  //nav로들어갈때
 			
