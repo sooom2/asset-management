@@ -19,7 +19,7 @@
 }
 body{
 	margin: 0;
-    background: #fcfae7;
+    background: #fffffa;;
 }
 
 .star-rating {
