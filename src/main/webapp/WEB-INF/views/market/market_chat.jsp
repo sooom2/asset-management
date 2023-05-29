@@ -444,7 +444,7 @@ $(function() {
 						
 						<!-- 나 -->
 							<div class="chat_timeago">
-							<c:if test="${not empty chatDetail}">
+							<c:if test="${not empty chatList}">
 								<div class="chat_timeago_box">
 									<span class="chat_timeago_text">
 										<fmt:formatDate value="${chatList.chat_openDate }" pattern="yyyy년 MM월 dd일" />
