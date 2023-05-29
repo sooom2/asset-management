@@ -131,7 +131,7 @@ let minutes = m < 10 ? "0" + m : m;  // 분
 
 var socket = null;
 function connect() {
-	var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/auctionChat");
+	var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/auctionLog");
 	socket = ws;
 	
 	ws.onopen = function() {

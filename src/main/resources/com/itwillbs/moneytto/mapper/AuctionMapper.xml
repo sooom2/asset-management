@@ -46,5 +46,16 @@
 		 			ON a.auction_code = i.table_code
 	 					WHERE auction_code = #{auction_code}
 	</select>
-
+	
+	<!-- 소켓 사용한 경매 기록 저장 -->
+	<insert id="insertAuctionLog">
+		INSERT 
+			INTO chat_messages (member_id, chat_message, chat_time)
+			VALUES (
+				#{id}
+				, #{messages}
+				, now()
+				)
+	</insert>
+	
 </mapper>

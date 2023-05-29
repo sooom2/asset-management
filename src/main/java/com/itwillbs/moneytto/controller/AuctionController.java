@@ -37,6 +37,13 @@ public class AuctionController {
 	// 실시간 경매
 	@RequestMapping(value="auction", method = RequestMethod.GET)
 	public String auction(@RequestParam String auction_code, Model model) { // 이미지 코드와 경매 코드를 받아서 목록 상세
+		
+//		HashMap<String, String> auctionLog = service.selectAuctionLog();
+		
+//		if() {
+//			
+//		} 
+		
 		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
 		System.out.println(auction);
 		model.addAttribute("auction", auction);

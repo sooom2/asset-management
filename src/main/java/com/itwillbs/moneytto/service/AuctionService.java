@@ -23,4 +23,10 @@ public class AuctionService {
 		return mapper.selectAuctionCode(auction_code);
 	}
 
+
+	// 소켓 사용한 경매 기록 저장
+	public int insertAuctionLog(String id, String messages) {
+		return mapper.insertAuctionLog(id, messages);
+	}
+	
 }
