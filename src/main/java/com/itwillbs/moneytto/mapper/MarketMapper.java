@@ -80,8 +80,9 @@ public interface MarketMapper {
 	int insertReview(HashMap<String, String> review);
 
 	int updateReview(HashMap<String, String> review);
-
 	
+	// 다음방번호찾기
+	int nextRoomCode();
 
 
 }

@@ -17,9 +17,8 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(MarketChatSocketHandler.class);
 	
-	// 채팅방 목록 <경매 코드, ArrayList<session> >
-	private Map<String, ArrayList<WebSocketSession>> auctionList = new ConcurrentHashMap<String, ArrayList<WebSocketSession>>();
-	// 세션, 경매코드
+	private Map<String, ArrayList<WebSocketSession>> marketList = new ConcurrentHashMap<String, ArrayList<WebSocketSession>>();
+
 	private Map<WebSocketSession, String> sessionList = new ConcurrentHashMap<WebSocketSession, String>();
 	
 	private static int i;
@@ -37,45 +36,45 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 		JSONObject jObject = new JSONObject(msg);
 	    String name = jObject.getString("name");
 	    String messages = jObject.getString("message");
-	    String auctionCode = jObject.getString("auctionCode");
+	    String roomCode = jObject.getString("roomCode");
 		System.out.println("name : " + name);
 		System.out.println("messages : " + messages);
-		System.out.println("auctionCode : " + auctionCode);
+		System.out.println("roomCode : " + roomCode);
 		
 		
 		// 채팅 세션 목록에 채팅방이 존재 X
-		if(auctionList.get(auctionCode) == null && messages.equals("ENTER")) {
+		if(marketList.get(roomCode) == null && messages.equals("ENTER")) {
             
             // 채팅방에 들어갈 sessionList 생성
             ArrayList<WebSocketSession> sessionTwo = new ArrayList<>();
             // session 추가
             sessionTwo.add(session);
             // sessionList에 추가
-            sessionList.put(session, auctionCode);
+            sessionList.put(session, roomCode);
             // RoomList에 추가
-            auctionList.put(auctionCode, sessionTwo);
+            marketList.put(roomCode, sessionTwo);
             System.out.println("채팅방 생성");
         }
         
         // 채팅방이 존재 할 때
-        else if(auctionList.get(auctionCode) != null && messages.equals("ENTER")) {
+        else if(marketList.get(roomCode) != null && messages.equals("ENTER")) {
             
             // RoomList 코드 확인
-            auctionList.get(auctionCode).add(session);
+        	marketList.get(roomCode).add(session);
             // sessionList에 추가
-            sessionList.put(session, auctionCode);
+            sessionList.put(session, roomCode);
             System.out.println("생성된 채팅방으로 입장");
         }
         
         // 채팅 메세지 입력 시
-        else if(auctionList.get(auctionCode) != null && !messages.equals("ENTER")) {
+        else if(marketList.get(roomCode) != null && !messages.equals("ENTER")) {
             // 채팅 출력
             TextMessage textMessage = new TextMessage(name + ":" + messages);
             
             int sessionCount = 0;
  
             // 해당 코드에 session에 뿌려줌.
-            for(WebSocketSession sess : auctionList.get(auctionCode)) {
+            for(WebSocketSession sess : marketList.get(roomCode)) {
                 sess.sendMessage(textMessage);
                 sessionCount++;
             }
@@ -95,7 +94,7 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
         // sessionList에 session이 있다면
         if(sessionList.get(session) != null) {
             // 해당 session의 방 번호를 가져와서, 방을 찾고, 그 방의 ArrayList<session>에서 해당 session을 지운다.
-            auctionList.get(sessionList.get(session)).remove(session);
+        	marketList.get(sessionList.get(session)).remove(session);
             sessionList.remove(session);
         }
 		

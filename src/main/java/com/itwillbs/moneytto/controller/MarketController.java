@@ -254,26 +254,40 @@ public class MarketController {
 				System.out.println(myChatList);
 				System.out.println("==========================================");
 				
+				
+				int roomCode = marketChatService.getNextRoomCode();
+				System.out.println("roomCode ==========================================");
+				System.out.println(roomCode);
+				System.out.println("==========================================");
+				model.addAttribute("roomCode",roomCode);
+				
+				
 			}
+		
 		} else {  //nav로들어갈때
 			
-			
-			//최근에 열린 채팅 내역 보이게
-			//1. 최근 room_code조회
-			chatList = marketChatService.getMyChatRecentList(id);	
+			int room_code = 0;
+			// 최근에 열린 채팅 내역 보이게
+			// 1. 최근 room_code 조회
+			chatList = marketChatService.getMyChatRecentList(id);
 			System.out.println("1 ==========================================");
 			System.out.println(chatList);
 			System.out.println("1 ==========================================");
+
+			if (chatList != null && chatList.size() > 0) {
+				  room_code = chatList.get("room_code");
+				  model.addAttribute("room_code", room_code);
+				  // 2. room_code로 채팅 내용 조회
+				  chatDetail = marketChatService.getChatDetail(room_code);
+				  if (chatDetail != null && !chatDetail.isEmpty()) {
+					  
+				    model.addAttribute("chatDetail", chatDetail);
+				    System.out.println("2 ==========================================");
+				    System.out.println(chatDetail);
+				    System.out.println("2 ==========================================");
+				  }
+			}
 			
-			
-			int room_code = chatList.get("room_code");
-			model.addAttribute("room_code",room_code);
-			//2. room_code로 채팅내용조회
-			chatDetail = marketChatService.getChatDetail(room_code);
-			model.addAttribute("chatDetail",chatDetail);
-			System.out.println("2 ==========================================");
-			System.out.println(chatDetail);
-			System.out.println("2 ==========================================");
 			
 			//3. 상대방 판매상품갯수조회
 			//상대방의 아이디 조회
@@ -282,14 +296,19 @@ public class MarketController {
 			sellCount = marketChatService.getSellCount(oppenentId.get("oppenent_id"));
 			
 			
-			
-			
 			myChatList = marketChatService.getMyChatList(id);
 			
 			
+			System.out.println("======================================");
+			System.out.println("myChatList");
+			System.out.println(myChatList);
+			System.out.println("======================================");
+			
 			
 		}
-		
+		System.out.println("chatList chatList======================================");
+		System.out.println(chatList);
+		System.out.println("======================================");
 		
 		model.addAttribute("myChatList",myChatList);
 		model.addAttribute("chatList",chatList);

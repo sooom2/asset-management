@@ -38,9 +38,9 @@ public class MarketChatService {
 	public List<HashMap<String, String>> getMyChatList(String id) {
 		return mapper.myChatList(id);
 	}
-	public List<HashMap<String, String>> getMyChatAllList(String id) {
-		return mapper.myChatAllList(id);
-	}
+//	public List<HashMap<String, String>> getMyChatAllList(String id) {
+//		return mapper.myChatAllList(id);
+//	}
 	
 	//채팅상세정보
 	public List<HashMap<String, String>> getChatDetail(int room_code) {
@@ -102,6 +102,11 @@ public class MarketChatService {
 	}
 	public HashMap<String, Integer> getItemDetail(String item_code) {
 		return mapper.itemDetail(item_code);
+	}
+	
+	//다음 룸코드
+	public int getNextRoomCode() {
+		return mapper.nextRoomCode();
 	}
 
 
