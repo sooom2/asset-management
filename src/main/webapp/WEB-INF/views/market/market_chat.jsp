@@ -259,7 +259,6 @@ $(function() {
             };
         let jsonData = JSON.stringify(data);
 		socket.send(jsonData);
-		$('#message').val('');
 	};
 
 // 	버튼 누름 전송
@@ -291,7 +290,9 @@ $(function() {
 	
 	var socket = null;
 	function connect() {
-		var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/marketChat");
+		
+		let roomCode = "${roomCode}";
+		var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
 // 		var ws = new WebSocket("ws://localhost:8080/moneytto/marketChat");
 // 		var ws = new SockJS("/marketChat");
 		socket = ws;
@@ -315,19 +316,21 @@ $(function() {
 			var message = null;
 		
 			var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
-		
 			sessionId = data.split(":")[0];
 			message = data.split(":")[1];
-		
+			
 			if(sessionId == cur_session) {
+				
 				var str = "<div class='chat_myself'>";
 				str += "<div class='chat_myself_box'>";
 				str += "<div class='chat_myself_message'>";
 				str += "<span>" + message + "</span>";
 				str += "<div class='chat_myself_timeago'>" + amPm + " " + hours + ":" + minutes + "</div></div></div></div>";
-			
-				$(".chatBox").append(str);
+				$(".chat_wrapper").append(str);
+				
+				
 			} else {
+				
 				var str = " <div class='chat_opponent'><div class='chat_opponent_box'><div class='chat_opponent_image_box'>";
 				str += "<img class='chat_opponent_profile_image' src='https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png' alt='상대방이미지'> </div>";
 				str += "<div class='chat_opponent_title'>" + sessionId + "</div>";
@@ -335,7 +338,7 @@ $(function() {
 				str += "<span>" + message + "</span>";
 				str += "<div class='chat_opponent_timeago'>" + amPm + " " + hours + ":" + minutes + " </div></div></div></div>";
 			
-				$(".chatBox").append(str);
+				$(".chat_wrapper").append(str);
 			};
 	               
 	                
@@ -490,7 +493,7 @@ $(function() {
 				<!-- 전송버튼 -->
 				<div class="chat_footer">
 					<div class="chat_footer_area">
-						<div class="chat_input" id="message" contenteditable="true" placeholder="메세지를 입력해주세요."></div>
+						<input type="text" class="chat_input" id="message" contenteditable="true" placeholder="메세지를 입력해주세요."></div>
 						<button type="button" id="btnSend">전송</button>
 					</div>
 				</div>

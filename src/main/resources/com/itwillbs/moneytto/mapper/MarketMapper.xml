@@ -508,4 +508,14 @@
 			AND	review_item_code = #{item_code}
 	</delete>
 	
+<!-- 	채팅방생성 -->
+	<insert id="insertChatRoom">
+	 INSERT INTO market_chat_rooms
+		VALUES(
+				  #{roomCode}
+				, #{itemCode}
+				, #{messages}
+				, now()
+			)
+	</insert>
 </mapper>

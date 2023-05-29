@@ -84,5 +84,8 @@ public interface MarketMapper {
 	// 다음방번호찾기
 	int nextRoomCode();
 
+	//채팅방 생성
+	int insertChatRoom(@Param("roomCode") String roomCode,@Param("itemCode") String itemCode,@Param("messages") String messages);
+
 
 }

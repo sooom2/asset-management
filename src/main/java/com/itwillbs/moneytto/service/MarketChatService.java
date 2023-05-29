@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.WebSocketMessage;
 
 import com.itwillbs.moneytto.mapper.MarketMapper;
 
@@ -107,6 +108,11 @@ public class MarketChatService {
 	//다음 룸코드
 	public int getNextRoomCode() {
 		return mapper.nextRoomCode();
+	}
+	
+	//채팅방생성
+	public int insertChatRoom(String roomCode, String itemCode, String messages) {
+		return mapper.insertChatRoom(roomCode,itemCode,messages);
 	}
 
 
