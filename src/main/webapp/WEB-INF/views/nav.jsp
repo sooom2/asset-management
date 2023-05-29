@@ -41,7 +41,7 @@
 			<ul class="nav_left">
 				<li style="width: 80px"><a href="auctionMain" class="">경매</a></li>
 				<li><a href="market_list" class="market_list">중고거래</a></li>
-				<li><a href="" class="">커뮤니티</a></li>
+				<li><a href="community" class="">커뮤니티</a></li>
 				<li><a href="notice_board" class="">공지사항</a></li>
 			</ul>
 			<div class="searchIconWrapper">

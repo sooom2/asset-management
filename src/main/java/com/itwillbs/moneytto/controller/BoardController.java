@@ -104,10 +104,10 @@ public class BoardController {
 	}
 	
 	// 내가 문의한 내용 목록
-	@RequestMapping(value = "free_board", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "community", method = {RequestMethod.GET, RequestMethod.POST})
 	public String oneList(@RequestParam HashMap<String, String> map, HttpSession session, Model model) {
-		String id = (String)session.getAttribute("sId");
-		System.out.println("one_list 시작 map : " + map);
+//		String id = (String)session.getAttribute("sId");
+//		System.out.println("one_list 시작 map : " + map);
 //		if(id == null || "".equals(id) || map.isEmpty()) {
 //			model.addAttribute("msg", "잘못된 접근입니다.");
 //			return "fail_back";
@@ -120,23 +120,23 @@ public class BoardController {
 //			map.put("memberEmail", member.get("member_email"));
 //		}
 		
-		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
-			map.put("pageNum", "1");
-			map.put("startNum", "0");
-			map.put("endNum", "10");
-		}
-		List<HashMap<String, String>> oneBoardList = boardService.getBoardList(map);
-		if(oneBoardList.size()>0) {
-			HashMap<String, String> countMap = oneBoardList.get(0);
-			map.put("totalCnt",String.valueOf(countMap.get("totalCnt")));
-		}
-		System.out.println("paramMap " + model.getAttribute("paramMap"));	// ID있을떄 !null, id없을때 null
-		model.addAttribute("paramMap", map);
-		model.addAttribute("oneBoardList", oneBoardList);
-		System.out.println("oneList 컨트롤러" + model);
+//		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
+//			map.put("pageNum", "1");
+//			map.put("startNum", "0");
+//			map.put("endNum", "10");
+//		}
+//		List<HashMap<String, String>> oneBoardList = boardService.getBoardList(map);
+//		if(oneBoardList.size()>0) {
+//			HashMap<String, String> countMap = oneBoardList.get(0);
+//			map.put("totalCnt",String.valueOf(countMap.get("totalCnt")));
+//		}
+//		System.out.println("paramMap " + model.getAttribute("paramMap"));	// ID있을떄 !null, id없을때 null
+//		model.addAttribute("paramMap", map);
+//		model.addAttribute("oneBoardList", oneBoardList);
+//		System.out.println("oneList 컨트롤러" + model);
 		
 		
-		return "board/free_board";
+		return "board/community_board";
 	}
 	
 	

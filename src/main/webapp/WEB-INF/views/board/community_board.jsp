@@ -107,7 +107,7 @@ function chkPasswd() {
 		<div class="inner-wrap">
 			<div id="contents">
 			<form id="iForm">
-				<h2 class="tit">내가 문의한 내역</h2>
+				<h2 class="tit">머니또 커뮤니티</h2>
 
 				<div class="board-list-util">
 					<p class="result-count">
