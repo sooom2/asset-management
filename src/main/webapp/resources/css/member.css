@@ -1261,7 +1261,7 @@
     font-weight: 700;
     font-size: 1.5rem;
     font-family: "Pretendard Variable";
-    margin-top: 0px;
+    margin-top: 30px;
     color: rgb(33, 39, 42);
 }
 .memberInfoProductCountBox {
@@ -2231,9 +2231,9 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     position: relative;
 }
 .profile_edit_image .profile_edit_image_box {
-/*     position: absolute; */
-/*     top: -150px; */
-    left: 41%;
+    position: relative;
+    top: 20px;
+    left: 0%;
 }
 .profile_edit_image .profile_edit_image_box img:first-child {
 	position : relative;
@@ -2242,14 +2242,15 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     border-radius: 50%;
     border: 1px solid #ebebeb;
     display: inline !important;
+    cursor: pointer;
 }
 .profile_edit_image .profile_edit_image_box img:nth-child(2) {
     position: relative;
     bottom: 29px;
-    right: -134px;
     cursor: pointer;
     width: 36px;
     height: 36px;
+    margin-left: 365px;
 }
 .pf_img {
     width: 33px;

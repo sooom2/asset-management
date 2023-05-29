@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보관리</title>
-<link  href="${path }/resources/css/member.css" rel="stylesheet">
 <link href="${path }/resources/css/member.css" rel="stylesheet" >
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -25,7 +24,7 @@ window.onload = function(){
             }
         }).open();
     });
-    swal("비밀번호를 변경하실 경우 비밀번호 확인란에 새 비밀번호를 입력해주세요.");
+    swal("비밀번호 변경하기를 원하시는 경우\n 비밀번호 확인란에 새 비밀번호를 입력해주세요.");
 
 }
 
@@ -39,15 +38,17 @@ window.onload = function(){
 				<div class="title-membership">회원정보 관리</div>
 				<div class="wrap-member-box wrap-membership-box">
 					<div class="title-membership">회원정보 수정</div>
-					<form method="post" name="form-join2" action="memberUpdatePro">
-						<div class="profile_edit_image">
-							<div class="profile_edit_image_box">
-								<img src="https://ccimage.hellomarket.com/img/web/common/empty_profile.svg" alt="머니또의 프로필 이미지">
-								<img src="https://ccimage.hellomarket.com/img/web/member/edit_camera.svg" alt="프로필 사진 등록 이미지">
-								<input type="file" class="pf_img" name="file" id="upFile" accept="image/jpeg, image/png">
-							</div>
-						</div>
+					<form method="post" name="form-join2" action="memberUpdatePro" enctype="multipart/form-data">
+						
 						<div class="wrap-inside">
+							<div class="profile_edit_image">
+								<label class="profile_edit_image_box" id="upFile">
+									<img src="https://ccimage.hellomarket.com/img/web/common/empty_profile.svg" alt="머니또의 프로필 이미지">
+									<img src="https://ccimage.hellomarket.com/img/web/member/edit_camera.svg" alt="프로필 사진 등록 이미지">
+									<input type="file" class="pf_img" name="file" id="upFile" accept="image/jpeg, image/png">
+								</label>
+							</div>
+						
 							<div class="join-detail">
 								<label class="label-input" for="id"> <span>닉네임</span>
 									<input type="text" id="member_nickname" name="member_nickname" 		

@@ -57,9 +57,10 @@ function memberAuth(){
 <!-- 							</div> -->
 							<div class="profile_edit_image">
 							<div class="profile_edit_image_box">
+								<!-- TODO
+									${member.image_name}
+								--> 
 								<img src="${path}/resources/images/mypage/cute.png" alt="머니또의 프로필 이미지">
-								<img src="https://ccimage.hellomarket.com/img/web/member/edit_camera.svg" alt="프로필 사진 등록 이미지">
-								<input type="file" class="pf_img" name="file" id="upFile" accept="image/jpeg, image/png">
 							</div>
 							</div>
 							<div class="userDataNickName">${member.member_nickname } 님</div>
@@ -88,7 +89,7 @@ function memberAuth(){
 					</div>
 					<div class="memberInfoRating">
 						<div class="payCharge"><Input type="button" value="충전" onclick="location.href='payCharge'"></div> &nbsp;&nbsp;
-						<div class="payReturn"><Input type="button" value="환급"></div>
+						<div class="pay"><Input type="button" value="충전" onclick="location.href='pay'"></div>
 					</div>
 					<div class="memberInfoMyDataBox" onclick='location.href="memberUpdateForm"'>
 						<div class="memberInfoSettingMyData">내정보 수정하기</div>
@@ -157,7 +158,14 @@ function memberAuth(){
 		                          <div class="ThumbNailTypeWrapper">
 		                              <div class="ThumbNailTypeItemBox">
 		                                  <div class="ThumbNailTypeImgBox"  data-code="${item.item_code }">
-		                                      <img src="${path }/resources/images/main/noThumbnail.jpg" alt="itemImg" class="ThumbNailTypeItemImg"/>
+		                                  	<c:choose>
+		                                  		<c:when test="${not empty item.image_name }">
+		                                  			<img src="${item.image_name }" alt="itemImg" class="ThumbNailTypeItemImg"/>
+		                                  		</c:when>
+		                                  		<c:otherwise>
+													<img src="${path }/resources/images/main/noThumbnail.jpg" alt="itemImg" class="ThumbNailTypeItemImg"/>		                                  		
+		                                  		</c:otherwise>
+		                                  	</c:choose>
 		                                    	<c:choose>
 	                                      	 		<c:when test="${not empty item.wish_code }">
 	                                      	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" 

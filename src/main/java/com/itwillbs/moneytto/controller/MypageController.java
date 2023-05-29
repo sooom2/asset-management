@@ -1,12 +1,16 @@
 package com.itwillbs.moneytto.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.itwillbs.moneytto.service.MarketService;
 import com.itwillbs.moneytto.service.MemberService;
@@ -27,7 +32,7 @@ public class MypageController {
 	private MemberService memberService;
 	
 	@Autowired
-	private MarketService MarketService;
+	private MarketService marketService;
 	
 	// 마이페이지 메인
 	@RequestMapping(value ="mypage", method = RequestMethod.GET)
@@ -139,13 +144,24 @@ public class MypageController {
 	}
 	//회원정보수정
 	@PostMapping(value = "memberUpdatePro")
-	public String updatePro(@RequestParam HashMap<String, String> paramMember, Model model, HttpSession session ) {
+	public String updatePro(@RequestParam HashMap<String, String> paramMember,
+							Model model, HttpSession session
+							,@RequestParam("file") MultipartFile file) {
 		//기존 정보
+		/*
+		 * TODO itemRegist 이미지 파일 prameter 확인
+		 * 
+		{file=KakaoTalk_20211001_141932875.jpg, member_nickname=꾸꾸꾸, member_pw=12345678, member_pw3=12345678
+		, member_name=꾸꾸펀치, member_address=부산 부산진구 동성로 2, member_address_detail=포동포동, member_email=test@test.com
+		, member_bday=19900101, member_tel=01011112456}
+		KakaoTalk_20211001_141932875.jpg
+		*/
 		String id = (String)session.getAttribute("sId");
 		HashMap<String, String> member = memberService.getMember(id);
 
 		//입력한 정보
 		System.out.println(paramMember);
+		System.out.println(file);
 		
 		String member_pw = paramMember.get("member_pw");
 		String member_pw2 = paramMember.get("member_pw3");
@@ -169,6 +185,36 @@ public class MypageController {
 		paramMember.put("member_location", memberService.setLocation(paramMember.get("member_address")));
 		
 		member.putAll(paramMember);
+		
+		String uploadDir = session.getServletContext().getRealPath("/resources/upload");
+		
+		String item_code = "member"+id;
+        String fileName = file.getOriginalFilename();
+        String fileExtension = FilenameUtils.getExtension(fileName);
+        String storedFileName = UUID.randomUUID().toString() + "." + fileExtension;
+        String filePath = uploadDir + "/" + storedFileName;
+        
+        
+        System.out.println(filePath);
+        
+        
+        try {
+			file.transferTo(new File(filePath));
+			
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        // 사진 정보를 저장
+        HashMap<String, String> saveImage = new HashMap<>();
+        saveImage.put("image_code", UUID.randomUUID().toString());
+        saveImage.put("item_code", item_code);
+        saveImage.put("image_name", fileName);
+
+        // 사진 정보 저장 메서드 호출
+        marketService.saveImage(saveImage);
+        //이거 왜 void..?
 		
 		int updateCount = memberService.updateMember(member);
 		

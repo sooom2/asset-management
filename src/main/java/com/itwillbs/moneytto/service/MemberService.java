@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.itwillbs.moneytto.mapper.MarketMapper;
 import com.itwillbs.moneytto.mapper.MemberMapper;
 
 import net.nurigo.java_sdk.api.Message;
@@ -25,6 +25,7 @@ public class MemberService {
 	
 	@Autowired
 	private MemberMapper mapper;
+	
 	// 좌표 가져오기
 	public String setLocation(String member_address) {
 		
@@ -158,8 +159,6 @@ public class MemberService {
 		return mapper.selectBuyItemList(id);
 	}
 	
-	
-
 	public int insertWish(String id, String item_code) {
 		
 		return mapper.insertWish(id, item_code);

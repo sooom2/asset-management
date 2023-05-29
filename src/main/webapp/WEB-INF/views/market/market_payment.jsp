@@ -10,8 +10,147 @@
 <title>머니머니머니또</title>
 <link href="${path }/resources/css/main.css" rel="stylesheet">
 <link href="${path }/resources/css/market_payment.css" rel="stylesheet">
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+	
+	// 아임포트 결제
+	var IMP = window.IMP; 
+	IMP.init("imp03276613"); 
+	
+	function requestPay() {
+		
+		// 포인트 전액 사용시
+		if($("#lstPayAmtView").text() == "0") {
+			if(confirm("포인트 전액 구매시, 환불이 불가합니다. 결제 하시겠습니까?")) {
+				location.href = "store_paySuccess?pay_code=code" + new Date().getTime() + "&pay_type=point" 
+				+ "&pay_price=0"
+				+ "&pay_status=paid" + "&item_code=" + ${item.get('item_code')} 
+				+ "&point=" + $("#totDcAmtView").text();
+			} else {
+				return;
+			}
+			
+		} else {
+			// 결제 수단 선택
+			
+			console.log($(".checked").find('label').attr('for'))
+			if($(".checked").find('label').attr('for') == null) {
+				alert("결제수단을 선택하세요.");
+
+				// 이용약관 동의
+// 			} else if(!$("#chk01").prop("checked") || !$("#chk02").prop("checked")) {
+// 				alert("이용약관에 모두 동의하셔야 합니다.");
+				
+				// 아임포트 결제
+			} else {
+				IMP.request_pay({
+			        pg : $('input[name="radio_choice"]:checked').val(),
+			        pay_method : 'card',
+			        merchant_uid: "code" + new Date().getTime(), 
+			        name : '${item.get('item_name') }',
+			        amount : $("#lstPayAmtView").text(),
+			        buyer_email : '${member.get('member_email')}',
+			        buyer_name : '${member.get('member_name')}',
+			        buyer_tel : '${member.get('member_tel')}',
+			        
+			    }, function (rsp) { // callback
+			        if (rsp.success) {
+					    alert("결제가 완료되었습니다.");
+					    location.href = "store_paySuccess?pay_code=" + rsp.merchant_uid + "&pay_type=" 
+					    				+ rsp.pay_method + "&pay_price=" + rsp.paid_amount
+					    				+ "&pay_status=" + rsp.status + "&item_code=" + ${item.get('item_code')} 
+					    				+ "&point=" + $("#totDcAmtView").text();
+			        } else {
+			            alert("실패 : 코드" + rep.error_code + ") / 메세지()"
+			            	  + rsp.error_msg + ")");
+			        }
+			    });
+			}
+		}
+		
+	    
+	};
+	
+// 항상 전액 사용하기
+$(function() {
+	$('.info').click(function(){
+		
+		$(".checked").removeClass("checked");
+		$(this).parent().addClass("checked");
+		
+	})
+// 	var userInputPoint = getCookie("userInputPoint");// 쿠기값 가져오기
+    
+// 	// 쿠키 있을 시, 저장하기 체크 상태
+//     if(userInputPoint != ""){ 
+//         $("#savePoint").attr("checked", true);
+//         if(${item_price} < ${point}) {
+//     		$("#pointNumber").val(${item_price});
+//     		$("#totDcAmtView").text($("#pointNumber").val());
+//     		$("#lstPayAmtView").text(${item_price } - $("#pointNumber").val());
+//     	} else {
+//     		$("#pointNumber").val(${point});
+//     		$("#totDcAmtView").text($("#pointNumber").val());
+//     		$("#lstPayAmtView").text(${item_price } - $("#pointNumber").val());
+//     	}
+//     }
+	
+// 	// 항상 저장하기 클릭 시.
+// 	$("#savePoint").on("click", function() {
+// 		if($(this).is(":checked")) {
+// 			var userInputPoint = ${point};
+//             setCookie("userInputPoint", userInputPoint, 7); // 7일 보관
+//             if(${item_price} < ${point}) {
+// 				$("#pointNumber").val(${item_price});
+// 				$("#totDcAmtView").text($("#pointNumber").val());
+// 				$("#lstPayAmtView").text(${item_price } - $("#pointNumber").val());
+// 			} else {
+// 				$("#pointNumber").val(${point});
+// 				$("#totDcAmtView").text($("#pointNumber").val());
+// 				$("#lstPayAmtView").text(${item_price } - $("#pointNumber").val());
+// 			}
+// 		} else {
+// 			$("#pointNumber").val("");
+// 			$("#totDcAmtView").text("");
+// 			$("#lstPayAmtView").text(${item_price });
+// 			var userInputPoint = "";
+//             setCookie("userInputPoint", userInputPoint, 7); // 7일 보관
+// 		}
+		
+// 	});
+	
+//     function setCookie(cookieName, value, exdays){
+//         var exdate = new Date();
+//         exdate.setDate(exdate.getDate() + exdays);
+//         var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+//         document.cookie = cookieName + "=" + cookieValue;
+//     }
+     
+//     function deleteCookie(cookieName){
+//         var expireDate = new Date();
+//         expireDate.setDate(expireDate.getDate() - 1);
+//         document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+//     }
+     
+//     function getCookie(cookieName) {
+//         cookieName = cookieName + '=';
+//         var cookieData = document.cookie;
+//         var start = cookieData.indexOf(cookieName);
+//         var cookieValue = '';
+//         if(start != -1){
+//             start += cookieName.length;
+//             var end = cookieData.indexOf(';', start);
+//             if(end == -1)end = cookieData.length;
+//             cookieValue = cookieData.substring(start, end);
+//         }
+//         return unescape(cookieValue);
+//     }
+	
+	
+	
+});
+</script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
@@ -54,8 +193,9 @@
 								<div class="parcel_wrapper">
 									<div class="label adress_label">배송지선택</div>
 									<div class="selectbox_order se_order_adress">
-										<label for="adressList">배송지를 선택해주세요.</label><select
-											disabled=""><option hidden="">배송지를 선택해주세요.</option>0
+										<label for="adressList">배송지를 선택해주세요.</label>
+										<select disabled="">
+											<option hidden="">배송지를 선택해주세요.</option>
 										</select>
 									</div>
 									<div class="adress_btn_wrapper">
@@ -95,9 +235,9 @@
 											</dd>
 										</dl></li>
 								</ul></li>
-							<li class="order_card last_order_card"><div
-									class="order_card_left">
-									<div class="title_box">쿠폰/포인트 할인</div>
+							<li class="order_card last_order_card">
+							<div class="order_card_left">
+								<div class="title_box">쿠폰/포인트 할인</div>
 									<div>
 										<div class="wallet_wrapper wallet_items_wrapper">
 											<div class="box_coupon">
@@ -135,21 +275,24 @@
 											</span>
 										</div>
 									</div>
-									
-									<div><div><ul class="pay_method_list item_pay_method_list"><div class="other_wrapper_div"><ul><li><div class="wrapper_div other_wrapper_div_option checked"><div class="info"><label for="Kakaopay" class="radio_desc">카카오페이</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="EasyBank" class="radio_desc">간편 계좌이체</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="CreditCard" class="radio_desc">신용카드</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="Toss" class="radio_desc">토스결제</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="MobilePhone" class="radio_desc">휴대폰</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="VirtualBank" class="radio_desc">무통장(가상계좌)</label></div><div class="exp"></div></div></li></ul></div><div class="other_wrapper_consignment"><span>카카오페이 수수료 : 3.2%</span></div></ul></div><div class="certified_box hide"><div class="title_txt"><span>핸드폰 인증</span></div><div class="phone_number_box"><input type="number" placeholder="숫자만 입력"><button class="addr_search">인증요청</button></div><div class="auth_code_box"><input type="number" placeholder="인증번호 입력"><button class="addr_search">인증</button></div></div></div>
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
 									<div>
+										<div>
+											<ul class="pay_method_list item_pay_method_list">
+												<div class="other_wrapper_div">
+													<ul>
+														<li><div class="wrapper_div other_wrapper_div_option checked"><div class="info"><label for="Kakaopay" class="radio_desc">카카오페이</label></div><div class="exp"></div></div></li>
+														<li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="EasyBank" class="radio_desc">간편 계좌이체</label></div><div class="exp"></div></div></li>
+														<li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="CreditCard" class="radio_desc">신용카드</label></div><div class="exp"></div></div></li>
+														<li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="Toss" class="radio_desc">토스결제</label></div><div class="exp"></div></div></li>
+														<li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="MobilePhone" class="radio_desc">휴대폰</label></div><div class="exp"></div></div></li>
+														<li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="VirtualBank" class="radio_desc">무통장(가상계좌)</label></div><div class="exp"></div></div></li>
+													</ul>
+												</div>
+												<div class="other_wrapper_consignment">
+													<span>카카오페이 수수료 : 3.2%</span>
+												</div>
+											</ul>
+										</div>
 										<div class="certified_box hide">
 											<div class="title_txt">
 												<span>핸드폰 인증</span>
@@ -212,12 +355,11 @@
 											</div>
 										</div>
 										<div class="success_btn_box">
-											<div class="success_btn btn_disabled">결제하기</div>
+											<div class="success_btn btn_disabled" onclick="requestPay()">결제하기</div>
 										</div>
 									</div>
 								</div></li>
-							<form method="post" id="SETTLEBANK_PAYINFO"
-								target="orderServiceForm">
+							<form method="post" id="SETTLEBANK_PAYINFO"target="orderServiceForm">
 								<input type="hidden" name="PMid"><input type="hidden"
 									name="PAmt"><input type="hidden" name="PGoods"><input
 									type="hidden" name="POid"><input type="hidden"
