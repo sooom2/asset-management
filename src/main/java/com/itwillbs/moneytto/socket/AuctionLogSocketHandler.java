@@ -54,7 +54,7 @@ public class AuctionLogSocketHandler extends TextWebSocketHandler {
 //		System.out.println(session);
 //		System.out.println("sessionList : " + sessionList);
 	    
-	    // DB저장
+	    // DB저장 방코드와 채팅코드도 넘겨야 하고 그건 컨트롤러에서 받을꺼고 페이지 들어올때
         int insertCount = service.insertAuctionLog(id, messages);
         if(insertCount > 0) {
         	for(WebSocketSession sess: sessionList) {

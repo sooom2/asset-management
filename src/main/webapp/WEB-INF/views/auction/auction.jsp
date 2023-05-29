@@ -48,7 +48,8 @@ $(document).ready(function() {
 		const data = {
 			"id" : "${ sessionScope.sId }",
 			"name" : "${ sessionScope.nickname }",
-			"message"   : message
+			"message"   : message,
+// 			"auctionCode" :  "${auction.get('auction_code') }"
 // 				if($('#message').val() != null && $('#message').val() != "") {
 // 				$('#message').val()
 // 				}
@@ -232,7 +233,6 @@ function connect() {
 				</div>
 				<!-- 가운데 -->
 				<div class="auction_center">
-					
 					<div class="auction_realTime">
 						<span style="font-size: 25px;">실시간 경매</span>
 						<div class="auction_price"><span>${auction.auction_present_price }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
@@ -252,6 +252,13 @@ function connect() {
 						</div>
 					</div>
 					<div class="auction_input">
+		<!-- 여기는 버튼 하나 생성해서 가리고 있다가 보증금 내면 바뀌게 -->
+						<div class="bid_right">
+<!-- 							<input type="button" value="경매참가" class="btnHidden"> -->
+							<input type="button" id="btnAskingPrice" value="즉시입찰(+${askingPrice })" style="width: 228px"
+									data-price="${askingPrice }" class="btnHidden">
+						</div>
+						
 						<div class="auction_input_title">입찰입찰입찰 제목좀바꿔죠</div>
 						<hr>
 <!-- 						<div style="float: right;"> -->
@@ -265,7 +272,6 @@ function connect() {
 								<div>즉시구매가</div>
 							</div>
 							<div class="bid_right">
-							
 <%-- 								<div>${prince * 0.1 }원 소수점 지워지나?</div> --%>
 								<div>${deposit }원</div>
 								<div>
