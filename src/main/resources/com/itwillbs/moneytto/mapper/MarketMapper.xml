@@ -332,7 +332,7 @@
 						(SELECT member_location
 						 FROM 	member
 						 WHERE 	member_id = #{member_id})
-						 , member_location) BETWEEN 1 AND 100000
+						 , member_location) <![CDATA[<]]>  100000
 			</if>
 			
 		   <choose>
@@ -449,5 +449,55 @@
 	WHERE item_code = #{item_code};
 	</update>
 	
+	<select id="selectBuyItem" resultType="hashmap">
+		SELECT pay.*
+				,r.review_code
+			FROM 
+				market_paid	pay
+			LEFT JOIN
+				review		r
+			ON
+				pay.item_code = r.review_item_code
+			WHERE
+				1 = 1
+				AND	pay.buy_id = #{member_id}
+				AND	pay.item_code = #{item_code}
+	</select>
+	
+	<insert id="insertReview">
+		INSERT INTO
+			review
+		VALUES	(
+			 REPLACE(#{item_code}, 'market', 'review')
+			, #{item_code}
+			, #{target_id}
+			, #{reviewer_id}
+			, #{review_content}
+			, now()
+			, #{rating}
+			)
+	</insert>
+	
+	<update id="updateReview">
+		UPDATE
+			review 
+		SET 
+			, review_content=#{review_content}
+			, rating = #{rating}
+		WHERE
+			1 = 1
+			AND reviewer_id = #{reviewer_id}
+			AND	review_item_code = #{item_code}
+	</update>
+	
+	<delete id="deleteReview">
+		DELETE		
+		FROM
+			review
+		WHERE
+			1=1
+			AND reviewer_id = #{reviewer_id}
+			AND	review_item_code = #{item_code}
+	</delete>
 	
 </mapper>

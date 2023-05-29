@@ -75,6 +75,12 @@ public interface MarketMapper {
 
 	int updateItem(HashMap<String, String> item);
 
+	HashMap<String, String> selectBuyItem(@Param("member_id")String id, @Param("item_code")String item_code);
+	// 리뷰 추가 05.28
+	int insertReview(HashMap<String, String> review);
+
+	int updateReview(HashMap<String, String> review);
+
 	
 
 

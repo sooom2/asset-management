@@ -102,9 +102,9 @@ function memberAuth(){
 					<div class="tabTab active"  data-attr="sellItem"><a href="#">판매 상품</a></div>
 					<div class="tabTab" data-attr="wishItem"><a href="#">찜한 상품</a></div>
 					<div class="tabTab" data-attr="buyItem"><a href="#">구매 상품</a></div>
-					<div class="tabTab"><a href="#">참여 중인 경매</a></div>
-<!-- 					<div class="tabTab"><a href="#">거래 후기</a></div> -->
-<!-- 					<div class="tabTab"><a href="#">추천 상품</a></div> -->
+					<div class="tabTab"><a href="#">#참여 중인 경매</a></div>
+					<div class="tabTab"><a href="market_review">리뷰 보기</a></div>
+					<div class="tabTab"><a href="reviewRegist">리뷰 작성</a></div>
 				</div>
 				
 				<div class="filterBarWrapper">

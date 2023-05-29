@@ -15,11 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.moneytto.service.MarketChatService;
 import com.itwillbs.moneytto.service.MarketService;
@@ -301,18 +301,65 @@ public class MarketController {
 		
 	}// market_chat
 	
-	@GetMapping("market_review")
-	public String marketReview() {
+	@GetMapping("reviewForm")
+	public String marketReview(HttpSession session, Model model, String item_code) {
 		
+		String id = (String)session.getAttribute("sId");
+		// 거래 내역에서 내가 산 물건 조회		
+		HashMap<String, String> item= service.getBuyItem(id ,item_code);
 		
+//		if(!item.isEmpty()) {	//거래 내역이 없을때
+//			
+//			model.addAttribute("msg", "권한이 없습니다.");
+//			return "fail_back";
+//		
+//		}
+		
+		if(item.get("review_code")==null) {
+			
+			model.addAttribute("review_type", "insert");	//작성된 리뷰가 없을때 추가
+			
+		}else {
+			
+			model.addAttribute("review_type", "update");	//작성된 리뷰가 있을때 수정
+		}
+		
+		model.addAttribute("item", item);
 		return "market/market_review";
+		
 	}
 	
-	@GetMapping("reviewRegist")
-	public String reviewRegist() {
+	@RequestMapping(value = "reviewRegist", method = RequestMethod.POST)
+	public String reviewRegist(@RequestParam HashMap<String, String> review,HttpSession session, Model model) {
 		
+		System.out.println(review);
+		System.out.println(review.get("review_type"));
 		
-		return "market/market_review";
+		switch (review.get("review_type")) {
+			case "insert":	int insertCount = service.writeReview(review);
+				
+				if(insertCount > 0) {				//insert 성공
+					model.addAttribute("msg", "리뷰가 성공적으로 등록되었습니다.");
+				}else {								//insert 실패
+					model.addAttribute("msg", "리뷰 작성에 실패하였습니다.");
+					
+				}
+			break;
+			case "update":	int updateCount = service.modifyReview(review);
+				
+				if(updateCount > 0) {				//insert 성공
+					
+					model.addAttribute("msg", "리뷰가 성공적으로 등록되었습니다.");
+				}else {								//insert 실패
+					model.addAttribute("msg", "리뷰 작성에 실패하였습니다.");
+					
+				}
+			break;
+		}
+		
+		//TODO 도착 위치 지정 필요
+		return"fail_back";
+		
 	}
 	@GetMapping("chatDetail")
 	@ResponseBody
