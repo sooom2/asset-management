@@ -26,6 +26,12 @@
 
 $(function() {
 	
+	function scrollToBottom() {
+		var chatWrapper = document.getElementById('chatWrapper');
+		chatWrapper.scrollTop = chatWrapper.scrollHeight;
+	}
+	
+	
 	let sId = "${sessionScope.sId}";
 	var room_code = <%= request.getAttribute("room_code") %>;
 	$('.card_box input.room_code[value="'+room_code+'"]').closest('.card_box').addClass('active');
@@ -248,13 +254,14 @@ $(function() {
 	
 	
 $(function() {
-	
-	let roomCode = "${roomCode}";
-	console.log(roomCode);
+	let item_code = $(".item_code").val();
+	let room_code = "${room_code}";
+	console.log(item_code);
 	function chatSend() {
 		const data = {
-				"roomCode" :  roomCode,
+				"room_code" :  room_code,
                 "name" : "${ sessionScope.sId }",
+                "item_code" : item_code,
                 "message"   : $('#message').val()
             };
         let jsonData = JSON.stringify(data);
@@ -291,16 +298,17 @@ $(function() {
 	var socket = null;
 	function connect() {
 		
-		let roomCode = "${roomCode}";
+		let room_code = "${room_code}";
+		let item_code = $(".item_code").val();
 		var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
-// 		var ws = new WebSocket("ws://localhost:8080/moneytto/marketChat");
-// 		var ws = new SockJS("/marketChat");
 		socket = ws;
 	
 		ws.onopen = function() {
 			console.log('연결완료');
+			console.log("방번호 : "+room_code+"아이템코드 :"+item_code);
 			const data = {
-					"roomCode" :  roomCode,
+					"room_code" :  room_code,
+					"item_code" : item_code,
 	                "name" : "${ sessionScope.sId }",
 	                "message"   : "ENTER"
 	            };
@@ -352,7 +360,7 @@ $(function() {
 </head>
 <body>
 <jsp:include page="../nav.jsp" />
-<input type="hidden" value="${room_code }">
+<input class="item_code" type="hidden" value="${param.item_code }">
 	<!-- 대화내역이있을때 -->
 	<c:if test="${not empty myChatList }">
 	<section class="content">
@@ -378,8 +386,9 @@ $(function() {
 									<div class="nick">[${chatList.get('member_nickname') }]</div>
 									<div class="subject"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.get('item_subject') }</div>
 									<div class="description">${chatList.get('chat_content') }</div>
-									<fmt:parseDate var="formattedDate" value="${chatList.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
-									<div class="time_ago"><fmt:formatDate value="${formattedDate}" pattern="yyyy-MM-dd a hh:mm" /></div>	
+									<!-- 날짜처리 제대로해야함 -->
+<%-- 									<fmt:parseDate var="formattedDate" value="${chatList.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" /> --%>
+<%-- 									<div class="time_ago"><fmt:formatDate value="${formattedDate}" pattern="yyyy-MM-dd a hh:mm" /></div>	 --%>
 									<input type="hidden" value="${chatList.get('room_code')}" class="room_code">
 								</div>
 							</li>
@@ -437,7 +446,7 @@ $(function() {
 				
 				<!-- 채팅영역 -->
 				<div class="chat_description" style="bottom:49px">
-					<div class="chat_wrapper">
+					<div class="chat_wrapper" id="chat_wrapper">
 						
 						
 						<!-- 나 -->
@@ -477,7 +486,6 @@ $(function() {
 							        </div>
 							    </c:otherwise>
 							</c:choose>
-
 						</c:forEach>
 						
 						

@@ -87,5 +87,14 @@ public interface MarketMapper {
 	//채팅방 생성
 	int insertChatRoom(@Param("roomCode") String roomCode,@Param("itemCode") String itemCode,@Param("messages") String messages);
 
+	//판매자아이디 찾기
+	HashMap<String, String> sellId(String item_code);
+	
+	// 마지막 룸코드
+	int lastRoomCode();
+
+	// 채팅내용 insert
+	int insertChatMessages(@Param("room_code") String room_code, @Param("sellId") String sellId, @Param("buyId") String buyId, @Param("messages") String messages, @Param("myId") String myId);
+
 
 }

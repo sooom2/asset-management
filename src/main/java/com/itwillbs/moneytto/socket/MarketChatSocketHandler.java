@@ -1,17 +1,21 @@
 package com.itwillbs.moneytto.socket;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import com.itwillbs.moneytto.service.MarketChatService;
 
 public class MarketChatSocketHandler extends TextWebSocketHandler {
 	
@@ -24,6 +28,8 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 	
 	private static int i;
 	
+	@Autowired
+	MarketChatService marketChatService;
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -37,52 +43,78 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 		JSONObject jObject = new JSONObject(msg);
 	    String name = jObject.getString("name");
 	    String messages = jObject.getString("message");
-	    String roomCode = jObject.getString("roomCode");
-		System.out.println("name : " + name);
+	    String room_code = jObject.getString("room_code");
+	    String item_code = jObject.getString("item_code");
+		System.out.println("name : " + name); // 
 		System.out.println("messages : " + messages);
-		System.out.println("roomCode : " + roomCode);
+		System.out.println("room_code : " + room_code);
+		System.out.println("item_code : " + item_code);
 		
 		
 		// 채팅 세션 목록에 채팅방이 존재 X
-		if(marketList.get(roomCode) == null && messages.equals("ENTER")) {
+		if(marketList.get(room_code) == null && messages.equals("ENTER")) {
             
             // 채팅방에 들어갈 sessionList 생성
             ArrayList<WebSocketSession> sessionTwo = new ArrayList<>();
             // session 추가
             sessionTwo.add(session);
             // sessionList에 추가
-            sessionList.put(session, roomCode);
+            sessionList.put(session, room_code);
             // RoomList에 추가
-            marketList.put(roomCode, sessionTwo);
+            marketList.put(room_code, sessionTwo);
+            System.out.println("===========================");
             System.out.println("채팅방 생성");
         }
         
         // 채팅방이 존재 할 때
-        else if(marketList.get(roomCode) != null && messages.equals("ENTER")) {
+        else if(marketList.get(room_code) != null && messages.equals("ENTER")) {
             
             // RoomList 코드 확인
-        	marketList.get(roomCode).add(session);
+        	marketList.get(room_code).add(session);
             // sessionList에 추가
-            sessionList.put(session, roomCode);
+            sessionList.put(session, room_code);
+            System.out.println("===========================");
             System.out.println("생성된 채팅방으로 입장");
         }
         
         // 채팅 메세지 입력 시
-        else if(marketList.get(roomCode) != null && !messages.equals("ENTER")) {
+        else if(marketList.get(room_code) != null && !messages.equals("ENTER")) {
             // 채팅 출력
             TextMessage textMessage = new TextMessage(name + ":" + messages);
             
             int sessionCount = 0;
  
             // 해당 코드에 session에 뿌려줌.
-            for(WebSocketSession sess : marketList.get(roomCode)) {
+            for(WebSocketSession sess : marketList.get(room_code)) {
                 sess.sendMessage(textMessage);
                 sessionCount++;
             }
+            
+            //채팅방생성 > room_code가 없을때 생성
+            int lastRoomCode = marketChatService.lastRoomCode();
+            System.out.println("Integer.parseInt(room_code) ==============================================");
+            System.out.println(Integer.parseInt(room_code));
+            System.out.println("==============================================");
+            System.out.println(lastRoomCode);
+            System.out.println("lastRoomCode ==============================================");
+            if(Integer.parseInt(room_code) != lastRoomCode) {
+            	int insertChatRoom = marketChatService.insertChatRoom(room_code,item_code,messages);
+            }
+            
+            //sell 은 item의 member-id
+            // buyID 는 내아이디
+            
+            HashMap<String, String> sellID = marketChatService.getSellID(item_code);
+            
+            String sellId = sellID.get("member_id");
+            System.out.println("===============================");
+            System.out.println(room_code+", "+sellId+", "+name+", "+messages+", "+name);
+            System.out.println("===============================");
+            int insertChatMessages = marketChatService.insertChatMessages(room_code,sellId,name,messages,name);
             System.out.println("현재 접속 인원 수 : " + sessionCount);
         }
 		
-        
+//				  #{chat_code} + 1, #{roomCode}	, #{sellId}, #{buyId}, #{messages}, #{sessionId} 
 		
 		
 	}

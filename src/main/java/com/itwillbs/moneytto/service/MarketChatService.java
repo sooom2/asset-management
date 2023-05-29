@@ -114,7 +114,21 @@ public class MarketChatService {
 	public int insertChatRoom(String roomCode, String itemCode, String messages) {
 		return mapper.insertChatRoom(roomCode,itemCode,messages);
 	}
-
+	
+	//판매자아이디찾기
+	public HashMap<String, String> getSellID(String item_code) {
+		return mapper.sellId(item_code);
+	}
+	
+	//채팅내용 insert
+	public int insertChatMessages(String room_code, String sellId, String buyId, String messages, String myId) {
+		return mapper.insertChatMessages(room_code,sellId,buyId,messages,myId);
+	}
+	
+	//마지막룸코드
+	public int lastRoomCode() {
+		return mapper.lastRoomCode();
+	}
 
 
 }

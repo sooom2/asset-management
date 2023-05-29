@@ -229,10 +229,10 @@ public class MarketController {
 				System.out.println("1 ==========================================");
 				
 				
-				int room_code = chatList.get("room_code");
-				model.addAttribute("room_code",room_code);
+				int roomCode = chatList.get("room_code");
+				model.addAttribute("room_code",roomCode);
 				//2. room_code로 채팅내용조회
-				chatDetail = marketChatService.getChatDetail(room_code);
+				chatDetail = marketChatService.getChatDetail(roomCode);
 				model.addAttribute("chatDetail",chatDetail);
 				System.out.println("2 ==========================================");
 				System.out.println(chatDetail);
@@ -240,13 +240,15 @@ public class MarketController {
 				
 				//3. 상대방 판매상품갯수조회
 				//상대방의 아이디 조회
-				HashMap<String, String> oppenentId = marketChatService.getOppenentId(room_code, id);
+				HashMap<String, String> oppenentId = marketChatService.getOppenentId(roomCode, id);
 				// 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
 				sellCount = marketChatService.getSellCount(oppenentId.get("oppenent_id"));
 				
 				myChatList = marketChatService.getMyChatList(id);
 				
 				System.out.println(myChatList);
+				
+				
 			} else { // 방이없을때 
 				
 				// 해당 상품 조회
@@ -259,11 +261,8 @@ public class MarketController {
 				System.out.println("==========================================");
 				
 				
-				int roomCode = marketChatService.getNextRoomCode();
-				System.out.println("roomCode ==========================================");
-				System.out.println(roomCode);
-				System.out.println("==========================================");
-				model.addAttribute("roomCode",roomCode);
+				int room_code = marketChatService.getNextRoomCode();
+				model.addAttribute("room_code",room_code);
 				
 				
 			}

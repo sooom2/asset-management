@@ -368,6 +368,20 @@
 			WHERE item_code=#{item_code}
 	</select>
 	
+	<select id="sellId" resultType="hashmap">
+		SELECT item.*,member.member_nickname 
+			FROM item
+				LEFT JOIN member 
+						ON member.member_id = item.member_id 
+			WHERE item_code=#{item_code}
+	</select>
+	
+	<select id="lastRoomCode" resultType="int">
+		SELECT * FROM
+			market_chat_rooms
+				ORDER BY room_code DESC LIMIT 1 
+	</select>
+	
 <!-- 	마켓 아이템 리스트 05.27 id 넣을려고 주석 처리 -->
 <!-- 	<select id="marketItemList" resultType="hashmap"> -->
 <!-- 		SELECT i.*, m.grade_score, im.* -->
@@ -518,4 +532,20 @@
 				, now()
 			)
 	</insert>
+	<insert id="insertChatMessages">
+		<selectKey keyProperty="chat_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(chat_code), 0) FROM market_chat_messages
+		</selectKey>
+			 INSERT INTO market_chat_messages
+				VALUES(
+						  #{chat_code} + 1
+						, #{room_code}
+						, #{sellId}
+						, #{buyId}
+						, #{messages}
+						, now()
+						, #{myId}
+				)
+	</insert>
+	
 </mapper>
