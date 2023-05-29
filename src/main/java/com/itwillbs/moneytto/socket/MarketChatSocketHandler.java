@@ -14,7 +14,8 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 public class MarketChatSocketHandler extends TextWebSocketHandler {
-
+	
+	
 	private static final Logger logger = LoggerFactory.getLogger(MarketChatSocketHandler.class);
 	
 	private Map<String, ArrayList<WebSocketSession>> marketList = new ConcurrentHashMap<String, ArrayList<WebSocketSession>>();

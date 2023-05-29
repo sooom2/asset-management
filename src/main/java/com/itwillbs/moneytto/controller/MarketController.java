@@ -2,10 +2,12 @@ package com.itwillbs.moneytto.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
@@ -13,6 +15,7 @@ import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -178,8 +181,9 @@ public class MarketController {
 		}
 	}
 	
+	@CrossOrigin
 	@GetMapping(value = "marketChat")
-	public String marketChat(Model model,HttpSession session,@RequestParam(defaultValue = "") String item_code) {
+	public String marketChat(Model model,HttpServletResponse response,HttpSession session,@RequestParam(defaultValue = "") String item_code) {
 		String id = (String)session.getAttribute("sId");
 		HashMap<String, String> member = memberService.getMember(id);
 		if(id==null) {
@@ -315,11 +319,11 @@ public class MarketController {
 		model.addAttribute("sellCount",sellCount);
 		
 		
-		
+		response.setHeader("Access-Control-Expose-Headers", "Authorization");
 		return "market/market_chat";
 		
 	}// market_chat
-	
+
 	@GetMapping("reviewForm")
 	public String marketReview(HttpSession session, Model model, String item_code) {
 		

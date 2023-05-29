@@ -292,10 +292,12 @@ $(function() {
 	var socket = null;
 	function connect() {
 		var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/marketChat");
+// 		var ws = new WebSocket("ws://localhost:8080/moneytto/marketChat");
+// 		var ws = new SockJS("/marketChat");
 		socket = ws;
 	
 		ws.onopen = function() {
-			console.log('Info: connection opened');
+			console.log('연결완료');
 			const data = {
 					"roomCode" :  roomCode,
 	                "name" : "${ sessionScope.sId }",
@@ -317,7 +319,6 @@ $(function() {
 			sessionId = data.split(":")[0];
 			message = data.split(":")[1];
 		
-// 		    로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
 			if(sessionId == cur_session) {
 				var str = "<div class='chat_myself'>";
 				str += "<div class='chat_myself_box'>";
@@ -327,23 +328,21 @@ $(function() {
 			
 				$(".chatBox").append(str);
 			} else {
-				var str = "<div class='OpponentChat__Wrapper-qv8pn4-0 cFvuGS'>";
-				str += "<img src='https://ccimage.hellomarket.com/img/web/common/empty_profile.svg' alt='상대방 프로필 이미지' class='OpponentChat__ProfileImage-qv8pn4-2 eLwuXd'>";
-				str += "<div class='OpponentChat__Nick-qv8pn4-3 hYaaYd'>" + sessionId + "</div>";
-				str += "<div class='OpponentChat__MyChatList-qv8pn4-1 lecfCu'>";
-				str += "<div class='OpponentChat__TextBox-qv8pn4-5 giIZqy'>";
-				str += "<span class='OpponentChat__Text-qv8pn4-6 ZPeEt'>" + message + "</span>";
-				str += "<div class='OpponentChat__TimeAgo-qv8pn4-7 jXWPOW'>" + amPm + " " + hours + ":" + minutes + "</div></div></div></div>";
+				var str = " <div class='chat_opponent'><div class='chat_opponent_box'><div class='chat_opponent_image_box'>";
+				str += "<img class='chat_opponent_profile_image' src='https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png' alt='상대방이미지'> </div>";
+				str += "<div class='chat_opponent_title'>" + sessionId + "</div>";
+				str += "<div class='chat_opponent_message'>";
+				str += "<span>" + message + "</span>";
+				str += "<div class='chat_opponent_timeago'>" + amPm + " " + hours + ":" + minutes + " </div></div></div></div>";
 			
 				$(".chatBox").append(str);
 			};
-		
-		
-		
+	               
+	                
 		};
 	
-		ws.onclose = function (event) { console.log('Info:onclose - connection closed'); };
-		ws.onerror = function (event) { console.log('Info:onerror - connection closed'); };
+		ws.onclose = function (event) { console.log('연결종료'); };
+		ws.onerror = function (event) { console.log('연결에러'); };
 	}
 
 </script>
@@ -421,18 +420,14 @@ $(function() {
 					        <input type="text" class="sch_box" style="border: none; width: 98px;" readonly/>
 					    </div>
 					    <div class="trade_status">
-<!-- 					    선택하는걸로 업데이트 될수있게해야함  -->
 
-							<!-- 개설된 방이 하나만있을때 중복으로 두개뜸...;; -->
-<%-- 								<c:forEach var="chatList" items="${chatList}"> --%>
-								    <input type="button" class="${chatList.item_status eq '판매중' ? 'active' : ''}" value="판매중">
-								    <input type="button" class="${chatList.item_status eq '거래중' ? 'active' : ''}" value="거래중">
-								    <input type="button" class="${chatList.item_status eq '거래완료' ? 'active' : ''}" value="거래완료">
-								    <br>
-								    <c:if test="${chatList.item_status eq '거래완료'}">
-								        <div class="review" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>
-								    </c:if>
-<%-- 								</c:forEach> --%>
+						    <input type="button" class="${chatList.item_status eq '판매중' ? 'active' : ''}" value="판매중">
+						    <input type="button" class="${chatList.item_status eq '거래중' ? 'active' : ''}" value="거래중">
+						    <input type="button" class="${chatList.item_status eq '거래완료' ? 'active' : ''}" value="거래완료">
+						    <br>
+						    <c:if test="${chatList.item_status eq '거래완료'}">
+						        <div class="review" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>
+						    </c:if>
 					    </div>
 					</div>
 				</div>
