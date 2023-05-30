@@ -121,10 +121,6 @@ public class MypageController {
 //			model.addAttribute("item_price", item_price);
 //			model.addAttribute("member", member);
 //			
-//			// 포인트 조회
-//			String point = service.selectPoint(id);
-//			model.addAttribute("point", point);
-//			model.addAttribute("item_count", item_count);
 //			if(id == null) {
 //				model.addAttribute("msg", "로그인 후 이용가능합니다.");
 //				model.addAttribute("target", "memLogin");
