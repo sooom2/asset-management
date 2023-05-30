@@ -17,6 +17,19 @@
 .contentImage {
 	height: 300px;
 }
+
+.hidden {
+	display: none;
+
+}
+
+.btnHidden {
+	width: 114px;
+	height: 50px;
+	margin: auto;
+	display: block;
+}
+
 </style>
 <script type="text/javascript">
 // $(function(){ 
@@ -171,6 +184,15 @@ function connect() {
 	ws.onerror = function (event) { console.log('Info: connection closed'); };
 }
 // ==========================================================
+$(document).ready(function() {
+	$(".btnHidden").click(function(){
+		location.href = "deposit";
+		if($("#hidden").css("display") == "none"){
+            $('#hidden').show();
+            $('#btnHidden').hide();
+    	}
+	});
+});
 
 </script>
 </head>
@@ -244,37 +266,38 @@ function connect() {
 		<!-- 여기는 버튼 하나 생성해서 가리고 있다가 보증금 내면 바뀌게 -->
 						<div class="bid_right">
 <!-- 							<input type="button" value="경매참가" class="btnHidden"> -->
-							<input type="button" id="btnAskingPrice" value="즉시입찰(+${askingPrice })" style="width: 228px"
-									data-price="${askingPrice }" class="btnHidden">
+							<input type="button" class="btnHidden" value="경매참가하기" id="btnHidden">
 						</div>
 						
-						<div class="auction_input_title">입찰입찰입찰 제목좀바꿔죠</div>
-						<hr>
-<!-- 						<div style="float: right;"> -->
-<!-- 						<div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<span>명</span></div></div><br> -->
-						<div class="bid">
-							<div class="bid_left">
-								<div>MY 보증금</div>
-								<div>입찰하기</div>
-								<div>가격 입찰</div>
-								<div>내 입찰가</div>
-								<div>즉시구매가</div>
-							</div>
-							<div class="bid_right">
-<%-- 								<div>${prince * 0.1 }원 소수점 지워지나?</div> --%>
-								<div>${deposit }원</div>
-								<div>
-									<input type="button" id="btnAskingPrice" value="즉시입찰(+${askingPrice })" style="width: 228px"
-									data-price="${askingPrice }" class="btn">
-								</div><!-- 실시간 변동 금액에 대한 호가 계산 -->
-								<div>
-									<input type="text" id="message" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="금액입력">
-									<input type="button" value="입찰" id="btnBid" class="btn" data-price="">
+						<div class="hidden" id="hidden">
+							<div class="auction_input_title">입찰입찰입찰 제목좀바꿔죠</div>
+							<hr>
+	<!-- 						<div style="float: right;"> -->
+	<!-- 						<div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<span>명</span></div></div><br> -->
+							<div class="bid">
+								<div class="bid_left">
+									<div>MY 보증금</div>
+									<div>입찰하기</div>
+									<div>가격 입찰</div>
+									<div>내 입찰가</div>
+									<div>즉시구매가</div>
 								</div>
-								<div class="my_bid"></div>
-								<div class="buy_now">
-									<span style="color:#bb2649">${purchase }원</span>
-									<input type="button" id="btnPurchase" value="즉시구매" style="float: right;margin-right: 11px;">
+								<div class="bid_right">
+	<%-- 								<div>${prince * 0.1 }원 소수점 지워지나?</div> --%>
+									<div>${deposit }원</div>
+									<div>
+										<input type="button" id="btnAskingPrice" value="즉시입찰(+${askingPrice })" style="width: 228px"
+										data-price="${askingPrice }" class="btn">
+									</div><!-- 실시간 변동 금액에 대한 호가 계산 -->
+									<div>
+										<input type="text" id="message" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="금액입력">
+										<input type="button" value="입찰" id="btnBid" class="btn" data-price="">
+									</div>
+									<div class="my_bid"></div>
+									<div class="buy_now">
+										<span style="color:#bb2649">${purchase }원</span>
+										<input type="button" id="btnPurchase" value="즉시구매" style="float: right;margin-right: 11px;">
+									</div>
 								</div>
 							</div>
 						</div>

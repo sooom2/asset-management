@@ -84,6 +84,12 @@ public class AuctionController {
 		return "auction/auctionFinish";
 	}
 	
+	// 보증금 결제
+	@RequestMapping(value="deposit", method = RequestMethod.GET)
+	public String auctionDeposit() { // 이미지 코드와 경매 코드를 받아서 목록 상세
+		return "auction/deposit";
+	}
+	
 	
 	
 	// 0524 test 여기서==========================
