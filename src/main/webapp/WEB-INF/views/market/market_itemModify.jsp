@@ -337,6 +337,25 @@ fileInput.addEventListener('change', handleFileSelect, false);
   });
 </script>
 
+<script>
+  // "item_category" 컬럼에서 가져온 카테고리 값
+  const savedCategory = '${marketItem.item_category}';
+
+  // 카테고리 선택하기
+  const categoryList = document.querySelector('.categoryCategoryBox .ListListWrapper');
+  const categories = categoryList.querySelectorAll('.TextTextWrapper');
+  categories.forEach(category => {
+    if (category.textContent === savedCategory) {
+      category.classList.add('selected');
+      // 선택된 카테고리 값을 hidden input에 설정하기
+      const hiddenInput = document.querySelector('.categoryCategoryBox input[name="item_category"]');
+      hiddenInput.value = savedCategory;
+    }
+  });
+</script>
+
+
+
 
 </head>
 <body>
@@ -408,26 +427,27 @@ fileInput.addEventListener('change', handleFileSelect, false);
 								</dd>
 							</dl>
 							<dl id="item_category"
-								class="categoryCategoryWrapper-sc-1qdv6sn-0 cGwZbp">
-								<dt class="TitleTitleWrapper">
-									<label class="Title">카테고리</label>
-									<div class="TitleEssentialMark">*</div>
-								</dt>
-								<dd>
-									<div class="categoryCategoryBox">
-										<div class="ListListWrapper">
-											<div class="TextTextWrapper">패션/의류/잡화/뷰티</div>
-											<div class="TextTextWrapper">가전제품/모바일/PC</div>
-											<div class="TextTextWrapper">가구/인테리어</div>
-											<div class="TextTextWrapper">도서/음반/문구/티켓</div>
-											<div class="TextTextWrapper">게임/스포츠/취미</div>
-											<div class="TextTextWrapper">유아동/반려동물</div>
-											<div class="TextTextWrapper">그외기타</div>
+									class="categoryCategoryWrapper-sc-1qdv6sn-0 cGwZbp">
+									<dt class="TitleTitleWrapper">
+										<label class="Title">카테고리</label>
+										<div class="TitleEssentialMark">*</div>
+									</dt>
+									<dd>
+										<div class="categoryCategoryBox">
+											<div class="ListListWrapper">
+												<div class="TextTextWrapper">패션/의류/잡화/뷰티</div>
+												<div class="TextTextWrapper">가전제품/모바일/PC</div>
+												<div class="TextTextWrapper">가구/인테리어</div>
+												<div class="TextTextWrapper">도서/음반/문구/티켓</div>
+												<div class="TextTextWrapper">게임/스포츠/취미</div>
+												<div class="TextTextWrapper">유아동/반려동물</div>
+												<div class="TextTextWrapper">그외기타</div>
+											</div>
+											<input type="hidden" name="item_category" value="">
 										</div>
-										<input type="hidden" name="item_category" value="">
-								</dd>
-							</dl>
-							<dl class="sell_method_box">
+									</dd>
+								</dl>
+								<dl class="sell_method_box">
 								<dt class="TitleTitleWrapper">
 									<label class="Title">가격 입력</label>
 									<div class="TitleEssentialMark">*</div>
