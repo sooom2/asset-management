@@ -115,10 +115,28 @@ public class MarketController {
 		
 		
 		
-		
-		
+
 		return "market/market_detail";
 	}
+	
+	@ResponseBody
+	@GetMapping(value = "report")
+	public void report(Model model, HttpSession session, String targetId, String reportType, String reportContent) {
+		System.out.println("값이 왔을까여");
+		String id = (String)session.getAttribute("sId");
+		System.out.println(id);
+		System.out.println(targetId);
+		System.out.println(reportType);
+		System.out.println(reportContent);
+		return "market/market_detail";
+		
+		int insertReport = service.insertReport(id, targetId, reportType, reportContent);
+		System.out.println("insertReport : " + insertReport);
+	}
+	
+	
+	
+	
 	
 	
 	

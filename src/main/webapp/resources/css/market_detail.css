@@ -106,7 +106,7 @@
     height: 90px;
     margin-right: 4px;
     object-fit: cover;
-    opacity: 40%;
+    opacity: 100%;
     display: inline-flex;
 }
 
@@ -512,7 +512,7 @@
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    background: #268BFF;
+    background: #bb2649;
     border-radius: 10px;
     padding: 18px 0;
     width: 100%;
@@ -854,7 +854,7 @@
     border-radius: 10px;
     margin: 0px 67px 60px 69px;
     cursor: pointer;
-    background: rgb(185, 218, 254);
+    background: #ffd6e0;
 }
 
 

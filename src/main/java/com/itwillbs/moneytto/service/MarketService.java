@@ -64,6 +64,12 @@ public class MarketService {
 	public List<HashMap<String, String>> getItemImage(String item_code) {
 		return mapper.selectItemImage(item_code);
 	}
+
+
+
+	public int insertReport(String id, String targetId, String reportType, String reportContent) {
+		return mapper.insertReport(id, targetId, reportType, reportContent);
+	}
 	
 	
 }
