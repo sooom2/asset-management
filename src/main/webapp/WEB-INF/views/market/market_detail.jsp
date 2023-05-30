@@ -73,9 +73,11 @@ function toggleLike(element) {
 							<div class="swiper-container" modules="[object Object]">
 								<div class="swiper-wrapper">
 									<div class="swiper-slide">
-										<img
-											src="https://ccimg.hellomarket.com/images/2022/item/07/09/21/4656318_2647700_1.jpg?size=s6"
+										<c:forEach var="itemImage" items="${itemImage}">
+											<img
+											src="http://c3d2212t3.itwillbs.com/images/${itemImage.image_name}"
 											alt="preview" class="PreviewImgListItemImg">
+										</c:forEach>
 									</div>
 
 								</div>
@@ -330,6 +332,8 @@ function toggleLike(element) {
 <script type="text/javascript">
 
 	$(function () {
+		
+		
 		// 신고하기
 		$(".report").on("click", function(e) {
 			$(".ReactModalPortal").show();

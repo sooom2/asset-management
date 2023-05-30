@@ -58,6 +58,12 @@ public class MarketService {
 		
 		return mapper.updateReview(review);
 	}
+
+
+
+	public List<HashMap<String, String>> getItemImage(String item_code) {
+		return mapper.selectItemImage(item_code);
+	}
 	
 	
 }
