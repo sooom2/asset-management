@@ -129,6 +129,7 @@ function toggleLike(element) {
 				<!--오른쪽섹션 -->
 				<div id="rightSection"
 					class="rightSectionWrapper">
+					<div class="trade_status"><input type="button" value="판매중" class="active" > <input type="button" value="거래중"> <input type="button" value="거래완료"></div>
 					<div class="TopNavigationWrapper">
 						<img
 							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_report.png"
