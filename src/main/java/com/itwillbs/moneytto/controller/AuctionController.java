@@ -24,6 +24,9 @@ public class AuctionController {
 	@Autowired
 	private AuctionService service;
 	
+	@Autowired
+	private MemberService memberService;
+	
 	// 경매 메인페이지
 	@RequestMapping(value = "auctionMain", method = RequestMethod.GET)
 	public String auctionMain(Model model) { 
@@ -77,6 +80,24 @@ public class AuctionController {
 	public String auctionFinish() { // 이미지 코드와 경매 코드를 받아서 목록 상세
 		return "auction/auctionFinish";
 	}
+	
+	// 경매 입찰 등록
+	@RequestMapping(value="auctionDeposit", method = RequestMethod.GET)
+	public String auctionDeposit(@RequestParam HashMap<String, String> deposit, HttpSession session, Model model) {
+		System.out.println(deposit);
+		String id = (String)session.getAttribute("sId");
+		String auction_code = deposit.get("auction_code");
+		HashMap<String, String> member = memberService.getMember(id);
+		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
+		
+		
+		model.addAttribute("member", member);
+		model.addAttribute("auction", auction);
+		model.addAttribute("deposit", deposit.get("deposit"));
+		
+		
+		return "auction/auctionDeposit";
+	};
 	
 	
 	

@@ -138,6 +138,15 @@
 		// 소켓 연결
 		connect();
 		
+		// 경매 입찰 등록
+		$("#auctionRegist").on("click", function() {
+			location.href="auctionDeposit?auction_code=" + $('input[name=auction_code]').val() 
+										+ "&deposit=" + $('input[name=deposit]').val();
+		});
+		
+		
+		
+		
 	});
 </script>
 <script type="text/javascript">
@@ -216,6 +225,9 @@
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
+	<input type="hidden" name="auction_code" value="${auction.get('auction_code')}">
+	<input type="hidden" name="image_name" value="${auction.get('image_name')}">
+	<input type="hidden" name="deposit" value="${deposit}">
 	<div class="container">
 		<div class="fullScreen">
 				<!-- 왼쪽 -->

@@ -173,5 +173,10 @@ public class MemberService {
 		
 		return mapper.selectWish(id, item_code);
 	}
+
+	public HashMap<String, String> selectAuctionMember(Object attribute) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
