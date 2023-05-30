@@ -28,5 +28,10 @@ public class AuctionService {
 	public int insertAuctionLog(String id, String messages) {
 		return mapper.insertAuctionLog(id, messages);
 	}
+
+	// 경매 기록 검색
+	public HashMap<String, String> selectAuctionLog(String id) {
+		return mapper.selectAuctionLog(id);
+	}
 	
 }

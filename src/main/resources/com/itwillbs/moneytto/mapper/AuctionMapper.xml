@@ -58,4 +58,10 @@
 				)
 	</insert>
 	
+	<!-- 경매 기록 검색 -->
+	<select id="selectAuctionLog" resultType="hashmap">
+		SELECT *
+			FROM chat_rooms
+			WHERE id = #{id}
+	</select>
 </mapper>

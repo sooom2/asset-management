@@ -186,7 +186,7 @@ function connect() {
 // ==========================================================
 $(document).ready(function() {
 	$(".btnHidden").click(function(){
-		location.href = "deposit";
+// 		location.href = "deposit";
 		if($("#hidden").css("display") == "none"){
             $('#hidden').show();
             $('#btnHidden').hide();

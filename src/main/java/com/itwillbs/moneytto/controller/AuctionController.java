@@ -36,12 +36,12 @@ public class AuctionController {
 	
 	// 실시간 경매
 	@RequestMapping(value="auction", method = RequestMethod.GET)
-	public String auction(@RequestParam String auction_code, Model model) { // 이미지 코드와 경매 코드를 받아서 목록 상세
+	public String auction(@RequestParam String auction_code, HttpSession session, Model model) { // 이미지 코드와 경매 코드를 받아서 목록 상세
 		
 		// 여기서 채팅방 or 내용 검색해서 기록이 있으면 그 기록을 화면에 보여줄꺼
 		// 여기서 넘길수 있는게 auction_code 고 
-		
-//		HashMap<String, String> auctionLog = service.selectAuctionLog();
+		String id = (String)session.getAttribute("sId");
+		HashMap<String, String> auctionLog = service.selectAuctionLog(id);
 		
 //		if() { // 경매 페이지로 들어갈 때 이 아이템에 대한 경매기록이 있는지 확인해야하고 경매 기록이 없을 경우 밑에 코드 사용
 //			채팅방에는 방번호, 아이템 번호, chat_content 이렇게 있고
