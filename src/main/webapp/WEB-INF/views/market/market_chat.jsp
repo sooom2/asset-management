@@ -26,11 +26,6 @@
 
 $(function() {
 	
-	function scrollToBottom() {
-		var chatWrapper = document.getElementById('chatWrapper');
-		chatWrapper.scrollTop = chatWrapper.scrollHeight;
-	}
-	
 	
 	let sId = "${sessionScope.sId}";
 	var room_code = <%= request.getAttribute("room_code") %>;
@@ -249,9 +244,7 @@ $(function() {
 
 <script type="text/javascript">
 
-
 // 채팅보내기
-	
 	
 $(function() {
 	let item_code = $(".item_code").val();
@@ -272,13 +265,17 @@ $(function() {
 	$('#btnSend').on("click", function(evt) {
 		chatSend();
 		evt.preventDefault();
+		$('#message').val('');
 	});
 // 	엔터 누름 전송
 	$("#message").on("keydown",function(key){
         if(key.keyCode == 13) {
             chatSend();
+            $('#message').val('');
         }
     });
+    
+	$('#chat_wrapper').scrollTop($('#chat_wrapper')[0].scrollHeight);
 	connect();
 });
 
