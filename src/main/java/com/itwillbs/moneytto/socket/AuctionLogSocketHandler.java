@@ -1,11 +1,11 @@
 package com.itwillbs.moneytto.socket;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.CloseStatus;
@@ -14,12 +14,17 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.itwillbs.moneytto.service.*;
+
 
 
 @RequestMapping("/echo")
-public class AuctionChatSocketHandler extends TextWebSocketHandler {
+public class AuctionLogSocketHandler extends TextWebSocketHandler {
+	
+	@Autowired
+	private AuctionService service;
 
-	private static final Logger logger = LoggerFactory.getLogger(AuctionChatSocketHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(AuctionLogSocketHandler.class);
 	
 	List<WebSocketSession> sessionList = new ArrayList<>();
 	
@@ -48,10 +53,14 @@ public class AuctionChatSocketHandler extends TextWebSocketHandler {
 		
 //		System.out.println(session);
 //		System.out.println("sessionList : " + sessionList);
-		
-		for(WebSocketSession sess: sessionList) {
-			sess.sendMessage(new TextMessage(id + ":" + name + ":" + messages));
-		}
+	    
+	    // DB저장 방코드와 채팅코드도 넘겨야 하고 그건 컨트롤러에서 받을꺼고 페이지 들어올때
+        int insertCount = service.insertAuctionLog(id, messages);
+        if(insertCount > 0) {
+        	for(WebSocketSession sess: sessionList) {
+        		sess.sendMessage(new TextMessage(id + ":" + name + ":" + messages));
+        	}
+		} 
 		
 	}
 	
