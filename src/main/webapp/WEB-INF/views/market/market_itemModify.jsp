@@ -500,7 +500,10 @@ fileInput.addEventListener('change', handleFileSelect, false);
 							<a href="main">
 								<button class="btn_item_cancel" type="button">취소</button>
 							</a>
-							<button class="btn_item_submit" type="submit">상품 등록 수정</button>
+							<button class="btn_item_submit" type="submit">상품 수정</button>
+							<a href="main">
+								<button class="btn_item_cancel" type="button">상품 삭제</button>
+							</a>
 						</div>
 					</div>
 				</div>
