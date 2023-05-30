@@ -128,7 +128,6 @@ public class MarketController {
 		System.out.println(targetId);
 		System.out.println(reportType);
 		System.out.println(reportContent);
-		return "market/market_detail";
 		
 		int insertReport = service.insertReport(id, targetId, reportType, reportContent);
 		System.out.println("insertReport : " + insertReport);
