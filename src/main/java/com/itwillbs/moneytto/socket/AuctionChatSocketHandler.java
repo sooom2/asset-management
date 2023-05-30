@@ -28,7 +28,6 @@ public class AuctionChatSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		i++;
-		
 	}
 
 	@Override  

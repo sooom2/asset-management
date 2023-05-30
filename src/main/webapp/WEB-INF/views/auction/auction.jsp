@@ -23,6 +23,19 @@
 	margin-left: 10px;
 }
 
+.auction_input_button {
+	font-size: 20px;
+	width: 300px;
+	height: 40px;
+    margin: auto;
+    display: block;
+}
+
+#auction_input_title {
+	color: #bb2649;
+    font-weight: bold;
+}
+
 #message {
   width: 70%;
   height: 60px;
@@ -150,6 +163,7 @@
 	                "name" : "${ sessionScope.sId }",
 	                "message"   : "ENTER"
 	            };
+			
 	        let jsonData = JSON.stringify(data);
 			socket.send(jsonData);
 			
@@ -266,7 +280,13 @@
 							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
 						</div>
 					</div>
-					<div class="auction_input">
+					<div id="auction_input_before" class="auction_input" style="display:block">
+						<div id="auction_input_title" class="auction_input_title">경매 입찰 등록</div>
+						<hr>
+						<br><br><br>
+						<input id="auctionRegist" class="auction_input_button" type="button" value="참여하기">
+					</div>
+					<div id="auction_input_after" class="auction_input" style="display:none">
 						<div class="auction_input_title">입찰입찰입찰 제목좀바꿔죠</div>
 						<hr>
 <!-- 						<div style="float: right;"> -->
