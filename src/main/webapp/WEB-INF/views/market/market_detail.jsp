@@ -42,6 +42,9 @@ function toggleLike(element) {
 </head>
 <body>
 <input type="hidden" id="item_code" name="item_code" value="">
+<input type="hidden" id="target_id" name="target_id" value="${marketItem.member_id}"/>
+<input type="hidden" id="report_type" name="report_type" value=""/>
+<input type="hidden" id="report_content" name="report_content" value=""/>
 	<jsp:include page="../nav.jsp" />
 	<div id="next">
 
@@ -274,50 +277,57 @@ function toggleLike(element) {
 								<div class="Report__Title-sc-140fn8w-2 fwaQok">신고 사유를 선택해 주세요.</div>
 								<div class="Report__ListWrapper-sc-140fn8w-3 gGZdRJ">
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="안전결제 거부" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">안전결제 거부</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="주류, 담배" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">주류, 담배</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
 										<img
-											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="전문 의약품, 의료기기" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">전문 의약품, 의료기기</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="개인정보 거래(신분증, 대포폰 등)"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">개인정보 거래(신분증, 대포폰 등)</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="음란물/성인용품(중고속옷 포함)"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">음란물/성인용품(중고속옷 포함)</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="위조상품"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">위조상품</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="총포 도검류"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">총포 도검류</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="화장품 견본품"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">화장품 견본품</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="게임계정"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">게임계정</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="도배행위"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">도배행위</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="동물 분양/입양글"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">동물 분양/입양글</div>
 									</div>
+									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="기타"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<div class="Report__List-sc-140fn8w-6 ejCmPe">기타</div>
+									</div>
+								<div class="report_content">
+									<textarea id="textarea" rows="5" cols="40" placeholder="신고 상세 사유를 입력해주세요." style="resize: none;"></textarea>
+								</div>
 								</div>
 								<div class="Report__Button-sc-140fn8w-7 IZaFu">신고하기</div>
 							</div>
@@ -333,14 +343,67 @@ function toggleLike(element) {
 
 	$(function () {
 		
+		function report() {
+			var id = "<%=(String)session.getAttribute("sId")%>";
+			var targetId = $("#target_id").val();
+			var reportType = $("#report_type").val();
+			var reportContent = $("#report_content").val();
+			
+			$.ajax({													
+	 			type: "GET",
+	 			url: "report",
+	 			data: { 
+	 				targetId : targetId,
+	 				reportType : reportType,
+	 				reportContent : reportContent
+	 			},
+	 			dataType: "json"
+	 		});
+			
+		}
+		
+		
 		
 		// 신고하기
-		$(".report").on("click", function(e) {
+		$(document).on("click", ".report", function(e) {
 			$(".ReactModalPortal").show();
 		});
 		
+		// 신고 상세
+		$(document).on("click", ".hzjjbI", function(e) {
+			var originalImage = "https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png";
+			var image = "https://ccimage.hellomarket.com/img/web/item/detail/ico_checked.png";
+			$(".hzjjbI").attr("src", originalImage);
+			$(this).attr("src", image);
+			var reportType = $(this).attr("id");
+			$("#report_type").val(reportType);
+			
+			
+			$(".IZaFu").css("background", "#bb2649");
+		});
+		
+		
+		$(document).on("change", "#textarea", function(e) {
+			$("#report_content").val($(this).val());
+		});
+		
+		
+		
+		// 신고하기 버튼
+		$(document).on("click", ".IZaFu", function(e) {
+			var reportType = $("#report_type").val();
+			
+			if(reportType == "") {
+				alert("신고 사유를 선택해주세요!");
+			} else {
+				alert("신고 접수 되었습니다!");
+				report();
+				$(".ReactModalPortal").remove();
+			}
+		});
+		
 		// 모달창 닫기
-		$(".close").on("click", function(e) {
+		$(document).on("click", ".close", function(e) {
 			$(".ReactModalPortal").remove();
 		});
 		

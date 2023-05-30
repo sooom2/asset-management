@@ -115,10 +115,26 @@ public class MarketController {
 		
 		
 		
-		
-		
 		return "market/market_detail";
 	}
+	
+	@ResponseBody
+	@GetMapping(value = "report")
+	public void report(Model model, HttpSession session, String targetId, String reportType, String reportContent) {
+		System.out.println("값이 왔을까여");
+		String id = (String)session.getAttribute("sId");
+		System.out.println(id);
+		System.out.println(targetId);
+		System.out.println(reportType);
+		System.out.println(reportContent);
+		
+		int insertReport = service.insertReport(id, targetId, reportType, reportContent);
+		System.out.println("insertReport : " + insertReport);
+	}
+	
+	
+	
+	
 	
 	@GetMapping(value = "market_payment")
 	public String marketPayment() {
@@ -187,6 +203,11 @@ public class MarketController {
 		}
 	}
 	
+	
+	
+	
+	// ajax로 옮긴방에서 채팅을 또하면 파라미터에딸린데로 채팅됨 수정해야함
+	// 
 	@CrossOrigin
 	@GetMapping(value = "marketChat")
 	public String marketChat(Model model,HttpServletResponse response,HttpSession session,@RequestParam(defaultValue = "") String item_code) {

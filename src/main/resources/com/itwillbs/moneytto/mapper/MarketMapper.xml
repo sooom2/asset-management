@@ -342,7 +342,6 @@
 						 WHERE 	member_id = #{member_id})
 						 , member_location) BETWEEN 1 AND 100000
 			</if>
-			
 		   <choose>
 		      <when test='sort.equals("lowPrice")'>
 	         	 ORDER BY 	replace(i.item_price,',','')+0 ASC
@@ -556,4 +555,22 @@
 			WHERE 
 				table_code = #{item_code}
 	</select>
+	
+	
+	<insert id="insertReport">
+		<selectKey keyProperty="report_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(report_code), 0) FROM report
+		</selectKey>
+			INSERT 
+				INTO 
+					report
+				VALUES(
+						  #{report_code} + 1
+						, #{targetId}
+						, #{id}
+						, #{reportType}
+						, #{reportContent}
+						, now()
+				)
+	</insert>
 </mapper>
