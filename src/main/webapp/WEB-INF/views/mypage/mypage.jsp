@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -37,7 +38,7 @@ function memberAuth(){
 	+"&scope=login inquiry transfer"
 	+"&state=11111111111111111111111111111111"
 	+"&auth_type=0";
-	// 산업은행 - 12345678
+	
 }
 
 </script>
@@ -66,17 +67,13 @@ function memberAuth(){
 							<div class="userDataNickName">${member.member_nickname } 님</div>
 <!-- 						</div> -->
 					</div>
-					<div class="memberInfoProductCountBox">
-						<div class="memberInfoText">상품</div>
-						<div class="memberInfoCount">0</div>
-					</div>
 					<div class="memberInfoReviewBox">
 						<div class="memberInfoText">등급</div>
 						<div class="memberInfoRating">
 							<!-- 이미지 태그 넣을 부분 -->
 							
 							<!--  -->
-							<div class="memberInfoCount">${member.grade_score }등급</div>
+							<div class="memberInfoCount">${member.grade_score }</div>
 						</div>
 					</div>
 					
@@ -148,11 +145,11 @@ function memberAuth(){
 					<div class="tagListWrapper-gkczkp-0 geRbir"></div>
 					
 				</div>
-				<div class="listControlBox"><div class="listCount">전체 0</div>
+				<div class="listControlBox"><div class="listCount">전체 ${fn:length(itemList) }</div>
 				</div>
 				<div class="itemWrapper">
 				  	<div class="itemItemWrapper">
-						<c:if test='${not empty itemList }'>
+						<c:if test='${not empty itemList }' >
 							<c:forEach var="item" items="${itemList}">
 								<div class="itemItemBox">
 		                          <div class="ThumbNailTypeWrapper">

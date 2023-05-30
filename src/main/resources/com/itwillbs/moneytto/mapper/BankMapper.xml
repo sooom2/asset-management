@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itwillbs.itwillbs.mapper.BankMapper">
+	
+	<!-- 토큰 정보(id, access_token, refresh_token, user_seq_no) 저장 -->
+	<insert id="insertToken">
+		INSERT
+			INTO 
+				account(
+					id
+					, user_seq_no
+					, access_token
+					, refresh_token
+				)
+			VALUES (
+				#{id}
+				, #{token.user_seq_no}
+				, #{token.access_token}
+				, #{token.refresh_token}
+			);
+	</insert>
+	
+	<!-- 계좌 인증 상태 변경(member 테이블의 아이디에 해당하는 account_auth_status 값을 'Y' 로 변경) -->
+	<update id="updateAccountAuthStatus">
+		UPDATE member
+			SET
+				account_auth_status = 'Y'
+			WHERE
+				id = #{id}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

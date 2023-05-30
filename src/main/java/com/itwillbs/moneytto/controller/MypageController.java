@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,9 @@ public class MypageController {
 	@Autowired
 	private MarketService marketService;
 	
+	@Value("${client_id}")
+	private String client_id;
+	
 	// 마이페이지 메인
 	@RequestMapping(value ="mypage", method = RequestMethod.GET)
 	public String mypage(@RequestParam(name ="itemList" , defaultValue = "sellItem") String itemType
@@ -52,6 +56,7 @@ public class MypageController {
 		System.out.println(member);
 		
 		model.addAttribute("member", member);
+		model.addAttribute("client_id", client_id);
 		
 		System.out.println("itemType : " + itemType);
 
@@ -214,7 +219,7 @@ public class MypageController {
 
         // 사진 정보 저장 메서드 호출
         marketService.saveImage(saveImage);
-        //이거 왜 void..?
+       
 		
 		int updateCount = memberService.updateMember(member);
 		
