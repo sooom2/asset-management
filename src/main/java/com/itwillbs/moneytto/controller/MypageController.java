@@ -143,6 +143,9 @@ public class MypageController {
 	public String updatePro(@RequestParam HashMap<String, String> paramMember,
 							Model model, HttpSession session
 							,@RequestParam("file") MultipartFile file) {
+		
+		String id = (String)session.getAttribute("sId");
+		HashMap<String, String> member = memberService.getMember(id);
 		//기존 정보
 		/*
 		 * TODO itemRegist 이미지 파일 prameter 확인
@@ -152,74 +155,63 @@ public class MypageController {
 		, member_bday=19900101, member_tel=01011112456}
 		KakaoTalk_20211001_141932875.jpg
 		*/
-		String id = (String)session.getAttribute("sId");
-		HashMap<String, String> member = memberService.getMember(id);
 
 		//입력한 정보
 		System.out.println(paramMember);
-		System.out.println(file);
 		
 		String member_pw = paramMember.get("member_pw");
-		String member_pw2 = paramMember.get("member_pw3");
-		
-
+		String member_pw2 = paramMember.get("member_pw3");	//css 상으로 member_pw3이 들어와서
 		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodedMember_pw = member.get("member_pw");
-		
 					
 		if(member_pw == null || !passwordEncoder.matches(member_pw2, encodedMember_pw)){
 			
 			model.addAttribute("msg", "정보를 수정하려면 기존의 비밀번호와 일치해야 합니다!");
 			return "fail_back";
 		}
-		// 비밀번호 검증 끝
-		// 수정되는 항목 : 닉네임 & 비밀번호 & 주소 & location & 생년월일 & 휴대번호
-		// 2. member_pw2를 새 비밀번호로  
+		
 		paramMember.put("member_pw2", passwordEncoder.encode(member_pw2));
 		// 입력한 주소로 location 설정
 		paramMember.put("member_location", memberService.setLocation(paramMember.get("member_address")));
 		
 		member.putAll(paramMember);
+		// 파일 업로드
+		String uploadDir = session.getServletContext().getRealPath("/resources/upload/member");
 		
-		String uploadDir = session.getServletContext().getRealPath("/resources/upload");
-		
-		String item_code = "member"+id;
-        String fileName = file.getOriginalFilename();
-        String fileExtension = FilenameUtils.getExtension(fileName);
-        String storedFileName = UUID.randomUUID().toString() + "." + fileExtension;
-        String filePath = uploadDir + "/" + storedFileName;
+        String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
         
+        String uuid = UUID.randomUUID().toString();
+        
+        String storedFileName = uuid.substring(0,8) + "." + fileExtension;
+        
+        String filePath = uploadDir + "/" + storedFileName;
+        String saveDir = "http://c3d2212t3.itwillbs.com/images/member/" + storedFileName;
+        // 사진을 저장하는 경로
+        // /resources/upload/member
+        // 사진을 읽어오는 절대 경로
+        // "http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg"
+        member.put("member_image", saveDir);
         
         System.out.println(filePath);
         
+        int updateCount = memberService.updateMember(member);
         
-        try {
-			file.transferTo(new File(filePath));
-			
-		} catch (IllegalStateException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-        // 사진 정보를 저장
-        HashMap<String, String> saveImage = new HashMap<>();
-        saveImage.put("image_code", UUID.randomUUID().toString());
-        saveImage.put("item_code", item_code);
-        saveImage.put("image_name", fileName);
-
-        // 사진 정보 저장 메서드 호출
-        marketService.saveImage(saveImage);
-        //이거 왜 void..?
-		
-		int updateCount = memberService.updateMember(member);
-		
-		if(updateCount > 0) {
-			model.addAttribute("msg", "회원정보수정성공!");
+        if(updateCount > 0) {
+        	
+	        try {
+	        	// 본인 서버 /resources/upload/member 내부에 저장
+				file.transferTo(new File(filePath));		// 이 이름으로 저장
+				// 사진 정보를 저장
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+	        model.addAttribute("msg", "회원정보수정성공!");
 			model.addAttribute("target", "mypage");
-			return "success";
+			session.setAttribute("member_image", member.get("member_image"));
 			
-		} else {
+			return "success";
+        } else {
 			model.addAttribute("msg", "회원정보수정 실패!");
 			return "fail_back";
 		}
@@ -267,5 +259,6 @@ public class MypageController {
 //		}
 		return "";
 	}
+	
 
 }

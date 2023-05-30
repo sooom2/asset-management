@@ -62,6 +62,7 @@
 		,member_address_detail = #{member_address_detail} 
 		,member_bday = #{member_bday}
 		,member_tel = #{member_tel}
+		,member_image = #{member_image}
 		,member_location = POINT(${member_location})
 		WHERE member_id = #{member_id}
 		

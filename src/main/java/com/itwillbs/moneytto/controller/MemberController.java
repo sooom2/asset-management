@@ -51,6 +51,9 @@ public class MemberController {
 		String securePasswd = new BCryptPasswordEncoder().encode(member.get("member_pw"));
 		
 		// 좌표
+		if(member.get("member_image").isEmpty()) {
+			member.put("member_image", "http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg");
+		}
 		String location = memberService.setLocation(member.get("member_address"));
 		member.put("member_location",location);
 		

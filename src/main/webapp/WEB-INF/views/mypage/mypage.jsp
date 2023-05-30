@@ -61,7 +61,7 @@ function memberAuth(){
 								<!-- TODO
 									${member.image_name}
 								--> 
-								<img src="${path}/resources/images/mypage/cute.png" alt="머니또의 프로필 이미지">
+								<img src="${member.member_image}" alt="머니또의 프로필 이미지">
 							</div>
 							</div>
 							<div class="userDataNickName">${member.member_nickname } 님</div>
