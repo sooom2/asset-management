@@ -20,19 +20,8 @@
 </style>
 <script type="text/javascript">
 // $(function(){ 
-// 	$('#btnAskingPrice').click(function(askingPrice) { // 물건 금액 5% 가격으로 입찰
-// 		console.log(${askingPrice })
-		
-// 	});
-	
-// 	$('#btnBid').click(function() { // 입찰하기
-// // 		console.log(" du dd")
-		
-// 	});
-	
 // 	$('#btnBid').click(function() { // 즉시구매
 // // 		console.log(" du dd")
-		
 // 	});
 // });
 
