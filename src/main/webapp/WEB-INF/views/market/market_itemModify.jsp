@@ -345,11 +345,11 @@ fileInput.addEventListener('change', handleFileSelect, false);
 		<section class="content">
 			<h1>중고거래의 시작 머니또마켓</h1>
 			<h2>상품 등록 페이지</h2>
-			<form class="insertItem" action="itemRegistPro" method="post" enctype="multipart/form-data">
+			<form class="updateItem" action="itemModifyPro" method="post" enctype="multipart/form-data">
 				<div class="regist_main_area">
 					<div class="regist_top">
 						<div class="regist_box_top">
-							<div>상품 등록</div>
+							<div>상품 등록 수정</div>
 						</div>
 						<div class="regist_box_sub">
 							<span>*필수항목</span>은 꼭 입력해주세요
@@ -403,7 +403,7 @@ fileInput.addEventListener('change', handleFileSelect, false);
 								</dt>
 								<dd>
 									<input type="text" name="item_subject" class="title_input"
-										placeholder="상품 제목을 입력해주세요" value="">
+										placeholder="상품 제목을 입력해주세요" value="${marketItem.item_subject}">
 									<ul class="item_recommend_box"></ul>
 								</dd>
 							</dl>
@@ -440,7 +440,7 @@ fileInput.addEventListener('change', handleFileSelect, false);
 													src="https://ccimage.hellomarket.com/img/web/regist/price_icon_x3.png"
 													class="price_icon" alt="가격 아이콘"> <input type="text"
 													name="item_price" placeholder="숫자를 입력해주세요"
-													class="PricePriceInput" value=""
+													class="PricePriceInput" value="${marketItem.item_price}"
 													style="width: 100%; height: 58px;">
 											</div>
 											<span class="PricePriceDotText">원</span>
@@ -488,8 +488,8 @@ fileInput.addEventListener('change', handleFileSelect, false);
 									<div class="TitleEssentialMark">*</div>
 								</dt>
 								<dd>
-									<textarea rows="5" class="introduce" name="item_content"
-										placeholder="상품의 상태를 정확하게 알 수 있는 정보를 꼭 포함해 주세요!   (최대 2,500자)"></textarea>
+									<textarea rows="5" class="introduce" name="item_content" 
+										placeholder="상품의 상태를 정확하게 알 수 있는 정보를 꼭 포함해 주세요!   (최대 2,500자)">${marketItem.item_content }</textarea>
 								</dd>
 							</dl>
 
@@ -500,7 +500,7 @@ fileInput.addEventListener('change', handleFileSelect, false);
 							<a href="main">
 								<button class="btn_item_cancel" type="button">취소</button>
 							</a>
-							<button class="btn_item_submit" type="submit">상품 등록 완료</button>
+							<button class="btn_item_submit" type="submit">상품 등록 수정</button>
 						</div>
 					</div>
 				</div>

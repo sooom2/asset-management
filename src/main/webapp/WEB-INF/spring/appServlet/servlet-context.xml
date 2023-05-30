@@ -19,9 +19,11 @@
 
 	<!-- 웹 소켓 -->
 	<beans:bean id="auctionChatHandler" class="com.itwillbs.moneytto.socket.AuctionChatSocketHandler" />
+	<beans:bean id="marketChatHandler" class="com.itwillbs.moneytto.socket.MarketChatSocketHandler" />
 
     <websocket:handlers>
         <websocket:mapping handler="auctionChatHandler" path="/auctionChat" />
+        <websocket:mapping handler="marketChatHandler" path="/market_chat" />
         <websocket:handshake-interceptors>
             <beans:bean
                 class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>

@@ -10,6 +10,7 @@
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.4.js"></script>
 <script type="text/javascript">
+
 $(function() {
 	
 	$(".SomeonesItemButton").click(function() {
@@ -18,7 +19,11 @@ $(function() {
 	});
 	$(".SomeonesModifyButton").click(function() {
 		
-		alert("수정페이지 만들면 이동 : 판매자랑 세션 아이디랑 같을 경우 채팅하기 버튼 없어요!");
+// 		alert("수정페이지 만들면 이동 : 판매자랑 세션 아이디랑 같을 경우 채팅하기 버튼 없어요!");
+		var item_code = $(this).data('cd');
+	    location.href = "itemModify?item_code=" + item_code;
+	    
+
 	});
 });
 
@@ -36,6 +41,7 @@ function toggleLike(element) {
 </script>
 </head>
 <body>
+<input type="hidden" id="item_code" name="item_code" value="">
 	<jsp:include page="../nav.jsp" />
 	<div id="next">
 

@@ -159,7 +159,7 @@
     position: absolute;
     bottom: -13px;
     font-size: 13px;
-    color: #5c5c5c;
+    color: #bb2649;
     width: 123px;
     /* display: inline-block; */
 }
@@ -200,7 +200,7 @@
 
 .right_main .chat_header {
     border-bottom: 1px solid #ebebeb;
-    padding: 15px 20px;
+    padding: 15px 20px 30px 20px;
     height: 65px;
 }
 
@@ -252,7 +252,8 @@
     color: #000;
     font-size: 16px;
     font-weight: 700;
-    display: block
+    display: block;
+    line-height: 27px;
 }
 
 .right_main .chat_header .info span:nth-child(2) {
@@ -280,7 +281,7 @@
 
 .chat_description {
     overflow: auto;
-    height: calc(77vh - 151px);
+    height: calc(74vh - 151px);
     border-bottom: 1px solid #ebebeb
 }
 
@@ -336,7 +337,7 @@
 
 .chat_description .chat_myself_message {
     max-width: 200px;
-    background-color: #0484f6;
+    background-color: #bb2649;
     margin-right: 21px;
     word-break: break-all
 }
@@ -370,7 +371,7 @@
 .chat_description .chat_myself_message:after {
     content: "";
     position: absolute;
-    border-color: transparent transparent #0484f6!important;
+    border-color: transparent transparent #bb2649!important;
     border: 10px solid #000;
     transform-origin: 0 0;
     right: 0;
@@ -386,7 +387,7 @@
     color: #b4b4b4;
     left: -70px;
     bottom: 3px;
-    width: 60px;
+    width: 63px;
     text-align: right
 }
 
@@ -852,7 +853,8 @@
     line-height: 21px;
     color: #000;
     font-size: 15px;
-    float: left
+    float: left;
+    border: none;
 }
 
 .chat_footer .chat_input span {
@@ -870,7 +872,7 @@
 
 .chat_footer button {
     color: #fff;
-    background-color: #0484f6;
+    background-color: #bb2649;
     border-radius: 3px;
     font-size: 15px;
     font-weight: 700;
@@ -1032,7 +1034,24 @@ color: #000;
 }
 
 
+.trade_status input[type="button"]{
+	cursor:pointer;
+}
 
 
+.content_area{
+	
+	width: 100%;
+	height: 500px;
+	text-align: center;
+	display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content_area{
+	font-size: 20px;
+	
+}
 
 

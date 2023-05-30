@@ -123,19 +123,12 @@
 <!-- 마이페이지 조회 -->
 	<select id="selectSellItemList" resultType="hashmap">
 		SELECT 	
-			i.*
-			, w.wish_code
-			, im.image_name
+			i.*,
+			w.wish_code
 		FROM
 			item i
 		LEFT JOIN
-				wish w
-			ON 
-				i.item_code = w.wish_item_code
-		LEFT JOIN
-				images im
-			ON
-				i.item_code = im.table_code 
+			wish w ON i.item_code = w.wish_item_code
 		WHERE
 			i.member_id = #{member_id}
 	</select>

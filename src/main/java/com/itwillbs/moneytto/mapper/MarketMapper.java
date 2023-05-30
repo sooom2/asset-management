@@ -1,4 +1,4 @@
-package com.itwillbs.moneytto.mapper;
+ package com.itwillbs.moneytto.mapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -56,15 +56,45 @@ public interface MarketMapper {
 	int updateStatus(@Param("item_status") String item_status,@Param("item_code") String item_code);
 
 	// 아이템코드 알아내기
-	HashMap<String, String> item_code(String room_code);
+	HashMap<String, String> item_code(int room_code);
 
 	// 아이템 상세
 	HashMap<String, String> marketItem(String item_code);
 
 	
+	// 거래내역업데이트
+	int insertMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("oppenentId") String oppenentId);
 	
+	// 거래내역 삭제
+	int delMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("oppenentId") String oppenentId);
 
+	//업데이트 가능한지
+	int isUpdate(String item_detail);
+
+	HashMap<String, Integer> itemDetail(String item_code);
+
+	int updateItem(HashMap<String, String> item);
+
+	HashMap<String, String> selectBuyItem(@Param("member_id")String id, @Param("item_code")String item_code);
+	// 리뷰 추가 05.28
+	int insertReview(HashMap<String, String> review);
+
+	int updateReview(HashMap<String, String> review);
 	
+	// 다음방번호찾기
+	int nextRoomCode();
+
+	//채팅방 생성
+	int insertChatRoom(@Param("roomCode") String roomCode,@Param("itemCode") String itemCode,@Param("messages") String messages);
+
+	//판매자아이디 찾기
+	HashMap<String, String> sellId(String item_code);
+	
+	// 마지막 룸코드
+	int lastRoomCode();
+
+	// 채팅내용 insert
+	int insertChatMessages(@Param("room_code") String room_code, @Param("sellId") String sellId, @Param("buyId") String buyId, @Param("messages") String messages, @Param("myId") String myId);
 
 
 }

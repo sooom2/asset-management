@@ -40,7 +40,24 @@ public class MarketService {
 		return mapper.marketItem(item_code);
 	}
 
+	public int updateItem(HashMap<String, String> item) {
+		return mapper.updateItem(item);
+	}
 
+	public HashMap<String, String> getBuyItem(String id, String item_code) {
+
+		return mapper.selectBuyItem(id, item_code);
+	}
+
+	public int writeReview(HashMap<String, String> review) {
+		
+		return mapper.insertReview(review);
+	}
+
+	public int modifyReview(HashMap<String, String> review) {
+		
+		return mapper.updateReview(review);
+	}
 	
 	
 }

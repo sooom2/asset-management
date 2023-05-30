@@ -265,13 +265,15 @@
 }
 
 .itemWrapper .wishWishIcon {
-    position: absolute;
-    z-index: 1;
+    /* position: absolute; */
+    /* z-index: 1; */
     width: 28px;
     height: 25px;
-    right: 7px;
-    bottom: 7px;
+    /* right: 7px; */
+    /* bottom: 7px; */
     cursor: pointer;
+    margin-top: -43px;
+    margin-left: 4px;
 }
 
 .itemWrapper .itemCategory {
@@ -658,13 +660,12 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     margin-left: 10px;
     letter-spacing: -0.2px;
     font-weight: 700;
-    font-size: 0.938rem;
+    font-size: 0.937rem;
     font-family: "Pretendard Variable";
     line-height: 134%;
     color: rgb(255, 255, 255);
     text-align: center !important;
 }
-
 button {
     border: none;
     background: none;
@@ -673,3 +674,10 @@ button {
     padding: 0;
 }
 
+.itemWrapper .itemTextBox{
+
+    display: inline-block;
+    width: 240px;
+    height: 200px;
+    
+}

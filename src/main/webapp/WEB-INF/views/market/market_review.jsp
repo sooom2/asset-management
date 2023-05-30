@@ -19,7 +19,7 @@
 }
 body{
 	margin: 0;
-    background: #fcfae7;
+    background: #fffffa;;
 }
 
 .star-rating {
@@ -103,43 +103,6 @@ h2{
 
 </style>
 </head>
-<script type="text/javascript">
-	$(function() {
-		$(".star-rating label").on("click", function() {
-			// 선택된 별점 값을 가져옵니다.
-			var ratingValue = $(this).prev('input').val();
-
-			// 이전에 추가된 이모지를 제거합니다.
-			$(".selected-emoji").remove();
-
-			// 선택된 별점 값에 따라 이모지를 추가합니다.
-			var emoji = '';
-			switch (ratingValue) {
-				case '5':
-					emoji = '😍';
-					break;
-				case '4':
-					emoji = '🤩';
-					break;
-				case '3':
-					emoji = '🤔';
-					break;
-				case '2':
-					emoji = '😑';
-					break;
-				case '1':
-					emoji = '&#128545';
-					break;
-				default:
-					emoji="";
-					break;
-			}
-
-			// 이모지를 추가합니다.
-			$(".star-rating").after('<span class="selected-emoji">' + emoji + '</span>');
-		});
-	});
-</script>
 </head>
 <script type="text/javascript">
 	$(function() {
@@ -176,12 +139,26 @@ h2{
 			// 이모지를 추가합니다.
 			$(".star-rating").after('<span class="selected-emoji">' + emoji + '</span>');
 		});
+		
+		
+		$("form").submit(function(){
+			
+			if($("review_type") == 'update'){
+				
+				if(confirm("이미 등록된 리뷰가 있습니다. 수정 하시겠습니까?")){
+							
+				}
+				history.back();	
+				
+			}
+		})
+		
 	});
 </script>
 
 <body>
 	<div class="con">
-		<div class="review">
+		<form class="review" action="reviewRegist" method="POST">
 		  	<div class="star-rating">
 				<input type="radio" id="5-stars" name="rating" value="5" />
 				<label for="5-stars" class="star">&#9733;</label>
@@ -194,13 +171,16 @@ h2{
 				<input type="radio" id="1-star" name="rating" value="1" />
 				<label for="1-star" class="star">&#9733;</label>
 			</div>
-			<h2>후 기 작 성</h2>
+			<h2>거래는 어떠셨나요?</h2>
 			<div class="review_area">
-				<textarea rows="3" cols="2" class="textArea"></textarea>
-<!-- 				<input type="text" class="textArea" placeholder="후기를 작성해 주세요"> -->
-				<input type="button" class="reviewBtn" value="등록">
+				<textarea rows="3" cols="2" class="textArea" name="review_content"></textarea>
+				<input type="hidden" name="item_code"value="${item.item_code }">
+				<input type="hidden" name="target_id"value="${item.sell_id }">
+				<input type="hidden" name="reviewer_id"value="${item.buy_id }">
+				<input type="hidden" name="review_type"value="${review_type }">
+				<input type="submit" class="reviewBtn" value="등록">
 			</div>
-		</div>
+		</form>
 	</div>
 </body>
 </html>

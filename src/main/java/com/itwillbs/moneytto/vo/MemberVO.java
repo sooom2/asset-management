@@ -1,4 +1,3 @@
-
 package com.itwillbs.moneytto.vo;
 
 import org.springframework.stereotype.Component;
