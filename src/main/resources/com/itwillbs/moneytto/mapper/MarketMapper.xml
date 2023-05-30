@@ -319,12 +319,18 @@
 				member m
 			ON
 				i.member_id = m.member_id
-			LEFT JOIN 
-				images im
-			ON
-				i.item_code = im.table_code
+			LEFT JOIN (
+				    SELECT *
+				    FROM (
+				        SELECT *,
+				ROW_NUMBER() OVER (PARTITION BY table_code ORDER BY image_code) AS row_num
+				        FROM images
+				    ) subquery
+				    WHERE row_num = 1
+				) im ON i.item_code = im.table_code
 			WHERE
 				1 = 1 
+				AND i.item_code = 
 			<if test = 'item_category != null and !item_category.equals("") '>
 				AND	i.item_category REGEXP replace(#{item_category}, '/', '|')
 			</if>
@@ -340,7 +346,7 @@
 						(SELECT member_location
 						 FROM 	member
 						 WHERE 	member_id = #{member_id})
-						 , member_location) BETWEEN 1 AND 100000
+						 , member_location) <![CDATA[<]]> 100000
 			</if>
 		   <choose>
 		      <when test='sort.equals("lowPrice")'>
@@ -355,7 +361,8 @@
 		      <otherwise>
 	      		ORDER BY	i.item_code DESC
 		   	  </otherwise> 
-		   </choose> 
+		   </choose>
+		   		, im.image_code  
 	</select>
 	
 	 
