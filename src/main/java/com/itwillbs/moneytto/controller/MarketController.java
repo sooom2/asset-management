@@ -196,7 +196,6 @@ public class MarketController {
 			}
 			
 			
-			
 		} else {
 			// market_paid 에서 삭제되야함
 			int delMarketPaid = marketChatService.deltMarketPaid(item_detail,oppenentId.get("oppenent_id"));
