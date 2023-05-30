@@ -174,13 +174,17 @@ public class MarketController {
 			}
 			
 			
-			
 		} else {
 			// market_paid 에서 삭제되야함
 			int delMarketPaid = marketChatService.deltMarketPaid(item_detail,oppenentId.get("oppenent_id"));
 		}
 	}
 	
+	
+	
+	
+	// ajax로 옮긴방에서 채팅을 또하면 파라미터에딸린데로 채팅됨 수정해야함
+	// 
 	@CrossOrigin
 	@GetMapping(value = "marketChat")
 	public String marketChat(Model model,HttpServletResponse response,HttpSession session,@RequestParam(defaultValue = "") String item_code) {
