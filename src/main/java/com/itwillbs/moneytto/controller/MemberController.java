@@ -91,6 +91,7 @@ public class MemberController {
 		    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 		    if (passwordEncoder.matches(member_pw, hashedPassword)) {
+		    	session.setAttribute("member_image", member.get("member_image"));
 		        session.setAttribute("sId", member.get("member_id"));
 		        session.setAttribute("token", "true");
 		        session.setAttribute("nickname", member.get("member_nickname"));
