@@ -548,4 +548,12 @@
 				)
 	</insert>
 	
+	
+	<select id="selectItemImage" resultType="hashmap">
+		SELECT *
+			FROM 
+				images
+			WHERE 
+				table_code = #{item_code}
+	</select>
 </mapper>
