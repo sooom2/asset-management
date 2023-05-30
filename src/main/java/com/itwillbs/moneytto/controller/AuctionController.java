@@ -1,5 +1,7 @@
 package com.itwillbs.moneytto.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,6 +54,14 @@ public class AuctionController {
 		model.addAttribute("deposit", deposit);
 		model.addAttribute("askingPrice", askingPrice);
 		model.addAttribute("purchase", purchase);
+		
+		// 년 월 일
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+		String formatedNow = now.format(formatter);
+		
+		model.addAttribute("formatedNow", formatedNow);
+		model.addAttribute("auction", auction);
 		
 		return "auction/auction";
 	}
