@@ -67,10 +67,21 @@
 				auction_code = #{auction_code}
 	</select>
 	
-	<!-- // 경매 상세 기록 검색 -->
+	<!-- 경매 상세 기록 검색 -->
 	<select id="selectAuctionLog" resultType="hashmap">
 		SELECT *
 			FROM chat_messages
 <!-- 			WHERE id = #{id} -->
 	</select>
+	
+	<!-- 경매 기록 방 저장 -->
+	<insert id="insertAuctionRoom">
+		INSERT
+			INTO chat_rooms(
+				null
+				, #{auction_code}
+				, "???"
+				, now()
+			)
+	</insert>
 </mapper>

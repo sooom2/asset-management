@@ -50,10 +50,16 @@ public class AuctionController {
 		 * 그럼 여기서는 방을 먼저 검색하네
 		 * 방 검색 옥션코드
 		 * */
+		// 이부분 셀렉트랑 인설트랑 같이 할 방법 없나?
+		// 셀렉하고 없으면 바로 만들고 있으면 검색된 값 가져오고 ???
+		// 경매기록 방 검색
 		HashMap<String, String> auctionRoom = service.selectAuctionRoom(auction_code);
-//		if() {
-//			
-//		}
+		if(auctionRoom == null) { // 경매기록 방이 없을 경우
+			// 경매 기록 방 저장
+			auctionRoom = service.insertAuctionRoom(auction_code);
+		} else if(auctionRoom.get("auction_code").equals(auction_code)) { // 경매 방 있는 경우
+			
+		}
 		
 		// 경매 기록(채팅 상세 내용) 검색
 		// 방번호,아이템코드, id 다 넘겨야 하나? 그렇구만
