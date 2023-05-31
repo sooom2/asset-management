@@ -58,7 +58,6 @@
     object-fit: cover;
     cursor: -webkit-url('https:-webkit-//ccimage.hellomarket.com/img/web/common/ico_zoom.png'),auto;
     cursor: -moz-url('https:-moz-//ccimage.hellomarket.com/img/web/common/ico_zoom.png'),auto;
-    cursor: url('https://ccimage.hellomarket.com/img/web/common/ico_zoom.png'),auto;
 }
 
 .SellStateImgWrapper {

@@ -64,7 +64,7 @@ function toggleLike(element) {
 							<div class="swiper-wrapper">
 								<div class="swiper-slide">
 									<div class="swiper-wrapper">
-										<img src="http://c3d2212t3.itwillbs.com/images/${marketItem}" class="MainImgItemImg">
+										<img src="http://c3d2212t3.itwillbs.com/images/${itemImage[0].image_name}" class="MainImgItemImg">
 									</div>
 								</div>
 							</div>
@@ -77,9 +77,7 @@ function toggleLike(element) {
 								<div class="swiper-wrapper">
 									<div class="swiper-slide">
 										<c:forEach var="itemImage" items="${itemImage}">
-											<img
-											src="http://c3d2212t3.itwillbs.com/images/${itemImage.image_name}"
-											alt="preview" class="PreviewImgListItemImg">
+											<img src="http://c3d2212t3.itwillbs.com/images/${itemImage.image_name}" alt="preview" class="PreviewImgListItemImg">
 										</c:forEach>
 									</div>
 
@@ -364,7 +362,6 @@ function toggleLike(element) {
 		}
 		
 		
-		
 		// 신고하기
 		$(document).on("click", ".report", function(e) {
 			$(".ReactModalPortal").show();
@@ -408,6 +405,12 @@ function toggleLike(element) {
 			$(".ReactModalPortal").remove();
 		});
 		
+		
+		// 이미지 썸네일
+		$(document).on("click", ".PreviewImgListItemImg", function(e) {
+			var src = $(this).attr("src");
+			$(".MainImgItemImg").attr("src", src);
+		});
 		
 
 	
