@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,22 +24,18 @@ public class MainController {
 	@Autowired
 	private MemberService memberService;
 	
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+	
 	@RequestMapping(value = "main", method = RequestMethod.GET)
 	public String main(Model model,HttpSession session) {
-		List newsList = mainService.getNewsInfo();
 		
-		String id = (String)session.getAttribute("sId");
+		// 파라미터 없이 LIMIT 10만 넣어서 대충 만들어둔 상태
+		List<HashMap<String,String>> itemList = mainService.getMainItemList();
 		
-		String nickname = null;
+		model.addAttribute("itemList", itemList);
 		
-		if (id != null) {
-		    HashMap<String, String> member = memberService.getMember(id);
-		    nickname = member.get("member_nickname");
-		}
+		logger.info("itemList : " + itemList.toString());
 		
-		
-		model.addAttribute("nickname",nickname);
-		model.addAttribute("newsList", newsList);
 		
 		return "main";
 	}

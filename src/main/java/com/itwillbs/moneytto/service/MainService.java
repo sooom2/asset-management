@@ -1,21 +1,28 @@
 package com.itwillbs.moneytto.service;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.itwillbs.moneytto.mapper.MarketMapper;
+
 @Service
 public class MainService {
-
+	
+	@Autowired
+	private MarketMapper mapper;
+	
 	public List getNewsInfo() {
-		
+		// 안쓰는데 API 쓸때 참고용으로 남겨둠
 		 URI uri = UriComponentsBuilder.fromUriString("https://openapi.naver.com/")
 			        .path("v1/search/news.json")
 			        .queryParam("query", "아이돌")
@@ -38,6 +45,11 @@ public class MainService {
 	    // 사용되는 객체 : title, link, description, pubDate
 	    
 		return jsonArray.toList();
+	}
+
+	public List<HashMap<String, String>> getMainItemList() {
+		
+		return mapper.selectItemList();
 	}
 	
 }

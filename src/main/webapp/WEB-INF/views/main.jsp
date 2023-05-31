@@ -134,150 +134,28 @@
 					</div>
 				</div>
 				<div class="itemWrapper">
+				
 					<!-- 상품 하나 -->
+					<c:forEach var="item" items="${itemList }">
 					<div class="item">
 						<div class="itemThumbnailBox">
-							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
+							<!-- 이건좀 아닌거같은데.. -->
+							<img src="http://c3d2212t3.itwillbs.com/images/${item.image_name }" alt="썸네일" class="itemThumbnail">
 								<div class="wishWrapper">
 									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 								</div>
 						</div>
 						<div class="itemTextBox">
-							<div class="itemBrand">와이드앵글</div>
-							<div class="itemText">20,000원</div>
-							<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
+							<div class="itemBrand">${item.item_category }</div>
+							<div class="itemText">${item.item_price }0원</div>
+							<div class="itemText">${item.item_subject }</div>
 							<div class="itemTagBox">
-								<div class="itemSizeTag">S</div>
+								<div class="itemSizeTag">${item.tag }</div>
 							</div>
-							<div class="itemTimeTag">방금 전</div>
+							<div class="itemTimeTag">${item.item_status }</div>
 						</div>
 					</div>
-					
-					<div class="item">
-						<div class="itemThumbnailBox">
-							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-								<div class="wishWrapper">
-									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-								</div>
-						</div>
-						<div class="itemTextBox">
-							<div class="itemBrand">와이드앵글</div>
-							<div class="itemText">20,000원</div>
-							<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
-							<div class="itemTagBox">
-								<div class="itemSizeTag">S</div>
-							</div>
-							<div class="itemTimeTag">방금 전</div>
-						</div>
-					</div>
-					
-					<div class="item">
-						<div class="itemThumbnailBox">
-							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-								<div class="wishWrapper">
-									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-								</div>
-						</div>
-						<div class="itemTextBox">
-							<div class="itemBrand">와이드앵글</div>
-							<div class="itemText">20,000원</div>
-							<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
-							<div class="itemTagBox">
-								<div class="itemSizeTag">S</div>
-							</div>
-							<div class="itemTimeTag">방금 전</div>
-						</div>
-					</div>
-					
-					<div class="item">
-						<div class="itemThumbnailBox">
-							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-								<div class="wishWrapper">
-									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-								</div>
-						</div>
-						<div class="itemTextBox">
-							<div class="itemBrand">와이드앵글</div>
-							<div class="itemText">20,000원</div>
-							<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
-							<div class="itemTagBox">
-								<div class="itemSizeTag">S</div>
-							</div>
-							<div class="itemTimeTag">방금 전</div>
-						</div>
-					</div>
-					
-					<div class="item">
-						<div class="itemThumbnailBox">
-							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-								<div class="wishWrapper">
-									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-								</div>
-						</div>
-						<div class="itemTextBox">
-							<div class="itemBrand">와이드앵글</div>
-							<div class="itemText">20,000원</div>
-							<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
-							<div class="itemTagBox">
-								<div class="itemSizeTag">S</div>
-							</div>
-							<div class="itemTimeTag">방금 전</div>
-						</div>
-					</div>
-					
-					<div class="item">
-						<div class="itemThumbnailBox">
-							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-								<div class="wishWrapper">
-									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-								</div>
-						</div>
-						<div class="itemTextBox">
-							<div class="itemBrand">와이드앵글</div>
-							<div class="itemPrice">20,000원</div>
-							<div class="itemName">[64]와이드앵글 골프치마 골프스커트</div>
-							<div class="itemTagBox">
-								<div class="itemSizeTag">S</div>
-							</div>
-							<div class="itemTimeTag">방금 전</div>
-						</div>
-					</div>
-					
-					<div class="item">
-						<div class="itemThumbnailBox">
-							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-								<div class="wishWrapper">
-									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-								</div>
-						</div>
-						<div class="itemTextBox">
-							<div class="itemBrand">와이드앵글</div>
-							<div class="itemText">20,000원</div>
-							<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
-							<div class="itemTagBox">
-								<div class="itemSizeTag">S</div>
-							</div>
-							<div class="itemTimeTag">방금 전</div>
-						</div>
-					</div>
-					
-					<div class="item">
-						<div class="itemThumbnailBox">
-							<img src="${path }/resources/images/main/noThumbnail.jpg" alt="썸네일" class="itemThumbnail">
-								<div class="wishWrapper">
-									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
-								</div>
-						</div>
-						<div class="itemTextBox">
-							<div class="itemBrand">와이드앵글</div>
-							<div class="itemText">20,000원</div>
-							<div class="itemText">[64]와이드앵글 골프치마 골프스커트</div>
-							<div class="itemTagBox">
-								<div class="itemSizeTag">S</div>
-							</div>
-							<div class="itemTimeTag">방금 전</div>
-						</div>
-					</div>
+					</c:forEach>
 				</div>
 			
 				<a href="challange">
