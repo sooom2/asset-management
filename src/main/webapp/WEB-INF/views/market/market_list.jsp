@@ -253,6 +253,7 @@
 						var itemDate = date;
 						var formattedDate = moment(itemDate).format("YYYY-MM-DD HH:mm");
 						
+						
 						if(image == null) {
 							image = "${path }/resources/images/main/noThumbnail.jpg";
 						} else {
@@ -343,9 +344,10 @@
 			$(document).on("click", ".tagListRemove", function(e) {
 				$(this).parent().remove();
 			});
-			$(document).on("click", ".tagListResetImg", function(e) {
-				$(".tagListTag").remove();
+			$(document).on("click", ".tagListReset", function(e) {
+				location.reload();	
 			});
+			
 			
 			
 			// 가격 설정

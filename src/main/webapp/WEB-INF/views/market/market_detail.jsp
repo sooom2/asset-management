@@ -137,7 +137,23 @@ function toggleLike(element) {
 						<img
 							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_share.png"
 							alt="공유하기" class="TopNavigationIcon">
+						<!-- 공유하기 -->
+						<div class="Share__Wrapper-sc-1nwaldt-0 gXuuDJ" style="display: none;">
+							<div class="Share__IconBox-sc-1nwaldt-4 exALGq">
+								<img
+									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_kakao.png"
+									alt="카카오톡 아이콘" class="Share__Icon-sc-1nwaldt-5 dvejot">
+								<div class="Share__IconText-sc-1nwaldt-6 fBVupx">카카오톡</div>
+							</div>
+							<div class="Share__IconBox-sc-1nwaldt-4 bzuDcA">
+								<img
+									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_link_x2.png"
+									alt="링크 아이콘" class="Share__Icon-sc-1nwaldt-5 cVlCCb">
+								<div class="Share__IconText-sc-1nwaldt-6 fBVupx">링크복사</div>
+							</div>
+						</div>
 					</div>
+					
 					<div class="TitleWrapper">
 						<div class="TitleText1">${marketItem.item_subject}</div>
 						<div class="TitleText2">${marketItem.item_price}원</div>
@@ -337,6 +353,13 @@ function toggleLike(element) {
 				</div>
 			</div>
 		</div>
+		
+		
+		
+		
+		
+
+
 
 	</div>
 	
@@ -419,8 +442,12 @@ function toggleLike(element) {
 			$(".MainImgItemImg").attr("src", src);
 		});
 		
-
 	
+		// 공유하기
+		$(document).on("click", ".TopNavigationIcon", function(e) {
+// 			gXuuDJ
+			
+		});
 	});
 
 </script>
