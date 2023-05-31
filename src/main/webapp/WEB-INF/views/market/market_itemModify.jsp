@@ -56,17 +56,24 @@ document.addEventListener('DOMContentLoaded',function() {
 			deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
 			deleteIcon.alt = '상품 썸네일 제거 아이콘';
 
+// 			// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
+// 			deleteIcon.addEventListener('click', function() {
+// 			  var imageContainer = this.closest('li');
+// 			  imageContainer.parentNode.removeChild(imageContainer);
+// 			  updateImageCount();
+// 			});
+			
 			// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
-			deleteIcon
-					.addEventListener(
-							'click',
-							function() {
-								var imageContainer = this
-										.closest('li');
-								imageList
-										.removeChild(imageContainer);
-								updateImageCount();
-							});
+			imageList.addEventListener('click', function(event) {
+			  if (event.target.classList.contains('img_delete_icon')) {
+			    var imageContainer = event.target.closest('li');
+			    imageContainer.parentNode.removeChild(imageContainer);
+			    updateImageCount();
+			  }
+			});
+
+
+
 
 			var imageBox = document.createElement('div');
 			imageBox.classList.add('up_img_box');
@@ -376,6 +383,17 @@ fileInput.addEventListener('change', handleFileSelect, false);
 										<ul class="image_list">
 										
 											<!-- 이미지 미리보기 영역 -->
+											<c:forEach items="${images}" var="image">
+												<li>
+													<div class="up_img_box">
+														<img class="item_img" src="http://c3d2212t3.itwillbs.com/images/${image.image_name}"
+															alt="${image.image_name}"> <img
+															class="img_delete_icon"
+															src="https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png"
+															alt="상품 썸네일 제거 아이콘">
+													</div>
+												</li>
+											</c:forEach>
 										</ul>
 										<div class="UploadGuideBox">
 											<div class="MiddleDotTextWrapper">
