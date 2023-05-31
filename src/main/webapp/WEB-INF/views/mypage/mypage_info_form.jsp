@@ -26,7 +26,14 @@ window.onload = function(){
     });
     swal("비밀번호 변경하기를 원하시는 경우\n 비밀번호 확인란에 새 비밀번호를 입력해주세요.");
 
+    $('input[type="file"]').change(function(){
+    	var file = $(this)[0].files[0]
+    	$(".previewImg").attr('src', URL.createObjectURL(file))
+    })
+    
+	
 }
+
 
 </script>
 </head>
@@ -43,7 +50,7 @@ window.onload = function(){
 						<div class="wrap-inside">
 							<div class="profile_edit_image">
 								<label class="profile_edit_image_box" id="upFile">
-									<img src="https://ccimage.hellomarket.com/img/web/common/empty_profile.svg" alt="머니또의 프로필 이미지">
+									<img src="${member.member_image }" alt="프로필 이미지" class="previewImg">
 									<img src="https://ccimage.hellomarket.com/img/web/member/edit_camera.svg" alt="프로필 사진 등록 이미지">
 									<input type="file" class="pf_img" name="file" id="upFile" accept="image/jpeg, image/png">
 								</label>

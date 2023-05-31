@@ -252,26 +252,18 @@
 						str += '<div class="itemText">';
 						str += price + '원';
 						str += '</div>';
+						str += '<div class="itemTagBox">';
 						
-						if(tag.length >= 2) {
-							for(var i = 0; i < tag.length; i++) {
-								str += '<div class="itemTagBox">';
-								str += '<div class="itemSizeTag">';
-								str += tag[i];
-								str += '</div>';
-							}
-						} else {
-							str += '<div class="itemTagBox">';
+						for(var i = 0; i < tag.length; i++) {
+							
 							str += '<div class="itemSizeTag">';
-							str += tag;
+							str += tag[i];
 							str += '</div>';
 						}
-						
-						str += '</div>';
 						str += '</div>';
 						str += '<div class="itemTimeTag">';
 						str += date;
-						str += '</div>';
+						str += '</div></div>';
 						
 						$(".itemWrapper").append(str);
 						
