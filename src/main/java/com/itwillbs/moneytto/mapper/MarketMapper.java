@@ -38,6 +38,7 @@ public interface MarketMapper {
 
 	// 마켓 메인 아이템 리스트	//05.27 id 추가
 	List<HashMap<String, String>> marketItemList(@Param("item_category") String item_category, 
+			@Param("item_tag") String item_tag, 
 			@Param("item_status") String item_status, 
 			@Param("item_price_min") String item_price_min,
 			@Param("item_price_max") String item_price_max, 

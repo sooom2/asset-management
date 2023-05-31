@@ -58,7 +58,6 @@
     object-fit: cover;
     cursor: -webkit-url('https:-webkit-//ccimage.hellomarket.com/img/web/common/ico_zoom.png'),auto;
     cursor: -moz-url('https:-moz-//ccimage.hellomarket.com/img/web/common/ico_zoom.png'),auto;
-    cursor: url('https://ccimage.hellomarket.com/img/web/common/ico_zoom.png'),auto;
 }
 
 .SellStateImgWrapper {
@@ -966,17 +965,66 @@
 }
 
 
+.trade_status input[type="button"] {
+    padding: 4px 7px;
+    border-radius: 6px;
+    border: none;
+}
+
+.trade_status .active {
+    background: #bb2649;
+    color: #fff!important;
+    border: 1px solid #b6b6b6;
+}
+
+.trade_status input[type="button"] {
+    cursor: pointer;
+}
 
 
+/* 공유하기 css */
+.gXuuDJ {
+    position: absolute;
+    z-index: 3;
+    bottom: 650px;
+    right: -1px;
+    width: 33px;
+    padding: 15px 18px;
+    background: rgb(255, 255, 255);
+    border-radius: 10px;
+    border: 1px solid rgb(25, 31, 40);
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 14px;
+    height: 60px;
+}
 
+.exALGq {
+    display: inline;
+}
 
+.dvejot {
+    width: 32px;
+    height: 32px;
+    margin-right: 18.67px;
+    cursor: pointer;
+    margin-left: 0px !important;
+    margin-top: -3px;
+}
 
+.fBVupx {
+    display: none;
+}
 
+.bzuDcA {
+    display: inline;
+}
 
+.cVlCCb {
+    width: 32px;
+    height: 32px;
+    margin-right: 0px;
+    cursor: pointer;
+    margin-left: 0px !important;
+    margin-top: 5px;
+}
 
-
-
-
-
-
-
+/* 공유하기 css end*/

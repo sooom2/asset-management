@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="ko">
@@ -9,6 +10,7 @@
 <link href="resources/css/swiper.min.css" rel="stylesheet" />
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.4.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/moment.js"></script>
 <script type="text/javascript">
 
 $(function() {
@@ -64,7 +66,7 @@ function toggleLike(element) {
 							<div class="swiper-wrapper">
 								<div class="swiper-slide">
 									<div class="swiper-wrapper">
-										<img src="http://c3d2212t3.itwillbs.com/images/${marketItem}" class="MainImgItemImg">
+										<img src="http://c3d2212t3.itwillbs.com/images/${itemImage[0].image_name}" class="MainImgItemImg">
 									</div>
 								</div>
 							</div>
@@ -77,9 +79,7 @@ function toggleLike(element) {
 								<div class="swiper-wrapper">
 									<div class="swiper-slide">
 										<c:forEach var="itemImage" items="${itemImage}">
-											<img
-											src="http://c3d2212t3.itwillbs.com/images/${itemImage.image_name}"
-											alt="preview" class="PreviewImgListItemImg">
+											<img src="http://c3d2212t3.itwillbs.com/images/${itemImage.image_name}" alt="preview" class="PreviewImgListItemImg">
 										</c:forEach>
 									</div>
 
@@ -129,7 +129,7 @@ function toggleLike(element) {
 				<!--오른쪽섹션 -->
 				<div id="rightSection"
 					class="rightSectionWrapper">
-					<div class="trade_status"><input type="button" value="판매중" class="active" > <input type="button" value="거래중"> <input type="button" value="거래완료"></div>
+					<div class="trade_status"><input type="button" value="${marketItem.item_status }" class="active" ></div>
 					<div class="TopNavigationWrapper">
 						<img
 							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_report.png"
@@ -137,7 +137,23 @@ function toggleLike(element) {
 						<img
 							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_share.png"
 							alt="공유하기" class="TopNavigationIcon">
+						<!-- 공유하기 -->
+						<div class="Share__Wrapper-sc-1nwaldt-0 gXuuDJ" style="display: none;">
+							<div class="Share__IconBox-sc-1nwaldt-4 exALGq">
+								<img
+									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_kakao.png"
+									alt="카카오톡 아이콘" class="Share__Icon-sc-1nwaldt-5 dvejot">
+								<div class="Share__IconText-sc-1nwaldt-6 fBVupx">카카오톡</div>
+							</div>
+							<div class="Share__IconBox-sc-1nwaldt-4 bzuDcA">
+								<img
+									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_link_x2.png"
+									alt="링크 아이콘" class="Share__Icon-sc-1nwaldt-5 cVlCCb">
+								<div class="Share__IconText-sc-1nwaldt-6 fBVupx">링크복사</div>
+							</div>
+						</div>
 					</div>
+					
 					<div class="TitleWrapper">
 						<div class="TitleText1">${marketItem.item_subject}</div>
 						<div class="TitleText2">${marketItem.item_price}원</div>
@@ -337,12 +353,24 @@ function toggleLike(element) {
 				</div>
 			</div>
 		</div>
+		
+		
+		
+		
+		
+
+
 
 	</div>
 	
 <script type="text/javascript">
 
 	$(function () {
+		 var itemDate = "${marketItem.item_date}";
+		 var formattedDate = moment(itemDate).format("YYYY-MM-DD HH:mm");
+		 $(".SubTitleDetailText").text(formattedDate);
+		 console.log(formattedDate);
+		
 		
 		function report() {
 			var id = "<%=(String)session.getAttribute("sId")%>";
@@ -362,7 +390,6 @@ function toggleLike(element) {
 	 		});
 			
 		}
-		
 		
 		
 		// 신고하기
@@ -409,8 +436,18 @@ function toggleLike(element) {
 		});
 		
 		
-
+		// 이미지 썸네일
+		$(document).on("click", ".PreviewImgListItemImg", function(e) {
+			var src = $(this).attr("src");
+			$(".MainImgItemImg").attr("src", src);
+		});
+		
 	
+		// 공유하기
+		$(document).on("click", ".TopNavigationIcon", function(e) {
+// 			gXuuDJ
+			
+		});
 	});
 
 </script>
