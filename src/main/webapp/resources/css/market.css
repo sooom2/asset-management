@@ -575,8 +575,9 @@
 
 .searchSearch .tag {
     height: 22px;
-    margin-top: -12px;
-    width: 174px !important;
+    margin-top: -50px !important;
+    margin-left: 26px !important;
+    width: 155px !important;
 }
 
 
@@ -681,3 +682,6 @@ button {
     height: 200px;
     
 }
+
+
+

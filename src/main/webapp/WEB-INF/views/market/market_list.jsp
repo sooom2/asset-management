@@ -43,22 +43,32 @@
 	          	 	<div class="FilterBoxWrapper FilterCategory">
 	           	 		<div class="FilterBoxTopic" >
 	           	 			<div class="FilterBoxName">#카테고리</div>
-	           	 			<div class="FilterBoxCount">#</div>
+<!-- 	           	 			<div class="FilterBoxCount">#</div> -->
 	           	 		</div>
 	           	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
 	          	 	</div>
 	          	 	<div class="FilterBoxWrapper FilterPrice">
 	           	 		<div class="FilterBoxTopic">
 	           	 			<div class="FilterBoxName">#가격</div>
-	           	 			<div class="FilterBoxCount">#</div>
+<!-- 	           	 			<div class="FilterBoxCount">#</div> -->
 	           	 		</div>
            	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
 	          	 	</div>
 					<!-- 등급 -->
-			        <label for="grade" style="cursor: pointer;"><input type="checkbox" value="checked" id="grade"/>새싹등급 이상 판매자</label>
+					<div class="FilterBoxWrapper FilterGrade">
+	           	 		<div class="FilterBoxTopic">
+	           	 			<div class="FilterBoxName"><label for="grade"><input type="checkbox" value="checked" id="grade"/>새싹 등급 이상 판매자</label></div>
+	           	 		</div>
+	          	 	</div>
+<!-- 			        <label for="grade" style="cursor: pointer;"><input type="checkbox" value="checked" id="grade"/>새싹등급 이상 판매자</label> -->
 			          	 
 			        <!-- 거래완료 제외하고 보기 -->
-			        <label for="complete" style="cursor: pointer;"><input type="checkbox" value="checked" id="complete" checked="checked"/>거래완료물품제외</label>
+			        <div class="FilterBoxWrapper FilterCompleted">
+	           	 		<div class="FilterBoxTopic">
+	           	 			<div class="FilterBoxName"><label for="complete"><input type="checkbox" value="checked" id="complete" checked="checked"/>거래 완료 물품 제외</label></div>
+	           	 		</div>
+	          	 	</div>
+<!-- 			        <label for="complete" style="cursor: pointer;"><input type="checkbox" value="checked" id="complete" checked="checked"/>거래완료물품제외</label> -->
 			        
 			        	
 	                <div class="searchIconWrapper marketListSearch">
