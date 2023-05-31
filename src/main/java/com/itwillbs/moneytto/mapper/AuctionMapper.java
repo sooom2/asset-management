@@ -16,7 +16,11 @@ public interface AuctionMapper {
 	// 소켓 사용한 경매 기록 저장
 	int insertAuctionLog(@Param("id") String id, @Param("messages") String messages);
 
-	// 경매 기록 검색
-	HashMap<String, String> selectAuctionLog(String id);
+	// 경매 기록 방
+	HashMap<String, String> selectAuctionRoom(String auction_code);
+
+	// 경매 상세 기록 검색
+	List<HashMap<String, String>> selectAuctionLog(String id);
+
 
 }

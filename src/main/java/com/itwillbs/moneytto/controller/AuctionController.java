@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +42,22 @@ public class AuctionController {
 		// 여기서 채팅방 or 내용 검색해서 기록이 있으면 그 기록을 화면에 보여줄꺼
 		// 여기서 넘길수 있는게 auction_code 고 
 		String id = (String)session.getAttribute("sId");
-		HashMap<String, String> auctionLog = service.selectAuctionLog(id);
+		
+		/*
+		 * 경매 참가를 하면 기록이 저장되는 방이 생성되어 있는지 확인하고 
+		 * 방이 없으면 새로운 방 생성할꺼고,
+		 * 방이 있으면 기존의 방을 검색하여 저장된 값을 가져올꺼다 
+		 * 그럼 여기서는 방을 먼저 검색하네
+		 * 방 검색 옥션코드
+		 * */
+		HashMap<String, String> auctionRoom = service.selectAuctionRoom(auction_code);
+//		if() {
+//			
+//		}
+		
+		// 경매 기록(채팅 상세 내용) 검색
+		// 방번호,아이템코드, id 다 넘겨야 하나? 그렇구만
+		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(id);
 		
 //		if() { // 경매 페이지로 들어갈 때 이 아이템에 대한 경매기록이 있는지 확인해야하고 경매 기록이 없을 경우 밑에 코드 사용
 //			채팅방에는 방번호, 아이템 번호, chat_content 이렇게 있고

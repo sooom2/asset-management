@@ -61,7 +61,6 @@ public class AuctionLogSocketHandler extends TextWebSocketHandler {
         		sess.sendMessage(new TextMessage(id + ":" + name + ":" + messages));
         	}
 		} 
-		
 	}
 	
 	

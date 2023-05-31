@@ -183,7 +183,9 @@ function connect() {
 	ws.onclose = function (event) { console.log('Info: connection closed'); };
 	ws.onerror = function (event) { console.log('Info: connection closed'); };
 }
-// ==========================================================
+// ======경매 참가하기 버튼====================================================
+
+//  밑에서 쓰고 DB에서 조회한 값이 있으면 보여주고 아니면 화면 바뀌지 않음 display hidden 하면 개발자 도구에 다 나옴	
 $(document).ready(function() {
 	$(".btnHidden").click(function(){
 // 		location.href = "deposit";
@@ -218,10 +220,10 @@ $(document).ready(function() {
 							6. 현재 페이지를 나가면 기록이 사라집니다(새로고침)
 							</p>
 							<hr>
-							<div class="con_tit">${auction.get("auction_item_name") }</div>
+							<div class="con_tit">${auction.auction_item_name }</div>
 							<div class="con_detail">
 								<!-- 상품이미지 -->
-								<div class="contentImage" style="background-image:url('http://c3d2212t3.itwillbs.com/images/${auction.get('image_name')}')"></div><br>
+								<div class="contentImage" style="background-image:url('http://c3d2212t3.itwillbs.com/images/${auction.image_name}')"></div><br>
 								<!-- 상품정보 -->
 								<div>
 									<div>
@@ -229,10 +231,10 @@ $(document).ready(function() {
 										<div class="con_price">상세정보 창 열기</div>
 									</div>
 									<span>경매날짜</span>
-									<div class="con_period">${auction.get('auction_start_date') }</div>
+									<div class="con_period">${auction.auction_start_date }</div>
 									<div>
 										<span>시작가</span>
-										<div class="con_price">${auction.get('auction_present_price') }원</div>
+										<div class="con_price">${auction.auction_present_price }원</div>
 									</div>
 								</div>
 								<hr>
@@ -249,7 +251,7 @@ $(document).ready(function() {
 						<div class="auction_price"><span>${auction.auction_present_price }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
 						<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
 						<div class="auction_id">
-						<span>추누공주님</span>
+						<span>님</span>
 						</div>
 					</div>
 					<div class="auction_realStatus">
@@ -263,11 +265,13 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<div class="auction_input">
+					
+<!-- =================================================================================================== -->
 		<!-- 여기는 버튼 하나 생성해서 가리고 있다가 보증금 내면 바뀌게 -->
 						<div class="bid_right">
-<!-- 							<input type="button" value="경매참가" class="btnHidden"> -->
 							<input type="button" class="btnHidden" value="경매참가하기" id="btnHidden">
 						</div>
+		<!-- 여기까지 -->
 						
 						<div class="hidden" id="hidden">
 							<div class="auction_input_title">입찰입찰입찰 제목좀바꿔죠</div>

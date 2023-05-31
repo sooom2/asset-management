@@ -58,10 +58,19 @@
 				)
 	</insert>
 	
-	<!-- 경매 기록 검색 -->
-	<select id="selectAuctionLog" resultType="hashmap">
+	<!-- 경매 기록 방 -->
+	<select id="selectAuctionRoom" resultType="hashmap">
 		SELECT *
 			FROM chat_rooms
-			WHERE id = #{id}
+			<!-- 조건 만족 안하는걸 어떻게 하지? -->
+			WHERE 
+				auction_code = #{auction_code}
+	</select>
+	
+	<!-- // 경매 상세 기록 검색 -->
+	<select id="selectAuctionLog" resultType="hashmap">
+		SELECT *
+			FROM chat_messages
+<!-- 			WHERE id = #{id} -->
 	</select>
 </mapper>
