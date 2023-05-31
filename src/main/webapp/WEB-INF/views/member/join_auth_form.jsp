@@ -16,19 +16,25 @@
 Kakao.init('bf0c05681627cc5d65f40192f843de1b'); 
 Kakao.isInitialized(); 
 function kakaoLogin() {
+	
     Kakao.Auth.login({
       success: function (response) {
-        Kakao.API.request({
-          url: '/v2/user/me',
-          success: function (response) {
-		       	var accessToken = Kakao.Auth.getAccessToken();
-		       	Kakao.Auth.setAccessToken(accessToken);
-		       	var account = response.kakao_account;
-		       	console.log(account)
-				$('#form-kakao-login input[name=email]').val(account.email);
-				$('#form-kakao-login input[name=accessToken]').val(accessToken);
-				// 사용자 정보가 포함된 폼을 서버로 제출.
-				document.querySelector('#form-kakao-login').submit();
+    	  
+	        Kakao.API.request({
+	          url: '/v2/user/me',
+	          success: function (response) {
+	        	  
+			       	var accessToken = Kakao.Auth.getAccessToken();
+			       	
+			       	Kakao.Auth.setAccessToken(accessToken);
+			       	
+			       	var account = response.kakao_account;
+			       	
+			       	console.log(account)
+					$('#form-kakao-login input[name=email]').val(account.email);
+					$('#form-kakao-login input[name=accessToken]').val(accessToken);
+					// 사용자 정보가 포함된 폼을 서버로 제출.
+					document.querySelector('#form-kakao-login').submit();
         	  
           },
           fail: function (error) {
@@ -42,8 +48,7 @@ function kakaoLogin() {
     })
   }
 function naverLogin(){
-	let naverloginpop = window.open("about:blank","authWindow","width=500, height=700");
-	naverloginpop.location = "https://nid.naver.com/oauth2.0/authorize"
+	location.href = "https://nid.naver.com/oauth2.0/authorize"
 	+"?response_type=code"
 	+"&client_id=mV2ILHR9EiZ5mjCPt4vg"
 	+"&redirect_uri=http://localhost:8080/moneytto/naverLogin"

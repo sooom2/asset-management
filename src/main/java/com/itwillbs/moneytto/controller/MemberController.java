@@ -106,9 +106,11 @@ public class MemberController {
 	// ******************************************************************
 	//네이버 로그인 확인
 	@RequestMapping(value = "naverLogin", method = {RequestMethod.GET, RequestMethod.POST})
-	public String naver(@RequestParam HashMap<String, String> naver) {
+	public String naver(@RequestParam HashMap<String, String> authResponse) {
+		 //{code=3HMEvZRJNVlJr4pbpw, state=63fbad94-92d6-45b2-9eb3-b879e454a289}
+//		HashMap<String, String> responseToken = memberService.requestToken(authResponse);
 		
-		System.out.println(naver);
+//		System.out.println("authResponse : " + authResponse);
 		return "member/mem_join_form";
 	}
 	

@@ -46,9 +46,7 @@ public class MemberService {
 	    JSONArray jsonArray;
 		try {
 			jsonArray = new JSONObject(resp.getBody()).getJSONArray("documents");
-		// 05.27 x, y 좌표를 바로 member_location에 넣도록 수정되었음
-//			coord.put("member_X", jsonArray.getJSONObject(0).getString("x"));
-//		    coord.put("member_Y", jsonArray.getJSONObject(0).getString("y"));
+			
 		    member_location = jsonArray.getJSONObject(0).getString("x") + ", " + jsonArray.getJSONObject(0).getString("y");
 		} catch (JSONException e) {
 			System.out.println("MemberService - setCoord null");
@@ -81,11 +79,6 @@ public class MemberService {
 		
 		return mapper.renewPw(member);
 	}
-//
-//	public int insertPoint(String id) {
-//		return mapper.insertPoint(id);
-//	}
-//	
 	// SMS 인증
 	public void certifiedPhoneNumber(String phone, int randomNumber) {
 		String api_key = "NCSQU2TAT8POKQ76";
@@ -120,15 +113,6 @@ public class MemberService {
 			return mapper.phoneCheck(member);
 	}
 	
-//	//회원 이름검색
-//	public int getMemberListCount(String searchKeyword) {
-//		return mapper.selectMemberListCount(searchKeyword);
-//	}
-
-//	//회원수
-//	public int selectMemCount() {
-//		return mapper.memberCount();
-//	}
 	// 회원 정보 수정
 	public int updateMember(HashMap<String, String> member) {
 		
@@ -172,6 +156,11 @@ public class MemberService {
 	public List<HashMap<String, String>> getWishItem(String id, String item_code) {
 		
 		return mapper.selectWish(id, item_code);
+	}
+
+	public HashMap<String, String> requestToken(HashMap<String, String> authResponse) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
