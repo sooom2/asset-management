@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <link href="${path }/resources/css/market.css" rel="stylesheet">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.4.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/moment.js"></script>
 <title>Insert title here</title>
 </head>
   <body>
@@ -249,6 +250,9 @@
 						let image = item.image_name;
 						let count = item.total_count;
 						
+						var itemDate = date;
+						var formattedDate = moment(itemDate).format("YYYY-MM-DD HH:mm");
+						
 						if(image == null) {
 							image = "${path }/resources/images/main/noThumbnail.jpg";
 						} else {
@@ -284,7 +288,7 @@
 						}
 						str += '</div>';
 						str += '<div class="itemTimeTag">';
-						str += date;
+						str += formattedDate;
 						str += '</div></div>';
 						
 						$(".itemWrapper").append(str);

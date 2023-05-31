@@ -965,6 +965,22 @@
 }
 
 
+.trade_status input[type="button"] {
+    padding: 4px 7px;
+    border-radius: 6px;
+    border: none;
+}
+
+.trade_status .active {
+    background: #bb2649;
+    color: #fff!important;
+    border: 1px solid #b6b6b6;
+}
+
+.trade_status input[type="button"] {
+    cursor: pointer;
+}
+
 
 
 
