@@ -60,7 +60,6 @@
 	           	 			<div class="FilterBoxName"><label for="grade"><input type="checkbox" value="checked" id="grade"/>새싹 등급 이상 판매자</label></div>
 	           	 		</div>
 	          	 	</div>
-<!-- 			        <label for="grade" style="cursor: pointer;"><input type="checkbox" value="checked" id="grade"/>새싹등급 이상 판매자</label> -->
 			          	 
 			        <!-- 거래완료 제외하고 보기 -->
 			        <div class="FilterBoxWrapper FilterCompleted">
@@ -68,7 +67,6 @@
 	           	 			<div class="FilterBoxName"><label for="complete"><input type="checkbox" value="checked" id="complete" checked="checked"/>거래 완료 물품 제외</label></div>
 	           	 		</div>
 	          	 	</div>
-<!-- 			        <label for="complete" style="cursor: pointer;"><input type="checkbox" value="checked" id="complete" checked="checked"/>거래완료물품제외</label> -->
 			        
 			        	
 	                <div class="searchIconWrapper marketListSearch">
