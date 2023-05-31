@@ -117,10 +117,10 @@
 	
 	<!-- 내채팅목록 -->
 	<select id="myChatList" resultType="hashmap">
-		SELECT b.room_code, chat_code, chat_content, member_nickname,chat_time,b.item_subject,chat_openDate,item_status
+		SELECT b.room_code, chat_code, chat_content, member_nickname,chat_time,b.item_subject,chat_openDate,item_status,item_code
          FROM (
              SELECT room_code, chat_code, chat_content, member_nickname,
-                    ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate,item_status
+                    ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate,item_status, item_code
              FROM (
                  SELECT market_chat_rooms.room_code,
                         chat_code,
@@ -129,7 +129,8 @@
                         chat_time,
                         item.item_subject ,
                         market_chat_rooms.chat_openDate,
-                        item.item_status 
+                        item.item_status ,
+                        item.item_code
            	   		FROM   market_chat_messages
 	                      JOIN member
 	                             ON member.member_id = market_chat_messages.sell_member_id
@@ -146,7 +147,8 @@
 	                    chat_time,
 	                    item.item_subject,
 	                    market_chat_rooms.chat_openDate,
-	                     item.item_status 
+	                    item.item_status ,
+	                    item.item_code
 	             	FROM   market_chat_messages
 		                    JOIN member
 		                           ON member.member_id = market_chat_messages.buy_member_id
