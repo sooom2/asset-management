@@ -7,8 +7,10 @@
 <head>
 <link href="${path }/resources/css/market_detail.css" rel="stylesheet">
 <link href="resources/css/swiper.min.css" rel="stylesheet" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.4.js"></script>
+
 <style type="text/css">
 .MainImgItemImg {
 	width: 80%;
@@ -54,6 +56,37 @@
 <script type="text/javascript">
 
 $(function() {
+	
+	$("#auctionEnroll").on("click", function() {
+		event.preventDefault()
+		 swal({
+			    title: "경매에 참여 하시겠습니까?",
+			    text: "1. 낙찰 후 경매 포기 시 보증금은 되돌려 받을 수 없습니다.\n2. 유찰 시 보증금은 즉시 되돌려 받습니다.",
+			    icon: "success",
+			    buttons: {
+			      confirm: {
+			        text: "참여",
+			        value: true,
+			        visible: true,
+			        className: "",
+			        closeModal: true,
+			      },
+			      cancel: {
+			        text: "취소",
+			        value: false,
+			        visible: true,
+			        className: "",
+			        closeModal: true,
+			      },
+			    },
+			  }).then((confirmResult) => {
+			    if (confirmResult) {
+			    	location.href="auctionEnroll?auction_code=${auction.get('auction_code')}";
+			    }
+		  	});
+		
+		
+	});// onclick
 	
 	
 });
@@ -141,7 +174,7 @@ $(function() {
 					</div>
 					<div class="itemControllerWrapper">
 						<div class="SomeonesItemWrapper">
-							<div width="90%" class="SomeonesModifyButton"data-cd="${marketItem.item_code }">
+							<div width="90%" id="auctionEnroll" class="SomeonesModifyButton"data-cd="${marketItem.item_code }">
 								<div color="#FFFFFF" class="SomeonesItemText">경매 참여</div>
 							</div>
 						</div>

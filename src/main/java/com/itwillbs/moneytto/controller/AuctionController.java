@@ -99,6 +99,25 @@ public class AuctionController {
 		return "auction/auctionDeposit";
 	};
 	
+	@RequestMapping(value="auctionEnroll", method = RequestMethod.GET)
+	public String auctionEnroll(@RequestParam String auction_code, HttpSession session, Model model) {
+		String id = (String)session.getAttribute("sId");
+//		int insertCount = service.insertEnroll(auction_code, id);
+//		INSERT 
+//			INTO point
+//			VALUES (
+//			(SELECT *
+//			  FROM (SELECT IFNULL(MAX(point_code),0) FROM point) A)+1
+//			,#{member_id}
+//			,'회원가입 축하 이벤트'
+//		,'1000'
+//		,now()
+//			);
+		
+		
+		return "";
+	};
+	
 	
 	
 	// 0524 test 여기서==========================
