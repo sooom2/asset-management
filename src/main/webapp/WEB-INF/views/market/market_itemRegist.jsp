@@ -12,127 +12,95 @@
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',function() {
-	var maxImageCount = 5; // 최대 이미지 개수 설정
-	var fileInput = document
-			.querySelector('input[type="file"]');
-	var imageList = document.querySelector('.image_list');
-	var countImg = document
-			.querySelector('.count_img span');
-	var defaultImage = document.querySelector('.default');
-	var draggedItem = null;
+$(document).ready(function() {
+	  var maxImageCount = 5;
+	  var fileInput = $('input[type="file"]');
+	  var imageList = $('.image_list');
+	  var countImg = $('.count_img span');
+	  var defaultImage = $('.default');
+	  var draggedItem = null;
 
-	function handleFileSelect(event) {
-		var files = event.target.files;
+	  function handleFileSelect(event) {
+	    var files = event.target.files;
 
-		// 이미지 개수가 최대 개수를 초과하는 경우 파일 선택을 제한
-		if (files.length + imageList.children.length > maxImageCount) {
-			alert('최대 ' + maxImageCount
-					+ '장의 사진만 업로드할 수 있습니다.');
-			fileInput.value = '';
-			return;
-		}
+	    if (files.length + imageList.children().length > maxImageCount) {
+	      alert('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
+	      fileInput.val('');
+	      return;
+	    }
 
-		// 선택한 파일들의 미리보기를 생성하여 추가
-		for (var i = 0; i < files.length; i++) {
-			var file = files[i];
+	    for (var i = 0; i < files.length; i++) {
+	      var file = files[i];
 
-			// 이미지 개수가 최대 개수에 도달한 경우 파일 선택을 제한
-			if (imageList.children.length >= maxImageCount) {
-				alert('최대 ' + maxImageCount
-						+ '장의 사진만 업로드할 수 있습니다.');
-				fileInput.value = '';
-				return;
-			}
+	      if (imageList.children().length >= maxImageCount) {
+	        alert('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
+	        fileInput.val('');
+	        return;
+	      }
 
-			var previewContainer = document
-					.createElement('li');
-			var img = document.createElement('img');
-			img.classList.add('item_img');
-			img.src = URL.createObjectURL(file);
+	      var previewContainer = $('<li>');
+	      var img = $('<img>').addClass('item_img').attr('src', URL.createObjectURL(file));
 
-			var deleteIcon = document.createElement('img');
-			deleteIcon.classList.add('img_delete_icon');
-			deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
-			deleteIcon.alt = '상품 썸네일 제거 아이콘';
+	      var deleteIcon = $('<img>').addClass('img_delete_icon').attr('src', 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png').attr('alt', '상품 썸네일 제거 아이콘');
 
-			// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
-			deleteIcon
-					.addEventListener(
-							'click',
-							function() {
-								var imageContainer = this
-										.closest('li');
-								imageList
-										.removeChild(imageContainer);
-								updateImageCount();
-							});
+	      deleteIcon.on('click', function() {
+	        var imageContainer = $(this).closest('li');
+	        imageContainer.remove();
+	        updateImageCount();
+	      });
 
-			var imageBox = document.createElement('div');
-			imageBox.classList.add('up_img_box');
-			imageBox.appendChild(deleteIcon);
-			imageBox.appendChild(img);
+	      var imageBox = $('<div>').addClass('up_img_box');
+	      imageBox.append(deleteIcon).append(img);
 
-			previewContainer.appendChild(imageBox);
-			imageList.appendChild(previewContainer);
+	      previewContainer.append(imageBox);
+	      imageList.append(previewContainer);
 
-			updateImageCount();
-		}
-	}
+	      updateImageCount();
+	    }
+	  }
 
-	function updateImageCount() {
-		countImg.textContent = imageList.children.length;
-	}
+	  function updateImageCount() {
+	    countImg.text(imageList.children().length);
+	  }
 
-	// default 버튼 클릭 시 파일 입력 필드를 클릭하여 파일 선택 창을 열도록 설정
-	defaultImage.addEventListener('click', function() {
-		fileInput.click();
+	  defaultImage.on('click', function() {
+	    fileInput.click();
+	  });
+
+	  fileInput.on('change', handleFileSelect);
+
+	  imageList.on('dragstart', 'li', function(event) {
+	    draggedItem = $(this);
+	    event.originalEvent.dataTransfer.setData('text/plain', '');
+	  });
+
+	  imageList.on('dragover', function(event) {
+	    event.preventDefault();
+	  });
+
+	  imageList.on('drop', function(event) {
+	    event.preventDefault();
+	    var droppedItem = $(event.target).closest('li');
+
+	    if (draggedItem && imageList.has(draggedItem) && droppedItem && imageList.has(droppedItem)) {
+	      var draggedIndex = imageList.children().index(draggedItem);
+	      var droppedIndex = imageList.children().index(droppedItem);
+
+	      if (draggedIndex !== droppedIndex) {
+	        if (draggedIndex < droppedIndex) {
+	          droppedItem.before(draggedItem);
+	        } else {
+	          droppedItem.after(draggedItem);
+	        }
+
+	        updateImageCount();
+	      }
+	    }
+
+	    draggedItem = null;
+	  });
 	});
 
-	fileInput.addEventListener('change', handleFileSelect,
-			false);
-
-	// 드래그 앤 드롭 이벤트 처리
-	imageList.addEventListener('dragstart',
-			function(event) {
-				draggedItem = event.target.closest('li');
-			});
-
-	imageList.addEventListener('dragover', function(event) {
-		event.preventDefault();
-	});
-
-	imageList.addEventListener('drop', function(event) {
-		event.preventDefault();
-		var droppedItem = event.target.closest('li');
-
-		if (draggedItem && imageList.contains(draggedItem)
-				&& droppedItem
-				&& imageList.contains(droppedItem)) {
-			var draggedIndex = Array.from(
-					imageList.children)
-					.indexOf(draggedItem);
-			var droppedIndex = Array.from(
-					imageList.children)
-					.indexOf(droppedItem);
-
-			if (draggedIndex !== droppedIndex) {
-				// 드래그된 이미지를 드롭된 위치로 이동
-				if (draggedIndex < droppedIndex) {
-					imageList.insertBefore(droppedItem,
-							draggedItem);
-				} else {
-					imageList.insertBefore(draggedItem,
-							droppedItem);
-				}
-
-				updateImageCount();
-			}
-		}
-
-		draggedItem = null;
-	});
-});
 
 	//태그기능 
 document.addEventListener('DOMContentLoaded', function() {
@@ -211,18 +179,18 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 });
 
-//파일 인풋 
+// //파일 인풋 
 
-var fileInput = document.querySelector('input[type="file"]');
+// var fileInput = document.querySelector('input[type="file"]');
 
-function handleFileSelect(event) {
-	var files = event.target.files;
+// function handleFileSelect(event) {
+// 	var files = event.target.files;
 
-	// 파일 선택된 후에 처리할 로직 작성
-	// 파일 객체(files)를 활용하여 원하는 동작 수행
-}
+// 	// 파일 선택된 후에 처리할 로직 작성
+// 	// 파일 객체(files)를 활용하여 원하는 동작 수행
+// }
 
-fileInput.addEventListener('change', handleFileSelect, false);
+// fileInput.addEventListener('change', handleFileSelect, false);
 </script>
 
 

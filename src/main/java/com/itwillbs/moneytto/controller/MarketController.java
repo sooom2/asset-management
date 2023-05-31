@@ -614,7 +614,8 @@ public class MarketController {
 		// 아이템 상세
 		HashMap<String, String> marketItem = service.getMarketItem(item_code);
 		model.addAttribute("marketItem", marketItem);
-		
+		List<HashMap<String, String>> images = service.getItemImage(item_code);
+		model.addAttribute("images", images);
 		
 		return "market/market_itemModify";
 	}
