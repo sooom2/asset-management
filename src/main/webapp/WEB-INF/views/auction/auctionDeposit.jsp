@@ -22,6 +22,8 @@
 .TitleText2 {
 	text-align: center;
 	margin-top: 10px;
+	border-radius: 10px;
+	background-color: rgb(245, 249, 254);
 }
 .SomeonesModifyButton {
     margin: auto;
@@ -36,6 +38,7 @@
     font-size: 24px;
     margin: auto;
     text-align: center;
+    color: #268BFF;
 }
 .bOvaxU {
 	margin: auto;
@@ -90,7 +93,7 @@ $(function() {
 							<div class="swiper-container" modules="[object Object]">
 								<div class="swiper-wrapper">
 									<div class="swiper-slide">
-										<div class="TitleWrapper">
+										<div class="TitleWrapper" >
 											<div class="TitleText1">&nbsp;&nbsp;${auction.get('auction_item_name')}</div>
 										</div>
 									</div>
@@ -104,7 +107,7 @@ $(function() {
 							<div class="swiper-container" modules="[object Object]">
 								<div class="swiper-wrapper">
 									<div class="swiper-slide">
-										<div class="TitleWrapper">
+										<div class="TitleWrapper" style="background-color:gainsboro">
 											<div class="TitleText1">&nbsp;&nbsp;즉시 구매가</div>
 											<div class="TitleText1" style="color:#BB2649">&nbsp;&nbsp;${auction.get('auction_immediate_price')}원</div>
 										</div>
@@ -127,7 +130,7 @@ $(function() {
 							alt="공유하기" class="TopNavigationIcon">
 					</div>
 					<div class="TitleWrapper">
-						<div class="TitleText1">경매 입찰 보증금 금액</div>
+						<div class="TitleText1" style="color:#BB2649">경매 입찰 보증금 금액</div>
 						<div class="TitleText2">${deposit}원</div>
 					</div>
 					<div class="SubTitleWrapper">
