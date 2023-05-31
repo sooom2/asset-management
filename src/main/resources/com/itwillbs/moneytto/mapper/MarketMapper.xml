@@ -250,15 +250,16 @@
 
 	<!-- 제일마지막에생성된 방 -->
 	<select id="chatRecentList" resultType="hashmap">
-		SELECT b.room_code, chat_code, chat_content, member_nickname,chat_time,b.item_subject,chat_openDate,item_status
+		SELECT b.room_code, chat_code, chat_content, member_nickname,member_id,chat_time,b.item_subject,chat_openDate,item_status
          FROM (
-             SELECT room_code, chat_code, chat_content, member_nickname,
+             SELECT room_code, chat_code, chat_content, member_nickname,member_id,
                     ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate,item_status
              FROM (
                  SELECT market_chat_rooms.room_code,
                         chat_code,
                         market_chat_rooms.chat_content,
                         member.member_nickname AS member_nickname,
+                        member.member_id,
                         chat_time,
                         item.item_subject ,
                         item.item_status,
@@ -276,6 +277,7 @@
 	                    chat_code,
 	                    market_chat_rooms.chat_content,
 	                    member.member_nickname AS member_nickname,
+	                    member.member_id,
 	                    chat_time,
 	                    item.item_subject,
 	                    item.item_status,

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.socket.WebSocketMessage;
 import org.apache.ibatis.annotations.*;
 
 public interface MarketMapper {
@@ -95,7 +96,7 @@ public interface MarketMapper {
 	int lastRoomCode();
 
 	// 채팅내용 insert
-	int insertChatMessages(@Param("room_code") String room_code, @Param("sellId") String sellId, @Param("buyId") String buyId, @Param("messages") String messages, @Param("myId") String myId);
+	int insertChatMessages(@Param("room_code") String room_code, @Param("sellId") String sellId, @Param("buyId") String buyId, @Param("messages") String message, @Param("myId") String myId);
 
 	// 아이템 이미지
 	List<HashMap<String, String>> selectItemImage(String item_code);
