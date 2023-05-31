@@ -70,6 +70,7 @@ public class MarketController {
 	@GetMapping(value = "marketItemList")
 	public String selectList(Model model, 
 			@RequestParam(defaultValue = "") String item_category, 
+			@RequestParam(defaultValue = "") String item_tag,
 			@RequestParam(defaultValue = "") String item_status, 
 			@RequestParam(defaultValue = "0") String item_price_min, 
 			@RequestParam(defaultValue = "") String item_price_max,
@@ -81,12 +82,13 @@ public class MarketController {
 		System.out.println("item_price_min : " + item_price_min);
 		System.out.println("item_price_max : " + item_price_max);
 		System.out.println("member_grade : " + member_grade);
+		System.out.println("item_tag : " + item_tag);
 		
 		String id = (String)session.getAttribute("sId");
 		
 			// 05.27 getMarketItemList에 id 파라미터 추가
 			// 마켓 메인 아이템 리스트
-			List<HashMap<String, String>> marketItemList = service.getMarketItemList(item_category, item_status, item_price_min, item_price_max, member_grade, sort, id);
+			List<HashMap<String, String>> marketItemList = service.getMarketItemList(item_category, item_tag, item_status, item_price_min, item_price_max, member_grade, sort, id);
 			model.addAttribute("marketItemList", marketItemList);
 			JSONArray ja = new JSONArray(marketItemList);
 			

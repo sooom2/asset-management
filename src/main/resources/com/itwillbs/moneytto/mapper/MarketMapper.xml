@@ -312,7 +312,7 @@
 
 	<!-- 마켓 아이템 리스트 05.27 새로 추가한 부분 -->
 	<select id="marketItemList" resultType="hashmap">
-		SELECT i.*, m.grade_score, im.*
+		SELECT i.*, m.grade_score, im.*, COUNT(*) OVER() AS total_count
 			FROM 
 				item i
 			LEFT JOIN
@@ -332,6 +332,9 @@
 				1 = 1 
 			<if test = 'item_category != null and !item_category.equals("") '>
 				AND	i.item_category REGEXP replace(#{item_category}, '/', '|')
+			</if>
+			<if test = 'item_tag != null and !item_tag.equals("") '>
+				AND	i.item_tag REGEXP #{item_tag}
 			</if>
 			<if test = 'item_status != null and !item_status.equals("") '>
 				AND	i.item_status = #{item_status}
