@@ -330,7 +330,6 @@
 				) im ON i.item_code = im.table_code
 			WHERE
 				1 = 1 
-				AND i.item_code = 
 			<if test = 'item_category != null and !item_category.equals("") '>
 				AND	i.item_category REGEXP replace(#{item_category}, '/', '|')
 			</if>
