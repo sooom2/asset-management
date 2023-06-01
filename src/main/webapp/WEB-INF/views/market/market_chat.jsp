@@ -26,11 +26,6 @@
 
 $(function() {
 	
-	function scrollToBottom() {
-		var chatWrapper = document.getElementById('chatWrapper');
-		chatWrapper.scrollTop = chatWrapper.scrollHeight;
-	}
-	
 	
 	let sId = "${sessionScope.sId}";
 	var room_code = <%= request.getAttribute("room_code") %>;
@@ -51,25 +46,26 @@ $(function() {
     $(".sch_date").click(function() {
         var schBox = $(".sch_box");
 
-        $(".scheduling").datepicker({
-            dateFormat: 'yy-mm-dd',
-            showOtherMonths: true,
-            showMonthAfterYear: true,
-            changeYear: true,
-            changeMonth: true,
-            yearSuffix: "년",
-            monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-            monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-            dayNamesMin: ['일','월','화','수','목','금','토'],
-            dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
-            minDate: "0D",
-            maxDate: "+30D",
-            onSelect: function(dateText, inst) {
-                schBox.val(dateText);
-                // datepicker 창 숨기기 왜안숨겨지냐 선택한 
-                $(".scheduling").datepicker("hide"); // 현재 선택한 datepicker를 닫음
-            }
+
+        $(".sch_box").datepicker({
+        	dateFormat: 'yy-mm-dd',
+        	showOtherMonths: true,
+        	showMonthAfterYear: true,
+        	changeYear: true,
+        	changeMonth: true,
+        	yearSuffix: "년",
+        	monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+        	monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+        	dayNamesMin: ['일','월','화','수','목','금','토'],
+        	dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+        	minDate: "0D",
+        	maxDate: "+30D"
         });
+
+        $(".sch_date").click(function() {
+        	$(".sch_box").datepicker("show")
+        });
+
     });
     
     //왼쪽 list 눌렸을때
@@ -250,117 +246,157 @@ $(function() {
 <script type="text/javascript">
 
 
-// 채팅보내기
-	
-	
-$(function() {
-	let item_code = $(".item_code").val();
-	let room_code = "${room_code}";
-	console.log(item_code);
-	function chatSend() {
-		const data = {
-				"room_code" :  room_code,
-                "name" : "${ sessionScope.sId }",
-                "item_code" : item_code,
-                "message"   : $('#message').val()
-            };
-        let jsonData = JSON.stringify(data);
-		socket.send(jsonData);
-	};
 
-// 	버튼 누름 전송
-	$('#btnSend').on("click", function(evt) {
-		chatSend();
-		evt.preventDefault();
-	});
-// 	엔터 누름 전송
-	$("#message").on("keydown",function(key){
-        if(key.keyCode == 13) {
-            chatSend();
+
+
+// 채팅 시간
+let today = new Date();
+let h = today.getHours();
+let m = today.getMinutes();
+
+let amPm = h < 12 ? "오전" : "오후";
+let hours = h < 13 ? h : h - 12; // 시
+let minutes = m < 10 ? "0" + m : m; // 분
+
+console.log(today);
+
+var ws = null;
+var socket = null;
+
+// function connect() {
+
+$(function() {
+
+    ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
+    socket = ws;
+    
+    let item_code = $(".item_code").val();
+    let room_code = "${room_code}";
+    let target = "${oppenentId.oppenent_id}";
+// 	let target2 = "${oppenent_id}";    
+//     alert(target2);
+    function chatSend() {
+        const data = {
+            "room_code": room_code,
+            "name": "${ sessionScope.sId }",
+            "item_code": item_code,
+            "message": $('#message').val(),
+            "target": target
+        };
+        let jsonData = JSON.stringify(data);
+        socket.send(jsonData);
+    };
+
+    $('#btnSend').off("click").on("click", function(evt) {
+        chatSend();
+        evt.preventDefault();
+        $('#message').val('');
+    });
+
+    $("#message").off("keydown").on("keydown", function(key) {
+        if (key.keyCode == 13) {
+        	chatSend();
+        	$('#message').val('');
         }
     });
-	connect();
+
+
+    ws.onopen = function() {
+        console.log('연결완료');
+        console.log("방번호 : " + room_code + "아이템코드 :" + item_code + "target : " + target);
+        const data = {
+            "room_code": room_code,
+            "item_code": item_code,
+            "name": "${ sessionScope.sId }",
+            "message": "${sessionScope.sId} " + "님접속",
+            "target": target
+        };
+        let jsonData = JSON.stringify(data);
+        socket.send(jsonData);
+
+    };
+
+
+
+
+    $(".card_box li").on("click", function() {
+
+        ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
+        socket = ws;
+
+        room_code = $(this).find('.room_code').val();
+        item_code = $(this).find('.item_code').val();
+
+        //처음입장할때
+        ws.onopen = function() {
+            console.log('연결완료');
+            console.log("방번호 : " + room_code + "아이템코드 :" + item_code + "target : " + target);
+            const data = {
+                "room_code": room_code,
+                "item_code": item_code,
+                "name": "${ sessionScope.sId }",
+                "message": "${sessionScope.sId} " + "님접속",
+                "target": target
+            };
+            let jsonData = JSON.stringify(data);
+            socket.send(jsonData);
+
+        };
+
+        // 메세지 수신
+        ws.onmessage = function(msg) {
+            var data = msg.data;
+            var sessionId = null; //데이터를 보낸 사람
+            var message = null;
+
+            var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
+            sessionId = data.split(":")[0];
+            message = data.split(":")[1];
+
+            if (sessionId == cur_session) {
+
+                var str = "<div class='chat_myself'>";
+                str += "<div class='chat_myself_box'>";
+                str += "<div class='chat_myself_message'>";
+                str += "<span>" + message + "</span>";
+                str += "<div class='chat_myself_timeago'>" + amPm + " " + hours + ":" + minutes + "</div></div></div></div>";
+                $(".chat_wrapper").append(str);
+
+
+            } else {
+
+                var str = " <div class='chat_opponent'><div class='chat_opponent_box'><div class='chat_opponent_image_box'>";
+                str += "<img class='chat_opponent_profile_image' src='https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png' alt='상대방이미지'> </div>";
+                str += "<div class='chat_opponent_title'>" + sessionId + "</div>";
+                str += "<div class='chat_opponent_message'>";
+                str += "<span>" + message + "</span>";
+                str += "<div class='chat_opponent_timeago'>" + amPm + " " + hours + ":" + minutes + " </div></div></div></div>";
+
+                $(".chat_wrapper").append(str);
+            };
+
+
+        };
+
+        ws.onclose = function(event) {
+            console.log('연결종료');
+        };
+        ws.onerror = function(event) {
+            console.log('연결에러');
+        };
+
+
+
+
+    });
+
+
 });
-
-
-	// 채팅 시간
-	let today = new Date();
-	let h = today.getHours();
-	let m = today.getMinutes();
-
-	let amPm = h < 12 ? "오전" : "오후";
-	let hours = h < 13 ? h : h - 12; // 시
-	let minutes = m < 10 ? "0" + m : m;  // 분
-
-	console.log(today);
-	
-	
-	var socket = null;
-	function connect() {
-		
-		let room_code = "${room_code}";
-		let item_code = $(".item_code").val();
-		var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
-		socket = ws;
-	
-		ws.onopen = function() {
-			console.log('연결완료');
-			console.log("방번호 : "+room_code+"아이템코드 :"+item_code);
-			const data = {
-					"room_code" :  room_code,
-					"item_code" : item_code,
-	                "name" : "${ sessionScope.sId }",
-	                "message"   : "ENTER"
-	            };
-	        let jsonData = JSON.stringify(data);
-			socket.send(jsonData);
-		
-		};
-	
-		// 메세지 수신
-		ws.onmessage = function (msg) {
-			var data = msg.data;
-			var sessionId = null; //데이터를 보낸 사람
-			var message = null;
-		
-			var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
-			sessionId = data.split(":")[0];
-			message = data.split(":")[1];
-			
-			if(sessionId == cur_session) {
-				
-				var str = "<div class='chat_myself'>";
-				str += "<div class='chat_myself_box'>";
-				str += "<div class='chat_myself_message'>";
-				str += "<span>" + message + "</span>";
-				str += "<div class='chat_myself_timeago'>" + amPm + " " + hours + ":" + minutes + "</div></div></div></div>";
-				$(".chat_wrapper").append(str);
-				
-				
-			} else {
-				
-				var str = " <div class='chat_opponent'><div class='chat_opponent_box'><div class='chat_opponent_image_box'>";
-				str += "<img class='chat_opponent_profile_image' src='https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png' alt='상대방이미지'> </div>";
-				str += "<div class='chat_opponent_title'>" + sessionId + "</div>";
-				str += "<div class='chat_opponent_message'>";
-				str += "<span>" + message + "</span>";
-				str += "<div class='chat_opponent_timeago'>" + amPm + " " + hours + ":" + minutes + " </div></div></div></div>";
-			
-				$(".chat_wrapper").append(str);
-			};
-	               
-	                
-		};
-	
-		ws.onclose = function (event) { console.log('연결종료'); };
-		ws.onerror = function (event) { console.log('연결에러'); };
-	}
 
 </script>
 </head>
 <body>
 <jsp:include page="../nav.jsp" />
-<input class="item_code" type="hidden" value="${param.item_code }">
 	<!-- 대화내역이있을때 -->
 	<c:if test="${not empty myChatList }">
 	<section class="content">
@@ -387,9 +423,10 @@ $(function() {
 									<div class="subject"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.get('item_subject') }</div>
 									<div class="description">${chatList.get('chat_content') }</div>
 									<!-- 날짜처리 제대로해야함 -->
-<%-- 									<fmt:parseDate var="formattedDate" value="${chatList.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" /> --%>
-<%-- 									<div class="time_ago"><fmt:formatDate value="${formattedDate}" pattern="yyyy-MM-dd a hh:mm" /></div>	 --%>
+									<fmt:parseDate var="formattedDate" value="${chatList.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+									<div class="time_ago"><fmt:formatDate value="${formattedDate}" pattern="yyyy-MM-dd a hh:mm" /></div>	
 									<input type="hidden" value="${chatList.get('room_code')}" class="room_code">
+									<input type="hidden" value="${chatList.get('item_code')}" class="item_code">
 								</div>
 							</li>
 						<div class="etc_dots"></div>
@@ -451,7 +488,7 @@ $(function() {
 						
 						<!-- 나 -->
 							<div class="chat_timeago">
-							<c:if test="${not empty chatList}">
+							<c:if test="${not empty room_code}">
 								<div class="chat_timeago_box">
 									<span class="chat_timeago_text">
 										<fmt:formatDate value="${chatList.chat_openDate }" pattern="yyyy년 MM월 dd일" />

@@ -56,17 +56,24 @@ document.addEventListener('DOMContentLoaded',function() {
 			deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
 			deleteIcon.alt = '상품 썸네일 제거 아이콘';
 
+// 			// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
+// 			deleteIcon.addEventListener('click', function() {
+// 			  var imageContainer = this.closest('li');
+// 			  imageContainer.parentNode.removeChild(imageContainer);
+// 			  updateImageCount();
+// 			});
+			
 			// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
-			deleteIcon
-					.addEventListener(
-							'click',
-							function() {
-								var imageContainer = this
-										.closest('li');
-								imageList
-										.removeChild(imageContainer);
-								updateImageCount();
-							});
+			imageList.addEventListener('click', function(event) {
+			  if (event.target.classList.contains('img_delete_icon')) {
+			    var imageContainer = event.target.closest('li');
+			    imageContainer.parentNode.removeChild(imageContainer);
+			    updateImageCount();
+			  }
+			});
+
+
+
 
 			var imageBox = document.createElement('div');
 			imageBox.classList.add('up_img_box');
@@ -337,25 +344,6 @@ fileInput.addEventListener('change', handleFileSelect, false);
   });
 </script>
 
-<script>
-  // "item_category" 컬럼에서 가져온 카테고리 값
-  const savedCategory = '${marketItem.item_category}';
-
-  // 카테고리 선택하기
-  const categoryList = document.querySelector('.categoryCategoryBox .ListListWrapper');
-  const categories = categoryList.querySelectorAll('.TextTextWrapper');
-  categories.forEach(category => {
-    if (category.textContent === savedCategory) {
-      category.classList.add('selected');
-      // 선택된 카테고리 값을 hidden input에 설정하기
-      const hiddenInput = document.querySelector('.categoryCategoryBox input[name="item_category"]');
-      hiddenInput.value = savedCategory;
-    }
-  });
-</script>
-
-
-
 
 </head>
 <body>
@@ -395,6 +383,17 @@ fileInput.addEventListener('change', handleFileSelect, false);
 										<ul class="image_list">
 										
 											<!-- 이미지 미리보기 영역 -->
+											<c:forEach items="${images}" var="image">
+												<li>
+													<div class="up_img_box">
+														<img class="item_img" src="http://c3d2212t3.itwillbs.com/images/${image.image_name}"
+															alt="${image.image_name}"> <img
+															class="img_delete_icon"
+															src="https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png"
+															alt="상품 썸네일 제거 아이콘">
+													</div>
+												</li>
+											</c:forEach>
 										</ul>
 										<div class="UploadGuideBox">
 											<div class="MiddleDotTextWrapper">
@@ -427,27 +426,26 @@ fileInput.addEventListener('change', handleFileSelect, false);
 								</dd>
 							</dl>
 							<dl id="item_category"
-									class="categoryCategoryWrapper-sc-1qdv6sn-0 cGwZbp">
-									<dt class="TitleTitleWrapper">
-										<label class="Title">카테고리</label>
-										<div class="TitleEssentialMark">*</div>
-									</dt>
-									<dd>
-										<div class="categoryCategoryBox">
-											<div class="ListListWrapper">
-												<div class="TextTextWrapper">패션/의류/잡화/뷰티</div>
-												<div class="TextTextWrapper">가전제품/모바일/PC</div>
-												<div class="TextTextWrapper">가구/인테리어</div>
-												<div class="TextTextWrapper">도서/음반/문구/티켓</div>
-												<div class="TextTextWrapper">게임/스포츠/취미</div>
-												<div class="TextTextWrapper">유아동/반려동물</div>
-												<div class="TextTextWrapper">그외기타</div>
-											</div>
-											<input type="hidden" name="item_category" value="">
+								class="categoryCategoryWrapper-sc-1qdv6sn-0 cGwZbp">
+								<dt class="TitleTitleWrapper">
+									<label class="Title">카테고리</label>
+									<div class="TitleEssentialMark">*</div>
+								</dt>
+								<dd>
+									<div class="categoryCategoryBox">
+										<div class="ListListWrapper">
+											<div class="TextTextWrapper">패션/의류/잡화/뷰티</div>
+											<div class="TextTextWrapper">가전제품/모바일/PC</div>
+											<div class="TextTextWrapper">가구/인테리어</div>
+											<div class="TextTextWrapper">도서/음반/문구/티켓</div>
+											<div class="TextTextWrapper">게임/스포츠/취미</div>
+											<div class="TextTextWrapper">유아동/반려동물</div>
+											<div class="TextTextWrapper">그외기타</div>
 										</div>
-									</dd>
-								</dl>
-								<dl class="sell_method_box">
+										<input type="hidden" name="item_category" value="">
+								</dd>
+							</dl>
+							<dl class="sell_method_box">
 								<dt class="TitleTitleWrapper">
 									<label class="Title">가격 입력</label>
 									<div class="TitleEssentialMark">*</div>

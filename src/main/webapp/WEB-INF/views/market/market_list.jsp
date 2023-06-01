@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <link href="${path }/resources/css/market.css" rel="stylesheet">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.4.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/moment.js"></script>
 <title>Insert title here</title>
 </head>
   <body>
@@ -18,6 +19,7 @@
   <input type="hidden" id="member_grade" name="member_grade" value="">
   <input type="hidden" id="sort" name="sort" value="default">
   <input type="hidden" id="item_code" name="item_code" value="">
+  <input type="hidden" id="tag" name="tag" value="">
   
   <jsp:include page="../nav.jsp" />
         <div id="__next">
@@ -42,27 +44,35 @@
 	          	 	<div class="FilterBoxWrapper FilterCategory">
 	           	 		<div class="FilterBoxTopic" >
 	           	 			<div class="FilterBoxName">#카테고리</div>
-	           	 			<div class="FilterBoxCount">#</div>
+<!-- 	           	 			<div class="FilterBoxCount">#</div> -->
 	           	 		</div>
 	           	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
 	          	 	</div>
 	          	 	<div class="FilterBoxWrapper FilterPrice">
 	           	 		<div class="FilterBoxTopic">
 	           	 			<div class="FilterBoxName">#가격</div>
-	           	 			<div class="FilterBoxCount">#</div>
+<!-- 	           	 			<div class="FilterBoxCount">#</div> -->
 	           	 		</div>
            	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
 	          	 	</div>
 					<!-- 등급 -->
-			        <label for="grade" style="cursor: pointer;"><input type="checkbox" value="checked" id="grade"/>새싹등급 이상 판매자</label>
+					<div class="FilterBoxWrapper FilterGrade">
+	           	 		<div class="FilterBoxTopic">
+	           	 			<div class="FilterBoxName"><label for="grade"><input type="checkbox" value="checked" id="grade"/>새싹 등급 이상 판매자</label></div>
+	           	 		</div>
+	          	 	</div>
 			          	 
 			        <!-- 거래완료 제외하고 보기 -->
-			        <label for="complete" style="cursor: pointer;"><input type="checkbox" value="checked" id="complete" checked="checked"/>거래완료물품제외</label>
+			        <div class="FilterBoxWrapper FilterCompleted">
+	           	 		<div class="FilterBoxTopic">
+	           	 			<div class="FilterBoxName"><label for="complete"><input type="checkbox" value="checked" id="complete" checked="checked"/>거래 완료 물품 제외</label></div>
+	           	 		</div>
+	          	 	</div>
 			        
 			        	
 	                <div class="searchIconWrapper marketListSearch">
 					<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
-					<div class="searchSearch"><form><input class="goodsName tag" type="text" placeholder="태그검색"></form></div>
+					<div class="searchSearch"><form id="searchForm"><input class="goodsName tag" id="searchTag" type="text" placeholder="태그검색"></form></div>
 				 </div>
                </div>
 	         </div>
@@ -77,14 +87,14 @@
 							<div class="categoryDetail" style="display: none;">
 								<div class="category__CategoryBox-sc-187sq7k-1 kGtMUL">
 									<div class="List__Wrapper-rd56hw-0 cmyJpu">
-										<div class="ListNonSelected" id="all" title="전체">전체 (38,390)</div>
-										<div class="ListNonSelected" id="fashion" title="패션/의류/잡화/뷰티">패션/의류/잡화/뷰티 (140)</div>
-										<div class="ListNonSelected" id="pc" title="가전제품/모바일/PC">가전제품/모바일/PC (5,444)</div>
-										<div class="ListNonSelected" id="interior" title="가구/인테리어">가구/인테리어 (192)</div>
-										<div class="ListNonSelected" id="book" title="도서/음반/문구/티켓">도서/음반/문구/티켓 (192)</div>
-										<div class="ListNonSelected" id="game" title="게임/스포츠/취미">게임/스포츠/취미 (192)</div>
-										<div class="ListNonSelected" id="child" title="유아동/반려동물">유아동/반려동물 (192)</div>
-										<div class="ListNonSelected" id="etc" title="기타">기타 (192)</div>
+										<div class="ListNonSelected" id="all" title="전체">전체</div>
+										<div class="ListNonSelected" id="fashion" title="패션/의류/잡화/뷰티">패션/의류/잡화/뷰티</div>
+										<div class="ListNonSelected" id="pc" title="가전제품/모바일/PC">가전제품/모바일/PC</div>
+										<div class="ListNonSelected" id="interior" title="가구/인테리어">가구/인테리어</div>
+										<div class="ListNonSelected" id="book" title="도서/음반/문구/티켓">도서/음반/문구/티켓</div>
+										<div class="ListNonSelected" id="game" title="게임/스포츠/취미">게임/스포츠/취미</div>
+										<div class="ListNonSelected" id="child" title="유아동/반려동물">유아동/반려동물</div>
+										<div class="ListNonSelected" id="etc" title="기타">기타</div>
 									</div>
 								</div>
 							</div>
@@ -123,8 +133,8 @@
 			</div>
 			<div class="searchedListWrapper">
                     <div class="searchedListTopWrapper">
-                        <div class="CountListCount"> 상품 
-                        	<span class="Count">281,414</span>개의 상품이 있습니다.                    
+                        <div class="CountListCount">
+                        	<span class="Count"></span>개의 상품이 있습니다.                    
                         </div>
                         <!--  -->
                         <div class="SortListWrapper">
@@ -184,11 +194,21 @@
 			marketItemList();
 		}
 		
+		
+		// 상세 페이지로 이동
+		function marketDetail() {
+			var item_code = $(this).parent().parent().data("cd");
+			$("#item_code").val(item_code);
+			location.href="market_detail?item_code=" + $("#item_code").val();
+		}
+		
+		
 		// 상품 리스트 불러오기
 		function marketItemList() {
 			$(".itemThumbnailBox").remove();
 
 			var item_category = $("#item_category").val();
+			var item_tag = $("#tag").val();
 			var item_status = $("#item_status").val();
 			var item_price_min = $("#item_price_min").val();
 			var item_price_max = $("#item_price_max").val();
@@ -197,6 +217,7 @@
 			
 			console.log("---var---")
 			console.log(item_category);
+			console.log(item_tag);
 			console.log(item_status);
 			console.log(item_price_min);
 			console.log(item_price_max);
@@ -208,6 +229,7 @@
 	 			url: "marketItemList",
 	 			data: { 
 	 				item_category : item_category,
+	 				item_tag : item_tag, 
 	 				item_status : item_status,
 	 				item_price_min : item_price_min,
 	 				item_price_max : item_price_max,
@@ -226,6 +248,11 @@
 						let date = item.item_date;
 						let code = item.item_code;
 						let image = item.image_name;
+						let count = item.total_count;
+						
+						var itemDate = date;
+						var formattedDate = moment(itemDate).format("YYYY-MM-DD HH:mm");
+						
 						
 						if(image == null) {
 							image = "${path }/resources/images/main/noThumbnail.jpg";
@@ -262,10 +289,11 @@
 						}
 						str += '</div>';
 						str += '<div class="itemTimeTag">';
-						str += date;
+						str += formattedDate;
 						str += '</div></div>';
 						
 						$(".itemWrapper").append(str);
+						$(".Count").empty().append(count);
 						
 	 				}
 	 			},
@@ -316,9 +344,10 @@
 			$(document).on("click", ".tagListRemove", function(e) {
 				$(this).parent().remove();
 			});
-			$(document).on("click", ".tagListResetImg", function(e) {
-				$(".tagListTag").remove();
+			$(document).on("click", ".tagListReset", function(e) {
+				location.reload();	
 			});
+			
 			
 			
 			// 가격 설정
@@ -331,8 +360,9 @@
 				
 				console.log(item_price_min);
 				console.log(item_price_max);
+				
 				// 필터에 추가
-				$(".tagPrice").remove();
+// 				$(".tagPrice").remove();
 				var tagStr = '';
 				tagStr += '<div class="tagPrice">';
 				tagStr += '<div class="tagListTag">';
@@ -343,7 +373,7 @@
 				tagStr += '원';
 				tagStr += '</div>';
 				tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div></div>';
-				$(".tagListFilterBox").append(tagStr);
+				$(".tagListFilterBox").empty().append(tagStr);
 				
 				
 				$("#item_price_min").val(item_price_min);
@@ -406,23 +436,48 @@
 			});
 			
 			
+
+			
+			// 제목 클릭, 이미지 클릭
+			$(document).on("click", ".itemThumbnail, .subject", marketDetail);
 			
 			
-			// 제목 클릭
-			$(document).on("click", ".subject", function(e) {
-				location.href="market_detail";
+			
+			// 검색
+			$(document).on("submit", "#searchForm", function(e) {
+				event.preventDefault(); // 폼 제출 기본 동작 막기
+				var input = $("#searchTag").val();
+				var tag = $("#tag").val();
 				
+				if(tag != ""){
+					tag += "|";
+				}
+				tag += input;
+				
+				$("#tag").val(tag);
+				console.log($("#tag").val());
+				
+				marketItemList();
+				
+				// 필터에 추가
+				var tagStr = '';
+				tagStr += '<div class="tagSearch">';
+				tagStr += '<div class="tagListTag">';
+				tagStr += '<div class="tagListName">';
+				tagStr += input;
+				tagStr += '</div>';
+				tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div></div>';
+				$(".tagListFilterBox").append(tagStr);
+				
+				return false;
 			});
 			
-			
-			// 이미지 클릭
-			$(document).on("click", ".itemThumbnail", function(e) {
-				var item_code = $(this).parent().parent().data("cd");
-				$("#item_code").val(item_code);
-				location.href="market_detail?item_code=" + $("#item_code").val();
-			});
-			
-			
+			$(".searchSearch input").keydown(function(event) {
+	            if(event.which === 13) {
+					event.preventDefault(); // 엔터 키 기본 동작 막기
+					$("#searchForm").submit(); // 폼 제출
+	            }
+	        });
 			
 		});
 	

@@ -548,6 +548,14 @@
 				)
 	</insert>
 	
+	<select id="selectItemImage" resultType="hashmap">
+		SELECT *
+			FROM 
+				images
+			WHERE 
+				table_code = #{item_code}
+	</select>
+	
 	<!-- MainService에서 호출  -->
 	<select id="selectItemList" resultType="hashmap">
 		SELECT 	
@@ -561,5 +569,22 @@
 			i.item_code = im.table_code
 		LIMIT 10
 	</select>
+	
+	<insert id="insertReport">
+		<selectKey keyProperty="report_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(report_code), 0) FROM report
+		</selectKey>
+			INSERT 
+				INTO 
+					report
+				VALUES(
+						  #{report_code} + 1
+						, #{targetId}
+						, #{id}
+						, #{reportType}
+						, #{reportContent}
+						, now()
+				)
+	</insert>
 	
 </mapper>

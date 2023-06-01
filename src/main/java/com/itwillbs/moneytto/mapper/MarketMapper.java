@@ -98,5 +98,10 @@ public interface MarketMapper {
 
 	List<HashMap<String, String>> selectItemList();
 
+	// 아이템 이미지
+	List<HashMap<String, String>> selectItemImage(String item_code);
+
+	// 신고
+	int insertReport(@Param("id") String id, @Param("targetId") String targetId, @Param("reportType") String reportType, @Param("reportContent") String reportContent);
 
 }
