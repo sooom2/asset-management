@@ -564,6 +564,19 @@
 				table_code = #{item_code}
 	</select>
 	
+	<!-- MainService에서 호출  -->
+	<select id="selectItemList" resultType="hashmap">
+		SELECT 	
+			i.*
+			,im.image_name
+		FROM
+			item i
+		LEFT JOIN
+			images im
+		ON	
+			i.item_code = im.table_code
+		LIMIT 10
+	</select>
 	
 	
 	<insert id="insertReport">

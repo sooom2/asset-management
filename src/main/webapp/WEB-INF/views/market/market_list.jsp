@@ -256,9 +256,7 @@
 						
 						if(image == null) {
 							image = "${path }/resources/images/main/noThumbnail.jpg";
-						} else {
-					        image = "http://c3d2212t3.itwillbs.com/images/" + image;
-					    }
+						}
 
 						var str = '<div class="itemThumbnailBox" data-cd="';
 						str += code;
@@ -475,7 +473,7 @@
 			$(".searchSearch input").keydown(function(event) {
 	            if(event.which === 13) {
 					event.preventDefault(); // 엔터 키 기본 동작 막기
-					$("#searchForm").submit(); // 폼 제출
+					$("#searchForm").submit(); // 폼 제출 히히
 	            }
 	        });
 			
