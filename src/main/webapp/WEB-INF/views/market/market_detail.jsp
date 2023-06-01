@@ -445,7 +445,7 @@ function toggleLike(element) {
 	
 		// 공유하기
 		$(document).on("click", ".TopNavigationIcon", function(e) {
-// 			gXuuDJ
+// 			gXuuDJ // ㅎ히히
 			
 		});
 	});

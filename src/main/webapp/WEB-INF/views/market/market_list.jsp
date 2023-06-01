@@ -475,7 +475,7 @@
 			$(".searchSearch input").keydown(function(event) {
 	            if(event.which === 13) {
 					event.preventDefault(); // 엔터 키 기본 동작 막기
-					$("#searchForm").submit(); // 폼 제출
+					$("#searchForm").submit(); // 폼 제출 히히
 	            }
 	        });
 			
