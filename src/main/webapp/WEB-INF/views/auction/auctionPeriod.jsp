@@ -7,9 +7,196 @@
 <head>
 <meta charset="UTF-8">
 <title>머니머니머니또</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
 <link href="${path }/resources/css/auction.css" rel="stylesheet">
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<style type="text/css">
+.contentImage {
+	height: 300px;
+}
+
+.hidden {
+	display: none;
+
+}
+
+.btnHidden {
+	width: 114px;
+	height: 50px;
+	margin: auto;
+	display: block;
+}
+
+</style>
+<script type="text/javascript">
+// $(function(){ 
+// 	$('#btnBid').click(function() { // 즉시구매
+// // 		console.log(" du dd")
+// 	});
+// });
+
+// ==========================================================
+$(document).ready(function() {
+// 	var message = ${price};
+	var message;
+	var nowPrice = ${price};
+	
+	function chatSend() {
+// 		console.log(" 옥션 프라이스 텍스트" + $(".auction_price").text())
+	
+		const data = {
+			"id" : "${ sessionScope.sId }",
+			"name" : "${ sessionScope.nickname }",
+			"message"   : message,
+// 			"auctionCode" :  "${auction.get('auction_code') }"
+// 				if($('#message').val() != null && $('#message').val() != "") {
+// 				$('#message').val()
+// 				}
+		};
+		let jsonData = JSON.stringify(data);
+		socket.send(jsonData);
+		$('#message').val('');
+		
+	};
+	
+// 	// 버튼 누름 전송
+// 	$('#btnAskingPrice').on("click", function(evt) {
+// 		chatSend();
+// 		evt.preventDefault();
+// 	});
+// 	// 버튼 누름 전송
+// 	$('#btnBid').on("click", function(evt) {
+// 		chatSend();
+// 		evt.preventDefault();
+// 	});
+	
+
+	$(".btn").click(function(){
+		
+		
+		//버튼을 눌렀을때 data-price가 없으면	
+		// data-price 없는게 직접 입력 버튼
+		if($(this).attr("data-price") == ""){ // 가격 직접 입력시 
+			// id = message 값을 message에
+			message = $("#message").val();			
+		}else{ // 입찰하기(1%값) 버튼 클릭시 
+// 			message = $(".auction_price").find("span").html();
+			// 누른 값에 해당하는 data-price 속성의 값을 메시지에
+			// 현재 상황 입찰하기 버튼을 눌렀을 때 입찰하기 버튼에 data-price속성이 있어서 그 값을 가져오는것
+			console.log("1번" + message);
+			console.log("1-1번" + typeof message); // number
+// 			if(message == null || message == "") {
+// 				message = (parseInt($(this).attr("data-price"), 10) + ${price }) + ""; // 3300
+// 				console.log("4번" + message + typeof message); // 303000  string
+// 			} else {
+// 				console.log("else도착");
+				message = (parseInt($(this).attr("data-price"), 10) + parseInt(nowPrice, 10) + "");
+				console.log("2번" + message);
+// 			}
+		}
+		
+		if(message == ""){
+			alert("금액을 입력해주세요")
+			return false;
+		}
+		else if(message < ${price} ) {
+			alert("최소금액 보다 높게 입력해주세요")
+			$("#message").val("");
+			message = nowPrice;
+			return false;
+		}
+		
+		if(nowPrice < message) {
+			nowPrice = message;
+		}
+		
+		console.log(message);
+		chatSend();
+	})
+	
+	connect();
+	
+});
+
+
+//채팅 시간
+let today = new Date();
+let h = today.getHours();
+let m = today.getMinutes();
+
+let amPm = h < 12 ? "오전" : "오후";
+let hours = h < 12 ? h : h - 12; // 시
+let minutes = m < 10 ? "0" + m : m;  // 분
+
+
+var socket = null;
+function connect() {
+	var ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/auctionLog");
+	socket = ws;
+	
+	ws.onopen = function() {
+		console.log('Info: connection opened');
+		
+	};
+	
+	// 메세지 수신
+	ws.onmessage = function (msg) {
+		var data = msg.data;
+		var sessionId = null; //데이터를 보낸 사람
+		var sessionName = null; 
+		var message = null;
+		
+		var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
+		console.log(data);
+		sessionId = data.split(":")[0];
+		sessionName = data.split(":")[1];
+		message = data.split(":")[2];
+
+		
+		// 낙찰 최대금액
+	//	var auctionMax = "<span>" + message + "</span>원&nbsp;<i class='fa-solid fa-comment-dollar'></i>";
+	//	$(".auction_price").html(auctionMax);
+		$(".auction_price").find("span").html(message);
+// 		$("#btnAskingPrice").attr("data-price",message);
+		//  입찰하기 부분이 현재 최고가 기준으로 변경됨 (속성만)
+		// 보여주는 부분을 변경하려면 val()을 수정해야하는것
+// 		$("btnAskingPrice").attr("data-price", message);
+		
+		// 낙찰 최대금액 닉네임
+		var auctionNic = "<span>" + sessionName + "님</span>";
+		$(".auction_id").html(auctionNic);
+		
+		// 경매 로그
+		var auctionLog = "<div class='chat_myself'>" + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + amPm + " " + hours + ":" + minutes + "</div>";
+		$(".chatBox").append(auctionLog);
+		
+		if(sessionId == cur_session) { // 세션 ID 와 입력된 금액의 ID가 같을 경우
+			// 내가 입력한 낙찰가
+			var auctionMyPrice =  message + "원";
+			$(".my_bid").html(auctionMyPrice);
+		}
+	};
+	
+	ws.onclose = function (event) { console.log('Info: connection closed'); };
+	ws.onerror = function (event) { console.log('Info: connection closed'); };
+}
+// ======경매 참가하기 버튼====================================================
+
+//  밑에서 쓰고 DB에서 조회한 값이 있으면 보여주고 아니면 화면 바뀌지 않음 display hidden 하면 개발자 도구에 다 나옴	
+$(document).ready(function() {
+	$(".btnHidden").click(function(){
+// 		location.href = "deposit";
+		if($("#hidden").css("display") == "none"){
+            $('#hidden').show();
+            $('#btnHidden').hide();
+    	}
+	});
+});
+
+</script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
@@ -19,36 +206,35 @@
 				<div class="auction_left">
 					<div class="left_main">
 						<div class="remainTime"> 
-<!-- 							(몇일 남아도 전부 시간으로 표시(27시간)? 일단위 하다 시간으로 표시(2일 -> 23시간)? 그럼 분은?) -->
 							<span>경매종료 까지 남은시간</span>
 							<div class="con_countDown"><i class="fa-regular fa-clock fa-xs"></i>&nbsp;10분 30초</div>
 						</div>
 						<div class="auction_info">
 							<span class="notice_title"><i class="fa-solid fa-bookmark"></i>&nbsp;공지사항</span><br>
 							<p class="auction_notice">
-							1. 아ㅓㅇㅇㅇ잉ㅂ력해주세요<br>
-							2. 가가가가가가ㅏ가가가<br>
-							3. 나나난나나나나난나<br>
-							4. 다다다다다다
+							1. 참가 신청을 하셔야 경매에 참여 가능합니다<br>
+							2. 경매가의 10%의 보증금을 받습니다<br>
+							3. 경매가 끝난 후 낙찰자를 제외하고 보증금을 돌려드립니다<br>
+							4. 낙찰 후 구매 취소 시 보증금을 받을 수 없습니다<br>
+							5. 즉시 구매 시 경매가 종료됩니다<br>
+							6. 현재 페이지를 나가면 기록이 사라집니다(새로고침)
 							</p>
 							<hr>
-							<div class="con_tit">도자기</div>
+							<div class="con_tit">${auction.auction_item_name }</div>
 							<div class="con_detail">
 								<!-- 상품이미지 -->
-								<div class="contentImage" style="height: 300px"></div><br>
+								<div class="contentImage" style="background-image:url('http://c3d2212t3.itwillbs.com/images/${auction.image_name}')"></div><br>
 								<!-- 상품정보 -->
 								<div>
 									<div>
 										<span>상품정보</span>
 										<div class="con_price">상세정보 창 열기</div>
 									</div>
-									<span>경매 시작일</span>
-									<div class="con_period">2023.05.14</div><br>
-									<span>경매 종료일</span>
-									<div class="con_period">2023.06.14</div>
+									<span>경매날짜</span>
+									<div class="con_period">${auction.auction_start_date }</div>
 									<div>
 										<span>시작가</span>
-										<div class="con_price">1,000원</div>
+										<div class="con_price">${auction.auction_present_price }원</div>
 									</div>
 								</div>
 								<hr>
@@ -60,47 +246,63 @@
 				</div>
 				<!-- 가운데 -->
 				<div class="auction_center">
-				
 					<div class="auction_realTime">
-						<span style="font-size: 25px;">기간 경매</span>
-						<div class="auction_price"><span>30,000</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
+						<span style="font-size: 25px;">실시간 경매</span>
+						<div class="auction_price"><span>${auction.auction_present_price }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
 						<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
-						<div class="auction_id"><span>'추누공주'님</span></div>
+						<div class="auction_id">
+						<span>님</span>
+						</div>
 					</div>
 					<div class="auction_realStatus">
 						<div class="auction_log_title">경매로그</div>
 						<div class="auction_log">
-							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇㅇ님 ㅇdddddㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇddddㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇddddㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇxxxxxㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇㅇ님 ㅇㅇㅇddddㅇ원 입찰 !</div>
-							<div>ㅇzzzzzzㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
+							<div class="chatBox">
+								<div class="chat_myself">
+								</div>
+							</div>
+<!-- 							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div> -->
 						</div>
 					</div>
 					<div class="auction_input">
-						<div class="auction_input_title">입찰입찰입찰 제목좀바꿔죠</div>
-						<hr>
-						<div class="bid">
-							<div class="bid_left">
-								<div>MY 보증금</div>
-								<div>경매단가로 입찰하기</div>
-								<div>입찰가격</div>
-								<div>내 입찰가</div>
-								<div>즉시구매가</div>
-							</div>
-							<div class="bid_right">
-								<div>200,000원</div>
-								<div><input type="button" value="단가입찰(상품금액의 5%)" style="width: 228px"></div>
-								<div><input type="text" placeholder="금액입력"><input type="button" value="입찰"></div>
-								<div class="my_bid">28,000원</div>
-								<div class="buy_now"><span style="color:#bb2649">35,000원</span><input type="button" value="즉시구매" style="float: right;margin-right: 11px;"></div>
+					
+<!-- =================================================================================================== -->
+		<!-- 여기는 버튼 하나 생성해서 가리고 있다가 보증금 내면 바뀌게 -->
+						<div class="bid_right">
+							<input type="button" class="btnHidden" value="경매참가하기" id="btnHidden">
+						</div>
+		<!-- 여기까지 -->
+						
+						<div class="hidden" id="hidden">
+							<div class="auction_input_title">입찰입찰입찰 제목좀바꿔죠</div>
+							<hr>
+	<!-- 						<div style="float: right;"> -->
+	<!-- 						<div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<span>명</span></div></div><br> -->
+							<div class="bid">
+								<div class="bid_left">
+									<div>MY 보증금</div>
+									<div>입찰하기</div>
+									<div>가격 입찰</div>
+									<div>내 입찰가</div>
+									<div>즉시구매가</div>
+								</div>
+								<div class="bid_right">
+	<%-- 								<div>${prince * 0.1 }원 소수점 지워지나?</div> --%>
+									<div>${deposit }원</div>
+									<div>
+										<input type="button" id="btnAskingPrice" value="즉시입찰(+${askingPrice })" style="width: 228px"
+										data-price="${askingPrice }" class="btn">
+									</div><!-- 실시간 변동 금액에 대한 호가 계산 -->
+									<div>
+										<input type="text" id="message" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="금액입력">
+										<input type="button" value="입찰" id="btnBid" class="btn" data-price="">
+									</div>
+									<div class="my_bid"></div>
+									<div class="buy_now">
+										<span style="color:#bb2649">${purchase }원</span>
+										<input type="button" id="btnPurchase" value="즉시구매" style="float: right;margin-right: 11px;">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -138,37 +340,22 @@
 										<span class="chat_timeago_text">2023년 05월 17일</span>
 									</div>
 								</div>
-								<div class="chat_item">
-									<div class="chat_item_box">
-										<div class="chat_item_image_box">
-											<img class="chat_item_image" src="https://ccimg.hellomarket.com/images/2023/member_profile/03/08/13/2823905_171_1.jpg?size=s4" alt="상대방이미지">
-										</div>
-										<div class="chat_item_message">
-											<div class="chat_item_message_box">
-												<div class="image_wrapper">
-													<div class="image_outside">
-														<div class="image_centerbox">
-															<img src="https://ccimg.hellomarket.com/images/2023/item/05/15/17/3324332_5222579_1.jpg" alt="채팅아이템이미지" class="chat_item_message_image">
-														</div>
-													</div>
-												</div>
-												<div class="chat_item_message_main">
-													<div class="chat_item_message_title">서류가방</div>
-													<div class="chat_item_message_price">80,000원</div>
-												</div>
-												<div class="chat_item_message_link">안전결제</div>
-											</div>
-											<div class="chat_item_timeago">오후 1:57</div>
-										</div>
-									</div>
-								</div>
 								<div class="chat_myself">
 									<div class="chat_myself_box">
 										<div class="chat_myself_message">
 											<span>안녕하세요</span>
 											<div class="chat_myself_ack"></div>
 											<div class="chat_myself_timeago">오후 1:57</div>
-											<div class="chat_myself_timeago">오후 1:57</div>
+										</div>
+									</div>
+								</div>
+								<div class="OpponentChat__Wrapper-qv8pn4-0 cFvuGS">
+									<img src="https://ccimage.hellomarket.com/img/web/common/empty_profile.svg" alt="상대방 프로필 이미지" class="OpponentChat__ProfileImage-qv8pn4-2 eLwuXd">
+									<div class="OpponentChat__Nick-qv8pn4-3 hYaaYd"> 명품인증</div>
+									<div class="OpponentChat__MyChatList-qv8pn4-1 lecfCu">
+										<div class="OpponentChat__TextBox-qv8pn4-5 giIZqy">
+											<span class="OpponentChat__Text-qv8pn4-6 ZPeEt">네 안녕하세요</span>
+											<div class="OpponentChat__TimeAgo-qv8pn4-7 jXWPOW">오후 2:06 </div>
 										</div>
 									</div>
 								</div>
