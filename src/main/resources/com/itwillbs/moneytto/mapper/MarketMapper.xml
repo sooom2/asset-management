@@ -575,7 +575,7 @@
 			images im
 		ON	
 			i.item_code = im.table_code
-		LIMIT 10
+		ORDER BY i.item_code DESC LIMIT 10
 	</select>
 	
 	
