@@ -86,12 +86,11 @@
 				let diffSecondsResult = diffSeconds < 10 ? "0" + diffSeconds : diffSeconds; 
 				let resultClock = (diffMinutes - 1) + ":" + (diffSecondsResult - 1);
 				
-				console.log(current_time - start_time);
-				
 				
 				// 경매시작 시간 지나면 (시간 카운트)
 				if(start_time <= current_time) {
 					$("#con_countDown").html(resultClock);
+// 					$('#auction_input_after *').prop('disabled', false);
 				} 
 				
 				// 경매 시작 후 (10분 이 지나면 종료)
@@ -111,6 +110,11 @@
 
 
 	$(document).ready(function() {
+// 		$('#auction_input_after *').prop('disabled', true);
+		if(${auctionEnroll}) {
+			$("#auction_input_before").css('display', 'none');
+			$("#auction_input_after").css('display', 'block');
+		}
 		
 		function chatSend() {
 			const data = {
@@ -352,24 +356,6 @@
 								<div class="chat_timeago">
 									<div class="chat_timeago_box">
 										<span class="chat_timeago_text">${formatedNow }</span>
-									</div>
-								</div>
-								<div class="chat_myself">
-									<div class="chat_myself_box">
-										<div class="chat_myself_message">
-											<span>안녕하세요</span>
-											<div class="chat_myself_timeago">오후 1:57</div>
-										</div>
-									</div>
-								</div>
-								<div class="OpponentChat__Wrapper-qv8pn4-0 cFvuGS">
-									<img src="https://ccimage.hellomarket.com/img/web/common/empty_profile.svg" alt="상대방 프로필 이미지" class="OpponentChat__ProfileImage-qv8pn4-2 eLwuXd">
-									<div class="OpponentChat__Nick-qv8pn4-3 hYaaYd"> 명품인증</div>
-									<div class="OpponentChat__MyChatList-qv8pn4-1 lecfCu">
-										<div class="OpponentChat__TextBox-qv8pn4-5 giIZqy">
-											<span class="OpponentChat__Text-qv8pn4-6 ZPeEt">네 안녕하세요</span>
-											<div class="OpponentChat__TimeAgo-qv8pn4-7 jXWPOW">오후 2:06 </div>
-										</div>
 									</div>
 								</div>
 							</div>

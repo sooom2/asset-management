@@ -44,5 +44,23 @@
 		 			ON a.auction_code = i.table_code
 	 					WHERE auction_code = #{auction_code}
 	</select>
+	
+	<insert id="insertEnroll">
+		INSERT INTO auction_enroll VALUES(
+								  ((SELECT *
+			  							FROM 
+			  								(SELECT IFNULL(MAX(enroll_code),0) FROM auction_enroll) A)+1)
+								, #{auction_code}
+								, #{id}
+								, 'N'
+					)
+	</insert>
+	
+	<select id="selectAuctionEnroll" resultType="hashmap">
+		SELECT * 
+			FROM auction_enroll
+				WHERE auction_code = #{auction_code} AND member_id = #{id}
+			
+	</select>
 
 </mapper>

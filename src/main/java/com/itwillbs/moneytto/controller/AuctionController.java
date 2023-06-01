@@ -41,9 +41,8 @@ public class AuctionController {
 	
 	// 실시간 경매
 	@RequestMapping(value="auction", method = RequestMethod.GET)
-	public String auction(@RequestParam String auction_code, Model model) { // 이미지 코드와 경매 코드를 받아서 목록 상세
+	public String auction(@RequestParam String auction_code, Model model, HttpSession session) { // 이미지 코드와 경매 코드를 받아서 목록 상세
 		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
-		System.out.println(auction);
 		model.addAttribute("auction", auction);
 
 //		int prince = Integer.parseInt(auction.get("auction_present_price").replace(",", ""));
@@ -65,6 +64,16 @@ public class AuctionController {
 		
 		model.addAttribute("formatedNow", formatedNow);
 		model.addAttribute("auction", auction);
+		
+		// 경매 등록 확인
+		String id = (String)session.getAttribute("sId");
+		HashMap<String, String> auctionEnroll = service.selectAuctionEnroll(auction_code, id);
+		System.out.println(auctionEnroll);
+		if(auctionEnroll != null) {
+			model.addAttribute("auctionEnroll", true);
+		} else {
+			model.addAttribute("auctionEnroll", false);
+		}
 		
 		return "auction/auction";
 	}
@@ -102,20 +111,11 @@ public class AuctionController {
 	@RequestMapping(value="auctionEnroll", method = RequestMethod.GET)
 	public String auctionEnroll(@RequestParam String auction_code, HttpSession session, Model model) {
 		String id = (String)session.getAttribute("sId");
-//		int insertCount = service.insertEnroll(auction_code, id);
-//		INSERT 
-//			INTO point
-//			VALUES (
-//			(SELECT *
-//			  FROM (SELECT IFNULL(MAX(point_code),0) FROM point) A)+1
-//			,#{member_id}
-//			,'회원가입 축하 이벤트'
-//		,'1000'
-//		,now()
-//			);
+		int insertCount = service.insertEnroll(auction_code, id);
 		
+		model.addAttribute("auction_code", auction_code);
 		
-		return "";
+		return "redirect:/auction";
 	};
 	
 	

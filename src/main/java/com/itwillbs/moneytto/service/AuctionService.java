@@ -21,4 +21,12 @@ public class AuctionService {
 		return mapper.selectAuctionCode(auction_code);
 	}
 
+	public int insertEnroll(String auction_code, String id) {
+		return mapper.insertEnroll(auction_code, id);
+	}
+
+	public HashMap<String, String> selectAuctionEnroll(String auction_code, String id) {
+		return mapper.selectAuctionEnroll(auction_code, id);
+	}
+
 }
