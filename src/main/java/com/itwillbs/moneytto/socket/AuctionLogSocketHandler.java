@@ -43,6 +43,8 @@ public class AuctionLogSocketHandler extends TextWebSocketHandler {
 		String id = jObject.getString("id");
 	    String name = jObject.getString("name");
 	    String messages = jObject.getString("message");
+//	    String enrollCode = jObject.getString("enrollCode");
+	    String auctionCode = jObject.getString("auctionCode");
 //	    System.out.println("id : " + id);
 //		System.out.println("name : " + name);
 //		System.out.println("messages : " + messages);
@@ -53,7 +55,7 @@ public class AuctionLogSocketHandler extends TextWebSocketHandler {
 //		System.out.println("sessionList : " + sessionList);
 	    
 	    // DB저장 방코드와 채팅코드도 넘겨야 하고 그건 컨트롤러에서 받을꺼고 페이지 들어올때
-        int insertCount = service.insertAuctionLog(id, messages);
+        int insertCount = service.insertAuctionLog(id, messages, auctionCode);
         if(insertCount > 0) {
         	for(WebSocketSession sess: sessionList) {
         		sess.sendMessage(new TextMessage(id + ":" + name + ":" + messages));

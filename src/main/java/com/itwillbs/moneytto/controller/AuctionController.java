@@ -56,27 +56,38 @@ public class AuctionController {
 		// 경매 등록 확인
 		String id = (String)session.getAttribute("sId");
 		HashMap<String, String> auctionEnroll = service.selectAuctionEnroll(auction_code, id);
-		System.out.println(auctionEnroll);
-		if(auctionEnroll != null) {
-			model.addAttribute("auctionEnroll", true);
-		} else {
-			model.addAttribute("auctionEnroll", false);
-		}
+		System.out.println("auctionEnroll1111111" + auctionEnroll);
+//		if(auctionEnroll != null) {
+//			model.addAttribute("auctionEnroll", true);
+//		} else {
+//			model.addAttribute("auctionEnroll", false);
+//		}
+		/* DB 에서 비교한 값이 true false 로 넘어오면 
+		model.addAttribute("auctionEnroll", auctionEnroll);
+		이렇게 넣어도 된다
+		*/
+//		model.addAttribute("enrollCode", auctionEnroll.get("enroll_code"));
+		boolean result = auctionEnroll != null ? true : false;
+		model.addAttribute("auctionEnroll", result);
 		
 		
 		// 경매 로그===============================================================================
-		HashMap<String, String> auctionRoom = service.selectAuctionRoom(auction_code);
-		if(auctionRoom == null) { // 경매기록 방이 없을 경우
-			// 경매 기록 방 저장
-//					auctionRoom = service.insertAuctionRoom(auction_code);
-		} else if(auctionRoom.get("auction_code").equals(auction_code)) { // 경매 방 있는 경우
-			
-		}
+		// auction_enroll
+//		HashMap<String, String> auctionRoom = service.selectAuctionRoom(auction_code);
+//		if(auctionRoom == null) { // 경매기록 방이 없을 경우
+//			// 경매 기록 방 저장
+////					auctionRoom = service.insertAuctionRoom(auction_code);
+//		} else if(auctionRoom.get("auction_code").equals(auction_code)) { // 경매 방 있는 경우
+//			
+//		}
 		
 		// 경매 기록(채팅 상세 내용) 검색
 		// 방번호,아이템코드, id 다 넘겨야 하나? 그렇구만
-		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(id);
-		
+		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(auction_code);
+		model.addAttribute("auctionLog", auctionLog);
+//		if(auctionLog.get(1) != null) {
+			System.out.println("출력ㄱㄱㄱㄱㄱㄱㄱㄱ" + auctionLog + "여긱ㄱㄱㄱㄱ");
+//		}
 //				if() { // 경매 페이지로 들어갈 때 이 아이템에 대한 경매기록이 있는지 확인해야하고 경매 기록이 없을 경우 밑에 코드 사용
 //					채팅방에는 방번호, 아이템 번호, chat_content 이렇게 있고
 			

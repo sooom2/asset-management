@@ -66,9 +66,11 @@
 	<!-- 소켓 사용한 경매 기록 저장 -->
 	<insert id="insertAuctionLog">
 		INSERT 
-			INTO chat_messages (member_id, chat_message, chat_time)
+			INTO chat_messages 
 			VALUES (
-				#{id}
+				null
+				, #{auctionCode}
+				, #{id}
 				, #{messages}
 				, now()
 				)
@@ -87,7 +89,7 @@
 	<select id="selectAuctionLog" resultType="hashmap">
 		SELECT *
 			FROM chat_messages
-<!-- 			WHERE id = #{id} -->
+			WHERE auction_code = #{auction_code}
 	</select>
 	
 	<!-- 경매 기록 방 저장 -->

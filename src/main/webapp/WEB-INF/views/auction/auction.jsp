@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -286,15 +287,23 @@
 						<div class="auction_price"><span>${auction.auction_present_price }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
 						<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
 						<div class="auction_id">
-						<span>님</span>
+						<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 						</div>
 					</div>
 					<div class="auction_realStatus">
 						<div class="auction_log_title">경매로그</div>
 						<div class="auction_log">
 							<div class="logBox">
-								<div class="chat_myself">
-								</div>
+								<c:forEach var="auctionLog" items="${auctionLog }">
+									<div class='chat_myself'>
+										닉네임님&nbsp;&nbsp;<span>${auctionLog.chat_message }원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>
+<%-- 										<fmt:formatDate value="${auctionLog.chat_time }" pattern="tt hh:mm:ss" /> --%>
+<%-- 										<fmt:parseDate var="formattedDate" value="${auctionLog.chat_time }" pattern="yyyy-MM-dd'T'hh:mm:ss" /> --%>
+									</div>
+								</c:forEach>
+<%-- 										ddddddddddddd<fmt:formatDate value="${auctionLog.chat_time }" pattern="hh:mm:ss" /> --%>
+<!-- 								<div class="chat_myself"> -->
+<!-- 								</div> -->
 							</div>
 						</div>
 					</div>
@@ -392,12 +401,12 @@ $(document).ready(function() {
 	
 	function chatSend2() {
 // 		console.log(" 옥션 프라이스 텍스트" + $(".auction_price").text())
-	
 		const data = {
 			"id" : "${ sessionScope.sId }",
 			"name" : "${ sessionScope.nickname }",
 			"message"   : chatLog,
-// 			"auctionCode" :  "${auction.get('auction_code') }"
+// 			"enrollCode" : "${enrollCode}",
+			"auctionCode" :  "${auction.auction_code }",
 // 				if($('#message').val() != null && $('#message').val() != "") {
 // 				$('#message').val()
 // 				}
@@ -435,8 +444,7 @@ $(document).ready(function() {
 		if(chatLog == ""){
 			alert("금액을 입력해주세요")
 			return false;
-		}
-		else if(chatLog < ${price} ) {
+		} else if(chatLog < ${price} ) {
 			alert("최소금액 보다 높게 입력해주세요")
 			$("#chatLog").val("");
 			chatLog = nowPrice;
@@ -472,6 +480,8 @@ function connect2() {
 		var sessionId = null; //데이터를 보낸 사람
 		var sessionName = null; 
 		var message = null;
+// 		var enrollCode = ${enrollCode};
+		var auctionCode = "${auction.auction_code }";
 		
 		var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
 		console.log(data);

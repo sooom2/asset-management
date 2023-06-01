@@ -32,8 +32,8 @@ public class AuctionService {
 	
 
 	// 소켓 사용한 경매 기록 저장
-	public int insertAuctionLog(String id, String messages) {
-		return mapper.insertAuctionLog(id, messages);
+	public int insertAuctionLog(String id, String messages, String auctionCode) {
+		return mapper.insertAuctionLog(id, messages, auctionCode);
 	}
 
 	// 경매 기록 방
@@ -42,8 +42,8 @@ public class AuctionService {
 	}
 
 	// 경매 상세 기록 검색
-	public List<HashMap<String, String>> selectAuctionLog(String id) {
-		return mapper.selectAuctionLog(id);
+	public List<HashMap<String, String>> selectAuctionLog(String auction_code) {
+		return mapper.selectAuctionLog(auction_code);
 	}
 
 	// 경매 기록 방 저장
