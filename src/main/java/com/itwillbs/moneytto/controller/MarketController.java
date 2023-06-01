@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
@@ -260,6 +261,9 @@ public class MarketController {
 	            //3. 상대방 판매상품갯수조회
 	            //상대방의 아이디 조회
 	            oppenentId = marketChatService.getOppenentId(room_code, id);
+	            System.out.println("3 ==========================================");
+	            System.out.println(oppenentId.get("oppenent_id"));
+	            System.out.println("3 ==========================================");
 	            // 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
 	            sellCount = marketChatService.getSellCount(oppenentId.get("oppenent_id"));
 	            myChatList = marketChatService.getMyChatList(id);
@@ -273,13 +277,13 @@ public class MarketController {
 	            room_code = marketChatService.getNextRoomCode();
 	            
 	            //상대방아이디 - 상품의 member_id
-	            
+//	            sellId = chatList.get("oppenent_id");
 	            //방이없을땐 보통 판매자,,
 	            HashMap<String, String> item = marketChatService.getItemList(item_code);
 	            
 	            String sellId = item.get("member_id");
 	            System.out.println("chatDetail 에서  방이없을경우"+item_code+",룸코드: "+room_code+","+sellId);
-	            model.addAttribute("sellId",sellId);
+	            model.addAttribute("oppenentId",sellId);
 	         }
 	         
 	      } else {  //nav로들어갈때
@@ -506,26 +510,36 @@ public class MarketController {
 
 	        // 아이템 수정
 	        int updateCount = service.updateItem(item);
+	        
+	        // 사진 수정시 기존 사진 삭제
 
 	        // 아이템 수정에 성공한 경우에만 사진 정보 저장
 	        if (updateCount > 0) {
+	        	int deleteCount = service.removeImage(itemCode);
 	            // 사진 정보를 저장
-	            for (int i = 0; i < files.size(); i++) {
+	        	for (int i = 0; i < files.size(); i++) {
 	                MultipartFile file = files.get(i);
 	                if (!file.isEmpty()) {
 	                    String fileName = file.getOriginalFilename();
 	                    String fileExtension = FilenameUtils.getExtension(fileName);
-	                    String storedFileName = UUID.randomUUID().toString() + "." + fileExtension;
+	                    
+	                    String uuid = UUID.randomUUID().toString();
+	                    
+	                    String storedFileName = uuid.substring(0,8) + "." + fileExtension;
+	                    
 	                    String filePath = uploadDir + "/" + storedFileName;
-
+	                    
+	                    String saveFileName = "http://c3d2212t3.itwillbs.com/images/" + storedFileName;
 	                    File dest = new File(filePath);
+	                    // upload 디렉토리가 없을때 생성하는 메서드
+	                    dest.mkdirs();
 	                    file.transferTo(dest);
 
 	                    // 사진 정보를 저장
 	                    HashMap<String, String> saveImage = new HashMap<>();
-	                    saveImage.put("image_code", UUID.randomUUID().toString());
+	                    saveImage.put("image_code", uuid);
 	                    saveImage.put("item_code", itemCode);
-	                    saveImage.put("image_name", fileName);
+	                    saveImage.put("image_name", saveFileName);
 
 	                    // 사진 정보 저장 메서드 호출
 	                    service.saveImage(saveImage);

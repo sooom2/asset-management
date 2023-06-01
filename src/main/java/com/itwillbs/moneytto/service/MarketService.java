@@ -71,6 +71,12 @@ public class MarketService {
 	public int insertReport(String id, String targetId, String reportType, String reportContent) {
 		return mapper.insertReport(id, targetId, reportType, reportContent);
 	}
+
+
+
+	public int removeImage(String itemCode) {
+		return mapper.removeImage(itemCode);
+	}
 	
 	
 }

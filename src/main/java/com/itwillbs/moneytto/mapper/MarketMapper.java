@@ -9,9 +9,10 @@ import org.apache.ibatis.annotations.*;
 
 public interface MarketMapper {
 
+	// 상품등록
 	int insertItem(HashMap<String, String> item);
 
-	//채팅방 item 정보
+	// 채팅방 item 정보
 	HashMap<String, String> getItem(String item_code);
 	// 상품판매상세정보
 	HashMap<String, String> sellDetail(String item_code);
@@ -19,11 +20,17 @@ public interface MarketMapper {
 	// item_code 없을때 
 	HashMap<String, String> getAllItem();
 	
-	//상대방물건판매갯수
+	// 상대방물건판매갯수
 	int sellCount(String openentId);
+	
+
 	// 채팅방개설가능한지
 	int isInsertChatRoom(@Param("item_code") String item_code,@Param("id") String id);
 
+	//채팅방 생성
+	int insertChatRoom(@Param("roomCode") String roomCode,@Param("itemCode") String itemCode,@Param("messages") String messages);
+	
+	
 	// 내채팅목록
 	List<HashMap<String, String>> myChatList(String id);
 	List<HashMap<String, String>> myChatAllList(String id);
@@ -75,6 +82,7 @@ public interface MarketMapper {
 
 	HashMap<String, Integer> itemDetail(String item_code);
 
+	// 상품수정
 	int updateItem(HashMap<String, String> item);
 
 	HashMap<String, String> selectBuyItem(@Param("member_id")String id, @Param("item_code")String item_code);
@@ -86,8 +94,6 @@ public interface MarketMapper {
 	// 다음방번호찾기
 	int nextRoomCode();
 
-	//채팅방 생성
-	int insertChatRoom(@Param("roomCode") String roomCode,@Param("itemCode") String itemCode,@Param("messages") String messages);
 
 	//판매자아이디 찾기
 	HashMap<String, String> sellId(String item_code);
@@ -105,5 +111,8 @@ public interface MarketMapper {
 
 	// 신고
 	int insertReport(@Param("id") String id, @Param("targetId") String targetId, @Param("reportType") String reportType, @Param("reportContent") String reportContent);
+
+	// 아이템 이미지 삭제 
+	int removeImage(String itemCode);
 
 }

@@ -117,10 +117,10 @@
 	
 	<!-- 내채팅목록 -->
 	<select id="myChatList" resultType="hashmap">
-		SELECT b.room_code, chat_code, chat_content, member_nickname,chat_time,b.item_subject,chat_openDate,item_status
+		SELECT b.room_code, chat_code, chat_content, member_nickname,chat_time,b.item_subject,chat_openDate,item_status,item_code
          FROM (
              SELECT room_code, chat_code, chat_content, member_nickname,
-                    ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate,item_status
+                    ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate,item_status, item_code
              FROM (
                  SELECT market_chat_rooms.room_code,
                         chat_code,
@@ -129,13 +129,14 @@
                         chat_time,
                         item.item_subject ,
                         market_chat_rooms.chat_openDate,
-                        item.item_status 
+                        item.item_status ,
+                        item.item_code
            	   		FROM   market_chat_messages
-	                      LEFT JOIN member
+	                      JOIN member
 	                             ON member.member_id = market_chat_messages.sell_member_id
-	                      LEFT JOIN market_chat_rooms
+	                      JOIN market_chat_rooms
 	                      		 ON market_chat_rooms.room_code = market_chat_messages.room_code
-	                      LEFT JOIN item 
+	                      JOIN item 
 	                      		 ON item.item_code=market_chat_rooms.item_code 
               		 WHERE  buy_member_id = #{id}
                UNION
@@ -146,13 +147,14 @@
 	                    chat_time,
 	                    item.item_subject,
 	                    market_chat_rooms.chat_openDate,
-	                     item.item_status 
+	                    item.item_status ,
+	                    item.item_code
 	             	FROM   market_chat_messages
-		                    LEFT JOIN member
+		                    JOIN member
 		                           ON member.member_id = market_chat_messages.buy_member_id
-		                    LEFT JOIN market_chat_rooms
+		                    JOIN market_chat_rooms
 	                      		   ON market_chat_rooms.room_code = market_chat_messages.room_code
-                  		   	LEFT JOIN item 
+                  		   	JOIN item 
 	                      		 ON item.item_code=market_chat_rooms.item_code 
               		 WHERE  sell_member_id = #{id}
              	) AS a
@@ -248,15 +250,16 @@
 
 	<!-- 제일마지막에생성된 방 -->
 	<select id="chatRecentList" resultType="hashmap">
-		SELECT b.room_code, chat_code, chat_content, member_nickname,chat_time,b.item_subject,chat_openDate,item_status
+		SELECT b.room_code, chat_code, chat_content, member_nickname,member_id,chat_time,b.item_subject,chat_openDate,item_status
          FROM (
-             SELECT room_code, chat_code, chat_content, member_nickname,
+             SELECT room_code, chat_code, chat_content, member_nickname,member_id,
                     ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate,item_status
              FROM (
                  SELECT market_chat_rooms.room_code,
                         chat_code,
                         market_chat_rooms.chat_content,
                         member.member_nickname AS member_nickname,
+                        member.member_id,
                         chat_time,
                         item.item_subject ,
                         item.item_status,
@@ -274,6 +277,7 @@
 	                    chat_code,
 	                    market_chat_rooms.chat_content,
 	                    member.member_nickname AS member_nickname,
+	                    member.member_id,
 	                    chat_time,
 	                    item.item_subject,
 	                    item.item_status,
@@ -310,7 +314,7 @@
 	
 	
 
-		<!-- 마켓 아이템 리스트 05.27 새로 추가한 부분 -->
+	<!-- 마켓 아이템 리스트 05.27 새로 추가한 부분 -->
 	<select id="marketItemList" resultType="hashmap">
 		SELECT i.*, m.grade_score, im.*, COUNT(*) OVER() AS total_count
 			FROM 
@@ -461,22 +465,28 @@
 				i.item_code = #{item_code}
 	</select>
 	
+	<!-- 상품 이미지 삭제 -->
+	<delete id ="removeImage">
+		DELETE FROM images
+			WHERE table_code = #{item_code}
+	</delete>
 	
 	<!-- 상품 등록 수정 -->
+	
 	<update id="updateItem">
-	UPDATE item
-	SET
-	item_code = #{item_code},
-	member_id = #{id},
-	item_subject = #{item_subject},
-	item_content = #{item_content},
-	item_price = #{item_price},
-	item_price_offer = #{item_price_offer},
-	item_tag = #{item_tag},
-	item_category = #{item_category},
-	item_status = '판매중',
-	item_date = NOW(),
-	WHERE item_code = #{item_code};
+	  UPDATE item
+	  SET
+	    item_code = #{item_code},
+	    member_id = #{id},
+	    item_subject = #{item_subject},
+	    item_content = #{item_content},
+	    item_price = #{item_price},
+	    item_price_offer = IFNULL((SELECT CASE WHEN #{item_price_offer} = 'on' THEN 'Y' ELSE 'N' END), 'N'),
+	    item_tag = #{item_tag},
+	    item_category = #{item_category},
+	    item_status = '판매중',
+	    item_date = NOW()
+	  WHERE item_code = #{item_code}
 	</update>
 	
 	<select id="selectBuyItem" resultType="hashmap">
@@ -556,6 +566,7 @@
 				)
 	</insert>
 	
+	
 	<select id="selectItemImage" resultType="hashmap">
 		SELECT *
 			FROM 
@@ -597,3 +608,4 @@
 	</insert>
 	
 </mapper>
+

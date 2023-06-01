@@ -112,7 +112,6 @@ public class AuctionController {
 		//================================================================================
 		
 		
-		
 		return "auction/auction";
 	}
 	
@@ -211,6 +210,11 @@ public class AuctionController {
 		return "redirect:/auction";
 	};
 	
+	@RequestMapping(value="auctionPay", method = RequestMethod.GET)
+	public String auctionPay() {
+		
+		return "auction/auctionPay";
+	}
 	
 	
 	// 0524 test 여기서==========================

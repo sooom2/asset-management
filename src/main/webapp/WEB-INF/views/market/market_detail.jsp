@@ -176,10 +176,6 @@ function toggleLike(element) {
 						<div class="CategoryTitle">카테고리</div>
 						<div class="CategoryCategoryBox">
 							<div class="DivergedLinkTitle">${marketItem.item_category}</div>
-<!-- 							<img -->
-<!-- 								src="https://ccimage.hellomarket.com/img/web/item/detail/ico_arrow_right_category.png" -->
-<!-- 								alt="오른쪽 화살표 아이콘" class="CategoryArrow"> -->
-<!-- 							<div class="DivergedLinkTitle">기타 가방</div> -->
 						</div>
 					</div>
 					<!-- 태그 -->
@@ -366,11 +362,20 @@ function toggleLike(element) {
 <script type="text/javascript">
 
 	$(function () {
-		 var itemDate = "${marketItem.item_date}";
-		 var formattedDate = moment(itemDate).format("YYYY-MM-DD HH:mm");
-		 $(".SubTitleDetailText").text(formattedDate);
-		 console.log(formattedDate);
+		var itemDate = "${marketItem.item_date}";
+		var formattedDate = moment(itemDate).format("YYYY-MM-DD HH:mm");
+		$(".SubTitleDetailText").text(formattedDate);
 		
+		var price = $(".TitleText2").text();
+		priceReplace(price);
+		
+		// 금액 단위 콤마
+		function priceReplace(price) {
+			var price = price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			$(".TitleText2").empty().append(price);
+		}
+		 
+		 
 		
 		function report() {
 			var id = "<%=(String)session.getAttribute("sId")%>";
@@ -446,7 +451,11 @@ function toggleLike(element) {
 	
 		// 공유하기
 		$(document).on("click", ".TopNavigationIcon", function(e) {
-// 			gXuuDJ //
+			if ( $('.gXuuDJ').css('display') === 'none' ) {
+				$(".gXuuDJ").show();
+			} else {
+				$(".gXuuDJ").hide();
+			}
 			
 		});
 	});
