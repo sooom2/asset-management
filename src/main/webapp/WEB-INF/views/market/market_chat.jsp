@@ -269,10 +269,20 @@ $(function() {
 
     ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
     socket = ws;
-    
+    //파라미터가 있을때 없을떄
+    urlParams = new URLSearchParams("?item_code");
+    alert(urlParams.has("item_code"));
     let item_code = $(".item_code").val();
     let room_code = "${room_code}";
-    let target = "${oppenentId.oppenent_id}";
+    
+    let target ="";
+    if(urlParams.has("item_code")){
+    	target = "${sellId}";
+    } else {
+		target  = "${oppenentId.oppenent_id}";
+    }
+    
+    console.log("아이템코드 : "+ item_code + "room_code : " + room_code + "target : " + target );
 // 	let target2 = "${oppenent_id}";    
 //     alert(target2);
     function chatSend() {
