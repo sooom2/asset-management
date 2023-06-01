@@ -261,6 +261,9 @@ public class MarketController {
 	            //3. 상대방 판매상품갯수조회
 	            //상대방의 아이디 조회
 	            oppenentId = marketChatService.getOppenentId(room_code, id);
+	            System.out.println("3 ==========================================");
+	            System.out.println(oppenentId.get("oppenent_id"));
+	            System.out.println("3 ==========================================");
 	            // 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
 	            sellCount = marketChatService.getSellCount(oppenentId.get("oppenent_id"));
 	            myChatList = marketChatService.getMyChatList(id);
@@ -274,7 +277,7 @@ public class MarketController {
 	            room_code = marketChatService.getNextRoomCode();
 	            
 	            //상대방아이디 - 상품의 member_id
-	            
+//	            sellId = chatList.get("oppenent_id");
 	            //방이없을땐 보통 판매자,,
 	            HashMap<String, String> item = marketChatService.getItemList(item_code);
 	            
