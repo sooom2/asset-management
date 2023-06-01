@@ -7,8 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <link href="${path }/resources/css/market.css" rel="stylesheet">
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.4.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/moment.js"></script>
+<script type="text/javascript" src="${path }/resources/js/jquery-3.6.4.js"></script>
+<script type="text/javascript" src="${path }/resources/js/moment.js"></script>
 <title>Insert title here</title>
 </head>
   <body>
@@ -217,6 +217,7 @@
 				let code = item.item_code;
 				let image = item.image_name;
 				let count = item.total_count;
+				var wish = item.wish_code;
 				
 				price = price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 				
@@ -227,6 +228,12 @@
 				if(image == null) {
 					image = "${path }/resources/images/main/noThumbnail.jpg";
 				}
+				
+				if(wish == null) {
+					wish = '<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="WishWishImg wish" />'
+				}else{
+					wish = '<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg" />'
+				}
 
 				var str = '<div class="itemThumbnailBox" data-cd="';
 				str += code;
@@ -234,7 +241,7 @@
 				str += '<div class="itemThumbnailBox">';
 				str += '<img src="' + image + '" alt="썸네일" class="itemThumbnail" style="cursor: pointer">';
 				str += '<div class="wishWrapper">';
-				str += '<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">';
+				str += wish;
 				str += '</div>';
 				str += '</div>';
 				str += '<div class="itemTextBox">';
@@ -521,6 +528,36 @@
 					$("#searchForm").submit(); // 폼 제출
 	            }
 	        });
+			
+			// wish
+			// 이페이지 넘 어려워서 몰겟음.....
+			$('.WishWishImg').click(function(){
+				// .WishWishImg 부모 선택자 "data-code" 속성에 넣어준 item_code를 item_code 변수로 저장
+				var $btnWish = $(this)
+				var item_code = $(this).closest(".itemThumbnailBox").attr("data-cd");
+				console.log(item_code);
+				// /clickWish MemberController에 매핑
+				$.ajax({
+			   		url : 'clickWish',
+			   		type : 'POST',
+			   		data : {item_code : item_code}
+				}).done(function(){
+					$btnWish.toggleClass("wish");
+					
+					if($btnWish.hasClass("wish")){
+						  				$btnWish.attr({'src' : 'resources/images/main/ico_heart_off_x3.png',
+										alt : '찜하기 완료'
+									})	
+					}else{
+						$btnWish.attr({'src' : 'resources/images/main/ico_heart_on_x3.png',
+										alt : '찜하기'
+									})
+					}
+				}).fail(function(){
+					alert("ERROR 위시리스트 추가 실패");
+				})
+			})
+			
 			
 		});
 	
