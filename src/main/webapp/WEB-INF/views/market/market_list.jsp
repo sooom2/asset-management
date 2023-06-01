@@ -202,6 +202,9 @@
 			location.href="market_detail?item_code=" + $("#item_code").val();
 		}
 		
+		
+		
+		
 		// ajax에서 받은 데이터로 div 생성
 		function makeDiv(response) {
 			for(let item of response) {
@@ -214,6 +217,8 @@
 				let code = item.item_code;
 				let image = item.image_name;
 				let count = item.total_count;
+				
+				price = price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 				
 				var itemDate = date;
 				var formattedDate = moment(itemDate).format("YYYY-MM-DD HH:mm");
