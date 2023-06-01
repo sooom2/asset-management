@@ -17,8 +17,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.itwillbs.moneytto.service.*;
 
 
-
-@RequestMapping("/echo")
 public class AuctionLogSocketHandler extends TextWebSocketHandler {
 	
 	@Autowired

@@ -217,7 +217,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 </script>
 
-
 <!-- 카테고리선택 -->
 <style>
 .selected {
@@ -468,7 +467,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							<a href="main">
 								<button class="btn_item_cancel" type="button">취소</button>
 							</a>
-							<button class="btn_item_submit" type="submit">상품 등록 완료</button>
+							<button class="btn_item_submit" type="submit">상품 등록</button>
 						</div>
 					</div>
 				</div>
