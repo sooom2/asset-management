@@ -75,13 +75,13 @@
 	</select>
 	
 	<!-- 경매 기록 방 저장 -->
-	<insert id="insertAuctionRoom">
-		INSERT
-			INTO chat_rooms(
-				null
-				, #{auction_code}
-				, "???"
-				, now()
-			)
-	</insert>
+<!-- 	<insert id="insertAuctionRoom"> -->
+<!-- 		INSERT -->
+<!-- 			INTO chat_rooms( -->
+<!-- 				1 -->
+<!-- 				, #{auction_code} -->
+<!-- 				, "물음표" -->
+<!-- 				, now() -->
+<!-- 			) -->
+<!-- 	</insert> -->
 </mapper>

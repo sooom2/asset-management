@@ -23,7 +23,7 @@ public interface AuctionMapper {
 	List<HashMap<String, String>> selectAuctionLog(String id);
 
 	// 경매 기록 방 저장
-	HashMap<String, String> insertAuctionRoom(String auction_code);
+//	HashMap<String, String> insertAuctionRoom(String auction_code);
 
 
 }

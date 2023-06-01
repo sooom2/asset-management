@@ -40,9 +40,9 @@ public class AuctionService {
 	}
 
 	// 경매 기록 방 저장
-	public HashMap<String, String> insertAuctionRoom(String auction_code) {
-		return mapper.insertAuctionRoom(auction_code);
-	}
+//	public HashMap<String, String> insertAuctionRoom(String auction_code) {
+//		return mapper.insertAuctionRoom(auction_code);
+//	}
 
 	
 }

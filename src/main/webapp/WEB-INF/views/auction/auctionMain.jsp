@@ -111,7 +111,7 @@ $(function() {
 					<!-- 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/20<span>명</span></div><br> -->
 													</div>
 												</div>
-												<a href="auction?auction_code=${auction.get('auction_code') }" class="clickArea">대화방바로가기</a>
+												<a href="auctionPeriod?auction_code=${auction.get('auction_code') }" class="clickArea">대화방바로가기</a>
 											</div>
 										</li>
 										</c:when>
