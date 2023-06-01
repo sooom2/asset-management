@@ -254,15 +254,18 @@
 				str += '<div class="itemText">';
 				str += price + '원';
 				str += '</div>';
-				str += '<div class="itemTagBox">';
 				
-				for(var i = 0; i < tag.length; i++) {
+				if(tag != "") {
+					str += '<div class="itemTagBox">';
 					
-					str += '<div class="itemSizeTag">';
-					str += tag[i];
+					for(var i = 0; i < tag.length; i++) {
+						str += '<div class="itemSizeTag">';
+						str += tag[i];
+						str += '</div>';
+					}
 					str += '</div>';
 				}
-				str += '</div>';
+				
 				str += '<div class="itemTimeTag">';
 				str += formattedDate;
 				str += '</div></div>';
@@ -402,7 +405,6 @@
 			
 			// 가격 설정
 			$(document).on("click", ".priceApplyBtn", function(e) {
-				
 				var item_price_min = $(".item_price_min").val();
 				var item_price_max = $(".item_price_max").val();
 				

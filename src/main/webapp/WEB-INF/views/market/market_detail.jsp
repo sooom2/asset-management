@@ -230,11 +230,11 @@ function toggleLike(element) {
 									</div>
 								</c:when>
 								<c:otherwise>
-									<div width="90%" class="SomeonesModifyButton"data-cd="${marketItem.item_code }">
-								<img
-									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_hellotalk.png"
-									alt="채팅 아이콘" class="SomeonesItemIcon">
-								<div color="#FFFFFF" class="SomeonesItemText">수정하기</div>
+									<div width="50%" class="SomeonesModifyButton"data-cd="${marketItem.item_code }">
+									<div color="#FFFFFF" class="SomeonesItemText">수정하기</div>
+									</div>
+									<div width="50%" class="SomeonesDeleteButton"data-cd="${marketItem.item_code }">
+									<div color="#FFFFFF" class="SomeonesItemText">삭제하기</div>
 									</div>
 								</c:otherwise>
 							</c:choose>

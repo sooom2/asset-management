@@ -514,7 +514,23 @@
     background: #bb2649;
     border-radius: 10px;
     padding: 18px 0;
-    width: 100%;
+    width: 50%;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.SomeonesDeleteButton {
+    margin-left: 6px;
+    cursor: pointer;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    background: #bb2649;
+    border-radius: 10px;
+    padding: 18px 0;
+    width: 50%;
     -webkit-box-pack: center;
     -webkit-justify-content: center;
     -ms-flex-pack: center;
