@@ -254,6 +254,8 @@ fileInput.addEventListener('change', handleFileSelect, false);
 			return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 		}
 	});
+	
+	
 </script>
 
 
@@ -263,6 +265,7 @@ fileInput.addEventListener('change', handleFileSelect, false);
 	font-weight: bold;
 	color: #bb2649;
 }
+
 
 /* 태그 아이콘 */
 .removeIcon {
@@ -284,39 +287,35 @@ fileInput.addEventListener('change', handleFileSelect, false);
 </style>
 
 <script>
-	document.addEventListener('DOMContentLoaded', function() {
-		// 카테고리 요소들을 선택합니다.
-		const items = document.querySelectorAll('.TextTextWrapper');
-		// 컬럼의 입력 필드를 선택합니다.
+  document.addEventListener('DOMContentLoaded', function() {
+    // marketItem.item_category 값을 가져와 선택된 항목을 스타일링합니다.
+    var selectedCategory = "${marketItem.item_category}";
+    var categoryItems = document.querySelectorAll('.TextTextWrapper');
 
-		const input = document
-				.querySelector('#item_category input[name="item_category"]');
+    // 선택된 항목에 selected 클래스를 추가하여 스타일을 변경합니다.
+    categoryItems.forEach(function(item) {
+      if (item.textContent.trim() === selectedCategory) {
+        item.classList.add('selected');
+      }
+    });
 
-		// 각 카테고리 요소에 클릭 이벤트를 추가합니다.
-		items.forEach(function(item) {
-			item.addEventListener('click', function() {
-				// 다른 요소들의 선택 상태를 제거합니다.
-				items.forEach(function(otherItem) {
-					otherItem.classList.remove('selected');
-				});
+    // 각 카테고리 요소에 클릭 이벤트를 추가합니다.
+    categoryItems.forEach(function(item) {
+      item.addEventListener('click', function() {
+        // 다른 요소들의 선택 상태를 제거합니다.
+        categoryItems.forEach(function(otherItem) {
+          otherItem.classList.remove('selected');
+        });
 
-				// 선택한 요소에 클래스를 추가합니다.
-				this.classList.add('selected');
+        // 선택한 요소에 클래스를 추가합니다.
+        this.classList.add('selected');
 
-				// 선택한 카테고리를 변수에 저장합니다.
-				const category = this.textContent;
-
-				// 선택한 카테고리를 저장합니다.
-				saveCategory(category);
-			});
-		});
-		//커밋
-		// 선택한 카테고리를 저장하는 함수입니다.
-		function saveCategory(category) {
-			console.log('Category saved:', category);
-			input.value = category;
-		}
-	});
+        // 선택한 카테고리를 저장합니다.
+        var categoryInput = document.querySelector('#item_category input[name="item_category"]');
+        categoryInput.value = this.textContent;
+      });
+    });
+  });
 </script>
 
 <script>
@@ -386,7 +385,7 @@ fileInput.addEventListener('change', handleFileSelect, false);
 											<c:forEach items="${images}" var="image">
 												<li>
 													<div class="up_img_box">
-														<img class="item_img" src="http://c3d2212t3.itwillbs.com/images/${image.image_name}"
+														<img class="item_img" src="${image.image_name}"
 															alt="${image.image_name}"> <img
 															class="img_delete_icon"
 															src="https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png"
@@ -443,6 +442,7 @@ fileInput.addEventListener('change', handleFileSelect, false);
 											<div class="TextTextWrapper">그외기타</div>
 										</div>
 										<input type="hidden" name="item_category" value="">
+									</div>
 								</dd>
 							</dl>
 							<dl class="sell_method_box">
@@ -476,13 +476,15 @@ fileInput.addEventListener('change', handleFileSelect, false);
 										<div id="price" class="PricePriceContainer">
 											<div class="priceCheckbox">
 												<input type="checkbox" id="priceCheckbox"
-													name="item_price_offer"> <label for="priceCheckbox">가격
-													제안하기</label>
+													name="item_price_offer"
+													<c:if test="${marketItem.item_price_offer eq 'Y'}">checked</c:if>>
+												<label for="priceCheckbox">가격제안하기</label>
 											</div>
 										</div>
 									</div>
 								</dd>
 							</dl>
+
 
 							<dl class="regist_tag">
 								<dt class="TitleTitleWrapper">
@@ -500,6 +502,7 @@ fileInput.addEventListener('change', handleFileSelect, false);
 									<input type="hidden" name="item_tag" value="">
 								</dd>
 							</dl>
+							
 							<dl class="text_area" id="desc">
 								<dt class="TitleTitleWrapper">
 									<label class="Title">상품설명</label>
