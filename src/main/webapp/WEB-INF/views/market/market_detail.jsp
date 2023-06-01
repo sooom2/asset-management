@@ -451,7 +451,11 @@ function toggleLike(element) {
 	
 		// 공유하기
 		$(document).on("click", ".TopNavigationIcon", function(e) {
-// 			gXuuDJ //
+			if ( $('.gXuuDJ').css('display') === 'none' ) {
+				$(".gXuuDJ").show();
+			} else {
+				$(".gXuuDJ").hide();
+			}
 			
 		});
 	});
