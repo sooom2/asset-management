@@ -12,133 +12,225 @@
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
-$(window).load(function() {
-	var maxImageCount = 5; // 최대 이미지 개수 설정
-	var fileInput = document.querySelector('input[type="file"]');
-	var imageList = document.querySelector('.image_list');
-	var countImg = document
-			.querySelector('.count_img span');
-	var defaultImage = document.querySelector('.default');
-	var draggedItem = null;
+// $(window).load(function() {
+// 	var maxImageCount = 5; // 최대 이미지 개수 설정
+// 	var fileInput = document.querySelector('input[type="file"]');
+// 	var imageList = document.querySelector('.image_list');
+// 	var countImg = document
+// 			.querySelector('.count_img span');
+// 	var defaultImage = document.querySelector('.default');
+// 	var draggedItem = null;
 
 	
-	function handleFileSelect(event) {
-		var files = event.target.files;
+// 	function handleFileSelect(event) {
+// 		var files = event.target.files;
 
-		// 이미지 개수가 최대 개수를 초과하는 경우 파일 선택을 제한
-		if (files.length + imageList.children.length > maxImageCount) {
-			alert('최대 ' + maxImageCount
-					+ '장의 사진만 업로드할 수 있습니다.');
-			fileInput.value = '';
-			return;
-		}
+// 		// 이미지 개수가 최대 개수를 초과하는 경우 파일 선택을 제한
+// 		if (files.length + imageList.children.length > maxImageCount) {
+// 			alert('최대 ' + maxImageCount
+// 					+ '장의 사진만 업로드할 수 있습니다.');
+// 			fileInput.value = '';
+// 			return;
+// 		}
 
-		// 선택한 파일들의 미리보기를 생성하여 추가
-		for (var i = 0; i < files.length; i++) {
-			var file = files[i];
+// 		// 선택한 파일들의 미리보기를 생성하여 추가
+// 		for (var i = 0; i < files.length; i++) {
+// 			var file = files[i];
 
-			// 이미지 개수가 최대 개수에 도달한 경우 파일 선택을 제한
-			if (imageList.children.length >= maxImageCount) {
-				alert('최대 ' + maxImageCount
-						+ '장의 사진만 업로드할 수 있습니다.');
-				fileInput.value = '';
-				return;
-			}
+// 			// 이미지 개수가 최대 개수에 도달한 경우 파일 선택을 제한
+// 			if (imageList.children.length >= maxImageCount) {
+// 				alert('최대 ' + maxImageCount
+// 						+ '장의 사진만 업로드할 수 있습니다.');
+// 				fileInput.value = '';
+// 				return;
+// 			}
 
-			var previewContainer = document.createElement('li');
-			var img = document.createElement('img');
-			img.classList.add('item_img');
-			img.src = URL.createObjectURL(file);
+// 			var previewContainer = document.createElement('li');
+// 			var img = document.createElement('img');
+// 			img.classList.add('item_img');
+// 			img.src = URL.createObjectURL(file);
 
-			var deleteIcon = document.createElement('img');
-			deleteIcon.classList.add('img_delete_icon');
-			deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
-			deleteIcon.alt = '상품 썸네일 제거 아이콘';
+// 			var deleteIcon = document.createElement('img');
+// 			deleteIcon.classList.add('img_delete_icon');
+// 			deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
+// 			deleteIcon.alt = '상품 썸네일 제거 아이콘';
 
-// 			// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
-// 			deleteIcon.addEventListener('click', function() {
-// 			  var imageContainer = this.closest('li');
-// 			  imageContainer.parentNode.removeChild(imageContainer);
-// 			  updateImageCount();
-// 			});
+
 			
-			// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
-			imageList.addEventListener('click', function(event) {
-			  if (event.target.classList.contains('img_delete_icon')) {
-			    var imageContainer = event.target.closest('li');
-			    imageContainer.parentNode.removeChild(imageContainer);
-			    updateImageCount();
-			  }
-			});
+// 			// 이미지 삭제 아이콘 클릭 시 해당 이미지를 삭제하는 이벤트 핸들러 추가
+// 			imageList.addEventListener('click', function(event) {
+// 			  if (event.target.classList.contains('img_delete_icon')) {
+// 			    var imageContainer = event.target.closest('li');
+// 			    imageContainer.parentNode.removeChild(imageContainer);
+// 			    updateImageCount();
+// 			  }
+// 			});
 
 
 
 
-			var imageBox = document.createElement('div');
-			imageBox.classList.add('up_img_box');
-			imageBox.appendChild(deleteIcon);
-			imageBox.appendChild(img);
+// 			var imageBox = document.createElement('div');
+// 			imageBox.classList.add('up_img_box');
+// 			imageBox.appendChild(deleteIcon);
+// 			imageBox.appendChild(img);
 
-			previewContainer.appendChild(imageBox);
-			imageList.appendChild(previewContainer);
+// 			previewContainer.appendChild(imageBox);
+// 			imageList.appendChild(previewContainer);
 
-			updateImageCount();
-		}
-	}
+// 			updateImageCount();
+// 		}
+// 	}
 
-	function updateImageCount() {
-		countImg.textContent = imageList.children.length;
-	}
+// 	function updateImageCount() {
+// 		countImg.textContent = imageList.children.length;
+// 	}
 
-	// default 버튼 클릭 시 파일 입력 필드를 클릭하여 파일 선택 창을 열도록 설정
-	defaultImage.addEventListener('click', function() {
-		fileInput.click();
-	});
+// 	// default 버튼 클릭 시 파일 입력 필드를 클릭하여 파일 선택 창을 열도록 설정
+// 	defaultImage.addEventListener('click', function() {
+// 		fileInput.click();
+// 	});
 
-	fileInput.addEventListener('change', handleFileSelect,
-			false);
+// 	fileInput.addEventListener('change', handleFileSelect,
+// 			false);
 
-	// 드래그 앤 드롭 이벤트 처리
-	imageList.addEventListener('dragstart',
-			function(event) {
-				draggedItem = event.target.closest('li');
-			});
+// 	// 드래그 앤 드롭 이벤트 처리
+// 	imageList.addEventListener('dragstart',
+// 			function(event) {
+// 				draggedItem = event.target.closest('li');
+// 			});
 
-	imageList.addEventListener('dragover', function(event) {
-		event.preventDefault();
-	});
+// 	imageList.addEventListener('dragover', function(event) {
+// 		event.preventDefault();
+// 	});
 
-	imageList.addEventListener('drop', function(event) {
-		event.preventDefault();
-		var droppedItem = event.target.closest('li');
+// 	imageList.addEventListener('drop', function(event) {
+// 		event.preventDefault();
+// 		var droppedItem = event.target.closest('li');
 
-		if (draggedItem && imageList.contains(draggedItem)
-				&& droppedItem
-				&& imageList.contains(droppedItem)) {
-			var draggedIndex = Array.from(
-					imageList.children)
-					.indexOf(draggedItem);
-			var droppedIndex = Array.from(
-					imageList.children)
-					.indexOf(droppedItem);
+// 		if (draggedItem && imageList.contains(draggedItem)
+// 				&& droppedItem
+// 				&& imageList.contains(droppedItem)) {
+// 			var draggedIndex = Array.from(
+// 					imageList.children)
+// 					.indexOf(draggedItem);
+// 			var droppedIndex = Array.from(
+// 					imageList.children)
+// 					.indexOf(droppedItem);
 
-			if (draggedIndex !== droppedIndex) {
-				// 드래그된 이미지를 드롭된 위치로 이동
-				if (draggedIndex < droppedIndex) {
-					imageList.insertBefore(droppedItem,
-							draggedItem);
-				} else {
-					imageList.insertBefore(draggedItem,
-							droppedItem);
-				}
+// 			if (draggedIndex !== droppedIndex) {
+// 				// 드래그된 이미지를 드롭된 위치로 이동
+// 				if (draggedIndex < droppedIndex) {
+// 					imageList.insertBefore(droppedItem,
+// 							draggedItem);
+// 				} else {
+// 					imageList.insertBefore(draggedItem,
+// 							droppedItem);
+// 				}
 
-				updateImageCount();
-			}
-		}
+// 				updateImageCount();
+// 			}
+// 		}
 
-		draggedItem = null;
-	});
+// 		draggedItem = null;
+// 	});
+// });
+$(window).load(function() {
+  var maxImageCount = 5;
+  var fileInput = document.querySelector('input[type="file"]');
+  var imageList = document.querySelector('.image_list');
+  var countImg = document.querySelector('.count_img span');
+  var defaultImage = document.querySelector('.default');
+  var draggedItem = null;
+
+  function handleFileSelect(event) {
+    var files = event.target.files;
+
+    if (files.length + imageList.children.length > maxImageCount) {
+      alert('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
+      fileInput.value = '';
+      return;
+    }
+
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+
+      if (imageList.children.length >= maxImageCount) {
+        alert('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
+        fileInput.value = '';
+        return;
+      }
+
+      var previewContainer = document.createElement('li');
+      var img = document.createElement('img');
+      img.classList.add('item_img');
+      img.src = URL.createObjectURL(file);
+
+      var deleteIcon = document.createElement('img');
+      deleteIcon.classList.add('img_delete_icon');
+      deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
+      deleteIcon.alt = '상품 썸네일 제거 아이콘';
+
+      var imageBox = document.createElement('div');
+      imageBox.classList.add('up_img_box');
+      imageBox.appendChild(deleteIcon);
+      imageBox.appendChild(img);
+
+      previewContainer.appendChild(imageBox);
+      imageList.appendChild(previewContainer);
+
+      updateImageCount();
+    }
+  }
+
+  function updateImageCount() {
+    countImg.textContent = imageList.children.length;
+  }
+
+  defaultImage.addEventListener('click', function() {
+    fileInput.click();
+  });
+
+  fileInput.addEventListener('change', handleFileSelect, false);
+
+  imageList.addEventListener('click', function(event) {
+    if (event.target.classList.contains('img_delete_icon')) {
+      var imageContainer = event.target.closest('li');
+      imageContainer.parentNode.removeChild(imageContainer);
+      updateImageCount();
+    }
+  });
+
+  imageList.addEventListener('dragstart', function(event) {
+    draggedItem = event.target.closest('li');
+  });
+
+  imageList.addEventListener('dragover', function(event) {
+    event.preventDefault();
+  });
+
+  imageList.addEventListener('drop', function(event) {
+    event.preventDefault();
+    var droppedItem = event.target.closest('li');
+
+    if (draggedItem && imageList.contains(draggedItem) && droppedItem && imageList.contains(droppedItem)) {
+      var draggedIndex = Array.from(imageList.children).indexOf(draggedItem);
+      var droppedIndex = Array.from(imageList.children).indexOf(droppedItem);
+
+      if (draggedIndex !== droppedIndex) {
+        if (draggedIndex < droppedIndex) {
+          imageList.insertBefore(droppedItem, draggedItem);
+        } else {
+          imageList.insertBefore(draggedItem, droppedItem);
+        }
+
+        updateImageCount();
+      }
+    }
+
+    draggedItem = null;
+  });
 });
+
 
 	//태그기능 
 document.addEventListener('DOMContentLoaded', function() {
@@ -217,20 +309,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 });
 
-//파일 인풋 
 
-	var fileInput = document.querySelector('input[type="file"]');
-
-	function handleFileSelect(event) {
-		var files = event.target.files;
-
-		// 파일 선택된 후에 처리할 로직 작성
-		// 파일 객체(files)를 활용하여 원하는 동작 수행
-	}
-
-	fileInput.addEventListener('change', handleFileSelect, false);	
 	
-	// marketItem.item_category 값을 가져와 선택된 항목을 스타일링합니다.
+// 상품 카테고리	
+  document.addEventListener('DOMContentLoaded', function() {
+    // marketItem.item_category 값을 가져와 선택된 항목을 스타일링합니다.
     var selectedCategory = "${marketItem.item_category}";
     var categoryItems = document.querySelectorAll('.TextTextWrapper');
 
@@ -257,27 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
         categoryInput.value = this.textContent;
       });
     });
-    
-    var form = document.querySelector(".insertItem");
-
-    // 양식에 제출 이벤트 리스너 추가
-    form.addEventListener("submit", function(event) {
-      // 입력 필드 가져오기
-      var titleInput = form.querySelector('input[name="item_subject"]');
-      var categoryInput = form.querySelector('input[name="item_category"]');
-      var priceInput = form.querySelector('input[name="item_price"]');
-      var contentInput = form.querySelector('textarea[name="item_content"]');
-
-      // 입력 필드 유효성 검사
-      if (titleInput.value.trim() === "" || categoryInput.value.trim() === "" || priceInput.value.trim() === "" || contentInput.value.trim() === "") {
-        // 양식 제출 방지
-        event.preventDefault();
-
-        // 오류 메시지 표시 또는 원하는 작업 수행
-        alert("필수 항목을 모두 입력해주세요.");
-    };
-	
-})
+  });
 
 </script>
 
@@ -334,20 +397,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	color: #ff0000;
 }
 </style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    
-  });
-</script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // 양식 요소 가져오기
-    
-  });
-</script>
-
 
 </head>
 <body>
@@ -446,7 +495,7 @@ document.addEventListener('DOMContentLoaded', function() {
 											<div class="TextTextWrapper">유아동/반려동물</div>
 											<div class="TextTextWrapper">그외기타</div>
 										</div>
-										<input type="hidden" name="item_category" value="">
+										<input type="hidden" name="item_category" value="${marketItem.item_category}">
 									</div>
 								</dd>
 							</dl>

@@ -495,7 +495,7 @@ public class MarketController {
 	
 	//상품 수정 
 	@PostMapping(value = "itemModifyPro")
-	public String itemModifyPro(@RequestParam HashMap<String, String> item, Model model, HttpSession session, @RequestParam("file") List<MultipartFile> files) {
+	public String itemModifyPro(@RequestParam HashMap<String, String> item, Model model, HttpSession session, @RequestParam(value = "file", required = false) List<MultipartFile> files) {
 	    String id = (String) session.getAttribute("sId");
 	    String uploadDir = session.getServletContext().getRealPath("/resources/upload");
 	    System.out.println(item);
@@ -510,39 +510,54 @@ public class MarketController {
 
 	        // 아이템 수정
 	        int updateCount = service.updateItem(item);
-	        
-	        // 사진 수정시 기존 사진 삭제
+
+	        // 사진 수정 여부 확인
+	        boolean photoChanged = false;
+	        if (files != null && !files.isEmpty()) {
+	            for (MultipartFile file : files) {
+	                if (!file.isEmpty()) {
+	                    photoChanged = true;
+	                    break;
+	                }
+	            }
+	        }
 
 	        // 아이템 수정에 성공한 경우에만 사진 정보 저장
 	        if (updateCount > 0) {
-	        	int deleteCount = service.removeImage(itemCode);
-	            // 사진 정보를 저장
-	        	for (int i = 0; i < files.size(); i++) {
-	                MultipartFile file = files.get(i);
-	                if (!file.isEmpty()) {
-	                    String fileName = file.getOriginalFilename();
-	                    String fileExtension = FilenameUtils.getExtension(fileName);
-	                    
-	                    String uuid = UUID.randomUUID().toString();
-	                    
-	                    String storedFileName = uuid.substring(0,8) + "." + fileExtension;
-	                    
-	                    String filePath = uploadDir + "/" + storedFileName;
-	                    
-	                    String saveFileName = "http://c3d2212t3.itwillbs.com/images/" + storedFileName;
-	                    File dest = new File(filePath);
-	                    // upload 디렉토리가 없을때 생성하는 메서드
-	                    dest.mkdirs();
-	                    file.transferTo(dest);
+	            // 사진 수정한 경우 기존 사진 삭제
+	            if (photoChanged) {
+	                int deleteCount = service.removeImage(itemCode);
+	            }
 
-	                    // 사진 정보를 저장
-	                    HashMap<String, String> saveImage = new HashMap<>();
-	                    saveImage.put("image_code", uuid);
-	                    saveImage.put("item_code", itemCode);
-	                    saveImage.put("image_name", saveFileName);
+	            // 새로운 사진 정보를 저장
+	            if (files != null && !files.isEmpty()) {
+	                for (int i = 0; i < files.size(); i++) {
+	                    MultipartFile file = files.get(i);
+	                    if (!file.isEmpty()) {
+	                        String fileName = file.getOriginalFilename();
+	                        String fileExtension = FilenameUtils.getExtension(fileName);
 
-	                    // 사진 정보 저장 메서드 호출
-	                    service.saveImage(saveImage);
+	                        String uuid = UUID.randomUUID().toString();
+
+	                        String storedFileName = uuid.substring(0, 8) + "." + fileExtension;
+
+	                        String filePath = uploadDir + "/" + storedFileName;
+
+	                        String saveFileName = "http://c3d2212t3.itwillbs.com/images/" + storedFileName;
+	                        File dest = new File(filePath);
+	                        // upload 디렉토리가 없을때 생성하는 메서드
+	                        dest.mkdirs();
+	                        file.transferTo(dest);
+
+	                        // 사진 정보를 저장
+	                        HashMap<String, String> saveImage = new HashMap<>();
+	                        saveImage.put("image_code", uuid);
+	                        saveImage.put("item_code", itemCode);
+	                        saveImage.put("image_name", saveFileName);
+
+	                        // 사진 정보 저장 메서드 호출
+	                        service.saveImage(saveImage);
+	                    }
 	                }
 	            }
 
@@ -559,6 +574,7 @@ public class MarketController {
 	        return "fail_back";
 	    }
 	}
+
 
 	
 
