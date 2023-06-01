@@ -527,6 +527,7 @@ document.addEventListener('DOMContentLoaded', function() {
 								<button class="btn_item_cancel" type="button">취소</button>
 							</a>
 							<button class="btn_item_submit" type="submit">상품 수정</button>
+							<input type="hidden" id="item_code" name="item_code" value="${marketItem.item_code}">
 							<a href="main">
 								<button class="btn_item_cancel" type="button">상품 삭제</button>
 							</a>
