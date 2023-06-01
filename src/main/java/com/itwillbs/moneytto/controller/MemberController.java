@@ -1,10 +1,14 @@
 package com.itwillbs.moneytto.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.itwillbs.moneytto.service.MailSendService;
 import com.itwillbs.moneytto.service.MemberService;
@@ -46,14 +51,29 @@ public class MemberController {
 	
 	// 회원가입
 	@RequestMapping(value = "joinPro", method = RequestMethod.POST)
-	public String joinPro(@RequestParam HashMap<String, String> member, Model model) {
+	public String joinPro(@RequestParam HashMap<String, String> member
+							,Model model, HttpSession session
+							,@RequestParam("file") MultipartFile file) {
 		
 		String securePasswd = new BCryptPasswordEncoder().encode(member.get("member_pw"));
 		
-		// 좌표
+		String uploadDir = session.getServletContext().getRealPath("/resources/upload/member");
+		
+        String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
+        
+        String uuid = UUID.randomUUID().toString();
+        
+        String storedFileName = uuid.substring(0,8) + "." + fileExtension;
+        
+        String filePath = uploadDir + "/" + storedFileName;
+        String saveDir = "http://c3d2212t3.itwillbs.com/images/member/" + storedFileName;
+		
 		if(member.get("member_image").isEmpty()) {
 			member.put("member_image", "http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg");
+		}else {
+	        member.put("member_image", saveDir);
 		}
+		
 		String location = memberService.setLocation(member.get("member_address"));
 		member.put("member_location",location);
 		
@@ -61,9 +81,20 @@ public class MemberController {
 		int insertCount = memberService.registMember(member);
 		
 		if(insertCount > 0) { // 가입 성공
-			model.addAttribute("member", member);
-			return "member/mem_join_success";
 			
+			
+			try {
+				file.transferTo(new File(filePath));
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			model.addAttribute("member", member);
+			
+			return "member/mem_join_success";
 		} else { // 가입 실패
 			model.addAttribute("msg", "회원 가입 실패!");
 			

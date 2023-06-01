@@ -6,9 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="${path }/resources/css/main.css" rel="stylesheet">
-<link href="${path }/resources/css/common.css" rel="stylesheet">
-<link href="${path }/resources/css/inc.css" rel="stylesheet">
 <link href="${path }/resources/css/member.css" rel="stylesheet" >
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -26,6 +23,11 @@ window.onload = function(){
             }
         }).open();
     });
+    
+    $('input[type="file"]').change(function(){
+    	var file = $(this)[0].files[0]
+    	$(".previewImg").attr('src', URL.createObjectURL(file))
+    })
 }
 
 $("form").submit(function() {
@@ -75,15 +77,23 @@ $("form").submit(function() {
 		<div id="content">
 			<div class="section group section-member">
 				<div class="title">회원가입</div>
-				<div class="wrap-member-box wrap-join-box" id="join_confirm_section">
+				<div class="wrap-member-box wrap-join-box" id="join_confirm_section" >
 					<ul class="join-indicator">
 						<li>이메일 입력(소셜 가입)</li>
 						<li class="selected">회원정보 입력</li>
 						<li>가입 완료</li>
 					</ul>
-					<form action="joinPro" name="form-join" id="form-join" method="post">
+					<form action="joinPro" name="form-join" id="form-join" method="post" enctype="multipart/form-data">
 						<div class="wrap-inside">
-
+						
+							<div class="profile_edit_image">
+								<label class="profile_edit_image_box" id="upFile">
+									<img src="http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg" alt="프로필 이미지" class="previewImg">
+									<img src="https://ccimage.hellomarket.com/img/web/member/edit_camera.svg" alt="프로필 사진 등록 이미지">
+									<input type="file" class="pf_img" name="file" id="upFile" accept="image/jpeg, image/png">
+								</label>
+							</div>
+							
 							<div class="join-detail">
 								<label class="label-input" for="id"> <span>아이디</span>
 								<input type="text" id="member_id" name="member_id" class="input" placeholder="아이디 입력해주세요">

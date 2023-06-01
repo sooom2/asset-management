@@ -37,14 +37,28 @@ public class MypageController {
 	// 마이페이지 메인
 	@RequestMapping(value ="mypage", method = RequestMethod.GET)
 	public String mypage(@RequestParam(name ="itemList" , defaultValue = "sellItem") String itemType
-						,HttpSession session, Model model) {
+						,HttpSession session, Model model, String member_id) {
 		String id = (String)session.getAttribute("sId");
 		
-		if(id == null) {
-			model.addAttribute("msg", "로그인 후 시도해주세요.");
-			model.addAttribute("target","memLogin");
-			return "success";
+		// 입력받은 member_id가 없고 sId도 없으면
+		// 널체크
+		if(id == null && member_id == null) {					// 나가
+			model.addAttribute("msg", "잘못된 접근입니다.");
 		}
+		// 입력받은 member_id 가 sId랑 같을때
+		if(id == member_id) {	// 마이페이지
+
+		}
+		// 입력받은 member_id 가 없고 sId가 있으면   
+		if(member_id == null || id != null) {	// 마이페이지
+			
+		}
+		// 입력받은 member_id가 sId랑 다를때 유어페이지
+		if(member_id != id) {	// 타인페이지
+			
+		}
+		
+		
 		
 		List<HashMap<String,String>> itemList = null;
 		
