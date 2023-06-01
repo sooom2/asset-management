@@ -256,9 +256,7 @@
 						
 						if(image == null) {
 							image = "${path }/resources/images/main/noThumbnail.jpg";
-						} else {
-					        image = "http://c3d2212t3.itwillbs.com/images/" + image;
-					    }
+						}
 
 						var str = '<div class="itemThumbnailBox" data-cd="';
 						str += code;
