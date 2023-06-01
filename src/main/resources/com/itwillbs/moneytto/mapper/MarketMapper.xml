@@ -91,11 +91,11 @@
                         chat_code,
                         member.member_id AS oppenent_id
            	   		FROM   market_chat_messages
-	                      LEFT JOIN member
+	                      JOIN member
 	                             ON member.member_id = market_chat_messages.sell_member_id
-	                      LEFT JOIN market_chat_rooms
+	                      JOIN market_chat_rooms
 	                      		 ON market_chat_rooms.room_code = market_chat_messages.room_code
-	                      LEFT JOIN item 
+	                      JOIN item 
 	                      		 ON item.item_code=market_chat_rooms.item_code 
               		 WHERE  buy_member_id = #{ssesion_id}
                UNION
@@ -103,11 +103,11 @@
 	                    chat_code,
 	                    member.member_id AS oppenent_id
 	             	FROM   market_chat_messages
-		                    LEFT JOIN member
+		                    JOIN member
 		                           ON member.member_id = market_chat_messages.buy_member_id
-		                    LEFT JOIN market_chat_rooms
+		                    JOIN market_chat_rooms
 	                      		   ON market_chat_rooms.room_code = market_chat_messages.room_code
-                  		   	LEFT JOIN item 
+                  		   	JOIN item 
 	                      		 ON item.item_code=market_chat_rooms.item_code 
               		 WHERE  sell_member_id = #{ssesion_id}
              	) AS a
@@ -131,11 +131,11 @@
                         market_chat_rooms.chat_openDate,
                         item.item_status 
            	   		FROM   market_chat_messages
-	                      LEFT JOIN member
+	                      JOIN member
 	                             ON member.member_id = market_chat_messages.sell_member_id
-	                      LEFT JOIN market_chat_rooms
+	                      JOIN market_chat_rooms
 	                      		 ON market_chat_rooms.room_code = market_chat_messages.room_code
-	                      LEFT JOIN item 
+	                      JOIN item 
 	                      		 ON item.item_code=market_chat_rooms.item_code 
               		 WHERE  buy_member_id = #{id}
                UNION
@@ -148,11 +148,11 @@
 	                    market_chat_rooms.chat_openDate,
 	                     item.item_status 
 	             	FROM   market_chat_messages
-		                    LEFT JOIN member
+		                    JOIN member
 		                           ON member.member_id = market_chat_messages.buy_member_id
-		                    LEFT JOIN market_chat_rooms
+		                    JOIN market_chat_rooms
 	                      		   ON market_chat_rooms.room_code = market_chat_messages.room_code
-                  		   	LEFT JOIN item 
+                  		   	JOIN item 
 	                      		 ON item.item_code=market_chat_rooms.item_code 
               		 WHERE  sell_member_id = #{id}
              	) AS a
@@ -262,11 +262,11 @@
                         item.item_status,
                         market_chat_rooms.chat_openDate
            	   		FROM   market_chat_messages
-	                      LEFT JOIN member
+	                      JOIN member
 	                             ON member.member_id = market_chat_messages.sell_member_id
-	                      LEFT JOIN market_chat_rooms
+	                      JOIN market_chat_rooms
 	                      		 ON market_chat_rooms.room_code = market_chat_messages.room_code
-	                      LEFT JOIN item 
+	                      JOIN item 
 	                      		 ON item.item_code=market_chat_rooms.item_code 
               		 WHERE  buy_member_id = #{id}
                UNION
@@ -279,11 +279,11 @@
 	                    item.item_status,
 	                    market_chat_rooms.chat_openDate
 	             	FROM   market_chat_messages
-		                    LEFT JOIN member
+		                    JOIN member
 		                           ON member.member_id = market_chat_messages.buy_member_id
-		                    LEFT JOIN market_chat_rooms
+		                    JOIN market_chat_rooms
 	                      		   ON market_chat_rooms.room_code = market_chat_messages.room_code
-                  		   	LEFT JOIN item 
+                  		   	JOIN item 
 	                      		 ON item.item_code=market_chat_rooms.item_code 
               		 WHERE  sell_member_id = #{id}
              	) AS a

@@ -21,9 +21,15 @@ public interface MarketMapper {
 	
 	//상대방물건판매갯수
 	int sellCount(String openentId);
+	
+
 	// 채팅방개설가능한지
 	int isInsertChatRoom(@Param("item_code") String item_code,@Param("id") String id);
 
+	//채팅방 생성
+	int insertChatRoom(@Param("roomCode") String roomCode,@Param("itemCode") String itemCode,@Param("messages") String messages);
+	
+	
 	// 내채팅목록
 	List<HashMap<String, String>> myChatList(String id);
 	List<HashMap<String, String>> myChatAllList(String id);
@@ -86,8 +92,6 @@ public interface MarketMapper {
 	// 다음방번호찾기
 	int nextRoomCode();
 
-	//채팅방 생성
-	int insertChatRoom(@Param("roomCode") String roomCode,@Param("itemCode") String itemCode,@Param("messages") String messages);
 
 	//판매자아이디 찾기
 	HashMap<String, String> sellId(String item_code);

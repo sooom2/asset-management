@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
@@ -204,7 +205,7 @@ public class MarketController {
 	@GetMapping(value = "marketChat")
 	   public String marketChat(Model model,HttpServletResponse response,HttpSession session,@RequestParam(defaultValue = "") String item_code) {
 	      String id = (String)session.getAttribute("sId");
-	      HashMap<String, String> member = memberService.getMember(id);
+	      Map<String, String> member = memberService.getMember(id);
 	      if(id==null) {
 	         model.addAttribute("msg","로그인해주세요");
 	         return "fail_back";
@@ -219,7 +220,7 @@ public class MarketController {
 	      System.out.println("===============================");
 	      
 	      //상대방아이디
-	      HashMap<String, String> oppenentId = null;
+	      Map<String, String> oppenentId = null;
 	      //마지막 채팅 내역 
 	      List<HashMap<String, String>> myChatList = null;
 	      HashMap<String, Integer> chatList = null;
@@ -231,7 +232,7 @@ public class MarketController {
 	         System.out.println("item_code있음"+item_code);
 	         // 아이템선택후 들어가야함
 	         // 채팅방이있는지 조회한후 채팅방 생성 //
-	         int createRoom = marketChatService.insertChatRoom(item_code,id);
+	         int createRoom = marketChatService.isInsertChatRoom(item_code,id);
 	         System.out.println(createRoom);
 	         
 	         
@@ -247,7 +248,6 @@ public class MarketController {
 	            System.out.println("1 ==========================================");
 	            System.out.println(chatList);
 	            System.out.println("1 ==========================================");
-	            
 	            
 	            room_code = chatList.get("room_code");
 	            //2. room_code로 채팅내용조회
@@ -278,6 +278,7 @@ public class MarketController {
 	            HashMap<String, String> item = marketChatService.getItemList(item_code);
 	            
 	            String sellId = item.get("member_id");
+	            System.out.println("sellId");
 	            System.out.println("chatDetail 에서  방이없을경우"+item_code+",룸코드: "+room_code+","+sellId);
 	            model.addAttribute("sellId",sellId);
 	         }
@@ -303,9 +304,14 @@ public class MarketController {
 	         HashMap<String, String> mapItemCode = marketChatService.getItem_code(room_code);
 	         item_code = mapItemCode.get("item_code");
 	         System.out.println("nav에서 들어갔을때 " + item_code);
-	         //3. 상대방 판매상품갯수조회
-	         //상대방의 아이디 조회
+	         System.out.println("-----------------========================");
+	         System.out.println(id);
+	         System.out.println("-----------------========================");
+	         //상대방의 아이디 조회 > nav 일떄는 최근room_code
 	         oppenentId = marketChatService.getOppenentId(room_code, id);
+	         System.out.println(oppenentId);
+	         
+	         
 	         // 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
 	         sellCount = marketChatService.getSellCount(oppenentId.get("oppenent_id"));
 	         
