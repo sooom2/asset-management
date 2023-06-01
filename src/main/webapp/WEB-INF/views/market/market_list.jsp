@@ -239,6 +239,11 @@
 	 			dataType: "json",
 	 			success: function(response) { 
 	 				console.log("marketItemList : 요청처리성공");
+	 				
+	 				 if (response.length == 0) {
+	 		           let count = 0;
+	 		           $(".Count").empty().append(count);
+	 				 } else {
 	 				for(let item of response) {
 						let category = item.item_category;
 						let subject = item.item_subject;
@@ -292,7 +297,7 @@
 						
 						$(".itemWrapper").append(str);
 						$(".Count").empty().append(count);
-						
+		 				}
 	 				}
 	 			},
 	 			error: function(xhr, textStatus, errorThrown) {
