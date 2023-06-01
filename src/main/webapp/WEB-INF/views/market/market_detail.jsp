@@ -47,14 +47,11 @@ function toggleLike(element) {
 <input type="hidden" id="target_id" name="target_id" value="${marketItem.member_id}"/>
 <input type="hidden" id="report_type" name="report_type" value=""/>
 <input type="hidden" id="report_content" name="report_content" value=""/>
-	<jsp:include page="../nav.jsp" />
+<jsp:include page="../nav.jsp" />
 	<div id="next">
-
 		<div class="layoutChildren"></div>
-
 		<div class="newDetailWrapper">
 			<div class="newDetailMain">
-				
 				<!--왼쪽섹션 -->
 				<div class="leftSectionWrapper">
 					<div class="MainImgWrapper">
@@ -82,7 +79,6 @@ function toggleLike(element) {
 											<img src="${itemImage.image_name}" alt="preview" class="PreviewImgListItemImg">
 										</c:forEach>
 									</div>
-
 								</div>
 							</div>
 						</div>
@@ -168,7 +164,6 @@ function toggleLike(element) {
 <!-- 								<div class="SubTitleDetailText">0</div> -->
 <!-- 							</div> -->
 						</div>
-
 					</div>
 					
 					<!-- 카테고리 -->
@@ -238,8 +233,6 @@ function toggleLike(element) {
 									</div>
 								</c:otherwise>
 							</c:choose>
-							
-							
 						</div>
 					</div>
 					
@@ -349,14 +342,6 @@ function toggleLike(element) {
 				</div>
 			</div>
 		</div>
-		
-		
-		
-		
-		
-
-
-
 	</div>
 	
 <script type="text/javascript">
@@ -451,9 +436,9 @@ function toggleLike(element) {
 	
 		// 공유하기
 		$(document).on("click", ".TopNavigationIcon", function(e) {
-			if ( $('.gXuuDJ').css('display') === 'none' ) {
+			if($('.gXuuDJ').css('display') === 'none'){
 				$(".gXuuDJ").show();
-			} else {
+			} else{
 				$(".gXuuDJ").hide();
 			}
 			

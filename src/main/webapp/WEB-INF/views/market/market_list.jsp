@@ -11,29 +11,28 @@
 <script type="text/javascript" src="${path }/resources/js/moment.js"></script>
 <title>Insert title here</title>
 </head>
-  <body>
-  <input type="hidden" id="item_category" name="item_category" value="">
-  <input type="hidden" id="item_status" name="item_status" value="판매중">
-  <input type="hidden" id="item_price_min" name="item_price_min" value="0">
-  <input type="hidden" id="item_price_max" name="item_price_max" value="999999999999999">
-  <input type="hidden" id="member_grade" name="member_grade" value="">
-  <input type="hidden" id="sort" name="sort" value="default">
-  <input type="hidden" id="item_code" name="item_code" value="">
-  <input type="hidden" id="tag" name="tag" value="">
+<body>
+<input type="hidden" id="item_category" name="item_category" value="">
+<input type="hidden" id="item_status" name="item_status" value="판매중">
+<input type="hidden" id="item_price_min" name="item_price_min" value="0">
+<input type="hidden" id="item_price_max" name="item_price_max" value="999999999999999">
+<input type="hidden" id="member_grade" name="member_grade" value="">
+<input type="hidden" id="sort" name="sort" value="default">
+<input type="hidden" id="item_code" name="item_code" value="">
+<input type="hidden" id="tag" name="tag" value="">
   
-  <jsp:include page="../nav.jsp" />
-        <div id="__next">
-            <div class="layout__Header-sc-1fg0dfe-0 iSTjqT">
-                <div class="header__Wrapper-hucg1a-0 dncKiK">
-                    <div class="header__Gnb-hucg1a-1 fixMZO">
-                    </div>
-                </div>
-            </div>
-            <div class="layout__Children-sc-1fg0dfe-2 jjXXzz"></div>
-    	    <div class="newSearchWrapper">
-    	    <!-- 카테고리 -->
-            <div class="webWrapper">
-	           	 <div class="barWrapper">
+<jsp:include page="../nav.jsp" />
+	<div id="__next">
+		<div class="layout__Header-sc-1fg0dfe-0 iSTjqT">
+			<div class="header__Wrapper-hucg1a-0 dncKiK">
+				<div class="header__Gnb-hucg1a-1 fixMZO"></div>
+			</div>
+		</div>
+		<div class="layout__Children-sc-1fg0dfe-2 jjXXzz"></div>
+   	    <div class="newSearchWrapper">
+   	    <!-- 카테고리 -->
+			<div class="webWrapper">
+				<div class="barWrapper">
 <!-- 	           	 	<div class="FilterBoxWrapper-active"> -->
 <!-- 	           	 		<div class="FilterBoxTopic"> -->
 <!-- 		           	 		<div class="FilterBoxName">#내지역이름</div> -->
@@ -41,40 +40,40 @@
 <!-- 	           	 		</div> -->
 <!--            	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow"> -->
 <!-- 	          	 	</div> -->
-	          	 	<div class="FilterBoxWrapper FilterCategory">
-	           	 		<div class="FilterBoxTopic" >
-	           	 			<div class="FilterBoxName">#카테고리</div>
+					<div class="FilterBoxWrapper FilterCategory">
+						<div class="FilterBoxTopic" >
+							<div class="FilterBoxName">#카테고리</div>
 <!-- 	           	 			<div class="FilterBoxCount">#</div> -->
-	           	 		</div>
-	           	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
-	          	 	</div>
-	          	 	<div class="FilterBoxWrapper FilterPrice">
-	           	 		<div class="FilterBoxTopic">
-	           	 			<div class="FilterBoxName">#가격</div>
+						</div>
+						<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
+					</div>
+					<div class="FilterBoxWrapper FilterPrice">
+						<div class="FilterBoxTopic">
+							<div class="FilterBoxName">#가격</div>
 <!-- 	           	 			<div class="FilterBoxCount">#</div> -->
-	           	 		</div>
-           	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
-	          	 	</div>
-					<!-- 등급 -->
+						</div>
+						<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
+					</div>
+				<!-- 등급 -->
 					<div class="FilterBoxWrapper FilterGrade">
-	           	 		<div class="FilterBoxTopic">
-	           	 			<div class="FilterBoxName"><label for="grade"><input type="checkbox" value="checked" id="grade"/>새싹 등급 이상 판매자</label></div>
-	           	 		</div>
-	          	 	</div>
-			          	 
-			        <!-- 거래완료 제외하고 보기 -->
-			        <div class="FilterBoxWrapper FilterCompleted">
-	           	 		<div class="FilterBoxTopic">
-	           	 			<div class="FilterBoxName"><label for="complete"><input type="checkbox" value="checked" id="complete" checked="checked"/>거래 완료 물품 제외</label></div>
-	           	 		</div>
-	          	 	</div>
+						<div class="FilterBoxTopic">
+							<div class="FilterBoxName"><label for="grade"><input type="checkbox" value="checked" id="grade"/>새싹 등급 이상 판매자</label></div>
+						</div>
+					</div>
+		          	 
+		        <!-- 거래완료 제외하고 보기 -->
+					<div class="FilterBoxWrapper FilterCompleted">
+						<div class="FilterBoxTopic">
+							<div class="FilterBoxName"><label for="complete"><input type="checkbox" value="checked" id="complete" checked="checked"/>거래 완료 물품 제외</label></div>
+						</div>
+					</div>
 			        
 			        	
-	                <div class="searchIconWrapper marketListSearch">
-					<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
-					<div class="searchSearch"><form id="searchForm"><input class="goodsName tag" id="searchTag" type="text" placeholder="태그검색"></form></div>
-				 </div>
-               </div>
+					<div class="searchIconWrapper marketListSearch">
+						<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
+						<div class="searchSearch"><form id="searchForm"><input class="goodsName tag" id="searchTag" type="text" placeholder="태그검색"></form></div>
+				 	</div>
+               	</div>
 	         </div>
 	         <!-- 카테고리 end -->
 			<div id="__next">
@@ -118,54 +117,47 @@
 			</div>
 
 
-
-
-
 			<div id="hello" class="tagListWrapper">
 				<div class="tagListFilterBox">
 					<div class="tagListReset">
 						<div class="tagListResetText">필터초기화</div>
 						<img
-							src="https://ccimage.hellomarket.com/img/web/search/filter/refresh.svg"
-							alt="reset" class="tagListResetImg">
+							src="https://ccimage.hellomarket.com/img/web/search/filter/refresh.svg" alt="reset" class="tagListResetImg">
 					</div>
 				</div>
 			</div>
 			<div class="searchedListWrapper">
-                    <div class="searchedListTopWrapper">
-                        <div class="CountListCount">
-                        	<span class="Count"></span>개의 상품이 있습니다.                    
-                        </div>
-                        <!--  -->
-                        <div class="SortListWrapper">
-                        	<div class="SortListList" id="default" title="최근 등록순">최근 등록순</div>
-                        	<div class="SortListList" id="lowPrice" title="낮은 가격순">낮은 가격순</div>
-                        	<div class="SortListList" id="highPrice" title="높은 가격순">높은 가격순</div>
-                        	<div class="SortListList" id="highGrade" title="높은 등급순">높은 등급순</div>
-                       	</div>
-                       	<!--  -->
-                        <div class="sortSortBox">
-                            <div class="sortSort">최근 등록순</div>
-                            <!-- 정렬버튼 이미지 -->
-                            <img src="https://ccimage.hellomarket.com/img/web/search/itemList/ico_sort.png" alt="정렬 아이콘" class="sortSortImg"/>
-                        </div>
-                    </div>
-                    <div>
-                    	<!-- 목록 -->
-	                    <div class="infinite-scroll-component " style="height:auto;">
-							<div class="itemListWrapper">
-								<div class="itemWrapper">
-								</div>
-							</div>
-						</div>
-						
-						<!-- 목록 end -->
+				<div class="searchedListTopWrapper">
+ 					<div class="CountListCount">
+						<span class="Count"></span>개의 상품이 있습니다.                    
 					</div>
-                  </div>
-              </div>
-          </div>
+                    <!-- 정렬 -->
+					<div class="SortListWrapper">
+						<div class="SortListList" id="default" 	 title="최근 등록순">최근 등록순</div>
+						<div class="SortListList" id="lowPrice"  title="낮은 가격순">낮은 가격순</div>
+						<div class="SortListList" id="highPrice" title="높은 가격순">높은 가격순</div>
+						<div class="SortListList" id="highGrade" title="높은 등급순">높은 등급순</div>
+                   	</div>
+                   	<!-- 현재 정렬 -->
+                    <div class="sortSortBox">
+                    	<div class="sortSort">최근 등록순</div>
+                        <!-- 정렬버튼 이미지 -->
+                        <img src="https://ccimage.hellomarket.com/img/web/search/itemList/ico_sort.png" alt="정렬 아이콘" class="sortSortImg"/>
+                        </div>
+                </div>
+                <div>
+                   	<!-- 목록 -->
+                    <div class="infinite-scroll-component " style="height:auto;">
+						<div class="itemListWrapper">
+							<div class="itemWrapper"></div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+   	</div>
           
-	<script type="text/javascript">
+<script type="text/javascript">
 		function category(categoryId) {
 			//기존값에 카테고리 추가
 			var category = $("#item_category").val();
@@ -578,7 +570,7 @@
 			
 		});
 	
-	</script>
+</script>
 <jsp:include page="../footer.jsp" />
 </body>
 </html>
