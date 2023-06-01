@@ -105,6 +105,8 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
             System.out.println("===============================");
             System.out.println(room_code+", "+sellId+", "+name+", "+messages+", "+name);
             System.out.println("===============================");
+            
+           
             int insertChatMessages = marketChatService.insertChatMessages(room_code,sellId,name,messages,name);
     	}
 

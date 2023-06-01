@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
@@ -279,7 +280,7 @@ public class MarketController {
 	            
 	            String sellId = item.get("member_id");
 	            System.out.println("chatDetail 에서  방이없을경우"+item_code+",룸코드: "+room_code+","+sellId);
-	            model.addAttribute("sellId",sellId);
+	            model.addAttribute("oppenentId",sellId);
 	         }
 	         
 	      } else {  //nav로들어갈때

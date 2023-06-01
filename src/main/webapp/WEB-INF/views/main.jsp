@@ -139,8 +139,7 @@
 					<c:forEach var="item" items="${itemList }">
 					<div class="item">
 						<div class="itemThumbnailBox">
-							<!-- 이건좀 아닌거같은데.. -->
-							<img src="http://c3d2212t3.itwillbs.com/images/${item.image_name }" alt="썸네일" class="itemThumbnail">
+							<img src="${item.image_name }" alt="썸네일" class="itemThumbnail">
 								<div class="wishWrapper">
 									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
 								</div>

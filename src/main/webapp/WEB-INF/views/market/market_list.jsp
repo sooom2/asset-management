@@ -203,6 +203,69 @@
 		}
 		
 		
+		
+		
+		// ajax에서 받은 데이터로 div 생성
+		function makeDiv(response) {
+			for(let item of response) {
+				let category = item.item_category;
+				let subject = item.item_subject;
+				let price = item.item_price;
+				let tags = item.item_tag;
+				let tag = tags.split(',');
+				let date = item.item_date;
+				let code = item.item_code;
+				let image = item.image_name;
+				let count = item.total_count;
+				
+				price = price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+				
+				var itemDate = date;
+				var formattedDate = moment(itemDate).format("YYYY-MM-DD HH:mm");
+				
+				
+				if(image == null) {
+					image = "${path }/resources/images/main/noThumbnail.jpg";
+				}
+
+				var str = '<div class="itemThumbnailBox" data-cd="';
+				str += code;
+				str +=	'">';
+				str += '<div class="itemThumbnailBox">';
+				str += '<img src="' + image + '" alt="썸네일" class="itemThumbnail" style="cursor: pointer">';
+				str += '<div class="wishWrapper">';
+				str += '<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">';
+				str += '</div>';
+				str += '</div>';
+				str += '<div class="itemTextBox">';
+				str += '<div class="itemCategory">';
+				str += category;
+				str += '</div>';
+				str += '<div class="itemText subject">';
+				str += subject;
+				str += '</div>';
+				str += '<div class="itemText">';
+				str += price + '원';
+				str += '</div>';
+				str += '<div class="itemTagBox">';
+				
+				for(var i = 0; i < tag.length; i++) {
+					
+					str += '<div class="itemSizeTag">';
+					str += tag[i];
+					str += '</div>';
+				}
+				str += '</div>';
+				str += '<div class="itemTimeTag">';
+				str += formattedDate;
+				str += '</div></div>';
+				
+				$(".itemWrapper").append(str);
+				$(".Count").empty().append(count);
+				}
+		}
+		
+		
 		// 상품 리스트 불러오기
 		function marketItemList() {
 			$(".itemThumbnailBox").remove();
@@ -228,13 +291,13 @@
 	 			type: "GET",
 	 			url: "marketItemList",
 	 			data: { 
-	 				item_category : item_category,
-	 				item_tag : item_tag, 
-	 				item_status : item_status,
-	 				item_price_min : item_price_min,
-	 				item_price_max : item_price_max,
-	 				member_grade : member_grade,
-	 				sort : sort
+	 				item_category	: item_category,
+	 				item_tag		: item_tag, 
+	 				item_status 	: item_status,
+	 				item_price_min 	: item_price_min,
+	 				item_price_max 	: item_price_max,
+	 				member_grade 	: member_grade,
+	 				sort 			: sort
 	 			},
 	 			dataType: "json",
 	 			success: function(response) { 
@@ -243,62 +306,10 @@
 	 				 if (response.length == 0) {
 	 		           let count = 0;
 	 		           $(".Count").empty().append(count);
-	 				 } else {
-	 				for(let item of response) {
-						let category = item.item_category;
-						let subject = item.item_subject;
-						let price = item.item_price;
-						let tags = item.item_tag;
-						let tag = tags.split(',');
-						let date = item.item_date;
-						let code = item.item_code;
-						let image = item.image_name;
-						let count = item.total_count;
-						
-						var itemDate = date;
-						var formattedDate = moment(itemDate).format("YYYY-MM-DD HH:mm");
-						
-						
-						if(image == null) {
-							image = "${path }/resources/images/main/noThumbnail.jpg";
-						}
-
-						var str = '<div class="itemThumbnailBox" data-cd="';
-						str += code;
-						str +=	'">';
-						str += '<div class="itemThumbnailBox">';
-						str += '<img src="' + image + '" alt="썸네일" class="itemThumbnail" style="cursor: pointer">';
-						str += '<div class="wishWrapper">';
-						str += '<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">';
-						str += '</div>';
-						str += '</div>';
-						str += '<div class="itemTextBox">';
-						str += '<div class="itemCategory">';
-						str += category;
-						str += '</div>';
-						str += '<div class="itemText subject">';
-						str += subject;
-						str += '</div>';
-						str += '<div class="itemText">';
-						str += price + '원';
-						str += '</div>';
-						str += '<div class="itemTagBox">';
-						
-						for(var i = 0; i < tag.length; i++) {
-							
-							str += '<div class="itemSizeTag">';
-							str += tag[i];
-							str += '</div>';
-						}
-						str += '</div>';
-						str += '<div class="itemTimeTag">';
-						str += formattedDate;
-						str += '</div></div>';
-						
-						$(".itemWrapper").append(str);
-						$(".Count").empty().append(count);
-		 				}
-	 				}
+	 		           return;
+	 				 } 
+	 				 // div 생성
+	 				 makeDiv(response);
 	 			},
 	 			error: function(xhr, textStatus, errorThrown) {
 	 				console.log("marketItemList : 요청처리실패");
@@ -310,11 +321,11 @@
 		$(function () {
 			marketItemList();
 			
-			
 			$(".FilterCategory").on("click", function(e) {
 				$(".priceDetail").hide();
 				$(".categoryDetail").show();
 			});
+			
 			$(".FilterPrice").on("click", function(e) {
 				$(".categoryDetail").hide();
 				$(".priceDetail").show();
@@ -478,7 +489,7 @@
 			$(".searchSearch input").keydown(function(event) {
 	            if(event.which === 13) {
 					event.preventDefault(); // 엔터 키 기본 동작 막기
-					$("#searchForm").submit(); // 폼 제출 히히
+					$("#searchForm").submit(); // 폼 제출
 	            }
 	        });
 			
