@@ -2,6 +2,7 @@ package com.itwillbs.moneytto.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.itwillbs.moneytto.vo.AccountVO;
 import com.itwillbs.moneytto.vo.ResponseTokenVO;
 
 public interface BankMapper {
@@ -11,5 +12,8 @@ public interface BankMapper {
 
 	// 계좌 인증 상태 변경
 	int updateAccountAuthStatus(String id);
+
+	// 계좌 정보 조회
+	AccountVO selectAccount(String id);
 
 }

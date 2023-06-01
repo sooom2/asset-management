@@ -30,14 +30,14 @@ $(document).ready(function(){
 		
 })
 function memberAuth(){
-	let authWindow = window.open("about:blank","authWindow","width=500, height=700");
+	let authWindow = window.open("about:blank", "authWindow", "width=500, height=700");
 	authWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize"
-	+"?response_type=code"
-	+"&client_id=bd507152-7d5b-4954-be9e-ef67beadb7eb"
-	+"&redirect_uri=http://localhost:8080/moneytto/memberAuth"
-	+"&scope=login inquiry transfer"
-	+"&state=11111111111111111111111111111111"
-	+"&auth_type=0";
+		+ "?response_type=code"
+		+ "&client_id=${client_id}"
+		+ "&redirect_uri=http://localhost:8082/moneytto/memberAuth"
+		+ "&scope=login inquiry transfer"
+		+ "&state=12345678901234567890123456789012"
+		+ "&auth_type=0";
 	
 }
 
