@@ -70,8 +70,6 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
             
             System.out.println(marketList);
             
-            
-           
 		}
             // 채팅방이 존재 할 때
 		else if(marketList.get(room_code) != null && messages.contains(name)) {
@@ -82,9 +80,7 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 			System.out.println("===========================");
 			System.out.println("생성된 "+room_code+"번 채팅방으로 입장");
 			System.out.println("===========================");
-			
-			System.out.println(room_code+","+item_code+","+messages);
-//            int insertChatRoom = marketChatService.insertChatRoom(room_code, item_code, messages);
+	            	
      
 		}
 
