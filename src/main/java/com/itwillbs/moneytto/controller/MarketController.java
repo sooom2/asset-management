@@ -279,7 +279,7 @@ public class MarketController {
 	            
 	            String sellId = item.get("member_id");
 	            System.out.println("chatDetail 에서  방이없을경우"+item_code+",룸코드: "+room_code+","+sellId);
-	            model.addAttribute("oppenentId",sellId);
+	            model.addAttribute("sellId",sellId);
 	         }
 	         
 	      } else {  //nav로들어갈때
