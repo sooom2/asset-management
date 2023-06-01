@@ -84,10 +84,6 @@ function memberAuth(){
 						<div class="memberInfoText">계좌 인증하기</div>
 						<div class="memberInfoCount" onclick="memberAuth()">계좌 인증하기</div>
 					</div>
-					<div class="memberInfoRating">
-						<div class="payCharge"><Input type="button" value="충전" onclick="location.href='payCharge'"></div> &nbsp;&nbsp;
-						<div class="pay"><Input type="button" value="충전" onclick="location.href='pay'"></div>
-					</div>
 					<div class="memberInfoMyDataBox" onclick='location.href="memberUpdateForm"'>
 						<div class="memberInfoSettingMyData">내정보 수정하기</div>
 					</div>

@@ -12,16 +12,16 @@
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',function() {
+$(window).load(function() {
 	var maxImageCount = 5; // 최대 이미지 개수 설정
-	var fileInput = document
-			.querySelector('input[type="file"]');
+	var fileInput = document.querySelector('input[type="file"]');
 	var imageList = document.querySelector('.image_list');
 	var countImg = document
 			.querySelector('.count_img span');
 	var defaultImage = document.querySelector('.default');
 	var draggedItem = null;
 
+	
 	function handleFileSelect(event) {
 		var files = event.target.files;
 
@@ -45,8 +45,7 @@ document.addEventListener('DOMContentLoaded',function() {
 				return;
 			}
 
-			var previewContainer = document
-					.createElement('li');
+			var previewContainer = document.createElement('li');
 			var img = document.createElement('img');
 			img.classList.add('item_img');
 			img.src = URL.createObjectURL(file);
@@ -220,16 +219,66 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //파일 인풋 
 
-var fileInput = document.querySelector('input[type="file"]');
+	var fileInput = document.querySelector('input[type="file"]');
 
-function handleFileSelect(event) {
-	var files = event.target.files;
+	function handleFileSelect(event) {
+		var files = event.target.files;
 
-	// 파일 선택된 후에 처리할 로직 작성
-	// 파일 객체(files)를 활용하여 원하는 동작 수행
-}
+		// 파일 선택된 후에 처리할 로직 작성
+		// 파일 객체(files)를 활용하여 원하는 동작 수행
+	}
 
-fileInput.addEventListener('change', handleFileSelect, false);
+	fileInput.addEventListener('change', handleFileSelect, false);	
+	
+	// marketItem.item_category 값을 가져와 선택된 항목을 스타일링합니다.
+    var selectedCategory = "${marketItem.item_category}";
+    var categoryItems = document.querySelectorAll('.TextTextWrapper');
+
+    // 선택된 항목에 selected 클래스를 추가하여 스타일을 변경합니다.
+    categoryItems.forEach(function(item) {
+      if (item.textContent.trim() === selectedCategory) {
+        item.classList.add('selected');
+      }
+    });
+
+    // 각 카테고리 요소에 클릭 이벤트를 추가합니다.
+    categoryItems.forEach(function(item) {
+      item.addEventListener('click', function() {
+        // 다른 요소들의 선택 상태를 제거합니다.
+        categoryItems.forEach(function(otherItem) {
+          otherItem.classList.remove('selected');
+        });
+
+        // 선택한 요소에 클래스를 추가합니다.
+        this.classList.add('selected');
+
+        // 선택한 카테고리를 저장합니다.
+        var categoryInput = document.querySelector('#item_category input[name="item_category"]');
+        categoryInput.value = this.textContent;
+      });
+    });
+    
+    var form = document.querySelector(".insertItem");
+
+    // 양식에 제출 이벤트 리스너 추가
+    form.addEventListener("submit", function(event) {
+      // 입력 필드 가져오기
+      var titleInput = form.querySelector('input[name="item_subject"]');
+      var categoryInput = form.querySelector('input[name="item_category"]');
+      var priceInput = form.querySelector('input[name="item_price"]');
+      var contentInput = form.querySelector('textarea[name="item_content"]');
+
+      // 입력 필드 유효성 검사
+      if (titleInput.value.trim() === "" || categoryInput.value.trim() === "" || priceInput.value.trim() === "" || contentInput.value.trim() === "") {
+        // 양식 제출 방지
+        event.preventDefault();
+
+        // 오류 메시지 표시 또는 원하는 작업 수행
+        alert("필수 항목을 모두 입력해주세요.");
+    };
+	
+})
+
 </script>
 
 
@@ -288,58 +337,14 @@ fileInput.addEventListener('change', handleFileSelect, false);
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // marketItem.item_category 값을 가져와 선택된 항목을 스타일링합니다.
-    var selectedCategory = "${marketItem.item_category}";
-    var categoryItems = document.querySelectorAll('.TextTextWrapper');
-
-    // 선택된 항목에 selected 클래스를 추가하여 스타일을 변경합니다.
-    categoryItems.forEach(function(item) {
-      if (item.textContent.trim() === selectedCategory) {
-        item.classList.add('selected');
-      }
-    });
-
-    // 각 카테고리 요소에 클릭 이벤트를 추가합니다.
-    categoryItems.forEach(function(item) {
-      item.addEventListener('click', function() {
-        // 다른 요소들의 선택 상태를 제거합니다.
-        categoryItems.forEach(function(otherItem) {
-          otherItem.classList.remove('selected');
-        });
-
-        // 선택한 요소에 클래스를 추가합니다.
-        this.classList.add('selected');
-
-        // 선택한 카테고리를 저장합니다.
-        var categoryInput = document.querySelector('#item_category input[name="item_category"]');
-        categoryInput.value = this.textContent;
-      });
-    });
+    
   });
 </script>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     // 양식 요소 가져오기
-    var form = document.querySelector(".insertItem");
-
-    // 양식에 제출 이벤트 리스너 추가
-    form.addEventListener("submit", function(event) {
-      // 입력 필드 가져오기
-      var titleInput = form.querySelector('input[name="item_subject"]');
-      var categoryInput = form.querySelector('input[name="item_category"]');
-      var priceInput = form.querySelector('input[name="item_price"]');
-      var contentInput = form.querySelector('textarea[name="item_content"]');
-
-      // 입력 필드 유효성 검사
-      if (titleInput.value.trim() === "" || categoryInput.value.trim() === "" || priceInput.value.trim() === "" || contentInput.value.trim() === "") {
-        // 양식 제출 방지
-        event.preventDefault();
-
-        // 오류 메시지 표시 또는 원하는 작업 수행
-        alert("필수 항목을 모두 입력해주세요.");
-      }
-    });
+    
   });
 </script>
 
