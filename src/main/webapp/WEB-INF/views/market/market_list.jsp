@@ -324,32 +324,32 @@
 	 		});
 		}
 		
-		let pageNum = 1;
+// 		let pageNum = 1;
 		$(function () {
 			marketItemList();
 			
 			
 			// 무한스크롤 기능 구현
 			// window 객체에서 scrolling 동작 처리를 위해 scroll() 함수 호출
-			$(window).scroll(function() {
-//	 			console.log("window scroll");
+// 			$(window).scroll(function() {
+// //	 			console.log("window scroll");
 				
-				// 1. window 객체와 document 객체를 활용하여 스크롤 관련 값 가져와서 제어
-				// => 스크롤바의 현재 위치, 문서가 표시되는 창(window)의 높이, 문서 전체 높이
-				let scrollTop = $(window).scrollTop();
-				let windowHeight = $(window).height();
-				let documentHeight = $(document).height();
-//	 			console.log("scrollTop : " + scrollTop + ", windowHeight : " + windowHeight + ", documentHeight : " + documentHeight);
+// 				// 1. window 객체와 document 객체를 활용하여 스크롤 관련 값 가져와서 제어
+// 				// => 스크롤바의 현재 위치, 문서가 표시되는 창(window)의 높이, 문서 전체 높이
+// 				let scrollTop = $(window).scrollTop();
+// 				let windowHeight = $(window).height();
+// 				let documentHeight = $(document).height();
+// //	 			console.log("scrollTop : " + scrollTop + ", windowHeight : " + windowHeight + ", documentHeight : " + documentHeight);
 
-				// 2. 스크롤바 위치값 + 창 높이 + x 가 문서 전체 높이 이상일 경우
-				//    다음 페이지 게시물 목록 로딩하여 화면에 추가
-				if(scrollTop + windowHeight + 1 >= documentHeight) {
-					// 다음 페이지 로딩을 위한 load_list() 함수 호출
-					// => 이 때, 페이지 번호를 1 증가시켜 다음 페이지 목록 로딩
-					pageNum++;
-					marketItemList();
-				}
-			});
+// 				// 2. 스크롤바 위치값 + 창 높이 + x 가 문서 전체 높이 이상일 경우
+// 				//    다음 페이지 게시물 목록 로딩하여 화면에 추가
+// 				if(scrollTop + windowHeight + 1 >= documentHeight) {
+// 					// 다음 페이지 로딩을 위한 load_list() 함수 호출
+// 					// => 이 때, 페이지 번호를 1 증가시켜 다음 페이지 목록 로딩
+// 					pageNum++;
+// 					marketItemList();
+// 				}
+// 			});
 			
 			
 			
@@ -402,14 +402,29 @@
 			
 			// 가격 설정
 			$(document).on("click", ".priceApplyBtn", function(e) {
-				$("#item_price_min").val(0);
-				$("#item_price_max").val(999999999999999);
 				
 				var item_price_min = $(".item_price_min").val();
 				var item_price_max = $(".item_price_max").val();
 				
-				console.log(item_price_min);
-				console.log(item_price_max);
+				console.log("item_price_min : " + item_price_min);
+				console.log("item_price_max : " + item_price_max);
+				
+				if(item_price_min == "" && item_price_max == "") {
+					return;
+				}
+				
+				if(item_price_min == "") {
+					item_price_min = 0;
+					$("#item_price_min").val(0);
+				}
+				if(item_price_max == "") {
+					item_price_max = 999999999999999;
+					$("#item_price_max").val(999999999999999);
+				}
+				
+				
+				
+				
 				
 				// 필터에 추가
 // 				$(".tagPrice").remove();
