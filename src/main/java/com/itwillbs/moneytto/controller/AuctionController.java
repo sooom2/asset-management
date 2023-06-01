@@ -44,18 +44,6 @@ public class AuctionController {
 	public String auction(@RequestParam String auction_code, Model model, HttpSession session) { // 이미지 코드와 경매 코드를 받아서 목록 상세
 		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
 		model.addAttribute("auction", auction);
-
-//		int prince = Integer.parseInt(auction.get("auction_present_price").replace(",", ""));
-//		model.addAttribute("prince", prince);
-		// 보증금 계산
-		String deposit = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.1) + "";
-		// 물건 호가 계산
-		String askingPrice = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.01) + "";
-		// 즉시 구매
-		String purchase = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 1.5) + "";
-		model.addAttribute("deposit", deposit);
-		model.addAttribute("askingPrice", askingPrice);
-		model.addAttribute("purchase", purchase);
 		
 		// 년 월 일
 		LocalDate now = LocalDate.now();
@@ -74,6 +62,45 @@ public class AuctionController {
 		} else {
 			model.addAttribute("auctionEnroll", false);
 		}
+		
+		
+		// 경매 로그===============================================================================
+		HashMap<String, String> auctionRoom = service.selectAuctionRoom(auction_code);
+		if(auctionRoom == null) { // 경매기록 방이 없을 경우
+			// 경매 기록 방 저장
+//					auctionRoom = service.insertAuctionRoom(auction_code);
+		} else if(auctionRoom.get("auction_code").equals(auction_code)) { // 경매 방 있는 경우
+			
+		}
+		
+		// 경매 기록(채팅 상세 내용) 검색
+		// 방번호,아이템코드, id 다 넘겨야 하나? 그렇구만
+		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(id);
+		
+//				if() { // 경매 페이지로 들어갈 때 이 아이템에 대한 경매기록이 있는지 확인해야하고 경매 기록이 없을 경우 밑에 코드 사용
+//					채팅방에는 방번호, 아이템 번호, chat_content 이렇게 있고
+			
+			/* 여기서 아이템 번호에는 옥션_코드 들가면 되고 방번호는 내가 임의로 넣으면 되나? 
+			예를 들어 구분자나 경매기록이니 'log'를 붙여서 사용하거나 다 공통된거 사용하는게 좋긴 한데 다른곳에서 쓸일이 있으려나? 
+			쓸일이 있어도 /log 같은거 사용해서 구분하는게 best같은데 맞지 
+			마이페이지에서도 필요할꺼고 */
+//				} else if() {} // 경매 관련 기록이 있을경우 그 기록의 정보를 화면에 표시 
+		
+		// 시작 가격 - 이건 계속 바뀌는 거 그래도 필요하네
+		String price = Integer.parseInt(auction.get("auction_present_price").replace(",", "")) + "";
+		model.addAttribute("price", price);
+		// 보증금 계산 - 고정
+		String deposit = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.1) + "";
+		// 물건 호가 계산 - 고정
+		String askingPrice = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.01) + "";
+		// 즉시 구매 - 고정
+		String purchase = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 1.8) + "";
+		model.addAttribute("deposit", deposit);
+		model.addAttribute("askingPrice", askingPrice);
+		model.addAttribute("purchase", purchase);
+		//================================================================================
+		
+		
 		
 		return "auction/auction";
 	}

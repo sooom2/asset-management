@@ -81,7 +81,7 @@
 				
 				
 				// 경매 남은시간 분, 초 
-				let diffMinutes = 10 - parseInt(((current_time - start_time) / (1000 * 60)));
+				let diffMinutes = 30 - parseInt(((current_time - start_time) / (1000 * 60)));
 				let diffSeconds = 60 - (((current_time - start_time) % (1000 * 60)) / 1000);
 				let diffSecondsResult = diffSeconds < 10 ? "0" + diffSeconds : diffSeconds; 
 				let resultClock = (diffMinutes - 1) + ":" + (diffSecondsResult - 1);
@@ -94,7 +94,7 @@
 				} 
 				
 				// 경매 시작 후 (10분 이 지나면 종료)
-				if(current_time - start_time > 600000) {
+				if(current_time - start_time > 1800000) {
 					
 					window.setTimeout(function(){ // setInterval 함수 종료
 						window.clearInterval(time);
@@ -111,9 +111,11 @@
 
 	$(document).ready(function() {
 // 		$('#auction_input_after *').prop('disabled', true);
+		// 경매 등록 확인
 		if(${auctionEnroll}) {
 			$("#auction_input_before").css('display', 'none');
 			$("#auction_input_after").css('display', 'block');
+			
 		}
 		
 		function chatSend() {
@@ -126,6 +128,9 @@
 			socket.send(jsonData);
 			$('#message').val('');
 		};
+		
+		
+	
 		
 		// 버튼 누름 전송
 		$('#btnSend').on("click", function(evt) {
@@ -222,9 +227,6 @@
 		ws.onerror = function (event) { console.log('Info: connection closed'); };
 	}
 	
-	
-	
-	
 </script>
 </head>
 <body>
@@ -281,27 +283,29 @@
 					
 					<div class="auction_realTime">
 						<span style="font-size: 25px;">실시간 경매</span>
-						<div class="auction_price"><span>30,000</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
+						<div class="auction_price"><span>${auction.auction_present_price }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
 						<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
-						<div class="auction_id"><span>'추누공주'님</span></div>
+						<div class="auction_id">
+						<span>님</span>
+						</div>
 					</div>
 					<div class="auction_realStatus">
 						<div class="auction_log_title">경매로그</div>
 						<div class="auction_log">
-							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇㅇ님 ㅇdddddㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇddddㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇddddㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
-							<div>ㅇㅇㅇ님 ㅇㅇㅇㅇ원 입찰 !</div>
+							<div class="logBox">
+								<div class="chat_myself">
+								</div>
+							</div>
 						</div>
 					</div>
+					<!-- 경매 등록 전 -->
 					<div id="auction_input_before" class="auction_input" style="display:block">
 						<div id="auction_input_title" class="auction_input_title">경매 입찰 등록</div>
 						<hr>
 						<br><br><br>
 						<input id="auctionRegist" class="auction_input_button" type="button" value="참여하기">
 					</div>
+					<!-- 경매 등록 후 -->
 					<div id="auction_input_after" class="auction_input" style="display:none">
 						<div class="auction_input_title">입찰입찰입찰 제목좀바꿔죠</div>
 						<hr>
@@ -316,11 +320,18 @@
 								<div>즉시구매가</div>
 							</div>
 							<div class="bid_right">
-								<div>200,000원</div>
-								<div><input type="button" value="단가입찰(상품금액의 5%)" style="width: 228px"></div>
-								<div><input type="text" placeholder="금액입력"><input type="button" value="입찰"></div>
-								<div class="my_bid">28,000원</div>
-								<div class="buy_now"><span style="color:#bb2649">35,000원</span><input type="button" value="즉시구매" style="float: right;margin-right: 11px;"></div>
+								<div>${deposit }원</div>
+								<div><input type="button" id="btnAskingPrice" value="즉시입찰(+${askingPrice })" style="width: 228px"
+										data-price="${askingPrice }" class="btn"></div>
+								<div>
+									<input type="text" id="logPrice" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="금액입력">
+									<input type="button" value="입찰" id="btnBid" class="btn" data-price="">
+								</div>
+								<div class="my_bid"></div>
+								<div class="buy_now">
+									<span style="color:#bb2649">${purchase }원</span>
+									<input type="button" id="btnPurchase" value="즉시구매" style="float: right;margin-right: 11px;">
+								</div>
 							</div>
 						</div>
 					</div>
@@ -371,4 +382,130 @@
 			</div>
 		</div>
 </body>
+<script type="text/javascript">
+
+// ==========================================================
+$(document).ready(function() {
+// 	var message = ${price};
+	var chatLog;
+	var nowPrice = ${price};
+	
+	function chatSend2() {
+// 		console.log(" 옥션 프라이스 텍스트" + $(".auction_price").text())
+	
+		const data = {
+			"id" : "${ sessionScope.sId }",
+			"name" : "${ sessionScope.nickname }",
+			"message"   : chatLog,
+// 			"auctionCode" :  "${auction.get('auction_code') }"
+// 				if($('#message').val() != null && $('#message').val() != "") {
+// 				$('#message').val()
+// 				}
+		};
+		let jsonData = JSON.stringify(data);
+		socket2.send(jsonData);
+		$('#chatLog').val('');
+		
+	};
+	
+
+	$(".btn").click(function(){
+		
+		//버튼을 눌렀을때 data-price가 없으면	
+		// data-price 없는게 직접 입력 버튼
+		if($(this).attr("data-price") == ""){ // 가격 직접 입력시 
+			// id = message 값을 message에
+			chatLog = $("#logPrice").val();			
+		}else{ // 입찰하기(1%값) 버튼 클릭시 
+// 			message = $(".auction_price").find("span").html();
+			// 누른 값에 해당하는 data-price 속성의 값을 메시지에
+			// 현재 상황 입찰하기 버튼을 눌렀을 때 입찰하기 버튼에 data-price속성이 있어서 그 값을 가져오는것
+			console.log("1번" + chatLog);
+			console.log("1-1번" + typeof chatLog); // number
+// 			if(message == null || message == "") {
+// 				message = (parseInt($(this).attr("data-price"), 10) + ${price }) + ""; // 3300
+// 				console.log("4번" + message + typeof message); // 303000  string
+// 			} else {
+// 				console.log("else도착");
+				chatLog = (parseInt($(this).attr("data-price"), 10) + parseInt(nowPrice, 10) + "");
+				console.log("2번" + chatLog);
+// 			}
+		}
+		
+		if(chatLog == ""){
+			alert("금액을 입력해주세요")
+			return false;
+		}
+		else if(chatLog < ${price} ) {
+			alert("최소금액 보다 높게 입력해주세요")
+			$("#chatLog").val("");
+			chatLog = nowPrice;
+			return false;
+		}
+		
+		if(nowPrice < chatLog) {
+			nowPrice = chatLog;
+		}
+		
+		console.log(chatLog);
+		chatSend2();
+	})
+	
+	connect2();
+	
+});
+
+
+var socket2 = null;
+function connect2() {
+	var ws2 = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/auctionLog");
+	socket2 = ws2;
+	
+	ws2.onopen = function() {
+		console.log('Info: connection opened');
+		
+	};
+	
+	// 메세지 수신
+	ws2.onmessage = function (msg) {
+		var data = msg.data;
+		var sessionId = null; //데이터를 보낸 사람
+		var sessionName = null; 
+		var message = null;
+		
+		var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
+		console.log(data);
+		sessionId = data.split(":")[0];
+		sessionName = data.split(":")[1];
+		message = data.split(":")[2];
+
+		
+		// 낙찰 최대금액
+	//	var auctionMax = "<span>" + message + "</span>원&nbsp;<i class='fa-solid fa-comment-dollar'></i>";
+	//	$(".auction_price").html(auctionMax);
+		$(".auction_price").find("span").html(message);
+// 		$("#btnAskingPrice").attr("data-price",message);
+		//  입찰하기 부분이 현재 최고가 기준으로 변경됨 (속성만)
+		// 보여주는 부분을 변경하려면 val()을 수정해야하는것
+// 		$("btnAskingPrice").attr("data-price", message);
+		
+		// 낙찰 최대금액 닉네임
+		var auctionNic = "<span>" + sessionName + "님</span>";
+		$(".auction_id").html(auctionNic);
+		
+		// 경매 로그
+		var auctionLog = "<div class='chat_myself'>" + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + amPm + " " + hours + ":" + minutes + "</div>";
+		$(".logBox").append(auctionLog);
+		
+		if(sessionId == cur_session) { // 세션 ID 와 입력된 금액의 ID가 같을 경우
+			// 내가 입력한 낙찰가
+			var auctionMyPrice =  message + "원";
+			$(".my_bid").html(auctionMyPrice);
+		}
+	};
+	
+	ws2.onclose = function (event) { console.log('Info: connection closed'); };
+	ws2.onerror = function (event) { console.log('Info: connection closed'); };
+}
+</script>
 </html>
