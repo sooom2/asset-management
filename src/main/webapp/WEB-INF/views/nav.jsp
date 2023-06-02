@@ -45,6 +45,7 @@
 				</c:otherwise>
 			</c:choose>
 					<%-- 실제 서비스시 없앨것 --%>
+					<li><a href="payment"> 결제페이지(샘플)</a>
 					<li><a href="admin" class="">관리자</a></li>
 			</ul>
 		</nav>

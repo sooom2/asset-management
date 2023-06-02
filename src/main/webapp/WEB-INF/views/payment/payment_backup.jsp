@@ -129,6 +129,8 @@
 
 
 	<input type="checkbox" class="hidden" id="npay" checked disabled>
+	
+	
 	<div class="fold_wrap _paymentInfoTitle">
 		<label class="fold_head sp_heading head_simplepay" for="npay">
 			<h3 class="fold_h">결제 정보</h3>
