@@ -145,7 +145,7 @@ function toggleLike(element) {
 							<div class="Share__IconBox-sc-1nwaldt-4 bzuDcA">
 								<img
 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_link_x2.png"
-									alt="링크 아이콘" class="Share__Icon-sc-1nwaldt-5 cVlCCb">
+									alt="링크 아이콘" class="Share__Icon-sc-1nwaldt-5 cVlCCb" onclick="clip(); return false;">
 								<div class="Share__IconText-sc-1nwaldt-6 fBVupx">링크복사</div>
 							</div>
 						</div>
@@ -362,16 +362,26 @@ function toggleLike(element) {
 		$(".TitleText2").empty().append(price);
 	}
 	
+	// 링크 복사
+	function clip(){
+		var url = "";
+		var textarea = document.createElement("textarea");
+		document.body.appendChild(textarea);
+		url = window.document.location.href;
+		textarea.value = url;
+		textarea.select();
+		document.execCommand("copy");
+		document.body.removeChild(textarea);
+		alert("URL이 복사되었습니다.")
+	}
 	
 	
 	$(function () {
 		var id = $("#session_id").val();
 		var target = $("#target_id").val();
-		console.log(id + ", " + target);
 		
 		if(id == target) {
-			$(".SomeonesModifyButton").show();
-			$(".SomeonesDeleteButton").show();
+			$(".SomeonesModifyButton, .SomeonesDeleteButton").show();
 		} else {
 			$(".SomeonesItemButton").show();
 		}
