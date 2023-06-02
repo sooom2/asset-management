@@ -54,7 +54,7 @@ public interface MarketMapper {
 			@Param("sort") String sort,
 			@Param("member_id") String member_id);
 
-	void saveImage(HashMap<String, String> saveImage);
+	int saveImage(HashMap<String, String> saveImage);
 
 	String selectItem();
 

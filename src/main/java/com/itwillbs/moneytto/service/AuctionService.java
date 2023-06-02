@@ -2,6 +2,7 @@ package com.itwillbs.moneytto.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
@@ -36,19 +37,20 @@ public class AuctionService {
 		return mapper.insertAuctionLog(id, messages, auctionCode);
 	}
 
-	// 경매 기록 방
-	public HashMap<String, String> selectAuctionRoom(String auction_code) {
-		return mapper.selectAuctionRoom(auction_code);
-	}
-
 	// 경매 상세 기록 검색
 	public List<HashMap<String, String>> selectAuctionLog(String auction_code) {
 		return mapper.selectAuctionLog(auction_code);
 	}
+	
+	// 경매 마지막 로그 검색
+	public HashMap<String, String> selectLastLog() {
+		return mapper.selectLastLog();
+	}
 
-	// 경매 기록 방 저장
-//	public HashMap<String, String> insertAuctionRoom(String auction_code) {
-//		return mapper.insertAuctionRoom(auction_code);
-//	}
+	// 경매 기록 최고값 검색
+	public HashMap<String, String> selectAuctionMax(String auction_code) {
+		return mapper.selectAuctionMax(auction_code);
+	}
+
 
 }

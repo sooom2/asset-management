@@ -11,104 +11,104 @@
 <link href="${path }/resources/css/itemRegist.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function() {
-    var maxImageCount = 5;
-    var fileInput = document.querySelector('input[type="file"]');
-    var imageList = document.querySelector('.image_list');
-    var countImg = document.querySelector('.count_img span');
-    
-    function handleFileSelect(event) {
-      var files = event.target.files;
+$(window).load(function() {
+	  var maxImageCount = 5;
+	  var fileInput = document.querySelector('input[type="file"]');
+	  var imageList = document.querySelector('.image_list');
+	  var countImg = document.querySelector('.count_img span');
+	  var defaultImage = document.querySelector('.default');
+	  var draggedItem = null;
 
-      if (files.length + imageList.children.length > maxImageCount) {
-        alert('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
-        fileInput.value = ''; // 파일 선택 창 초기화
-        return;
-      }
+	  function handleFileSelect(event) {
+	    var files = event.target.files;
 
-      for (var i = 0; i < files.length; i++) {
-        var file = files[i];
+	    if (files.length + imageList.children.length > maxImageCount) {
+	      alert('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
+	      fileInput.value = '';
+	      return;
+	    }
 
-        if (imageList.children.length >= maxImageCount) {
-          alert('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
-          fileInput.value = ''; // 파일 선택 창 초기화
-          return;
-        }
+	    for (var i = 0; i < files.length; i++) {
+	      var file = files[i];
 
-        var previewContainer = document.createElement('li');
-        var img = document.createElement('img');
-        img.classList.add('item_img');
-        img.src = URL.createObjectURL(file);
+	      if (imageList.children.length >= maxImageCount) {
+	        alert('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
+	        fileInput.value = '';
+	        return;
+	      }
 
-        var deleteIcon = document.createElement('img');
-        deleteIcon.classList.add('img_delete_icon');
-        deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
-        deleteIcon.alt = '상품 썸네일 제거 아이콘';
+	      var previewContainer = document.createElement('li');
+	      var img = document.createElement('img');
+	      img.classList.add('item_img');
+	      img.src = URL.createObjectURL(file);
 
-        deleteIcon.addEventListener('click', function() {
-          var imageContainer = this.closest('li');
-          imageContainer.remove();
-          updateImageCount();
-        });
+	      var deleteIcon = document.createElement('img');
+	      deleteIcon.classList.add('img_delete_icon');
+	      deleteIcon.src = 'https://ccimage.hellomarket.com/img/web/regist/image_delete_x3.png';
+	      deleteIcon.alt = '상품 썸네일 제거 아이콘';
 
-        var imageBox = document.createElement('div');
-        imageBox.classList.add('up_img_box');
-        imageBox.appendChild(deleteIcon);
-        imageBox.appendChild(img);
+	      var imageBox = document.createElement('div');
+	      imageBox.classList.add('up_img_box');
+	      imageBox.appendChild(deleteIcon);
+	      imageBox.appendChild(img);
 
-        previewContainer.appendChild(imageBox);
-        imageList.appendChild(previewContainer);
+	      previewContainer.appendChild(imageBox);
+	      imageList.appendChild(previewContainer);
 
-        updateImageCount();
-      }
+	      updateImageCount();
+	    }
+	  }
 
-      fileInput.value = ''; // 파일 선택 창 초기화
-    }
+	  function updateImageCount() {
+	    countImg.textContent = imageList.children.length;
+	  }
 
-    function updateImageCount() {
-      countImg.textContent = imageList.children.length;
-    }
+	  defaultImage.addEventListener('click', function() {
+	    fileInput.click();
+	  });
 
-    fileInput.addEventListener('change', handleFileSelect);
+	  fileInput.addEventListener('change', handleFileSelect, false);
 
-    // 이미지 선택 버튼 클릭 시 파일 선택 창 열기
-    var defaultImage = document.querySelector('.default');
-    defaultImage.addEventListener('click', function() {
-      fileInput.click();
-    });
+	  imageList.addEventListener('click', function(event) {
+	    if (event.target.classList.contains('img_delete_icon')) {
+	      var imageContainer = event.target.closest('li');
+	      imageContainer.parentNode.removeChild(imageContainer);
+	      updateImageCount();
+	    }
+	  });
 
-    // 이미지 순서 변경을 위한 드래그 앤 드롭 기능
-    imageList.addEventListener('dragstart', function(event) {
-      draggedItem = event.target.closest('li');
-      event.dataTransfer.setData('text/plain', '');
-    });
+	  imageList.addEventListener('dragstart', function(event) {
+	    draggedItem = event.target.closest('li');
+	  });
 
-    imageList.addEventListener('dragover', function(event) {
-      event.preventDefault();
-    });
+	  imageList.addEventListener('dragover', function(event) {
+	    event.preventDefault();
+	  });
 
-    imageList.addEventListener('drop', function(event) {
-      event.preventDefault();
-      var droppedItem = event.target.closest('li');
+	  imageList.addEventListener('drop', function(event) {
+	    event.preventDefault();
+	    var droppedItem = event.target.closest('li');
 
-      if (draggedItem && imageList.contains(draggedItem) && droppedItem && imageList.contains(droppedItem)) {
-        var draggedIndex = Array.from(imageList.children).indexOf(draggedItem);
-        var droppedIndex = Array.from(imageList.children).indexOf(droppedItem);
+	    if (draggedItem && imageList.contains(draggedItem) && droppedItem && imageList.contains(droppedItem)) {
+	      var draggedIndex = Array.from(imageList.children).indexOf(draggedItem);
+	      var droppedIndex = Array.from(imageList.children).indexOf(droppedItem);
 
-        if (draggedIndex !== droppedIndex) {
-          if (draggedIndex < droppedIndex) {
-            imageList.insertBefore(draggedItem, droppedItem);
-          } else {
-            imageList.insertBefore(draggedItem, droppedItem.nextSibling);
-          }
+	      if (draggedIndex !== droppedIndex) {
+	        if (draggedIndex < droppedIndex) {
+	          imageList.insertBefore(droppedItem, draggedItem);
+	        } else {
+	          imageList.insertBefore(draggedItem, droppedItem);
+	        }
 
-          updateImageCount();
-        }
-      }
+	        updateImageCount();
+	      }
+	    }
 
-      draggedItem = null;
-    });
-  });
+	    draggedItem = null;
+	  });
+	});
+
+
 
 	
 	//태그기능 

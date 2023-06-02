@@ -213,7 +213,7 @@ $(document).ready(function() {
 							<div class="con_tit">${auction.auction_item_name }</div>
 							<div class="con_detail">
 								<!-- 상품이미지 -->
-								<div class="contentImage" style="background-image:url('http://c3d2212t3.itwillbs.com/images/${auction.image_name}')"></div><br>
+								<div class="contentImage" style="background-image:url('${auction.image_name}')"></div><br>
 								<!-- 상품정보 -->
 								<div>
 									<div>
