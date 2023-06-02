@@ -96,9 +96,12 @@
 	
 	<!-- 경매 마지막 로그 검색 -->
 	<select id="selectLastLog" resultType="hashmap">
-		SELECT *
+		SELECT auction_log.*, member.member_nickname
 			FROM auction_log
-					ORDER BY log_time DESC LIMIT 1
+				LEFT JOIN member
+				ON member.member_id = auction_log.member_id
+			WHERE auction_code = #{auction_code}
+				ORDER BY log_time DESC LIMIT 1
 	</select>
 	
 	<!-- 경매 기록 최고값 검색 -->

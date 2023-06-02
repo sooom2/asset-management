@@ -42,15 +42,11 @@ public class AuctionService {
 		return mapper.selectAuctionLog(auction_code);
 	}
 	
-	// 경매 마지막 로그 검색
-	public HashMap<String, String> selectLastLog() {
-		return mapper.selectLastLog();
+	// 경매 기록 최고값 검색
+	public HashMap<String, String> selectLastLog(String auction_code) {
+		return mapper.selectLastLog(auction_code);
 	}
 
-	// 경매 기록 최고값 검색
-	public HashMap<String, String> selectAuctionMax(String auction_code) {
-		return mapper.selectAuctionMax(auction_code);
-	}
 
 
 }
