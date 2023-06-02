@@ -301,6 +301,7 @@ $(function() {
 
     function chatSend() {
     	
+    	
 //     	if(room_code ==null){
 // 			location.reload();
 // 		}
@@ -314,12 +315,6 @@ $(function() {
         let jsonData = JSON.stringify(data);
         socket.send(jsonData);
         
-		//목록의 정보를 업데이트 해야함
-		let recentlyMsg = $('#message').val();
-		let getMsg = $(".card_box .description").text();
-		$(".active .description").text(recentlyMsg);
-		$(".active .time_ago").text(formatDate);
-		
 		
     };
     
@@ -366,6 +361,9 @@ $(function() {
 
 });
 
+
+
+
 function messages() {
 
     ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
@@ -405,6 +403,8 @@ function messages() {
             str += "<div class='chat_myself_timeago'>" + amPm + " " + hours + ":" + minutes + "</div></div></div></div>";
             $(".chat_wrapper").append(str);
 
+            $(".active .description").text(message);
+            $(".active .time_ago").text(amPm + " " + hours + ":" + minutes);	
         } else {
 
             var str = " <div class='chat_opponent'><div class='chat_opponent_box'><div class='chat_opponent_image_box'>";
@@ -415,13 +415,18 @@ function messages() {
             str += "<div class='chat_opponent_timeago'>" + amPm + " " + hours + ":" + minutes + " </div></div></div></div>";
 
             $(".chat_wrapper").append(str);
+            $(".active .description").text(message);
+            $(".active .time_ago").text(amPm + " " + hours + ":" + minutes);	
         };
         
         $('.chat_description').scrollTop($('.chat_description')[0].scrollHeight+100);
     };
 }
 
-
+// let recentlyMsg = $('#message').val();
+// let getMsg = $(".card_box .description").text();
+// $(".active .description").text(recentlyMsg);
+// $(".active .time_ago").text(formatDate);
 
 </script>
 </head>
