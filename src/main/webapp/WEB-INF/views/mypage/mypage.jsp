@@ -82,7 +82,14 @@ function memberAuth(){
 						<div class="memberInfoCount">${member.member_point }원</div>
 					</div><div class="memberInfoReviewBox">
 						<div class="memberInfoText">계좌 인증하기</div>
-						<div class="memberInfoCount" onclick="memberAuth()">계좌 인증하기</div>
+						<c:choose>
+							<c:when test="${member.member_auth_status eq 'Y'  }">
+								<div class="memberInfoCount" onclick="location.href='bank_userInfo'">계좌 확인하기</div>
+							</c:when>
+							<c:otherwise>
+								<div class="memberInfoCount" onclick="memberAuth()">계좌 인증하기</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<div class="memberInfoMyDataBox" onclick='location.href="memberUpdateForm"'>
 						<div class="memberInfoSettingMyData">내정보 수정하기</div>
