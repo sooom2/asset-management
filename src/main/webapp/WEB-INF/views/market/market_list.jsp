@@ -195,6 +195,13 @@
 		}
 		
 		
+		// 필터 토글
+		function toggleFilter(showClass, hideClass) {
+		  $(hideClass).hide();
+		  $(showClass).toggle();
+		}
+		
+		
 		
 		
 		// ajax에서 받은 데이터로 div 생성
@@ -280,6 +287,18 @@
 			var member_grade = $("#member_grade").val();
 			var sort = $("#sort").val();
 			
+			
+			
+			// 필터 제거시 필요없는 마지막 문자 제거
+			if(item_category.charAt(item_category.length - 1) == "/") {
+				item_category = item_category.slice(0, -1);
+			}
+			
+			if(item_tag.charAt(item_tag.length - 1) == "|") {
+				item_tag = item_tag.slice(0, -1);
+			}
+
+			
 			console.log("---var---")
 			console.log(item_category);
 			console.log(item_tag);
@@ -351,15 +370,14 @@
 			
 			
 			
-			
+			// 카테고리 클릭
 			$(".FilterCategory").on("click", function(e) {
-				$(".priceDetail").hide();
-				$(".categoryDetail").show();
+				toggleFilter(".categoryDetail", ".priceDetail");
 			});
 			
+			// 가격 클릭
 			$(".FilterPrice").on("click", function(e) {
-				$(".categoryDetail").hide();
-				$(".priceDetail").show();
+				toggleFilter(".priceDetail", ".categoryDetail");
 			});
 			
 			
@@ -371,11 +389,11 @@
 				var categoryId = $(this).attr("id");
 				category(categoryId);
 				
-				// 필터에 추가
+				// 카테고리 필터에 추가
 				var title = $(this).attr("title");
 				var tagStr = '';
 				tagStr += '<div class="tagListTag">';
-				tagStr += '<div class="tagListName">';
+				tagStr += '<div class="tagListName" data-cd="1">';
 				tagStr += title;
 				tagStr += '</div>';
 				tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div>';
@@ -387,8 +405,47 @@
 
 			// 필터 remove
 			$(document).on("click", ".tagListRemove", function(e) {
+				let text = this.parentElement.textContent;
+				var category = $("#item_category").val();
+				var item_tag = $("#tag").val();
+				var item_price_min = $("#item_price_min").val();
+				var item_price_max = $("#item_price_max").val();
+				console.log("text : " + text);
+				
+				/*
+					1: 카테고리
+					2: 가격
+					3: 태그
+				*/
+				var data = $(this).parent().find(".tagListName").data("cd");
+				console.log(data);
+				
+				switch(data) {
+					case 1: 
+						// 카테고리 처리
+						console.log("카테고리 처리");
+						$("#item_category").val(category.replace(text, ""))
+						break;
+					case 2: 
+						// 가격 처리
+						console.log("가격 처리");
+						$("#item_price_min").val(0);
+						$("#item_price_max").val(999999999999999);
+						break;
+					case 3: 
+						// 태그 처리
+						console.log("태그 처리");
+						$("#tag").val(item_tag.replace(text, ""))
+				}
+				
+				marketItemList();
+				
+				
 				$(this).parent().remove();
 			});
+			
+			
+			// 필터 초기화
 			$(document).on("click", ".tagListReset", function(e) {
 				location.reload();	
 			});
@@ -420,19 +477,24 @@
 				
 				
 				
-				// 필터에 추가
-// 				$(".tagPrice").remove();
+				// 가격 필터에 추가
+				if($(".tagListFilterBox").find(".tagPrice").length > 0) {
+					$(".tagPrice").remove();
+				}
+				
 				var tagStr = '';
 				tagStr += '<div class="tagPrice">';
 				tagStr += '<div class="tagListTag">';
-				tagStr += '<div class="tagListName">';
+				tagStr += '<div class="tagListName" data-cd="2">';
 				tagStr += item_price_min;
 				tagStr += '원~';
 				tagStr += item_price_max;
 				tagStr += '원';
 				tagStr += '</div>';
 				tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div></div>';
-				$(".tagListFilterBox").empty().append(tagStr);
+				
+				
+				$(".tagListFilterBox").append(tagStr);
 				
 				
 				$("#item_price_min").val(item_price_min);
@@ -467,11 +529,7 @@
 			
 			// 정렬 박스 열기
 			$(document).on("click", ".sortSortBox", function(e) {
-				if($('.SortListWrapper').css('display') == 'none' ) {
-					  $('.SortListWrapper').show();
-					} else {
-					  $('.SortListWrapper').hide();
-					}
+				$('.SortListWrapper').toggle();
 			});
 			
 			
@@ -479,6 +537,7 @@
 			$(document).on("click", ".SortListList", function(e) {
 				$(".sortSortBox").remove();
 				var title = $(this).attr("title");
+				
 				// 정렬 글자 변경
 				var str = '';
 				str += '<div class="sortSortBox">';
@@ -518,11 +577,11 @@
 				
 				marketItemList();
 				
-				// 필터에 추가
+				// 태그 필터에 추가
 				var tagStr = '';
 				tagStr += '<div class="tagSearch">';
 				tagStr += '<div class="tagListTag">';
-				tagStr += '<div class="tagListName">';
+				tagStr += '<div class="tagListName" data-cd="3">';
 				tagStr += input;
 				tagStr += '</div>';
 				tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div></div>';
