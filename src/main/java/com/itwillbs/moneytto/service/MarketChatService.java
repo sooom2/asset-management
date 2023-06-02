@@ -82,7 +82,7 @@ public class MarketChatService {
 	}
 	
 	// 채팅방 생성 가능한지 유무확인
-	public int insertChatRoom(String item_code, String id) {
+	public int isInsertChatRoom(String item_code, String id) {
 		return mapper.isInsertChatRoom(item_code,id);
 	}
 	

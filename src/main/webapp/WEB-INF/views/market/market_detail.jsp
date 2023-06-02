@@ -200,7 +200,7 @@ function toggleLike(element) {
 								</div>
 								
 								<div width="90%" class="SomeonesItemButton"data-cd="${marketItem.item_code }" style="display: none;">
-								<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_hellotalk.png" alt="채팅 아이콘" class="SomeonesItemIcon">
+								<i class="fa-regular fa-comment-dots fa-flip-horizontal" style="color: white;"></i>&nbsp;
 								<div color="#FFFFFF" class="SomeonesItemText">채팅하기</div>
 								</div>
 								<div width="50%" class="SomeonesModifyButton"data-cd="${marketItem.item_code }" style="display: none;">

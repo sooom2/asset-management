@@ -23,7 +23,8 @@
     background-color: #fff;
     margin: 20px 20px 0 0;
     float: left;
-    position: relative
+    position: relative;
+    overflow: scroll;
 }
 
 .left_main .left_main_header {

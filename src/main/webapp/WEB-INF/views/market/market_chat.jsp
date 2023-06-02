@@ -395,7 +395,14 @@ function messages() {
         sessionId = data.split(":")[0];
         message = data.split(":")[1];
         if (sessionId == cur_session) {
-
+			
+        	if (!$(".chat_description").text().trim()) {
+	        	var str = "<div class='chat_timeago'>";
+	        	str += "<div class='chat_timeago_box'>";
+	        	str += "<span class='chat_timeago_text'>"+year+"년 "+month+"월 "+day+"일" +"</span></div></div>";
+	        	$(".chat_wrapper").append(str);
+        	}
+        	
             var str = "<div class='chat_myself'>";
             str += "<div class='chat_myself_box'>";
             str += "<div class='chat_myself_message'>";
@@ -434,7 +441,7 @@ function messages() {
 <jsp:include page="../nav.jsp" />
 
 		<!-- 채팅내역없을때 -->
-		<c:if test="${empty param.item_code}">
+		<c:if test="${empty param.item_code and empty myChatList}">
 			<section class="content">
 				<div class="main_area">
 					<div class="content_area">
@@ -452,7 +459,7 @@ function messages() {
 	
 
 		<!-- 대화내역이있을때 -->
-		<c:if test="${not empty myChatList}">
+		<c:if test="${not empty myChatList and createRoom ne 0}">
 			<section class="content">
 				<div class="main_area">
 					<!-- left -->
@@ -537,17 +544,14 @@ function messages() {
 						<div class="chat_description" style="bottom:49px">
 							<div class="chat_wrapper" id="chat_wrapper">
 								
-								
 								<!-- 나 -->
-									<div class="chat_timeago">
-									<c:if test="${not empty room_code}">
-										<div class="chat_timeago_box">
-											<span class="chat_timeago_text">
-												<fmt:formatDate value="${chatList.chat_openDate }" pattern="yyyy년 MM월 dd일" />
-											</span>
-										</div>
-									</c:if>
+								<div class="chat_timeago">
+									<div class="chat_timeago_box">
+										<span class="chat_timeago_text">
+											<fmt:formatDate value="${chatList.chat_openDate }" pattern="yyyy년 MM월 dd일" />
+										</span>
 									</div>
+								</div>
 								<c:forEach var="chatDetail" items="${chatDetail }">
 									<c:choose>
 									    <c:when test="${sessionScope.sId eq chatDetail.chat_mem_id}">
@@ -590,7 +594,7 @@ function messages() {
 				</div>
 			</section>
 		</c:if>
-		<c:if test="${not empty param.item_code}">
+		<c:if test="${not empty param.item_code and createRoom eq 0}">
 			<section class="content">
 				<div class="main_area">
 					<!-- left -->

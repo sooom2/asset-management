@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -240,9 +241,11 @@ public class MarketController {
 	         System.out.println("item_code있음"+item_code);
 	         // 아이템선택후 들어가야함
 	         // 채팅방이있는지 조회한후 채팅방 생성 //
-	         int createRoom = marketChatService.insertChatRoom(item_code,id);
+	         int createRoom = marketChatService.isInsertChatRoom(item_code,id);
+	         System.out.println("1 ==========================================");
 	         System.out.println(createRoom);
-	         
+	         System.out.println("1 ==========================================");
+	         model.addAttribute("createRoom",createRoom);
 	         if(createRoom > 0 ) { //방이있을때
 	            
 	            //최근에 열린 채팅 내역 보이게
@@ -299,23 +302,6 @@ public class MarketController {
 	         
 	         
 	         
-	         if(chatList !=null && myChatList != null && opponentId !=null ) {
-		    	  
-			      //이미지 얻어오기위해 ( 상대방 꺼 조회해야함 )
-			      HashMap<String, String> opponentMember = memberService.getMember(opponentId.get("opponent_id"));
-			      String profileImg = opponentMember.get("member_image");
-			      
-		          model.addAttribute("profileImg",profileImg);
-		          item = marketChatService.getItemList(item_code);
-			      sellId = item.get("member_id");
-		      
-		      } 
-		      //판매자 프사
-		      HashMap<String, String> sellMember = memberService.getMember(sellId);
-		      String sellProfileImg = sellMember.get("member_image");
-		      model.addAttribute("sellProfileImg",sellProfileImg);
-	         
-	         
 		      model.addAttribute("sellId",sellId);
 	      } else {  //nav로들어갈때
 	         
@@ -346,7 +332,22 @@ public class MarketController {
 	         
 	      }
 	      
-	     
+	      if(chatList !=null && myChatList != null && opponentId !=null ) {
+	    	  
+		      //이미지 얻어오기위해 ( 상대방 꺼 조회해야함 )
+		      HashMap<String, String> opponentMember = memberService.getMember(opponentId.get("opponent_id"));
+		      String profileImg = opponentMember.get("member_image");
+		      
+	          model.addAttribute("profileImg",profileImg);
+	          item = marketChatService.getItemList(item_code);
+		      sellId = item.get("member_id");
+	      
+	      } 
+	      //판매자 프사
+	      HashMap<String, String> sellMember = memberService.getMember(sellId);
+	      String sellProfileImg = sellMember.get("member_image");
+	      model.addAttribute("sellProfileImg",sellProfileImg);
+         
 		    
 	      
 	      
