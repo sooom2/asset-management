@@ -367,7 +367,7 @@
 			</if>
 		   <choose>
 		      <when test='sort.equals("lowPrice")'>
-	         	 ORDER BY 	replace(i.item_price,',','')+0 ASC
+	         	ORDER BY 	replace(i.item_price,',','')+0 ASC
 		      </when> 
 		      <when test='sort.equals("highPrice")'>
 		        ORDER BY	replace(i.item_price,',','')+0 DESC
@@ -376,7 +376,7 @@
 	      		ORDER BY	m.grade_score DESC
 		      </when>
 		      <otherwise>
-	      		ORDER BY	i.item_code DESC
+	      		ORDER BY	i.item_date DESC
 		   	  </otherwise> 
 		   </choose>
 		   		, im.image_code  

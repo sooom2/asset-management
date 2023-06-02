@@ -74,7 +74,7 @@ public class MarketController {
 			@RequestParam(defaultValue = "0") String item_price_min, 
 			@RequestParam(defaultValue = "") String item_price_max,
 			@RequestParam(defaultValue = "") String member_grade,
-			@RequestParam(defaultValue = "default") String sort,
+			@RequestParam(defaultValue = "default") String sort, 
 			HttpSession session) {
 		System.out.println("item_category : " + item_category);
 		System.out.println("item_status : " + item_status);
@@ -82,8 +82,14 @@ public class MarketController {
 		System.out.println("item_price_max : " + item_price_max);
 		System.out.println("member_grade : " + member_grade);
 		System.out.println("item_tag : " + item_tag);
+//		System.out.println("pageNum : " + pageNum);
 		
 		String id = (String)session.getAttribute("sId");
+		
+		
+		// 페이징 처리를 위해 조회 목록 갯수 조절 시 사용될 변수 선언
+//		int listLimit = 10; // 한 페이지에서 표시할 게시물 목록 갯수(10개로 제한)
+//		int startRow = (pageNum - 1) * listLimit; // 조회 시작 행번호(startRow) 계산 => 0, 10, 20...
 		
 		// 05.27 getMarketItemList에 id 파라미터 추가
 		// 마켓 메인 아이템 리스트

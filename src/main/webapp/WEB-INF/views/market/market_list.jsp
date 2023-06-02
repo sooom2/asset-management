@@ -275,6 +275,20 @@
 		}
 		
 		
+		// 카테고리 첫 문자나 마지막 문자가 "/" 이면 제거, 태그 첫 문자나 마지막 문자가 "|" 이면 제거
+		function removeChar(str, character){
+		  if(str[0] == character){
+		    str = str.substring(1);
+		  }
+
+		  if(str[str.length - 1] == character){
+		    str = str.slice(0, -1);
+		  }
+
+		  return str;
+		}
+		
+		
 		// 상품 리스트 불러오기
 		function marketItemList() {
 			$(".itemThumbnailBox").remove();
@@ -288,25 +302,21 @@
 			var sort = $("#sort").val();
 			
 			
+			// 카테고리 첫 문자나 마지막 문자가 "/" 이면 제거, 태그 첫 문자나 마지막 문자가 "|" 이면 제거
+			item_category = removeChar(item_category, "/");
+			item_tag = removeChar(item_tag, "|");
+			$("#item_category").val(item_category);
+			$("#tag").val(item_tag);
 			
-			// 필터 제거시 필요없는 마지막 문자 제거
-			if(item_category.charAt(item_category.length - 1) == "/") {
-				item_category = item_category.slice(0, -1);
-			}
-			
-			if(item_tag.charAt(item_tag.length - 1) == "|") {
-				item_tag = item_tag.slice(0, -1);
-			}
-
 			
 			console.log("---var---")
-			console.log(item_category);
-			console.log(item_tag);
-			console.log(item_status);
-			console.log(item_price_min);
-			console.log(item_price_max);
-			console.log(member_grade);
-			console.log(sort);
+			console.log("item_category : " + item_category);
+			console.log("item_tag : " + item_tag);
+			console.log("item_status : " + item_status);
+			console.log("item_price_min : " + item_price_min);
+			console.log("item_price_max : " + item_price_max);
+			console.log("member_grade : " + member_grade);
+			console.log("sort : " + sort);
 			
 			$.ajax({													
 	 			type: "GET",
@@ -338,6 +348,7 @@
 	 		});
 		}
 		
+		// 페이지 번호 값
 // 		let pageNum = 1;
 		$(function () {
 			marketItemList();
@@ -353,7 +364,7 @@
 // 				let scrollTop = $(window).scrollTop();
 // 				let windowHeight = $(window).height();
 // 				let documentHeight = $(document).height();
-// //	 			console.log("scrollTop : " + scrollTop + ", windowHeight : " + windowHeight + ", documentHeight : " + documentHeight);
+// // 	 			console.log("scrollTop : " + scrollTop + ", windowHeight : " + windowHeight + ", documentHeight : " + documentHeight);
 
 // 				// 2. 스크롤바 위치값 + 창 높이 + x 가 문서 전체 높이 이상일 경우
 // 				//    다음 페이지 게시물 목록 로딩하여 화면에 추가
