@@ -22,7 +22,7 @@
 <script type="text/javascript">
 
 $(function() {
-	$('.chat_description').scrollTop($('.chat_description')[0].scrollHeight+1000);
+// 	$('.chat_description').scrollTop($('.chat_description')[0].scrollHeight+1000);
 	
 	
 	
@@ -406,9 +406,9 @@ function messages() {
             $(".active .description").text(message);
             $(".active .time_ago").text(amPm + " " + hours + ":" + minutes);	
         } else {
-
+        	
             var str = " <div class='chat_opponent'><div class='chat_opponent_box'><div class='chat_opponent_image_box'>";
-            str += "<img class='chat_opponent_profile_image' src='https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png' alt='상대방이미지'> </div>";
+            str += "<img class='chat_opponent_profile_image' src='${profileImg}' alt='상대방이미지'> </div>";
             str += "<div class='chat_opponent_title'>" + sessionId + "</div>";
             str += "<div class='chat_opponent_message'>";
             str += "<span>" + message + "</span>";
@@ -432,167 +432,264 @@ function messages() {
 </head>
 <body>
 <jsp:include page="../nav.jsp" />
-	<!-- 대화내역이있을때 -->
-	<c:if test="${not empty myChatList }">
-	<section class="content">
-		<div class="main_area">
-			<!-- left -->
-			<div class="left_main">
-				<div class="left_main_header">
-					<div class="title">MY CHAT LIST</div>
-<!-- 					<hr> -->
+
+		<!-- 채팅내역없을때 -->
+		<c:if test="${empty param.item_code}">
+			<section class="content">
+				<div class="main_area">
+					<div class="content_area">
+						<a href="market_list">
+						<p>
+						<span style="font-size: 50px;">🧐</span><br>
+						<span>대화 내역이 존재하지 않습니다</span><br>
+						<span>대화를 시작 하러 가볼까요?</span><br>
+						</p>
+						</a>
+					</div>
 				</div>
-				<ul>
-					<!-- 채팅방 목록-->
-					<!--  선택된채팅에 active처리  -->
-				
-				<c:forEach var="chatList" items="${myChatList }">
-					<div class="card_box">
-							<li>
-								<div class="profile">
-									<img src="${path }/resources/images/chat/defaultProfile.png" alt="명품인증">
-									<div style="font-size: 13px;  text-align: center;}">${chatList.get('item_status')}</div>
+			</section>
+		</c:if>
+	
+
+		<!-- 대화내역이있을때 -->
+		<c:if test="${not empty myChatList}">
+			<section class="content">
+				<div class="main_area">
+					<!-- left -->
+					<div class="left_main">
+						<div class="left_main_header">
+							<div class="title">MY CHAT LIST</div>
+						</div>
+						<ul>
+						<!-- 채팅방 목록-->
+						<!--  선택된채팅에 active처리  -->
+						<c:forEach var="chatList" items="${myChatList }">
+							<div class="card_box">
+									<li>
+										<div class="profile">
+											<img src="${path }/resources/images/chat/defaultProfile.png" alt="명품인증">
+											<div style="font-size: 13px;  text-align: center;}">${chatList.get('item_status')}</div>
+										</div>
+										<div class="info">
+											<div class="nick">[${chatList.get('member_nickname') }]</div>
+											<div class="subject"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.get('item_subject') }</div>
+											<div class="description">${chatList.get('chat_content') }</div>
+											<!-- 날짜처리 제대로해야함 -->
+											<fmt:parseDate var="formattedDate" value="${chatList.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+											<div class="time_ago"><fmt:formatDate value="${formattedDate}" pattern="yyyy-MM-dd a hh:mm" /></div>	
+											<input type="hidden" value="${chatList.get('room_code')}" class="room_code">
+											<input type="hidden" value="${chatList.get('item_code')}" class="item_code">
+										</div>
+									</li>
+								<div class="etc_dots"></div>
+							</div>
+						</c:forEach>
+						</ul>
+					</div>
+					<!-- 나중에 세션아이디로(내아이디) -->
+					<input hidden="${id }">
+					<!-- 채팅방 -->
+					<div class="right_main">
+					
+					
+						<div class="chat_header">
+							<a href="" target="_blank" rel="noopener noreferrer" style="display: inline-block;">
+								<div class="image_box">
+									<div class="image_table">
+										<img src="${sellProfileImg}" alt="ㅇㅇ님의 프로필 이미지">
+									</div>
 								</div>
 								<div class="info">
-									<div class="nick">[${chatList.get('member_nickname') }]</div>
-									<div class="subject"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.get('item_subject') }</div>
-									<div class="description">${chatList.get('chat_content') }</div>
-									<!-- 날짜처리 제대로해야함 -->
-									<fmt:parseDate var="formattedDate" value="${chatList.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
-									<div class="time_ago"><fmt:formatDate value="${formattedDate}" pattern="yyyy-MM-dd a hh:mm" /></div>	
-									<input type="hidden" value="${chatList.get('room_code')}" class="room_code">
-									<input type="hidden" value="${chatList.get('item_code')}" class="item_code">
+									<div>
+										<!-- 상대방 닉네임 -->
+										<span>[${chatList.member_nickname }]<br><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.item_subject }</span>
+		<%-- 								<span>판매아이템 ${sellCount }개</span> --%>
+									</div>
 								</div>
-							</li>
-						<div class="etc_dots"></div>
-					</div>
-				</c:forEach>
-				</ul>
-			</div>
-			<!-- 나중에 세션아이디로(내아이디) -->
-			<input hidden="${id }">
-			<!-- 채팅방 -->
-			<div class="right_main">
-			
-			
-				<div class="chat_header">
-					<a href="" target="_blank" rel="noopener noreferrer" style="display: inline-block;">
-						<div class="image_box">
-							<div class="image_table">
-								<img src="${path }/resources/images/chat/defaultProfile.png" alt="ㅇㅇ님의 프로필 이미지">
+							</a>
+							<!-- 신고 -->
+							<div class="declaration">
+								<div>
+									<img src="${path }/resources/images/chat/btn_report_x2.png" alt="신고 이미지">
+								</div>
 							</div>
-						</div>
-						<div class="info">
 							<div>
-								<!-- 상대방 닉네임 -->
-								<span>[${chatList.member_nickname }]<br><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.item_subject }</span>
-<%-- 								<span>판매아이템 ${sellCount }개</span> --%>
+							    <div class="scheduling">
+							        <a class="sch_date">
+							            <i class="fa-regular fa-calendar"></i> 일정잡기 
+							        </a>
+							        <input type="text" class="sch_box" style="border: none; width: 98px;" readonly/>
+							    </div>
+							    <div class="trade_status">
+		
+								    <input type="button" class="${chatList.item_status eq '판매중' ? 'active' : ''}" value="판매중">
+								    <input type="button" class="${chatList.item_status eq '거래중' ? 'active' : ''}" value="거래중">
+								    <input type="button" class="${chatList.item_status eq '거래완료' ? 'active' : ''}" value="거래완료">
+								    <br>
+								    <c:if test="${chatList.item_status eq '거래완료'}">
+								        <div class="review" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>
+								    </c:if>
+							    </div>
 							</div>
 						</div>
-					</a>
-					<!-- 신고 -->
-					<div class="declaration">
-						<div>
-							<img src="${path }/resources/images/chat/btn_report_x2.png" alt="신고 이미지">
+						
+						<!-- 채팅영역 -->
+						<div class="chat_description" style="bottom:49px">
+							<div class="chat_wrapper" id="chat_wrapper">
+								
+								
+								<!-- 나 -->
+									<div class="chat_timeago">
+									<c:if test="${not empty room_code}">
+										<div class="chat_timeago_box">
+											<span class="chat_timeago_text">
+												<fmt:formatDate value="${chatList.chat_openDate }" pattern="yyyy년 MM월 dd일" />
+											</span>
+										</div>
+									</c:if>
+									</div>
+								<c:forEach var="chatDetail" items="${chatDetail }">
+									<c:choose>
+									    <c:when test="${sessionScope.sId eq chatDetail.chat_mem_id}">
+									        <div class="chat_myself">
+									            <div class="chat_myself_box">
+									                <div class="chat_myself_message">
+									                    <span>${chatDetail.chat_content }</span>
+									                    <div class="chat_myself_timeago"><fmt:formatDate value="${formattedDate}" pattern="a hh:mm" /></div>
+									                </div>
+									            </div>
+									        </div>
+									    </c:when>
+									    <c:otherwise>
+									        <div class="chat_opponent">
+									            <div class="chat_opponent_box">
+									                <div class="chat_opponent_image_box">
+									                    <img class="chat_opponent_profile_image" src="${profileImg}" alt="상대방이미지">
+									                </div>
+									                <div class="chat_opponent_title">${opponentId.opponent_nickname }</div>
+									                <div class="chat_opponent_message">
+									                    <span>${chatDetail.chat_content }</span>
+									                    <div class="chat_opponent_timeago"><fmt:formatDate value="${formattedDate}" pattern="a hh:mm" /></div>
+									                </div>
+									            </div>
+									        </div>
+									    </c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</div>
 						</div>
-					</div>
-					<div>
-					    <div class="scheduling">
-					        <a class="sch_date">
-					            <i class="fa-regular fa-calendar"></i> 일정잡기 
-					        </a>
-					        <input type="text" class="sch_box" style="border: none; width: 98px;" readonly/>
-					    </div>
-					    <div class="trade_status">
-
-						    <input type="button" class="${chatList.item_status eq '판매중' ? 'active' : ''}" value="판매중">
-						    <input type="button" class="${chatList.item_status eq '거래중' ? 'active' : ''}" value="거래중">
-						    <input type="button" class="${chatList.item_status eq '거래완료' ? 'active' : ''}" value="거래완료">
-						    <br>
-						    <c:if test="${chatList.item_status eq '거래완료'}">
-						        <div class="review" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>
-						    </c:if>
-					    </div>
+						
+						<!-- 전송버튼 -->
+						<div class="chat_footer">
+							<div class="chat_footer_area">
+								<input type="text" class="chat_input" id="message" contenteditable="true" placeholder="메세지를 입력해주세요."></div>
+								<button type="button" id="btnSend">전송</button>
+							</div>
+						</div>
 					</div>
 				</div>
-				
-				<!-- 채팅영역 -->
-				<div class="chat_description" style="bottom:49px">
-					<div class="chat_wrapper" id="chat_wrapper">
-						
-						
-						<!-- 나 -->
-							<div class="chat_timeago">
-							<c:if test="${not empty room_code}">
-								<div class="chat_timeago_box">
-									<span class="chat_timeago_text">
-										<fmt:formatDate value="${chatList.chat_openDate }" pattern="yyyy년 MM월 dd일" />
-									</span>
-								</div>
-							</c:if>
+			</section>
+		</c:if>
+		<c:if test="${not empty param.item_code}">
+			<section class="content">
+				<div class="main_area">
+					<!-- left -->
+					<div class="left_main">
+						<div class="left_main_header">
+							<div class="title">MY CHAT LIST</div>
+						</div>
+						<ul>
+						<!-- 채팅방 목록-->
+						<!--  선택된채팅에 active처리  -->
+						<c:forEach var="chatList" items="${myChatList }">
+							<div class="card_box">
+									<li>
+										<div class="profile">
+											<img src="${path }/resources/images/chat/defaultProfile.png" alt="명품인증">
+											<div style="font-size: 13px;  text-align: center;}">${chatList.get('item_status')}</div>
+										</div>
+										<div class="info">
+											<div class="nick">[${chatList.get('member_nickname') }]</div>
+											<div class="subject"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.get('item_subject') }</div>
+											<div class="description">${chatList.get('chat_content') }</div>
+											<!-- 날짜처리 제대로해야함 -->
+											<fmt:parseDate var="formattedDate" value="${chatList.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+											<div class="time_ago"><fmt:formatDate value="${formattedDate}" pattern="yyyy-MM-dd a hh:mm" /></div>	
+											<input type="hidden" value="${chatList.get('room_code')}" class="room_code">
+											<input type="hidden" value="${chatList.get('item_code')}" class="item_code">
+										</div>
+									</li>
+								<div class="etc_dots"></div>
 							</div>
-						<c:forEach var="chatDetail" items="${chatDetail }">
-							<c:choose>
-							    <c:when test="${sessionScope.sId eq chatDetail.chat_mem_id}">
-							        <div class="chat_myself">
-							            <div class="chat_myself_box">
-							                <div class="chat_myself_message">
-							                    <span>${chatDetail.chat_content }</span>
-							                    <div class="chat_myself_timeago"><fmt:formatDate value="${formattedDate}" pattern="a hh:mm" /></div>
-							                </div>
-							            </div>
-							        </div>
-							    </c:when>
-							    <c:otherwise>
-							        <div class="chat_opponent">
-							            <div class="chat_opponent_box">
-							                <div class="chat_opponent_image_box">
-							                    <img class="chat_opponent_profile_image" src="https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png" alt="상대방이미지">
-							                </div>
-							                <div class="chat_opponent_title">${opponentId.opponent_nickname }</div>
-							                <div class="chat_opponent_message">
-							                    <span>${chatDetail.chat_content }</span>
-							                    <div class="chat_opponent_timeago"><fmt:formatDate value="${formattedDate}" pattern="a hh:mm" /></div>
-							                </div>
-							            </div>
-							        </div>
-							    </c:otherwise>
-							</c:choose>
 						</c:forEach>
+						</ul>
+					</div>
+					<!-- 나중에 세션아이디로(내아이디) -->
+					<input hidden="${id }">
+					<!-- 채팅방 -->
+					<div class="right_main">
+					
+						<div class="chat_header">
+							<a href="" target="_blank" rel="noopener noreferrer" style="display: inline-block;">
+								<div class="image_box">
+									<div class="image_table">
+										<img src="${sellProfileImg}" alt="ㅇㅇ님의 프로필 이미지">
+									</div>
+								</div>
+								<div class="info">
+									<div>
+										<!-- 상대방 닉네임 -->
+										<span>[${chatList.member_nickname }]<br><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.item_subject }</span>
+		<%-- 								<span>판매아이템 ${sellCount }개</span> --%>
+									</div>
+								</div>
+							</a>
+							<!-- 신고 -->
+							<div class="declaration">
+								<div>
+									<img src="${path }/resources/images/chat/btn_report_x2.png" alt="신고 이미지">
+								</div>
+							</div>
+							<div>
+							    <div class="scheduling">
+							        <a class="sch_date">
+							            <i class="fa-regular fa-calendar"></i> 일정잡기 
+							        </a>
+							        <input type="text" class="sch_box" style="border: none; width: 98px;" readonly/>
+							    </div>
+							    <div class="trade_status">
+		
+								    <input type="button" class="${chatList.item_status eq '판매중' ? 'active' : ''}" value="판매중">
+								    <input type="button" class="${chatList.item_status eq '거래중' ? 'active' : ''}" value="거래중">
+								    <input type="button" class="${chatList.item_status eq '거래완료' ? 'active' : ''}" value="거래완료">
+								    <br>
+								    <c:if test="${chatList.item_status eq '거래완료'}">
+								        <div class="review" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>
+								    </c:if>
+							    </div>
+							</div>
+						</div>
 						
+						<!-- 채팅영역 -->
+						<div class="chat_description" style="bottom:49px">
+							<div class="chat_wrapper" id="chat_wrapper">
+							</div>
+						</div>
 						
-						
-						
+						<!-- 전송버튼 -->
+						<div class="chat_footer">
+							<div class="chat_footer_area">
+								<input type="text" class="chat_input" id="message" contenteditable="true" placeholder="메세지를 입력해주세요."></div>
+								<button type="button" id="btnSend">전송</button>
+							</div>
+						</div>
 					</div>
 				</div>
-				
-				<!-- 전송버튼 -->
-				<div class="chat_footer">
-					<div class="chat_footer_area">
-						<input type="text" class="chat_input" id="message" contenteditable="true" placeholder="메세지를 입력해주세요."></div>
-						<button type="button" id="btnSend">전송</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	</c:if>
-	
-	<!--  대화내역이 존재하지않을때 -->
-	<c:if test="${empty chatList}">
-		<section class="content">
-			<div class="main_area">
-				<div class="content_area">
-					<p>
-					<span style="font-size: 50px;">🧐</span><br>
-					<span>대화 내역이 존재하지 않습니다</span>
-					<span>대화를 시작 하러 가볼까요?</span>
-					</p>
-				</div>
-			</div>
-		</section>
-	
-	</c:if>
+			</section>
+		</c:if>
+		
+		
+
 	
 	<jsp:include page="../footer.jsp" />
 </body>

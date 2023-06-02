@@ -224,6 +224,11 @@ public class MarketController {
 	      
 	      //상대방아이디
 	      HashMap<String, String> opponentId = null;
+	      
+	      HashMap<String, String> item =null;
+	      String sellId = null;
+	    
+	      
 	      //마지막 채팅 내역 
 	      List<HashMap<String, String>> myChatList = null;
 	      HashMap<String, Integer> chatList = null;
@@ -237,11 +242,6 @@ public class MarketController {
 	         // 채팅방이있는지 조회한후 채팅방 생성 //
 	         int createRoom = marketChatService.insertChatRoom(item_code,id);
 	         System.out.println(createRoom);
-	         
-	         
-	         
-	         HashMap<String, String> item =null;
-	         String sellId = null;
 	         
 	         if(createRoom > 0 ) { //방이있을때
 	            
@@ -282,7 +282,6 @@ public class MarketController {
 	            chatList = marketChatService.getItemDetail(item_code);
 	            myChatList = marketChatService.getMyChatList(id);
 	            if(myChatList != null) {
-	            	System.out.println("널널너런러널너러널널널널널너런런러");
 	            	room_code = marketChatService.getNextRoomCode();
 //	            System.out.println("chatDetail 에서  방이없을경우"+item_code+",룸코드: "+room_code+","+sellId);
 	            }else {
@@ -298,7 +297,26 @@ public class MarketController {
 	            
 	         }
 	         
-	         model.addAttribute("sellId",sellId);
+	         
+	         
+	         if(chatList !=null && myChatList != null && opponentId !=null ) {
+		    	  
+			      //이미지 얻어오기위해 ( 상대방 꺼 조회해야함 )
+			      HashMap<String, String> opponentMember = memberService.getMember(opponentId.get("opponent_id"));
+			      String profileImg = opponentMember.get("member_image");
+			      
+		          model.addAttribute("profileImg",profileImg);
+		          item = marketChatService.getItemList(item_code);
+			      sellId = item.get("member_id");
+		      
+		      } 
+		      //판매자 프사
+		      HashMap<String, String> sellMember = memberService.getMember(sellId);
+		      String sellProfileImg = sellMember.get("member_image");
+		      model.addAttribute("sellProfileImg",sellProfileImg);
+	         
+	         
+		      model.addAttribute("sellId",sellId);
 	      } else {  //nav로들어갈때
 	         
 	    	 // 최근에 열린 채팅 내역 보이게
@@ -326,10 +344,11 @@ public class MarketController {
 	        	 
 	         }
 	         
-	         
-	         
-	         
 	      }
+	      
+	     
+		    
+	      
 	      
 	      model.addAttribute("opponentId",opponentId);
 	      model.addAttribute("myChatList",myChatList);
@@ -337,9 +356,9 @@ public class MarketController {
 	      model.addAttribute("sellCount",sellCount);
 	      model.addAttribute("room_code",room_code);
 	      model.addAttribute("item_code",item_code);
-	      System.out.println("=============");
-	      System.out.println(chatList);
-	      System.out.println("=============");
+	      System.out.println("===============????=========================================");
+	      System.out.println(chatList + ": " + myChatList + ": " + opponentId);
+	      System.out.println("==================????===========================================");
 	      return "market/market_chat";
 	      
 	   }// market_chat

@@ -65,7 +65,7 @@
 			</div>
 			<c:if test="${not empty sessionScope.sId }">
 				<div class="mem_profile">
-						<img src="${sessionScope.member_image }" alt="프로필 이미지" class="profileImg">
+					<img src="${sessionScope.member_image }" alt="프로필 이미지" class="profileImg">
 					<div class="mem_nickName" onclick="location.href='mypage'">${sessionScope.nickname }</div>
 				</div>	
 			</c:if>

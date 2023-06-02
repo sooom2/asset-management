@@ -123,7 +123,7 @@ public class MemberController {
 							, Model model, HttpSession session) {
 
 	    HashMap<String, String> member = memberService.getMember(member_id);
-	    
+
 	    if (member != null) {
 	        String hashedPassword = member.get("member_pw");
 		    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
