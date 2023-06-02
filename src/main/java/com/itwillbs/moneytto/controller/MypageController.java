@@ -85,7 +85,11 @@ public class MypageController {
 	    
 	    model.addAttribute("member", member);
 	    model.addAttribute("itemList", itemList);
-	    model.addAttribute("balance_amt", account.get("balance_amt"));
+	    //TODO
+//	    if(account.get("balance_amt") == null) {
+//	    	model.addAttribute("balance_amt", account.get("balance_amt"));
+//	    }
+	    
 	    
 		return "mypage/mypage";
 	} 
