@@ -58,17 +58,6 @@ public class AuctionController {
 		String id = (String)session.getAttribute("sId");
 		HashMap<String, String> auctionEnroll = service.selectAuctionEnroll(auction_code, id);
 		System.out.println("auctionEnroll1111111" + auctionEnroll);
-//		if(auctionEnroll != null) {
-//			model.addAttribute("auctionEnroll", true);
-//		} else {
-//			model.addAttribute("auctionEnroll", false);
-//		}
-		/* DB 에서 비교한 값이 true false 로 넘어오면 
-		model.addAttribute("auctionEnroll", auctionEnroll);
-		이렇게 넣어도 된다 
-		그렇지만 이거보단 밑에꺼 사용이 보기 편함
-		*/
-//		model.addAttribute("enrollCode", auctionEnroll.get("enroll_code"));
 		
 		// 방 번호 대신 방에 등록이 되었는지 저장해서 그걸로 확인
 		boolean result = auctionEnroll != null ? true : false;

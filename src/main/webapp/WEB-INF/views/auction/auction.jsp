@@ -294,9 +294,7 @@
 						</c:choose>
 						<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
 						<div class="auction_id">
-						<span>${auction. }
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-						<option value="${cinema.cinema_name}" ${paramMap.cinema_name == cinema.cinema_name ? 'selected' : ''}>${cinema.cinema_name}</option>
+<!-- 						<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
 						<span>${lastLog.get("member_id") }</span>
 						</div>
 					</div>
@@ -306,15 +304,10 @@
 							<div class="logBox">
 								<c:forEach var="auctionLog" items="${auctionLog }">
 									<div class='chat_myself'>
-										${auctionLog.member_nickname }님&nbsp;&nbsp;<span>${auctionLog.log_content }원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>
-<%-- 										<fmt:formatDate value="${auctionLog.log_time }" pattern="tt hh:mm:ss" /> --%>
-<%-- 										<fmt:parseDate var="formattedDate" value="${auctionLog.log_time }" pattern="t hh:mm:ss" /> --%>
-										<${auctionLog.log_time }>&nbsp;&nbsp;${auctionLog.member_id }님&nbsp;&nbsp;<span>${auctionLog.log_content }원&nbsp;&nbsp;입찰!</span>
-<%-- 										<fmt:formatDate value="${auctionLog.chat_time }" pattern="tt hh:mm:ss" /> --%>
-<%-- 										<fmt:parseDate var="formattedDate" value="${auctionLog.chat_time }" pattern="yyyy-MM-dd'T'hh:mm:ss" /> --%>
+<%-- 										${auctionLog.member_nickname }님&nbsp;&nbsp;<span>${auctionLog.log_content }원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span> --%>
+										${auctionLog.log_time }&nbsp;&nbsp;${auctionLog.member_id }님&nbsp;&nbsp;<span>${auctionLog.log_content }원&nbsp;&nbsp;입찰!</span>
 									</div>
 								</c:forEach>
-<%-- 										ddddddddddddd<fmt:formatDate value="${auctionLog.chat_time }" pattern="hh:mm:ss" /> --%>
 <!-- 								<div class="chat_myself"> -->
 <!-- 								</div> -->
 							</div>
