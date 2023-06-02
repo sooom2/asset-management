@@ -1,55 +1,194 @@
 @charset "UTF-8";
 
+.container {
+  display: flex;
+  justify-content: center; /* 양쪽으로 여백을 동일하게 설정 */
+  margin-left: 50px; /* 왼쪽 여백 크기 */
+  margin-right: 50px; /* 오른쪽 여백 크기 */
+  position: relative;
+}
+
+.form-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 50px;
+}
+
+.button-search-container {
+ display: flex;
+ 
+ /* 버튼과 검색 요소를 오른쪽으로 정렬 */
+ margin-bottom: 14px;
+ margin-left: 803px;
+ flex-direction: row;
+ }
+
+#button-container,
+#search-container {
+margin-left: 10px; /* 요소들 간의 간격 조정 */
+}
+
+#board-table {
+  margin: 0 auto; /* 테이블 가운데 정렬 */
+  width: 100%; /* 테이블 너비를 화면에 맞게 설정 */
+  max-width: 1200px; /* 테이블의 최대 너비를 지정 (원하는 크기로 조정) */
+  border-collapse: collapse;
+  margin-bottom: 20px; /* 테이블 아래 여백 조정 */
+  table-layout: fixed; /* 테이블의 너비를 고정시킴 */
+}
+
+
 #board-header {
-        padding: 10px;
-        text-align: center;
-        border-bottom: 2px solid #bb2649;
-        background-color: #bb26491a;
-        font-weight: bold;
-    }
+padding: 10px;
+text-align: center;
+border-bottom: 2px solid #bb2649;
+background-color: #bb26491a;
+font-weight: bold;
+}
 
-    #board-data {
-        padding: 10px;
-        text-align: center;
-        border-bottom: 1px solid #bb2649;
-    }
+#board-data {
+padding: 10px;
+text-align: center;
+border-bottom: 1px solid #bb2649;
+word-wrap: break-word; /* 긴 텍스트 줄바꿈 처리 */
+}
 
-    #iForm {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 50px;
-    }
+.tit {
+margin-bottom: 20px;
+font-size: 24px;
+color: #333;
+}
 
-    .tit {
-        margin-bottom: 20px;
-        font-size: 24px;
-        color: #333;
-    }
+table {
+margin: 20px auto;
+border-collapse: collapse;
+}
 
-    table {
-        width: 90%;
-        margin: 20px auto;
-        border-collapse: collapse;
-    }
+th:first-child,
+td:first-child {
+  width: 10%;
+  background-color: #bb26491a;
+  font-weight: bold;
+  white-space: nowrap; /* 글번호가 너무 길어지면 줄바꿈하지 않음 */
+}
 
-    th:first-child,
-    td:first-child {
-        width: 10%;
-        background-color: #bb26491a;
-        font-weight: bold;
-    }
+th#board-number {
+  width: 10%;
+  writing-mode: horizontal-tb; /* 글번호를 수평으로 표시 */
+  text-orientation: mixed; /* 글번호를 수평으로 표시 */
+}
+#board-data {
+  text-align: center; /* 테이블 데이터 가운데 정렬 */
+}
 
-    th:not(:first-child),
-    td:not(:first-child) {
-        width: 15%;
-    }
+td a {
+color: #bb2649;
+text-decoration: none;
+}
 
-    td a {
-        color: #bb2649;
-        text-decoration: none;
-    }
+td a:hover {
+text-decoration: underline;
+}
 
-    td a:hover {
-        text-decoration: underline;
-    }
+#button-container button,
+#search-container button {
+padding: 8px 16px;
+background-color: #bb2649;
+color: #fff;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+}
+
+#button-container button:hover,
+#search-container button:hover {
+background-color: #e23d69;
+}
+
+#search-container input[type="text"] {
+padding: 8px;
+border-radius: 4px;
+border: 1px solid #ccc;
+}
+
+
+/* 커뮤니티 작성폼  */
+h1#writeForm-heading {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+form#writeForm {
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+tr.title-row td {
+  text-align: center;
+  font-weight: bold;
+}
+
+td.write_td_left {
+  width: 20%;
+  padding: 10px;
+}
+
+td.write_td_right {
+  width: 80%;
+  padding: 10px;
+}
+label#writeForm-label {
+  font-weight: bold;
+}
+
+input#board_subject,
+textarea#board_content {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+input#file {
+  padding: 8px;
+}
+
+section#btnArea {
+  margin-top: 20px;
+}
+
+section#btnArea input[type="submit"],
+section#btnArea input[type="reset"],
+section#btnArea input[type="button"] {
+  padding: 8px 16px;
+  background-color: #bb2649;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+section#btnArea input[type="submit"]:hover,
+section#btnArea input[type="reset"]:hover,
+section#btnArea input[type="button"]:hover {
+  background-color: #e23d69;
+}
+
+article#writeForm  {
+	display: flex;
+	justify-content: center;
+	height: 100vh;
+	margin-top: 100px;
+	}
+
+
+
+

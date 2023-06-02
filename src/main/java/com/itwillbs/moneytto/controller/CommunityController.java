@@ -15,5 +15,14 @@ public class CommunityController {
 		
 		return "board/community";
 	}
+	
+	
+	@GetMapping(value = "commBoardWrite")
+	public String commBoardWrite(Model model,HttpSession session) {
+		
+		
+		return "board/commBoardWrite";
+	}
+	
 
 }
