@@ -82,14 +82,15 @@
 	</select>
 	
 	<select id="opponentId" resultType="hashmap">
-		SELECT oppenent_id
+		SELECT opponent_id,opponent_nickname
          FROM (
-             SELECT room_code, chat_code, oppenent_id,
+             SELECT room_code, chat_code, opponent_id,opponent_nickname,
                     ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num
              FROM (
                  SELECT market_chat_rooms.room_code,
                         chat_code,
-                        member.member_id AS oppenent_id
+                        member.member_id AS opponent_id,
+                        member.member_nickname  AS opponent_nickname
            	   		FROM   market_chat_messages
 	                      LEFT JOIN member
 	                             ON member.member_id = market_chat_messages.sell_member_id
@@ -97,11 +98,12 @@
 	                      		 ON market_chat_rooms.room_code = market_chat_messages.room_code
 	                      LEFT JOIN item 
 	                      		 ON item.item_code=market_chat_rooms.item_code 
-              		 WHERE  buy_member_id = #{ssesion_id}
+              		 WHERE  buy_member_id = #{session_id}
                UNION
 	             SELECT market_chat_rooms.room_code,
 	                    chat_code,
-	                    member.member_id AS oppenent_id
+	                    member.member_id AS opponent_id,
+	                    member.member_nickname  AS opponent_nickname
 	             	FROM   market_chat_messages
 		                    LEFT JOIN member
 		                           ON member.member_id = market_chat_messages.buy_member_id
@@ -109,10 +111,10 @@
 	                      		   ON market_chat_rooms.room_code = market_chat_messages.room_code
                   		   	LEFT JOIN item 
 	                      		 ON item.item_code=market_chat_rooms.item_code 
-              		 WHERE  sell_member_id = #{ssesion_id}
+              		 WHERE  sell_member_id =#{session_id}
              	) AS a
          	) AS b
-      WHERE row_num = 1 and room_code =#{room_code}
+      WHERE row_num = 1 and room_code =#{room_code};
 	</select>
 	
 	<!-- 내채팅목록 -->
@@ -195,7 +197,7 @@
 			#{market_code} + 1
 			, #{item_detail.member_id}
 			, #{item_detail.item_code}
-			, #{oppenentId}
+			, #{opponentId}
 			, #{item_detail.member_id}
 			, #{item_detail.item_price}
 			, '직접거래'
@@ -216,7 +218,7 @@
 			FROM market_paid
 				WHERE 1=1
 					AND item_code=#{item_detail.item_code}
-					AND buy_id=#{oppenentId};
+					AND buy_id=#{opponentId};
 	</delete>
 
 	<!-- 채팅상세내용 -->
@@ -246,6 +248,31 @@
 				  	item.item_code = market_chat_rooms.item_code 
 		WHERE
 			market_chat_messages.room_code = #{room_code}
+	</select>
+	
+	<!-- 마지막채팅내용 -->
+	<select id="recentlyMsg" resultType="hashmap">
+		SELECT
+				market_chat_messages.chat_content
+			FROM
+				market_chat_messages
+					LEFT JOIN market_chat_rooms
+					  ON
+						market_chat_messages.room_code = market_chat_rooms.room_code
+					LEFT JOIN member as seller
+					  ON
+						seller.member_id = market_chat_messages.sell_member_id
+					LEFT JOIN member as buyer
+					  ON
+						buyer.member_id = market_chat_messages.buy_member_id
+					LEFT JOIN item 
+					  ON
+					  	item.item_code = market_chat_rooms.item_code 
+			WHERE
+				market_chat_messages.room_code = #{room_code}
+			ORDER BY chat_code DESC 
+			LIMIT 1;
+	
 	</select>
 
 	<!-- 제일마지막에생성된 방 -->
@@ -551,6 +578,12 @@
 			AND	review_item_code = #{item_code}
 	</delete>
 	
+	<select id="roomCodeExists" resultType="int">
+		SELECT count(room_code)
+		FROM market_chat_messages
+		WHERE room_code = #{room_code}
+	</select>
+	
 <!-- 	채팅방생성 -->
 	<insert id="insertChatRoom">
 	 INSERT INTO market_chat_rooms
@@ -561,6 +594,12 @@
 				, now()
 			)
 	</insert>
+	<update id="updateChatRoom">
+		UPDATE market_chat_rooms 
+			SET chat_content=#{messages}
+			 WHERE room_Code=#{room_code}
+	</update>
+	
 	<insert id="insertChatMessages">
 		<selectKey keyProperty="chat_code" resultType="int" order="BEFORE">
 			SELECT IFNULL(MAX(chat_code), 0) FROM market_chat_messages

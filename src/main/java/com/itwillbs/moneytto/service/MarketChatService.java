@@ -63,8 +63,8 @@ public class MarketChatService {
 	}
 	
 	//상대방 아이디 알아내기
-	public HashMap<String, String> getOppenentId(int room_code,String ssesion_id) {
-		return mapper.opponentId(room_code,ssesion_id);
+	public HashMap<String, String> getOpponentId(int room_code,String session_id) {
+		return mapper.opponentId(room_code,session_id);
 	}
 	// 최근 채팅내역
 	public HashMap<String, Integer> getMyChatRecentList(String id) {
@@ -88,12 +88,12 @@ public class MarketChatService {
 	
 	
 	//거래내역업데이트
-	public int insertMarketPaid(HashMap<String, String> item_detail, String oppenentId) {
-		return mapper.insertMarketPaid(item_detail,oppenentId);
+	public int insertMarketPaid(HashMap<String, String> item_detail, String opponentId) {
+		return mapper.insertMarketPaid(item_detail,opponentId);
 	}
 	// 거래내역삭제
-	public int deltMarketPaid(HashMap<String, String> item_detail, String oppenentId) {
-		return mapper.delMarketPaid(item_detail,oppenentId);
+	public int deltMarketPaid(HashMap<String, String> item_detail, String opponentId) {
+		return mapper.delMarketPaid(item_detail,opponentId);
 	}
 	
 	// 거래내역업데이트가능한지확인
@@ -128,6 +128,17 @@ public class MarketChatService {
 	//마지막룸코드
 	public int lastRoomCode() {
 		return mapper.lastRoomCode();
+	}
+	//룸코드있는지
+	public int roomCodeExists(String room_code) {
+		return mapper.roomCodeExists(room_code);
+	}
+	public int updateChatRoom(String messages, String room_code) {
+		return mapper.updateChatRoom(messages,room_code);
+	}
+	//최근 메시지
+	public HashMap<String, String> getRecentlyMsg(String room_code) {
+		return mapper.recentlyMsg(room_code);
 	}
 
 

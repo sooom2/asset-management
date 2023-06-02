@@ -25,15 +25,12 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 
 	private Map<WebSocketSession, String> sessionList = new ConcurrentHashMap<WebSocketSession, String>();
 	
-	private static int i;
 	
 	@Autowired
 	MarketChatService marketChatService;
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		i++;
-		
 	}
 
 	@Override  
@@ -107,11 +104,25 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
             System.out.println("===============================");
             
            
-            int insertChatMessages = marketChatService.insertChatMessages(room_code,sellId,name,messages,name);
-    	}
-
-	}
+            int roomCodeExists = marketChatService.roomCodeExists(room_code);
+            System.out.println("===============================");
+            System.out.println(roomCodeExists);
+            System.out.println("===============================");
             
+            if(roomCodeExists < 1) {
+            	int insertChatRoom = marketChatService.insertChatRoom(room_code,item_code, messages);
+            }else {
+            	// 채팅방이있을땐 marketChatRoom 업데이트 
+            	int updateChatRoom = marketChatService.updateChatRoom(messages,room_code);	
+            }
+            int insertChatMessages = marketChatService.insertChatMessages(room_code,sellId,name,messages,name);
+           
+		}
+            
+            
+	}
+
+     
         
        
 		
@@ -119,8 +130,6 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-		i--;
-//		System.out.println(session.getId() + " 연결 종료 / 총 접속 인원 : " + i + "명");
         // sessionList에 session이 있다면
         if(sessionList.get(session) != null) {
             // 해당 session의 방 번호를 가져와서, 방을 찾고, 그 방의 ArrayList<session>에서 해당 session을 지운다.

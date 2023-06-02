@@ -21,12 +21,12 @@
 
 <script type="text/javascript">
 
-
-
-
 $(function() {
+	$('.chat_description').scrollTop($('.chat_description')[0].scrollHeight+1000);
 	
 	
+	
+
 	let sId = "${sessionScope.sId}";
 	var room_code = <%= request.getAttribute("room_code") %>;
 	$('.card_box input.room_code[value="'+room_code+'"]').closest('.card_box').addClass('active');
@@ -34,13 +34,11 @@ $(function() {
 	$(".card_box").on("click", function() {
 	    let room_code = $(this).find('.room_code').val();
 	    $(".card_box").removeClass("active");
-		$(this).addClass("active");
-
+		$(this).addClass("active");	
+		
 		//채팅내역을 눌렀을때 > 상세보기
-		chatDetail(room_code);
+		chatDetail(room_code);		
 	});
-	
-	
 	
 	
     $(".sch_date").click(function() {
@@ -97,12 +95,12 @@ $(function() {
 			        	console.log(result);
 			        	
 			        	// 채팅 헤더 상대방 닉네임
-			        	let oppenent_nickname = result[0].buy_nickname;
+			        	let opponent_nickname = result[0].buy_nickname;
 			        	let item_subject = result[0].item_subject;
 			        	
-			        	if (sId == result[0].buy_member_id) { oppenent_nickname = result[0].sell_nickname; }
+			        	if (sId == result[0].buy_member_id) { opponent_nickname = result[0].sell_nickname; }
 			        	$(".chat_header a .info div").empty();
-			        	$(".chat_header a .info div").append("<span>["+oppenent_nickname+"]<br><i class='fa-regular fa-comment-dots fa-flip-horizontal'></i> "+item_subject+"</span>");
+			        	$(".chat_header a .info div").append("<span>["+opponent_nickname+"]<br><i class='fa-regular fa-comment-dots fa-flip-horizontal'></i> "+item_subject+"</span>");
 								
 						
 						// 상품판매상태 버튼
@@ -248,45 +246,59 @@ $(function() {
 
 
 
-
-// 채팅 시간
+//채팅 시간
 let today = new Date();
+let year = today.getFullYear();
+
+let month = today.getMonth()+1;
+let day = today.getDate();
+
 let h = today.getHours();
 let m = today.getMinutes();
 
+
+
+month = String(month).padStart(2, '0');
+day = String(day).padStart(2, '0');
 let amPm = h < 12 ? "오전" : "오후";
 let hours = h < 13 ? h : h - 12; // 시
 let minutes = m < 10 ? "0" + m : m; // 분
 
-console.log(today);
+hours = String(hours).padStart(2, '0');
+minutes = String(minutes).padStart(2, '0');
 
+let formatDate = year+"-"+month+"-"+day+" "+amPm + " " + hours + ":" + minutes;
+
+let room_code;
+let target;
 var ws = null;
 var socket = null;
-
-// function connect() {
-
 $(function() {
 
+	
+	
     ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
     socket = ws;
     //파라미터가 있을때 없을떄
     let urlParams = new URLSearchParams(window.location.search);
     let paramItemCode = urlParams.get('item_code');
-
-    let item_code = $(".item_code").val();
-    let room_code = "${room_code}";
-    
-    
-    let target;
+   
     
     if (paramItemCode) { // 디테일에서 상대아이디 구하기> 즉 판매자 아이디
-		target = "${sellId}";
-		item_code = "${param.item_code}";
-   	} else { // nav에서 들어갈때 최근채팅의 상대아이디
-		target = "${oppenentId.oppenent_id}";
-   	}
+        target = "${sellId}";
+        item_code = "${param.item_code}";
+    } else { // nav에서 들어갈때 최근채팅의 상대아이디
+        target = "${opponentId.opponent_id}";
+        item_code = "${item_code}";
+    }
+    room_code = "${room_code}";
+
     
-    console.log("아이템코드 : "+ item_code + "room_code : " + room_code + "target : " + target );
+    //nav에서들어갈때
+    messages();
+    	
+    console.log("아이템코드 : " + item_code + "room_code : " + room_code + "target : " + target);
+
     function chatSend() {
         const data = {
             "room_code": room_code,
@@ -297,23 +309,66 @@ $(function() {
         };
         let jsonData = JSON.stringify(data);
         socket.send(jsonData);
-    };
+        
+		//목록의 정보를 업데이트 해야함
+		let recentlyMsg = $('#message').val();
+		let getMsg = $(".card_box .description").text();
+		$(".active .description").text(recentlyMsg);
+		$(".active .time_ago").text(formatDate);
+		
 
-    $('#btnSend').off("click").on("click", function(evt) {
+    };
+    $('#btnSend').on("click", function(evt) {
         chatSend();
         evt.preventDefault();
         $('#message').val('');
+    	
+    
     });
 
-    $("#message").off("keydown").on("keydown", function(key) {
+    $("#message").on("keydown", function(key) {
         if (key.keyCode == 13) {
-        	chatSend();
-        	$('#message').val('');
+            chatSend();
+            $('#message').val('');
         }
     });
 
 
+	//리스트 눌렀을때
+    $(".card_box li").one("click", function() { //버튼여러번 왓다갓다막기위해 one click
+    	
+		
+        room_code = $(this).find('.room_code').val();
+        item_code = $(this).find('.item_code').val();
+    
+        
+        // 메세지 수신 
+        // 제일위에 목록은 nav로 처음 들어왔을때 메세지 보내면 보내지게 해놨기때문에
+        // 목록을 다른데 클릭했다가 제일위에 있는 목록을 클릭하면 중복으로 메세지가 보내지게 됨
+        // 그래서 제일위에 목록이 아닌거에만 메세지를 보내게해야함
+        if (!$(this).parent().is("ul > div:first-child")) {
+			messages();
+        }
+        ws.onclose = function(event) {
+            console.log('연결종료');
+        };
+        ws.onerror = function(event) {
+            console.log('연결에러');
+        };
+
+    });
+
+
+});
+
+function messages() {
+
+    ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
+    socket = ws;
+
+    //처음입장할때
     ws.onopen = function() {
+//     	alert("입장");
         console.log('연결완료');
         console.log("방번호 : " + room_code + "아이템코드 :" + item_code + "target : " + target);
         const data = {
@@ -328,82 +383,40 @@ $(function() {
 
     };
 
+    ws.onmessage = function(msg) {
+        var data = msg.data;
+        var sessionId = null; //데이터를 보낸 사람
+        var message = null;
 
+        var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
+        sessionId = data.split(":")[0];
+        message = data.split(":")[1];
+        if (sessionId == cur_session) {
 
+            var str = "<div class='chat_myself'>";
+            str += "<div class='chat_myself_box'>";
+            str += "<div class='chat_myself_message'>";
+            str += "<span>" + message + "</span>";
+            str += "<div class='chat_myself_timeago'>" + amPm + " " + hours + ":" + minutes + "</div></div></div></div>";
+            $(".chat_wrapper").append(str);
 
-    $(".card_box li").on("click", function() {
+        } else {
 
-        ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
-        socket = ws;
+            var str = " <div class='chat_opponent'><div class='chat_opponent_box'><div class='chat_opponent_image_box'>";
+            str += "<img class='chat_opponent_profile_image' src='https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png' alt='상대방이미지'> </div>";
+            str += "<div class='chat_opponent_title'>" + sessionId + "</div>";
+            str += "<div class='chat_opponent_message'>";
+            str += "<span>" + message + "</span>";
+            str += "<div class='chat_opponent_timeago'>" + amPm + " " + hours + ":" + minutes + " </div></div></div></div>";
 
-        room_code = $(this).find('.room_code').val();
-        item_code = $(this).find('.item_code').val();
-		alert(" cardBox : "+item_code);
-        //처음입장할때
-        ws.onopen = function() {
-            console.log('연결완료');
-            console.log("방번호 : " + room_code + "아이템코드 :" + item_code + "target : " + target);
-            const data = {
-                "room_code": room_code,
-                "item_code": item_code,
-                "name": "${ sessionScope.sId }",
-                "message": "${sessionScope.sId} " + "님접속",
-                "target": target
-            };
-            let jsonData = JSON.stringify(data);
-            socket.send(jsonData);
-
+            $(".chat_wrapper").append(str);
         };
-
-        // 메세지 수신
-        ws.onmessage = function(msg) {
-            var data = msg.data;
-            var sessionId = null; //데이터를 보낸 사람
-            var message = null;
-
-            var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
-            sessionId = data.split(":")[0];
-            message = data.split(":")[1];
-
-            if (sessionId == cur_session) {
-
-                var str = "<div class='chat_myself'>";
-                str += "<div class='chat_myself_box'>";
-                str += "<div class='chat_myself_message'>";
-                str += "<span>" + message + "</span>";
-                str += "<div class='chat_myself_timeago'>" + amPm + " " + hours + ":" + minutes + "</div></div></div></div>";
-                $(".chat_wrapper").append(str);
+        
+        $('.chat_description').scrollTop($('.chat_description')[0].scrollHeight+100);
+    };
+}
 
 
-            } else {
-
-                var str = " <div class='chat_opponent'><div class='chat_opponent_box'><div class='chat_opponent_image_box'>";
-                str += "<img class='chat_opponent_profile_image' src='https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png' alt='상대방이미지'> </div>";
-                str += "<div class='chat_opponent_title'>" + sessionId + "</div>";
-                str += "<div class='chat_opponent_message'>";
-                str += "<span>" + message + "</span>";
-                str += "<div class='chat_opponent_timeago'>" + amPm + " " + hours + ":" + minutes + " </div></div></div></div>";
-
-                $(".chat_wrapper").append(str);
-            };
-
-
-        };
-
-        ws.onclose = function(event) {
-            console.log('연결종료');
-        };
-        ws.onerror = function(event) {
-            console.log('연결에러');
-        };
-
-
-
-
-    });
-
-
-});
 
 </script>
 </head>
@@ -526,7 +539,7 @@ $(function() {
 							                <div class="chat_opponent_image_box">
 							                    <img class="chat_opponent_profile_image" src="https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png" alt="상대방이미지">
 							                </div>
-							                <div class="chat_opponent_title">${chatDetail.buy_nickname }</div>
+							                <div class="chat_opponent_title">${opponentId.opponent_nickname }</div>
 							                <div class="chat_opponent_message">
 							                    <span>${chatDetail.chat_content }</span>
 							                    <div class="chat_opponent_timeago"><fmt:formatDate value="${formattedDate}" pattern="a hh:mm" /></div>
@@ -538,10 +551,6 @@ $(function() {
 						</c:forEach>
 						
 						
-						
-						
-						<!-- 파는사람쪽 -->
-				
 						
 						
 					</div>

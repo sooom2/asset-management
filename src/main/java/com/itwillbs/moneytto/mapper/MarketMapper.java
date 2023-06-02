@@ -36,7 +36,7 @@ public interface MarketMapper {
 	List<HashMap<String, String>> myChatAllList(String id);
 
 	//상대방 아이디알아내기
-	HashMap<String, String> opponentId(@Param("room_code") int room_code,@Param("ssesion_id") String ssesion_id);
+	HashMap<String, String> opponentId(@Param("room_code") int room_code,@Param("session_id") String session_id);
 	
 	//아이템상세목록
 	HashMap<String, String> itemList(String item_code);
@@ -72,10 +72,10 @@ public interface MarketMapper {
 
 	
 	// 거래내역업데이트
-	int insertMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("oppenentId") String oppenentId);
+	int insertMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("opponentId") String opponentId);
 	
 	// 거래내역 삭제
-	int delMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("oppenentId") String oppenentId);
+	int delMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("opponentId") String opponentId);
 
 	//업데이트 가능한지
 	int isUpdate(String item_detail);
@@ -114,5 +114,13 @@ public interface MarketMapper {
 
 	// 아이템 이미지 삭제 
 	int removeImage(String itemCode);
+
+	//룸코드 존재하는지
+	int roomCodeExists(String room_code);
+
+	//룸테이블 업데이트
+	int updateChatRoom(@Param("messages") String messages,@Param("room_code") String room_code);
+
+	HashMap<String, String> recentlyMsg(String room_code);
 
 }

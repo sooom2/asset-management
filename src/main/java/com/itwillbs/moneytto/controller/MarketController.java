@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itwillbs.moneytto.service.MarketChatService;
 import com.itwillbs.moneytto.service.MarketService;
 import com.itwillbs.moneytto.service.MemberService;
@@ -178,7 +180,7 @@ public class MarketController {
 		// item_status 가 '거래완료'일시 > market_paid 에 insert
 		HashMap<String, String> item_detail = marketChatService.getItemList(item_code.get("item_code")); 
 		String get_item_status = item_detail.get("item_status");
-		HashMap<String, String> oppenentId= marketChatService.getOppenentId(room_code, (String)session.getAttribute("sId"));
+		HashMap<String, String> opponentId= marketChatService.getOpponentId(room_code, (String)session.getAttribute("sId"));
 		
 		String get_item_code = item_detail.get("item_code");
 		//여기까진됨
@@ -193,13 +195,13 @@ public class MarketController {
 			}else { //거래내역에없을때 
 				// market_paid insert 작업
 				// 거래코드, 판매자아이디, 아이템코드, 산사람, 판사람, 가격 , 판매방법 , 날짜
-				int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,oppenentId.get("oppenent_id"));
+				int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,opponentId.get("opponent_id"));
 			}
 			
 			
 		} else {
 			// market_paid 에서 삭제되야함
-			int delMarketPaid = marketChatService.deltMarketPaid(item_detail,oppenentId.get("oppenent_id"));
+			int delMarketPaid = marketChatService.deltMarketPaid(item_detail,opponentId.get("opponent_id"));
 		}
 	}
 	@GetMapping(value = "marketChat")
@@ -220,7 +222,7 @@ public class MarketController {
 	      System.out.println("===============================");
 	      
 	      //상대방아이디
-	      HashMap<String, String> oppenentId = null;
+	      HashMap<String, String> opponentId = null;
 	      //마지막 채팅 내역 
 	      List<HashMap<String, String>> myChatList = null;
 	      HashMap<String, Integer> chatList = null;
@@ -237,8 +239,8 @@ public class MarketController {
 	         
 	         
 	         
-	         
-	         
+	         HashMap<String, String> item =null;
+	         String sellId = null;
 	         
 	         if(createRoom > 0 ) { //방이있을때
 	            
@@ -260,13 +262,17 @@ public class MarketController {
 	            
 	            //3. 상대방 판매상품갯수조회
 	            //상대방의 아이디 조회
-	            oppenentId = marketChatService.getOppenentId(room_code, id);
+	            opponentId = marketChatService.getOpponentId(room_code, id);
 	            System.out.println("3 ==========================================");
-	            System.out.println(oppenentId.get("oppenent_id"));
+	            System.out.println(opponentId.get("opponent_id"));
 	            System.out.println("3 ==========================================");
 	            // 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
-	            sellCount = marketChatService.getSellCount(oppenentId.get("oppenent_id"));
+	            sellCount = marketChatService.getSellCount(opponentId.get("opponent_id"));
 	            myChatList = marketChatService.getMyChatList(id);
+	            
+            	item = marketChatService.getItemList(item_code);
+            	sellId = item.get("member_id");
+	            
 	            
 	            System.out.println("chatDetail 에서  방이있을경우"+item_code+",룸코드: "+room_code);
 	         } else { // 방이없을때 
@@ -277,15 +283,15 @@ public class MarketController {
 	            room_code = marketChatService.getNextRoomCode();
 	            
 	            //상대방아이디 - 상품의 member_id
-//	            sellId = chatList.get("oppenent_id");
+//	            sellId = chatList.get("opponent_id");
 	            //방이없을땐 보통 판매자,,
-	            HashMap<String, String> item = marketChatService.getItemList(item_code);
+	            item = marketChatService.getItemList(item_code);
 	            
-	            String sellId = item.get("member_id");
-	            System.out.println("chatDetail 에서  방이없을경우"+item_code+",룸코드: "+room_code+","+sellId);
-	            model.addAttribute("oppenentId",sellId);
+	            sellId = item.get("member_id");
+//	            System.out.println("chatDetail 에서  방이없을경우"+item_code+",룸코드: "+room_code+","+sellId);
 	         }
 	         
+	         model.addAttribute("sellId",sellId);
 	      } else {  //nav로들어갈때
 	         
 	         // 최근에 열린 채팅 내역 보이게
@@ -309,9 +315,9 @@ public class MarketController {
 	         System.out.println("nav에서 들어갔을때 " + item_code);
 	         //3. 상대방 판매상품갯수조회
 	         //상대방의 아이디 조회
-	         oppenentId = marketChatService.getOppenentId(room_code, id);
+	         opponentId = marketChatService.getOpponentId(room_code, id);
 	         // 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
-	         sellCount = marketChatService.getSellCount(oppenentId.get("oppenent_id"));
+	         sellCount = marketChatService.getSellCount(opponentId.get("opponent_id"));
 	         
 	         
 	         myChatList = marketChatService.getMyChatList(id);
@@ -321,7 +327,7 @@ public class MarketController {
 	         
 	      }
 	      
-	      model.addAttribute("oppenentId",oppenentId);
+	      model.addAttribute("opponentId",opponentId);
 	      model.addAttribute("myChatList",myChatList);
 	      model.addAttribute("chatList",chatList);
 	      model.addAttribute("sellCount",sellCount);
@@ -401,12 +407,25 @@ public class MarketController {
 		String sId = (String)session.getAttribute("sId");
 		
 		List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
-		
 		JSONArray arrChatDetail = new JSONArray(chatDetail);
 		System.out.println(arrChatDetail);
 		return arrChatDetail.toString();
 	}
+	
+	@GetMapping("recentlyMessage")
+	@ResponseBody
+	public String recentlyMessage(@RequestParam String room_code) throws JsonProcessingException {
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		HashMap<String, String> recentlyMsg = marketChatService.getRecentlyMsg(room_code);
 
+		
+		System.out.println(recentlyMsg);
+		String msg = objectMapper.writeValueAsString(recentlyMsg);
+		
+		return msg;
+		
+	}
 	// 상품등록
 	@PostMapping(value = "itemRegistPro")
 	public String itemRegistPro(@RequestParam HashMap<String, String> item, Model model, HttpSession session, @RequestParam("file") List<MultipartFile> files) {

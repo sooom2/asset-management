@@ -279,6 +279,8 @@
     cursor: pointer
 }
 
+.chat_wrapper{/* 	position: relative; *//*     display: flex; *//*     align-items: flex-start; *//*     justify-content: flex-start; *//*     flex-direction: column; *//*     width: 100%; *//*     height: 100%; *//* margin-bottom: 10px; */}
+
 .chat_description {
     overflow: auto;
     height: calc(74vh - 151px);
@@ -332,8 +334,10 @@
 
 .chat_description .chat_myself {
     overflow: hidden;
-    margin-top: 20px
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
+
 
 .chat_description .chat_myself_message {
     max-width: 200px;
@@ -892,7 +896,8 @@
 
 .chat_description .chat_opponent {
         overflow: hidden;
-        margin-top: 20px
+        margin-top: 20px;
+        margin-bottom: 10px;
     }
 
 .chat_description .chat_opponent_message:after {
