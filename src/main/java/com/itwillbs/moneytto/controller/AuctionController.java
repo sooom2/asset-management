@@ -70,12 +70,15 @@ public class AuctionController {
 		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(auction_code);
 		// 경매 기록 최고값 검색
 		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
+		// 내가 입찰한 가격
+		HashMap<String, String> myLog = service.selectMyLog(id);
 		boolean lastLogYN = lastLog == null ? true : false; 
 		model.addAttribute("auctionLog", auctionLog);
 		model.addAttribute("lastLog", lastLog);
 		model.addAttribute("lastLogYN", lastLogYN);
+		model.addAttribute("myLog", myLog);
 		System.out.println("출력ㄱㄱㄱㄱㄱㄱㄱㄱ" + auctionLog + "여긱ㄱㄱㄱㄱ");
-		
+		System.out.println("myLog 출력22222" + myLog);
 		
 //		if() { // 경매 페이지로 들어갈 때 이 아이템에 대한 경매기록이 있는지 확인해야하고 경매 기록이 없을 경우 밑에 코드 사용
 //			채팅방에는 방번호, 아이템 번호, chat_content 이렇게 있고
@@ -193,7 +196,10 @@ public class AuctionController {
 	};
 	
 	@RequestMapping(value="auctionPay", method = RequestMethod.GET)
-	public String auctionPay() {
+	public String auctionPay(@RequestParam String auction_code, Model model, HttpSession session) { // 이미지 코드와 경매 코드를 받아서 목록 상세
+		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
+		model.addAttribute("auction", auction);
+		System.out.println("auctionPay에서" + auction);
 		
 		return "auction/auctionPay";
 	}

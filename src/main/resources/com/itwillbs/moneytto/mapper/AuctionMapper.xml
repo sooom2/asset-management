@@ -113,4 +113,12 @@
 <!-- 			WHERE auction_code = #{auction_code} -->
 <!-- 	</select> -->
 	
+	<!-- 나의 경매 기록 -->
+	<select id="selectMyLog" resultType="hashmap">
+		SELECT *
+			FROM auction_log
+				WHERE member_id = #{id}
+					ORDER BY log_time DESC LIMIT 1
+	</select>
+	
 </mapper>

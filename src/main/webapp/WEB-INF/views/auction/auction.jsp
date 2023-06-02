@@ -15,6 +15,7 @@
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style type="text/css">
 .contentImage {
 	height: 250px;
@@ -351,7 +352,7 @@
 									<input type="text" id="logPrice" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="금액입력">
 									<input type="button" value="입찰" id="btnBid" class="btn" data-price="">
 								</div>
-								<div class="my_bid"></div>
+								<div class="my_bid">${myLog.log_content }원</div>
 								<div class="buy_now">
 									<span style="color:#bb2649">${purchase }원</span>
 									<input type="button" id="btnPurchase" value="즉시구매" class="btn" data-price="${purchase }" style="float: right;margin-right: 11px;">
@@ -462,7 +463,7 @@ $(document).ready(function() {
 			console.log("2번" + chatLog);
 // 			}
 		}
-		
+		var numPurchase = parseInt(${purchase }, 10);
 		if(chatLog == ""){
 			alert("금액을 입력해주세요");
 			return false;
@@ -481,11 +482,12 @@ $(document).ready(function() {
 			$("#logPrice").val("");
 			chatLog = nowPrice;
 			return false;
-// 		} else if(chatLog > ${purchase }) {
-// 			alert("즉시구매 가격 이하로 입력해주세요");
-// 			$("#logPrice").val("");
-// 			chatLog = nowPrice;
-// 			return false;
+		} else if(chatLog > numPurchase) {
+			alert("즉시구매 가격 이하로 입력해주세요");
+			$("#logPrice").val("");
+			chatLog = nowPrice;
+			numPurchase += "";
+			return false;
 		} 
 		
 		if(nowPrice < chatLog) {
@@ -498,7 +500,6 @@ $(document).ready(function() {
 	connect2();
 	
 });
-
 
 var socket2 = null;
 function connect2() {
@@ -551,6 +552,8 @@ function connect2() {
 		// 즉시구매가 구매
 		if(message == ${purchase }) {
 // 			console.log("즉시구매가 로 구매" + message);
+			alert("낙찰되셨습니다." + auctionCode);
+			location.href = "auctionPay?auction_code=" + auctionCode;
 		}
 		
 	};

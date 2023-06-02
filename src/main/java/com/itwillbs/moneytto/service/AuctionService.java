@@ -47,6 +47,11 @@ public class AuctionService {
 		return mapper.selectLastLog(auction_code);
 	}
 
+	// 나의 경매 기록
+	public HashMap<String, String> selectMyLog(String id) {
+		return mapper.selectMyLog(id);
+	}
+
 
 
 }

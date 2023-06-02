@@ -29,4 +29,7 @@ public interface AuctionMapper {
 	// 경매 기록 최고값 검색
 	HashMap<String, String> selectLastLog(@Param("auction_code")String auction_code);
 
+	// 나의 경매 기록
+	HashMap<String, String> selectMyLog(@Param("id") String id);
+
 }
