@@ -107,36 +107,11 @@ public class MypageController {
 		
 		return "mypage/mypage_info_form";
 	}
-//	// 계좌인증
-//	@RequestMapping(value = "memberAuth", method = RequestMethod.GET)
-//	public String memberAuth(@RequestParam Map<String, String> authResponse, Model model, HttpSession session) {
-//		String id = (String)session.getAttribute("sId");
-//		if(id ==null) {
-//			
-//			model.addAttribute("msg", "잘못된 접근입니다.");
-//			return "fail_back";
-//			
-//		}
-//		String code = authResponse.get("code").toString();
-//		
-//		System.out.println(authResponse.toString());
-//		
-//		System.out.println("code: "+ code);
-//		
-//		int updateCount = memberService.setAuth(id);
-//		if(updateCount > 0) {
-//			model.addAttribute("msg", "인증이 완료되었습니다.");
-//			return "mypage/close_redirect";
-//		}else {
-//			model.addAttribute("msg", "인증에 실패하였습니다.\n 다시 시도해주세요.");
-//			return "mypage/close_redirect";
-//		}
-//	}
 		// 결제
 		@RequestMapping(value = "pay", method = {RequestMethod.GET, RequestMethod.POST})
 		public String store_pay(HttpSession session, Model model) {
 //			HashMap<String, String> item = service.selectCode(item_code);
-			String id = (String)session.getAttribute("sId");
+//			String id = (String)session.getAttribute("sId");
 //			HashMap<String, String> member = service.selectMemberId(id);
 //			model.addAttribute("item", item);
 //			model.addAttribute("item_price", item_price);
@@ -149,7 +124,7 @@ public class MypageController {
 //			} else {
 //				return "store/store_pay";
 //			}
-			return "mypage/mypage_pay";
+			return "naver";
 		}
 		
 	
