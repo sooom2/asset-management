@@ -282,51 +282,54 @@ public class MarketController {
 	            
 	            System.out.println("chatDetail 에서  방이있을경우"+item_code+",룸코드: "+room_code);
 	         } else { // 방이없을때 
-	            
+	        	
 	            // 해당 상품 조회
 	            chatList = marketChatService.getItemDetail(item_code);
 	            myChatList = marketChatService.getMyChatList(id);
-	            room_code = marketChatService.getNextRoomCode();
-	            
+	            if(myChatList != null) {
+	            	System.out.println("널널너런러널너러널널널널널너런런러");
+	            	room_code = marketChatService.getNextRoomCode();
+//	            System.out.println("chatDetail 에서  방이없을경우"+item_code+",룸코드: "+room_code+","+sellId);
+	            }else {
+	            	room_code = 1;
+	            	
+	            }
 	            //상대방아이디 - 상품의 member_id
 //	            sellId = chatList.get("opponent_id");
 	            //방이없을땐 보통 판매자,,
 	            item = marketChatService.getItemList(item_code);
 	            
 	            sellId = item.get("member_id");
-//	            System.out.println("chatDetail 에서  방이없을경우"+item_code+",룸코드: "+room_code+","+sellId);
+	            
 	         }
 	         
 	         model.addAttribute("sellId",sellId);
 	      } else {  //nav로들어갈때
 	         
-	         // 최근에 열린 채팅 내역 보이게
+	    	 // 최근에 열린 채팅 내역 보이게
 	         // 1. 최근 room_code 조회
-	         chatList = marketChatService.getMyChatRecentList(id);
-	         System.out.println("nav =====================================");
-	         System.out.println(chatList.get("member_id"));
-	         System.out.println("nav =====================================");
+    		 chatList = marketChatService.getMyChatRecentList(id);
 	         if (chatList != null && chatList.size() > 0) {
-	              room_code = chatList.get("room_code");
-	              // 2. room_code로 채팅 내용 조회
-	              chatDetail = marketChatService.getChatDetail(room_code);
-	              if (chatDetail != null && !chatDetail.isEmpty()) {
+	        	 System.out.println(chatList.get("member_id"));
+	        	 room_code = chatList.get("room_code");
+	        	 // 2. room_code로 채팅 내용 조회
+	        	 chatDetail = marketChatService.getChatDetail(room_code);
+	        	 if (chatDetail != null && !chatDetail.isEmpty()) {
 	                 
-	                model.addAttribute("chatDetail", chatDetail);
-	              }
+	        		 model.addAttribute("chatDetail", chatDetail);
+	        	 }
+	        	 
+	        	 HashMap<String, String> mapItemCode = marketChatService.getItem_code(room_code);
+	        	 item_code = mapItemCode.get("item_code");
+	        	 System.out.println("nav에서 들어갔을때 " + item_code);
+	        	 //3. 상대방 판매상품갯수조회
+	        	 //상대방의 아이디 조회
+	        	 opponentId = marketChatService.getOpponentId(room_code, id);
+	        	 // 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
+	        	 sellCount = marketChatService.getSellCount(opponentId.get("opponent_id"));
+	        	 myChatList = marketChatService.getMyChatList(id);
+	        	 
 	         }
-	         
-	         HashMap<String, String> mapItemCode = marketChatService.getItem_code(room_code);
-	         item_code = mapItemCode.get("item_code");
-	         System.out.println("nav에서 들어갔을때 " + item_code);
-	         //3. 상대방 판매상품갯수조회
-	         //상대방의 아이디 조회
-	         opponentId = marketChatService.getOpponentId(room_code, id);
-	         // 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
-	         sellCount = marketChatService.getSellCount(opponentId.get("opponent_id"));
-	         
-	         
-	         myChatList = marketChatService.getMyChatList(id);
 	         
 	         
 	         
@@ -339,7 +342,9 @@ public class MarketController {
 	      model.addAttribute("sellCount",sellCount);
 	      model.addAttribute("room_code",room_code);
 	      model.addAttribute("item_code",item_code);
-	      
+	      System.out.println("=============");
+	      System.out.println(chatList);
+	      System.out.println("=============");
 	      return "market/market_chat";
 	      
 	   }// market_chat

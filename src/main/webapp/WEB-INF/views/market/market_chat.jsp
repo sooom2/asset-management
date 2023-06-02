@@ -300,6 +300,10 @@ $(function() {
     console.log("아이템코드 : " + item_code + "room_code : " + room_code + "target : " + target);
 
     function chatSend() {
+    	
+//     	if(room_code ==null){
+// 			location.reload();
+// 		}
         const data = {
             "room_code": room_code,
             "name": "${ sessionScope.sId }",
@@ -316,8 +320,9 @@ $(function() {
 		$(".active .description").text(recentlyMsg);
 		$(".active .time_ago").text(formatDate);
 		
-
+		
     };
+    
     $('#btnSend').on("click", function(evt) {
         chatSend();
         evt.preventDefault();
@@ -569,8 +574,7 @@ function messages() {
 	</c:if>
 	
 	<!--  대화내역이 존재하지않을때 -->
-	<c:if test="${empty myChatList}">
-	
+	<c:if test="${empty chatList}">
 		<section class="content">
 			<div class="main_area">
 				<div class="content_area">
