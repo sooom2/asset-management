@@ -47,6 +47,7 @@ function toggleLike(element) {
 <input type="hidden" id="target_id" name="target_id" value="${marketItem.member_id}"/>
 <input type="hidden" id="report_type" name="report_type" value=""/>
 <input type="hidden" id="report_content" name="report_content" value=""/>
+<input type="hidden" id="session_id" name="session_id" value="${sId }"/>
 <jsp:include page="../nav.jsp" />
 	<div id="next">
 		<div class="layoutChildren"></div>
@@ -103,7 +104,7 @@ function toggleLike(element) {
 					<div class="profileWrapper">
 						<div class="profileProfileData">
 							<img
-								src="${pageContext.request.contextPath }/resources/images/mypage/cute.png"
+								src="${marketItem.member_image }"
 								alt="profileImg" class="profileProfileImg">
 							<div class="ProfileInfoWrapper">
 								<div class="ProfileInfoProfileName">${marketItem.member_nickname}</div>
@@ -144,7 +145,7 @@ function toggleLike(element) {
 							<div class="Share__IconBox-sc-1nwaldt-4 bzuDcA">
 								<img
 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_link_x2.png"
-									alt="링크 아이콘" class="Share__Icon-sc-1nwaldt-5 cVlCCb">
+									alt="링크 아이콘" class="Share__Icon-sc-1nwaldt-5 cVlCCb" onclick="clip(); return false;">
 								<div class="Share__IconText-sc-1nwaldt-6 fBVupx">링크복사</div>
 							</div>
 						</div>
@@ -215,24 +216,16 @@ function toggleLike(element) {
 								  <img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png" alt="좋아요 아이콘" class="WishIcon" onclick="toggleLike(this)">
 								</div>
 								
-							<c:choose>
-								<c:when test = "${sId } neq ${marketItem.member_id}">
-									<div width="90%" class="SomeonesItemButton"data-cd="${marketItem.item_code }">
-								<img
-									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_hellotalk.png"
-									alt="채팅 아이콘" class="SomeonesItemIcon">
+								<div width="90%" class="SomeonesItemButton"data-cd="${marketItem.item_code }" style="display: none;">
+								<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_hellotalk.png" alt="채팅 아이콘" class="SomeonesItemIcon">
 								<div color="#FFFFFF" class="SomeonesItemText">채팅하기</div>
-									</div>
-								</c:when>
-								<c:otherwise>
-									<div width="50%" class="SomeonesModifyButton"data-cd="${marketItem.item_code }">
-									<div color="#FFFFFF" class="SomeonesItemText">수정하기</div>
-									</div>
-									<div width="50%" class="SomeonesDeleteButton"data-cd="${marketItem.item_code }">
-									<div color="#FFFFFF" class="SomeonesItemText">삭제하기</div>
-									</div>
-								</c:otherwise>
-							</c:choose>
+								</div>
+								<div width="50%" class="SomeonesModifyButton"data-cd="${marketItem.item_code }" style="display: none;">
+								<div color="#FFFFFF" class="SomeonesItemText">수정하기</div>
+								</div>
+								<div width="50%" class="SomeonesDeleteButton"data-cd="${marketItem.item_code }" style="display: none;">
+								<div color="#FFFFFF" class="SomeonesItemText">삭제하기</div>
+								</div>
 						</div>
 					</div>
 					
@@ -345,41 +338,61 @@ function toggleLike(element) {
 	</div>
 	
 <script type="text/javascript">
-
+	function report() {
+		var id = "<%=(String)session.getAttribute("sId")%>";
+		var targetId = $("#target_id").val();
+		var reportType = $("#report_type").val();
+		var reportContent = $("#report_content").val();
+		
+		$.ajax({													
+				type: "GET",
+				url: "report",
+				data: { 
+					targetId : targetId,
+					reportType : reportType,
+					reportContent : reportContent
+				},
+				dataType: "json"
+			});
+	}
+	
+	// 금액 단위 콤마
+	function priceReplace(price) {
+		var price = price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+		$(".TitleText2").empty().append(price);
+	}
+	
+	// 링크 복사
+	function clip(){
+		var url = "";
+		var textarea = document.createElement("textarea");
+		document.body.appendChild(textarea);
+		url = window.document.location.href;
+		textarea.value = url;
+		textarea.select();
+		document.execCommand("copy");
+		document.body.removeChild(textarea);
+		alert("URL이 복사되었습니다.")
+	}
+	
+	
 	$(function () {
+		var id = $("#session_id").val();
+		var target = $("#target_id").val();
+		
+		if(id == target) {
+			$(".SomeonesModifyButton, .SomeonesDeleteButton").show();
+		} else {
+			$(".SomeonesItemButton").show();
+		}
+		
+		
 		var itemDate = "${marketItem.item_date}";
 		var formattedDate = moment(itemDate).format("YYYY-MM-DD HH:mm");
 		$(".SubTitleDetailText").text(formattedDate);
 		
 		var price = $(".TitleText2").text();
 		priceReplace(price);
-		
-		// 금액 단위 콤마
-		function priceReplace(price) {
-			var price = price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-			$(".TitleText2").empty().append(price);
-		}
-		 
-		 
-		
-		function report() {
-			var id = "<%=(String)session.getAttribute("sId")%>";
-			var targetId = $("#target_id").val();
-			var reportType = $("#report_type").val();
-			var reportContent = $("#report_content").val();
-			
-			$.ajax({													
-	 			type: "GET",
-	 			url: "report",
-	 			data: { 
-	 				targetId : targetId,
-	 				reportType : reportType,
-	 				reportContent : reportContent
-	 			},
-	 			dataType: "json"
-	 		});
-			
-		}
 		
 		
 		// 신고하기
