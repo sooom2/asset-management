@@ -16,14 +16,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwillbs.moneytto.service.BankService;
 import com.itwillbs.moneytto.service.MailSendService;
 import com.itwillbs.moneytto.service.MemberService;
+import com.itwillbs.moneytto.vo.AccountVO;
 
 @Controller
 public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private BankService bankService;
 	
 	@Autowired
 	private MailSendService mailService;
@@ -94,7 +98,17 @@ public class MemberController {
 		        session.setAttribute("sId", member.get("member_id"));
 		        session.setAttribute("token", "true");
 		        session.setAttribute("nickname", member.get("member_nickname"));
-		        return "redirect:/main";
+		       
+				// 만약, 계좌 정보가 존재할 경우(account != null)
+		        AccountVO account = bankService.getAccount(member.get("member_id"));
+				if(account != null) {
+					// 세션 객체에 access_token, user_seq_no 저장
+					session.setAttribute("access_token", account.getAccess_token());
+					session.setAttribute("user_seq_no", account.getUser_seq_no());
+				}
+				
+				
+		        return "redirect:/";
 		    }
 	    
 	    }

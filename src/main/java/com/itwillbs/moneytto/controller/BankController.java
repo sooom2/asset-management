@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.itwillbs.moneytto.service.BankApiService;
 import com.itwillbs.moneytto.service.BankService;
 import com.itwillbs.moneytto.vo.AccountDetailVO;
+import com.itwillbs.moneytto.vo.AccountWithdrawResponseVO;
 import com.itwillbs.moneytto.vo.ResponseTokenVO;
 import com.itwillbs.moneytto.vo.ResponseUserInfoVO;
 
@@ -33,7 +34,7 @@ public class BankController {
 	@GetMapping("/memberAuth")
 	public String responseAuthCode(
 			@RequestParam Map<String, String> authResponse, HttpSession session, Model model) {
-//		logger.info(authResponse.toString());
+		logger.info(authResponse.toString());
 		
 		// 인증 실패 시(인증 정보 존재하지 않을 경우) 오류 메세지 출력 및 인증창 닫기
 		if(authResponse == null || authResponse.get("code") == null) {
@@ -148,6 +149,18 @@ public class BankController {
 		model.addAttribute("user_name", map.get("user_name"));
 		
 		return "admin/bank_account_detail";
+		
+	}
+	// 2.3.1 출금이체
+	@PostMapping("bank_withdraw")
+	public String withdraw(
+			@RequestParam Map<String, String> map, HttpSession session, Model model) {
+		map.put("access_token", (String)session.getAttribute("access_token"));
+		
+		AccountWithdrawResponseVO result = apiService.withdraw(map);
+		System.out.println("result = " + result);
+		
+		return "bank/withdraw_result";
 		
 	}
 	

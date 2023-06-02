@@ -2,6 +2,7 @@ package com.itwillbs.moneytto.service;
 
 import java.util.Map;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -19,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.itwillbs.moneytto.generator.BankValueGenerator;
 import com.itwillbs.moneytto.vo.AccountDetailVO;
+import com.itwillbs.moneytto.vo.AccountWithdrawResponseVO;
 import com.itwillbs.moneytto.vo.ResponseTokenVO;
 import com.itwillbs.moneytto.vo.ResponseUserInfoVO;
 
@@ -86,6 +89,7 @@ public class BankApiClient {
 
 	// 사용자 정보 요청
 	public ResponseUserInfoVO requestUserInfo(String access_token, String user_seq_no) {
+		System.out.println("◇◇◇◇◇ requestUserInfo() : " + access_token + ", " + user_seq_no);
 		logger.info("◇◇◇◇◇ requestUserInfo() : " + access_token + ", " + user_seq_no);
 		
 		// 사용자 정보 요청 API 의 URL - GET 방식 요청
@@ -120,7 +124,7 @@ public class BankApiClient {
 		ResponseEntity<ResponseUserInfoVO> responseEntity = restTemplate.exchange(
 				uriBuilder.toString(), HttpMethod.GET, httpEntity, ResponseUserInfoVO.class);
 		logger.info("◇◇◇◇◇ 응답 데이터 : " + responseEntity.getBody());
-		
+		System.out.println("◇◇◇◇◇ 응답 데이터 : " + responseEntity.getBody());
 		return responseEntity.getBody();
 	}
 
@@ -167,7 +171,42 @@ public class BankApiClient {
 		
 		return responseEntity.getBody();
 	}
-	
+	public AccountWithdrawResponseVO withdraw(Map<String, String> map) {
+		// 토큰 요청에 사용될 API URL 설정
+		String url = baseUrl + "/v2.0/transfer/withdraw/fin_num";
+		
+		restTemplate = new RestTemplate();
+	    HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.add("Authorization", "Bearer " + map.get("access_token"));
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+	    
+	    
+	    JSONObject jo = new JSONObject();
+	    jo.put("bank_tran_id", valueGenerator.getBankTranId());
+	    jo.put("cntr_account_type", "N");
+	    jo.put("cntr_account_num", "99999999999999");
+	    jo.put("dps_print_content", "국민７０６６에서출금");
+	    jo.put("fintech_use_num", "120211385488932371716986");
+	    jo.put("tran_amt", "1000");
+	    jo.put("tran_dtime", valueGenerator.getTranDTime());
+	    jo.put("req_client_name", "이연태");
+	    jo.put("req_client_fintech_use_num", "120211385488932360143650");
+	    jo.put("req_client_num", "1");
+	    jo.put("transfer_purpose", "TR");
+	    jo.put("recv_client_name", "이연태");
+	    jo.put("recv_client_bank_code", "002");
+	    jo.put("recv_client_account_num", "99999999999999");
+	    
+	    HttpEntity<String> request = 
+	    	      new HttpEntity<String>(jo.toString(), httpHeaders);
+	    	    
+	    ResponseEntity<AccountWithdrawResponseVO> responseEntityStr = restTemplate.
+	    	      postForEntity(url, request, AccountWithdrawResponseVO.class);
+	    
+	    System.out.println(responseEntityStr.getBody());
+	    
+	    return responseEntityStr.getBody();
+	}
 	
 
 }

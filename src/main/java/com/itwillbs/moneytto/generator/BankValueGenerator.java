@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 // 스프링 Bean 으로 등록하기 위한 어노테이션 : @Component
 @Component
 public class BankValueGenerator {
+	
 	@Value("${client_use_code}")
 	private String client_use_code; // 이용기관코드
 	

@@ -61,7 +61,7 @@ function memberAuth(){
 								<!-- TODO
 									${member.image_name}
 								--> 
-								<img src="${path}/resources/images/mypage/cute.png" alt="머니또의 프로필 이미지">
+								<img src="${member.member_image}" alt="머니또의 프로필 이미지">
 							</div>
 							</div>
 							<div class="userDataNickName">${member.member_nickname } 님</div>
@@ -82,11 +82,14 @@ function memberAuth(){
 						<div class="memberInfoCount">${member.member_point }원</div>
 					</div><div class="memberInfoReviewBox">
 						<div class="memberInfoText">계좌 인증하기</div>
-						<div class="memberInfoCount" onclick="memberAuth()">계좌 인증하기</div>
-					</div>
-					<div class="memberInfoRating">
-						<div class="payCharge"><Input type="button" value="충전" onclick="location.href='payCharge'"></div> &nbsp;&nbsp;
-						<div class="pay"><Input type="button" value="충전" onclick="location.href='pay'"></div>
+						<c:choose>
+							<c:when test="${member.member_auth_status eq 'Y'  }">
+								<div class="memberInfoCount" onclick="location.href='bank_userInfo'">계좌 확인하기</div>
+							</c:when>
+							<c:otherwise>
+								<div class="memberInfoCount" onclick="memberAuth()">계좌 인증하기</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<div class="memberInfoMyDataBox" onclick='location.href="memberUpdateForm"'>
 						<div class="memberInfoSettingMyData">내정보 수정하기</div>
@@ -100,9 +103,9 @@ function memberAuth(){
 					<div class="tabTab active"  data-attr="sellItem"><a href="#">판매 상품</a></div>
 					<div class="tabTab" data-attr="wishItem"><a href="#">찜한 상품</a></div>
 					<div class="tabTab" data-attr="buyItem"><a href="#">구매 상품</a></div>
-					<div class="tabTab"><a href="#">참여 중인 경매</a></div>
-<!-- 					<div class="tabTab"><a href="#">거래 후기</a></div> -->
-<!-- 					<div class="tabTab"><a href="#">추천 상품</a></div> -->
+					<div class="tabTab"><a href="#">#참여 중인 경매</a></div>
+					<div class="tabTab"><a href="market_review">리뷰 보기</a></div>
+					<div class="tabTab"><a href="reviewRegist">리뷰 작성</a></div>
 				</div>
 				
 				<div class="filterBarWrapper">

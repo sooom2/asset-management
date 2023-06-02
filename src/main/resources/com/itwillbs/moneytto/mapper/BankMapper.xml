@@ -24,10 +24,17 @@
 	<update id="updateAccountAuthStatus">
 		UPDATE member
 			SET
-				account_auth_status = 'Y'
+				member_auth_status = 'Y'
 			WHERE
-				id = #{id}
+				member_id = #{member_id}
 	</update>
+	
+	<!-- 계좌 정보 조회 - SELECT -->
+	<select id="selectAccount" resultType="com.itwillbs.moneytto.vo.AccountVO">
+		SELECT *
+		FROM account
+		WHERE id = #{member_id}
+	</select>
 	
 </mapper>
 

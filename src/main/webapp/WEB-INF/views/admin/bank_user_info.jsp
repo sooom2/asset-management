@@ -49,11 +49,11 @@
 				<td>${account.fintech_use_num }</td>
 				<td>
 					<form action="bank_accountDetail" method="post">
-						<%-- 엑세스토큰, 핀테크이용번호 전달 --%>
+						<%-- 엑세스토큰, 핀테크이용번호, 계좌번호(마스킹), 예금주명 전달 --%>
 <%-- 						<input type="hidden" name="access_token" value="${sessionScope.access_token }"> --%>
 						<input type="hidden" name="fintech_use_num" value="${account.fintech_use_num }">
 						<input type="hidden" name="account_num_masked" value="${account.account_num_masked }">
-						<input type="hidden" name="user_name" value="${userInfo.user_name }">						
+						<input type="hidden" name="user_name" value="${userInfo.user_name }">
 						<input type="submit" value="상세조회">
 					</form>
 				</td>

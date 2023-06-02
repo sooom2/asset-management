@@ -11,9 +11,9 @@ public interface BankMapper {
 	int insertToken(@Param("id") String id, @Param("token") ResponseTokenVO responseToken);
 
 	// 계좌 인증 상태 변경
-	int updateAccountAuthStatus(String id);
+	int updateAccountAuthStatus(String member_id);
 
 	// 계좌 정보 조회
-	AccountVO selectAccount(String id);
+	AccountVO selectAccount(String member_id);
 
 }

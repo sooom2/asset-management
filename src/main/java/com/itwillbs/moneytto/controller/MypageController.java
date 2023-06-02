@@ -45,18 +45,15 @@ public class MypageController {
 		String id = (String)session.getAttribute("sId");
 		
 		if(id == null) {
-			model.addAttribute("msg", "로그인 후 시도해주세요.");
-			model.addAttribute("target","memLogin");
-			return "success";
+			model.addAttribute("msg", "잘못된 접근입니다!");
+			return "fail_back";
 		}
 		
 		List<HashMap<String,String>> itemList = null;
 		
 		HashMap<String,String> member = memberService.getMember(id);
-		System.out.println(member);
 		
-		model.addAttribute("member", member);
-		model.addAttribute("client_id", client_id);
+		
 		
 		System.out.println("itemType : " + itemType);
 
@@ -69,6 +66,8 @@ public class MypageController {
 	    System.out.println(itemType);
 	    System.out.println(itemList);
 	    
+	    model.addAttribute("member", member);
+		model.addAttribute("client_id", client_id);
 	    model.addAttribute("itemList", itemList);
 
 		return "mypage/mypage";
@@ -92,30 +91,30 @@ public class MypageController {
 		return "mypage/mypage_info_form";
 	}
 	// 계좌인증
-	@RequestMapping(value = "memberAuth", method = RequestMethod.GET)
-	public String memberAuth(@RequestParam Map<String, String> authResponse, Model model, HttpSession session) {
-		String id = (String)session.getAttribute("sId");
-		if(id ==null) {
-			
-			model.addAttribute("msg", "잘못된 접근입니다.");
-			return "fail_back";
-			
-		}
-		String code = authResponse.get("code").toString();
-		
-		System.out.println(authResponse.toString());
-		
-		System.out.println("code: "+ code);
-		
-		int updateCount = memberService.setAuth(id);
-		if(updateCount > 0) {
-			model.addAttribute("msg", "인증이 완료되었습니다.");
-			return "mypage/close_redirect";
-		}else {
-			model.addAttribute("msg", "인증에 실패하였습니다.\n 다시 시도해주세요.");
-			return "mypage/close_redirect";
-		}
-	}
+//	@RequestMapping(value = "memberAuth", method = RequestMethod.GET)
+//	public String memberAuth(@RequestParam Map<String, String> authResponse, Model model, HttpSession session) {
+//		String id = (String)session.getAttribute("sId");
+//		if(id ==null) {
+//			
+//			model.addAttribute("msg", "잘못된 접근입니다.");
+//			return "fail_back";
+//			
+//		}
+//		String code = authResponse.get("code").toString();
+//		
+//		System.out.println(authResponse.toString());
+//		
+//		System.out.println("code: "+ code);
+//		
+//		int updateCount = memberService.setAuth(id);
+//		if(updateCount > 0) {
+//			model.addAttribute("msg", "인증이 완료되었습니다.");
+//			return "mypage/close_redirect";
+//		}else {
+//			model.addAttribute("msg", "인증에 실패하였습니다.\n 다시 시도해주세요.");
+//			return "mypage/close_redirect";
+//		}
+//	}
 		// 결제
 		@RequestMapping(value = "pay", method = {RequestMethod.GET, RequestMethod.POST})
 		public String store_pay(HttpSession session, Model model) {
