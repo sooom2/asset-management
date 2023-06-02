@@ -21,8 +21,8 @@ public class MarketService {
 
 
 
-    public void saveImage(HashMap<String, String> saveImage) {
-        mapper.saveImage(saveImage);
+    public int saveImage(HashMap<String, String> saveImage) {
+       return mapper.saveImage(saveImage);
     }
 
 

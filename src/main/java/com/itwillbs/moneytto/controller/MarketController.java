@@ -416,15 +416,16 @@ public class MarketController {
 	// 상품등록
 	@PostMapping(value = "itemRegistPro")
 	public String itemRegistPro(@RequestParam HashMap<String, String> item, Model model, HttpSession session, @RequestParam("file") List<MultipartFile> files) {
-		String id = (String)session.getAttribute("sId");
+	    String id = (String) session.getAttribute("sId");
 	    String uploadDir = session.getServletContext().getRealPath("/resources/upload");
 	    System.out.println(item);
+	    System.out.println(files);
 	    try {
 	        // 아이템 등록 전에 아이템 코드를 생성하여 저장
 	        String itemCode = service.selectItem();
 	        item.put("item_code", itemCode);
 	        item.put("id", id);
-	        
+
 	        // 가격에서 쉼표 제거
 	        String itemPrice = item.get("item_price");
 	        itemPrice = itemPrice.replace(",", "");
@@ -438,20 +439,18 @@ public class MarketController {
 	            // 사진 정보를 저장
 	            for (int i = 0; i < files.size(); i++) {
 	                MultipartFile file = files.get(i);
-	                if (!file.isEmpty()) {
+	                if (!file.isEmpty() && file.getSize() > 0) { // 파일이 전송되었는지 확인
 	                    String fileName = file.getOriginalFilename();
 	                    String fileExtension = FilenameUtils.getExtension(fileName);
-	                    
+
 	                    String uuid = UUID.randomUUID().toString();
-	                    
-	                    String storedFileName = uuid.substring(0,8) + "." + fileExtension;
-	                    
+
+	                    String storedFileName = uuid.substring(0, 8) + "." + fileExtension;
+
 	                    String filePath = uploadDir + "/" + storedFileName;
-	                    
+
 	                    String saveFileName = "http://c3d2212t3.itwillbs.com/images/" + storedFileName;
 	                    File dest = new File(filePath);
-	                    // upload 디렉토리가 없을때 생성하는 메서드
-	                    dest.mkdirs();
 	                    file.transferTo(dest);
 
 	                    // 사진 정보를 저장
@@ -461,7 +460,14 @@ public class MarketController {
 	                    saveImage.put("image_name", saveFileName);
 
 	                    // 사진 정보 저장 메서드 호출
-	                    service.saveImage(saveImage);
+	                    int saveCount = service.saveImage(saveImage);
+	                    System.out.println("saveCount: " + saveCount); // 디버깅용 로그
+
+	                    if (saveCount <= 0) {
+	                        // 사진 정보 저장 실패
+	                        model.addAttribute("msg", "상품 수정에 실패하였습니다.");
+	                        return "fail_back";
+	                    }
 	                }
 	            }
 
@@ -478,6 +484,8 @@ public class MarketController {
 	        return "fail_back";
 	    }
 	}
+
+
 	
 	@GetMapping(value = "itemModify")
 	public String marketModify(Model model, HttpSession session, String item_code) {
@@ -562,7 +570,15 @@ public class MarketController {
 	                        saveImage.put("image_name", saveFileName);
 
 	                        // 사진 정보 저장 메서드 호출
-	                        service.saveImage(saveImage);
+	                        
+	                        int saveCount = service.saveImage(saveImage);
+	                        if(saveCount > 0) {
+	                        	
+	                        }else {
+	            	            model.addAttribute("msg", "상품 수정에 실패하였습니다.");
+	            	            return "fail_back";
+	                        }
+	                        
 	                    }
 	                }
 	            }
@@ -570,6 +586,7 @@ public class MarketController {
 	            model.addAttribute("msg", "상품이 수정되었습니다.");
 	            model.addAttribute("target", "main");
 	            return "success";
+	            	
 	        } else {
 	            model.addAttribute("msg", "상품 수정에 실패하였습니다.");
 	            return "fail_back";
