@@ -25,11 +25,12 @@
 			<td>${account.available_amt }</td>
 			<td>
 				<form action="bank_withdraw" method="post">
-					<%-- 엑세스토큰, 핀테크이용번호, 계좌번호(마스킹), 예금주명 전달 --%>
 <%-- 						<input type="hidden" name="access_token" value="${sessionScope.access_token }"> --%>
 					<input type="hidden" name="fintech_use_num" value="${account.fintech_use_num }">
 					<input type="hidden" name="bank_name" value="${account.bank_name }">
-					<input type="submit" value="출금이체">
+					<input type="hidden" name="balance_amt" value="${account.balance_amt }">
+					<input type="submit" formaction="bank_regist" value="등록하기">
+					<input type="submit" value="출금이체(X)">
 				</form>
 			</td>
 		</tr>

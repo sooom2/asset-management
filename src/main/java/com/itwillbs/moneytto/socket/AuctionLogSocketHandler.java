@@ -47,10 +47,8 @@ public class AuctionLogSocketHandler extends TextWebSocketHandler {
 	    String auctionCode = jObject.getString("auctionCode");
 //	    System.out.println("id : " + id);
 //		System.out.println("name : " + name);
-//		System.out.println("messages : " + messages);
-//		
+//		System.out.println("logSocket - messages : " + messages);
 //		System.out.println(session.getAttributes());
-		
 //		System.out.println(session);
 //		System.out.println("sessionList : " + sessionList);
 	    

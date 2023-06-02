@@ -166,7 +166,7 @@
 	let m = today.getMinutes();
 	
 	let amPm = h < 12 ? "오전" : "오후";
-	let hours = h < 13 ? h : h - 12; // 시
+	let hours = h < 10 ? "0" + h : h; // 시
 	let minutes = m < 10 ? "0" + m : m;  // 분
 	
 	
@@ -286,7 +286,7 @@
 						<span style="font-size: 25px;">실시간 경매</span>
 						<c:choose>
 							<c:when test="${not empty lastLog }">
-								<div class="auction_price"><span id="lastLogPrice">${lastLog.get("log_content") }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
+								<div class="auction_price"><span id="lastLogPrice">${lastLog.log_content }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
 							</c:when>
 							<c:otherwise>
 								<div class="auction_price"><span>${auction.auction_present_price }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
@@ -295,7 +295,16 @@
 						<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
 						<div class="auction_id">
 <!-- 						<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
-						<span>${lastLog.get("member_id") }</span>
+						<c:if test="${lastLog.member_nickname ne 'null'}"><span>${lastLog.member_nickname }님</span></c:if>
+<%-- 						<c:choose> --%>
+<%-- 							<c:when test="${lastLog.member_nickname ne 'null' and lastLog.member_nickname ne ''}"> --%>
+<%-- 								<span>${lastLog.member_nickname }님</span> --%>
+<%-- 							</c:when> --%>
+<%-- 							<c:otherwise> --%>
+<!-- 						        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
+<%-- 						    </c:otherwise> --%>
+<%-- 						</c:choose> --%>
+<%-- 						<span>${lastLog.member_nickname }</span> --%>
 						</div>
 					</div>
 					<div class="auction_realStatus">
@@ -305,7 +314,7 @@
 								<c:forEach var="auctionLog" items="${auctionLog }">
 									<div class='chat_myself'>
 <%-- 										${auctionLog.member_nickname }님&nbsp;&nbsp;<span>${auctionLog.log_content }원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span> --%>
-										${auctionLog.log_time }&nbsp;&nbsp;${auctionLog.member_id }님&nbsp;&nbsp;<span>${auctionLog.log_content }원&nbsp;&nbsp;입찰!</span>
+										<${auctionLog.log_time }>&nbsp;${auctionLog.member_nickname }님&nbsp;&nbsp;<span>${auctionLog.log_content }원&nbsp;&nbsp;입찰!</span>
 									</div>
 								</c:forEach>
 <!-- 								<div class="chat_myself"> -->
@@ -345,7 +354,7 @@
 								<div class="my_bid"></div>
 								<div class="buy_now">
 									<span style="color:#bb2649">${purchase }원</span>
-									<input type="button" id="btnPurchase" value="즉시구매" style="float: right;margin-right: 11px;">
+									<input type="button" id="btnPurchase" value="즉시구매" class="btn" data-price="${purchase }" style="float: right;margin-right: 11px;">
 								</div>
 							</div>
 						</div>
@@ -407,6 +416,7 @@ $(document).ready(function() {
 	
 	function chatSend2() {
 // 		console.log(" 옥션 프라이스 텍스트" + $(".auction_price").text())
+// 		console.log(" chateSeng2()안 텍스트" + chatLog)
 		const data = {
 			"id" : "${ sessionScope.sId }",
 			"name" : "${ sessionScope.nickname }",
@@ -419,7 +429,7 @@ $(document).ready(function() {
 		};
 		let jsonData = JSON.stringify(data);
 		socket2.send(jsonData);
-		$('#chatLog').val('');
+		$('#logPrice').val('');
 		
 	};
 	
@@ -430,7 +440,9 @@ $(document).ready(function() {
 		if($(this).attr("data-price") == ""){ // 가격 직접 입력시 
 			// id = message 값을 message에
 			chatLog = $("#logPrice").val();			
-		}else{ // 입찰하기(1%값) 버튼 클릭시 
+		} else if($(this).attr("data-price") == ${purchase }) {
+			chatLog = ${purchase } + "";
+		} else{ // 입찰하기(1%값) 버튼 클릭시 
 // 			message = $(".auction_price").find("span").html();
 			// 누른 값에 해당하는 data-price 속성의 값을 메시지에
 			// 현재 상황 입찰하기 버튼을 눌렀을 때 입찰하기 버튼에 data-price속성이 있어서 그 값을 가져오는것
@@ -441,31 +453,45 @@ $(document).ready(function() {
 // 				console.log("4번" + message + typeof message); // 303000  string
 // 			} else {
 // 				console.log("else도착");
-				if(${lastLogYN}) {
-					chatLog = (parseInt($(this).attr("data-price"), 10) + parseInt(nowPrice, 10) + "");
-				} else {
-					chatLog = (parseInt($(this).attr("data-price"), 10) + parseInt($("#lastLogPrice").html(), 10) + "");
-				}
-				console.log(${lastLog.get("log_content")});
-				console.log("2번" + chatLog);
+			if(${lastLogYN}) {
+				chatLog = (parseInt($(this).attr("data-price"), 10) + parseInt(nowPrice, 10) + "");
+			} else {
+				chatLog = (parseInt($(this).attr("data-price"), 10) + parseInt($("#lastLogPrice").html(), 10) + "");
+			}
+			console.log(${lastLog.log_content});
+			console.log("2번" + chatLog);
 // 			}
 		}
 		
 		if(chatLog == ""){
-			alert("금액을 입력해주세요")
+			alert("금액을 입력해주세요");
 			return false;
 		} else if(chatLog < ${price} ) {
-			alert("최소금액 보다 높게 입력해주세요")
-			$("#chatLog").val("");
+			alert("최소금액 보다 높게 입력해주세요");
+			$("#logPrice").val("");
 			chatLog = nowPrice;
 			return false;
-		}
+		} else if(chatLog < ${lastLog.log_content }) {
+			alert("현재 입찰금액 보다 높게 입력해주세요");
+			$("#logPrice").val("");
+			chatLog = nowPrice;
+			return false;
+		} else if(chatLog == ${lastLog.log_content }) {
+			alert("현재 입찰금액 보다 높게 입력해주세요");
+			$("#logPrice").val("");
+			chatLog = nowPrice;
+			return false;
+// 		} else if(chatLog > ${purchase }) {
+// 			alert("즉시구매 가격 이하로 입력해주세요");
+// 			$("#logPrice").val("");
+// 			chatLog = nowPrice;
+// 			return false;
+		} 
 		
 		if(nowPrice < chatLog) {
 			nowPrice = chatLog;
 		}
 		
-		console.log(chatLog);
 		chatSend2();
 	})
 	
@@ -478,7 +504,6 @@ var socket2 = null;
 function connect2() {
 	var ws2 = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/auctionLog");
 	socket2 = ws2;
-	
 	ws2.onopen = function() {
 		console.log('Info: connection opened');
 		
@@ -494,7 +519,7 @@ function connect2() {
 		var auctionCode = "${auction.auction_code }";
 		
 		var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
-		console.log(data);
+		console.log("메세지 수신" + data);
 		sessionId = data.split(":")[0];
 		sessionName = data.split(":")[1];
 		message = data.split(":")[2];
@@ -522,6 +547,12 @@ function connect2() {
 			var auctionMyPrice =  message + "원";
 			$(".my_bid").html(auctionMyPrice);
 		}
+		
+		// 즉시구매가 구매
+		if(message == ${purchase }) {
+// 			console.log("즉시구매가 로 구매" + message);
+		}
+		
 	};
 	
 	ws2.onclose = function (event) { console.log('Info: connection closed'); };

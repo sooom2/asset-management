@@ -135,11 +135,11 @@ public class MemberController {
 		        session.setAttribute("nickname", member.get("member_nickname"));
 		       
 				// 만약, 계좌 정보가 존재할 경우(account != null)
-		        AccountVO account = bankService.getAccount(member.get("member_id"));
+		        HashMap<String, String> account = bankService.getAccount(member.get("member_id"));
 				if(account != null) {
 					// 세션 객체에 access_token, user_seq_no 저장
-					session.setAttribute("access_token", account.getAccess_token());
-					session.setAttribute("user_seq_no", account.getUser_seq_no());
+					session.setAttribute("access_token", account.get("Access_token"));
+					session.setAttribute("user_seq_no", account.get("User_seq_no"));
 				}
 				
 				

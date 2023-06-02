@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.moneytto.service.BankApiService;
 import com.itwillbs.moneytto.service.BankService;
+import com.itwillbs.moneytto.service.MemberService;
 import com.itwillbs.moneytto.vo.AccountDetailVO;
 import com.itwillbs.moneytto.vo.AccountWithdrawResponseVO;
 import com.itwillbs.moneytto.vo.ResponseTokenVO;
@@ -163,5 +164,30 @@ public class BankController {
 		return "bank/withdraw_result";
 		
 	}
+	
+	@PostMapping("bank_regist")
+	public String bankRegist(Model model
+			, HttpSession session
+			, String fintech_use_num
+			, String balance_amt) {
+		
+		String id = (String)session.getAttribute("sId");
+		
+		int insertCount = bankService.updateAccount(id, fintech_use_num, balance_amt);
+		
+		// 핀테크번호 등록 성공시 
+		if(insertCount > 0) {
+			
+			return "redirect:/mypage";
+			
+		}
+		
+		model.addAttribute("msg", "계좌 등록에 실패하였습니다.\n 계좌정보를 확인해주세요.");
+		
+		return "fail_back";
+		
+	}
+	
+	
 	
 }

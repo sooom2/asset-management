@@ -68,15 +68,14 @@ public class AuctionController {
 		
 		// 경매 기록(상세 내용) 검색
 		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(auction_code);
-		HashMap<String, String> lastLog = service.selectLastLog(); // 경매 마지막 로그
+		// 경매 기록 최고값 검색
+		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
 		boolean lastLogYN = lastLog == null ? true : false; 
 		model.addAttribute("auctionLog", auctionLog);
 		model.addAttribute("lastLog", lastLog);
 		model.addAttribute("lastLogYN", lastLogYN);
 		System.out.println("출력ㄱㄱㄱㄱㄱㄱㄱㄱ" + auctionLog + "여긱ㄱㄱㄱㄱ");
 		
-		// 경매 기록 최고값 검색
-//		HashMap<String, String> auctionMax = service.selectAuctionMax(auction_code);
 		
 //		if() { // 경매 페이지로 들어갈 때 이 아이템에 대한 경매기록이 있는지 확인해야하고 경매 기록이 없을 경우 밑에 코드 사용
 //			채팅방에는 방번호, 아이템 번호, chat_content 이렇게 있고
@@ -96,6 +95,7 @@ public class AuctionController {
 		String askingPrice = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.01) + "";
 		// 즉시 구매 - 고정
 		String purchase = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 1.8) + "";
+//		int purchase = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 1.8);
 		model.addAttribute("deposit", deposit);
 		model.addAttribute("askingPrice", askingPrice);
 		model.addAttribute("purchase", purchase);
