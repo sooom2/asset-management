@@ -114,7 +114,7 @@ $(function() {
 							<div class="swiper-wrapper">
 								<div class="swiper-slide">
 									<div class="swiper-wrapper">
-										<img src="http://c3d2212t3.itwillbs.com/images/${auction.get('image_name')}" class="MainImgItemImg">
+										<img src="${auction.get('image_name')}" class="MainImgItemImg">
 									</div>
 								</div>
 							</div>

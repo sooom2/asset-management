@@ -2,6 +2,7 @@ package com.itwillbs.moneytto.mapper;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,8 @@ public interface AuctionMapper {
 
 	// 경매 상세 기록 검색
 	List<HashMap<String, String>> selectAuctionLog(@Param("auction_code") String auction_code);
+
+	HashMap<String, String> selectLastLog();
 
 	// 경매 기록 방 저장
 //	HashMap<String, String> insertAuctionRoom(String auction_code);

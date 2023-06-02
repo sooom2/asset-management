@@ -258,7 +258,7 @@
 							<div class="con_tit">${auction.get("auction_item_name") }</div>
 							<div class="con_detail">
 								<!-- 상품이미지 -->
-								<div class="contentImage" style="background-image:url('http://c3d2212t3.itwillbs.com/images/${auction.get('image_name')}')"></div><br>
+								<div class="contentImage" style="background-image:url('${auction.get('image_name')}')"></div><br>
 								<!-- 상품정보 -->
 								<div>
 									<div>
@@ -284,10 +284,17 @@
 					
 					<div class="auction_realTime">
 						<span style="font-size: 25px;">실시간 경매</span>
-						<div class="auction_price"><span>${auction.auction_present_price }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
+						<c:choose>
+							<c:when test="${not empty lastLog }">
+								<div class="auction_price"><span id="lastLogPrice">${lastLog.get("log_content") }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
+							</c:when>
+							<c:otherwise>
+								<div class="auction_price"><span>${auction.auction_present_price }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
+							</c:otherwise>
+						</c:choose>
 						<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
 						<div class="auction_id">
-						<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span>${lastLog.get("member_id") }</span>
 						</div>
 					</div>
 					<div class="auction_realStatus">
@@ -296,7 +303,7 @@
 							<div class="logBox">
 								<c:forEach var="auctionLog" items="${auctionLog }">
 									<div class='chat_myself'>
-										닉네임님&nbsp;&nbsp;<span>${auctionLog.chat_message }원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>
+										<${auctionLog.log_time }>&nbsp;&nbsp;${auctionLog.member_id }님&nbsp;&nbsp;<span>${auctionLog.log_content }원&nbsp;&nbsp;입찰!</span>
 <%-- 										<fmt:formatDate value="${auctionLog.chat_time }" pattern="tt hh:mm:ss" /> --%>
 <%-- 										<fmt:parseDate var="formattedDate" value="${auctionLog.chat_time }" pattern="yyyy-MM-dd'T'hh:mm:ss" /> --%>
 									</div>
@@ -419,7 +426,6 @@ $(document).ready(function() {
 	
 
 	$(".btn").click(function(){
-		
 		//버튼을 눌렀을때 data-price가 없으면	
 		// data-price 없는게 직접 입력 버튼
 		if($(this).attr("data-price") == ""){ // 가격 직접 입력시 
@@ -436,7 +442,12 @@ $(document).ready(function() {
 // 				console.log("4번" + message + typeof message); // 303000  string
 // 			} else {
 // 				console.log("else도착");
-				chatLog = (parseInt($(this).attr("data-price"), 10) + parseInt(nowPrice, 10) + "");
+				if(${lastLogYN}) {
+					chatLog = (parseInt($(this).attr("data-price"), 10) + parseInt(nowPrice, 10) + "");
+				} else {
+					chatLog = (parseInt($(this).attr("data-price"), 10) + parseInt($("#lastLogPrice").html(), 10) + "");
+				}
+				console.log(${lastLog.get("log_content")});
 				console.log("2번" + chatLog);
 // 			}
 		}
@@ -504,7 +515,7 @@ function connect2() {
 		$(".auction_id").html(auctionNic);
 		
 		// 경매 로그
-		var auctionLog = "<div class='chat_myself'>" + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + amPm + " " + hours + ":" + minutes + "</div>";
+		var auctionLog = "<div class='chat_myself'>" + "<" + hours + ":" + minutes + "> " + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + "</div>";
 		$(".logBox").append(auctionLog);
 		
 		if(sessionId == cur_session) { // 세션 ID 와 입력된 금액의 ID가 같을 경우

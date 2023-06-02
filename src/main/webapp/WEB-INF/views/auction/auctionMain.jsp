@@ -53,7 +53,7 @@ $(function() {
 										<c:when test="${auction.get('auction_type') eq '실시간 경매' and auction.get('auction_status') eq 'N'}">
 											<li class="pickedContent">
 											<div class="landingPickWrap">
-												<div class="contentImage" style="background-image:url('http://c3d2212t3.itwillbs.com/images/${auction.get('image_name')}')">
+												<div class="contentImage" style="background-image:url('${auction.get('image_name')}')">
 													<div class="ddday">
 														시작<br>D-10
 													</div>
@@ -91,7 +91,7 @@ $(function() {
 										<c:when test="${auction.get('auction_type') eq '기간 경매' and auction.get('auction_status') eq 'N'}">
 										<li class="pickedContent">
 											<div class="landingPickWrap">
-												<div class="contentImage" style="background-image:url('http://c3d2212t3.itwillbs.com/images/${auction.get('image_name')}')">
+												<div class="contentImage" style="background-image:url('${auction.get('image_name')}')">
 													<div class="ddday">
 														진 행
 		<!-- 												시작<br>D-10 -->

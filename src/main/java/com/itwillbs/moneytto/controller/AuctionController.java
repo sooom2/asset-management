@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,16 +58,6 @@ public class AuctionController {
 		String id = (String)session.getAttribute("sId");
 		HashMap<String, String> auctionEnroll = service.selectAuctionEnroll(auction_code, id);
 		System.out.println("auctionEnroll1111111" + auctionEnroll);
-//		if(auctionEnroll != null) {
-//			model.addAttribute("auctionEnroll", true);
-//		} else {
-//			model.addAttribute("auctionEnroll", false);
-//		}
-		/* DB 에서 비교한 값이 true false 로 넘어오면 
-		model.addAttribute("auctionEnroll", auctionEnroll);
-		이렇게 넣어도 된다
-		*/
-//		model.addAttribute("enrollCode", auctionEnroll.get("enroll_code"));
 		boolean result = auctionEnroll != null ? true : false;
 		model.addAttribute("auctionEnroll", result);
 		
@@ -84,9 +75,13 @@ public class AuctionController {
 		// 경매 기록(채팅 상세 내용) 검색
 		// 방번호,아이템코드, id 다 넘겨야 하나? 그렇구만
 		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(auction_code);
+		HashMap<String, String> lastLog = service.selectLastLog(); // 경매 마지막 로그
+		boolean lastLogYN = lastLog == null ? true : false; 
 		model.addAttribute("auctionLog", auctionLog);
+		model.addAttribute("lastLog", lastLog);
+		model.addAttribute("lastLogYN", lastLogYN);
 //		if(auctionLog.get(1) != null) {
-			System.out.println("출력ㄱㄱㄱㄱㄱㄱㄱㄱ" + auctionLog + "여긱ㄱㄱㄱㄱ");
+		System.out.println("출력ㄱㄱㄱㄱㄱㄱㄱㄱ" + auctionLog + "여긱ㄱㄱㄱㄱ");
 //		}
 //				if() { // 경매 페이지로 들어갈 때 이 아이템에 대한 경매기록이 있는지 확인해야하고 경매 기록이 없을 경우 밑에 코드 사용
 //					채팅방에는 방번호, 아이템 번호, chat_content 이렇게 있고

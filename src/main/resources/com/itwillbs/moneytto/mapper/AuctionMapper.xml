@@ -46,13 +46,14 @@
 	</select>
 	
 	<insert id="insertEnroll">
-		INSERT INTO auction_enroll VALUES(
-								  ((SELECT *
-			  							FROM 
-			  								(SELECT IFNULL(MAX(enroll_code),0) FROM auction_enroll) A)+1)
-								, #{auction_code}
-								, #{id}
-								, 'N'
+		INSERT INTO auction_enroll 
+					VALUES(
+						  ((SELECT *
+	  							FROM 
+	  								(SELECT IFNULL(MAX(CAST(enroll_code AS UNSIGNED)) ,0) FROM auction_enroll) A)+1)
+						, #{auction_code}
+						, #{id}
+						, 'N'
 					)
 	</insert>
 	
@@ -66,9 +67,11 @@
 	<!-- 소켓 사용한 경매 기록 저장 -->
 	<insert id="insertAuctionLog">
 		INSERT 
-			INTO chat_messages 
+			INTO auction_log
 			VALUES (
-				null
+				((SELECT *
+			  		FROM 
+			  			(SELECT IFNULL(MAX(CAST(log_code AS UNSIGNED)) ,0) FROM auction_log) A)+1)
 				, #{auctionCode}
 				, #{id}
 				, #{messages}
@@ -79,7 +82,7 @@
 	<!-- 경매 기록 방 -->
 	<select id="selectAuctionRoom" resultType="hashmap">
 		SELECT *
-			FROM chat_rooms
+			FROM auction_log
 			<!-- 조건 만족 안하는걸 어떻게 하지? -->
 			WHERE 
 				auction_code = #{auction_code}
@@ -87,10 +90,26 @@
 	
 	<!-- 경매 상세 기록 검색 -->
 	<select id="selectAuctionLog" resultType="hashmap">
-		SELECT *
-			FROM chat_messages
-			WHERE auction_code = #{auction_code}
+		SELECT 
+			  log_code
+			, auction_code
+			, member_id
+			, log_content
+			, DATE_FORMAT(log_time, '%H:%i') 'log_time'
+				FROM auction_log
+					WHERE auction_code = #{auction_code}
 	</select>
+	
+	<!-- 경매 마지막 로그 검색 -->
+	<select id="selectLastLog" resultType="hashmap">
+		SELECT *
+			FROM auction_log
+					ORDER BY log_time DESC LIMIT 1
+	</select>
+	
+	
+	
+	
 	
 	<!-- 경매 기록 방 저장 -->
 <!-- 	<insert id="insertAuctionRoom"> -->

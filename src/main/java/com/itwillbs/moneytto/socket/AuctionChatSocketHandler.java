@@ -21,7 +21,7 @@ public class AuctionChatSocketHandler extends TextWebSocketHandler {
 	private Map<String, ArrayList<WebSocketSession>> auctionList = new ConcurrentHashMap<String, ArrayList<WebSocketSession>>();
 	// 세션, 경매코드
 	private Map<WebSocketSession, String> sessionList = new ConcurrentHashMap<WebSocketSession, String>();
-	
+	// 세션 수
 	private static int i;
 	
 	
