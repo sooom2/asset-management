@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,7 +79,11 @@ public class AuctionController {
 		
 		// 경매 기록(상세 내용) 검색
 		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(auction_code);
+		HashMap<String, String> lastLog = service.selectLastLog(); // 경매 마지막 로그
+		boolean lastLogYN = lastLog == null ? true : false; 
 		model.addAttribute("auctionLog", auctionLog);
+		model.addAttribute("lastLog", lastLog);
+		model.addAttribute("lastLogYN", lastLogYN);
 		System.out.println("출력ㄱㄱㄱㄱㄱㄱㄱㄱ" + auctionLog + "여긱ㄱㄱㄱㄱ");
 		
 		// 경매 기록 최고값 검색
