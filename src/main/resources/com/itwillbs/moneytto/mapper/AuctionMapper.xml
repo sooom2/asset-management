@@ -66,41 +66,34 @@
 	<!-- 소켓 사용한 경매 기록 저장 -->
 	<insert id="insertAuctionLog">
 		INSERT 
-			INTO chat_messages 
+			INTO auction_log 
 			VALUES (
-				null
-				, #{auctionCode}
-				, #{id}
-				, #{messages}
-				, now()
-				)
+				(SELECT *
+					FROM (SELECT IFNULL(MAX(CAST(log_code  AS UNSIGNED)),0) +1
+			 			FROM auction_log) A)
+					, #{auctionCode}
+					, #{id}
+					, #{messages}
+					, now()
+					)
 	</insert>
-	
-	<!-- 경매 기록 방 -->
-	<select id="selectAuctionRoom" resultType="hashmap">
-		SELECT *
-			FROM chat_rooms
-			<!-- 조건 만족 안하는걸 어떻게 하지? -->
-			WHERE 
-				auction_code = #{auction_code}
-	</select>
 	
 	<!-- 경매 상세 기록 검색 -->
 	<select id="selectAuctionLog" resultType="hashmap">
-		SELECT *
-			FROM chat_messages
+		SELECT auction_log.*, member.member_nickname
+			FROM auction_log
+				LEFT JOIN member
+					ON member.member_id = auction_log.member_id
 			WHERE auction_code = #{auction_code}
 	</select>
 	
-	<!-- 경매 기록 방 저장 -->
-<!-- 	<insert id="insertAuctionRoom"> -->
-<!-- 		INSERT -->
-<!-- 			INTO chat_rooms( -->
-<!-- 				1 -->
-<!-- 				, #{auction_code} -->
-<!-- 				, "물음표" -->
-<!-- 				, now() -->
-<!-- 			) -->
-<!-- 	</insert> -->
-
+	<!-- 경매 기록 최고값 검색 -->
+<!-- 	<select id="selectAuctionMax" resultType="hashmap"> -->
+<!-- 		SELECT auction_log.*, member.member_nickname -->
+<!-- 			FROM auction_log  -->
+<!-- 				LEFT JOIN member -->
+<!-- 					ON member.member_id = auction_log.member_id -->
+<!-- 			WHERE auction_code = #{auction_code} -->
+<!-- 	</select> -->
+	
 </mapper>

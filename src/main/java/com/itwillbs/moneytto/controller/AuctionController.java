@@ -64,38 +64,34 @@ public class AuctionController {
 //		}
 		/* DB 에서 비교한 값이 true false 로 넘어오면 
 		model.addAttribute("auctionEnroll", auctionEnroll);
-		이렇게 넣어도 된다
+		이렇게 넣어도 된다 
+		그렇지만 이거보단 밑에꺼 사용이 보기 편함
 		*/
 //		model.addAttribute("enrollCode", auctionEnroll.get("enroll_code"));
+		
+		// 방 번호 대신 방에 등록이 되었는지 저장해서 그걸로 확인
 		boolean result = auctionEnroll != null ? true : false;
 		model.addAttribute("auctionEnroll", result);
 		
 		
 		// 경매 로그===============================================================================
-		// auction_enroll
-//		HashMap<String, String> auctionRoom = service.selectAuctionRoom(auction_code);
-//		if(auctionRoom == null) { // 경매기록 방이 없을 경우
-//			// 경매 기록 방 저장
-////					auctionRoom = service.insertAuctionRoom(auction_code);
-//		} else if(auctionRoom.get("auction_code").equals(auction_code)) { // 경매 방 있는 경우
-//			
-//		}
 		
-		// 경매 기록(채팅 상세 내용) 검색
-		// 방번호,아이템코드, id 다 넘겨야 하나? 그렇구만
+		// 경매 기록(상세 내용) 검색
 		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(auction_code);
 		model.addAttribute("auctionLog", auctionLog);
-//		if(auctionLog.get(1) != null) {
-			System.out.println("출력ㄱㄱㄱㄱㄱㄱㄱㄱ" + auctionLog + "여긱ㄱㄱㄱㄱ");
-//		}
-//				if() { // 경매 페이지로 들어갈 때 이 아이템에 대한 경매기록이 있는지 확인해야하고 경매 기록이 없을 경우 밑에 코드 사용
-//					채팅방에는 방번호, 아이템 번호, chat_content 이렇게 있고
+		System.out.println("출력ㄱㄱㄱㄱㄱㄱㄱㄱ" + auctionLog + "여긱ㄱㄱㄱㄱ");
+		
+		// 경매 기록 최고값 검색
+//		HashMap<String, String> auctionMax = service.selectAuctionMax(auction_code);
+		
+//		if() { // 경매 페이지로 들어갈 때 이 아이템에 대한 경매기록이 있는지 확인해야하고 경매 기록이 없을 경우 밑에 코드 사용
+//			채팅방에는 방번호, 아이템 번호, chat_content 이렇게 있고
 			
 			/* 여기서 아이템 번호에는 옥션_코드 들가면 되고 방번호는 내가 임의로 넣으면 되나? 
 			예를 들어 구분자나 경매기록이니 'log'를 붙여서 사용하거나 다 공통된거 사용하는게 좋긴 한데 다른곳에서 쓸일이 있으려나? 
 			쓸일이 있어도 /log 같은거 사용해서 구분하는게 best같은데 맞지 
 			마이페이지에서도 필요할꺼고 */
-//				} else if() {} // 경매 관련 기록이 있을경우 그 기록의 정보를 화면에 표시 
+//		} else if() {} // 경매 관련 기록이 있을경우 그 기록의 정보를 화면에 표시 
 		
 		// 시작 가격 - 이건 계속 바뀌는 거 그래도 필요하네
 		String price = Integer.parseInt(auction.get("auction_present_price").replace(",", "")) + "";
@@ -132,14 +128,6 @@ public class AuctionController {
 		 * */
 		// 이부분 셀렉트랑 인설트랑 같이 할 방법 없나?
 		// 셀렉하고 없으면 바로 만들고 있으면 검색된 값 가져오고 ???
-		// 경매기록 방 검색
-		HashMap<String, String> auctionRoom = service.selectAuctionRoom(auction_code);
-		if(auctionRoom == null) { // 경매기록 방이 없을 경우
-			// 경매 기록 방 저장
-//					auctionRoom = service.insertAuctionRoom(auction_code);
-		} else if(auctionRoom.get("auction_code").equals(auction_code)) { // 경매 방 있는 경우
-			
-		}
 		
 		// 경매 기록(채팅 상세 내용) 검색
 		// 방번호,아이템코드, id 다 넘겨야 하나? 그렇구만
