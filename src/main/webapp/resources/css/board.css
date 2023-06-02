@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+#board-header {
+        padding: 10px;
+        text-align: center;
+        border-bottom: 2px solid #bb2649;
+        background-color: #bb26491a;
+        font-weight: bold;
+    }
+
+    #board-data {
+        padding: 10px;
+        text-align: center;
+        border-bottom: 1px solid #bb2649;
+    }
+
+    #iForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+    }
+
+    .tit {
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #333;
+    }
+
+    table {
+        width: 90%;
+        margin: 20px auto;
+        border-collapse: collapse;
+    }
+
+    th:first-child,
+    td:first-child {
+        width: 10%;
+        background-color: #bb26491a;
+        font-weight: bold;
+    }
+
+    th:not(:first-child),
+    td:not(:first-child) {
+        width: 15%;
+    }
+
+    td a {
+        color: #bb2649;
+        text-decoration: none;
+    }
+
+    td a:hover {
+        text-decoration: underline;
+    }
