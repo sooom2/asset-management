@@ -1,5 +1,7 @@
 package com.itwillbs.moneytto.service;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +26,16 @@ public class BankService {
 		}
 	}
 	// 계좌 정보 조회
-	public AccountVO getAccount(String member_id) {
+	public HashMap<String, String> getAccount(String member_id) {
 		
 		return mapper.selectAccount(member_id);
+	}
+	
+	
+	
+	public int updateAccount(String member_id, String fintech_use_num, String balance_amt) {
+
+		return mapper.updateAccount(member_id, fintech_use_num, balance_amt);
 	}
 	
 	

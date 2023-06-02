@@ -2,10 +2,8 @@ package com.itwillbs.moneytto.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.itwillbs.moneytto.service.BankService;
 import com.itwillbs.moneytto.service.MarketService;
 import com.itwillbs.moneytto.service.MemberService;
 
@@ -33,6 +32,11 @@ public class MypageController {
 	
 	@Autowired
 	private MarketService marketService;
+	
+	@Autowired
+	private BankService bankService;
+	
+	
 	
 	// 마이페이지 메인
 	@RequestMapping(value ="mypage", method = RequestMethod.GET)
@@ -63,9 +67,10 @@ public class MypageController {
 		List<HashMap<String,String>> itemList = null;
 		
 		HashMap<String,String> member = memberService.getMember(id);
-		System.out.println(member);
 		
-		model.addAttribute("member", member);
+		HashMap<String, String> account = bankService.getAccount(id);
+		
+		System.out.println(member);
 		
 		System.out.println("itemType : " + itemType);
 
@@ -78,8 +83,10 @@ public class MypageController {
 	    System.out.println(itemType);
 	    System.out.println(itemList);
 	    
+	    model.addAttribute("member", member);
 	    model.addAttribute("itemList", itemList);
-
+	    model.addAttribute("balance_amt", account.get("balance_amt"));
+	    
 		return "mypage/mypage";
 	} 
  

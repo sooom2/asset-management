@@ -34,7 +34,7 @@ function memberAuth(){
 	authWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize"
 	+"?response_type=code"
 	+"&client_id=bd507152-7d5b-4954-be9e-ef67beadb7eb"
-	+"&redirect_uri=http://localhost:8080/moneytto/memberAuth"
+	+"&redirect_uri=http://localhost:8082/moneytto/memberAuth"
 	+"&scope=login inquiry transfer"
 	+"&state=11111111111111111111111111111111"
 	+"&auth_type=0";

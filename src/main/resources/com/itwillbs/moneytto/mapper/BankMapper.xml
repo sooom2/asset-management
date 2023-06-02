@@ -30,11 +30,23 @@
 	</update>
 	
 	<!-- 계좌 정보 조회 - SELECT -->
-	<select id="selectAccount" resultType="com.itwillbs.moneytto.vo.AccountVO">
+	<select id="selectAccount" resultType="hashmap">
 		SELECT *
 		FROM account
 		WHERE id = #{member_id}
 	</select>
+	
+	
+	
+	<update id="updateAccount">
+		UPDATE	
+			account
+		SET
+			fintech_use_num = #{fintech_use_num}
+			,balance_amt		= #{balance_amt}
+		WHERE
+			id = #{member_id}			
+	</update>
 	
 </mapper>
 
