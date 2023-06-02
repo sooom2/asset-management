@@ -696,3 +696,11 @@ button {
 .FilterBoxWrapper > div > div > label {
 	cursor : pointer;
 }
+
+
+.chall_more {
+    border: 1px solid #bdbdbd;
+    padding: 5px;
+    text-align: center;
+    color: #000;
+}

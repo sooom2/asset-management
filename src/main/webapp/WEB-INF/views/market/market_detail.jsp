@@ -83,21 +83,6 @@ function toggleLike(element) {
 								</div>
 							</div>
 						</div>
-						<div
-							class="NavigationCustomNavigationContainer">
-							<div style="margin-left: -10.4px"
-								class="NavigationCustomImgBox">
-								<img
-									src="https://ccimage.hellomarket.com/img/common/arrow/left_black.png"
-									class="NavigationCustomArrowImg">
-							</div>
-							<div style="margin-right: -10.4px"
-								class="NavigationCustomImgBox">
-								<img
-									src="https://ccimage.hellomarket.com/img/common/arrow/right_black.png"
-									class="NavigationCustomArrowImg">
-							</div>
-						</div>
 					</div>
 					
 					<!--판매자정보 -->
@@ -109,8 +94,6 @@ function toggleLike(element) {
 							<div class="ProfileInfoWrapper">
 								<div class="ProfileInfoProfileName">${marketItem.member_nickname}</div>
 								<div class="ProfileInfoItemCountBox">
-<%-- 									<div class="ProfileInfoProduct"></div> --%>
-<!-- 									<div class="ProfileInfoItemQuantity">62</div> -->
 								</div>
 								<div class="ProfileInfoRating">
 									<img

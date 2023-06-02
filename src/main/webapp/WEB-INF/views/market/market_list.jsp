@@ -271,7 +271,10 @@
 				
 				$(".itemWrapper").append(str);
 				$(".Count").empty().append(count);
+				
 			}
+				var more = '<a href="#"><div class="chall_more">MORE</div></a>';
+				$(".itemListWrapper").after(more);
 		}
 		
 		
