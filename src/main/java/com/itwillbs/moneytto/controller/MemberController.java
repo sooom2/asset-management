@@ -41,6 +41,7 @@ public class MemberController {
 	//회원인증폼
 	@GetMapping(value = "memAuth")
 	public String memAuth() {
+		
 		return "member/join_auth_form";
 	}
 	
@@ -59,52 +60,56 @@ public class MemberController {
 							,Model model, HttpSession session
 							,@RequestParam("file") MultipartFile file) {
 		
+		System.out.println(member);
+		
+		// 1) 암호화된 비밀번호 생성 
 		String securePasswd = new BCryptPasswordEncoder().encode(member.get("member_pw"));
 		
-		String uploadDir = session.getServletContext().getRealPath("/resources/upload/member");
+		member.put("member_pw", securePasswd);
+		// 2) 입력받은 주소를 위도와 경도로 변환
+		String location = memberService.setLocation(member.get("member_address"));
 		
-        String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
-        
-        String uuid = UUID.randomUUID().toString();
-        
-        String storedFileName = uuid.substring(0,8) + "." + fileExtension;
-        
-        String filePath = uploadDir + "/" + storedFileName;
-        String saveDir = "http://c3d2212t3.itwillbs.com/images/member/" + storedFileName;
+		member.put("member_location",location);		
 		
-		if(member.get("member_image").isEmpty()) {
-			member.put("member_image", "http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg");
-		}else {
+		// 3) 입력받은 사진 이미지 설정
+		if(!file.isEmpty() ) {
+			// 실제 파일 저장 경로
+			String uploadDir = session.getServletContext().getRealPath("/resources/upload/member");
+			// 파일 확장자
+	        String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
+	        // 변환된 파일 이름
+	        String storedFileName = UUID.randomUUID().toString().substring(0,8) + "." + fileExtension;
+	        // 저장될 로컬 파일 경로
+	        String filePath = uploadDir + "/" + storedFileName;
+	        // DB에 저장될 이름
+	        String saveDir = "http://c3d2212t3.itwillbs.com/images/member/" + storedFileName;
+	        
+	        try {
+				file.transferTo(new File(filePath));
+			} catch (IllegalStateException | IOException e) {
+				// 사진 저장 실패 
+				e.printStackTrace();
+				model.addAttribute("msg", "프로필 이미지 등록에 실패했습니다.\n 마이페이지에서 수정할 수 있습니다.");
+			}
 	        member.put("member_image", saveDir);
 		}
-		
-		String location = memberService.setLocation(member.get("member_address"));
-		member.put("member_location",location);
-		
-		member.put("member_pw", securePasswd);
+		// 등록된 프로필 이미지가 없을 때는 디폴트값 적용
 		int insertCount = memberService.registMember(member);
 		
 		if(insertCount > 0) { // 가입 성공
 			
-			
-			try {
-				file.transferTo(new File(filePath));
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			model.addAttribute("member", member);
 			
 			return "member/mem_join_success";
-		} else { // 가입 실패
-			model.addAttribute("msg", "회원 가입 실패!");
 			
-			return "member/fail_back";
-		}
+		} 
+		 // 가입 실패
+		model.addAttribute("msg", "회원 가입 실패!");
+		
+		return "member/fail_back";
+		
 	}
+	
 // 카카오 회원가입
 	@PostMapping(value = "kakaoJoin")
 	public String kakaoJoin(@RequestParam HashMap<String, String> kakao, Model model) {
@@ -309,7 +314,7 @@ public class MemberController {
 	public boolean clickWish(@RequestParam("item_code") String item_code, HttpSession session) {
 		boolean result = false;
 		String id = (String)session.getAttribute("sId");
-		System.out.println("컨트롤러 확인");
+		
 		System.out.println(item_code);
 		List<HashMap<String, String>> wishitem = memberService.getWishItem(id,item_code);
 		System.out.println(wishitem);

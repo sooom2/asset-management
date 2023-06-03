@@ -42,42 +42,38 @@ public class MypageController {
 	@RequestMapping(value ="mypage", method = RequestMethod.GET)
 	public String mypage(@RequestParam(name ="itemList" , defaultValue = "sellItem") String itemType
 						,HttpSession session, Model model, String member_id) {
-		String id = (String)session.getAttribute("sId");
+		String sId = (String)session.getAttribute("sId");
 		
-		// 입력받은 member_id가 없고 sId도 없으면
-		// 널체크
-		if(id == null && member_id == null) {					// 나가
+		// 세션 아이디o 아이디x 내꺼			
+		// 세션 아이디o 아이디o 다른사람꺼 
+		// 세션 아이디x 아이디o 다른사람꺼
+		// 세션 아이디x 아이디x 잘못된 접근
+		
+		if(member_id != null) {					// 아이디
+			if(sId != null || sId == member_id) {//세션이 있고, 파라미터 아이디랑 같을 때 마이페이지
+				
+				HashMap<String, String> account = bankService.getAccount(sId);
+				//세션이 없거나 세션과 일치하지 않은 경우
+			}
+			
+		}else {	// 마이페이지로 들어올 때 파라미터를 입력받지 못한 경우에
+			
 			model.addAttribute("msg", "잘못된 접근입니다.");
+			return "fail_back";
 		}
-		// 입력받은 member_id 가 sId랑 같을때
-		if(id == member_id) {	// 마이페이지
-
-		}
-		// 입력받은 member_id 가 없고 sId가 있으면   
-		if(member_id == null || id != null) {	// 마이페이지
-			
-		}
-		// 입력받은 member_id가 sId랑 다를때 유어페이지
-		if(member_id != id) {	// 타인페이지
-			
-		}
-		
-		
 		
 		List<HashMap<String,String>> itemList = null;
 		
-		HashMap<String,String> member = memberService.getMember(id);
-		
-		HashMap<String, String> account = bankService.getAccount(id);
+		HashMap<String,String> member = memberService.getMember(member_id);
 		
 		System.out.println(member);
 		
 		System.out.println("itemType : " + itemType);
 
 	    switch (itemType) {
-		    case "sellItem" : itemList  = memberService.getSellItemList(id); break;
-		    case "wishItem" : itemList  = memberService.getWishItemList(id); break;
-	        case "buyItem" 	: itemList  = memberService.getBuyItemList(id); break;
+		    case "sellItem" : itemList  = memberService.getSellItemList(member_id); break;
+		    case "wishItem" : itemList  = memberService.getWishItemList(member_id); break;
+	        case "buyItem" 	: itemList  = memberService.getBuyItemList(member_id); break;
 	    }
 	    
 	    System.out.println(itemType);

@@ -87,7 +87,7 @@ function toggleLike(element) {
 					
 					<!--판매자정보 -->
 					<div class="profileWrapper">
-						<div class="profileProfileData">
+						<div class="profileProfileData" onclick="location.href='mypage?member_id=${marketItem.member_id}'">
 							<img
 								src="${marketItem.member_image }"
 								alt="profileImg" class="profileProfileImg">
