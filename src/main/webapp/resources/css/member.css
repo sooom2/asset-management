@@ -1719,6 +1719,7 @@ img {
 
 .listControlBox {
     margin-top: 26px;
+    margin-bottom: 10px;
     display: flex;
     -webkit-box-pack: justify;
     justify-content: space-between;
@@ -1736,7 +1737,7 @@ img {
 
 .itemItemWrapper {
     width: 100%;
-    display: grid;
+/*     display: grid; */
     grid-template-columns: 247px 247px 247px;
 }
 
@@ -1745,11 +1746,12 @@ img {
     width: 230px;
     margin-bottom: 20px;
     cursor: pointer;
-}
-
-.ThumbNailTypeImgBox {
     position: relative;
 }
+
+/* .ThumbNailTypeImgBox { */
+/*     position: relative; */
+/* } */
 
 
 .ThumbNailTypeItemImg {
@@ -1778,16 +1780,11 @@ img {
 
 .WishWishImg {
     position: absolute;
-    bottom: 10px;
-    right: 5px;
+    bottom: 20px;
+    right: 20px;
     width: 25px;
     height: 25px;
-}
-
-.WishWishImg {
-    display: flex;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
+    cursor: pointer;
 }
 
 .ThumbNailTypeTitle {
@@ -2133,11 +2130,6 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     line-height: 145%;
 }
 
-.itemWrapper {
-    margin-top: 16px;
-    padding: 0px 10px;
-}
-
 .EmptyEmptyBox {
     height: 500px;
     display: grid;
@@ -2264,3 +2256,27 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     display: none;
 }
 
+.itemWrapper {
+	
+/*     width: 1400px; */
+    margin: 0px 20px 30px 0px;
+}
+
+.itemWrapper .itemCategory {
+    /* margin-top: 10px; */
+    letter-spacing: 0px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    font-family: "Pretendard Variable";
+    color: rgb(255, 255, 255);
+    max-width: 194px;
+    width: fit-content;
+    line-height: 14px;
+    padding: 6px 8px;
+    margin: 12px 0px 4px;
+    border-radius: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: rgb(44, 44, 44);
+}

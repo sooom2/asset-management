@@ -8,12 +8,14 @@
 <head>
 <title>머니머니머니또</title>
 <link href="${path }/resources/css/main.css" rel="stylesheet">
+<link href="${path }/resources/css/market.css" rel="stylesheet">
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
 <link href="${path }/resources/css/common.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="resources/js/jquery.bxslider.min.js"></script>
+<script type="text/javascript" src="${path }/resources/js/wish.js"></script>
 <script type="text/javascript">
 	$(function() {
 		//메인 슬라이 더
@@ -77,8 +79,12 @@
 			customControlStatus = 'play';
 		});
 		//메인 슬라이더
-
 		
+		// 상품 페이지 이동
+  	$(".itemThumbnail, .itemTextBox").on("click",function(){
+  		var item_code = $(this).closest(".item").attr("data-cd");
+		location.href="market_detail?item_code="+item_code
+	})
 	
 });
 </script>
@@ -133,30 +139,44 @@
 						<div class="bestSell_title"><i class="fa-brands fa-hotjar"></i>&nbsp;머니또 인기상품</div>
 					</div>
 				</div>
-				<div class="itemWrapper">
-				
-					<!-- 상품 하나 -->
-					<c:forEach var="item" items="${itemList }">
-					<div class="item">
-						<div class="itemThumbnailBox">
-							<img src="${item.image_name }" alt="썸네일" class="itemThumbnail">
-								<div class="wishWrapper">
-									<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="wishWishIcon">
+				<div class="itemListWrapper">
+					<div class="itemWrapper">
+						<!-- 상품 하나 -->
+						<c:forEach var="item" items="${itemList }">
+							<div class="item" data-cd="${item.item_code }">
+								<div class="itemThumbnailBox">
+									<c:choose>
+	                              	<c:when test="${not empty item.image_name }">
+	                              		<img src="${item.image_name }" alt="itemImg" class="itemThumbnail"/>
+	                              	</c:when>
+	                              	<c:otherwise>
+										<img src="${path }/resources/images/main/noThumbnail.jpg" alt="itemImg" class="itemThumbnail" />		                                  		
+	                              	</c:otherwise>
+	                            </c:choose>
+								<c:choose>
+	                       	 		<c:when test="${not empty item.wish_code }">
+	                       	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg" />
+	                           		</c:when>
+	                	 		   	<c:otherwise>
+	                      	 		   	<img src="${path }/resources/images/main/ico_heart_off_x3.png"  alt="좋아요 아이콘" class="WishWishImg wish" >
+	                      	 		</c:otherwise>
+	                             </c:choose>
 								</div>
-						</div>
-						<div class="itemTextBox">
-							<div class="itemBrand">${item.item_category }</div>
-							<div class="itemText">${item.item_price }0원</div>
-							<div class="itemText">${item.item_subject }</div>
-							<div class="itemTagBox">
-								<div class="itemSizeTag">${item.tag }</div>
+								<div class="itemTextBox">
+									<div class="itemCategory">${item.item_category }</div>
+									<div class="itemText subject">${item.item_subject }</div>
+									<div class="itemText">${item.item_price }원</div>
+									<div class="itemTagBox">
+									<c:forEach var="item_tag" items ="${fn:split(item.item_tag, ',') }">
+									<div class="itemSizeTag">${item_tag }</div>
+									</c:forEach>
+									</div>
+									<div class="itemTimeTag">${item.item_date }</div>
+								</div>
 							</div>
-							<div class="itemTimeTag">${item.item_status }</div>
-						</div>
+						</c:forEach>
 					</div>
-					</c:forEach>
 				</div>
-			
 				<a href="challange">
 					<div class="chall_more">MORE</div>
 				</a>
@@ -166,9 +186,3 @@
 	<jsp:include page="footer.jsp" />
 </body>
 </html>
-
-
-
-
-
-

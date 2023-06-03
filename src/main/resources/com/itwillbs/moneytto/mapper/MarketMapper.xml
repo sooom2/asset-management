@@ -572,12 +572,22 @@
 		SELECT 	
 			i.*
 			,im.image_name
+			,w.wish_code
 		FROM
 			item i
+		LEFT JOIN (
+			    SELECT *
+			    FROM (
+			        	SELECT *,
+							ROW_NUMBER() OVER (PARTITION BY table_code ORDER BY image_code) AS row_num
+			       		FROM images
+			    	 ) subquery
+			    WHERE row_num = 1
+				 ) im 
+		ON
+			 i.item_code = im.table_code
 		LEFT JOIN
-			images im
-		ON	
-			i.item_code = im.table_code
+			wish w ON i.item_code = w.wish_item_code
 		ORDER BY i.item_code DESC LIMIT 10
 	</select>
 	
