@@ -72,7 +72,7 @@ public class AuctionController {
 		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
 		// 내가 입찰한 가격
 		HashMap<String, String> myLog = service.selectMyLog(id);
-		boolean lastLogYN = lastLog == null ? true : false; 
+		boolean lastLogYN = lastLog != null ? true : false; 
 		model.addAttribute("auctionLog", auctionLog);
 		model.addAttribute("lastLog", lastLog);
 		model.addAttribute("lastLogYN", lastLogYN);
@@ -196,8 +196,9 @@ public class AuctionController {
 	};
 	
 	@RequestMapping(value="auctionPay", method = RequestMethod.GET)
-	public String auctionPay(@RequestParam String auction_code, Model model, HttpSession session) { // 이미지 코드와 경매 코드를 받아서 목록 상세
-		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
+	public String auctionPay(@RequestParam Map<String, String> auctionPay, Model model, HttpSession session) { // 이미지 코드와 경매 코드를 받아서 목록 상세
+		System.out.println(auctionPay);
+		HashMap<String, String> auction = service.selectAuctionCode(auctionPay.get("auction_code"));
 		model.addAttribute("auction", auction);
 		System.out.println("auctionPay에서" + auction);
 		
