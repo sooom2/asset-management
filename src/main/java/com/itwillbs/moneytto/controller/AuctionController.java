@@ -63,7 +63,6 @@ public class AuctionController {
 		boolean result = auctionEnroll != null ? true : false;
 		model.addAttribute("auctionEnroll", result);
 		
-		
 		// 경매 로그===============================================================================
 		
 		// 경매 기록(상세 내용) 검색
@@ -72,22 +71,13 @@ public class AuctionController {
 		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
 		// 내가 입찰한 가격
 		HashMap<String, String> myLog = service.selectMyLog(id);
-		boolean lastLogYN = lastLog == null ? true : false; 
+		boolean lastLogYN = lastLog != null ? true : false; 
 		model.addAttribute("auctionLog", auctionLog);
 		model.addAttribute("lastLog", lastLog);
 		model.addAttribute("lastLogYN", lastLogYN);
 		model.addAttribute("myLog", myLog);
 		System.out.println("출력ㄱㄱㄱㄱㄱㄱㄱㄱ" + auctionLog + "여긱ㄱㄱㄱㄱ");
 		System.out.println("myLog 출력22222" + myLog);
-		
-//		if() { // 경매 페이지로 들어갈 때 이 아이템에 대한 경매기록이 있는지 확인해야하고 경매 기록이 없을 경우 밑에 코드 사용
-//			채팅방에는 방번호, 아이템 번호, chat_content 이렇게 있고
-			
-			/* 여기서 아이템 번호에는 옥션_코드 들가면 되고 방번호는 내가 임의로 넣으면 되나? 
-			예를 들어 구분자나 경매기록이니 'log'를 붙여서 사용하거나 다 공통된거 사용하는게 좋긴 한데 다른곳에서 쓸일이 있으려나? 
-			쓸일이 있어도 /log 같은거 사용해서 구분하는게 best같은데 맞지 
-			마이페이지에서도 필요할꺼고 */
-//		} else if() {} // 경매 관련 기록이 있을경우 그 기록의 정보를 화면에 표시 
 		
 		// 시작 가격 - 이건 계속 바뀌는 거 그래도 필요하네
 		String price = Integer.parseInt(auction.get("auction_present_price").replace(",", "")) + "";
@@ -196,10 +186,28 @@ public class AuctionController {
 	};
 	
 	@RequestMapping(value="auctionPay", method = RequestMethod.GET)
-	public String auctionPay(@RequestParam String auction_code, Model model, HttpSession session) { // 이미지 코드와 경매 코드를 받아서 목록 상세
+	public String auctionPay(@RequestParam HashMap<String, String> payMap, HttpSession session, Model model) {
+		System.out.println(payMap);
+		String id = (String)session.getAttribute("sId");
+		String auction_code = payMap.get("auction_code");
+		System.out.println("확인=======" + auction_code);
+		HashMap<String, String> member = memberService.getMember(id);
 		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
+//	public String auctionPay(@RequestParam Map<String, String> auctionPay, Model model, HttpSession session) { // 이미지 코드와 경매 코드를 받아서 목록 상세
+//		System.out.println(auctionPay);
+//		HashMap<String, String> auction = service.selectAuctionCode(auctionPay.get("auction_code"));
+		// 경매 기록 최고값 검색
+		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
+		
+		model.addAttribute("member", member);
 		model.addAttribute("auction", auction);
+		model.addAttribute("lastLog", lastLog);
+//		model.addAttribute("deposit", payMap.get("deposit"));
+		
+//		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
+//		model.addAttribute("auction", auction);
 		System.out.println("auctionPay에서" + auction);
+		System.out.println("auctionPay에서2" + member);
 		
 		return "auction/auctionPay";
 	}
