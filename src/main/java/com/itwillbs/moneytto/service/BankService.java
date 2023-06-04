@@ -1,6 +1,7 @@
 package com.itwillbs.moneytto.service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,9 +34,9 @@ public class BankService {
 	
 	
 	
-	public int updateAccount(String member_id, String fintech_use_num, String balance_amt) {
+	public int updateAccount(Map<String, String> map) {
 
-		return mapper.updateAccount(member_id, fintech_use_num, balance_amt);
+		return mapper.updateAccount(map);
 	}
 	
 	

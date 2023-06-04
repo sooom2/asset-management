@@ -166,7 +166,7 @@ public class BankApiClient {
 																HttpMethod.GET, 
 																httpEntity, 
 																AccountDetailVO.class);
-		
+		System.out.println("◇◇◇◇◇ 응답 데이터 : " + responseEntity.getBody());
 		logger.info("◇◇◇◇◇ 응답 데이터 : " + responseEntity.getBody());
 		
 		return responseEntity.getBody();
@@ -184,23 +184,27 @@ public class BankApiClient {
 	    JSONObject jo = new JSONObject();
 	    jo.put("bank_tran_id", valueGenerator.getBankTranId());
 	    jo.put("cntr_account_type", "N");
-	    jo.put("cntr_account_num", "99999999999999");						// 약정 계좌/계정 번호 ?
-	    jo.put("dps_print_content", "국민７０６６에서출금");				// 출금계좌에 찍히는 내용 
-	    jo.put("fintech_use_num", "120211385488932371716986");				// 사용자 핀테크번호
-	    
+	    // 등록할때 썼던 계좌번호
+	    // DB에 저장될 수 없어서 여기서 임의로 기록
+	    jo.put("cntr_account_num", "12345678");				// 약정 계좌/계정 번호 ?
+	    jo.put("dps_print_content", "머니또머니 충전");				// 출금계좌에 찍히는 내용 
+	    // 운영자 핀테크 번호 =====================================================
+	    jo.put("fintech_use_num", "120211385488932372195721");				// 사용자 핀테크번호
+	    // 거래금액
 	    jo.put("tran_amt", "1000");											// 거래금액
 	    jo.put("tran_dtime", valueGenerator.getTranDTime());				// 거래일자	
 	    // 요청 고객
-	    jo.put("req_client_name", "이연태");								
+	    jo.put("req_client_name", "머니또");								
 	    jo.put("req_client_fintech_use_num", "120211385488932360143650");	// 운영자
 	    jo.put("req_client_num", "1");										//
 	    // 충전 :  RC, 이체 : TR ==================================================
-	    jo.put("transfer_purpose", "TR");									
+	    // TR => RC 로 설정해둠
+	    jo.put("transfer_purpose", "RC");									
 	    // 최종 수취인(하위 가맹점)================================================
 	    // RC 인경우에 기재 X
-	    jo.put("recv_client_name", "이연태");
-	    jo.put("recv_client_bank_code", "002");
-	    jo.put("recv_client_account_num", "99999999999999");				// 최종수취고객계좌번호
+//	    jo.put("recv_client_name", "이연태");
+//	    jo.put("recv_client_bank_code", "002");
+//	    jo.put("recv_client_account_num", "99999999999999");				// 최종수취고객계좌번호
 	    
 	    HttpEntity<String> request = 
 	    	      new HttpEntity<String>(jo.toString(), httpHeaders);

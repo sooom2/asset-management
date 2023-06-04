@@ -67,14 +67,14 @@
 					<li class="full_area label_margin button_margin">
 						<span class="label">보유 포인트</span>
 						<span class="value number point_green align_left">${member.member_point }<span class="unit">원</span></span>
-						<div class="button">
+						<div class="submit" id="withDraw">
 								<!-- 사용하기 => 충전하기 -->
 								<a href="#" class="size1 _click(checkout.mobile.nsp.paymentSheet.useAllMileage()) _stopDefault">충전하기</a>
 						</div>
 					</li>
 					<li class="full_area label_margin button_margin2">
 						<label for="point2" class="label">사용 포인트</label>
-						<input title="사용포인트" id="point2" name="payAmounts.NAVER_CASH" type="number" class="value number _onlyPriceTarget _naverMileage _payForm _blur(checkout.mobile.nsp.paymentSheet.checkInputTextAmountValue()) _focus(checkout.mobile.nsp.paymentSheet.beforeInputPrice()) _stopDefault" placeholder="0">
+						<input title="사용포인트" id="point2" name="payAmounts.NAVER_CASH" type="tel" class="value number _onlyPriceTarget _naverMileage _payForm _blur(checkout.mobile.nsp.paymentSheet.checkInputTextAmountValue()) _focus(checkout.mobile.nsp.paymentSheet.beforeInputPrice()) _stopDefault" placeholder="0">
 						<span class="text_won">원</span>
 						<div class="button2">
 							<a href="#" class="sp_ordersheet button_del _click(checkout.mobile.nsp.paymentSheet.clearUsedPoint()) _stopDefault">삭제</a>
@@ -86,7 +86,7 @@
 <!-- 테스트 부분 -->
 <script type="text/javascript">
 $(function(){
-	
+	//css 아직 안빼서 클래스 이름 이상 
 	
 })
 </script>

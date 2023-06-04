@@ -118,10 +118,11 @@ public class BankController {
 		// Model 객체에 ResponseUserInfoVO 객체 저장
 		model.addAttribute("userInfo", userInfo);
 		
-		return "admin/bank_user_info";
+		return "bank/bank_user_info";
 	}
 	
 	// 계좌 상세정보 조회(2.3.1. 잔액조회 API)
+	// /balance/fin_num
 	@PostMapping("bank_accountDetail")
 	public String getAccountDetail(
 			@RequestParam Map<String, String> map, HttpSession session, Model model) {
@@ -166,7 +167,12 @@ public class BankController {
 	@PostMapping("bank_withdraw")
 	public String withdraw(
 			@RequestParam Map<String, String> map, HttpSession session, Model model) {
+		
 		map.put("access_token", (String)session.getAttribute("access_token"));
+		
+		// TODO
+		// map에 들어갈 요소 
+		// 사용자의 핀테크 이용번호 받아서 admin 계정의 핀테크 이용번호로 충전하는 느낌
 		
 		AccountWithdrawResponseVO result = apiService.withdraw(map);
 		System.out.println("result = " + result);
@@ -178,12 +184,12 @@ public class BankController {
 	@PostMapping("bank_regist")
 	public String bankRegist(Model model
 			, HttpSession session
-			, String fintech_use_num
-			, String balance_amt) {
-		
+			, @RequestParam Map<String, String> map) {
+
 		String id = (String)session.getAttribute("sId");
+		map.put("member_id", id);
 		
-		int insertCount = bankService.updateAccount(id, fintech_use_num, balance_amt);
+		int insertCount = bankService.updateAccount(map);
 		
 		// 핀테크번호 등록 성공시 
 		if(insertCount > 0) {

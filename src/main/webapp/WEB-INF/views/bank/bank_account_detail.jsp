@@ -29,8 +29,8 @@
 					<input type="hidden" name="fintech_use_num" value="${account.fintech_use_num }">
 					<input type="hidden" name="bank_name" value="${account.bank_name }">
 					<input type="hidden" name="balance_amt" value="${account.balance_amt }">
+<!-- 					<input type="submit" value="출금이체(X)"> -->
 					<input type="submit" formaction="bank_regist" value="등록하기">
-					<input type="submit" value="출금이체(X)">
 				</form>
 			</td>
 		</tr>
