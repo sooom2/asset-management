@@ -272,8 +272,16 @@
 				$(".Count").empty().append(count);
 				
 			}
-				var more = '<a href="#"><div class="chall_more">MORE</div></a>';
+				var more = '<div class="chall_more">MORE</div>';
 				$(".itemListWrapper").after(more);
+				
+				
+				$(".itemThumbnailBox").hide();
+				$(".itemThumbnailBox").slice(0, 20).show();
+				
+
+				
+				
 		}
 		
 		
@@ -352,6 +360,18 @@
 		
 		$(function () {
 			marketItemList();
+			
+			// 더보기
+			$(document).on("click", ".chall_more", function(e) {
+				console.log("more");
+				e.preventDefault();
+				 $(".itemThumbnailBox:hidden").slice(0, 20).show();
+				if($(".itemThumbnailBox:hidden").length == 0) {
+					$(".chall_more").fadeOut(100);
+				}
+			});
+
+			
 			
 			// 카테고리 클릭
 			$(".FilterCategory").on("click", function(e) {
