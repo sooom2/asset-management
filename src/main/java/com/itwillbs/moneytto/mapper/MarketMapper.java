@@ -123,4 +123,7 @@ public interface MarketMapper {
 
 	HashMap<String, String> recentlyMsg(String room_code);
 
+	//대화방있을때 룸코드 찾기
+	int roomCode(@Param("item_code") String item_code,@Param("id") String id);
+
 }

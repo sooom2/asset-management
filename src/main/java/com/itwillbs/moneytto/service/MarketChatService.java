@@ -140,6 +140,9 @@ public class MarketChatService {
 	public HashMap<String, String> getRecentlyMsg(String room_code) {
 		return mapper.recentlyMsg(room_code);
 	}
+	public int getRoomCode(String item_code,String id) {
+		return mapper.roomCode(item_code,id);
+	}
 
 
 }
