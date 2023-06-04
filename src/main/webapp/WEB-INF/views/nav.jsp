@@ -64,7 +64,7 @@ function payment(){
 			</ul>
 			<div class="searchIconWrapper">
 				<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
-				<div class="searchSearch"><form><input class="goodsName" type="text" placeholder="어떤 상품을 찾으시나요?"></form></div>
+				<div class="searchSearch"><form id="searchForm"><input class="goodsName" id="search" type="text" placeholder="어떤 상품을 찾으시나요?"></form></div>
 			</div>
 			<c:if test="${not empty sessionScope.sId }">
 				<div class="mem_profile">
@@ -79,5 +79,22 @@ function payment(){
 	</div>
 </div>
 
+<script type="text/javascript">
+	$(function () {
+		// 검색 하는중
+		$(document).on("submit", "#searchForm", function(e) {
+			event.preventDefault(); // 폼 제출 기본 동작 막기
+			var input = $("#search").val();
+			alert(input);
+		});
+		
+		$(".searchSearch input").keydown(function(event) {
+            if(event.which === 13) {
+				event.preventDefault(); // 엔터 키 기본 동작 막기
+				$("#searchForm").submit(); // 폼 제출
+            }
+        });
+	});
+</script>
 </body>
 </html>
