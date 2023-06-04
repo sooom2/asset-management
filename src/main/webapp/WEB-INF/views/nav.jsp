@@ -10,18 +10,21 @@
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
 <script>
-	function logout() {
-		// 카카오 로그인 아닐시 session "token" = true
-		if(${sessionScope.token == true}){
-			let isLogout = confirm("로그아웃 하시겠습니까?");
-			
-			if(isLogout) {
-				location.href = "logout";
-			}
-		} else {
-// 			location.href="https://kauth.kakao.com/oauth/logout?client_id=bf0c05681627cc5d65f40192f843de1b&logout_redirect_uri=http://192.168.3.126:8080/movie/logout";
-		}
-	}
+// function logout() {
+// 	// 카카오 로그인 아닐시 session "token" = true
+// 	if(${sessionScope.token == true}){
+// 		let isLogout = confirm("로그아웃 하시겠습니까?");
+		
+// 		if(isLogout) {
+// 			location.href = "logout";
+// 		}
+// 	} else {
+// 		location.href="https://kauth.kakao.com/oauth/logout?client_id=bf0c05681627cc5d65f40192f843de1b&logout_redirect_uri=http://192.168.3.126:8080/movie/logout";
+// 	}
+// }
+function payment(){
+	window.open("payment", "_blank","width=500,height=830");
+}
 </script>
 </head>
 <body>
@@ -45,8 +48,8 @@
 				</c:otherwise>
 			</c:choose>
 					<%-- 실제 서비스시 없앨것 --%>
-					<li><a href="payment"> 결제페이지(샘플)</a>
-					<li><a href="admin" class="">관리자</a></li>
+					<li><a href="#" onclick="payment()"> 결제페이지(샘플)</a>
+					<li><a href="admin"  class="">관리자</a></li>
 			</ul>
 		</nav>
 	

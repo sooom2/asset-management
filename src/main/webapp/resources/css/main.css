@@ -511,6 +511,15 @@
 	margin-right: 10px;
 }
 
+.itemListWrapper {
+	display: inline-block;
+    width: 1300px;
+    /* flex-wrap: wrap; */
+    /* width: 1200px; */
+    /* -webkit-box-pack: start; */
+    /* justify-content: flex-start; */
+}
+
 .itemWrapper {
     width: 1400px;
     margin: 0px 20px 30px 0px;
@@ -519,7 +528,13 @@
 .itemWrapper .itemThumbnailBox {
     position: relative;
 }
-
+.itemListWrapper .itemWrapper {
+    display: block;
+    width: 100%;
+    /* margin: 0px 20px 30px 0px; */
+    height: 478px;
+    margin: 0 auto;
+}
 .itemWrapper .itemThumbnail {
     object-fit: cover;
     width: 224px;
@@ -636,3 +651,16 @@
 .chall_more:hover {
 	background-color: #ececec;
 }
+/* 찜 */
+.WishWishImg {
+    position: absolute;
+    bottom: 10px;
+    right: 5px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    cursor: pointer;
+}
+

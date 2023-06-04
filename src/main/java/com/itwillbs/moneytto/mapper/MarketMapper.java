@@ -103,8 +103,8 @@ public interface MarketMapper {
 
 	// 채팅내용 insert
 	int insertChatMessages(@Param("room_code") String room_code, @Param("sellId") String sellId, @Param("buyId") String buyId, @Param("messages") String message, @Param("myId") String myId);
-
-	List<HashMap<String, String>> selectItemList();
+	// 메인 아이템리스트
+	List<HashMap<String, String>> selectItemList(String member_id);
 
 	// 아이템 이미지
 	List<HashMap<String, String>> selectItemImage(String item_code);
