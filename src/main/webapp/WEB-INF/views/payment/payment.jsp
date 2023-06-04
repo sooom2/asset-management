@@ -23,8 +23,10 @@
 <link rel="shortcut icon" href="https://img.pay.naver.net/static/images/customer/favicon.ico" />
 <!-- TODO 밑에 css 따와서 파일로 저장하기 -->
 <!-- TODO 창 로고 변경하기 -->
+<!-- 넘빨개여,,,ㅠ -->
 <link type="text/css" rel="stylesheet" href="//img.pay.naver.net/z/mstatic/css/service/mobile/nsp/order_common.css?1684912786775">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 <link href="${path }/resources/css/payment.css" rel ="stylesheet">
 </head>
 
@@ -59,7 +61,7 @@
 			<input type="checkbox" class="hidden" checked>
 			<div class="fold_wrap">
 				<label class="fold_head sp_heading head_nppoint" for="c1">
-					<h3 class="fold_h">머니또페이 포인트 사용</h3>
+					<h3 class="fold_h">&#127808; 머니또페이 포인트 사용</h3>
 					<p class="summary number"><span class="_pointTitle">0</span><span class="unit">원</span></p>
 				</label>
 				<div class="fold_content verification">
@@ -94,7 +96,7 @@ $(function(){
 	<input type="checkbox" class="hidden" id="c2">
 	<div class="fold_wrap">
 		<label class="fold_head sp_heading head_totamount head_arrow" for="c2">
-			<h3 class="fold_h">최종 결제금액</h3>
+			<h3 class="fold_h">&#128179; 최종 결제금액</h3>
 			<p class="summary number"><span class="_totalPayAmt">38,400</span><span class="unit">원</span></p>
 		</label>
 		<div class="fold_content amount_section">
@@ -178,7 +180,7 @@ $(function(){
     <input type="checkbox" id="benefit2_1" class="hidden" title="포인트 적립 혜택">
     <div class="benefit_point">
         <label for="benefit2_1" class="fold_h sp_h h_point h_arrow">
-            <h4 class="point_h">적립 혜택 : <span class="point_yellow">384원 적립 예정</span></h4>
+            <h4 class="point_h">적립 혜택 : <span class="point_yellow"><b>384원 </b></span>적립 예정</h4>
         </label>
         <div class="point_content">
             <ul class="s_benefit_list">

@@ -1,8 +1,19 @@
 @charset "UTF-8";
 
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+*{
+    font-family: 'Pretendard-Regular!important';
+}
+
+
 /* Common */
 body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,button,select{margin:0;padding:0}
-body,input,textarea,select,button,table{font-size:14px;line-height:18px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;color:#252525}
+body,input,textarea,select,button,table{font-size:14px;line-height:18px;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;color:#252525}
 body.s,.s input,.s textarea,.s select,.s button,.s table{font-family:Helvetica}
 body{position:relative;-webkit-text-size-adjust:none}
 img,fieldset{border:0}
@@ -23,19 +34,19 @@ hr{display:none !important}
 html{height:100%}
 body{height:100%;background:#e9ecef}
 .wrap{position:relative;min-height:100%}
-.header{position:relative;z-index:100;height:46px;border-bottom:1px solid rgba(0,0,0,0.07);background-color:#BB2649;text-align:center;box-sizing:border-box;-webkit-box-sizing:border-box}
+.header{position:relative;z-index:100;/* height:46px; */border-bottom:1px solid rgba(0,0,0,0.07);/* background-color: #000000; */text-align:center;box-sizing:border-box;-webkit-box-sizing:border-box;}
 .container{position:relative;padding:20px 6px}
 .footer{padding:5px 0 25px;font-size:13px;text-align:center}
-.corp{font-family:Helvetica,sans-serif;color:#999}
+.corp{font-family:Pretendard-Regular,sans-serif;color:#999}
 
 .sp_header:after{background:url(../../../../img/service/mobile/nsp/sp_ordersheet_header_20151204.png) no-repeat;background-size:56px auto;-webkit-background-size:56px auto;content:''}
 .sp_header.gnb_logo:after{width:56px;height:35px;background-position:0 0}
 .sp_header.gnb_cls:after{width:35px;height:35px;background-position:0 -35px}
 .sp_header.gnb_prev:after{width:35px;height:35px;background-position:0 -70px}
 
-.h1{height:100%;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Medium,'나눔고딕',nanumgothic,sans-serif;font-size:19px;line-height:46px;font-weight:normal;color:#fff;text-align:center;text-shadow:0 0 1px rgba(0,0,0,0.3)}
+.h1{height:100%;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Medium,'나눔고딕',nanumgothic,sans-serif;font-size:19px;line-height:46px;font-weight:normal;color: #000;text-align:center;/* text-shadow: 0 0 1px rgb(0 0 0 / 30%); */}
 
-.gnb_logo{position:absolute;top:5px;left:10px;width:56px;height:35px}
+.gnb_logo{position:absolute;top:5px;left:10px;width:56px;height:35px;/* background: #000; */}
 .gnb_cls{position:absolute;top:5px;right:0;width:35px;height:35px}
 .gnb_prev{position:absolute;top:5px;left:5px;width:35px;height:35px}
 .gnb_logo:after,
@@ -60,16 +71,16 @@ body{height:100%;background:#e9ecef}
 .sp_ordersheet.icon_infocharge:before{width:13px;height:13px;background-position:-40px -145px;margin-top:3px}
 
 .sp_heading:before{
-	border-radius:2px;
-	background:url(../images/payment/sp_ordersheet_h_icon.png) no-repeat;
-	background-size:30px auto;
+	/* border-radius:2px; */
+	/* background:url(../images/payment/sp_ordersheet_h_icon.png) no-repeat; */
+	/* background-size:30px auto; */
 	-webkit-background-size:30px auto;
-	content:'';
+	/* content:''; */
 	-webkit-border-radius:2px
 }
-.sp_heading.head_nppoint:before{background-color:#BB2649;background-position:0 0}
-.sp_heading.head_totamount:before{background-color:#1088ed;background-position:0 -30px}
-.sp_heading.head_simplepay:before{background-color:#BB2649;background-position:0 -60px}
+.sp_heading.head_nppoint:before{background-color: #5b5b5b;background-position:0 0;}
+.sp_heading.head_totamount:before{background-color: #676767;background-position:0 -30px;}
+.sp_heading.head_simplepay:before{/* background-color:#BB2649; *//* background-position:0 -60px; */}
 
 .sp_arrow:after{background:url(../../../../img/service/mobile/nsp/sp_arrow_icon.png) no-repeat;background-size:25px auto;-webkit-background-size:25px auto;content:''}
 .sp_arrow.icon_arrow:after{width:4px;height:6px;background-position:0 -25px}
@@ -112,7 +123,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .spot_h3.full_title{padding-right:0}
 .h_icon + .spot_h3{margin-top:5px}
 .spot_detail .amount{display:inline-block;font-size:17px;color:#1088ed}
-.spot_detail .amount strong{font-size:20px;font-weight:normal;font-family:HelveticaNeue-medium,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;vertical-align:top}
+.spot_detail .amount strong{font-size:20px;font-weight:normal;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;vertical-align:top}
 .spot_detail .vat{color:#8f8f8f;font-size:14px}
 .spot_detail .np_point{display:inline-block;position:relative;padding-left:40px;color:#8f8f8f}
 .spot_detail .np_point.icon_nppoint:before{position:absolute;top:50%;left:0;margin-top:-8px}
@@ -134,20 +145,20 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .fold_head{display:block;position:relative}
 .fold_head:before{position:absolute;top:50%;left:13px;width:30px;height:30px;margin-top:-15px}
 .fold_head:after{position:absolute;top:50%;right:11px;margin-top:-10px}
-.fold_head .summary{overflow:hidden;position:absolute;top:16px;right:36px;left:135px;font-size:16px;line-height:18px;font-family:HelveticaNeue-Medium,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;color:#1088ed;text-align:right;white-space:nowrap;text-overflow:ellipsis}
+.fold_head .summary{overflow:hidden;position:absolute;top:16px;right:36px;left:135px;font-size:16px;line-height:18px;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;color:#1088ed;text-align:right;white-space:nowrap;text-overflow:ellipsis}
 .fold_head .summary.number{font-size:18px}
 .fold_head .summary.number .unit{display:inline-block;margin:0 0 0 2px;font-size:16px;vertical-align:top}
-.fold_h{padding:15px 0 15px 52px;font-size:16px;line-height:20px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-SemiBold,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;font-weight:normal}
+.fold_h{padding: 15px 0 15px 10px;font-size:16px;line-height:20px;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-SemiBold,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;font-weight:normal}
 .fold_content{display:none;position:relative}
 .fold_head + .fold_content{border-top:1px solid #e2e6e9}
 
 .label{position:absolute;top:0;right:0;left:0;bottom:0;padding:7px 0;line-height:36px;font-size:15px}
-.value{display:block;position:relative;z-index:10;width:100%;padding:6px 0;border:0;border-radius:0;background-color:transparent;line-height:24px;font-family:HelveticaNeue-Medium,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;text-align:right}
-.value.number{font-size:18px;font-family:HelveticaNeue-Medium,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif}
-.value.number_v2{font-size:18px;font-family:HelveticaNeue,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif}
+.value{display:block;position:relative;z-index:10;width:100%;padding:6px 0;border:0;border-radius:0;background-color:transparent;line-height:24px;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;text-align:right}
+.value.number{font-size:18px;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif}
+.value.number_v2{font-size:18px;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif}
 .unit{display:inline-block;margin-left:2px;font-size:16px;vertical-align:top}
 .point_green{color:#BB2649 !important}
-.point_yellow{color:#fff600 !important}
+.point_yellow{color: #bb2649 !important;}
 .point_black{color:#252525 !important}
 .align_left{text-align:left !important}
 .switch_button{position:absolute;top:0;right:0;left:0;bottom:0;width:100%;height:100%}
@@ -166,7 +177,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .verification .button_margin{padding-right:71px}
 .verification .button_margin2{padding-right:40px}
 .verification .button{position:absolute;top:0;right:0;bottom:0;height:35px;margin:auto}
-.verification .button .size1, .btn_use_all{display:block;width:70px;border-radius:2px;background:#a4abb9;font-size:13px;line-height:35px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Medium,'나눔고딕',nanumgothic,sans-serif;color:#fff;text-align:center}
+.verification .button .size1, .btn_use_all{display:block;width:70px;border-radius:2px;background:#a4abb9;font-size:13px;line-height:35px;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Medium,'나눔고딕',nanumgothic,sans-serif;color:#fff;text-align:center}
 .verification .button2{position:absolute;top:50%;right:3px;width:17px;height:35px;margin-top:-17px}
 .button_del{display:block;overflow:hidden;width:100%;height:100%;text-indent:-9999px}
 .button_del:before{position:absolute;top:50%;right:0;margin-top:-8px}
@@ -187,7 +198,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .input_area .label_margin{padding-left:60px}
 .input_area .button_margin{padding-right:75px}
 .input_area .label{padding-left:15px;font-size:13px;color:#8f8f8f}
-.input_area .value{font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif !important}
+.input_area .value{font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif !important}
 .input_area .button{position:absolute;top:0;right:15px;bottom:0;height:35px;margin:auto}
 .input_area .button .size1{display:block;width:50px;border-radius:2px;background:#a4abb9;font-size:13px;line-height:35px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Medium,'나눔고딕',nanumgothic,sans-serif;color:#fff;text-align:center}
 .input_area .bank_logo{position:absolute;right:15px;bottom:16px;width:83px;height:15px}
@@ -223,7 +234,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .pay_tab_menu a{display:block;font-size:14px;line-height:33px;color:#8f8f8f;text-align:center}
 .pay_tab_menu a strong{font-weight:normal}
 .pay_tab_menu.on a{position:relative;z-index:10;margin:-1px;border:1px solid #F0CFC3;background-color:#BB2649;color:#fff}
-.pay_tab_menu.on a strong{font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-SemiBold,'나눔고딕',nanumgothic,sans-serif;font-weight:bold}
+.pay_tab_menu.on a strong{font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-SemiBold,'나눔고딕',nanumgothic,sans-serif;font-weight:bold}
 .pay_tab_menu:first-child,
 .pay_tab_menu:first-child a{border-radius:3px 0 0 3px}
 .pay_tab_menu:last-child,
@@ -277,7 +288,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .receipt_info dd .wayid{font-weight:normal}
 .receipt_info dd .number{margin-left:6px;font-size:17px}
 .receipt_info + .cont_button{margin-top:7px}
-.receipt_wrap .fold_h{font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif}
+.receipt_wrap .fold_h{font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif}
 
 
 .check_agree .link{color:inherit}
@@ -299,8 +310,8 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .use_select_item + .use_select_item{margin-left:22px}
 
 .value_select{}
-.value_select .value2{width:100%;height:41px;border:1px solid #d7dadd;border-radius:3px;background-color:#fff;line-height:41px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;text-indent:10px;-webkit-border-radius:3px;box-sizing:border-box;-webkit-box-sizing:border-box;-webkit-appearance:none}
-.value_select .value2.number{font-family:HelveticaNeue-Medium,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;font-size:18px}
+.value_select .value2{width:100%;height:41px;border:1px solid #d7dadd;border-radius:3px;background-color:#fff;line-height:41px;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;text-indent:10px;-webkit-border-radius:3px;box-sizing:border-box;-webkit-box-sizing:border-box;-webkit-appearance:none}
+.value_select .value2.number{font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;font-size:18px}
 .value_select .value2.select{background:url(../../../../img/service/mobile/nsp/icon_select_arrow.png) no-repeat 90% 50%;background-size:15px 28px;-webkit-background-size:15px 28px}
 .value_select select.value2{background-color:#fff;background-position:100% 0;font-size:15px;vertical-align:top}
 .value_select select.value2 + input.value2{margin-top:5px}
@@ -318,8 +329,8 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .select_point .guide_text{margin-top:13px}
 .select_point .value_select.disabled .label_tit{color:#a9a9a9}
 .select_point select:disabled{color:#bdbdbd}
-.select_point .none_point{background:#f8f7da;margin:-14px -13px 0 -13px;text-align:center;color:#f16156;padding:13px 0 11px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Medium,'나눔고딕',nanumgothic,sans-serif;border-bottom:1px solid #e2e6e9}
-.select_point .value_select .input_use{width:100%;height:35px;border:1px solid #d9dadc;border-radius:3px;text-align:right;box-sizing:border-box;padding-right:46px;color:#b3b3b3;font-size:18px;font-family:HelveticaNeue-Medium,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;-webkit-appearance:none}
+.select_point .none_point{background:#f8f7da;margin:-14px -13px 0 -13px;text-align:center;color:#f16156;padding:13px 0 11px;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Medium,'나눔고딕',nanumgothic,sans-serif;border-bottom:1px solid #e2e6e9}
+.select_point .value_select .input_use{width:100%;height:35px;border:1px solid #d9dadc;border-radius:3px;text-align:right;box-sizing:border-box;padding-right:46px;color:#b3b3b3;font-size:18px;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;-webkit-appearance:none}
 
 
 .sp_band_icon:after{width:38px;height:38px;background:url(../../../../img/service/mobile/nsp/sp_ordersheet_bandicon.png) no-repeat;background-size:50px auto;-webkit-background-size:50px auto;content:''}
@@ -506,7 +517,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .pay_selected .flick_area{position:relative;padding:20px 0}
 .pay_selected .flick_area.paging{padding-bottom:36px}
 .pay_selected .flick_area + .benefit_area{margin:0 13px;padding:12px 0 15px;border-top:1px solid #f1f3f5}
-.pay_selected .page_num{position:absolute;bottom:10px;left:0;right:0;font-family:HelveticaNeue,Helvetica,sans-serif;font-size:16px;font-weight:500;text-align:center;color:#8f8f8f}
+.pay_selected .page_num{position:absolute;bottom:10px;left:0;right:0;font-family:Pretendard-Regular,Helvetica,sans-serif;font-size:16px;font-weight:500;text-align:center;color:#8f8f8f}
 .single_selected{padding:15px 13px}
 
 .pay_tab_area + .flick_area {padding-top: 5px}
@@ -559,7 +570,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .card_select.card_add{display:block;padding:39px 0 38px;border:2px dashed #c4cbd1;background-color:#f9fbfd}
 .card_select.card_add.regist{padding:21px 0 19px}
 .card_select .card_type {position: absolute;color:#fff;font-size:11px;letter-spacing:-1px;top:13px;right:15px}
-.card_select .card_number{display:table;width:100%;table-layout:fixed;font-size:20px;font-family:sans-serif-light,HelveticaNeue-Light,Helvetica,sans-serif;line-height:30px;color:#fff;text-align:center;}
+.card_select .card_number{display:table;width:100%;table-layout:fixed;font-size:20px;font-family:Pretendard-Regular,HelveticaNeue-Light,Helvetica,sans-serif;line-height:30px;color:#fff;text-align:center;}
 .card_select .card_number span{display:table-cell;text-align:center;}
 .card_select .card_text{font-size:15px;line-height:20px;color:#252525}
 .card_select .card_text:before{display:block;margin:0 auto 10px;width:34px;height:34px;background:url(../../../../img/service/mobile/nsp/sp_ordersheet_20190613.png) no-repeat 0 -165px;background-size:150px auto;content:''}
@@ -636,20 +647,20 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 
 /* 결제 제한 */
 .card_select.disabled{border:1px solid #e8ebee;box-shadow:none}
-.card_select.disabled .card_number{font-size:22px;font-family:sans-serif-light,HelveticaNeue-thin,Helvetica,sans-serif;line-height:30px;color: #a5abb6;text-align:center;text-shadow:none}
+.card_select.disabled .card_number{font-size:22px;font-family:Pretendard-Regular,HelveticaNeue-thin,Helvetica,sans-serif;line-height:30px;color: #a5abb6;text-align:center;text-shadow:none}
 .card_select.disabled +.select_area .sp_select_icon{background:none}
 .card_select.disabled +.select_area .slt_value{border-color:#e2e7ec;background-position:100% -80px;color:#d6dce1;box-shadow:0 1px 0 rgba(255,255,255,0.15)}
 .card_select.disabled +.select_area .slt_value:disabled{background-color:transparent}
 .select_area .slt_value:disabled{border-color:rgba(0,0,0,0.1);background-color:rgba(0,0,0,0.07);background-image:none;color:rgba(0,0,0,0.4)}
 
 .h_arrow:after{width:16px;height:9px;background:url(../../../../img/service/mobile/nsp/h_ordersheet_arrow.png) no-repeat;background-size:16px 9px;-webkit-background-size:16px 9px;content:''}
-.benefit_point{margin-top:7px;border:1px solid #F0CFC3;border-radius:2px;background-color:#BB2649;-webkit-border-radius:2px}
+.benefit_point{margin-top:7px;border: 1px solid #b9b9b9;border-radius:2px;background-color: #ffffff;-webkit-border-radius:2px}
 .benefit_point .fold_h{display:block;position:relative;padding:0}
 .benefit_point .fold_h:before{position:absolute;top:50%;left:10px;width:47px;height:19px;margin-top:-9px}
 .benefit_point .fold_h:after{position:absolute;top:50%;right:10px;margin-top:-5px}
-.benefit_point .sp_h:before{background:url(../../../../img/service/mobile/nsp/sp_ordersheet_benefit_20161117.png) no-repeat;background-size:47px auto;-webkit-background-size:47px auto;content:''}
+.benefit_point .sp_h:before{/* background:url(../../../../img/service/mobile/nsp/sp_ordersheet_benefit_20161117.png) no-repeat; */background-size:47px auto;/* -webkit-background-size:47px auto; *//* content:''; */}
 .benefit_point .h_point:before{background-position:0 0}
-.benefit_point .point_h{padding:11px 0 11px 61px;font-weight:normal;font-size:15px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;color:#fff}
+.benefit_point .point_h{padding: 11px 0 11px 1px;font-weight:normal;font-size:15px;/* font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif; */color: #000;text-align: center;}
 .benefit_point .point_content{display:none;padding:10px 11px;border-top:1px solid #00bf3a}
 .benefit_point .point_guide{font-size:13px;line-height:18px;color:rgba(255,255,255,0.5)}
 .s_benefit_list{color:#fff}
@@ -665,7 +676,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 :checked + .benefit_point .fold_h:after{transform:rotate(180deg);-webkit-transform:rotate(180deg)}
 .point_content .s_benefit_list + .point_guide{margin-top:9px;padding-top:11px;border-top:1px solid rgba(0,0,0,0.04)}
 
-.complete_info{margin-top:-7px;padding:9px 0 16px;font-size:22px;line-height:26px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Light,'나눔고딕',nanumgothic,sans-serif;color:#252525;letter-spacing:-1px;text-align:center}
+.complete_info{margin-top:-7px;padding:9px 0 16px;font-size:22px;line-height:26px;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Light,'나눔고딕',nanumgothic,sans-serif;color:#252525;letter-spacing:-1px;text-align:center}
 .complete_info strong{font-weight:normal}
 .complete_box{position:relative;margin:34px 0 0;border:1px solid #e2e6e9;border-radius:0 0 3px 3px;background-color:#fff}
 .complete_box .point_box{height:56px;border-radius:3px 3px 0 0}
@@ -753,7 +764,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 
 .pay_sim{margin:7px 0 -4px;padding:18px 0;border-style:solid;border-color:#ededed;border-width:1px 0;text-align:center}
 .pay_sim strong{font-size:17px;font-weight:normal;line-height:20px;color:#BB2649}
-.pay_sim strong em{font-family:HelveticaNeue-Roman,Helvetica,Arial,sans-serif !important}
+.pay_sim strong em{font-family:Pretendard-Regular,Helvetica,Arial,sans-serif !important}
 .pay_sim p{margin-top:7px;font-size:13px;line-height:17px;color:#8f8f8f}
 
 /* 로딩페이지 */
@@ -796,7 +807,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .ly_bx .p_txt{margin-top:10px;line-height:19px;font-size:15px;color:#252525}
 .ly_bx .p_txt p{display:-webkit-box;overflow:hidden;margin:0 10px;text-overflow:ellipsis;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-wrap:break-word}
 .ly_bx .p_txt span{color:#b3b3b3}
-.ly_bx .p_txt em{font-family:Helvetica,sans-serif}
+.ly_bx .p_txt em{font-family:Pretendard-Regular,sans-serif}
 .ly_bx .p_img .bg{display:block;position:absolute;top:0;left:0;width:65px;height:65px;background-color:#000}
 .ly_bx .inq{overflow:hidden;border-top:1px solid #efefef}
 .ly_bx .inq li{float:left;position:relative;width:50%;text-align:center}
@@ -827,7 +838,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .ly_bx .benefit_wrap .btn_txt{display:inline-block;font-size:11px;color:#c8c8c8;text-decoration:underline}
 .ly_bx .benefit_wrap .arrow{display:block;position:relative;margin-left:3px;padding-right:7px}
 .ly_bx .benefit_wrap .arrow:after{position:absolute;top:6px;right:0;width:3px;height:6px;background-position:-20px 0}
-.ly_bx .benefit_wrap .font_number{font-family:HelveticaNeue;font-weight:normal;letter-spacing:0}
+.ly_bx .benefit_wrap .font_number{font-family:Pretendard-Regular;font-weight:normal;letter-spacing:0}
 .ly_bx .benefit_wrap .point_color{color:#BB2649}
 .ly_bx .benefit_wrap .comment{display:block;margin-top:1px;font-size:11px;line-height:15px;color:#b3b3b3;letter-spacing:-1px}
 .ly_bx .benefit_wrap2 dt{margin:22px 17px 6px 20px}
@@ -872,7 +883,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .sp_spot_benefit,
 .sp_spot_benefit:before,
 .sp_spot_benefit:after{background:url(../../../../img/service/mobile/nsp/sp_spot_benefit.png) no-repeat -200px 0;background-size:75px auto;-webkit-background-size:75px auto;content:''}
-.benefit_npay .font_number{font-family:Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;color:#BB2649}
+.benefit_npay .font_number{font-family:Pretendard-Regular,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;color:#BB2649}
 .benefit_npay .benefit_title a{display:block;position:relative;color:#252525}
 .benefit_npay .benefit_title a:after{position:absolute;top:50%;right:15px;width:16px;height:9px;margin-top:-5px;background-position:0 0}
 .benefit_npay .benefit_title .logo_pay{display:inline-block;overflow:hidden;width:46px;height:18px;margin:-2px 0 2px;background-position:0 -16px;line-height:999px;vertical-align:middle}
@@ -918,7 +929,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 }
 .info_login .img_area{float:left;width:32px;height:32px;background:url(../../../../img/service/mobile/nsp/profile_default.png) no-repeat 0 0;background-size:32px auto;-webkit-background-size:32px auto;border-radius:50%;margin:7px 9px 0 0;overflow:hidden}
 .info_login .name{color:#2ec543}
-.info_login .eng_name{color:#8a8980;font-family:HelveticaNeue,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;line-height:13px;vertical-align:1px}
+.info_login .eng_name{color:#8a8980;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;line-height:13px;vertical-align:1px}
 .info_login .btn_logout{
     position: absolute;
     right: 9px;
@@ -1066,7 +1077,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
     display: block;
 }
 .txt .list_dot {
-    font-family: "Lucida Grande",HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;
+    font-family: Pretendard-Regular,HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;
 }
 .ly_bx .benefit_wrap .no_letterspace {
     letter-spacing: 0;
@@ -1168,7 +1179,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
     background-color: #f3fcff;
     text-align: center;
     line-height: 17px;
-    font-family: AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;
+    font-family: Pretendard-Regular,'나눔고딕',nanumgothic,sans-serif;
 }
 .banner_pointplus .user_name {
     font-weight: bold;
@@ -1317,7 +1328,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
     padding: 7px 10px;
     color: #fff;
     font-size: 14px;
-    font-family: Helvetica, AppleSDGothicNeo-Medium, "나눔고딕", nanumgothic, sans-serif;
+    font-family: Pretendard-Regular, AppleSDGothicNeo-Medium, "나눔고딕", nanumgothic, sans-serif;
     line-height: 17px;
     letter-spacing: -1px;
     text-align: left;
