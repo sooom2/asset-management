@@ -1,5 +1,6 @@
 package com.itwillbs.moneytto.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,10 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.moneytto.service.BankApiService;
 import com.itwillbs.moneytto.service.BankService;
+import com.itwillbs.moneytto.service.MarketService;
 import com.itwillbs.moneytto.service.MemberService;
 import com.itwillbs.moneytto.vo.AccountDetailVO;
 import com.itwillbs.moneytto.vo.AccountWithdrawResponseVO;
@@ -28,6 +32,12 @@ public class BankController {
 	
 	@Autowired
 	private BankService bankService;
+	
+	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
+	private MarketService marketService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BankController.class);
 	
@@ -149,7 +159,7 @@ public class BankController {
 		model.addAttribute("account_num_masked", map.get("account_num_masked"));
 		model.addAttribute("user_name", map.get("user_name"));
 		
-		return "admin/bank_account_detail";
+		return "bank/bank_account_detail";
 		
 	}
 	// 2.3.1 출금이체
@@ -188,6 +198,39 @@ public class BankController {
 		
 	}
 	
-	
+	// TEST CONTROLLER
+	@RequestMapping(value = "payment", method = {RequestMethod.GET, RequestMethod.POST})
+	public String store_pay2(HttpSession session
+							, Model model
+							, @RequestParam(value = "item_code", defaultValue = "market0029") String item_code) {
+							// 테스트용으로 임의로 default 값 넣어둔 상태
+		
+		
+		HashMap<String, String> item = marketService.getMarketItem(item_code);
+		String id = (String)session.getAttribute("sId");
+		if(id == null) {
+			id = "admin";
+		}
+		HashMap<String, String> member = memberService.getMember(id);
+		
+//				model.addAttribute("item_price", item_price);
+		
+		
+		System.out.println("======================================================");
+		System.out.println("item : " + item.toString());
+		System.out.println("member : " + member.toString());
+		System.out.println("======================================================");
+		
+//				if(id == null) {
+//					model.addAttribute("msg", "로그인 후 이용가능합니다.");
+//					model.addAttribute("target", "memLogin");
+//					return "success";
+//				} else {
+//					return "store/store_pay";
+//				}
+		model.addAttribute("member", member);
+		model.addAttribute("item", item);
+		return "payment/payment";
+	}
 	
 }

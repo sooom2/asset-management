@@ -29,8 +29,10 @@ public class MainController {
 	@RequestMapping(value = "main", method = RequestMethod.GET)
 	public String main(Model model,HttpSession session) {
 		
+		String id = (String)session.getAttribute("sId");
+		
 		// 파라미터 없이 LIMIT 10만 넣어서 대충 만들어둔 상태
-		List<HashMap<String,String>> itemList = mainService.getMainItemList();
+		List<HashMap<String,String>> itemList = mainService.getMainItemList(id);
 		
 		model.addAttribute("itemList", itemList);
 		

@@ -586,11 +586,16 @@
 				 ) im 
 		ON
 			 i.item_code = im.table_code
-		LEFT JOIN
-			wish w ON i.item_code = w.wish_item_code
+		LEFT JOIN (
+				SELECT	*
+				FROM	wish
+				WHERE	member_id = #{member_id}
+				) w
+		ON
+			i.item_code = w.wish_item_code
 		ORDER BY i.item_code DESC LIMIT 10
 	</select>
-	
+	<!--  -->
 	
 	<insert id="insertReport">
 		<selectKey keyProperty="report_code" resultType="int" order="BEFORE">
