@@ -15,7 +15,7 @@ public interface MarketMapper {
 	// 채팅방 item 정보
 	HashMap<String, String> getItem(String item_code);
 	// 상품판매상세정보
-	HashMap<String, String> sellDetail(String item_code);
+	HashMap<String, String> sellDetail(int item_code);
 	
 	// item_code 없을때 
 	HashMap<String, String> getAllItem();
@@ -125,5 +125,6 @@ public interface MarketMapper {
 
 	//대화방있을때 룸코드 찾기
 	int roomCode(@Param("item_code") String item_code,@Param("id") String id);
+
 
 }

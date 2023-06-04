@@ -67,7 +67,7 @@ $(function() {
         	show: "fast" 
         	,
         	onSelect: function(dateText, inst) {
-        		let scheduleButton = $(".scheduling").append("<input type='button' class='schdule' value='확인'>");
+        		let scheduleButton = $(".scheduling").append("<input type='button' class='schdule' value='확인'><input type='button' class='schduleRemove' value='취소'>");
                 
                 schedule = dateText;
                 $(".scheduling").append(scheduleButton);
@@ -89,7 +89,6 @@ $(function() {
 	   			            success: function(result) {
 	   			                location.reload();
 	   			             	$('.card_box input.room_code[value="'+room_code+'"]').closest('.card_box').addClass('active');
-	   			             	
 	   			            },
 	   			            error: function(request, status, error) {
 	   			                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -106,6 +105,7 @@ $(function() {
 
     });
     
+   
     //왼쪽 list 눌렸을때
     function chatDetail(room_code){
     	
@@ -133,6 +133,7 @@ $(function() {
 			        	let formatDate = year + '년 ' + month + '월 ' + day + '일';
 			        	
 			        	console.log(result);
+			        	alert(result[0].buy_member_id);
 			        	
 			        	// 채팅 헤더 상대방 닉네임
 			        	let opponent_nickname = result[0].buy_nickname;
@@ -141,27 +142,17 @@ $(function() {
 			        	let sell_profileImg = result[0].sell_image;
 			        	let buy_id = result[0].buy_member_id;
 			        	let sell_id = result[0].sell_member_id;
-			        	let profileImg;
-			        	if(sId == buy_id){
-				        	$('.image_table img').attr('src', sell_profileImg);
-				        	profileImg = sell_profileImg;
-			        	}else {
-				        	$('.image_table img').attr('src', buy_profileImg);
-				        	profileImg = buy_profileImg;
-				        	
-			        	}
+			        	let sell_nickname = result[0].sell_nickname;
+			        	let profileImg = sell_profileImg;
 			        	
 			        	
 			        	
-			        	if (sId == result[0].buy_member_id) { opponent_nickname = result[0].sell_nickname; }
-			        	$(".chat_header a .info div").empty();
-			        	$(".chat_header a .info div").append("<span>[" + opponent_nickname + "]<br><i class='fa-regular fa-comment-dots fa-flip-horizontal'></i> " + item_subject + "</span>");
-								
-						
+						let sellButton = $("<input>").attr("type", "button").addClass("sellTrade").val("거래완료");
 						// 상품판매상태 버튼
 						$(".trade_status").empty();
-						$(".trade_status").append("<input type='button' value='판매중'> <input type='button' value='거래중'> <input type='button' value='거래완료'>");
-    					
+
+						$(".trade_status").append("<input type='button' value='판매중'> <input type='button' value='거래중'> ");
+						$(".trade_status").append(sellButton);
 						
 						if (result[0].item_status === '거래완료') {
 						    $(".trade_status").append(reviewElement);
@@ -172,6 +163,31 @@ $(function() {
 						        $(this).addClass('active');
 						    }
 						});
+			        	
+			        	
+			        	if(sId == buy_id){
+			        		$(".trade").empty();
+				        	$('.image_table img').attr('src', sell_profileImg);
+				        	profileImg = sell_profileImg;
+				        	$(".trade img").attr("src", "${path}/resources/images/chat/btn_trade_x2.png");
+				        	
+				        	$(".declaration").after("<div class='trade'><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+				        	
+				      	// 파는사람일땐 거래완료를 하면안됨
+			        	}else if (sId == sell_id) {
+			        	    $('.image_table img').attr('src', sell_profileImg);
+			        	    profileImg = buy_profileImg;
+			        	    $(".trade").remove();
+			        	    alert("ddddd");
+			        	    sellButton.prop('disabled', true);
+			        	    sellButton.after("<br><span style='font-size: 11px;  display: inline-block; float:right;margin-top:5px;font-weight: bolder;'><i class='fa-brands fa-bilibili'></i> 판매자는 거래완료버튼을 누를수 없습니다.</span>");
+			        	}
+			        	
+			        	
+			        	if (sId == result[0].buy_member_id) { opponent_nickname = result[0].sell_nickname; }
+			        	$(".chat_header a .info div").empty();
+			        	$(".chat_header a .info div").append("<span>[" + sell_nickname + "]<br><i class='fa-regular fa-comment-dots fa-flip-horizontal'></i> " + item_subject + "</span>");
+								
 						
 						
 						
@@ -281,11 +297,16 @@ $(function() {
 		
 	});
 	
-	// 거래중일때 날짜가 남아있게하기위해
+	// 거래중일때 날짜가 남아있게하기위해 ,, 근데 해당방에만 남아있어야하는디..
 	let storedSchedule = localStorage.getItem('scheduleValue');
 	if(storedSchedule){
 		$("input.sch_box").val(storedSchedule);
 	}
+	
+	if($("input.active").val()=="판매중"){
+			$(".sch_box").val("");
+	}
+	    
 	
 	//리뷰작성
 	$(".reviewForm").on("click",function(){
@@ -340,6 +361,7 @@ $(function() {
     let paramItemCode = urlParams.get('item_code');
    
     
+    room_code = "${room_code}";
     if (paramItemCode) { // 디테일에서 상대아이디 구하기> 즉 판매자 아이디
         target = "${sellId}";
         item_code = "${param.item_code}";
@@ -347,11 +369,9 @@ $(function() {
         target = "${opponentId.opponent_id}";
         item_code = "${item_code}";
     }
-    room_code = "${room_code}";
+	    messages();
 
     
-    //nav에서들어갈때
-    messages();
   
     console.log("아이템코드 : " + item_code + "room_code : " + room_code + "target : " + target);
 
@@ -442,8 +462,6 @@ function messages() {
         var data = msg.data;
         var sessionId = null; //데이터를 보낸 사람
         var message = null;
-// 		alert("프사..${opponentId.member_image}");
-		alert("${opponentId}");
         var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
         sessionId = data.split(":")[0];
         message = data.split(":")[1];
@@ -478,15 +496,12 @@ function messages() {
             $(".active .description").text(message);
             $(".active .time_ago").text(year + "-" + month + "-" + day + " " + amPm + " " + hours + ":" + minutes);	
         };
-        
         $('.chat_description').scrollTop($('.chat_description')[0].scrollHeight+100);
     };
+    
+//     location.reload();
 }
 
-// let recentlyMsg = $('#message').val();
-// let getMsg = $(".card_box .description").text();
-// $(".active .description").text(recentlyMsg);
-// $(".active .time_ago").text(formatDate);
 
 </script>
 </head>
@@ -534,9 +549,7 @@ function messages() {
 											<div class="nick">[${chatList.get('member_nickname') }]</div>
 											<div class="subject"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.get('item_subject') }</div>
 											<div class="description">${chatList.get('chat_content') }</div>
-<%-- 											<fmt:parseDate var="formattedDate" value="${chatList.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" /> --%>
-<%-- 											<div class="time_ago"><fmt:formatDate value="${formattedDate}" pattern="yyyy-MM-dd a hh:mm" /></div>	 --%>
-											<div class="time_ago">${chatList.chat_time}</div>	
+											<div class="time_ago">${chatTime}</div>	
 											<input type="hidden" value="${chatList.get('room_code')}" class="room_code">
 											<input type="hidden" value="${chatList.get('item_code')}" class="item_code">
 										</div>
@@ -556,50 +569,64 @@ function messages() {
 							<a href="" target="_blank" rel="noopener noreferrer" style="display: inline-block;">
 								<div class="image_box">
 									<div class="image_table">
-										<img src="${sellMember.member_image}" alt="프사">
+										<img src="${sellDetail.sell_image}" alt="프사">
 									</div>
 								</div>
-								<div class="info">
+								
+								<div class="info" onclick="location.href='mypage?member_id=${marketItem.member_id}'">
 									<div>
 										<!-- 판매자 닉네임 -->
-										<span>[${sellMember.member_nickname }]<br><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${item_subject }</span>
+										<span>[${sellDetail.sell_nickname }]<br><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${item_subject }</span>
 		<%-- 								<span>판매아이템 ${sellCount }개</span> --%>
 									</div>
 								</div>
 							</a>
+							
+							
+							
 							<!-- 신고 -->
 							<div class="declaration">
 								<div>
 									<img src="${path }/resources/images/chat/btn_report_x2.png" alt="신고 이미지">
 								</div>
 							</div>
+							
+							<c:if test="${sellDetail.buy_member_id eq sessionScope.sId }">
+								<div class="trade">
+									<div>
+										<img src="${path }/resources/images/chat/btn_trade_x2.png" alt="송금이미지">
+									</div>
+								</div>
+							</c:if>
+							
+							
 							<div>
 							    <div class="scheduling">
 							        <a class="sch_date">
-							            <i class="fa-regular fa-calendar"></i> 일정잡기
+							            <i class="fa-regular fa-calendar"></i> 일정잡기 
 							        </a>
-							        <input type="text" class="sch_box" style="border: none; width: 98px;" readonly/>
+							        <input type="text" class="sch_box" style="border: none; width: 90px;" readonly/>
 							    </div>
 							    <div class="trade_status">
 		
 								    <input type="button" class="${chatList.item_status eq '판매중' ? 'active' : ''}" value="판매중">
 								    <input type="button" class="${chatList.item_status eq '거래중' ? 'active' : ''}" value="거래중">
 								    <c:choose>
-								    	<c:when test="${sellMember.member_id eq sessionScope.sId }">
+								    	<c:when test="${sellDetail.sell_member_id eq sessionScope.sId }">
 									    	<input type="button" class="sellTrade" value="거래완료" disabled="disabled"><br>
 								    		<span style="font-size: 11px;  display: inline-block; float:right;margin-top:5px;font-weight: bolder;"><i class="fa-brands fa-bilibili"></i> 판매자는 거래완료버튼을 누를수 없습니다.</span>
 								    	</c:when>
 								    	<c:otherwise>
-										    <input type="button" class="${chatList.item_status eq '거래완료' ? 'active' : ''}" value="거래완료">
+										    <input type="button" class="${chatList.item_status eq '거래완료' ? 'active' : ''} sellTrade" value="거래완료">
 								    	</c:otherwise>
 								    </c:choose>
-								 
 								    <br>
 								    <c:if test="${chatList.item_status eq '거래완료'}">
 								        <div class="reviewForm" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>
 								    </c:if>
 							    </div>
 							</div>
+							
 						</div>
 						<!-- 채팅영역 -->
 						<div class="chat_description" style="bottom:49px">

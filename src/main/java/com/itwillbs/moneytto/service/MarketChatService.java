@@ -20,8 +20,8 @@ public class MarketChatService {
 		return mapper.getItem(item_code);
 	}
 	// 상품판매상세정보
-	public HashMap<String, String> getSellDetail(String item_code) {
-		return mapper.sellDetail(item_code);
+	public HashMap<String, String> getSellDetail(int room_code) {
+		return mapper.sellDetail(room_code);
 	}
 	
 	// item_code 없을때
@@ -143,6 +143,7 @@ public class MarketChatService {
 	public int getRoomCode(String item_code,String id) {
 		return mapper.roomCode(item_code,id);
 	}
+	
 
 
 }

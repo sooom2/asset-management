@@ -344,8 +344,8 @@ public class MarketController {
 
 			}
 
-		}
-
+		}//nav
+		
 		if (chatList != null && myChatList != null && opponentId != null) {
 
 			// 이미지 얻어오기위해 ( 상대방 꺼 조회해야함 )
@@ -355,32 +355,30 @@ public class MarketController {
 			model.addAttribute("oppProfileImg", oppProfileImg);
 			item = marketChatService.getItemList(item_code);
 			sellId = item.get("member_id");
+			
+			
+			DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+			DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm");
+			String chatTime = String.valueOf(chatList.get("chat_time"));
+			LocalDateTime parsedDateTime = LocalDateTime.parse(chatTime, inputFormatter);
+			String formattedDateTime = parsedDateTime.format(outputFormatter);
+		
+			model.addAttribute("chatTime",formattedDateTime);
 
 		}
 		
+		System.out.println("판매자!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		item = marketChatService.getItemList(item_code);
+		sellId = item.get("member_id");
 		
+		// header에는 판매자 의정보!! ㅠㅠ
+		HashMap<String, String> sellDetail = marketChatService.getSellDetail(room_code);
+		System.out.println("=헷 갈.. 린 .. 다=============================================");
+		System.out.println(sellDetail);
+		System.out.println("==============================================");
 		
-		// 판매자 프사
-		HashMap<String, String> sellMember = memberService.getMember(sellId);
-//		String sellProfileImg = sellMember.get("member_image");
-		
-
-		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-		DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm: +-ss");
-		
-		String chatTime = String.valueOf(chatList.get("chat_time"));
-		LocalDateTime parsedDateTime = LocalDateTime.parse(chatTime, inputFormatter);
-		String formattedDateTime = parsedDateTime.format(outputFormatter);
-		System.out.println("===============????=========================================");
-		System.out.println(formattedDateTime);
-		System.out.println("===============????=========================================");
-		
-		
-				
-		
-		model.addAttribute("sellMember",sellMember);
+		model.addAttribute("sellDetail",sellDetail);
 		model.addAttribute("item_subject",item_subject);
-//		model.addAttribute("sellProfileImg", sellProfileImg);
 		model.addAttribute("opponentId", opponentId);
 		model.addAttribute("myChatList", myChatList);
 		model.addAttribute("chatList", chatList);
@@ -394,6 +392,20 @@ public class MarketController {
 
 	}// market_chat
 	
+	@GetMapping("chatDetail")
+	@ResponseBody
+	public String chatDetail(Model model, @RequestParam(defaultValue="0") int room_code,HttpSession session) {
+		
+		String sId = (String)session.getAttribute("sId");
+		
+		List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
+		
+		System.out.println("ajax ========================================================");
+		System.out.println(chatDetail);
+		System.out.println("ajax ========================================================");
+		JSONArray arrChatDetail = new JSONArray(chatDetail);
+		return arrChatDetail.toString();
+	}
 	
 
 	@GetMapping("reviewForm")
@@ -457,17 +469,7 @@ public class MarketController {
 		return"fail_back";
 		
 	}
-	@GetMapping("chatDetail")
-	@ResponseBody
-	public String chatDetail(Model model, @RequestParam(defaultValue="0") int room_code,HttpSession session) {
-		
-		String sId = (String)session.getAttribute("sId");
-		
-		List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
-		JSONArray arrChatDetail = new JSONArray(chatDetail);
-		return arrChatDetail.toString();
-	}
-	
+
 	@GetMapping("recentlyMessage")
 	@ResponseBody
 	public String recentlyMessage(@RequestParam String room_code) throws JsonProcessingException {
