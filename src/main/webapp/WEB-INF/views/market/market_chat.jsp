@@ -22,15 +22,21 @@
 <script type="text/javascript">
 
 $(function() {
-// 	$('.chat_description').scrollTop($('.chat_description')[0].scrollHeight+1000);
 	
+	$('.chat_description').scrollTop($('.chat_description')[0].scrollHeight+1000);
+
 	
 	
 
 	let sId = "${sessionScope.sId}";
 	var room_code = <%= request.getAttribute("room_code") %>;
+	let item_code;
+	// (대화내역이 존재하지않을때) => 최근대화에 active
+	// (대화내역이 존재할때 ) => 그 내용에 active
 	$('.card_box input.room_code[value="'+room_code+'"]').closest('.card_box').addClass('active');
-
+	
+	//아이템코드의 대화내용이있으면 그 대화에 active 되야함
+	
 	$(".card_box").on("click", function() {
 	    let room_code = $(this).find('.room_code').val();
 	    $(".card_box").removeClass("active");
@@ -57,11 +63,45 @@ $(function() {
         	dayNamesMin: ['일','월','화','수','목','금','토'],
         	dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
         	minDate: "0D",
-        	maxDate: "+30D"
+        	maxDate: "+30D",
+        	show: "fast" 
+        	,
+        	onSelect: function(dateText, inst) {
+        		let scheduleButton = $(".scheduling").append("<input type='button' class='schdule' value='확인'>");
+                
+                schedule = dateText;
+                $(".scheduling").append(scheduleButton);
+                
+                scheduleButton.click(function() {
+                	let sch = confirm(schedule + "으로 일정을 잡으시겠습니까?\n동의시 거래중으로 상태가 바뀝니다.");
+                    console.log("선택된 일정: " + schedule);
+                    if(sch){
+//                     	거래중으로 상태변경
+						localStorage.setItem('scheduleValue', schedule);
+                    	 $.ajax({
+             		        type: "GET",
+	             		    url: "itemStatus_update",
+	   			            dataType: "text",
+	   			            data: {
+	   			                item_status: "거래중",
+	   			                room_code: room_code
+	   			            },
+	   			            success: function(result) {
+	   			                location.reload();
+	   			             	$('.card_box input.room_code[value="'+room_code+'"]').closest('.card_box').addClass('active');
+	   			             	
+	   			            },
+	   			            error: function(request, status, error) {
+	   			                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	   			            }
+	   			        });
+                    }
+                });
+            }
         });
 
         $(".sch_date").click(function() {
-        	$(".sch_box").datepicker("show")
+            $(".sch_box").datepicker("show");
         });
 
     });
@@ -69,7 +109,7 @@ $(function() {
     //왼쪽 list 눌렸을때
     function chatDetail(room_code){
     	
-    	let reviewElement = $("<div class='review' style='text-align: right;font-size: 13px; color: #bbb'><a>후기작성</a></div>");
+    	let reviewElement = $("<div class='reviewForm' style='text-align: right;font-size: 13px; color: #bbb'><a>후기작성</a></div>");
     	new Promise((succ, fail)=>{
 		    $.ajax({
 		        type: "GET",
@@ -97,10 +137,25 @@ $(function() {
 			        	// 채팅 헤더 상대방 닉네임
 			        	let opponent_nickname = result[0].buy_nickname;
 			        	let item_subject = result[0].item_subject;
+			        	let buy_profileImg = result[0].buy_image;
+			        	let sell_profileImg = result[0].sell_image;
+			        	let buy_id = result[0].buy_member_id;
+			        	let sell_id = result[0].sell_member_id;
+			        	let profileImg;
+			        	if(sId == buy_id){
+				        	$('.image_table img').attr('src', sell_profileImg);
+				        	profileImg = sell_profileImg;
+			        	}else {
+				        	$('.image_table img').attr('src', buy_profileImg);
+				        	profileImg = buy_profileImg;
+				        	
+			        	}
+			        	
+			        	
 			        	
 			        	if (sId == result[0].buy_member_id) { opponent_nickname = result[0].sell_nickname; }
 			        	$(".chat_header a .info div").empty();
-			        	$(".chat_header a .info div").append("<span>["+opponent_nickname+"]<br><i class='fa-regular fa-comment-dots fa-flip-horizontal'></i> "+item_subject+"</span>");
+			        	$(".chat_header a .info div").append("<span>[" + opponent_nickname + "]<br><i class='fa-regular fa-comment-dots fa-flip-horizontal'></i> " + item_subject + "</span>");
 								
 						
 						// 상품판매상태 버튼
@@ -152,7 +207,8 @@ $(function() {
 								    "<div class='chat_opponent'>" +
 								    "<div class='chat_opponent_box'>" +
 								    "<div class='chat_opponent_image_box'>" +
-								    "<img class='chat_opponent_profile_image' src='https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png' alt='상대방이미지'></div>" +
+								    "<img class='chat_opponent_profile_image' src='"+profileImg+"' alt='상대방이미지'></div>" +
+								    
 								    "<div class='chat_opponent_title'>" + result[i].buy_nickname + "</div>" +
 								    "<div class='chat_opponent_message'>" +
 								    "<span>" + result[i].chat_content + "</span>" +
@@ -169,7 +225,6 @@ $(function() {
 			    }); //ajax
 		    
     		}).then((arg) =>{//then    
-    			// reload 될때 현재페이지 (지금선택된 목록 )가 reload되야하는디 ㅠ
     			$(".trade_status input").on("click", function() {
     			    let item_status = $(this).val();
     			    let result = confirm(item_status + "으로 변경하시겠습니까");
@@ -184,8 +239,7 @@ $(function() {
     			                room_code: room_code
     			            },
     			            success: function(result2) {
-    			            	
-    			                location.reload();
+//     			                location.reload();
     			            },
     			            error: function(request, status, error) {
     			                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -227,14 +281,16 @@ $(function() {
 		
 	});
 	
-	
-	
-	
+	// 거래중일때 날짜가 남아있게하기위해
+	let storedSchedule = localStorage.getItem('scheduleValue');
+	if(storedSchedule){
+		$("input.sch_box").val(storedSchedule);
+	}
 	
 	//리뷰작성
-	$(".review").on("click",function(){
+	$(".reviewForm").on("click",function(){
 		let options = "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=400,height=400,left=350,top=200";
-		window.open('market_review','리뷰작성',options);
+		window.open('reviewForm?item_code='+"market0027", '리뷰작성', options);
 	});
     
 });
@@ -296,15 +352,11 @@ $(function() {
     
     //nav에서들어갈때
     messages();
-    	
+  
     console.log("아이템코드 : " + item_code + "room_code : " + room_code + "target : " + target);
 
     function chatSend() {
     	
-    	
-//     	if(room_code ==null){
-// 			location.reload();
-// 		}
         const data = {
             "room_code": room_code,
             "name": "${ sessionScope.sId }",
@@ -390,7 +442,8 @@ function messages() {
         var data = msg.data;
         var sessionId = null; //데이터를 보낸 사람
         var message = null;
-
+// 		alert("프사..${opponentId.member_image}");
+		alert("${opponentId}");
         var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
         sessionId = data.split(":")[0];
         message = data.split(":")[1];
@@ -411,11 +464,11 @@ function messages() {
             $(".chat_wrapper").append(str);
 
             $(".active .description").text(message);
-            $(".active .time_ago").text(amPm + " " + hours + ":" + minutes);	
+            $(".active .time_ago").text(year + "-" + month+"-" + day + " "+amPm + " " + hours + ":" + minutes);	
+      
         } else {
-        	
             var str = " <div class='chat_opponent'><div class='chat_opponent_box'><div class='chat_opponent_image_box'>";
-            str += "<img class='chat_opponent_profile_image' src='${profileImg}' alt='상대방이미지'> </div>";
+            str += "<img class='chat_opponent_profile_image' src='${opponentId.opponent_image}' alt='상대방이미지'> </div>";
             str += "<div class='chat_opponent_title'>" + sessionId + "</div>";
             str += "<div class='chat_opponent_message'>";
             str += "<span>" + message + "</span>";
@@ -423,7 +476,7 @@ function messages() {
 
             $(".chat_wrapper").append(str);
             $(".active .description").text(message);
-            $(".active .time_ago").text(amPm + " " + hours + ":" + minutes);	
+            $(".active .time_ago").text(year + "-" + month + "-" + day + " " + amPm + " " + hours + ":" + minutes);	
         };
         
         $('.chat_description').scrollTop($('.chat_description')[0].scrollHeight+100);
@@ -465,7 +518,7 @@ function messages() {
 					<!-- left -->
 					<div class="left_main">
 						<div class="left_main_header">
-							<div class="title">MY CHAT LIST</div>
+							<div class="title">MY CHAT LIST - 내역있을때</div>
 						</div>
 						<ul>
 						<!-- 채팅방 목록-->
@@ -474,16 +527,16 @@ function messages() {
 							<div class="card_box">
 									<li>
 										<div class="profile">
-											<img src="${path }/resources/images/chat/defaultProfile.png" alt="명품인증">
+											<img src="${chatList.member_image}" alt="프사">
 											<div style="font-size: 13px;  text-align: center;}">${chatList.get('item_status')}</div>
 										</div>
 										<div class="info">
 											<div class="nick">[${chatList.get('member_nickname') }]</div>
 											<div class="subject"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.get('item_subject') }</div>
 											<div class="description">${chatList.get('chat_content') }</div>
-											<!-- 날짜처리 제대로해야함 -->
-											<fmt:parseDate var="formattedDate" value="${chatList.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
-											<div class="time_ago"><fmt:formatDate value="${formattedDate}" pattern="yyyy-MM-dd a hh:mm" /></div>	
+<%-- 											<fmt:parseDate var="formattedDate" value="${chatList.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" /> --%>
+<%-- 											<div class="time_ago"><fmt:formatDate value="${formattedDate}" pattern="yyyy-MM-dd a hh:mm" /></div>	 --%>
+											<div class="time_ago">${chatList.chat_time}</div>	
 											<input type="hidden" value="${chatList.get('room_code')}" class="room_code">
 											<input type="hidden" value="${chatList.get('item_code')}" class="item_code">
 										</div>
@@ -503,13 +556,13 @@ function messages() {
 							<a href="" target="_blank" rel="noopener noreferrer" style="display: inline-block;">
 								<div class="image_box">
 									<div class="image_table">
-										<img src="${sellProfileImg}" alt="ㅇㅇ님의 프로필 이미지">
+										<img src="${sellMember.member_image}" alt="프사">
 									</div>
 								</div>
 								<div class="info">
 									<div>
-										<!-- 상대방 닉네임 -->
-										<span>[${chatList.member_nickname }]<br><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.item_subject }</span>
+										<!-- 판매자 닉네임 -->
+										<span>[${sellMember.member_nickname }]<br><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${item_subject }</span>
 		<%-- 								<span>판매아이템 ${sellCount }개</span> --%>
 									</div>
 								</div>
@@ -523,7 +576,7 @@ function messages() {
 							<div>
 							    <div class="scheduling">
 							        <a class="sch_date">
-							            <i class="fa-regular fa-calendar"></i> 일정잡기 
+							            <i class="fa-regular fa-calendar"></i> 일정잡기
 							        </a>
 							        <input type="text" class="sch_box" style="border: none; width: 98px;" readonly/>
 							    </div>
@@ -531,15 +584,23 @@ function messages() {
 		
 								    <input type="button" class="${chatList.item_status eq '판매중' ? 'active' : ''}" value="판매중">
 								    <input type="button" class="${chatList.item_status eq '거래중' ? 'active' : ''}" value="거래중">
-								    <input type="button" class="${chatList.item_status eq '거래완료' ? 'active' : ''}" value="거래완료">
+								    <c:choose>
+								    	<c:when test="${sellMember.member_id eq sessionScope.sId }">
+									    	<input type="button" class="sellTrade" value="거래완료" disabled="disabled"><br>
+								    		<span style="font-size: 11px;  display: inline-block; float:right;margin-top:5px;font-weight: bolder;"><i class="fa-brands fa-bilibili"></i> 판매자는 거래완료버튼을 누를수 없습니다.</span>
+								    	</c:when>
+								    	<c:otherwise>
+										    <input type="button" class="${chatList.item_status eq '거래완료' ? 'active' : ''}" value="거래완료">
+								    	</c:otherwise>
+								    </c:choose>
+								 
 								    <br>
 								    <c:if test="${chatList.item_status eq '거래완료'}">
-								        <div class="review" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>
+								        <div class="reviewForm" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>
 								    </c:if>
 							    </div>
 							</div>
 						</div>
-						
 						<!-- 채팅영역 -->
 						<div class="chat_description" style="bottom:49px">
 							<div class="chat_wrapper" id="chat_wrapper">
@@ -568,7 +629,7 @@ function messages() {
 									        <div class="chat_opponent">
 									            <div class="chat_opponent_box">
 									                <div class="chat_opponent_image_box">
-									                    <img class="chat_opponent_profile_image" src="${profileImg}" alt="상대방이미지">
+									                    <img class="chat_opponent_profile_image" src="${oppProfileImg}" alt="상대방이미지">
 									                </div>
 									                <div class="chat_opponent_title">${opponentId.opponent_nickname }</div>
 									                <div class="chat_opponent_message">
@@ -600,7 +661,7 @@ function messages() {
 					<!-- left -->
 					<div class="left_main">
 						<div class="left_main_header">
-							<div class="title">MY CHAT LIST</div>
+							<div class="title">MY CHAT LIST- 암것도없을때</div>
 						</div>
 						<ul>
 						<!-- 채팅방 목록-->
@@ -609,7 +670,7 @@ function messages() {
 							<div class="card_box">
 									<li>
 										<div class="profile">
-											<img src="${path }/resources/images/chat/defaultProfile.png" alt="명품인증">
+											<img src="${chatList.member_image}" alt="프사">
 											<div style="font-size: 13px;  text-align: center;}">${chatList.get('item_status')}</div>
 										</div>
 										<div class="info">
@@ -637,7 +698,7 @@ function messages() {
 							<a href="" target="_blank" rel="noopener noreferrer" style="display: inline-block;">
 								<div class="image_box">
 									<div class="image_table">
-										<img src="${sellProfileImg}" alt="ㅇㅇ님의 프로필 이미지">
+										 <img class="chat_opponent_profile_image" src="${sellMember.member_image}" alt="상대방이미지">
 									</div>
 								</div>
 								<div class="info">
@@ -691,10 +752,6 @@ function messages() {
 				</div>
 			</section>
 		</c:if>
-		
-		
-
-	
 	<jsp:include page="../footer.jsp" />
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.itwillbs.moneytto.mapper;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -19,8 +20,6 @@ public interface BankMapper {
 	HashMap<String, String> selectAccount(String member_id);
 	
 	// 핀테크 번호 등록
-	int updateAccount(@Param("member_id")String member_id,
-						@Param("fintech_use_num")String fintech_use_num
-						,@Param("balance_amt") String balance_amt);
+	int updateAccount(Map<String, String> map);
 
 }

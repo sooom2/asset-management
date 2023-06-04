@@ -16,12 +16,15 @@
 			return true;
 		}
 	}
+	
+	
 </script>
 <title>머니또페이</title>
 <link rel="shortcut icon" href="https://img.pay.naver.net/static/images/customer/favicon.ico" />
 <!-- TODO 밑에 css 따와서 파일로 저장하기 -->
 <!-- TODO 창 로고 변경하기 -->
 <link type="text/css" rel="stylesheet" href="//img.pay.naver.net/z/mstatic/css/service/mobile/nsp/order_common.css?1684912786775">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <link href="${path }/resources/css/payment.css" rel ="stylesheet">
 </head>
 
@@ -33,51 +36,40 @@
 		<p class="sp_header gnb_logo"><span class="blind">ttoPay</span></p>
 	</div>
 
-	<!-- //header -->
-	<!-- //u_skip -->
-
-
 <form name="paymentSheetForm" id="paymentSheetForm" method="post" autocomplete="off">
-<input type="hidden" name="donAgree" value="false" class="_donAgree _certificationForm">
-<input type="hidden" name="paymentId">
-<input type="hidden" name="fdsUuid" value="" class="_fdsUuid _certificationForm">
-<input type="hidden" name="naverToken" value="" class="_naverToken _certificationForm">
-<input type="hidden" name="naverInitToken" value="" class="_naverInitToken _certificationForm">
-<input type="hidden" name="isNaverPayPasswordAvailable" value="false" class="_certificationForm">
-<input type="hidden" name="authentificationToken" value="" class="_authentificationToken _certificationForm">
 
 <div class="container" id="container">
     <div class="info_login">
 		<div class="img_area">
-			<img src="//img.pay.naver.net/z/mstatic/img/service/mobile/nsp/profile_default.png" alt="프로필 이미지" width="32" height="32" class="thumb">
+			<img src="${member.member_image}" alt="프로필 이미지" width="32" height="32" class="thumb">
 		</div>
-        <span class="name">홍길동</span>
-        <span class="eng_name">(ho******)</span>
+        <span class="name">${member.member_name }</span>
+        <span class="eng_name">(${member.member_id })</span>
 	</div>
 	<div class="spot_section">
 		<div class="spot_head">
-			<span class="h_icon">테스트가맹점</span>
 			<h3 class="spot_h3">
-				<strong class="heading">##물건 이름</strong>
+				<strong class="heading">${item.item_subject }</strong>
 			</h3>
 		</div>
 		<div class="spot_detail">
-			<span class="amount"><strong>##38,400</strong>원</span>
+			<span class="amount"><strong>${item.item_price }</strong>원</span>
 		</div>
 	</div>
 			<input type="checkbox" class="hidden" checked>
 			<div class="fold_wrap">
 				<label class="fold_head sp_heading head_nppoint" for="c1">
-					<h3 class="fold_h">##머니또페이 포인트 사용</h3>
+					<h3 class="fold_h">머니또페이 포인트 사용</h3>
 					<p class="summary number"><span class="_pointTitle">0</span><span class="unit">원</span></p>
 				</label>
 				<div class="fold_content verification">
 					<ul class="form_area box_margin">
 					<li class="full_area label_margin button_margin">
 						<span class="label">보유 포인트</span>
-						<span class="value number point_green align_left">50,000<span class="unit">원</span></span>
-						<div class="button">
-								<a href="#" class="size1 _click(checkout.mobile.nsp.paymentSheet.useAllMileage()) _stopDefault">전액사용</a>
+						<span class="value number point_green align_left">${member.member_point }<span class="unit">원</span></span>
+						<div class="submit" id="withDraw">
+								<!-- 사용하기 => 충전하기 -->
+								<a href="#" class="size1 _click(checkout.mobile.nsp.paymentSheet.useAllMileage()) _stopDefault">충전하기</a>
 						</div>
 					</li>
 					<li class="full_area label_margin button_margin2">
@@ -91,7 +83,14 @@
 					</ul>
 				</div>
 			</div>
-
+<!-- 테스트 부분 -->
+<script type="text/javascript">
+$(function(){
+	//css 아직 안빼서 클래스 이름 이상 
+	
+})
+</script>
+<!-- 테스트 부분 -->
 	<input type="checkbox" class="hidden" id="c2">
 	<div class="fold_wrap">
 		<label class="fold_head sp_heading head_totamount head_arrow" for="c2">
@@ -102,7 +101,7 @@
 			<ul class="form_area">
 			<li class="full_area label_margin">
 				<span class="label">상품금액</span>
-				<span class="value number">38,400<span class="unit">원</span></span>
+				<span class="value number">${item.item_price }<span class="unit">원</span></span>
 			</li>
 			<li class="full_area label_margin">
 				<span class="label">포인트사용</span>
@@ -192,13 +191,13 @@
 	
 	<div class="agree_section">
 		<div class="checkall">
-            <input type="checkbox" class="hidden _allAgreeBtn _click(checkout.mobile.nsp.paymentSheet.onToggleAllAgree()) _certificationForm" name="payAgreement" checked>
+            <input type="checkbox" class="hidden _allAgreeBtn _click(checkout.mobile.nsp.paymentSheet.onToggleAllAgree()) _certificationForm" name="payAgreement">
             <label for="agree_all" class="check_agree sp_checkbox large">전체 동의하기</label>
 		</div>
 		<div class="checklist">
 			<ul>
 			<li class="check_item">
-                <input type="checkbox" class="hidden _agreeBtn _click(checkout.mobile.nsp.paymentSheet.checkAllAgreed()) " checked>
+                <input type="checkbox" class="hidden _agreeBtn _click(checkout.mobile.nsp.paymentSheet.checkAllAgreed()) ">
                 <label for="agree_c1" class="check_agree sp_checkbox large">위 구매조건 확인 및 결제진행 동의</label>
 			</li>
 			</ul>

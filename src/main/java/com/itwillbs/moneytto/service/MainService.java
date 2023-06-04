@@ -47,9 +47,9 @@ public class MainService {
 		return jsonArray.toList();
 	}
 
-	public List<HashMap<String, String>> getMainItemList() {
+	public List<HashMap<String, String>> getMainItemList(String id) {
 		
-		return mapper.selectItemList();
+		return mapper.selectItemList(id);
 	}
 	
 }
