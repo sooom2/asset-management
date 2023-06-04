@@ -9,7 +9,10 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +39,8 @@ public class MypageController {
 	@Autowired
 	private BankService bankService;
 	
-	
+	@Value("${client_id}")
+	private String client_id;
 	
 	// 마이페이지 메인
 	@RequestMapping(value ="mypage", method = RequestMethod.GET)
@@ -44,48 +48,32 @@ public class MypageController {
 						,HttpSession session, Model model, String member_id) {
 		String sId = (String)session.getAttribute("sId");
 		
-		// 세션 아이디o 아이디x 내꺼			
-		// 세션 아이디o 아이디o 다른사람꺼 
-		// 세션 아이디x 아이디o 다른사람꺼
-		// 세션 아이디x 아이디x 잘못된 접근
+		model.addAttribute("client_id", client_id);
 		
-		if(member_id != null) {					// 아이디
-			if(sId != null || sId == member_id) {//세션이 있고, 파라미터 아이디랑 같을 때 마이페이지
-				
-				HashMap<String, String> account = bankService.getAccount(sId);
-				//세션이 없거나 세션과 일치하지 않은 경우
-			}
-			
-		}else {	// 마이페이지로 들어올 때 파라미터를 입력받지 못한 경우에
-			
+		if(member_id == null && sId == null ) {
 			model.addAttribute("msg", "잘못된 접근입니다.");
 			return "fail_back";
+		}
+		if(member_id == null  ||  sId == member_id) {
+			member_id = sId;
+			HashMap<String, String> account = bankService.getAccount(member_id);
+			
+			
 		}
 		
 		List<HashMap<String,String>> itemList = null;
 		
-		HashMap<String,String> member = memberService.getMember(member_id);
-		
-		System.out.println(member);
-		
-		System.out.println("itemType : " + itemType);
-
 	    switch (itemType) {
 		    case "sellItem" : itemList  = memberService.getSellItemList(member_id); break;
 		    case "wishItem" : itemList  = memberService.getWishItemList(member_id); break;
 	        case "buyItem" 	: itemList  = memberService.getBuyItemList(member_id); break;
 	    }
 	    
-	    System.out.println(itemType);
-	    System.out.println(itemList);
+	    HashMap<String,String> member = memberService.getMember(member_id);
 	    
 	    model.addAttribute("member", member);
-	    model.addAttribute("itemList", itemList);
-	    //TODO
-//	    if(account.get("balance_amt") == null) {
-//	    	model.addAttribute("balance_amt", account.get("balance_amt"));
-//	    }
 	    
+	    model.addAttribute("itemList", itemList);
 	    
 		return "mypage/mypage";
 	} 
@@ -127,25 +115,7 @@ public class MypageController {
 			return "naver";
 		}
 		
-		// TEST CONTROLLER
-		@RequestMapping(value = "payment", method = {RequestMethod.GET, RequestMethod.POST})
-		public String store_pay2(HttpSession session, Model model) {
-//			HashMap<String, String> item = service.selectCode(item_code);
-//			String id = (String)session.getAttribute("sId");
-//			HashMap<String, String> member = service.selectMemberId(id);
-//			model.addAttribute("item", item);
-//			model.addAttribute("item_price", item_price);
-//			model.addAttribute("member", member);
-//			
-//			if(id == null) {
-//				model.addAttribute("msg", "로그인 후 이용가능합니다.");
-//				model.addAttribute("target", "memLogin");
-//				return "success";
-//			} else {
-//				return "store/store_pay";
-//			}
-			return "payment/payment";
-		}
+		
 		
 	
 	@GetMapping(value = "payCharge")
@@ -161,19 +131,8 @@ public class MypageController {
 							,@RequestParam("file") MultipartFile file) {
 		
 		String id = (String)session.getAttribute("sId");
+		
 		HashMap<String, String> member = memberService.getMember(id);
-		//기존 정보
-		/*
-		 * TODO itemRegist 이미지 파일 prameter 확인
-		 * 
-		{file=KakaoTalk_20211001_141932875.jpg, member_nickname=꾸꾸꾸, member_pw=12345678, member_pw3=12345678
-		, member_name=꾸꾸펀치, member_address=부산 부산진구 동성로 2, member_address_detail=포동포동, member_email=test@test.com
-		, member_bday=19900101, member_tel=01011112456}
-		KakaoTalk_20211001_141932875.jpg
-		*/
-
-		//입력한 정보
-		System.out.println(paramMember);
 		
 		String member_pw = paramMember.get("member_pw");
 		String member_pw2 = paramMember.get("member_pw3");	//css 상으로 member_pw3이 들어와서
@@ -191,37 +150,39 @@ public class MypageController {
 		// 입력한 주소로 location 설정
 		paramMember.put("member_location", memberService.setLocation(paramMember.get("member_address")));
 		
-		member.putAll(paramMember);
-		// 파일 업로드
-		String uploadDir = session.getServletContext().getRealPath("/resources/upload/member");
 		
-        String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
+		// 파일 업로드
+		// 3) 입력받은 사진 이미지 설정
+		// 기본 파일 "http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg"
+		if(!file.isEmpty() ) {
+			// 실제 파일 저장 경로
+			String uploadDir = session.getServletContext().getRealPath("/resources/upload/member");
+			// 파일 확장자
+	        String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
+	        // 변환된 파일 이름
+	        String storedFileName = UUID.randomUUID().toString().substring(0,8) + "." + fileExtension;
+	        // 저장될 로컬 파일 경로
+	        String filePath = uploadDir + "/" + storedFileName;
+	        // DB에 저장될 이름
+	        String saveDir = "http://c3d2212t3.itwillbs.com/images/member/" + storedFileName;
+	        
+	        try {
+				file.transferTo(new File(filePath));
+			} catch (IllegalStateException | IOException e) {
+				// 사진 저장 실패 
+				e.printStackTrace();
+				model.addAttribute("msg", "프로필 이미지 등록에 실패했습니다.\n 마이페이지에서 수정할 수 있습니다.");
+				return "fail_back";
+			}
+	        member.put("member_image", saveDir);
+		}
         
-        String uuid = UUID.randomUUID().toString();
-        
-        String storedFileName = uuid.substring(0,8) + "." + fileExtension;
-        
-        String filePath = uploadDir + "/" + storedFileName;
-        String saveDir = "http://c3d2212t3.itwillbs.com/images/member/" + storedFileName;
-        // 사진을 저장하는 경로
-        // /resources/upload/member
-        // 사진을 읽어오는 절대 경로
-        // "http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg"
-        member.put("member_image", saveDir);
-        
-        System.out.println(filePath);
+        member.putAll(paramMember);
         
         int updateCount = memberService.updateMember(member);
         
         if(updateCount > 0) {
         	
-	        try {
-	        	// 본인 서버 /resources/upload/member 내부에 저장
-				file.transferTo(new File(filePath));		// 이 이름으로 저장
-				// 사진 정보를 저장
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-			}
 	        model.addAttribute("msg", "회원정보수정성공!");
 			model.addAttribute("target", "mypage");
 			session.setAttribute("member_image", member.get("member_image"));

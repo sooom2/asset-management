@@ -71,7 +71,7 @@ public class AuctionController {
 		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
 		// 내가 입찰한 가격
 		HashMap<String, String> myLog = service.selectMyLog(id);
-		boolean lastLogYN = lastLog == null ? true : false; 
+		boolean lastLogYN = lastLog != null ? true : false; 
 		model.addAttribute("auctionLog", auctionLog);
 		model.addAttribute("lastLog", lastLog);
 		model.addAttribute("lastLogYN", lastLogYN);
@@ -193,6 +193,9 @@ public class AuctionController {
 		System.out.println("확인=======" + auction_code);
 		HashMap<String, String> member = memberService.getMember(id);
 		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
+//	public String auctionPay(@RequestParam Map<String, String> auctionPay, Model model, HttpSession session) { // 이미지 코드와 경매 코드를 받아서 목록 상세
+//		System.out.println(auctionPay);
+//		HashMap<String, String> auction = service.selectAuctionCode(auctionPay.get("auction_code"));
 		// 경매 기록 최고값 검색
 		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
 		

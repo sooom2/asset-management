@@ -201,8 +201,8 @@
 
 .right_main .chat_header {
     border-bottom: 1px solid #ebebeb;
-    padding: 15px 20px 30px 20px;
-    height: 65px;
+    padding: 12px 20px 27px 20px;
+    height: 77px;
 }
 
 .right_main .chat_header:after {
@@ -847,13 +847,13 @@
 
 .chat_footer {
     height: 40px;
-    padding: 15px 15px 15px 21px
+    padding: 15px 15px 15px 20px;
 }
 
 .chat_footer .chat_input {
     width: 570px;
     overflow: auto;
-    height: 40px;
+    height: 25px;
     outline: 0;
     line-height: 21px;
     color: #000;
@@ -883,7 +883,8 @@
     font-weight: 700;
     padding: 10px 0;
     text-align: center;
-    width: 80px
+    width: 80px;
+    margin-top: -8px;
 }
 
 .chat_empty {

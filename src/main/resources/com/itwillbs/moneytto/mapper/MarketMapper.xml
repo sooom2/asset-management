@@ -82,28 +82,30 @@
 	</select>
 	
 	<select id="opponentId" resultType="hashmap">
-		SELECT opponent_id,opponent_nickname
+		SELECT opponent_id,opponent_nickname,opponent_image
          FROM (
-             SELECT room_code, chat_code, opponent_id,opponent_nickname,
+             SELECT room_code, chat_code, opponent_id,opponent_nickname,opponent_image,
                     ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num
              FROM (
                  SELECT market_chat_rooms.room_code,
                         chat_code,
                         member.member_id AS opponent_id,
-                        member.member_nickname  AS opponent_nickname
-           	   		FROM   market_chat_messages
-	                      LEFT JOIN member
-	                             ON member.member_id = market_chat_messages.sell_member_id
-	                      LEFT JOIN market_chat_rooms
-	                      		 ON market_chat_rooms.room_code = market_chat_messages.room_code
-	                      LEFT JOIN item 
-	                      		 ON item.item_code=market_chat_rooms.item_code 
+                        member.member_nickname  AS opponent_nickname,
+                        member.member_image AS opponent_image
+           	   	  FROM  market_chat_messages
+                      LEFT JOIN member
+                             ON member.member_id = market_chat_messages.sell_member_id
+                      LEFT JOIN market_chat_rooms
+                      		 ON market_chat_rooms.room_code = market_chat_messages.room_code
+                      LEFT JOIN item 
+                      		 ON item.item_code=market_chat_rooms.item_code 
               		 WHERE  buy_member_id = #{session_id}
                UNION
 	             SELECT market_chat_rooms.room_code,
 	                    chat_code,
 	                    member.member_id AS opponent_id,
-	                    member.member_nickname  AS opponent_nickname
+	                    member.member_nickname  AS opponent_nickname,
+	                    member.member_image AS opponent_image
 	             	FROM   market_chat_messages
 		                    LEFT JOIN member
 		                           ON member.member_id = market_chat_messages.buy_member_id
@@ -112,22 +114,23 @@
                   		   	LEFT JOIN item 
 	                      		 ON item.item_code=market_chat_rooms.item_code 
               		 WHERE  sell_member_id =#{session_id}
-             	) AS a
-         	) AS b
+             	) a
+         	) AS opponentId
       WHERE row_num = 1 and room_code =#{room_code};
 	</select>
 	
 	<!-- 내채팅목록 -->
 	<select id="myChatList" resultType="hashmap">
-		SELECT b.room_code, chat_code, chat_content, member_nickname,chat_time,b.item_subject,chat_openDate,item_status,item_code
+		SELECT myChatRecentList.room_code, chat_code, chat_content, member_nickname,member_image,chat_time,myChatRecentList.item_subject,chat_openDate,item_status,item_code
          FROM (
-             SELECT room_code, chat_code, chat_content, member_nickname,
+             SELECT room_code, chat_code, chat_content, member_nickname,member_image,
                     ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate,item_status, item_code
              FROM (
                  SELECT market_chat_rooms.room_code,
                         chat_code,
                         market_chat_rooms.chat_content,
-                        member.member_nickname AS member_nickname,
+                        member.member_nickname,
+                        member.member_image,
                         chat_time,
                         item.item_subject ,
                         market_chat_rooms.chat_openDate,
@@ -145,7 +148,8 @@
 	             SELECT market_chat_rooms.room_code,
 	                    chat_code,
 	                    market_chat_rooms.chat_content,
-	                    member.member_nickname AS member_nickname,
+	                    member.member_nickname,
+	                    member.member_image,
 	                    chat_time,
 	                    item.item_subject,
 	                    market_chat_rooms.chat_openDate,
@@ -159,10 +163,20 @@
                   		   	JOIN item 
 	                      		 ON item.item_code=market_chat_rooms.item_code 
               		 WHERE  sell_member_id = #{id}
-             	) AS a
-         	) AS b
+             	) a
+         	) AS myChatRecentList
       	WHERE row_num = 1
-     		ORDER BY room_code desc
+     		ORDER BY chat_time desc
+	</select>
+	<select id="roomCode" resultType="int">
+		SELECT market_chat_rooms.room_code
+			FROM market_chat_rooms
+				LEFT JOIN market_chat_messages
+						ON market_chat_rooms.room_code = market_chat_messages.room_code
+					WHERE 1=1
+					  AND market_chat_rooms.item_code = #{item_code}
+					  AND (sell_member_id =  #{id}
+					  OR buy_member_id=  #{id}) LIMIT 1
 	</select>
 	
 	<select id="nextRoomCode" resultType="int">
@@ -229,6 +243,8 @@
 			chat_mem_id,
 			seller.member_nickname as sell_nickname,
 			buyer.member_nickname as buy_nickname,
+			seller.member_image as sell_image,
+			buyer.member_image as buy_image,
 			chat_time,
 			item.item_status,
 			item.item_subject
@@ -277,7 +293,7 @@
 
 	<!-- 제일마지막에생성된 방 -->
 	<select id="chatRecentList" resultType="hashmap">
-		SELECT b.room_code, chat_code, chat_content, member_nickname,member_id,chat_time,b.item_subject,chat_openDate,item_status
+		SELECT chatRecentListOne.room_code, chat_code, chat_content, member_nickname,member_id,chat_time,chatRecentListOne.item_subject,chat_openDate,item_status
          FROM (
              SELECT room_code, chat_code, chat_content, member_nickname,member_id,
                     ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate,item_status
@@ -317,10 +333,10 @@
                   		   	LEFT JOIN item 
 	                      		 ON item.item_code=market_chat_rooms.item_code 
               		 WHERE  sell_member_id = #{id}
-             	) AS a
-         	) AS b
+             	) a
+         	) AS chatRecentListOne
       	WHERE row_num = 1 
-      	ORDER BY room_code DESC LIMIT 1
+      	ORDER BY chat_time DESC LIMIT 1
 	</select>
 	
 	<select id="item_code" resultType="hashmap">
@@ -572,15 +588,30 @@
 		SELECT 	
 			i.*
 			,im.image_name
+			,w.wish_code
 		FROM
 			item i
-		LEFT JOIN
-			images im
-		ON	
-			i.item_code = im.table_code
+		LEFT JOIN (
+			    SELECT *
+			    FROM (
+			        	SELECT *,
+							ROW_NUMBER() OVER (PARTITION BY table_code ORDER BY image_code) AS row_num
+			       		FROM images
+			    	 ) subquery
+			    WHERE row_num = 1
+				 ) im 
+		ON
+			 i.item_code = im.table_code
+		LEFT JOIN (
+				SELECT	*
+				FROM	wish
+				WHERE	member_id = #{member_id}
+				) w
+		ON
+			i.item_code = w.wish_item_code
 		ORDER BY i.item_code DESC LIMIT 10
 	</select>
-	
+	<!--  -->
 	
 	<insert id="insertReport">
 		<selectKey keyProperty="report_code" resultType="int" order="BEFORE">

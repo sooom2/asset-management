@@ -123,12 +123,14 @@
 	<select id="selectSellItemList" resultType="hashmap">
 		SELECT 	
 			i.*
-			,w.wish_code
+			, w.wish_code
 			, im.image_name
 		FROM
 			item i
 		LEFT JOIN
-			wish w ON i.item_code = w.wish_item_code
+			wish w
+		ON
+			i.item_code = w.wish_item_code
 		LEFT JOIN (
 				    SELECT *
 				    FROM (
@@ -146,28 +148,33 @@
 		SELECT 	
 			i.*
 			, im.image_name
-			,w.wish_code
+			, w.wish_code
 		FROM
+			wish w
+		LEFT JOIN
 			item i
-		INNER JOIN
-			wish w ON i.item_code = w.wish_item_code
+		ON
+			i.item_code = w.wish_item_code
 		LEFT JOIN (
 				    SELECT *
 				    FROM (
 				        SELECT *,
-				ROW_NUMBER() OVER (PARTITION BY table_code ORDER BY image_code) AS row_num
+						ROW_NUMBER() OVER (PARTITION BY table_code ORDER BY image_code) AS row_num
 				        FROM images
-				    ) subquery
+				    	) subquery
 				    WHERE row_num = 1
-				) im ON i.item_code = im.table_code
+				) im 
+		ON
+			w.wish_item_code = im.table_code
 		WHERE
-			i.member_id = #{member_id}
+			w.member_id = #{member_id}
 	</select>
 	
 	<select id="selectBuyItemList" resultType="hashmap">
 		SELECT
 		 	p.*
 		 	, im.image_name
+		 	,w.wish_code
 		FROM
 			market_paid p
 		LEFT JOIN (
@@ -179,6 +186,10 @@
 				    ) subquery
 				    WHERE row_num = 1
 				) im ON p.item_code = im.table_code
+		LEFT JOIN
+			wish w
+		ON
+			p.item_code = w.wish_item_code
 		WHERE
 			buy_id = #{member_id} 
 	</select>

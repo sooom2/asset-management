@@ -83,10 +83,10 @@
 				
 				
 				// 경매 남은시간 분, 초 
-				let diffMinutes = 30 - parseInt(((current_time - start_time) / (1000 * 60)));
+				let diffMinutes = 10 - parseInt(((current_time - start_time) / (1000 * 60)));
 				let diffSeconds = 60 - (((current_time - start_time) % (1000 * 60)) / 1000);
-				let diffSecondsResult = diffSeconds < 10 ? "0" + diffSeconds : diffSeconds; 
-				let resultClock = (diffMinutes - 1) + ":" + (diffSecondsResult - 1);
+				let diffSecondsResult = diffSeconds < 10 ? "0" + (diffSeconds - 1) : diffSeconds - 1; 
+				let resultClock = (diffMinutes - 1) + ":" + diffSecondsResult;
 				
 				
 				// 경매시작 시간 지나면 (시간 카운트)
@@ -96,11 +96,12 @@
 				} 
 				
 				// 경매 시작 후 (10분 이 지나면 종료)
-				if(current_time - start_time > 1800000) {
+				if(current_time - start_time > 600000) {
 					
 					window.setTimeout(function(){ // setInterval 함수 종료
 						window.clearInterval(time);
 						$("#con_countDown").html("경매가 종료 되었습니다.");
+						auctionFinish();
 					});
 				}
 			
@@ -112,6 +113,8 @@
 
 
 	$(document).ready(function() {
+		
+		
 // 		$('#auction_input_after *').prop('disabled', true);
 		// 경매 등록 확인
 		if(${auctionEnroll}) {
@@ -229,6 +232,52 @@
 		ws.onerror = function (event) { console.log('Info: connection closed'); };
 	}
 	
+	// 경매 종료 이벤트
+	function auctionFinish() {
+		// 경매 종료 닉네임이 현재 세션과 같을 때 -> 낙찰자
+		if($("#auctionLog_nickname").html() == "${nickname}님") {
+			swal({
+			    title: "경매 낙찰을 축하합니다.",
+			    text: "1. 낙찰 포기 시 보증금은 되돌려 받을 수 없습니다.\n2. 결제 시 보증금을 뺀 낙찰가격으로 결제합니다.",
+			    icon: "success",
+			    buttons: {
+			      confirm: {
+			        text: "결제하기",
+			        value: true,
+			        visible: true,
+			        className: "",
+			        closeModal: true,
+			      },
+			      cancel: {
+			        text: "취소",
+			        value: false,
+			        visible: true,
+			        className: "",
+			        closeModal: true,
+			      },
+			    },
+			  }).then((result) => {
+			    if (result) {
+			    	location.href = "auctionPay?auction_code=${auction.get('auction_code') }&successPrice=" + $("#lastLogPrice").html();
+			    } else {
+			    	location.href = "auctionMain";
+			    }
+		  	});
+		} else { // 닉네임과 세션 다를 때 -> 유찰
+			swal({
+			    title: "경매가 종료 되었습니다.",
+			    text: "유찰되었습니다. \n낙찰자: " + $("#auctionLog_nickname").html(),
+			    icon: "warning",
+			    buttons: "확인"
+			  }).then((result) => {
+			    if (result) {
+			    	location.href = "auctionMain";
+			    }
+		  	});
+		}
+		
+	};
+	
 </script>
 </head>
 <body>
@@ -290,13 +339,21 @@
 								<div class="auction_price"><span id="lastLogPrice">${lastLog.log_content }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
 							</c:when>
 							<c:otherwise>
-								<div class="auction_price"><span>${auction.auction_present_price }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
+								<div class="auction_price"><span id="lastLogPrice">${auction.auction_present_price }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
 							</c:otherwise>
 						</c:choose>
 						<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
 						<div class="auction_id">
 <!-- 						<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
-						<c:if test="${lastLog.member_nickname ne 'null'}"><span>${lastLog.member_nickname }님</span></c:if>
+						<c:choose>
+							<c:when test="${lastLogYN }">
+								<span id="auctionLog_nickname">${lastLog.member_nickname }님</span>
+							</c:when>
+							<c:otherwise>
+								<span id="auctionLog_nickname"></span>
+							</c:otherwise>
+						</c:choose>
+<%-- 						<c:if test="${lastLog.member_nickname ne 'null'}"><span id="auctionLog_nickname">${lastLog.member_nickname }님</span></c:if> --%>
 <%-- 						<c:choose> --%>
 <%-- 							<c:when test="${lastLog.member_nickname ne 'null' and lastLog.member_nickname ne ''}"> --%>
 <%-- 								<span>${lastLog.member_nickname }님</span> --%>
@@ -443,7 +500,7 @@ $(document).ready(function() {
 			chatLog = $("#logPrice").val();			
 		} else if($(this).attr("data-price") == ${purchase }) {
 			chatLog = ${purchase } + "";
-		} else{ // 입찰하기(1%값) 버튼 클릭시 
+		} else if($(this).attr("data-price") == ${askingPrice }) { // 입찰하기(1%값) 버튼 클릭시 
 // 			message = $(".auction_price").find("span").html();
 			// 누른 값에 해당하는 data-price 속성의 값을 메시지에
 			// 현재 상황 입찰하기 버튼을 눌렀을 때 입찰하기 버튼에 data-price속성이 있어서 그 값을 가져오는것
@@ -454,11 +511,9 @@ $(document).ready(function() {
 // 				console.log("4번" + message + typeof message); // 303000  string
 // 			} else {
 // 				console.log("else도착");
-			if(${lastLogYN}) {
-				chatLog = (parseInt($(this).attr("data-price"), 10) + parseInt(nowPrice, 10) + "");
-			} else {
-				chatLog = (parseInt($(this).attr("data-price"), 10) + parseInt($("#lastLogPrice").html(), 10) + "");
-			}
+			let lastLogPrice = $("#lastLogPrice").html().split(",")[0] + $("#lastLogPrice").html().split(",")[1];
+			chatLog = (parseInt($(this).attr("data-price")) + parseInt(lastLogPrice)) + "";
+				
 			console.log(${lastLog.log_content});
 			console.log("2번" + chatLog);
 // 			}
@@ -472,12 +527,7 @@ $(document).ready(function() {
 			$("#logPrice").val("");
 			chatLog = nowPrice;
 			return false;
-		} else if(chatLog < ${lastLog.log_content }) {
-			alert("현재 입찰금액 보다 높게 입력해주세요");
-			$("#logPrice").val("");
-			chatLog = nowPrice;
-			return false;
-		} else if(chatLog == ${lastLog.log_content }) {
+		} else if(chatLog <= $("#lastLogPrice").html()) {
 			alert("현재 입찰금액 보다 높게 입력해주세요");
 			$("#logPrice").val("");
 			chatLog = nowPrice;
@@ -524,7 +574,7 @@ function connect2() {
 		sessionId = data.split(":")[0];
 		sessionName = data.split(":")[1];
 		message = data.split(":")[2];
-
+	
 		
 		// 낙찰 최대금액
 	//	var auctionMax = "<span>" + message + "</span>원&nbsp;<i class='fa-solid fa-comment-dollar'></i>";
@@ -536,8 +586,9 @@ function connect2() {
 // 		$("btnAskingPrice").attr("data-price", message);
 		
 		// 낙찰 최대금액 닉네임
-		var auctionNic = "<span>" + sessionName + "님</span>";
-		$(".auction_id").html(auctionNic);
+// 		var auctionNic = "<span>" + sessionName + "님</span>";
+// 		$(".auction_id").html(auctionNic);
+		$("#auctionLog_nickname").html(sessionName + "님");
 		
 		// 경매 로그
 		var auctionLog = "<div class='chat_myself'>" + "<" + hours + ":" + minutes + "> " + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + "</div>";
@@ -549,12 +600,12 @@ function connect2() {
 			$(".my_bid").html(auctionMyPrice);
 		}
 		
-		// 즉시구매가 구매
-		if(message == ${purchase }) {
-// 			console.log("즉시구매가 로 구매" + message);
-			alert("낙찰되셨습니다." + auctionCode);
-			location.href = "auctionPay?auction_code=" + auctionCode;
+		// 경매 종료.
+		if(message == ${purchase}) {
+			auctionFinish();
+			
 		}
+		
 		
 	};
 	

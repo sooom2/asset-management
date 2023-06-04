@@ -9,6 +9,7 @@
 <link href="${path }/resources/css/market.css" rel="stylesheet">
 <script type="text/javascript" src="${path }/resources/js/jquery-3.6.4.js"></script>
 <script type="text/javascript" src="${path }/resources/js/moment.js"></script>
+<script type="text/javascript" src="${path }/resources/js/wish.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -239,9 +240,7 @@
 				str +=	'">';
 				str += '<div class="itemThumbnailBox">';
 				str += '<img src="' + image + '" alt="썸네일" class="itemThumbnail" style="cursor: pointer">';
-				str += '<div class="wishWrapper">';
 				str += wish;
-				str += '</div>';
 				str += '</div>';
 				str += '<div class="itemTextBox">';
 				str += '<div class="itemCategory">';
@@ -273,8 +272,16 @@
 				$(".Count").empty().append(count);
 				
 			}
-				var more = '<a href="#"><div class="chall_more">MORE</div></a>';
+			
+				var more = '<div class="chall_more">MORE</div>';
 				$(".itemListWrapper").after(more);
+				
+				$(".itemThumbnailBox").hide();
+				$(".itemThumbnailBox").slice(0, 20).show();
+				
+				if($(".itemThumbnailBox:hidden").length == 0) {
+					$(".chall_more").fadeOut(100);
+				}
 		}
 		
 		
@@ -295,6 +302,7 @@
 		// 상품 리스트 불러오기
 		function marketItemList() {
 			$(".itemThumbnailBox").remove();
+			$(".chall_more").remove();
 
 			var item_category = $("#item_category").val();
 			var item_tag = $("#tag").val();
@@ -311,8 +319,7 @@
 			$("#item_category").val(item_category);
 			$("#tag").val(item_tag);
 			
-			
-			console.log("---var---")
+			console.log("------ marketItemList 요청 시 들어가는 값 ------")
 			console.log("item_category : " + item_category);
 			console.log("item_tag : " + item_tag);
 			console.log("item_status : " + item_status);
@@ -353,6 +360,17 @@
 		
 		$(function () {
 			marketItemList();
+			
+			// 더보기
+			$(document).on("click", ".chall_more", function(e) {
+				e.preventDefault();
+				$(".itemThumbnailBox:hidden").slice(0, 20).show();
+				if($(".itemThumbnailBox:hidden").length == 0) {
+					$(".chall_more").fadeOut(100);
+				}
+			});
+
+			
 			
 			// 카테고리 클릭
 			$(".FilterCategory").on("click", function(e) {
@@ -441,20 +459,24 @@
 				var item_price_min = $(".item_price_min").val();
 				var item_price_max = $(".item_price_max").val();
 				
-				console.log("item_price_min : " + item_price_min);
-				console.log("item_price_max : " + item_price_max);
+// 				console.log("item_price_min : " + item_price_min);
+// 				console.log("item_price_max : " + item_price_max);
 				
 				if(item_price_min == "" && item_price_max == "") {
 					return;
 				}
 				
 				if(item_price_min == "") {
-					item_price_min = 0;
+// 					item_price_min = 0;
 					$("#item_price_min").val(0);
+				} else {
+					$("#item_price_min").val(item_price_min);
 				}
 				if(item_price_max == "") {
-					item_price_max = 999999999999999;
+// 					item_price_max = 999999999999999;
 					$("#item_price_max").val(999999999999999);
+				} else {
+					$("#item_price_max").val(item_price_max);
 				}
 				
 				
@@ -470,10 +492,19 @@
 				tagStr += '<div class="tagPrice">';
 				tagStr += '<div class="tagListTag">';
 				tagStr += '<div class="tagListName" data-cd="2">';
-				tagStr += item_price_min;
-				tagStr += '원~';
-				tagStr += item_price_max;
-				tagStr += '원';
+				
+				if(item_price_min != "") {
+					tagStr += item_price_min;
+					tagStr += '원';
+				}
+				
+				tagStr += '~';
+				
+				if(item_price_max != "") {
+					tagStr += item_price_max;
+					tagStr += '원';
+				}
+				
 				tagStr += '</div>';
 				tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div></div>';
 				
@@ -481,8 +512,8 @@
 				$(".tagListFilterBox").append(tagStr);
 				
 				
-				$("#item_price_min").val(item_price_min);
-				$("#item_price_max").val(item_price_max);
+				
+				
 				marketItemList();
 			});
 			
@@ -580,36 +611,6 @@
 					$("#searchForm").submit(); // 폼 제출
 	            }
 	        });
-			
-			// wish
-			// 이페이지 넘 어려워서 몰겟음.....
-			$('.WishWishImg').click(function(){
-				// .WishWishImg 부모 선택자 "data-code" 속성에 넣어준 item_code를 item_code 변수로 저장
-				var $btnWish = $(this)
-				var item_code = $(this).closest(".itemThumbnailBox").attr("data-cd");
-				console.log(item_code);
-				// /clickWish MemberController에 매핑
-				$.ajax({
-			   		url : 'clickWish',
-			   		type : 'POST',
-			   		data : {item_code : item_code}
-				}).done(function(){
-					$btnWish.toggleClass("wish");
-					
-					if($btnWish.hasClass("wish")){
-						  				$btnWish.attr({'src' : 'resources/images/main/ico_heart_off_x3.png',
-										alt : '찜하기 완료'
-									})	
-					}else{
-						$btnWish.attr({'src' : 'resources/images/main/ico_heart_on_x3.png',
-										alt : '찜하기'
-									})
-					}
-				}).fail(function(){
-					alert("ERROR 위시리스트 추가 실패");
-				})
-			})
-			
 			
 		});
 	

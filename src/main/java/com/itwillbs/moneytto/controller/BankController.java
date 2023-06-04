@@ -1,5 +1,6 @@
 package com.itwillbs.moneytto.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,10 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.moneytto.service.BankApiService;
 import com.itwillbs.moneytto.service.BankService;
+import com.itwillbs.moneytto.service.MarketService;
 import com.itwillbs.moneytto.service.MemberService;
 import com.itwillbs.moneytto.vo.AccountDetailVO;
 import com.itwillbs.moneytto.vo.AccountWithdrawResponseVO;
@@ -28,6 +32,12 @@ public class BankController {
 	
 	@Autowired
 	private BankService bankService;
+	
+	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
+	private MarketService marketService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BankController.class);
 	
@@ -108,10 +118,11 @@ public class BankController {
 		// Model 객체에 ResponseUserInfoVO 객체 저장
 		model.addAttribute("userInfo", userInfo);
 		
-		return "admin/bank_user_info";
+		return "bank/bank_user_info";
 	}
 	
 	// 계좌 상세정보 조회(2.3.1. 잔액조회 API)
+	// /balance/fin_num
 	@PostMapping("bank_accountDetail")
 	public String getAccountDetail(
 			@RequestParam Map<String, String> map, HttpSession session, Model model) {
@@ -149,14 +160,19 @@ public class BankController {
 		model.addAttribute("account_num_masked", map.get("account_num_masked"));
 		model.addAttribute("user_name", map.get("user_name"));
 		
-		return "admin/bank_account_detail";
+		return "bank/bank_account_detail";
 		
 	}
 	// 2.3.1 출금이체
 	@PostMapping("bank_withdraw")
 	public String withdraw(
 			@RequestParam Map<String, String> map, HttpSession session, Model model) {
+		
 		map.put("access_token", (String)session.getAttribute("access_token"));
+		
+		// TODO
+		// map에 들어갈 요소 
+		// 사용자의 핀테크 이용번호 받아서 admin 계정의 핀테크 이용번호로 충전하는 느낌
 		
 		AccountWithdrawResponseVO result = apiService.withdraw(map);
 		System.out.println("result = " + result);
@@ -168,12 +184,12 @@ public class BankController {
 	@PostMapping("bank_regist")
 	public String bankRegist(Model model
 			, HttpSession session
-			, String fintech_use_num
-			, String balance_amt) {
-		
+			, @RequestParam Map<String, String> map) {
+
 		String id = (String)session.getAttribute("sId");
+		map.put("member_id", id);
 		
-		int insertCount = bankService.updateAccount(id, fintech_use_num, balance_amt);
+		int insertCount = bankService.updateAccount(map);
 		
 		// 핀테크번호 등록 성공시 
 		if(insertCount > 0) {
@@ -188,6 +204,39 @@ public class BankController {
 		
 	}
 	
-	
+	// TEST CONTROLLER
+	@RequestMapping(value = "payment", method = {RequestMethod.GET, RequestMethod.POST})
+	public String store_pay2(HttpSession session
+							, Model model
+							, @RequestParam(value = "item_code", defaultValue = "market0029") String item_code) {
+							// 테스트용으로 임의로 default 값 넣어둔 상태
+		
+		
+		HashMap<String, String> item = marketService.getMarketItem(item_code);
+		String id = (String)session.getAttribute("sId");
+		if(id == null) {
+			id = "admin";
+		}
+		HashMap<String, String> member = memberService.getMember(id);
+		
+//				model.addAttribute("item_price", item_price);
+		
+		
+		System.out.println("======================================================");
+		System.out.println("item : " + item.toString());
+		System.out.println("member : " + member.toString());
+		System.out.println("======================================================");
+		
+//				if(id == null) {
+//					model.addAttribute("msg", "로그인 후 이용가능합니다.");
+//					model.addAttribute("target", "memLogin");
+//					return "success";
+//				} else {
+//					return "store/store_pay";
+//				}
+		model.addAttribute("member", member);
+		model.addAttribute("item", item);
+		return "payment/payment";
+	}
 	
 }
