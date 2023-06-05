@@ -149,7 +149,10 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .fold_head .summary.number{font-size:18px}
 .fold_head .summary.number .unit{display:inline-block;margin:0 0 0 2px;font-size:16px;vertical-align:top}
 .fold_h{padding: 15px 0 15px 10px;font-size:16px;line-height:20px;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-SemiBold,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;font-weight:normal}
-.fold_content{display:none;position:relative}
+.fold_content{
+/* 	display:none; */
+	position:relative
+	}
 .fold_head + .fold_content{border-top:1px solid #e2e6e9}
 
 .label{position:absolute;top:0;right:0;left:0;bottom:0;padding:7px 0;line-height:36px;font-size:15px}
@@ -161,6 +164,7 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .point_yellow{color: #bb2649 !important;}
 .point_black{color:#252525 !important}
 .align_left{text-align:left !important}
+.align_right{text-align:right !important}
 .switch_button{position:absolute;top:0;right:0;left:0;bottom:0;width:100%;height:100%}
 .info_desc{padding:13px 13px 8px;border-top:1px solid #e2e6e9;background-color:#f8f9fa}
 .guide_text{display:block;position:relative;z-index:10;padding:0 0 5px 18px;font-size:13px;line-height:18px;color:#8f8f8f}
@@ -173,12 +177,31 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
 .verification .full_area .value{color:#b3b3b3}
 .verification .box_margin{margin:0 13px}
 .verification .label_margin{padding-left:88px}
-.verification .text_won{position:absolute;top:7px;right:24px;line-height:36px}
-.verification .button_margin{padding-right:71px}
-.verification .button_margin2{padding-right:40px}
+.verification .text_won{
+	position:absolute;
+	top:7px;
+	right:4px;
+	line-height:36px
+	}
+.verification .button_margin{
+/* 	padding-right:71px */
+	}
+.verification .button_margin2{
+	padding-right:20px
+}
 .verification .button{position:absolute;top:0;right:0;bottom:0;height:35px;margin:auto}
-.verification .button .size1, .btn_use_all{display:block;width:70px;border-radius:2px;background:#a4abb9;font-size:13px;line-height:35px;font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Medium,'나눔고딕',nanumgothic,sans-serif;color:#fff;text-align:center}
+
+.verification .button .btnCharge, .btn_use_all{
+	display:block;width:70px;
+	border-radius:2px;
+	background:#a4abb9;
+	font-size:13px;
+	line-height:35px;
+	font-family:Pretendard-Regular,Helvetica,AppleSDGothicNeo-Medium,'나눔고딕',nanumgothic,sans-serif;
+	color:#fff;
+	text-align:center}
 .verification .button2{position:absolute;top:50%;right:3px;width:17px;height:35px;margin-top:-17px}
+
 .button_del{display:block;overflow:hidden;width:100%;height:100%;text-indent:-9999px}
 .button_del:before{position:absolute;top:50%;right:0;margin-top:-8px}
 

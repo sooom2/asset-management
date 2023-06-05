@@ -238,5 +238,27 @@ public class BankController {
 		model.addAttribute("item", item);
 		return "payment/payment";
 	}
-	
+	// TEST CONTROLLER
+		@RequestMapping(value = "test", method = {RequestMethod.GET, RequestMethod.POST})
+		public String test(HttpSession session
+								, Model model
+								,@RequestParam Map<String,String> map) {
+			/* 
+			 * 들어오는 요소 : 
+			 * id
+			 * charge_Point
+			 * 
+			 * withdraw로 옮길것
+			 * 
+			 * id 자체는 withdraw controller에서 xml 작업용으로 쓰일거고
+			 * 
+			 * charge_Point는 api 서비스에서 사용될 차감액이 될 것
+			 * 근데 이거 .. 어케 써먹음...
+			 * 싶은 생각만 주말내내..
+			 *  */
+			System.out.println("test : " + map);
+
+			model.addAttribute("msg", "헥헥");
+			return "fail_back";
+		}
 }

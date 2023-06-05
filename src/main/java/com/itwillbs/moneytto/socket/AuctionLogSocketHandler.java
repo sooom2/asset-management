@@ -34,10 +34,12 @@ public class AuctionLogSocketHandler extends TextWebSocketHandler {
 		sessionList.add(session);
 //		System.out.println(session);
 		i++;
+		
 	}
 
 	@Override  
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
+		
 		String msg = (String)message.getPayload();
 		JSONObject jObject = new JSONObject(msg);
 		String id = jObject.getString("id");
