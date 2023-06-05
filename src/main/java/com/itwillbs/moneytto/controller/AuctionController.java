@@ -36,7 +36,6 @@ public class AuctionController {
 		System.out.println(auction);
 		model.addAttribute("auction", auction);
 		
-		
 		return "auction/auctionMain";
 	}
 	
@@ -45,7 +44,7 @@ public class AuctionController {
 	public String auction(@RequestParam String auction_code, Model model, HttpSession session) { // 이미지 코드와 경매 코드를 받아서 목록 상세
 		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
 		model.addAttribute("auction", auction);
-		
+		System.out.println("auction확인 " + auction);
 		// 년 월 일
 		LocalDate now = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
@@ -186,18 +185,13 @@ public class AuctionController {
 	};
 	
 	@RequestMapping(value="auctionPay", method = RequestMethod.GET)
-	public String auctionPay(@RequestParam HashMap<String, String> payMap, HttpSession session, Model model) {
-		System.out.println(payMap);
+	public String auctionPay(@RequestParam Map<String, String> auctionPay, Model model, HttpSession session) { // 이미지 코드와 경매 코드를 받아서 목록 상세
 		String id = (String)session.getAttribute("sId");
-		String auction_code = payMap.get("auction_code");
-		System.out.println("확인=======" + auction_code);
 		HashMap<String, String> member = memberService.getMember(id);
-		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
-//	public String auctionPay(@RequestParam Map<String, String> auctionPay, Model model, HttpSession session) { // 이미지 코드와 경매 코드를 받아서 목록 상세
-//		System.out.println(auctionPay);
-//		HashMap<String, String> auction = service.selectAuctionCode(auctionPay.get("auction_code"));
+		System.out.println(auctionPay);
+		HashMap<String, String> auction = service.selectAuctionCode(auctionPay.get("auction_code"));
 		// 경매 기록 최고값 검색
-		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
+		HashMap<String, String> lastLog = service.selectLastLog(auctionPay.get("auction_code"));
 		
 		model.addAttribute("member", member);
 		model.addAttribute("auction", auction);

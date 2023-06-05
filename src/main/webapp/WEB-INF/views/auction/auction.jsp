@@ -302,7 +302,7 @@
 							3. 경매가 끝난 후 낙찰자를 제외하고 보증금을 돌려드립니다<br>
 							4. 낙찰 후 구매 취소 시 보증금을 받을 수 없습니다<br>
 							5. 즉시 구매 시 경매가 종료됩니다<br>
-							6. 현재 페이지를 나가면 기록이 사라집니다
+							6. 현재 페이지를 나가면 채팅 기록이 사라집니다
 							</p>
 							<hr>
 							<div class="con_tit">${auction.get("auction_item_name") }</div>
@@ -324,7 +324,7 @@
 								</div>
 								<hr>
 								<div style="float: right;">
-								<div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<span>명</span></div></div><br>
+								<div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${auction.enroll_count }<span>명</span></div></div><br>
 							</div>
 						</div>
 					</div>
@@ -350,19 +350,9 @@
 								<span id="auctionLog_nickname">${lastLog.member_nickname }님</span>
 							</c:when>
 							<c:otherwise>
-								<span id="auctionLog_nickname"></span>
+								<span id="auctionLog_nickname">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 							</c:otherwise>
 						</c:choose>
-<%-- 						<c:if test="${lastLog.member_nickname ne 'null'}"><span id="auctionLog_nickname">${lastLog.member_nickname }님</span></c:if> --%>
-<%-- 						<c:choose> --%>
-<%-- 							<c:when test="${lastLog.member_nickname ne 'null' and lastLog.member_nickname ne ''}"> --%>
-<%-- 								<span>${lastLog.member_nickname }님</span> --%>
-<%-- 							</c:when> --%>
-<%-- 							<c:otherwise> --%>
-<!-- 						        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
-<%-- 						    </c:otherwise> --%>
-<%-- 						</c:choose> --%>
-<%-- 						<span>${lastLog.member_nickname }</span> --%>
 						</div>
 					</div>
 					<div class="auction_realStatus">
@@ -385,6 +375,14 @@
 						<div id="auction_input_title" class="auction_input_title">경매 입찰 등록</div>
 						<hr>
 						<br><br><br>
+						<div class="bid">
+							<div class="bid_left">
+								<div>보증금</div>
+							</div>
+							<div class="bid_right">
+								<div>${deposit }원</div>
+							</div>
+						</div>
 						<input id="auctionRegist" class="auction_input_button" type="button" value="참여하기">
 					</div>
 					<!-- 경매 등록 후 -->
