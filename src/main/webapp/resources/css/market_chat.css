@@ -276,10 +276,9 @@
 }
 
 .right_main .chat_header .declaration img {
-	
-    margin-left: 5px;
-    width: 18px;
-    cursor: pointer
+	margin-left: 5px;
+	width: 27px;
+	cursor: pointer
 }
 .right_main .chat_header .trade {
     float: right;
@@ -293,7 +292,7 @@
 }
 
 .right_main .chat_header .trade img {
-    width: 18px;
+    width: 21px;
     cursor: pointer
 }
 

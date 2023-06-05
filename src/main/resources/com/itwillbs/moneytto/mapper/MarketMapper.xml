@@ -462,7 +462,7 @@
 	
 	 
 	<select id="itemDetail" resultType="hashmap">
-		SELECT item.*,member.member_nickname 
+		SELECT item.*,member.member_nickname ,member.member_image 
 			FROM item
 				LEFT JOIN member 
 						ON member.member_id = item.member_id 
