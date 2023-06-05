@@ -189,13 +189,15 @@ public class BankApiClient {
 	    jo.put("cntr_account_num", "12345678");				// 약정 계좌/계정 번호 ?
 	    jo.put("dps_print_content", "머니또머니 충전");				// 출금계좌에 찍히는 내용 
 	    // 운영자 핀테크 번호 =====================================================
+	    // 계정마다 다르게 핀테크번호를 받기는 좀 힘들거같은...
 	    jo.put("fintech_use_num", "120211385488932372195721");				// 사용자 핀테크번호
 	    // 거래금액
+	    // TODO
 	    jo.put("tran_amt", "1000");											// 거래금액
 	    jo.put("tran_dtime", valueGenerator.getTranDTime());				// 거래일자	
 	    // 요청 고객
 	    jo.put("req_client_name", "머니또");								
-	    jo.put("req_client_fintech_use_num", "120211385488932360143650");	// 운영자
+	    jo.put("req_client_fintech_use_num", "120211385488932360143650");	// 운영자 고정
 	    jo.put("req_client_num", "1");										//
 	    // 충전 :  RC, 이체 : TR ==================================================
 	    // TR => RC 로 설정해둠
