@@ -47,6 +47,32 @@
 		WHERE
 			id = #{member_id}			
 	</update>
+	<!-- 파라미터 수정중 -->
+	<insert id="insertAccountHistory">
+		<selectKey keyProperty="trade_balance" resultType="java.lang.Long" order="BEFORE">
+    		SELECT
+    			COALESCE(MAX(trade_balance), 0) + #{trade_amount} AS trade_balance
+    		FROM account_history
+  		</selectKey>
+		INSERT
+			INTO 
+				account_history(
+					trade_code
+					, trade_member_id
+					, trade_amount
+					, trade_type
+					, trade_balance
+					, trade_date
+				)
+			VALUES (
+				 #{trade_code}
+				, #{id}
+				, #{trade_amount}
+				, #{trade_type}
+				, #{trade_balance}
+				, #{trade_date}
+			)
+	</insert>
 	
 </mapper>
 

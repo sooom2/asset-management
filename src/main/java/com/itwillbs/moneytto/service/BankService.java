@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.moneytto.mapper.BankMapper;
-import com.itwillbs.moneytto.vo.AccountVO;
 import com.itwillbs.moneytto.vo.ResponseTokenVO;
 
 @Service
@@ -32,11 +31,14 @@ public class BankService {
 		return mapper.selectAccount(member_id);
 	}
 	
-	
-	
 	public int updateAccount(Map<String, String> map) {
 
 		return mapper.updateAccount(map);
+	}
+	// 포인트 충전 내역 작성 
+	public int writeHistory(Map<String, String> map) {
+		
+		return mapper.insertAccountHistory(map);
 	}
 	
 	

@@ -2,6 +2,7 @@ package com.itwillbs.moneytto.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.protobuf.Service;
 import com.itwillbs.moneytto.service.BankApiService;
 import com.itwillbs.moneytto.service.BankService;
 import com.itwillbs.moneytto.service.MarketService;
@@ -173,11 +175,23 @@ public class BankController {
 		// TODO
 		// map에 들어갈 요소 
 		// 사용자의 핀테크 이용번호 받아서 admin 계정의 핀테크 이용번호로 충전하는 느낌
+		System.out.println(map);
 		
 		AccountWithdrawResponseVO result = apiService.withdraw(map);
+		
+		String trade_code = UUID.randomUUID().toString().substring(0, 8);
+		String trade_amount = result.getTran_amt();
+		String trade_date = result.getBank_tran_date();
+		
+		map.put("trade_code", trade_code);
+		map.put("trade_amount", trade_amount);
+		map.put("trade_date", trade_date);
+//		int insertCount = bankService.writeHistory(map);
+		
+		
 		System.out.println("result = " + result);
 		
-		return "bank/withdraw_result";
+		return "";
 		
 	}
 	
@@ -190,6 +204,10 @@ public class BankController {
 		map.put("member_id", id);
 		
 		int insertCount = bankService.updateAccount(map);
+		
+		System.out.println("==================================");
+		System.out.println(map);
+		System.out.println("==================================");
 		
 		// 핀테크번호 등록 성공시 
 		if(insertCount > 0) {

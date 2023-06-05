@@ -10,18 +10,18 @@
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
 <script>
-// function logout() {
-// 	// 카카오 로그인 아닐시 session "token" = true
-// 	if(${sessionScope.token == true}){
-// 		let isLogout = confirm("로그아웃 하시겠습니까?");
+function logout() {
+	// 카카오 로그인 아닐시 session "token" = true
+	if(${sessionScope.token == true}){
+		let isLogout = confirm("로그아웃 하시겠습니까?");
 		
-// 		if(isLogout) {
-// 			location.href = "logout";
-// 		}
-// 	} else {
-// 		location.href="https://kauth.kakao.com/oauth/logout?client_id=bf0c05681627cc5d65f40192f843de1b&logout_redirect_uri=http://192.168.3.126:8080/movie/logout";
-// 	}
-// }
+		if(isLogout) {
+			location.href = "logout";
+		}
+	} else {
+		location.href="https://kauth.kakao.com/oauth/logout?client_id=bf0c05681627cc5d65f40192f843de1b&logout_redirect_uri=http://192.168.3.126:8080/movie/logout";
+	}
+}
 function payment(){
 	window.open("payment", "_blank","width=500,height=830");
 }
@@ -69,7 +69,7 @@ function payment(){
 			<c:if test="${not empty sessionScope.sId }">
 				<div class="mem_profile">
 					<img src="${sessionScope.member_image }" alt="프로필 이미지" class="profileImg">
-					<div class="mem_nickName" onclick="location.href='mypage?member_id=${sessionScope.sId }'">${sessionScope.nickname }</div>
+					<div class="mem_nickName" >${sessionScope.nickname }</div>
 				</div>	
 			</c:if>
 			<a href="itemRegist" class="menu-item">
@@ -94,6 +94,11 @@ function payment(){
 				$("#searchForm").submit(); // 폼 제출
             }
         });
+		// 프로필 이미지 눌렀을때도 마이페이지 이동하게 할려고 하는데
+		// 더 괜찮은 방법 있으면 이거 지우고 그걸로 바꿔주세요 !
+		$('.mem_profile').children().click(function(){
+			location.href='mypage?member_id=${sessionScope.sId }';
+		})
 	});
 </script>
 </body>

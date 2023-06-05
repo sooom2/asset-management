@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <link href="${path }/resources/css/market.css" rel="stylesheet">
-<script type="text/javascript" src="${path }/resources/js/jquery-3.6.4.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/moment.js"></script>
 <script type="text/javascript" src="${path }/resources/js/wish.js"></script>
 <title>Insert title here</title>
@@ -618,3 +618,6 @@
 <jsp:include page="../footer.jsp" />
 </body>
 </html>
+<!-- 페이지 자체가 렉 넘 심해서.. 혹시나 해서 10번 라인에 jQuery 서버경로로 바꿨는데
+	좀 빨라진 체감이 있는것 같기도...?? 잘 작동안되면 원래 버전으로 바꿔주세요 ~
+ -->

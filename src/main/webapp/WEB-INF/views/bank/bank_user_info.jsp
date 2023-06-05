@@ -48,13 +48,13 @@
 				<td>${account.balance_amt }</td>
 				<td>${account.fintech_use_num }</td>
 				<td>
-					<form action="bank_accountDetail" method="post">
+					<form action="bank_accountDetail" method="POST">
 						<%-- 엑세스토큰, 핀테크이용번호, 계좌번호(마스킹), 예금주명 전달 --%>
 <%-- 						<input type="hidden" name="access_token" value="${sessionScope.access_token }"> --%>
 						<input type="hidden" name="fintech_use_num" value="${account.fintech_use_num }">
 						<input type="hidden" name="user_name" value="${userInfo.user_name }">
 						<input type="submit" value="상세조회">
-						<input type="submit" formaction="bank_regist" value="등록하기">
+						<input type="submit" formaction="bank_regist" formmethod="POST"value="등록하기">
 					</form>
 				</td>
 			</tr>

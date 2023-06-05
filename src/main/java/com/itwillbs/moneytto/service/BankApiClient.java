@@ -181,23 +181,25 @@ public class BankApiClient {
 	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 	    
 	    
+	    String tran_amt = map.get("charge_point");
+	    
 	    JSONObject jo = new JSONObject();
 	    jo.put("bank_tran_id", valueGenerator.getBankTranId());
+	    // N이 기본값
 	    jo.put("cntr_account_type", "N");
 	    // 등록할때 썼던 계좌번호
 	    // DB에 저장될 수 없어서 여기서 임의로 기록
-	    jo.put("cntr_account_num", "12345678");				// 약정 계좌/계정 번호 ?
-	    jo.put("dps_print_content", "머니또머니 충전");				// 출금계좌에 찍히는 내용 
 	    // 운영자 핀테크 번호 =====================================================
-	    // 계정마다 다르게 핀테크번호를 받기는 좀 힘들거같은...
-	    jo.put("fintech_use_num", "120211385488932372195721");				// 사용자 핀테크번호
+	    jo.put("cntr_account_num", "11111129");				// 약정 계좌/계정 번호 ?
+	    jo.put("dps_print_content", "머니또머니 충전");				// 출금계좌에 찍히는 내용 
+	    jo.put("fintech_use_num", "120211385488932372196408");				// 사용자 핀테크번호
 	    // 거래금액
 	    // TODO
-	    jo.put("tran_amt", "1000");											// 거래금액
+	    jo.put("tran_amt", tran_amt);											// 거래금액
 	    jo.put("tran_dtime", valueGenerator.getTranDTime());				// 거래일자	
 	    // 요청 고객
 	    jo.put("req_client_name", "머니또");								
-	    jo.put("req_client_fintech_use_num", "120211385488932360143650");	// 운영자 고정
+	    jo.put("req_client_fintech_use_num", "120211385488932372196408");	// 운영자 고정
 	    jo.put("req_client_num", "1");										//
 	    // 충전 :  RC, 이체 : TR ==================================================
 	    // TR => RC 로 설정해둠

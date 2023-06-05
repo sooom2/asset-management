@@ -28,8 +28,19 @@
 </head>
 <script type="text/javascript">
 $(function(){
-	$('.button').click(function(){
-		$('#paymentSheetForm').submit();			
+	$('.button_section').click(function(){
+		if(confirm("등록된 간편결제 계좌로 충전하시겠습니까?")){
+			$("form").submit();
+		}
+					
+	})
+	
+	$('#point2').change(function(){
+		console.log($('#point2').val());
+		console.log($('#point1').text());
+		var point1 = Number($('#point1').text());
+		var point2 = Number($('#point2').val());
+		$('._totalPayAmt').text(point1 + point2)
 	})
 })
 </script>
@@ -41,8 +52,9 @@ $(function(){
 		<p class="sp_header gnb_logo"><span class="blind">ttoPay</span></p>
 	</div>
 
-<form id="paymentSheetForm" method="post" autocomplete="off" action="test">
+<form method="post" autocomplete="off" action="bank_withdraw">
 <input type="hidden" name="id" value="${member.member_id }"> 
+<input type="hidden" name="trade_type" value="이체">
 <div class="container" id="container">
     <div class="info_login">
 		<div class="img_area">
@@ -65,7 +77,7 @@ $(function(){
 					</li>
 					<li class="full_area label_margin button_margin2">
 						<label for="point2" class="label">충전 포인트</label>
-						<input title="사용포인트" id="point2" name="charge_Point" type="tel" class="value number _onlyPriceTarget _naverMileage _payForm _blur(checkout.mobile.nsp.paymentSheet.checkInputTextAmountValue()) _focus(checkout.mobile.nsp.paymentSheet.beforeInputPrice()) _stopDefault" placeholder="0">
+						<input title="사용포인트" id="point2" name="charge_point" type="tel" class="value number _onlyPriceTarget _naverMileage _payForm _blur(checkout.mobile.nsp.paymentSheet.checkInputTextAmountValue()) _focus(checkout.mobile.nsp.paymentSheet.beforeInputPrice()) _stopDefault" placeholder="0">
 						<span class="text_won">원</span>
 					</li>
 					</ul>
@@ -78,23 +90,6 @@ $(function(){
 					</div>
 				</div>
 			</div>
-<!-- 테스트 부분 -->
-<script type="text/javascript">
-$(function(){
-	$('.btnCharge').click(function(){
-		confirm("등록된 간편결제 계좌로 충전하시겠습니까?")
-	})
-	
-	$('#point2').change(function(){
-		console.log($('#point2').val());
-		console.log($('#point1').text());
-		var point1 = Number($('#point1').text());
-		var point2 = Number($('#point2').val());
-		$('._totalPayAmt').text(point1 + point2)
-	})
-})
-</script>
-<!-- 테스트 부분 -->
 	<input type="checkbox" class="hidden" id="c2">
 	<div class="agree_section">
 		<div class="checkall">
@@ -120,11 +115,8 @@ $(function(){
 			<a href="#" class="button _click(checkout.mobile.nsp.paymentSheet.create()) _stopDefault _doPayButton"><span class="sp_button_icon icon_check">결제하기</span></a></div>
 		</div>
 	</div>
-
 </div>
-
 </form>
-<!--  테스트 -->
 
 <div class="_tempLayer"></div>
 <div class="ly_bx" id="pointAlert" style="top:200px;display:none;">
