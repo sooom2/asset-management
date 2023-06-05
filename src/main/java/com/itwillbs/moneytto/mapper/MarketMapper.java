@@ -126,5 +126,7 @@ public interface MarketMapper {
 	//대화방있을때 룸코드 찾기
 	int roomCode(@Param("item_code") String item_code,@Param("id") String id);
 
+	int deleteItem(HashMap<String, String> item);
+
 
 }
