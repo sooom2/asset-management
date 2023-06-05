@@ -684,7 +684,7 @@ public class MarketController {
 		} else {
 			model.addAttribute("msg", "상품 삭제에 실패하였습니다.");
 			
-			return "";
+			return "fail_back";
 		}
 		
 	}

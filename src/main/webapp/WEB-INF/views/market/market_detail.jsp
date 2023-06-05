@@ -40,6 +40,18 @@ function toggleLike(element) {
 }
 
 
+
+//삭제하기 버튼 클릭 시 itemDeletePro 실행
+	$(function() {
+	  $(".SomeonesDeleteButton").click(function() {
+		    var item_code = $(this).data("cd");
+		    var confirmDelete = confirm("정말로 삭제하시겠습니까?");
+		    if (confirmDelete) {
+		      itemDeletePro(item_code);
+		    }
+		  });
+	});
+
 </script>
 </head>
 <body>
