@@ -29,8 +29,11 @@ $(function() {
 	$("#tradeButton").prop("disabled", true).css({"backgroundColor": "#BB2649", "border": "none"});
 
 
-	$(".active[value='거래중']").css({ });
-	
+	if (!$("#tradeButton").hasClass("active")) {
+		$("#tradeButton").css({ "background-color": "#F0F0F0","border": "none", "color": "#000"});
+	}
+		  
+		
     $('.chat_description').scrollTop($('.chat_description')[0].scrollHeight + 1000);
 
     let sId = "${sessionScope.sId}";
