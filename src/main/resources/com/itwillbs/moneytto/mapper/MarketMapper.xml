@@ -240,6 +240,7 @@
 		SELECT
 			market_chat_messages.*,
 			market_chat_rooms.chat_openDate,
+			market_chat_rooms.trade_date,
 			chat_mem_id,
 			seller.member_nickname as sell_nickname,
 			buyer.member_nickname as buy_nickname,
@@ -377,7 +378,7 @@
 	<select id="item_code" resultType="hashmap">
 		SELECT item_code
 			FROM market_chat_rooms
-				WHERE room_code=#{item_code}
+				WHERE room_code=#{room_code}
 	</select>
 	
 	<update id="updateStatus">
@@ -388,8 +389,42 @@
 			 	item_code=#{item_code} 
 	</update>
 	
+	<select id="tradeDate" resultType="hashmap">
+		SELECT trade_date
+			FROM market_chat_rooms
+				WHERE room_code=#{room_code}
+	</select>
 	
-	
+	<update id="updateTradeEnd">
+		UPDATE
+				item
+			SET
+				item_status = '거래완료'
+			WHERE
+				item_code IN (
+				SELECT
+					tradeEnd.item_code
+				FROM
+					(
+					SELECT
+						item.item_code
+					FROM
+						market_chat_rooms
+					LEFT JOIN item ON
+						item.item_code = market_chat_rooms.item_code
+					WHERE
+						item_status = '거래중'
+						AND trade_date &lt; CURDATE()
+			  ) as tradeEnd
+			)
+	</update>
+	<update id="tradeDateUpdate">
+		UPDATE market_chat_rooms
+			SET
+				trade_date = #{trade_date}
+			WHERE
+				room_code = #{room_code}
+	</update>
 	
 
 	<!-- 마켓 아이템 리스트  -->
@@ -459,6 +494,7 @@
 		   </choose>
 		   		, im.image_code  
 	</select>
+	
 	
 	 
 	<select id="itemDetail" resultType="hashmap">

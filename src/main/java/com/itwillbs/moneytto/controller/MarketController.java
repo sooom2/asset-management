@@ -171,8 +171,7 @@ public class MarketController {
 	// 아이템상태 업데이트
 	@GetMapping("itemStatus_update")
 	@ResponseBody
-	public void itemStatusUpdate(int room_code, String item_status,Model model,HttpSession session) {
-		
+	public void itemStatusUpdate(int room_code, String item_status,String trade_date,Model model,HttpSession session) {
 		// 1. 버튼을누르면 해당상대로 변경되야함  ok
 		// 2. 거래완료 버튼을 누르면  2-1 item에서 상품의 상태가 update 2-2 market_paid 에 insert되야함
 		// 3. 거래완료에서 다른버튼을 누르면 ex)다시 판매중이나 거래중으로바뀌면 market_paid에서 삭제되야함
@@ -182,6 +181,12 @@ public class MarketController {
 		
 		// 1-2 알아낸 상품코드로 아이템 상태를 업데이트함
 		int updateStatus = marketChatService.updateStatus(item_status,item_code.get("item_code"));
+
+		
+		// 1-3 market_chat_rooms 의 trade_date 업데이드함
+		int tradeDateUpdate = marketChatService.getTradeDateUpdate(trade_date,room_code);
+		
+		
 		
 		// item_status 가 '거래완료'일시 > market_paid 에 insert
 		HashMap<String, String> item_detail = marketChatService.getItemList(item_code.get("item_code")); 
@@ -189,6 +194,10 @@ public class MarketController {
 		HashMap<String, String> opponentId= marketChatService.getOpponentId(room_code, (String)session.getAttribute("sId"));
 		
 		String get_item_code = item_detail.get("item_code");
+		
+		
+		
+		
 		//여기까진됨
 		if(get_item_status.equals("거래완료")) {
 			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -313,7 +322,7 @@ public class MarketController {
 			// 1. 최근 room_code 조회
 			chatList = marketChatService.getMyChatRecentList(id);
 			System.out.println("nav1 ========================================");
-			System.out.println(chatList);
+			System.out.println();
 			System.out.println("nav1 ========================================");
 			if (chatList != null && chatList.size() > 0) {
 				System.out.println(chatList.get("member_id"));
@@ -370,17 +379,22 @@ public class MarketController {
 			model.addAttribute("chatTime",formattedDateTime);
 
 		}
+		if(chatList !=null) {
+			item = marketChatService.getItemList(item_code);
+			sellId = item.get("member_id");
+		}
 		
-		System.out.println("판매자!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		item = marketChatService.getItemList(item_code);
-		sellId = item.get("member_id");
+		// 거래일정이 지나면 상태를 거래완료로 바꾸게하기
+		int updateTradEnd = marketChatService.updateTradeEnd(); 
 		
 		// header에는 판매자 의정보!! ㅠㅠ
 		HashMap<String, String> sellDetail = marketChatService.getSellDetail(room_code);
-		System.out.println("=헷 갈.. 린 .. 다=============================================");
-		System.out.println(sellDetail);
-		System.out.println("==============================================");
-		
+		System.out.println(room_code);
+		HashMap<String, String> trade_date = marketChatService.getTradeDate(room_code);
+		System.out.println("=============== trade_date ======================");
+		System.out.println(trade_date);
+		System.out.println("=============== trade_date ======================");
+		model.addAttribute("trade_date",trade_date);
 		model.addAttribute("sellDetail",sellDetail);
 		model.addAttribute("item_subject",item_subject);
 		model.addAttribute("opponentId", opponentId);

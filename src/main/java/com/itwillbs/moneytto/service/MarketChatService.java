@@ -143,6 +143,17 @@ public class MarketChatService {
 	public int getRoomCode(String item_code,String id) {
 		return mapper.roomCode(item_code,id);
 	}
+	public int getTradeDateUpdate(String trade_date,int room_code) {
+		return mapper.tradeDateUpdate(trade_date,room_code);
+	}
+	public HashMap<String, String> getTradeDate(int room_code) {
+		System.out.println("service : "+room_code);
+		return mapper.tradeDate(room_code);
+	}
+	public int updateTradeEnd() {
+		// TODO Auto-generated method stub
+		return mapper.updateTradeEnd();
+	}
 	
 
 

@@ -13,19 +13,25 @@
 <link href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"	rel="stylesheet" />
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
 
-
 <script type="text/javascript">
+
+
+// 해야할거 > 송금하기누르면 메세지창에 해당물건 메세지 출력되면서 누르면 결제하기로 하고싶은디....
+// 안되면그냥 바로 결제로 연결
+
 $(function() {
+	
+	$("#tradeButton").prop("disabled", true).css({"backgroundColor": "#BB2649", "border": "none"});
 
+
+	$(".active[value='거래중']").css({ });
+	
     $('.chat_description').scrollTop($('.chat_description')[0].scrollHeight + 1000);
-
-
-
 
     let sId = "${sessionScope.sId}";
     let room_code = <%= request.getAttribute("room_code") %> ;
@@ -45,8 +51,9 @@ $(function() {
         
     });
 
-		
     $(".sch_date").click(function() {
+        $(".sch_box").datepicker("setDate", null);
+        $(".schdule").remove();
         var schBox = $(".sch_box");
         $(".sch_box").datepicker({
             dateFormat: 'yy-mm-dd',
@@ -63,36 +70,33 @@ $(function() {
             maxDate: "+30D",
             show: "fast",
             onSelect: function(dateText, inst) {
-                let scheduleButton = $(".scheduling").append("<input type='button' class='schdule' value='확인'>");
-
-                schedule = dateText;
+                let scheduleButton = $("<input type='button' class='schdule' value='확인'>");
+                trade_date = dateText;
                 $(".scheduling").append(scheduleButton);
-                
+
                 scheduleButton.click(function() {
-                    let sch = confirm(schedule + "으로 일정을 잡으시겠습니까?\n동의시 거래중으로 상태가 바뀝니다.");
-                    console.log("선택된 일정: " + schedule);
-                    
+                    let sch = confirm(trade_date + "으로 일정을 잡으시겠습니까?\n동의시 거래중으로 상태가 바뀝니다.");
+                    console.log("선택된 일정: " + trade_date);
+
                     if (sch) {
-                        //                     	거래중으로 상태변경
-//                         localStorage.setItem('scheduleValue', schedule);
-                        
-                        alert(room_code)
                         $.ajax({
                             type: "GET",
                             url: "itemStatus_update",
                             dataType: "text",
                             data: {
                                 item_status: "거래중",
-                                room_code: room_code
+                                room_code: room_code,
+                                trade_date: trade_date
                             },
                             success: function(result) {
+                                $('.trade img').remove();
                                 $('.card_box input.room_code[value="' + room_code + '"]').closest('.card_box').addClass('active');
-								$('.trade_status input.active').removeClass('active');
-								$('.trade_status input[value="거래중"]').addClass('active');
-								$('.schdule').remove();
-								$('.card_box.active .sch_box').val(schedule);
-								
-								$('div.card_box.active .profile div').text("거래중");
+                                $('.trade_status input.active').removeClass('active');
+                                $('.trade_status input[value="거래중"]').addClass('active');
+                                $('.schdule').remove();
+                                $('.card_box.active .sch_box').val(trade_date);
+                                $('div.card_box.active .profile div').text("거래중");
+                                $(".declaration").after("<div class='trade'  ><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
                             },
                             error: function(request, status, error) {
                                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -102,12 +106,15 @@ $(function() {
                 });
             }
         });
-
-        $(".sch_date").click(function() {
-            $(".sch_box").datepicker("show");
-        });
-
     });
+
+    $(".sch_date").click(function() {
+        $(".sch_box").datepicker("show");
+    });
+
+    
+    
+    
 
 
     //왼쪽 list 눌렸을때
@@ -147,9 +154,8 @@ $(function() {
                     let sell_id = result[0].sell_member_id;
                     let sell_nickname = result[0].sell_nickname;
                     let profileImg = sell_profileImg;
-
-
-
+					let trade_date = result[0].trade_date;
+					
                     let sellButton = $("<input>").attr("type", "button").addClass("sellTrade").val("거래완료");
                     // 상품판매상태 버튼
                     $(".trade_status").empty();
@@ -167,15 +173,23 @@ $(function() {
                         }
                     });
 
-
-                    if (sId == buy_id) {
+                    
+                    $("input.sch_box").val(trade_date);
+                    
+					if (sId == buy_id) {
                         $(".trade").empty();
                         $('.image_table img').attr('src', sell_profileImg);
                         profileImg = sell_profileImg;
                         $(".trade img").attr("src", "${path}/resources/images/chat/btn_trade_x2.png");
+						
 
-                        $(".declaration").after("<div class='trade'><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
-
+                        if(result[0].item_status == '거래중'){
+	                        $(".declaration").after("<div class='trade'  ><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+                        }else {
+                        	$(".trade").remove();
+                        }
+                        
+                        
                         // 파는사람일땐 거래완료를 하면안됨
                     } else if (sId == sell_id) {
                         let str = "<br><span style='font-size: 11px;  display: inline-block; float:right;margin-top:5px;font-weight: bolder;'><i class='fa-brands fa-bilibili'></i> 판매자는 거래완료버튼을 누를수 없습니다.</span>";
@@ -257,11 +271,26 @@ $(function() {
         }).then((arg) => { //then    
             $(".trade_status input").on("click", function() {
                 let item_status = $(this).val();
-                let result = confirm(item_status + "으로 변경하시겠습니까");
+				let clickedButton = $(this);
+				
+				if ($('input.sch_box').val() === "" && item_status === "거래중") {
+					alert("일정을 먼저 잡아주세요");
+					return; 
+				}
+
+				let result = confirm(item_status + "으로 변경하시겠습니까");
+				if(item_status == '거래중'){
+					$(".declaration").after("<div class='trade'><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+				} else {
+					$(".trade").remove();
+				}
+				
+				if(item_status == '판매중'){
+					$('input.sch_box').val("");
+				}
 
                 if (result) {
-                	
-                	let clickedButton = $(this);
+                	 
                     $.ajax({ //두번째 ajax
                         type: "GET",
                         url: "itemStatus_update",
@@ -276,7 +305,8 @@ $(function() {
                             clickedButton.addClass('active');
                             
                             $('div.card_box.active .profile div').text(item_status);
-                        	
+                           
+                           
                         },
                         error: function(request, status, error) {
                             alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -318,14 +348,10 @@ $(function() {
 
     });
 
-    // 거래중일때 날짜가 남아있게하기위해 ,, 근데 해당방에만 남아있어야하는디..
-//     let storedSchedule = localStorage.getItem('scheduleValue');
-//     if (storedSchedule) {
-//         $("input.sch_box").val(storedSchedule);
-//     }
 
     if ($("input.active").val() == "판매중") {
         $(".sch_box").val("");
+	     
     }
 
 
@@ -344,8 +370,8 @@ $(function() {
 
 
 
-    //채팅 시간
-    let today = new Date();
+//채팅 시간
+let today = new Date();
 let year = today.getFullYear();
 
 let month = today.getMonth() + 1;
@@ -410,12 +436,6 @@ $(function() {
 
 
     };
-    
-    
-	$('.moneyttoPay').on("click",function(){
-		
-		
-	});  
 
     $('#btnSend').on("click", function(evt) {
     	if($('#message').val()!=''){
@@ -456,6 +476,12 @@ $(function() {
         };
 
     });
+    
+    $(".moneyttoPay").one("click",function(){
+    	
+    	messages();
+    	
+    });	
 
 
 });
@@ -470,7 +496,6 @@ function messages() {
 
     //처음입장할때
     ws.onopen = function() {
-        //     	alert("입장");
         console.log('연결완료');
         console.log("방번호 : " + room_code + "아이템코드 :" + item_code + "target : " + target);
         const data = {
@@ -627,8 +652,8 @@ function messages() {
 								</div>
 							</div>
 							
-							<c:if test="${sellDetail.buy_member_id eq sessionScope.sId }">
-								<div class="trade">
+							<c:if test="${sellDetail.buy_member_id eq sessionScope.sId and chatList.item_status eq '거래중' }">
+								<div class="trade"  >
 									<div class="moneyttoPay">
 										<img src="${path }/resources/images/chat/btn_trade_x2.png" alt="송금이미지">
 									</div>
@@ -641,12 +666,18 @@ function messages() {
 							        <a class="sch_date">
 							            <i class="fa-regular fa-calendar"></i> 일정잡기 
 							        </a>
-							        <input type="text" class="sch_box" style="border: none; width: 90px;" readonly/>
+							        <input type="text" class="sch_box" style="border: none; width: 90px;" readonly value="${trade_date.trade_date }"/>
 							    </div>
 							    <div class="trade_status">
-		
 								    <input type="button" class="${chatList.item_status eq '판매중' ? 'active' : ''}" value="판매중">
-								    <input type="button" class="${chatList.item_status eq '거래중' ? 'active' : ''}" value="거래중">
+								    <c:choose>
+									    <c:when test="${trade_date.trade_date eq null }">
+										    <input type="button" class="${chatList.item_status eq '거래중' ? 'active' : ''}" value="거래중" id="tradeButton" disabled="disabled" style="border: none;background-color: #f0f0f0;color: #000" onclick="tradeBtn()">
+									    </c:when>
+									    <c:otherwise>
+										    <input type="button" class="${chatList.item_status eq '거래중' ? 'active' : ''}" value="거래중" id="tradeButton" >
+									    </c:otherwise>
+								    </c:choose>
 								    <c:choose>
 								    	<c:when test="${sellDetail.sell_member_id eq sessionScope.sId }">
 									    	<input type="button" class="sellTrade" value="거래완료" disabled="disabled"><br>
@@ -793,7 +824,7 @@ function messages() {
 							        <a class="sch_date">
 							            <i class="fa-regular fa-calendar"></i> 일정잡기 
 							        </a>
-							        <input type="text" class="sch_box" style="border: none; width: 98px;" readonly/>
+							        <input type="text" class="sch_box" style="border: none; width: 98px;" readonly value="${trade_date.trade_date }"/>
 							    </div>
 							    <div class="trade_status">
 		

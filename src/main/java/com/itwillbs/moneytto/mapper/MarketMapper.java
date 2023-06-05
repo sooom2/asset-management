@@ -128,5 +128,13 @@ public interface MarketMapper {
 
 	int deleteItem(HashMap<String, String> item);
 
+	// 거래일정 업데이트
+	int tradeDateUpdate(@Param("trade_date") String trade_date,@Param("room_code") int room_code);
+
+	// 거래일정 찾기
+	HashMap<String, String> tradeDate(int room_code);
+
+	int updateTradeEnd();
+
 
 }
