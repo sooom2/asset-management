@@ -618,28 +618,34 @@ function wish(){
 	
 	event.preventDefault();
 	
-	var $btnWish = $(this)
-	var item_code = $(this).closest(".item").attr("data-cd");
-	console.log(item_code);
-	$.ajax({
-   		url : 'clickWish',
-   		type : 'POST',
-   		data : {item_code : item_code}
-	}).done(function(){
-		$btnWish.toggleClass("wish");
-		
-		if($btnWish.hasClass("wish")){
-			  				$btnWish.attr({'src' : 'resources/images/main/ico_heart_off_x3.png',
-							alt : '찜하기 완료'
-						})	
-		}else{
-			$btnWish.attr({'src' : 'resources/images/main/ico_heart_on_x3.png',
-							alt : '찜하기'
-						})
-		}
-	}).fail(function(){
+	var $btnWish = $(this);
+	var item_code = $btnWish.closest(".item").attr("data-cd");
+	
+	if(${not empty sessionScope.sId}){
+		$.ajax({
+	   		url : 'clickWish',
+	   		type : 'POST',
+	   		data : {item_code : item_code}
+		}).done(function(){
+			$btnWish.toggleClass("wish");
+			
+			if($btnWish.hasClass("wish")){
+				$btnWish.attr({
+					'src' : 'resources/images/main/ico_heart_off_x3.png',
+					alt : '찜하기 완료'
+				});	
+			}else{
+				$btnWish.attr({
+					'src' : 'resources/images/main/ico_heart_on_x3.png',
+					alt : '찜하기'
+				});
+			}
+		}).fail(function(){
+			
+		})	
+	}else{
 		alert("로그인 후 이용할 수 있습니다.");
-	})
+	}
 }	
 </script>
 <jsp:include page="../footer.jsp" />
