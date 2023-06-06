@@ -1078,3 +1078,127 @@
     background-color:#BB2649 !important;
     
 }
+/*신고 모달 */
+
+.detail_report, .overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.75);
+    z-index: 9999;
+    outline: 0;
+}
+
+
+
+.modal_main {
+    width: 100%;
+    height: 100%;
+    outline: 0;
+}
+
+.modal_parent {
+    display: table;
+    height: 77%;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.modal_parent .modal_container {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.ReportWrapper {
+    width: 490px;
+    margin: 0px auto;
+    background: rgb(255, 255, 255);
+    border-radius: 17px;
+    border: 1px solid rgb(25, 31, 40);
+    height: 650px;
+}
+
+.ReportCloseIcon {
+    width: 17px;
+    height: 17px;
+    display: flex;
+    cursor: pointer;
+    margin: 34px 34px 10px auto;
+}
+
+.report_title {
+    letter-spacing: 0px;
+    font-weight: 800;
+    font-size: 1.75rem;
+    font-family: "Pretendard Variable";
+    color: rgb(25, 31, 40);
+    -webkit-box-align: center;
+    align-items: center;
+    margin: 0px 68px;
+}
+
+.report_list_wrapper {
+    margin: 34px 68px 32px;
+}
+
+.report_list_box {
+    display: flex;
+    cursor: pointer;
+}
+
+.report_check_icon {
+    /* line-height: 23px; */
+    width: 18px;
+    height: 18px;
+    margin: 8px 12px 20px;
+}
+
+.report_list {
+    letter-spacing: -0.4px;
+    font-weight: 500;
+    font-size: 15px;
+    font-family: "Pretendard Variable";
+    line-height: 25px;
+    color: rgb(51, 61, 75);
+    text-align: left;
+    margin-top: 5px;
+}
+
+.report_btn {
+    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    font-family: "Pretendard Variable";
+    line-height: 100%;
+    color: rgb(255, 255, 255);
+    padding: 11px 53px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 0px 67px 60px 69px;
+    cursor: pointer;
+    background: #ffd6e0;
+}
+
+
+
+
+.trade_status input[type="button"] {
+    padding: 4px 7px;
+    border-radius: 6px;
+    border: none;
+}
+
+.trade_status .active {
+    background: #bb2649;
+    color: #fff!important;
+    border: 1px solid #b6b6b6;
+}
+
+.trade_status input[type="button"] {
+    cursor: pointer;
+}
+

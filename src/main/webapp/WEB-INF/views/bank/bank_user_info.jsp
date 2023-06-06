@@ -26,8 +26,8 @@
 	</c:choose>
 	<h1>핀테크 사용자 정보</h1>
 	<h3>${userInfo.user_name } 고객님의 계좌 목록(사용자 일련번호 : ${userInfo.user_seq_no })</h3>
-	<table border="1">
-		<tr>
+	<table border="1" style="border-collapse: collapse;">
+		<tr style="background-color: #f0f0f0">
 			<th>계좌별칭</th>
 			<th>계좌번호</th>
 			<th>은행명</th>

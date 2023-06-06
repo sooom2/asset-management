@@ -24,8 +24,6 @@ public class MainController {
 	@Autowired
 	private MemberService memberService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
-	
 	@RequestMapping(value = "main", method = RequestMethod.GET)
 	public String main(Model model,HttpSession session) {
 		
@@ -36,8 +34,9 @@ public class MainController {
 		
 		model.addAttribute("itemList", itemList);
 		
-		logger.info("itemList : " + itemList.toString());
-		
+		System.out.println("==================================");
+		System.out.println("itemList : " + itemList);
+		System.out.println("==================================");
 		
 		return "main";
 	}

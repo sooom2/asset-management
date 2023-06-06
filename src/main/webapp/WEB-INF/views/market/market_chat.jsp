@@ -21,10 +21,81 @@
 <script type="text/javascript">
 
 
+
 // 해야할거 > 송금하기누르면 메세지창에 해당물건 메세지 출력되면서 누르면 결제하기로 하고싶은디....
 // 안되면그냥 바로 결제로 연결
 
 $(function() {
+	
+	//============================================================================================
+	// 신고관련
+	$(document).on("click", ".declaration div", function(e) {
+		$(".ReactModalPortal").show();
+	});
+	
+	// 신고 상세
+	$(document).on("click", ".report_check_icon", function(e) {
+	    var originalImage = "${path}/resources/images/chat/ico_unChecked.png";
+	    var activeImage = "${path}/resources/images/chat/ico_checked.png";
+	  
+	    // 모든 아이콘의 이미지를 원래 이미지로 초기화
+	    $(".report_check_icon").attr("src", originalImage);
+	  
+	    // 선택한 아이콘의 이미지를 활성화 이미지로 변경
+	    $(this).attr("src", activeImage);
+	  
+	    var reportType = $(this).attr("id");
+	    $("#report_type").val(reportType);
+	  
+	    $(".report_btn").css("background", "#bb2649");
+	});
+	
+	
+	$(document).on("change", "#textarea", function(e) {
+		$("#report_content").val($(this).val());
+	});
+	
+	
+	
+	// 신고하기 버튼
+	$(document).on("click", ".report_btn", function(e) {
+		var reportType = $("#report_type").val();
+		
+		if(reportType == "") {
+			alert("신고 사유를 선택해주세요!");
+		} else {
+			alert("신고 접수 되었습니다!");
+			report();
+			$(".ReactModalPortal").remove();
+		}
+	});
+	
+	// 모달창 닫기
+	$(document).on("click", ".close", function(e) {
+		$(".ReactModalPortal").remove();
+		location.reload();	
+	});
+	
+	
+	function report() {
+		var id = "<%=(String)session.getAttribute("sId")%>";
+		var opponentId = "${opponentId.opponent_id}";
+		var reportType = $("#report_type").val();
+		var reportContent = $("#report_content").val();
+		alert(reportContent);
+		$.ajax({													
+				type: "GET",
+				url: "report",
+				data: { 
+					targetId : opponentId,
+					reportType : reportType,
+					reportContent : reportContent
+				},
+				dataType: "json"
+			});
+	}
+	
+	//============================================================================================
 	
 
 	
@@ -432,12 +503,13 @@ minutes = String(minutes).padStart(2, '0');
 let formatDate = year + "-" + month + "-" + day + " " + amPm + " " + hours + ":" + minutes;
 
 let room_code;
+let item_code;
 let target;
 var ws = null;
 var socket = null;
 $(function() {
 
-
+	
 
     ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
     socket = ws;
@@ -606,9 +678,10 @@ function messages() {
             $(".active .time_ago").text(year + "-" + month + "-" + day + " " + amPm + " " + hours + ":" + minutes);
         };
         $('.chat_description').scrollTop($('.chat_description')[0].scrollHeight + 100);
+
+    	
     };
 
-    //     location.reload();
 }
 
 
@@ -617,7 +690,62 @@ function messages() {
 </script>
 </head>
 <body>
+<input type="hidden" id="report_type" name="report_type" value=""/>
+<input type="hidden" id="report_content" name="report_content" value=""/>
 <jsp:include page="../nav.jsp" />
+
+		<!-- 신고 모달창 -->
+		<div class="ReactModalPortal" style="display: none;">
+			<div
+				class="detail_report">
+				<div class="modal_main" tabindex="-1" role="dialog">
+					<div class="modal_parent">
+						<div class="modal_container">
+							<div class="ReportWrapper">
+								<img src="${path }/resources/images/chat/ico_close_modal.png" alt="닫기 아이콘" class="ReportCloseIcon close">
+								<div class="report_title">신고 사유를 선택해 주세요.</div>
+								<div class="report_list_wrapper">
+									<div class="report_list_box">
+										<img src="${path }/resources/images/chat/ico_unChecked.png" id="카톡/오픈채팅 등 당근채팅밖에서 대화를 유도해요" alt="체크박스 아이콘" class="report_check_icon">
+										<div class="report_list">카톡/오픈채팅 등 당근채팅밖에서 대화를 유도해요</div>
+									</div>
+									<div class="report_list_box">
+										<img src="${path }/resources/images/chat/ico_unChecked.png" id="신분증/계좌와 같은 개인정보를 수집하고, 잠적했어요" alt="체크박스 아이콘" class="report_check_icon">
+										<div class="report_list">신분증/계좌와 같은 개인정보를 수집하고, 잠적했어요</div>
+									</div>
+									<div class="report_list_box">
+										<img
+											src="${path }/resources/images/chat/ico_unChecked.png" id="불법적이거나 불건전한 업무를 지시해요" alt="체크박스 아이콘" class="report_check_icon">
+										<div class="report_list">불법적이거나 불건전한 업무를 지시해요</div>
+									</div>
+									
+									<div class="report_list_box">
+										<img
+											src="${path }/resources/images/chat/ico_unChecked.png" id="욕설/비하/혐오 발언을 해요" alt="체크박스 아이콘" class="report_check_icon">
+										<div class="report_list">욕설/비하/혐오 발언을 해요</div>
+									</div>
+									<div class="report_list_box">
+										<img
+											src="${path }/resources/images/chat/ico_unChecked.png" id="성희롱을 해요" alt="체크박스 아이콘" class="report_check_icon">
+										<div class="report_list">성희롱을 해요</div>
+									</div>
+									<div class="report_list_box">
+										<img
+											src="${path }/resources/images/chat/ico_unChecked.png" id="약속을 지키지 않았어요" alt="체크박스 아이콘" class="report_check_icon">
+										<div class="report_list">약속을 지키지 않았어요</div>
+									</div>
+									<div class="report_content">
+										<textarea id="textarea" rows="5" cols="40" placeholder="신고 상세 사유를 입력해주세요." style="resize: none;"></textarea>
+									</div>
+								</div>
+								<div class="report_btn">신고하기</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 
 		<!-- 채팅내역없을때 -->
 		<c:if test="${empty param.item_code and empty myChatList}">
@@ -662,7 +790,7 @@ function messages() {
 											<div class="description">${chatList.get('chat_content') }</div>
 											<div class="time_ago">${chatTime}</div>	
 											<input type="hidden" value="${chatList.get('room_code')}" class="room_code">
-											<input type="hidden" value="${chatList.get('item_code')}" class="item_code">
+											<input type="hidden" value="${chatList.get('item_code')}" class="item_code" data-item-code="${chatList.get('item_code')}">
 										</div>
 									</li>
 								<div class="etc_dots"></div>
@@ -790,7 +918,7 @@ function messages() {
 									                <div class="chat_opponent_title">${opponentId.opponent_nickname }</div>
 									                <div class="chat_opponent_message">
 									                    <span>${chatDetail.chat_content }</span>
-									                    <div class="chat_opponent_timeago"><fmt:formatDate value="${formattedDate}" pattern="a hh:mm" /></div>
+									                    <div class="chat_opponent_timeago">${chatAreaTime }</div>
 									                </div>
 									            </div>
 									        </div>
