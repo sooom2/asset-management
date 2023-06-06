@@ -1,6 +1,7 @@
 package com.itwillbs.moneytto.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,11 +21,14 @@ public class CommunityController {
 	private CommunityService service;
 	
 	@GetMapping(value = "commBoard")
-	public String commBoard(Model model,HttpSession session) {
-		
-		
-		return "board/community";
+	public String commBoard(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
+	    List<HashMap<String, String>> boardList = service.boardList(board);
+
+	    model.addAttribute("boardList", boardList); // boardList를 모델에 추가
+
+	    return "board/community";
 	}
+
 	
 	
 	@GetMapping(value = "commBoardWrite")

@@ -19,5 +19,8 @@
 			)
 	</insert>
 
+	<select id = "boardList" resultType="hashmap">
+		SELECT * FROM community
+	</select>
 	
 </mapper>

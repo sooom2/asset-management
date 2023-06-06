@@ -44,22 +44,16 @@
 					<th id="board-header">날짜</th>
 					<th id="board-header">조회수</th>
 				</tr>
-				<%-- 예시 데이터 --%>
-				<tr>
-					<td id="board-data">1</td>
-					<td id="board-data"><a href="글상세페이지URL">게시글 제목</a></td>
-					<td id="board-data">작성자 이름</td>
-					<td id="board-data">2023-06-01</td>
-					<td id="board-data">100</td>
-				</tr>
-				<tr>
-					<td id="board-data">2</td>
-					<td id="board-data"><a href="글상세페이지URL">게시글 제목</a></td>
-					<td id="board-data">작성자 이름</td>
-					<td id="board-data">2023-05-31</td>
-					<td id="board-data">50</td>
-				</tr>
-				<%-- 여기에 반복문을 통해 실제 데이터를 출력하는 로직을 추가하세요 --%>
+			    <%-- boardList를 반복하여 데이터를 출력 --%>
+			    <c:forEach items="${boardList}" var="boardList">
+			        <tr>
+			            <td id="board-data">${boardList.comm_code}</td>
+			            <td id="board-data"><a href="글상세페이지URL">${boardList.comm_title}</a></td>
+			            <td id="board-data">${boardList.member_id}</td>
+			            <td id="board-data">${boardList.comm_date}</td>
+			            <td id="board-data">${boardList.comm_count}</td>
+			        </tr>
+			    </c:forEach>
 			</table>
 		</form>
 	</div>

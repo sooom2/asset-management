@@ -1,6 +1,7 @@
 package com.itwillbs.moneytto.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,10 @@ public class CommunityService {
 	
 	public int insertBoard(HashMap<String, String> board) {
 		return mapper.insertBoard(board);
+	}
+
+	public List<HashMap<String, String>> boardList(HashMap<String, String> board) {
+		return mapper.boardList(board);
 	}
 
 
