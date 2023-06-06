@@ -44,12 +44,31 @@ function toggleLike(element) {
 //삭제하기 버튼 클릭 시 itemDeletePro 실행
 	$(function() {
 	  $(".SomeonesDeleteButton").click(function() {
-		    var item_code = $(this).data("cd");
-		    var confirmDelete = confirm("정말로 삭제하시겠습니까?");
-		    if (confirmDelete) {
-		      itemDeletePro(item_code);
-		    }
-		  });
+	    var item_code = $(this).data("cd");
+	    var confirmDelete = confirm("정말로 삭제하시겠습니까?");
+	    if (confirmDelete) {
+	      itemDeleteRequest(item_code);
+	    }
+	  });
+
+	  function itemDeleteRequest(item_code) {
+	    $.ajax({
+	      type: "POST",
+	      url: "itemDeletePro",
+	      data: { item_code: item_code },
+	      success: function(response) {
+	        if (response === "success") {
+	          alert("상품이 삭제되었습니다.");
+	          window.location.href = "main";  // 메인 페이지로 이동
+	        } else {
+	          alert("상품 삭제에 실패하였습니다.");
+	        }
+	      },
+	      error: function() {
+	        alert("상품 삭제 중 오류가 발생하였습니다.");
+	      }
+	    });
+	  }
 	});
 
 </script>
