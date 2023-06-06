@@ -12,15 +12,15 @@
 <script>
 function logout() {
 	// 카카오 로그인 아닐시 session "token" = true
-	if(${sessionScope.token == true}){
-		let isLogout = confirm("로그아웃 하시겠습니까?");
+// 	if(${sessionScope.token == true}){
+// 		let isLogout = confirm("로그아웃 하시겠습니까?");
 		
-		if(isLogout) {
-			location.href = "logout";
-		}
-	} else {
-		location.href="https://kauth.kakao.com/oauth/logout?client_id=bf0c05681627cc5d65f40192f843de1b&logout_redirect_uri=http://192.168.3.126:8080/movie/logout";
-	}
+// 		if(isLogout) {
+// 			location.href = "logout";
+// 		}
+// 	} else {
+// 		location.href="https://kauth.kakao.com/oauth/logout?client_id=bf0c05681627cc5d65f40192f843de1b&logout_redirect_uri=http://192.168.3.126:8080/movie/logout";
+// 	}
 }
 function payment(){
 	window.open("payment", "_blank","width=500,height=830");

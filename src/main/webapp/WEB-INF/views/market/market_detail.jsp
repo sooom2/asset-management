@@ -11,6 +11,7 @@
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.4.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/moment.js"></script>
+<script type="text/javascript" src="${path }/resources/js/wish.js"></script>
 <script type="text/javascript">
 
 $(function() {
@@ -80,7 +81,7 @@ function toggleLike(element) {
 <input type="hidden" id="report_content" name="report_content" value=""/>
 <input type="hidden" id="session_id" name="session_id" value="${sId }"/>
 <jsp:include page="../nav.jsp" />
-	<div id="next">
+	<div id="next" data-cd="${marketItem.item_code }" class="item">
 		<div class="layoutChildren"></div>
 		<div class="newDetailWrapper">
 			<div class="newDetailMain">
@@ -227,7 +228,14 @@ function toggleLike(element) {
 <!-- 								<div class="WishText">0</div> --> 
 <!-- 							</div> -->
 								<div class="WishWrapper">
-								  <img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png" alt="좋아요 아이콘" class="WishIcon" onclick="toggleLike(this)">
+								  <c:choose>
+	                       	 		<c:when test="${not empty item.wish_code }">
+	                       	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg" />
+	                           		</c:when>
+	                	 		   	<c:otherwise>
+	                      	 		   	<img src="${path }/resources/images/main/ico_heart_off_x3.png"  alt="좋아요 아이콘" class="WishWishImg wish" >
+	                      	 		</c:otherwise>
+	                             </c:choose>
 								</div>
 								<c:choose>
 									<c:when test="${marketItem.member_id eq sessionScope.sId}">
