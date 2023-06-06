@@ -81,9 +81,12 @@ public class MarketService {
 
 
 	public int deleteItem(HashMap<String, String> item) {
-		// TODO Auto-generated method stub
 		return mapper.deleteItem(item);
 	}
+
+
+
+		
 	
 	
 }

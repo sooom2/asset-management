@@ -41,6 +41,8 @@ public interface MemberMapper {
 
 	List<HashMap<String, String>> selectWish(@Param("member_id") String member_id,@Param("wish_item_code") String wish_item_code);
 
+	int updateQuitMember(HashMap<String, String> member);
+
 	
 	
 }

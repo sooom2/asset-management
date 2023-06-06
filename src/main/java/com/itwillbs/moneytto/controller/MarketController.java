@@ -715,24 +715,31 @@ public class MarketController {
 	}
 
 
-	//상품 삭제
+	// 상품 삭제
 	@PostMapping(value = "itemDeletePro")
-	public String itemDeletePro(@RequestParam HashMap<String, String> item,HttpSession session, Model model) {
-		int deleteCount = service.deleteItem(item);
-		
-		if(deleteCount > 0) {
-			 model.addAttribute("msg", "상품이 삭제 되었습니다.");
-            model.addAttribute("target", "main");
-            
-            return "success";
-            
-		} else {
-			model.addAttribute("msg", "상품 삭제에 실패하였습니다.");
-			
-			return "fail_back";
-		}
-		
+	@ResponseBody
+	public String itemDeletePro(@RequestParam("item_code") String itemCode, HttpSession session) {
+	    String id = (String) session.getAttribute("sId");
+	    
+	    if (id == null) {
+	        return "fail_back";
+	    }
+	    
+	    HashMap<String, String> item = new HashMap<>();
+	    item.put("item_code", itemCode);
+	    item.put("id", id);
+	    
+	    int deleteCount = service.deleteItem(item);
+	    
+	    if (deleteCount > 0) {
+	        service.removeImage(itemCode);
+	        return "success";
+	    } else {
+	        return "fail_back";
+	    }
 	}
+
+
 
 
 	

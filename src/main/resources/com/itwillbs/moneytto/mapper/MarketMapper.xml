@@ -734,5 +734,20 @@
 				)
 	</insert>
 	
+		<!-- 상품 아이템 삭제 -->
+	<delete id ="deleteItem">
+	    DELETE FROM item
+	    WHERE
+	        1=1
+	        AND item_code = #{item_code}
+	        AND member_id = #{id}
+	        AND (item_status = '판매중' OR item_status = '거래완료')
+				
+	</delete>
+	
+	
+	
+	
+	
 </mapper>
 

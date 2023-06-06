@@ -220,7 +220,7 @@ public class BankController {
 			model.addAttribute("msg", "포인트 충전에 실패하였습니다. 다시 확인해주세요.");
 			
 		}else {
-			model.addAttribute("msg", trade_date + "포인트 충전되었습니다.");
+			model.addAttribute("msg", trade_amount + "포인트 충전되었습니다.");
 			model.addAttribute("isClose", true);
 		}
 		

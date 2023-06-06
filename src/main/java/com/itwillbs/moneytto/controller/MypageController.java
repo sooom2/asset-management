@@ -174,41 +174,41 @@ public class MypageController {
 		
 		//세션아이디 저장
 		String id = (String)session.getAttribute("sId");
-		System.out.println(member);
-//		String password = quit.get("member_pw");
-//		
-//		//아이디와 일치하는 레코드의 패스워드 조회
-//		String dbPasswd = service.getPasswd(id);
-//		
-//		System.out.println("평문 암호 : " + password + ", 해싱 암호 : " + dbPasswd);
-//		
-//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//		
-//		if(passwordEncoder.matches(password, dbPasswd)) {	
-//			int deleteCount = service.quitMember(quit);
-//			
-//			if(deleteCount > 0) {
-//				
-//				session.invalidate();
-//				model.addAttribute("msg", "탈퇴가 완료되었습니다!");
-//				model.addAttribute("target", "main");
-//				
-//				return "success";
-//			} else {
-//				
-//				model.addAttribute("msg", "탈퇴 실패!");
-//				return "fail_back";
-//				
-//			}
-//		
-//		} else {
-//			
-//			model.addAttribute("msg", "권한이 없습니다!");
-//			return "fail_back";
-//		
-//		}
-		return "";
+		if(id == null) {
+			model.addAttribute("msg", "권한이 없습니다!");
+			return "fail_back";
+		}
+		
+		
+		String password = member.get("member_pw");
+		
+		//아이디와 일치하는 레코드의 패스워드 조회
+		String dbPasswd = memberService.getMember(id).get("member_pw");
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		
+		if(passwordEncoder.matches(password, dbPasswd)) {
+			member.put("member_id", id);
+			int updateCount = memberService.quitMember(member);
+			
+			if(updateCount > 0) {
+				
+				session.invalidate();
+				model.addAttribute("msg", "탈퇴가 완료되었습니다!");
+				model.addAttribute("target", "main");
+				
+				return "success";
+			} else {
+				
+				model.addAttribute("msg", "탈퇴 제대로 이루어지지 않았습니다. \n 비밀번호를 다시 확인해주세요");
+				return "fail_back";
+				
+			}
+		}else {
+			model.addAttribute("msg", "비밀번호를 다시 확인해주세요");
+			return "fail_back";
+		}
+		
 	}
 	
-
 }

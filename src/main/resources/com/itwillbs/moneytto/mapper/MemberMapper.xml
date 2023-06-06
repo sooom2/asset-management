@@ -194,4 +194,22 @@
 			buy_id = #{member_id} 
 	</select>
 <!-- 마이페이지 조회 -->	
+	
+	<update id="updateQuitMember" >
+		UPDATE 
+			member
+		SET
+			member_name ='탈퇴한 회원입니다.'
+			,member_nickname = '탈퇴한 회원입니다.'
+			,member_email = ''
+			,member_address = ''
+			,member_address_detail = '' 
+			,member_bday = ''
+			,member_tel = ''
+			,member_image = 'http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg'
+		WHERE
+			 member_id = #{member_id}
+		
+	</update>
+
 </mapper>

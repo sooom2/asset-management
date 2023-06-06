@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.itwillbs.moneytto.mapper.MarketMapper;
 import com.itwillbs.moneytto.mapper.MemberMapper;
 
 import net.nurigo.java_sdk.api.Message;
@@ -179,4 +178,10 @@ public class MemberService {
 		return null;
 	}
 	
+	// 회원 탈퇴
+	public int quitMember(HashMap<String, String> member) {
+		
+		return mapper.updateQuitMember(member);
+	}
+
 }
