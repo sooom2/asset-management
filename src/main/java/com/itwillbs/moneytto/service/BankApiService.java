@@ -1,5 +1,6 @@
 package com.itwillbs.moneytto.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class BankApiService {
 	}
 
 	// 계좌 상세정보(잔고) 조회 요청
-	public AccountDetailVO requestAccountDetail(Map<String, String> map) {
+	public Map<String, String> requestAccountDetail(Map<String, String> map) {
 		// BankApiClient - requestAccountDetail() 메서드 호출 후 결과값 리턴
 		return apiClient.requestAccountDetail(map);
 	}

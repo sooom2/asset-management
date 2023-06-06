@@ -43,7 +43,6 @@
 			account
 		SET
 			fintech_use_num = #{fintech_use_num}
-			,balance_amt		= #{balance_amt}
 		WHERE
 			id = #{member_id}			
 	</update>
@@ -74,8 +73,20 @@
 			)
 	</insert>
 	
+	<update id="updatePointAmount">
+		UPDATE member
+			SET member_point = (
+				 SELECT t.member_point + #{trade_amount}
+					  FROM (
+					    SELECT member_point
+					    FROM member
+					    WHERE member_id = #{id}
+					  ) AS t
+			)
+			WHERE member_id = #{id}
+	</update>
+	
 </mapper>
-
 
 
 

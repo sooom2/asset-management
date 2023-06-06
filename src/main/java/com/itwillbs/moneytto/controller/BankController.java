@@ -1,6 +1,9 @@
 package com.itwillbs.moneytto.controller;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -107,7 +110,7 @@ public class BankController {
 		
 		// access_token 이 null 일 경우 "계좌 인증 필수" 메세지 출력 후 이전페이지로 돌아가기
 		if(access_token == null) {
-			model.addAttribute("msg", "계좌 인증 필수!");
+			model.addAttribute("msg", "계좌 인증이 필요합니다.");
 			return "fail_back";
 		}
 		
@@ -115,10 +118,15 @@ public class BankController {
 		// BankApiService - requestUserInfo() 메서드 호출
 		// => 파라미터 : 엑세스토큰, 사용자번호   리턴타입 : ResponseUserInfoVO(userInfo)
 		ResponseUserInfoVO userInfo = apiService.requestUserInfo(access_token, user_seq_no);
+		
 		System.out.println(userInfo);
 		
 		// Model 객체에 ResponseUserInfoVO 객체 저장
 		model.addAttribute("userInfo", userInfo);
+		System.out.println("==================================");
+		System.out.println("/bank_userInfo : " + userInfo);
+		System.out.println("==================================");
+		
 		
 		return "bank/bank_user_info";
 	}
@@ -142,7 +150,7 @@ public class BankController {
 		// BankApiService - requestAccountDetail() 메서드를 호출하여
 		// 계좌 상세정보 조회 요청
 		// => 파라미터 : Map 객체   리턴타입 : AccountDetailVO(account)
-		AccountDetailVO account = apiService.requestAccountDetail(map);
+		Map<String, String> account = apiService.requestAccountDetail(map);
 		
 		// 응답코드(rsp_code)가 "A0000" 가 아니면 에러 상황이므로 에러 처리
 		// => "정보 조회 실패!" 출력 후 이전페이지로 돌아가기(fail_bank)
@@ -150,8 +158,8 @@ public class BankController {
 		if(account == null) {
 			model.addAttribute("msg", "정보 조회 실패");
 			return "fail_back";
-		} else if(!account.getRsp_code().equals("A0000")) {
-			model.addAttribute("msg", "정보 조회 실패 - " + account.getRsp_message());
+		} else if(!account.get("rsp_code").equals("A0000")) {
+			model.addAttribute("msg", "정보 조회 실패 - " + account.get("rsp_message"));
 			return "fail_back";
 		}
 		
@@ -170,28 +178,56 @@ public class BankController {
 	public String withdraw(
 			@RequestParam Map<String, String> map, HttpSession session, Model model) {
 		
+		String id = (String)session.getAttribute("sId");
+		
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용해주세요.");
+			return "fail_back";
+		} 
+		
 		map.put("access_token", (String)session.getAttribute("access_token"));
 		
 		// TODO
 		// map에 들어갈 요소 
 		// 사용자의 핀테크 이용번호 받아서 admin 계정의 핀테크 이용번호로 충전하는 느낌
-		System.out.println(map);
 		
-		AccountWithdrawResponseVO result = apiService.withdraw(map);
 		
+		// 계좌번호 미인증이라고 계속 오류떠서 못하고 있는중..
+		
+//		AccountWithdrawResponseVO result = apiService.withdraw(map);
 		String trade_code = UUID.randomUUID().toString().substring(0, 8);
-		String trade_amount = result.getTran_amt();
-		String trade_date = result.getBank_tran_date();
+//		String trade_amount = result.getTran_amt();
+//		String trade_date = result.getBank_tran_date();
+//		System.out.println("result = " + result);
 		
+		//임시로 넣기
+		String trade_amount = map.get("charge_point");
+		String trade_date = LocalDate.now().toString();
+		//
 		map.put("trade_code", trade_code);
 		map.put("trade_amount", trade_amount);
 		map.put("trade_date", trade_date);
-//		int insertCount = bankService.writeHistory(map);
+		
+		System.out.println("==================================");
+		System.out.println(map);
+		System.out.println("==================================");
+		int insertCount = bankService.writeHistory(map);
 		
 		
-		System.out.println("result = " + result);
+		// TODO
+		// member_point bigint타입으로 바꾸기..
+		if(insertCount == 0) {
+			model.addAttribute("msg", "포인트 충전에 실패하였습니다. 다시 확인해주세요.");
+			
+		}else {
+			model.addAttribute("msg", trade_date + "포인트 충전되었습니다.");
+			model.addAttribute("isClose", true);
+		}
 		
-		return "";
+		
+		
+		
+		return "fail_back";
 		
 	}
 	
@@ -261,22 +297,7 @@ public class BankController {
 		public String test(HttpSession session
 								, Model model
 								,@RequestParam Map<String,String> map) {
-			/* 
-			 * 들어오는 요소 : 
-			 * id
-			 * charge_Point
-			 * 
-			 * withdraw로 옮길것
-			 * 
-			 * id 자체는 withdraw controller에서 xml 작업용으로 쓰일거고
-			 * 
-			 * charge_Point는 api 서비스에서 사용될 차감액이 될 것
-			 * 근데 이거 .. 어케 써먹음...
-			 * 싶은 생각만 주말내내..
-			 *  */
-			System.out.println("test : " + map);
-
-			model.addAttribute("msg", "헥헥");
+			
 			return "fail_back";
 		}
 }

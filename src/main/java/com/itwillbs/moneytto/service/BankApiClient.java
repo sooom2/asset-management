@@ -1,5 +1,6 @@
 package com.itwillbs.moneytto.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -7,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,7 +22,6 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.itwillbs.moneytto.generator.BankValueGenerator;
-import com.itwillbs.moneytto.vo.AccountDetailVO;
 import com.itwillbs.moneytto.vo.AccountWithdrawResponseVO;
 import com.itwillbs.moneytto.vo.ResponseTokenVO;
 import com.itwillbs.moneytto.vo.ResponseUserInfoVO;
@@ -120,16 +121,22 @@ public class BankApiClient {
 		// 파라미터3) HttpEntity 객체
 		// 파라미터4) 응답 데이터를 저장할 VO 클래스 타입 - .class 형식으로 지정
 		// 리턴타입 : ResponseEntity<ResponseUserInfoVO>
+		
+//		ParameterizedTypeReference<Map<String, String>> responseType = new ParameterizedTypeReference<Map<String, String>>() {};
 		restTemplate = new RestTemplate();
+		
 		ResponseEntity<ResponseUserInfoVO> responseEntity = restTemplate.exchange(
-				uriBuilder.toString(), HttpMethod.GET, httpEntity, ResponseUserInfoVO.class);
-		logger.info("◇◇◇◇◇ 응답 데이터 : " + responseEntity.getBody());
-		System.out.println("◇◇◇◇◇ 응답 데이터 : " + responseEntity.getBody());
+															uriBuilder.toString(), HttpMethod.GET, httpEntity, ResponseUserInfoVO.class);
+		
+		System.out.println("=========================================");
+		System.out.println("/v2.0/user/me 리턴값 : " + responseEntity.getBody());
+		System.out.println("=========================================");
+		
 		return responseEntity.getBody();
 	}
 
 	// 계좌 상세정보(잔고) 조회 요청 - GET
-	public AccountDetailVO requestAccountDetail(Map<String, String> map) {
+	public Map<String,String> requestAccountDetail(Map<String, String> map) {
 //		System.out.println("거래코드 : " + valueGenerator.getBankTranId());
 //		System.out.println("거래일시 : " + valueGenerator.getTranDTime());
 		String bank_tran_id = valueGenerator.getBankTranId();
@@ -160,15 +167,21 @@ public class BankApiClient {
 		// 파라미터3) HttpEntity 객체
 		// 파라미터4) 응답 데이터를 저장할 VO 클래스 타입 - .class 형식으로 지정
 		// 리턴타입 : ResponseEntity<AccountDetailVO>
+		
+		//VO 삒쳐서..
+		ParameterizedTypeReference<Map<String, String>> responseType = new ParameterizedTypeReference<Map<String, String>>() {};
+		
 		restTemplate = new RestTemplate();
-		ResponseEntity<AccountDetailVO> responseEntity = restTemplate.exchange(
+		ResponseEntity<Map<String,String>> responseEntity = restTemplate.exchange(
 																uriBuilder.toString(), 
 																HttpMethod.GET, 
 																httpEntity, 
-																AccountDetailVO.class);
-		System.out.println("◇◇◇◇◇ 응답 데이터 : " + responseEntity.getBody());
-		logger.info("◇◇◇◇◇ 응답 데이터 : " + responseEntity.getBody());
+																responseType);
+
 		
+		System.out.println("=========================================");
+		System.out.println("/v2.0/account/balance/fin_num 리턴값 : " + responseEntity.getBody());
+		System.out.println("=========================================");
 		return responseEntity.getBody();
 	}
 	public AccountWithdrawResponseVO withdraw(Map<String, String> map) {
@@ -199,16 +212,12 @@ public class BankApiClient {
 	    jo.put("tran_dtime", valueGenerator.getTranDTime());				// 거래일자	
 	    // 요청 고객
 	    jo.put("req_client_name", "머니또");								
-	    jo.put("req_client_fintech_use_num", "120211385488932372196408");	// 운영자 고정
+	    jo.put("req_client_fintech_use_num", "120211385488932372196159");	// 운영자 고정
 	    jo.put("req_client_num", "1");										//
-	    // 충전 :  RC, 이체 : TR ==================================================
-	    // TR => RC 로 설정해둠
-	    jo.put("transfer_purpose", "RC");									
-	    // 최종 수취인(하위 가맹점)================================================
-	    // RC 인경우에 기재 X
-//	    jo.put("recv_client_name", "이연태");
-//	    jo.put("recv_client_bank_code", "002");
-//	    jo.put("recv_client_account_num", "99999999999999");				// 최종수취고객계좌번호
+	    jo.put("transfer_purpose", "TR");									
+	    jo.put("recv_client_name", "머니또");
+	    jo.put("recv_client_bank_code", "002");						// 산업 002
+	    jo.put("recv_client_account_num", "11111124");				// 최종수취고객계좌번호
 	    
 	    HttpEntity<String> request = 
 	    	      new HttpEntity<String>(jo.toString(), httpHeaders);

@@ -23,4 +23,6 @@ public interface BankMapper {
 	// 포인트 충전 했을 때
 	int insertAccountHistory(Map<String, String> map);
 
+	int updatePointAmount(Map<String, String> map);
+
 }

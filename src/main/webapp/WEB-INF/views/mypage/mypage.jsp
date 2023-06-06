@@ -72,11 +72,12 @@ function memberAuth(){
 					<div class="memberInfoReviewBox">
 						<div class="memberInfoText">또머니페이</div>
 						<c:choose>
+							
 							<c:when test="${member.member_auth_status eq 'Y'  }">
 								<div class="memberInfoCount" onclick="location.href='bank_userInfo'">계좌 관리</div>
 							</c:when>
 							<c:otherwise>
-								<div class="memberInfoCount" onclick="memberAuth()">계좌 등록</div>
+								<div class="memberInfoCount" onclick="memberAuth()">계좌 등록하기</div>
 							</c:otherwise>
 						</c:choose>
 					</div>

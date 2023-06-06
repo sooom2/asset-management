@@ -95,35 +95,8 @@ public class MypageController {
 		
 		return "mypage/mypage_info_form";
 	}
-		// 결제
-		@RequestMapping(value = "pay", method = {RequestMethod.GET, RequestMethod.POST})
-		public String store_pay(HttpSession session, Model model) {
-//			HashMap<String, String> item = service.selectCode(item_code);
-//			String id = (String)session.getAttribute("sId");
-//			HashMap<String, String> member = service.selectMemberId(id);
-//			model.addAttribute("item", item);
-//			model.addAttribute("item_price", item_price);
-//			model.addAttribute("member", member);
-//			
-//			if(id == null) {
-//				model.addAttribute("msg", "로그인 후 이용가능합니다.");
-//				model.addAttribute("target", "memLogin");
-//				return "success";
-//			} else {
-//				return "store/store_pay";
-//			}
-			return "naver";
-		}
-		
-		
 		
 	
-	@GetMapping(value = "payCharge")
-	public String payCharge() {
-		
-		return "market/market_payment";
-		
-	}
 	//회원정보수정
 	@PostMapping(value = "memberUpdatePro")
 	public String updatePro(@RequestParam HashMap<String, String> paramMember,
