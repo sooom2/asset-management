@@ -6,16 +6,29 @@
 <c:choose>
 	<c:when test="${isClose eq true }">
 		<script>
-			swal("${msg}");
-			// 부모창의 페이지를 지정한 페이지로 이동시키고, 자식창 닫기
-			window.opener.location.href = "${target}";
-			window.close();
+			$(document).ready(function() {	
+				var message = "${msg}";
+				var target = "${target}";
+				swal({
+					text : message,
+				}).then(function(){
+					window.opener.location.href = target;
+					window.close();
+				});
+			});
 		</script>
 	</c:when>
 	<c:otherwise>
 		<script>
-			swal("${msg}");
-			location.href = "${target}";
+		$(document).ready(function() {	
+			var message = "${msg}";
+			var target = "${target}";
+			swal({
+				text : message,
+			}).then(function(){
+				window.opener.location.href = target;
+			});
+		});
 		</script>
 	</c:otherwise>
 </c:choose>
