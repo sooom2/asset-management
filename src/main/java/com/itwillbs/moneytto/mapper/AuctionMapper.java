@@ -30,6 +30,6 @@ public interface AuctionMapper {
 	HashMap<String, String> selectLastLog(@Param("auction_code")String auction_code);
 
 	// 나의 경매 기록
-	HashMap<String, String> selectMyLog(@Param("id") String id);
+	HashMap<String, String> selectMyLog(@Param("id") String id, @Param("auction_code") String auction_code);
 
 }

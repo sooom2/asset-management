@@ -48,8 +48,8 @@ public class AuctionService {
 	}
 
 	// 나의 경매 기록
-	public HashMap<String, String> selectMyLog(String id) {
-		return mapper.selectMyLog(id);
+	public HashMap<String, String> selectMyLog(String id, String auction_code) {
+		return mapper.selectMyLog(id, auction_code);
 	}
 
 

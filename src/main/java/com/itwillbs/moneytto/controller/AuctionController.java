@@ -69,7 +69,7 @@ public class AuctionController {
 		// 경매 기록 최고값 검색
 		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
 		// 내가 입찰한 가격
-		HashMap<String, String> myLog = service.selectMyLog(id);
+		HashMap<String, String> myLog = service.selectMyLog(id, auction_code);
 		boolean lastLogYN = lastLog != null ? true : false; 
 		model.addAttribute("auctionLog", auctionLog);
 		model.addAttribute("lastLog", lastLog);

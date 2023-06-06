@@ -25,8 +25,8 @@
 			LEFT JOIN (
 			    SELECT auction_code, COUNT(*) AS enroll_count
 				    FROM auction_enroll
-					    GROUP BY auction_code
-					) ae ON a.auction_code = ae.auction_code;
+					    GROUP BY auction_code) AS ae 
+				ON a.auction_code = ae.auction_code;
 	</select>
 	
 	<select id="selectAuctionCode" resultType="hashmap">
@@ -55,7 +55,7 @@
 							FROM auction_enroll
 								GROUP BY auction_code) AS ae
 						ON a.auction_code = ae.auction_code
-					WHERE a.auction_code = #{auction_code};
+				WHERE a.auction_code = #{auction_code};
 	</select>
 	
 	<insert id="insertEnroll">
@@ -117,20 +117,12 @@
 				ORDER BY log_time DESC LIMIT 1
 	</select>
 	
-	<!-- 경매 기록 최고값 검색 -->
-<!-- 	<select id="selectAuctionMax" resultType="hashmap"> -->
-<!-- 		SELECT auction_log.*, member.member_nickname -->
-<!-- 			FROM auction_log  -->
-<!-- 				LEFT JOIN member -->
-<!-- 					ON member.member_id = auction_log.member_id -->
-<!-- 			WHERE auction_code = #{auction_code} -->
-<!-- 	</select> -->
-	
 	<!-- 나의 경매 기록 -->
 	<select id="selectMyLog" resultType="hashmap">
 		SELECT *
 			FROM auction_log
 				WHERE member_id = #{id}
+				and auction_code = #{auction_code}
 					ORDER BY log_time DESC LIMIT 1
 	</select>
 	
