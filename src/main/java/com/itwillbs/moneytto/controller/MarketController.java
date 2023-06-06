@@ -4,12 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -447,7 +443,16 @@ public class MarketController {
 		return arrChatDetail.toString();
 	}
 	
-
+	@GetMapping("exitChatRoom")
+	@ResponseBody
+	public String existChatRoom(String room_code,HttpSession session) {
+		
+		String id = (String)session.getAttribute("sId");
+		List<HashMap<String, String>> chatList = marketChatService.existChatList(room_code,id);
+		JSONArray arrChatList = new JSONArray(chatList);
+		return arrChatList.toString();
+	};
+	
 	@GetMapping("reviewForm")
 	public String marketReview(HttpSession session, Model model, String item_code) {
 		

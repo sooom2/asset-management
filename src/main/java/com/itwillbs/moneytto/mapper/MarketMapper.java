@@ -136,5 +136,8 @@ public interface MarketMapper {
 
 	int updateTradeEnd();
 
+	//나간방
+	List<HashMap<String, String>> existChatList(String room_code);
+
 
 }

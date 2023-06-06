@@ -102,13 +102,23 @@
 }
 
 .left_main .card_box.active .etc_dots:after,.left_main .card_box:hover .etc_dots:after {
-    content: "\2807";
+/*     content: ""; */
     font-size: 20px;
     position: absolute;
     top: 13px;
     right: 5px;
     color: #757575;
     cursor: pointer
+}
+
+.exitChatRoom{
+	display: inline-block;
+	float: right;
+}
+.etc_dots i{
+/* 	position: absolute; */
+    top: 13px;
+    right: 10px;
 }
 
 .left_main ul li:after {
@@ -132,8 +142,9 @@
     float: left;
     margin-left: 10px;
     position: relative;
-    width: 165px;
-    height: 40px
+    width: 155px;
+    height: 40px;
+    /* display: inline-block; */
 }
 
 .left_main ul li .info .nick {
@@ -1051,7 +1062,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 183px;
+    width: 167px;
 }
 
 .trade_status input[type="button"]{
@@ -1184,8 +1195,6 @@
 }
 
 
-
-
 .trade_status input[type="button"] {
     padding: 4px 7px;
     border-radius: 6px;
@@ -1200,5 +1209,11 @@
 
 .trade_status input[type="button"] {
     cursor: pointer;
+}
+ .exitChatRoom  svg{
+ 	color: rgb(0,0,0,0);
+ }
+.active .exitChatRoom svg{
+	color: black;
 }
 

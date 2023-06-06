@@ -154,6 +154,10 @@ public class MarketChatService {
 		// TODO Auto-generated method stub
 		return mapper.updateTradeEnd();
 	}
+	//나간방 ㅊ
+	public List<HashMap<String, String>> existChatList(String room_code,String id) {
+		return null;
+	}
 	
 
 

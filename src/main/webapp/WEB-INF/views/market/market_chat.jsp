@@ -21,12 +21,37 @@
 <script type="text/javascript">
 
 
-
 // 해야할거 > 송금하기누르면 메세지창에 해당물건 메세지 출력되면서 누르면 결제하기로 하고싶은디....
+
+
 // 안되면그냥 바로 결제로 연결
+
+
+function payment() {
+  window.open("payment", "_blank", "width=500,height=660,top=300,left=300");
+}
+
+
 
 $(function() {
 	
+	$(".exitChatRoom").on("click", function() {
+		alert(room_code);
+		
+		$.ajax({													
+			type: "GET",
+			url: "exitChatRoom",
+			data: { 
+				room_code : room_code
+			},
+			dataType: "json",
+            success: function(result) {
+            
+            	alert(result[0]);
+            }
+		});
+	});
+
 	//============================================================================================
 	// 신고관련
 	$(document).on("click", ".declaration div", function(e) {
@@ -152,7 +177,7 @@ $(function() {
                 $(".scheduling").append(scheduleButton);
 
                 scheduleButton.click(function() {
-                    let sch = confirm(trade_date + "으로 일정을 잡으시겠습니까?\n동의시 거래중으로 상태가 바뀝니다.");
+                    let sch = confirm(trade_date + "으로 일정을 잡으시겠습니까?\n확인버튼을 누를시 거래중으로 상태가 바뀝니다.");
                     console.log("선택된 일정: " + trade_date);
 
                     if (sch) {
@@ -173,7 +198,8 @@ $(function() {
                                 $('.schdule').remove();
                                 $('.card_box.active .sch_box').val(trade_date);
                                 $('div.card_box.active .profile div').text("거래중");
-                                $(".declaration").after("<div class='trade'  ><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+//                                 $(".declaration").after("<div class='trade' ><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+                                $(".declaration").after("<div class='trade' onclick='payment()'><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
                             },
                             error: function(request, status, error) {
                                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -261,7 +287,7 @@ $(function() {
 						
 
                         if(result[0].item_status == '거래중'){
-	                        $(".declaration").after("<div class='trade'  ><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+	                        $(".declaration").after("<div class='trade' onclick='payment()'  ><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
                         }else {
                         	$(".trade").remove();
                         }
@@ -357,7 +383,7 @@ $(function() {
 
 				let result = confirm(item_status + "으로 변경하시겠습니까");
 				if(item_status == '거래중'){
-					$(".declaration").after("<div class='trade'><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+					$(".declaration").after("<div class='trade' onclick='payment()'><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
 				} else {
 					$(".trade").remove();
 				}
@@ -587,30 +613,26 @@ $(function() {
 
     });
     
-    $(".moneyttoPay").one("click",function(){
+//     $(".moneyttoPay").one("click",function(){
     	
-    	console.log("moneyttoPay");
-        ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
-        socket = ws;
-        function moneyttoPaySend() {
+//     	console.log("moneyttoPay");
+//         ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
+//         socket = ws;
+//         function moneyttoPaySend() {
 
         	
-            const data = {
-                "room_code": room_code,
-                "name": "${ sessionScope.sId }",
-                "item_code": item_code,
-                "message": "안전거래",
-                "target": target
-            };
-            let jsonData = JSON.stringify(data);
-            socket.send(jsonData);
-
-
-        };
-        
-        
+//             const data = {
+//                 "room_code": room_code,
+//                 "name": "${ sessionScope.sId }",
+//                 "item_code": item_code,
+//                 "message": "안전거래",
+//                 "target": target
+//             };
+//             let jsonData = JSON.stringify(data);
+//             socket.send(jsonData);
+//         };
     
-    });	
+//     });	
 
 
 });
@@ -679,7 +701,6 @@ function messages() {
         };
         $('.chat_description').scrollTop($('.chat_description')[0].scrollHeight + 100);
 
-    	
     };
 
 }
@@ -706,7 +727,7 @@ function messages() {
 								<div class="report_title">신고 사유를 선택해 주세요.</div>
 								<div class="report_list_wrapper">
 									<div class="report_list_box">
-										<img src="${path }/resources/images/chat/ico_unChecked.png" id="카톡/오픈채팅 등 당근채팅밖에서 대화를 유도해요" alt="체크박스 아이콘" class="report_check_icon">
+										<img src="${path }/resources/images/chat/ico_unChecked.png" id="카톡/오픈채팅 등 머니또채팅밖에서 대화를 유도해요" alt="체크박스 아이콘" class="report_check_icon">
 										<div class="report_list">카톡/오픈채팅 등 당근채팅밖에서 대화를 유도해요</div>
 									</div>
 									<div class="report_list_box">
@@ -769,6 +790,7 @@ function messages() {
 		<c:if test="${not empty myChatList and createRoom ne 0}">
 			<section class="content">
 				<div class="main_area">
+					
 					<!-- left -->
 					<div class="left_main">
 						<div class="left_main_header">
@@ -784,6 +806,7 @@ function messages() {
 											<img src="${chatList.member_image}" alt="프사">
 											<div style="font-size: 13px;  text-align: center;}">${chatList.get('item_status')}</div>
 										</div>
+										<div class="exitChatRoom" ><i class="fa-solid fa-arrow-right-from-bracket exitChatRoomIcon" ></i></div>
 										<div class="info">
 											<div class="nick">[${chatList.get('member_nickname') }]</div>
 											<div class="subject"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.get('item_subject') }</div>
@@ -793,10 +816,11 @@ function messages() {
 											<input type="hidden" value="${chatList.get('item_code')}" class="item_code" data-item-code="${chatList.get('item_code')}">
 										</div>
 									</li>
-								<div class="etc_dots"></div>
 							</div>
 						</c:forEach>
 						</ul>
+						
+						
 					</div>
 					<!-- 나중에 세션아이디로(내아이디) -->
 					<input hidden="${id }">
@@ -839,7 +863,7 @@ function messages() {
 							
 							<c:if test="${sellDetail.buy_member_id eq sessionScope.sId and chatList.item_status eq '거래중' }">
 								<div class="trade"  >
-									<div class="moneyttoPay">
+									<div class="moneyttoPay" onclick="payment()">
 										<img src="${path }/resources/images/chat/btn_trade_x2.png" alt="송금이미지">
 									</div>
 								</div>
@@ -971,7 +995,7 @@ function messages() {
 											<input type="hidden" value="${chatList.get('item_code')}" class="item_code">
 										</div>
 									</li>
-								<div class="etc_dots"></div>
+								<div class="etc_dots" ></div>
 							</div>
 						</c:forEach>
 						</ul>

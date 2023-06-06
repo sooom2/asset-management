@@ -165,9 +165,33 @@
               		 WHERE  sell_member_id = #{id}
              	) a
          	) AS myChatRecentList
-      	WHERE row_num = 1
+      	WHERE 1=1
+      		AND row_num = 1
+<!--       		<if> -->
+<!--       		AND room_code != #{room_code} -->
+<!--       		</if> -->
+      	
      		ORDER BY chat_time desc
 	</select>
+	
+	
+	<select id="existChatList" resultType="hashmap">
+	
+		SELECT *
+			FROM
+				market_chat_messages
+			LEFT JOIN market_chat_rooms ON
+				market_chat_rooms.room_code = market_chat_messages.room_code
+			WHERE
+				sell_member_id = #{id}
+				OR buy_member_id =  #{id}
+				AND market_chat_rooms.room_code != #{room_code}
+	
+	
+	
+	
+	</select>
+	
 	<select id="roomCode" resultType="int">
 		SELECT market_chat_rooms.room_code
 			FROM market_chat_rooms
