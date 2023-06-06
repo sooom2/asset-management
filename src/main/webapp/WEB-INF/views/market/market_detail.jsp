@@ -229,17 +229,22 @@ function toggleLike(element) {
 								<div class="WishWrapper">
 								  <img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png" alt="좋아요 아이콘" class="WishIcon" onclick="toggleLike(this)">
 								</div>
-								
-								<div width="90%" class="SomeonesItemButton"data-cd="${marketItem.item_code }" style="display: none;">
-								<i class="fa-regular fa-comment-dots fa-flip-horizontal" style="color: white;"></i>&nbsp;
-								<div color="#FFFFFF" class="SomeonesItemText">채팅하기</div>
-								</div>
-								<div width="50%" class="SomeonesModifyButton"data-cd="${marketItem.item_code }" style="display: none;">
-								<div color="#FFFFFF" class="SomeonesItemText">수정하기</div>
-								</div>
-								<div width="50%" class="SomeonesDeleteButton"data-cd="${marketItem.item_code }" style="display: none;">
-								<div color="#FFFFFF" class="SomeonesItemText">삭제하기</div>
-								</div>
+								<c:choose>
+									<c:when test="${marketItem.member_id eq sessionScope.sId}">
+										<div width="50%" class="SomeonesModifyButton"data-cd="${marketItem.item_code }">
+										<div color="#FFFFFF" class="SomeonesItemText">수정하기</div>
+										</div>
+										<div width="50%" class="SomeonesDeleteButton"data-cd="${marketItem.item_code }">
+										<div color="#FFFFFF" class="SomeonesItemText">삭제하기</div>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div width="90%" class="SomeonesItemButton"data-cd="${marketItem.item_code }">
+										<i class="fa-regular fa-comment-dots fa-flip-horizontal" style="color: white;"></i>&nbsp;
+										<div color="#FFFFFF" class="SomeonesItemText">채팅하기</div>
+										</div>
+									</c:otherwise>
+								</c:choose>
 						</div>
 					</div>
 					
@@ -391,12 +396,13 @@ function toggleLike(element) {
 	$(function () {
 		var id = $("#session_id").val();
 		var target = $("#target_id").val();
-		
-		if(id == target) {
-			$(".SomeonesModifyButton, .SomeonesDeleteButton").show();
-		} else {
-			$(".SomeonesItemButton").show();
-		}
+//		display:none / show 방식으로 하면 다른사람이 이부분 지우기만 해도 접근 가능해서
+//		JSTL c:choose로 바꿨어요 확인했으면 주석 지워도돼요 06.06
+// 		if(id == target) {
+// 			$(".SomeonesModifyButton, .SomeonesDeleteButton").show();
+// 		} else {
+// 			$(".SomeonesItemButton").show();
+// 		}
 		
 		
 		var itemDate = "${marketItem.item_date}";
