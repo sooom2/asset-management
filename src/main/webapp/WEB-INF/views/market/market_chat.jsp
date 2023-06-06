@@ -26,6 +26,8 @@
 
 $(function() {
 	
+
+	
 	$("#tradeButton").prop("disabled", true).css({"backgroundColor": "#BB2649", "border": "none"});
 
 
@@ -53,6 +55,7 @@ $(function() {
         chatDetail(room_code);
         
     });
+    
 
     $(".sch_date").click(function() {
         $(".sch_box").datepicker("setDate", null);
@@ -120,10 +123,10 @@ $(function() {
     
 
 
+	let reviewElement = $("<div class='reviewForm' style='text-align: right;font-size: 13px; color: #bbb'><a>후기작성</a></div>");
     //왼쪽 list 눌렸을때
     function chatDetail(room_code) {
 
-        let reviewElement = $("<div class='reviewForm' style='text-align: right;font-size: 13px; color: #bbb'><a>후기작성</a></div>");
         new Promise((succ, fail) => {
             $.ajax({
                 type: "GET",
@@ -306,7 +309,6 @@ $(function() {
                         	
                             $('.trade_status input.active').removeClass('active');
                             clickedButton.addClass('active');
-                            
                             $('div.card_box.active .profile div').text(item_status);
                            
                            
@@ -323,7 +325,40 @@ $(function() {
 
 
     } //function chatDetail()
+    
+    
+    let tradeDate = new Date($("input.sch_box").val());
+    let currentDate = new Date();
+	let sellMember = "${sellDetail.sell_member_id}";
+    if (tradeDate < currentDate && $('input.active').val()!='거래완료' && sId != sellMember) {
+        let tradeResult = confirm(room_code +"해당방의 거래가 일정이 지났습니다. 거래를 완료하시겠습니까?");
+        
+        if (tradeResult) {
+            $.ajax({
+                type: "GET",
+                url: "itemStatus_update",
+                dataType: "text",
+                data: {
+                    item_status: "거래완료",
+                    room_code: room_code,
+                    trade_date: $("input.sch_box").val()
+                },
+                success: function(result) {
+                	$("#tradeButton").removeClass("active");
+                	$("#tradeButton").css({ "background-color": "#F0F0F0","border": "none", "color": "#000"});
+                    $(".sellTrade").addClass("active");
+                    $(".trade_status").append(reviewElement);
+                    
+                    
+                },
+                error: function(request, status, error) {
+                }
+            });
+        }
+    }
 
+    
+    
 
     // 판매상태 버튼 처리 >> db에 상태 업데이트
     $(".trade_status input").on("click", function() {
@@ -482,8 +517,27 @@ $(function() {
     
     $(".moneyttoPay").one("click",function(){
     	
-    	messages();
-    	
+    	console.log("moneyttoPay");
+        ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
+        socket = ws;
+        function moneyttoPaySend() {
+
+        	
+            const data = {
+                "room_code": room_code,
+                "name": "${ sessionScope.sId }",
+                "item_code": item_code,
+                "message": "안전거래",
+                "target": target
+            };
+            let jsonData = JSON.stringify(data);
+            socket.send(jsonData);
+
+
+        };
+        
+        
+    
     });	
 
 
@@ -682,17 +736,22 @@ function messages() {
 									    </c:otherwise>
 								    </c:choose>
 								    <c:choose>
-								    	<c:when test="${sellDetail.sell_member_id eq sessionScope.sId }">
+								    	<c:when test="${chatList.item_status ne '거래완료' and sellDetail.sell_member_id eq sessionScope.sId }">
 									    	<input type="button" class="sellTrade" value="거래완료" disabled="disabled"><br>
 								    		<span style="font-size: 11px;  display: inline-block; float:right;margin-top:5px;font-weight: bolder;"><i class="fa-brands fa-bilibili"></i> 판매자는 거래완료버튼을 누를수 없습니다.</span>
+								    	</c:when>
+								    	<c:when test="${chatList.item_status eq '거래완료' and sellDetail.sell_member_id eq sessionScope.sId }">
+										    <input type="button" class="${chatList.item_status eq '거래완료' ? 'active' : ''} sellTrade" value="거래완료">
 								    	</c:when>
 								    	<c:otherwise>
 										    <input type="button" class="${chatList.item_status eq '거래완료' ? 'active' : ''} sellTrade" value="거래완료">
 								    	</c:otherwise>
 								    </c:choose>
 								    <br>
-								    <c:if test="${chatList.item_status eq '거래완료'}">
-								        <div class="reviewForm" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>
+								    	<c:if test="${chatList.item_status eq '거래완료' and sellDetail.sell_member_id ne sessionScope.sId }">
+									        <div class="reviewForm" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>
+								    	</c:if>
+								    <c:if test="">
 								    </c:if>
 							    </div>
 							</div>

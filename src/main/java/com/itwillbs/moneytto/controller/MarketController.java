@@ -172,6 +172,12 @@ public class MarketController {
 	@GetMapping("itemStatus_update")
 	@ResponseBody
 	public void itemStatusUpdate(int room_code, String item_status,String trade_date,Model model,HttpSession session) {
+		
+		//거래 일정 시간이 지나서 거래완료로 바꿔야할때
+		// 거래일정이 지나면 상태를 거래완료로 바꾸게하기
+		int updateTradEnd = marketChatService.updateTradeEnd(); 
+		
+		
 		// 1. 버튼을누르면 해당상대로 변경되야함  ok
 		// 2. 거래완료 버튼을 누르면  2-1 item에서 상품의 상태가 update 2-2 market_paid 에 insert되야함
 		// 3. 거래완료에서 다른버튼을 누르면 ex)다시 판매중이나 거래중으로바뀌면 market_paid에서 삭제되야함
@@ -193,6 +199,20 @@ public class MarketController {
 		String get_item_status = item_detail.get("item_status");
 		HashMap<String, String> opponentId= marketChatService.getOpponentId(room_code, (String)session.getAttribute("sId"));
 		
+		//물건판매자
+		HashMap<String, String> sellDetail = marketChatService.getSellID(item_code.get("item_code"));
+		String sellId = null;
+		// 내가판매자
+		if((String)session.getAttribute("sId") == sellDetail.get("member_id")) {
+			sellId = (String)session.getAttribute("sId");
+			System.out.println(sellId + "내가판매자일때");
+		} else {
+			//상대방이 판매자
+			sellId = sellDetail.get("member_id").toString();
+			System.out.println(sellId + "상대방이 판매자일때");
+			
+		}
+		
 		String get_item_code = item_detail.get("item_code");
 		
 		
@@ -210,13 +230,16 @@ public class MarketController {
 			}else { //거래내역에없을때 
 				// market_paid insert 작업
 				// 거래코드, 판매자아이디, 아이템코드, 산사람, 판사람, 가격 , 판매방법 , 날짜
-				int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,opponentId.get("opponent_id"));
+				System.out.println("사는사람 ==================================");
+				System.out.println(sellId);
+				System.out.println("==================================");
+				int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date);
 			}
 			
 			
 		} else {
 			// market_paid 에서 삭제되야함
-			int delMarketPaid = marketChatService.deltMarketPaid(item_detail,opponentId.get("opponent_id"));
+			int delMarketPaid = marketChatService.deltMarketPaid(item_detail,sellId);
 		}
 	}
 
@@ -384,8 +407,7 @@ public class MarketController {
 			sellId = item.get("member_id");
 		}
 		
-		// 거래일정이 지나면 상태를 거래완료로 바꾸게하기
-		int updateTradEnd = marketChatService.updateTradeEnd(); 
+		
 		
 		// header에는 판매자 의정보!! ㅠㅠ
 		HashMap<String, String> sellDetail = marketChatService.getSellDetail(room_code);
@@ -409,7 +431,7 @@ public class MarketController {
 		return "market/market_chat";
 
 	}// market_chat
-	
+
 	@GetMapping("chatDetail")
 	@ResponseBody
 	public String chatDetail(Model model, @RequestParam(defaultValue="0") int room_code,HttpSession session) {

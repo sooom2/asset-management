@@ -88,12 +88,12 @@ public class MarketChatService {
 	
 	
 	//거래내역업데이트
-	public int insertMarketPaid(HashMap<String, String> item_detail, String opponentId) {
-		return mapper.insertMarketPaid(item_detail,opponentId);
+	public int insertMarketPaid(HashMap<String, String> item_detail, String sellId,String buyId,String trade_date) {
+		return mapper.insertMarketPaid(item_detail,sellId,buyId,trade_date);
 	}
 	// 거래내역삭제
-	public int deltMarketPaid(HashMap<String, String> item_detail, String opponentId) {
-		return mapper.delMarketPaid(item_detail,opponentId);
+	public int deltMarketPaid(HashMap<String, String> item_detail, String sellId) {
+		return mapper.delMarketPaid(item_detail,sellId);
 	}
 	
 	// 거래내역업데이트가능한지확인

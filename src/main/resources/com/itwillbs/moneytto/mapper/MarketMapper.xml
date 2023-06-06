@@ -202,7 +202,8 @@
 				market_code
 				, member_id
 				, item_code
-				, buy_id, sell_id
+				, buy_id
+				, sell_id
 				, market_price
 				, market_pay_type
 				, market_date
@@ -211,11 +212,18 @@
 			#{market_code} + 1
 			, #{item_detail.member_id}
 			, #{item_detail.item_code}
-			, #{opponentId}
-			, #{item_detail.member_id}
+			, #{buyId} -- 사는사람
+			, #{sellId} -- 파는사람 sellId
 			, #{item_detail.item_price}
 			, '직접거래'
-			, now()
+			<choose>
+	            <when test="trade_date == null">
+	                , now()
+	            </when>
+	            <otherwise>
+	                , #{trade_date}
+	            </otherwise>
+			</choose>
 			)
 	
 	</insert>
@@ -232,7 +240,7 @@
 			FROM market_paid
 				WHERE 1=1
 					AND item_code=#{item_detail.item_code}
-					AND buy_id=#{opponentId};
+					AND sell_id=#{sellId};
 	</delete>
 
 	<!-- 채팅상세내용 -->

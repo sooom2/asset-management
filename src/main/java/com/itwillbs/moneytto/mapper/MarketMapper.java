@@ -72,10 +72,10 @@ public interface MarketMapper {
 
 	
 	// 거래내역업데이트
-	int insertMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("opponentId") String opponentId);
+	int insertMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("sellId") String sellId,@Param("buyId") String buyId,@Param("trade_date") String trade_date);
 	
 	// 거래내역 삭제
-	int delMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("opponentId") String opponentId);
+	int delMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("sellId") String sellId);
 
 	//업데이트 가능한지
 	int isUpdate(String item_detail);
