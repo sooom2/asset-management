@@ -15,9 +15,16 @@
 				,#{comm_title}
 				,#{comm_content}
 				,now()
-				,"1"			
+				,"0"			
 			)
 	</insert>
+	
+	<!-- 조회수 증가 -->
+	<update id="increaseViews" parameterType="String">
+	  UPDATE community
+	  SET comm_count = comm_count + 1
+	  WHERE comm_code = #{comm_code}
+	</update>
 
 	<select id = "boardList" resultType="hashmap">
 		SELECT * FROM community

@@ -16,6 +16,24 @@
 <script src="resources/js/jquery-3.6.4.js"></script>
 <%-- <link href="${pageContext.request.contextPath }/resources/css/main.css" rel="stylesheet"> --%>
 
+    <script>
+ // 검색 함수
+    function search() {
+        var searchKeyword = document.getElementById("searchInput").value.toLowerCase();
+        var tableRows = document.querySelectorAll("#board-table tr");
+
+        for (var i = 1; i < tableRows.length; i++) { // i=0은 테이블 헤더이므로 건너뜁니다
+            var title = tableRows[i].querySelector("td:nth-child(2)").innerText.toLowerCase();
+
+            if (title.includes(searchKeyword)) {
+                tableRows[i].style.display = ""; // 검색어가 포함된 제목을 가진 행을 표시합니다
+            } else {
+                tableRows[i].style.display = "none"; // 검색어가 포함되지 않은 제목을 가진 행은 숨깁니다
+            }
+        }
+    }
+
+    </script>
 <body>
 	<jsp:include page="../nav.jsp" />
 
@@ -35,6 +53,7 @@
 					<button type="button" onclick="search()">검색</button>
 				</div>
 			</div>
+			
 
 			<table id="board-table">
 				<tr>

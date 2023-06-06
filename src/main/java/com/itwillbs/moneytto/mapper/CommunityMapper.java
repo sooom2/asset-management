@@ -11,6 +11,9 @@ public interface CommunityMapper {
 	List<HashMap<String, String>> boardList(HashMap<String, String> board);
 
 	HashMap<String, String> boardDetail(String comm_code);
+
+	int increaseViews(String comm_code);
+
 	
 
 	

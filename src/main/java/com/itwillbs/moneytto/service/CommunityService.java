@@ -26,6 +26,10 @@ public class CommunityService {
 		return mapper.boardDetail(comm_code);
 	}
 
+	public int increaseViews(String comm_code) {
+	    return mapper.increaseViews(comm_code);
+	}
+
 
 
 }

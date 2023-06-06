@@ -62,13 +62,17 @@ public class CommunityController {
 	@GetMapping(value = "commBoardView")
 	public String commBoardView(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
 	    String comm_code = board.get("comm_code"); // comm_code 값을 가져옵니다.
+	   
+	    // 게시물 조회수 증가 처리
+	    service.increaseViews(board.get("comm_code"));
+
 	    HashMap<String, String> boardDetail = service.boardDetail(comm_code); // comm_code에 해당하는 글 내용을 조회합니다.
 	    
 	    if (boardDetail != null) {
 	        model.addAttribute("boardDetail", boardDetail); // 조회한 글 내용을 모델에 추가합니다.
 	        return "board/commBoardView";
 	    } else {
-	        // 글 내용이 없을 경우 처리할 내용을 추가하세요.
+	    	
 	        return "fail_back";
 	    }
 	}

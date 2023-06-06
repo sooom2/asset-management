@@ -35,15 +35,6 @@
 	rel="stylesheet">
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-<script>
-		// 검색 함수
-		function search() {
-			var searchKeyword = document.getElementById("searchInput").value;
-			// 검색 결과 페이지로 이동
-			location.href = "검색결과URL?keyword=" + searchKeyword;
-		}
-</script>
-
 
 <body>
 	<jsp:include page="../nav.jsp" />
