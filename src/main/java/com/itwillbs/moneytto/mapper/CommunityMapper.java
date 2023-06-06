@@ -9,6 +9,8 @@ public interface CommunityMapper {
 	int insertBoard(HashMap<String, String> board);
 
 	List<HashMap<String, String>> boardList(HashMap<String, String> board);
+
+	HashMap<String, String> boardDetail(String comm_code);
 	
 
 	

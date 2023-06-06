@@ -48,7 +48,7 @@
 			    <c:forEach items="${boardList}" var="boardList">
 			        <tr>
 			            <td id="board-data">${boardList.comm_code}</td>
-			            <td id="board-data"><a href="글상세페이지URL">${boardList.comm_title}</a></td>
+			            <td id="board-data"><a href="commBoardView?comm_code=${boardList.comm_code}">${boardList.comm_title}</a></td>
 			            <td id="board-data">${boardList.member_id}</td>
 			            <td id="board-data">${boardList.comm_date}</td>
 			            <td id="board-data">${boardList.comm_count}</td>

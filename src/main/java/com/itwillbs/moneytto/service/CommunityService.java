@@ -22,6 +22,10 @@ public class CommunityService {
 		return mapper.boardList(board);
 	}
 
+	public HashMap<String, String> boardDetail(String comm_code) {
+		return mapper.boardDetail(comm_code);
+	}
+
 
 
 }

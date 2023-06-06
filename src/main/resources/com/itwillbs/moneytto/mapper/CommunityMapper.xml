@@ -23,4 +23,8 @@
 		SELECT * FROM community
 	</select>
 	
+	<select id="boardDetail" parameterType="String" resultType="HashMap">
+	  SELECT * FROM community WHERE comm_code = #{comm_code}
+	</select>
+	
 </mapper>
