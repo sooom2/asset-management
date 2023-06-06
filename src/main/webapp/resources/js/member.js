@@ -42,12 +42,7 @@ function confirmQuit() {
 		            closeModal: true,
 		          },
 		        },
-		      }).then((finalResult) => {
-		        if (finalResult) {
-		          swal("정상적으로 탈퇴 되었습니다!");
-		          $("form").attr("action","memberQuitPro").submit();
-		        }
-		      });
+		      })
 		    }
 	  	});
 	}
