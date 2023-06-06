@@ -47,31 +47,23 @@
 
 <body>
 	<jsp:include page="../nav.jsp" />
-	<!-- 게시판 등록 -->
+	<!-- 게시글 보기 -->
 	<article id="writeForm">
-		<form action="BoardWritePro" name="writeForm" method="post"
+		<form action="commBoardView" name="viewForm" 
 			enctype="multipart/form-data">
 			<input type="hidden" name="board_name" value="${sessionScope.sId }" />
 			<div class="form-group">
 				<label for="title">Title</label> <input type="text"
-					class="form-control" placeholder="글 제목을 입력해 주세요" id="title" name="comm_title">
-				
+					class="form-control" placeholder="글 제목을 입력해 주세요" id="title">
 			</div>
 
 			<div class="form-group">
 				<label for="content">Content</label>
 				<textarea class="form-control summernote" rows="5" cols=""
-					id="content" name="comm_content"></textarea>
+					id="content"></textarea>
 			</div>
 
-			<div>
-				<section id="btnArea"
-					style="display: flex; justify-content: center;">
-					<input type="submit" value="등록"> <input type="reset"
-						value="다시쓰기"> <input type="button" value="취소"
-						onclick="history.back()">
-				</section>
-			</div>
+
 		</form>
 	</article>
 
@@ -87,10 +79,6 @@
 
 </body>
 </html>
-
-
-
-
 
 
 
