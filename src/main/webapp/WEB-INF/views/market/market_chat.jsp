@@ -21,6 +21,7 @@
 <script type="text/javascript">
 
 
+
 // 해야할거 > 송금하기누르면 메세지창에 해당물건 메세지 출력되면서 누르면 결제하기로 하고싶은디....
 // 안되면그냥 바로 결제로 연결
 
@@ -502,12 +503,13 @@ minutes = String(minutes).padStart(2, '0');
 let formatDate = year + "-" + month + "-" + day + " " + amPm + " " + hours + ":" + minutes;
 
 let room_code;
+let item_code;
 let target;
 var ws = null;
 var socket = null;
 $(function() {
 
-
+	
 
     ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
     socket = ws;
@@ -676,9 +678,10 @@ function messages() {
             $(".active .time_ago").text(year + "-" + month + "-" + day + " " + amPm + " " + hours + ":" + minutes);
         };
         $('.chat_description').scrollTop($('.chat_description')[0].scrollHeight + 100);
+
+    	
     };
 
-    //     location.reload();
 }
 
 
@@ -787,7 +790,7 @@ function messages() {
 											<div class="description">${chatList.get('chat_content') }</div>
 											<div class="time_ago">${chatTime}</div>	
 											<input type="hidden" value="${chatList.get('room_code')}" class="room_code">
-											<input type="hidden" value="${chatList.get('item_code')}" class="item_code">
+											<input type="hidden" value="${chatList.get('item_code')}" class="item_code" data-item-code="${chatList.get('item_code')}">
 										</div>
 									</li>
 								<div class="etc_dots"></div>
@@ -915,7 +918,7 @@ function messages() {
 									                <div class="chat_opponent_title">${opponentId.opponent_nickname }</div>
 									                <div class="chat_opponent_message">
 									                    <span>${chatDetail.chat_content }</span>
-									                    <div class="chat_opponent_timeago"><fmt:formatDate value="${formattedDate}" pattern="a hh:mm" /></div>
+									                    <div class="chat_opponent_timeago">${chatAreaTime }</div>
 									                </div>
 									            </div>
 									        </div>
