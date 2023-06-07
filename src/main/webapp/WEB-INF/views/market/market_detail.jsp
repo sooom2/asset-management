@@ -9,6 +9,7 @@
 <link href="${path }/resources/css/market_detail.css" rel="stylesheet">
 <link href="resources/css/swiper.min.css" rel="stylesheet" />
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.4.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/moment.js"></script>
 <script type="text/javascript" src="${path }/resources/js/wish.js"></script>
@@ -75,11 +76,18 @@ function toggleLike(element) {
 </script>
 </head>
 <body>
-<input type="hidden" id="item_code" name="item_code" value="">
+<input type="hidden" id="item_code" name="item_code" value="${marketItem.item_code }">
 <input type="hidden" id="target_id" name="target_id" value="${marketItem.member_id}"/>
 <input type="hidden" id="report_type" name="report_type" value=""/>
 <input type="hidden" id="report_content" name="report_content" value=""/>
 <input type="hidden" id="session_id" name="session_id" value="${sId }"/>
+
+<input type="hidden" id="item_subject" name="item_subject" value="${marketItem.item_subject }"/>
+<input type="hidden" id="item_content" name="item_content" value="${marketItem.item_content }"/>
+<input type="hidden" id="item_price" name="item_price" value="${marketItem.item_price }"/>
+<input type="hidden" id="item_image" name="item_image" value="${itemImage[0].image_name }"/>
+
+
 <jsp:include page="../nav.jsp" />
 	<div id="next" data-cd="${marketItem.item_code }" class="item">
 		<div class="layoutChildren"></div>
@@ -154,7 +162,7 @@ function toggleLike(element) {
 							<div class="Share__IconBox-sc-1nwaldt-4 exALGq">
 								<img
 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_kakao.png"
-									alt="카카오톡 아이콘" class="Share__Icon-sc-1nwaldt-5 dvejot">
+									alt="카카오톡 아이콘" class="Share__Icon-sc-1nwaldt-5 dvejot" onclick="shareMessage()">
 								<div class="Share__IconText-sc-1nwaldt-6 fBVupx">카카오톡</div>
 							</div>
 							<div class="Share__IconBox-sc-1nwaldt-4 bzuDcA">
@@ -363,6 +371,69 @@ function toggleLike(element) {
 	</div>
 	
 <script type="text/javascript">
+	//init 체크
+	if (!Kakao.isInitialized()) {
+	  Kakao.init('02e5170f8bbb4a73ba5e5575b5b198b4');
+	}
+	
+	
+// 	function shareMessage() {
+// 		    Kakao.Share.sendDefault({
+// 		      objectType: 'feed',
+// 		      content: {
+// 		        title: $("#item_subject").val(),
+// 		        description: $("#item_content").val(),
+// 		        imageUrl:
+// 		          $("#item_image").val(),
+// 		        link: {
+// 		          // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+// 		          mobileWebUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
+// 		          webUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
+// 		        },
+// 		      },
+// 		      buttons: [
+// 		        {
+// 		          title: '웹으로 보기',
+// 		          link: {
+// 		            mobileWebUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
+// 		            webUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
+// 					},
+// 				},
+// 			],
+// 		});
+// 	}
+	
+	
+	function shareMessage() {
+		    Kakao.Share.sendDefault({
+		      objectType: 'commerce',
+		      content: {
+		        title: $("#item_content").val(),
+		        imageUrl:
+		        	$("#item_image").val(),
+		        link: {
+		          mobileWebUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
+		          webUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
+		        },
+		      },
+		      commerce: {
+		        productName: $("#item_subject").val(),
+		        regularPrice: parseInt($("#item_price").val()),
+		      },
+		      buttons: [
+		    	  {
+ 		          title: '웹으로 보기',
+ 		          link: {
+ 		            mobileWebUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
+ 		            webUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
+ 					},
+ 				},
+		      ],
+		    });
+		  }
+	
+	
+
 	function report() {
 		var id = "<%=(String)session.getAttribute("sId")%>";
 		var targetId = $("#target_id").val();
@@ -411,7 +482,7 @@ function toggleLike(element) {
 // 		} else {
 // 			$(".SomeonesItemButton").show();
 // 		}
-		
+// 		alert(typeof($("#item_price").val()));
 		
 		var itemDate = "${marketItem.item_date}";
 		var formattedDate = moment(itemDate).format("YYYY-MM-DD HH:mm");

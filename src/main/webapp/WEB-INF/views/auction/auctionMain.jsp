@@ -122,29 +122,37 @@ $(function() {
 						<!-- Tab3 종료된 경매 -->
 						<div id="tab3" class="tabcontent">
 							<ul class="pickedContentContainer">
-								<li class="pickedContent">
-									<div class="landingPickWrap">
-										<div class="contentImage">
-<!-- 											<div class="ddday"> -->
-<!-- 												시작<br>D-10 -->
-<!-- 											</div> -->
-										</div>
-										<div class="contentBox">
-			<!-- 								<div  class="con_period">[소비방]</div> -->
-											<div class="con_tit">도자기</div>
-											<hr>
-											<div class="con_detail">
-												<div><span>종료일</span><div class="con_period">2023.05.14</div></div>
-												<div><span>낙찰가</span><div class="con_price"><span class="won">&nbsp;5,000원</span></div></div>
-<!-- 												<div><span>즉시구매가</span><div class="con_price">&nbsp;<span class="won">35,000원</span></div></div> -->
-												<hr>
-												<div><div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>입찰자명 나중에 표시</span></div></div><br>
-			<!-- 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/20<span>명</span></div><br> -->
+								<c:forEach var="auction" items="${auction }">
+									<c:choose>
+										<c:when test="${auction.get('auction_type') eq '경매 완료' and auction.get('auction_status') ne 'N'}">
+										<li class="pickedContent">
+											<div class="landingPickWrap">
+												<div class="contentImage" style="background-image:url('${auction.get('image_name')}')">
+													<div class="ddday">
+														종 료
+		<!-- 												시작<br>D-10 -->
+													</div>
+												</div>
+												<div class="contentBox">
+					<!-- 								<div  class="con_period">[소비방]</div> -->
+													<div class="con_tit">${auction.get("auction_item_name") }</div>
+													<hr>
+													<div class="con_detail">
+														<div><span>시작일</span><div class="con_period">${auction.get("auction_start_date") }</div></div>
+														<div><span>종료일</span><div class="con_period">${auction.get("auction_end_date") }</div></div>
+														<div><span>현재가</span><div class="con_price"><span class="won">&nbsp;${auction.get("auction_present_price") }원</span></div></div>
+														<div><span>즉시구매가</span><div class="con_price">&nbsp;<span class="won">${auction.get("auction_immediate_price") }원</span></div></div>
+														<hr>
+														<div><div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${auction.enroll_count }<span>명</span></div></div><br>
+					<!-- 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/20<span>명</span></div><br> -->
+													</div>
+												</div>
+												<a href="auctionFinish?auction_code=${auction.get('auction_code') }" class="clickArea">대화방바로가기</a>
 											</div>
-										</div>
-										<a href="auctionFinish" class="clickArea">대화방바로가기</a>
-									</div>
-								</li>
+										</li>
+										</c:when>
+									</c:choose>
+								</c:forEach>
 							</ul>
 						</div>
 					</div>

@@ -52,6 +52,10 @@ public class AuctionService {
 		return mapper.selectMyLog(id, auction_code);
 	}
 
+	public int updateAuctionFinish(String auction_code, String success_id, String success_price) {
+		return mapper.updateAuctionFinish(auction_code, success_id, success_price);
+	}
+
 
 
 }

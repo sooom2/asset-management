@@ -154,7 +154,7 @@ public class MarketController {
 		HashMap<String, String> member = memberService.getMember(id);
 		
 		if(id==null) {
-			model.addAttribute("msg","로그인해주세요");
+			model.addAttribute("msg","로그인이 필요합니다.");
 			return "fail_back";
 		}
 		    String nickname = member.get("member_nickname");
