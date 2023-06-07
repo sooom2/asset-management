@@ -84,12 +84,20 @@
 				
 				
 				// 경매 남은시간 일, 시, 분, 초
-				let diffDays = parseInt(((end_time - current_time) / (1000 * 60 * 60 * 24))) - 1;
-				let diffHours = parseInt(((end_time - current_time) / (1000 * 60 * 60)));
+				let diffDays = parseInt((end_time - current_time) / (1000 * 60 * 60 * 24)) - 1;
+				let diffHours = parseInt(((end_time - current_time) % (1000 * 60 * 60 * 25)) / (1000 * 60 * 60));
 				let diffMinutes = parseInt(((end_time - current_time) / (1000 * 60)));
-				let diffSeconds = (((end_time - current_time) % (1000 * 60)) / 1000);
-				let diffSecondsResult = diffSeconds < 10 ? "0" + (diffSeconds - 1) : diffSeconds - 1; 
-				let resultClock = diffDays + "일 " + diffHours + "시" + (diffMinutes - 1) + ":" + diffSecondsResult;
+				let diffSeconds = parseInt(((end_time - current_time) % (1000 * 60)) / 1000);
+				let diffSecondsResult = diffSeconds < 10 ? "0" + diffSeconds : diffSeconds; 
+				let resultClock;
+				
+				if(diffDays > 1) {
+					resultClock = diffDays + " Days";
+				} else if(diffDays < 1 && diffHours > 1) {
+					resultClock = diffHours + " Hours";
+				} else {
+					resultClock = diffMinutes + ":" + diffSecondsResult;
+				}
 				
 				
 				// 경매시작 시간 지나면 (시간 카운트)
@@ -590,7 +598,7 @@ $(document).ready(function() {
 // 				console.log("4번" + message + typeof message); // 303000  string
 // 			} else {
 // 				console.log("else도착");
-			let lastLogPrice = $("#lastLogPrice").html().split(",")[0] + $("#lastLogPrice").html().split(",")[1];
+			let lastLogPrice = $("#lastLogPrice").html().replaceAll(",", "");
 			chatLog = (parseInt($(this).attr("data-price")) + parseInt(lastLogPrice)) + "";
 				
 			console.log(${lastLog.log_content});

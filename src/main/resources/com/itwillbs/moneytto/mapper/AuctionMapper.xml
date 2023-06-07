@@ -14,6 +14,7 @@
 		   , DATE_FORMAT(auction_start_date, '%Y.%m.%d %H:%i') AS auction_start_date
 		   , DATE_FORMAT(auction_end_date, '%Y.%m.%d %H:%i') AS auction_end_date
 		   , auction_status
+		   , success_price
 		   , auction_notice
 		   , auction_category
 		   , image_code
@@ -42,6 +43,7 @@
 		   , DATE_FORMAT(auction_start_date, '%Y.%m.%d %H:%i') 'auction_start_date'
 		   , DATE_FORMAT(auction_end_date, '%Y.%m.%d %H:%i') 'auction_end_date'
 		   , auction_status
+		   , success_price
 		   , auction_notice
 		   , auction_category
 		   , image_code

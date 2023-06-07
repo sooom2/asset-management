@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.itwillbs.moneytto.service.*;
+import com.itwillbs.moneytto.service.AuctionService;
+import com.itwillbs.moneytto.service.MemberService;
 
 @Controller
 public class AuctionController {
@@ -34,7 +35,7 @@ public class AuctionController {
 	public String auctionMain(Model model) { 
 		// 이미지 코드와 경매 코드를 찾아서 목록 뿌리기
 		List<HashMap<String, String>> auction = service.selectAuction();
-		System.out.println(auction);
+		System.out.println("@@@@@@@@@@@@@@@" + auction);
 		model.addAttribute("auction", auction);
 		
 		return "auction/auctionMain";
@@ -206,9 +207,19 @@ public class AuctionController {
 	};
 	
 	@RequestMapping(value="auctionEnroll", method = RequestMethod.GET)
-	public String auctionEnroll(@RequestParam String auction_code, HttpSession session, Model model) {
+	public String auctionEnroll(@RequestParam String auction_code, @RequestParam String deposit, HttpSession session, Model model) {
 		String id = (String)session.getAttribute("sId");
-		int insertCount = service.insertEnroll(auction_code, id);
+		HashMap<String, String> member = memberService.getMember(id);
+		
+		// 현재 포인트
+		int member_point = Integer.parseInt(member.get("member_point"));
+		
+		// 보증금 차감
+		int updatePoint = memberService.updatePoint(id, (member_point - Integer.parseInt(deposit)) + "");
+		if(updatePoint > 0) {
+			// 경매 등록
+			int insertCount = service.insertEnroll(auction_code, id);
+		}
 		
 		model.addAttribute("auction_code", auction_code);
 		
@@ -237,14 +248,21 @@ public class AuctionController {
 		return "auction/auctionPay";
 	}
 	
-	// 경매 종료 업데이트
+	// 경매 종료 낙찰자 업데이트
 	@RequestMapping(value="auctionUpdateFinish", method = RequestMethod.GET)
 	@ResponseBody
 	public void auctionUpdateFinish(@RequestParam Map<String, String> auction) {
-		// 경매 종료 -> '판매 완료', 낙찰자 이름 업데이트
+		
+		
+		// 경매 종료 낙찰자 -> '판매 완료', 낙찰자 이름 업데이트
 		int updateCount = service.updateAuctionFinish(auction.get("auction_code"), auction.get("success_id"), auction.get("success_price"));
+			
+		// 보증금 입금
+		int updatePoint = memberService.updateDeposit(auction.get("auction_code"), auction.get("success_id"), Integer.parseInt(auction.get("deposit")));
+			
 		
 	}
+	
 	
 	// 0524 test 여기서==========================
 //	@Controller

@@ -43,6 +43,10 @@ public interface MemberMapper {
 
 	int updateQuitMember(HashMap<String, String> member);
 
+	int updateDeposit(@Param("auction_code") String auction_code, @Param("success_id") String success_id, @Param("deposit") int deposit);
+
+	int updatePoint(@Param("id")String id, @Param("point") String point);
+
 	
 	
 }

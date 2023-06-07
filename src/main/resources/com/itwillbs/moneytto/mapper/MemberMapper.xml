@@ -213,5 +213,24 @@
 			 member_id = #{member_id}
 		
 	</update>
+	
+	<update id="updatePoint">
+		UPDATE 
+			member
+		SET
+			member_point = #{point}
+		WHERE
+			member_id = #{id}
+	</update>
+	
+	<update id="updateDeposit">
+		UPDATE member m 
+			LEFT JOIN auction_enroll ae 
+				ON m.member_id  = ae.member_id 
+				SET 
+					m.member_point = CAST(member_point AS UNSIGNED) + #{deposit}
+				WHERE 
+					auction_code = #{auction_code} and m.member_nickname != #{success_id}
+	</update>
 
 </mapper>

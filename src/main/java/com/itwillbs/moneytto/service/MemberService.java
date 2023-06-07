@@ -184,4 +184,12 @@ public class MemberService {
 		return mapper.updateQuitMember(member);
 	}
 
+	public int updateDeposit(String auction_code, String success_id, int deposit) {
+		return mapper.updateDeposit(auction_code, success_id, deposit);
+	}
+
+	public int updatePoint(String id, String point) {
+		return mapper.updatePoint(id, point);
+	}
+
 }

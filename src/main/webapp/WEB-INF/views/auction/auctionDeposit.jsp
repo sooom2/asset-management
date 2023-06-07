@@ -81,7 +81,8 @@ $(function() {
 			    },
 			  }).then((confirmResult) => {
 			    if (confirmResult) {
-			    	location.href="auctionEnroll?auction_code=${auction.get('auction_code')}";
+			    	
+			    	location.href="auctionEnroll?auction_code=${auction.get('auction_code')}&deposit=${deposit}";
 			    }
 		  	});
 		

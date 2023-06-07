@@ -252,7 +252,8 @@
             data: {
                 auction_code: "${auction.auction_code }",
                 success_id: $("#auctionLog_nickname").html(),
-                success_price: $("#lastLogPrice").html()
+                success_price: $("#lastLogPrice").html().toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","),
+                deposit: ${deposit}
             },
             success: function(result) {
             	// 경매 종료 닉네임이 현재 세션과 같을 때 -> 낙찰자
@@ -295,6 +296,7 @@
         			    	location.href = "auctionMain";
         			    }
         		  	});
+        			
         		}
             },
             error: function(error) {
@@ -587,7 +589,8 @@ $(document).ready(function() {
 // 				console.log("4번" + message + typeof message); // 303000  string
 // 			} else {
 // 				console.log("else도착");
-			let lastLogPrice = $("#lastLogPrice").html().split(",")[0] + $("#lastLogPrice").html().split(",")[1];
+			let lastLogPrice = $("#lastLogPrice").html().replaceAll(",", "");
+			
 			chatLog = (parseInt($(this).attr("data-price")) + parseInt(lastLogPrice)) + "";
 				
 			console.log(${lastLog.log_content});
