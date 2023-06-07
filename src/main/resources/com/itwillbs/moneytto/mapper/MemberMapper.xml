@@ -21,6 +21,7 @@
 				   , '0' -- grade_score
 				   , '0' -- declare_count
 				   , POINT(${member_location})
+				   , 'N' -- member_delete_status
 			)
 	</insert>
 	
@@ -207,6 +208,7 @@
 			,member_bday = ''
 			,member_tel = ''
 			,member_image = 'http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg'
+			,member_delete_status = 'N'
 		WHERE
 			 member_id = #{member_id}
 		
