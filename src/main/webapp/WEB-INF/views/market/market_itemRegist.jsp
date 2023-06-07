@@ -18,9 +18,10 @@ $(window).load(function() {
 	  var countImg = document.querySelector('.count_img span');
 	  var defaultImage = document.querySelector('.default');
 	  var draggedItem = null;
-
+	  var files = [];
 	  function handleFileSelect(event) {
-	    var files = event.target.files;
+		  
+	     files = event.target.files;
 
 	    if (files.length + imageList.children.length > maxImageCount) {
 	      alert('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
@@ -68,12 +69,38 @@ $(window).load(function() {
 	  });
 
 	  fileInput.addEventListener('change', handleFileSelect, false);
-
+	//======================================================================
 	  imageList.addEventListener('click', function(event) {
 	    if (event.target.classList.contains('img_delete_icon')) {
-	      var imageContainer = event.target.closest('li');
-	      imageContainer.parentNode.removeChild(imageContainer);
+	    	var imageContainer = event.target.closest('li');
+	    	
+	    	console.log($(this).closest('ul').find('li').index(imageContainer));
+			// 삭제버튼 눌렀을때 이미지 삭제되게
+			
+			//=================================================
+	    	var arrayNum = $(this).closest('ul').find('li').index(imageContainer);
+	    	
+	    	const dataTransfer = new DataTransfer();
+	        
+	        let files = fileInput.files;	//사용자가 입력한 파일을 변수에 할당
+	        
+	        let fileArray = Array.from(files);	//변수에 할당된 파일을 배열로 변환(FileList -> Array)
+	        
+	        fileArray.splice(arrayNum, 1);	//해당하는 index의 파일을 배열에서 제거
+	        
+	        fileArray.forEach(file => { dataTransfer.items.add(file); });
+	        //남은 배열을 dataTransfer로 처리(Array -> FileList)
+	        
+	        fileInput.files = dataTransfer.files;	//제거 처리된 FileList를 돌려줌
+	    	//======================================================
+	    	// => 배열 순서 리턴
+	    	console.log(fileInput.files[arrayNum]);
+	      
+	      
+	      //===========================================
+    	  imageContainer.parentNode.removeChild(imageContainer);
 	      updateImageCount();
+    	 //==========================================
 	    }
 	  });
 
@@ -183,9 +210,6 @@ $(window).load(function() {
 
 		tagListWrapper.addEventListener('click', removeTag);
 
-		tagForm.addEventListener('submit', function(event) {
-			event.preventDefault();
-		});
 	});
 </script>
 
