@@ -5,18 +5,14 @@
 <html lang="en">
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
 
 <title>머니또관리자페이지</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
-	rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
-<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
-	crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
 
 	function search(idx) {
@@ -73,8 +69,8 @@
 								<label for="cinema_name"></label>
 								<select name="rep_board" onchange="" style="margin-top: 0px; !important">
 									<option value="전체" <c:if test="${paramMap.rep_board eq '전체'}">selected</c:if>>전체</option>
-									<option value="답변완료" <c:if test="${paramMap.rep_board eq '답변완료'}">selected</c:if>>답변완료</option>
-									<option value="미답변" <c:if test="${paramMap.rep_board eq '미답변'}">selected</c:if>>미답변</option>
+									<option value="입금" <c:if test="${paramMap.rep_board eq '입금'}">selected</c:if>>입금</option>
+									<option value="출금" <c:if test="${paramMap.rep_board eq '출금'}">selected</c:if>>출금</option>
 								</select>
 								<input class="datatable-input" value="${param.searchKeyword }" name="searchKeyword" type="search" 
 								placeholder="검색어를 입력해 주세요." aria-controls="datatablesSimple" style="width: 210px;">
@@ -84,7 +80,7 @@
 						</div>
 					</div>
 					<div>
-						<strong>전체 <em class="font-gblue">${paramMap.totalCnt == null ? 0 : paramMap.totalCnt}</em>건</strong>
+						<strong>전체 <em class="font-gblue">${countMap.totalCnt == null ? 0 : countMap.totalCnt}</em>건</strong>
 					</div>
 					<table id="datatablesSimple" class="datatable-table">
 						<thead>
@@ -116,14 +112,14 @@
 <%-- 							<input type="hidden" name="pageNum" value="${paramMap.pageNum}"> --%>
 <!-- 							<input type="hidden" name="table_name" value=""> -->
 <!-- 							<input type="hidden" name="code" value=""> -->
-							<c:forEach var="oneBoard" items="${oneBoardList }">
+							<c:forEach var="accountHistory" items="${accountHistory }">
 								<tr>
-									<td>${oneBoard.rownum }</td>
-									<td>${oneBoard.one_name }</td>
-									<td>${oneBoard.cinema_name }</td>
-									<td>${oneBoard.one_subject }</td>
-									<td>${oneBoard.one_rep_board }</td>
-									<td>${oneBoard.one_write_date }</td>
+									<td>${accountHistory.rownum }</td>
+									<td>${accountHistory.trade_member_id }</td>
+									<td>${accountHistory.trade_amount }</td>
+									<td>${accountHistory.trade_type }</td>
+									<td>${accountHistory.trade_balance }</td>
+									<td>${accountHistory.trade_date }</td>
 <!-- 									<td class="modi"><input class="btn btn-block btn-more" -->
 <%-- 										type="button" value="M O R E" onclick="location.href='admin_one_rep?one_code=${oneBoard.one_code }'"></td> --%>
 								</tr>
