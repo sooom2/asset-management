@@ -663,6 +663,7 @@
             , #{messages}
             , now()
             , null
+            , 'N'
          )
    </insert>
    <update id="updateChatRoom">

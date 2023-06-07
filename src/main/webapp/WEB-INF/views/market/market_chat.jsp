@@ -39,501 +39,509 @@ function payment() {
 
 
 $(function() {
-   
-   // 탈퇴한회원처리 ( disabled 하기)
-   let isExistMember ="${opponentId.opponent_delete_status}"
-   if(isExistMember == 'Y'){
-      let str = "<div class='disabledChat'><div class='disabledContent'><h2>😮 대화가 불가능한 상태입니다</h2></div></div>"
-      $(".chat_header").before(str);
-      $(".chat_input").attr("disabled", true);
-      $(".chat_input").attr("placeholder","탈퇴한회원입니다");
-   } else {
-//       $(".chat_header").remove();
-      $(".chat_input").attr("disabled", false);
-      $(".chat_input").attr("placeholder","메세지를 입력해주세요.");
-   }
+	
+	   //리뷰작성
+	   $(".reviewForm").on("click", function() {
+	       let options = "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=400,height=400,left=350,top=200";
+	       window.open('reviewForm?item_code=' + "market0027", '리뷰작성', options);
+	   });
 
-   
-   
-   
-   $(".exitChatRoom").on("click", function() {
-      alert(room_code);
-      
-      $.ajax({                                       
-         type: "GET",
-         url: "exitChatRoom",
-         data: { 
-            room_code : room_code
-         },
-         dataType: "json",
-            success: function(result) {
-            
-//                alert(result[0]);
-            }
-      });
-   });
-
-   //============================================================================================
-   // 신고관련
-   $(document).on("click", ".declaration div", function(e) {
-      $(".ReactModalPortal").show();
-   });
-   
-   // 신고 상세
-   $(document).on("click", ".report_check_icon", function(e) {
-       var originalImage = "${path}/resources/images/chat/ico_unChecked.png";
-       var activeImage = "${path}/resources/images/chat/ico_checked.png";
-     
-       // 모든 아이콘의 이미지를 원래 이미지로 초기화
-       $(".report_check_icon").attr("src", originalImage);
-     
-       // 선택한 아이콘의 이미지를 활성화 이미지로 변경
-       $(this).attr("src", activeImage);
-     
-       var reportType = $(this).attr("id");
-       $("#report_type").val(reportType);
-     
-       $(".report_btn").css("background", "#bb2649");
-   });
-   
-   
-   $(document).on("change", "#textarea", function(e) {
-      $("#report_content").val($(this).val());
-   });
-   
-   
-   
-   // 신고하기 버튼
-   $(document).on("click", ".report_btn", function(e) {
-      var reportType = $("#report_type").val();
-      
-      if(reportType == "") {
-         alert("신고 사유를 선택해주세요!");
-      } else {
-         alert("신고 접수 되었습니다!");
-         report();
-         $(".ReactModalPortal").remove();
-      }
-   });
-   
-   // 모달창 닫기
-   $(document).on("click", ".close", function(e) {
-      $(".ReactModalPortal").remove();
-      location.reload();   
-   });
-   
-   
-   function report() {
-      var id = "<%=(String)session.getAttribute("sId")%>";
-      var opponentId = "${opponentId.opponent_id}";
-      var reportType = $("#report_type").val();
-      var reportContent = $("#report_content").val();
-      alert(reportContent);
-      $.ajax({                                       
-            type: "GET",
-            url: "report",
-            data: { 
-               targetId : opponentId,
-               reportType : reportType,
-               reportContent : reportContent
-            },
-            dataType: "json"
-         });
-   }
-   
-   //============================================================================================
-   
-
-   
-   $("#tradeButton").prop("disabled", true).css({"backgroundColor": "#BB2649", "border": "none"});
-
-
-   if (!$("#tradeButton").hasClass("active")) {
-      $("#tradeButton").css({ "background-color": "#F0F0F0","border": "none", "color": "#000"});
-   }
-        
-      
-    $('.chat_description').scrollTop($('.chat_description')[0].scrollHeight + 1000);
-
-    let sId = "${sessionScope.sId}";
-    room_code = <%= request.getAttribute("room_code") %> ;
-    // (대화내역이 존재하지않을때) => 최근대화에 active
-    // (대화내역이 존재할때 ) => 그 내용에 active
-    $('.card_box input.room_code[value="' + room_code + '"]').closest('.card_box').addClass('active');
-
-    //아이템코드의 대화내용이있으면 그 대화에 active 되야함
-    $(".card_box").on("click", function() {
-        room_code = $(this).find('.room_code').val();
-        $(".card_box").removeClass("active");
-        $(this).addClass("active");
-
-        //채팅내역을 눌렀을때 > 상세보기
-        chatDetail(room_code);
-        
-    });
-    
-
-    $(".sch_date").click(function() {
-        $(".sch_box").datepicker("setDate", null);
-        $(".schdule").remove();
-        var schBox = $(".sch_box");
-        $(".sch_box").datepicker({
-            dateFormat: 'yy-mm-dd',
-            showOtherMonths: true,
-            showMonthAfterYear: true,
-            changeYear: true,
-            changeMonth: true,
-            yearSuffix: "년",
-            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-            dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
-            minDate: "0D",
-            maxDate: "+30D",
-            show: "fast",
-            onSelect: function(dateText, inst) {
-                let scheduleButton = $("<input type='button' class='schdule' value='확인'>");
-                trade_date = dateText;
-                $(".scheduling").append(scheduleButton);
-
-                scheduleButton.click(function() {
-                    let sch = confirm(trade_date + "으로 일정을 잡으시겠습니까?\n확인버튼을 누를시 거래중으로 상태가 바뀝니다.");
-                    console.log("선택된 일정: " + trade_date);
-
-                    if (sch) {
-                        $.ajax({
-                            type: "GET",
-                            url: "itemStatus_update",
-                            dataType: "text",
-                            data: {
-                                item_status: "거래중",
-                                room_code: room_code,
-                                trade_date: trade_date
-                            },
-                            success: function(result) {
-                                $('.trade img').remove();
-                                $('.card_box input.room_code[value="' + room_code + '"]').closest('.card_box').addClass('active');
-                                $('.trade_status input.active').removeClass('active');
-                                $('.trade_status input[value="거래중"]').addClass('active');
-                                $('.schdule').remove();
-                                $('.card_box.active .sch_box').val(trade_date);
-                                $('div.card_box.active .profile div').text("거래중");
-//                                 $(".declaration").after("<div class='trade' ><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
-                                $(".declaration").after("<div class='trade' onclick='payment()'><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
-                            },
-                            error: function(request, status, error) {
-                                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    });
-
-    $(".sch_date").click(function() {
-        $(".sch_box").datepicker("show");
-    });
-
-    
-    
-    
-
-
-   let reviewElement = $("<div class='reviewForm' style='text-align: right;font-size: 13px; color: #bbb'><a>후기작성</a></div>");
-    //왼쪽 list 눌렸을때
-    function chatDetail(room_code) {
-        new Promise((succ, fail) => {
-            $.ajax({
-                type: "GET",
-                url: "chatDetail",
-                dataType: "json",
-                data: {
-                    room_code: room_code
-                },
-                success: function(result) {
-                    //조회한 채팅방 내용에서의 room_code는 동일함 그래서 젤첨값인 resul[0]으로 조회
-//                     room_code = result[0].room_code;
-
-                    // 채팅 생성 날짜 (처음에 날짜 지정 포맷으로 변경)
-                    let dateString = result.chatDetail[0].chat_openDate;
-                    let date = new Date(dateString);
-                    let year = date.getFullYear();
-                    let month = (date.getMonth() + 1).toString().padStart(2, '0');
-                    let day = date.getDate().toString().padStart(2, '0');
-                    
-                    let formatDate = year + '년 ' + month + '월 ' + day + '일';
-
-                    // 채팅 헤더 상대방 닉네임
-                    let buy_nickname = result.chatDetail[0].buy_nickname;
-                    let item_subject = result.chatDetail[0].item_subject;
-                    let buy_profileImg = result.chatDetail[0].buy_image;
-                    let sell_profileImg = result.chatDetail[0].sell_image;
-                    let buy_id = result.chatDetail[0].buy_member_id;
-                    let sell_id = result.chatDetail[0].sell_member_id;
-                    let sell_nickname = result.chatDetail[0].sell_nickname;
-                    let profileImg = sell_profileImg;
-					let trade_date = result.chatDetail[0].trade_date;
-					let opponent_delete_status = result.opponentId.opponent_delete_status;
-					let opponent_nickname;
-//                alert(sell_profileImg);
-//                target = result.opponentId.opponent_id;
-                    
-                    
-               //Y일때 탈퇴
-               if(opponent_delete_status == 'Y'){
-                  let str = "<div class='disabledChat'><div class='disabledContent'><h2>😮 대화가 불가능한 상태입니다</h2></div></div>"
-                  $(".chat_header").before(str);
-                  $(".chat_input").attr("disabled", true);
-                  $(".chat_input").attr("placeholder","탈퇴한회원입니다");
-               } else {
-                  $('.disabledChat').remove();
-                  $(".chat_input").attr("disabled", false);
-                  $(".chat_input").attr("placeholder","메세지를 입력해주세요.");
-               }
-               
-                    let sellButton = $("<input>").attr("type", "button").addClass("sellTrade").val("거래완료");
-                    // 상품판매상태 버튼
-                    $(".trade_status").empty();
-
-                    $(".trade_status").append("<input type='button' value='판매중'> <input type='button' value='거래중'> ");
-                    $(".trade_status").append(sellButton);
-
-                    if (result.chatDetail[0].item_status === '거래완료') {
-                        $(".trade_status").append(reviewElement);
-                    }
-
-                    $(".trade_status input").each(function() {
-                        if ($(this).val() === result.chatDetail[0].item_status) {
-                            $(this).addClass('active');
-                        }
-                    });
-
-                    
-                    $("input.sch_box").val(trade_date);
-                    
-               if (sId == buy_id) {
-                        $(".trade").empty();
-                        $('.image_table img').attr('src', sell_profileImg);
-                        profileImg = sell_profileImg;
-                        $(".trade img").attr("src", "${path}/resources/images/chat/btn_trade_x2.png");
-                  
-
-                        if(result.chatDetail[0].item_status == '거래중'){
-                           $(".declaration").after("<div class='trade' onclick='payment()'  ><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
-                        }else {
-                           $(".trade").remove();
-                        }
-                        
-                        
-                        // 파는사람일땐 거래완료를 하면안됨
-                    } else if (sId == sell_id) {
-                        let str = "<br><span style='font-size: 11px;  display: inline-block; float:right;margin-top:5px;font-weight: bolder;'><i class='fa-brands fa-bilibili'></i> 판매자는 거래완료버튼을 누를수 없습니다.</span>";
-                        $('.image_table img').attr('src', sell_profileImg);
-                        profileImg = buy_profileImg;
-                        $(".trade").remove();
-                        sellButton.prop('disabled', true);
-
-                        sellButton.after(str);
-
-                        if ($('.trade_status .active').val() == '거래완료') {
-                            sellButton.prop('disabled', false);
-                            $('span').remove();
-                            $('.reviewForm').remove();
-
-                        }
-
-                    }
-
-
-//                     if (sId == result.chatDetail[0].buy_member_id) {
-//                         opponent_nickname = result.chatDetail[0].sell_nickname;
-//                     }
-                    $(".chat_header a .info div").empty();
-                    // 헤더에 파는사람아이디
-                    $(".chat_header a .info div").append("<span>[" + sell_nickname + "]<br><i class='fa-regular fa-comment-dots fa-flip-horizontal'></i> " + item_subject + "</span>");
+	   // 탈퇴한회원처리 ( disabled 하기)
+	   let isExistMember = "${opponentId.opponent_delete_status}"
+	   if (isExistMember == 'Y') {
+	       let str = "<div class='disabledChat'><div class='disabledContent'><h2>😮 대화가 불가능한 상태입니다</h2></div></div>"
+	       $(".chat_header").before(str);
+	       $(".chat_input").attr("disabled", true);
+	       $(".chat_input").attr("placeholder", "탈퇴한회원입니다");
+	   } else {
+	       //       $(".chat_header").remove();
+	       $(".chat_input").attr("disabled", false);
+	       $(".chat_input").attr("placeholder", "메세지를 입력해주세요.");
+	   }
 
 
 
 
-                    //날짜표시
-                    $(".chat_wrapper").empty();
-                    let str = "<div class='chat_timeago'>" +
-                        "<div class='chat_timeago_box'>" +
-                        "<span class='chat_timeago_text'>" + formatDate + "</span></div></div>";
+	   $(".exitChatRoom").on("click", function() {
 
-                    $(".chat_description .chat_wrapper").append(str);
+	       $.ajax({
+	           type: "GET",
+	           url: "exitChatRoom",
+	           data: {
+	               room_code: room_code
+	           },
+	           dataType: "json",
+	           success: function(result) {
 
-                    //대화내역 상대방인지 나인지 구분하며 표시
-                    for (var i = 0; i < result.chatDetail.length; i++) {
-                        let time = new Date(result.chatDetail[i].chat_time);
-                        let hours = time.getHours();
-                        let minutes = time.getMinutes();
-                        let formattedMinutes = minutes.toString().padStart(2, '0');
-                        let amPm = hours < 12 ? "오전" : "오후";
-                        hours = hours % 12 || 12;
-                        let formatChatTime = amPm + " " + hours + ":" + formattedMinutes;
-                  
+	               //                alert(result[0]);
+	           }
+	       });
+	   });
 
-                        if (sId == result.chatDetail[i].chat_mem_id) {
-                            let str =
-                                "<div class='chat_myself'>" +
-                                "<div class='chat_myself_box'>" +
-                                "<div class='chat_myself_message'>" +
-                                "<span>" + result.chatDetail[i].chat_content + "</span>" +
-                                "<div class='chat_myself_timeago'>" + formatChatTime + "</div></div></div></div>";
-                            $(".chat_timeago").append(str);
-                        } else {
-                            let str =
-                                "<div class='chat_opponent'>" +
-                                "<div class='chat_opponent_box'>" +
-                                "<div class='chat_opponent_image_box'>" +
-                                "<img class='chat_opponent_profile_image' src='" + profileImg + "' alt='상대방이미지'></div>" +
+	   //============================================================================================
+	   // 신고관련
+	   $(document).on("click", ".declaration div", function(e) {
+	       $(".ReactModalPortal").show();
+	   });
 
-                                "<div class='chat_opponent_title'>" + result.chatDetail[i].buy_nickname + "</div>" +
-                                "<div class='chat_opponent_message'>" +
-                                "<span>" + result.chatDetail[i].chat_content + "</span>" +
-                                "<div class='chat_opponent_timeago'>" + formatChatTime + "</div></div></div></div>";
-                            $(".chat_timeago").append(str);
-                        }
+	   // 신고 상세
+	   $(document).on("click", ".report_check_icon", function(e) {
+	       var originalImage = "${path}/resources/images/chat/ico_unChecked.png";
+	       var activeImage = "${path}/resources/images/chat/ico_checked.png";
 
-                        succ(result);
-                        
-                        
-                    } //success
-                },
-                error: function(request, status, error) {
-                    alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                }
-            }); //ajax
+	       // 모든 아이콘의 이미지를 원래 이미지로 초기화
+	       $(".report_check_icon").attr("src", originalImage);
 
-        }).then((arg) => { //then    
-            $(".trade_status input").on("click", function() {
-                let item_status = $(this).val();
-            let clickedButton = $(this);
-            
-            if ($('input.sch_box').val() === "" && item_status === "거래중") {
-               alert("일정을 먼저 잡아주세요");
-               return; 
-            }
+	       // 선택한 아이콘의 이미지를 활성화 이미지로 변경
+	       $(this).attr("src", activeImage);
 
-            let result = confirm(item_status + "으로 변경하시겠습니까");
-            if(item_status == '거래중'){
-               $(".declaration").after("<div class='trade' onclick='payment()'><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
-            } else {
-               $(".trade").remove();
-            }
-            
-            if(item_status == '판매중'){
-               $('input.sch_box').val("");
-            }
+	       var reportType = $(this).attr("id");
+	       $("#report_type").val(reportType);
 
-                if (result) {
-                    
-                    $.ajax({ //두번째 ajax
-                        type: "GET",
-                        url: "itemStatus_update",
-                        dataType: "text",
-                        data: {
-                            item_status: item_status,
-                            room_code: room_code
-                        },
-                        success: function(result2) {
-                           
-                            $('.trade_status input.active').removeClass('active');
-                            clickedButton.addClass('active');
-                            $('div.card_box.active .profile div').text(item_status);
-                           
-                           
-                        },
-                        error: function(request, status, error) {
-                            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                        }
-                    });
-                }
-            });
+	       $(".report_btn").css("background", "#bb2649");
+	   });
 
 
-        }); //then(arg)
+	   $(document).on("change", "#textarea", function(e) {
+	       $("#report_content").val($(this).val());
+	   });
 
 
-    } //function chatDetail()
-    
-    
-    let tradeDate = new Date($("input.sch_box").val());
-    let currentDate = new Date();
-   let sellMember = "${sellDetail.sell_member_id}";
-    if (tradeDate < currentDate && $('input.active').val()!='거래완료' && sId != sellMember) {
-        let tradeResult = confirm(room_code +"해당방의 거래가 일정이 지났습니다. 거래를 완료하시겠습니까?");
-        
-        if (tradeResult) {
-            $.ajax({
-                type: "GET",
-                url: "itemStatus_update",
-                dataType: "text",
-                data: {
-                    item_status: "거래완료",
-                    room_code: room_code,
-                    trade_date: $("input.sch_box").val()
-                },
-                success: function(result) {
-                   $("#tradeButton").removeClass("active");
-                   $("#tradeButton").css({ "background-color": "#F0F0F0","border": "none", "color": "#000"});
-                    $(".sellTrade").addClass("active");
-                    $(".trade_status").append(reviewElement);
-                    
-                   
-                },
-                error: function(request, status, error) {
-                }
-            });
-        }
-    }
 
-    
-    
+	   // 신고하기 버튼
+	   $(document).on("click", ".report_btn", function(e) {
+	       var reportType = $("#report_type").val();
 
-    // 판매상태 버튼 처리 >> db에 상태 업데이트
-    $(".trade_status input").on("click", function() {
+	       if (reportType == "") {
+	           alert("신고 사유를 선택해주세요!");
+	       } else {
+	           alert("신고 접수 되었습니다!");
+	           report();
+	           $(".ReactModalPortal").remove();
+	       }
+	   });
 
-        let item_status = $(this).val();
-        let result = confirm(item_status + "으로 변경하시겠습니까");
-
-        if (result) {
-            $.ajax({
-                type: "GET",
-                url: "itemStatus_update",
-                dataType: "text",
-                data: {
-                    item_status: item_status,
-                    room_code: room_code
-                },
-                success: function(result) {
-                    location.reload();
-                },
-                error: function(request, status, error) {
-                    alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                }
-            });
-        }
-
-    });
+	   // 모달창 닫기
+	   $(document).on("click", ".close", function(e) {
+	       $(".ReactModalPortal").remove();
+	       location.reload();
+	   });
 
 
-    if ($("input.active").val() == "판매중") {
-        $(".sch_box").val("");
-        
-    }
+	   function report() {
+	       let id = "<%=(String)session.getAttribute("sId")%>";
+	       let opponentId = "${opponentId.opponent_id}";
+	       let reportType = $("#report_type").val();
+	       let reportContent = $("#report_content").val();
+	       alert(reportContent);
+	       $.ajax({
+	           type: "GET",
+	           url: "report",
+	           data: {
+	               targetId: opponentId,
+	               reportType: reportType,
+	               reportContent: reportContent
+	           },
+	           dataType: "json"
+	       });
+	   }
+
+	   //============================================================================================
 
 
-    //리뷰작성
-    $(".reviewForm").on("click", function() {
-        let options = "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=400,height=400,left=350,top=200";
-        window.open('reviewForm?item_code=' + "market0027", '리뷰작성', options);
-    });
+
+	   $("#tradeButton").prop("disabled", true).css({
+	       "backgroundColor": "#BB2649",
+	       "border": "none"
+	   });
+
+
+	   if (!$("#tradeButton").hasClass("active")) {
+	       $("#tradeButton").css({
+	           "background-color": "#F0F0F0",
+	           "border": "none",
+	           "color": "#000"
+	       });
+	   }
+
+
+	   $('.chat_description').scrollTop($('.chat_description')[0].scrollHeight + 1000);
+
+	   let sId = "${sessionScope.sId}";
+	   room_code = <%= request.getAttribute("room_code") %>;
+	   // (대화내역이 존재하지않을때) => 최근대화에 active
+	   // (대화내역이 존재할때 ) => 그 내용에 active
+	   $('.card_box input.room_code[value="' + room_code + '"]').closest('.card_box').addClass('active');
+
+	   //아이템코드의 대화내용이있으면 그 대화에 active 되야함
+	   $(".card_box").on("click", function() {
+	       room_code = $(this).find('.room_code').val();
+	       $(".card_box").removeClass("active");
+	       $(this).addClass("active");
+
+	       //채팅내역을 눌렀을때 > 상세보기
+	       chatDetail(room_code);
+
+	   });
+
+
+	   $(".sch_date").click(function() {
+	       $(".sch_box").datepicker("setDate", null);
+	       $(".schdule").remove();
+	       var schBox = $(".sch_box");
+	       $(".sch_box").datepicker({
+	           dateFormat: 'yy-mm-dd',
+	           showOtherMonths: true,
+	           showMonthAfterYear: true,
+	           changeYear: true,
+	           changeMonth: true,
+	           yearSuffix: "년",
+	           monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	           monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	           dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+	           dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+	           minDate: "0D",
+	           maxDate: "+30D",
+	           show: "fast",
+	           onSelect: function(dateText, inst) {
+	               let scheduleButton = $("<input type='button' class='schdule' value='확인'>");
+	               trade_date = dateText;
+	               $(".scheduling").append(scheduleButton);
+
+	               scheduleButton.click(function() {
+	                   let sch = confirm(trade_date + "으로 일정을 잡으시겠습니까?\n확인버튼을 누를시 거래중으로 상태가 바뀝니다.");
+	                   console.log("선택된 일정: " + trade_date);
+
+	                   if (sch) {
+	                       $.ajax({
+	                           type: "GET",
+	                           url: "itemStatus_update",
+	                           dataType: "text",
+	                           data: {
+	                               item_status: "거래중",
+	                               room_code: room_code,
+	                               trade_date: trade_date
+	                           },
+	                           success: function(result) {
+	                               $('.trade img').remove();
+	                               $('.card_box input.room_code[value="' + room_code + '"]').closest('.card_box').addClass('active');
+	                               $('.trade_status input.active').removeClass('active');
+	                               $('.trade_status input[value="거래중"]').addClass('active');
+	                               $('.schdule').remove();
+	                               $('.card_box.active .sch_box').val(trade_date);
+	                               $('div.card_box.active .profile div').text("거래중");
+	                               //                                 $(".declaration").after("<div class='trade' ><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+	                               $(".declaration").after("<div class='trade' onclick='payment()'><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+	                           },
+	                           error: function(request, status, error) {
+	                               alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	                           }
+	                       });
+	                   }
+	               });
+	           }
+	       });
+	   });
+
+	   $(".sch_date").click(function() {
+	       $(".sch_box").datepicker("show");
+	   });
+
+
+
+
+	   let reviewElement = $("<div class='reviewForm' style='text-align: right;font-size: 13px; color: #bbb'><a>후기작성</a></div>");
+	   //왼쪽 list 눌렸을때
+	   function chatDetail(room_code) {
+	       new Promise((succ, fail) => {
+	           $.ajax({
+	               type: "GET",
+	               url: "chatDetail",
+	               dataType: "json",
+	               data: {
+	                   room_code: room_code
+	               },
+	               success: function(result) {
+	                   //조회한 채팅방 내용에서의 room_code는 동일함 그래서 젤첨값인 resul[0]으로 조회
+	                   //                     room_code = result[0].room_code;
+
+	                   // 채팅 생성 날짜 (처음에 날짜 지정 포맷으로 변경)
+	                   let dateString = result.chatDetail[0].chat_openDate;
+	                   let date = new Date(dateString);
+	                   let year = date.getFullYear();
+	                   let month = (date.getMonth() + 1).toString().padStart(2, '0');
+	                   let day = date.getDate().toString().padStart(2, '0');
+
+	                   let formatDate = year + '년 ' + month + '월 ' + day + '일';
+
+	                   // 채팅 헤더 상대방 닉네임
+	                   let buy_nickname = result.chatDetail[0].buy_nickname;
+	                   let item_subject = result.chatDetail[0].item_subject;
+	                   let buy_profileImg = result.chatDetail[0].buy_image;
+	                   let sell_profileImg = result.chatDetail[0].sell_image;
+	                   let buy_id = result.chatDetail[0].buy_member_id;
+	                   let sell_id = result.chatDetail[0].sell_member_id;
+	                   let sell_nickname = result.chatDetail[0].sell_nickname;
+	                   let profileImg = sell_profileImg;
+	                   let trade_date = result.chatDetail[0].trade_date;
+	                   let opponent_delete_status = result.opponentId.opponent_delete_status;
+	                   let opponent_nickname;
+	                   //                alert(sell_profileImg);
+	                   //                target = result.opponentId.opponent_id;
+
+
+	                   //Y일때 탈퇴
+	                   if (opponent_delete_status == 'Y') {
+	                       let str = "<div class='disabledChat'><div class='disabledContent'><h2>😮 대화가 불가능한 상태입니다</h2></div></div>"
+	                       $(".chat_header").before(str);
+	                       $(".chat_input").attr("disabled", true);
+	                       $(".chat_input").attr("placeholder", "탈퇴한회원입니다");
+	                   } else {
+	                       $('.disabledChat').remove();
+	                       $(".chat_input").attr("disabled", false);
+	                       $(".chat_input").attr("placeholder", "메세지를 입력해주세요.");
+	                   }
+
+	                   let sellButton = $("<input>").attr("type", "button").addClass("sellTrade").val("거래완료");
+	                   // 상품판매상태 버튼
+	                   $(".trade_status").empty();
+
+	                   $(".trade_status").append("<input type='button' value='판매중'> <input type='button' value='거래중'> ");
+	                   $(".trade_status").append(sellButton);
+
+	                   if (result.chatDetail[0].item_status === '거래완료') {
+	                       $(".trade_status").append(reviewElement);
+	                   }
+
+	                   $(".trade_status input").each(function() {
+	                       if ($(this).val() === result.chatDetail[0].item_status) {
+	                           $(this).addClass('active');
+	                       }
+	                   });
+
+
+	                   $("input.sch_box").val(trade_date);
+
+	                   if (sId == buy_id) {
+	                       $(".trade").empty();
+	                       $('.image_table img').attr('src', sell_profileImg);
+	                       profileImg = sell_profileImg;
+	                       $(".trade img").attr("src", "${path}/resources/images/chat/btn_trade_x2.png");
+
+
+	                       if (result.chatDetail[0].item_status == '거래중') {
+	                           $(".declaration").after("<div class='trade' onclick='payment()'  ><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+	                       } else {
+	                           $(".trade").remove();
+	                       }
+
+
+	                       // 파는사람일땐 거래완료를 하면안됨
+	                   } else if (sId == sell_id) {
+	                       let str = "<br><span style='font-size: 11px;  display: inline-block; float:right;margin-top:5px;font-weight: bolder;'><i class='fa-brands fa-bilibili'></i> 판매자는 거래완료버튼을 누를수 없습니다.</span>";
+	                       $('.image_table img').attr('src', sell_profileImg);
+	                       profileImg = buy_profileImg;
+	                       $(".trade").remove();
+	                       sellButton.prop('disabled', true);
+
+	                       sellButton.after(str);
+
+	                       if ($('.trade_status .active').val() == '거래완료') {
+	                           sellButton.prop('disabled', false);
+	                           $('span').remove();
+	                           $('.reviewForm').remove();
+
+	                       }
+
+	                   }
+
+
+	                   //                     if (sId == result.chatDetail[0].buy_member_id) {
+	                   //                         opponent_nickname = result.chatDetail[0].sell_nickname;
+	                   //                     }
+	                   $(".chat_header a .info div").empty();
+	                   // 헤더에 파는사람아이디
+	                   $(".chat_header a .info div").append("<span>[" + sell_nickname + "]<br><i class='fa-regular fa-comment-dots fa-flip-horizontal'></i> " + item_subject + "</span>");
+
+
+
+
+	                   //날짜표시
+	                   $(".chat_wrapper").empty();
+	                   let str = "<div class='chat_timeago'>" +
+	                       "<div class='chat_timeago_box'>" +
+	                       "<span class='chat_timeago_text'>" + formatDate + "</span></div></div>";
+
+	                   $(".chat_description .chat_wrapper").append(str);
+
+	                   //대화내역 상대방인지 나인지 구분하며 표시
+	                   for (var i = 0; i < result.chatDetail.length; i++) {
+	                       let time = new Date(result.chatDetail[i].chat_time);
+	                       let hours = time.getHours();
+	                       let minutes = time.getMinutes();
+	                       let formattedMinutes = minutes.toString().padStart(2, '0');
+	                       let amPm = hours < 12 ? "오전" : "오후";
+	                       hours = hours % 12 || 12;
+	                       let formatChatTime = amPm + " " + hours + ":" + formattedMinutes;
+
+
+	                       if (sId == result.chatDetail[i].chat_mem_id) {
+	                           let str =
+	                               "<div class='chat_myself'>" +
+	                               "<div class='chat_myself_box'>" +
+	                               "<div class='chat_myself_message'>" +
+	                               "<span>" + result.chatDetail[i].chat_content + "</span>" +
+	                               "<div class='chat_myself_timeago'>" + formatChatTime + "</div></div></div></div>";
+	                           $(".chat_timeago").append(str);
+	                       } else {
+	                           let str =
+	                               "<div class='chat_opponent'>" +
+	                               "<div class='chat_opponent_box'>" +
+	                               "<div class='chat_opponent_image_box'>" +
+	                               "<img class='chat_opponent_profile_image' src='" + profileImg + "' alt='상대방이미지'></div>" +
+
+	                               "<div class='chat_opponent_title'>" + result.chatDetail[i].buy_nickname + "</div>" +
+	                               "<div class='chat_opponent_message'>" +
+	                               "<span>" + result.chatDetail[i].chat_content + "</span>" +
+	                               "<div class='chat_opponent_timeago'>" + formatChatTime + "</div></div></div></div>";
+	                           $(".chat_timeago").append(str);
+	                       }
+
+	                       succ(result);
+
+
+	                   } //success
+	               },
+	               error: function(request, status, error) {
+	                   alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	               }
+	           }); //ajax
+
+	       }).then((arg) => { //then    
+	           $(".trade_status input").on("click", function() {
+	               let item_status = $(this).val();
+	               let clickedButton = $(this);
+
+	               if ($('input.sch_box').val() === "" && item_status === "거래중") {
+	                   alert("일정을 먼저 잡아주세요");
+	                   return;
+	               }
+
+	               let result = confirm(item_status + "으로 변경하시겠습니까");
+	               if (item_status == '거래중') {
+	                   $(".declaration").after("<div class='trade' onclick='payment()'><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+	               } else {
+	                   $(".trade").remove();
+	               }
+
+	               if (item_status == '판매중') {
+	                   $('input.sch_box').val("");
+	               }
+
+	               if (result) {
+
+	                   $.ajax({ //두번째 ajax
+	                       type: "GET",
+	                       url: "itemStatus_update",
+	                       dataType: "text",
+	                       data: {
+	                           item_status: item_status,
+	                           room_code: room_code
+	                       },
+	                       success: function(result2) {
+
+	                           $('.trade_status input.active').removeClass('active');
+	                           clickedButton.addClass('active');
+	                           $('div.card_box.active .profile div').text(item_status);
+
+
+	                       },
+	                       error: function(request, status, error) {
+	                           alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	                       }
+	                   });
+	               }
+	           });
+
+
+	       }); //then(arg)
+
+
+	   } //function chatDetail()
+
+
+	   let tradeDate = new Date($("input.sch_box").val());
+	   let currentDate = new Date();
+	   let sellMember = "${sellDetail.sell_member_id}";
+	   if (tradeDate < currentDate && $('input.active').val() != '거래완료' && sId != sellMember) {
+	       let tradeResult = confirm(room_code + "해당방의 거래가 일정이 지났습니다. 거래를 완료하시겠습니까?");
+
+	       if (tradeResult) {
+	           $.ajax({
+	               type: "GET",
+	               url: "itemStatus_update",
+	               dataType: "text",
+	               data: {
+	                   item_status: "거래완료",
+	                   room_code: room_code,
+	                   trade_date: $("input.sch_box").val()
+	               },
+	               success: function(result) {
+	                   $("#tradeButton").removeClass("active");
+	                   $("#tradeButton").css({
+	                       "background-color": "#F0F0F0",
+	                       "border": "none",
+	                       "color": "#000"
+	                   });
+	                   $(".sellTrade").addClass("active");
+	                   $(".trade_status").append(reviewElement);
+
+
+	               },
+	               error: function(request, status, error) {}
+	           });
+	       }
+	   }
+
+
+
+
+	   // 판매상태 버튼 처리 >> db에 상태 업데이트
+	   $(".trade_status input").on("click", function() {
+
+	       let item_status = $(this).val();
+	       let result = confirm(item_status + "으로 변경하시겠습니까");
+
+	       if (result) {
+	           $.ajax({
+	               type: "GET",
+	               url: "itemStatus_update",
+	               dataType: "text",
+	               data: {
+	                   item_status: item_status,
+	                   room_code: room_code
+	               },
+	               success: function(result) {
+	                   location.reload();
+	               },
+	               error: function(request, status, error) {
+	                   alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	               }
+	           });
+	       }
+
+	   });
+
+
+	   if ($("input.active").val() == "판매중") {
+	       $(".sch_box").val("");
+
+	   }
+
+
+
 
 });
-
 </script>
 <script type="text/javascript">
 // 채팅 시간
@@ -580,13 +588,13 @@ $(function() {
 		opponent_img = "${opponentId.opponent_image}"
 		opponent_nickname = "${opponentId.opponent_nickname}"
     }
-    alert(target+", "+opponent_img+", "+opponent_nickname);
+//     alert(target+", "+opponent_img+", "+opponent_nickname);
     messages(target,opponent_img,opponent_nickname);
 
     console.log("nav에서 아이템코드: " + item_code + " room_code: " + room_code + " target: " + target);
 
     function chatSend(target) {
-        alert("안드가노" + target);
+//         alert("안드가노" + target);
         const data = {
             "room_code": room_code,
             "name": "${sessionScope.sId}",
@@ -619,8 +627,8 @@ $(function() {
         const clickedListItem = $(this);
         room_code = clickedListItem.find('.room_code').val();
         item_code = clickedListItem.find('.item_code').val();
-        console.log("=== room_code: " + room_code + " item_code: " + item_code);
-        alert(room_code + "; " + item_code)
+        console.log("room_code: " + room_code + " item_code: " + item_code);
+//         alert(room_code + "; " + item_code)
         $.ajax({
             type: "GET",
             url: "getTarget",
@@ -632,7 +640,7 @@ $(function() {
             success: function(result) {
                 let parsedObject = JSON.parse(result);
                 target = parsedObject.opponent_id;
-                alert(target);
+//                 alert(target);
                 if (!$(this).parent().is("ul > div:first-child")) {
                 	opponent_img = parsedObject.opponent_image;
                 	opponent_nickname = parsedObject.opponent_nickname;
@@ -1048,7 +1056,7 @@ $(function() {
                             <input type="button" class="${chatList.item_status eq '거래완료' ? 'active' : ''}" value="거래완료">
                             <br>
                             <c:if test="${chatList.item_status eq '거래완료'}">
-                                <div class="review" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>
+                                <div class="reviewForm" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>
                             </c:if>
                          </div>
                      </div>
