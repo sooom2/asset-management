@@ -76,7 +76,8 @@
 	
 	<!-- 계좌 내역 조회 -->
 	<select id="selectAccountHistory" resultType="hashmap">
-<!-- 		SELECT ROW_NUMBER() OVER(ORDER BY trade_code ) AS rownum, lb.*, count(*) over() AS totalCnt -->
+		SELECT ROW_NUMBER() OVER(ORDER BY trade_code ) AS rownum, ah.*, count(*) over() AS totalCnt
+			FROM account_history ah
 	</select>
 	
 	<update id="updatePointAmount">

@@ -136,9 +136,13 @@ public class AdminController {
 	public String adminAccount(Model model) {
 		
 		// 계좌내역 조회
-//		List<HashMap<String, String>> accountHistory = bankService.selectAccountHistory();
-//		model.addAttribute("accountHistory", accountHistory);
-//		System.out.println("adminAccount에서" + accountHistory);
+		List<HashMap<String, String>> accountHistory = bankService.selectAccountHistory();
+		model.addAttribute("accountHistory", accountHistory);
+		HashMap<String, String> countMap = accountHistory.get(0);
+		countMap.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+		model.addAttribute("countMap", countMap);
+		System.out.println("adminAccount에서" + accountHistory);
+		System.out.println("adminAccount에서" + countMap);
 		
 		return "admin/adminAccount";
 	}
