@@ -34,4 +34,34 @@
 	  SELECT * FROM community WHERE comm_code = #{comm_code}
 	</select>
 	
+	<!--커뮤니티 댓글등록 -->
+	<insert id="addComment">
+		INSERT INTO reply 
+		VALUES (
+		(SELECT *
+  			  FROM (SELECT IFNULL(MAX(reply_code),0) FROM reply) A)+1,
+		#{id},
+		#{content},
+		NOW(),
+		#{comm_code}
+		)
+	</insert>
+	
+	<select id="replyList" resultType="hashmap">
+		SELECT * FROM reply
+		WHERE comm_code = #{comm_code}
+	
+	
+	</select>
+
+	<select id="commentCount" resultType="int">
+		SELECT count(*) from reply
+		WHERE comm_code = #{comm_code}
+		
+	
+	</select>
+
+	
+	
+	
 </mapper>

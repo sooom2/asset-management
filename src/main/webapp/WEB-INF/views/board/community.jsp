@@ -34,12 +34,18 @@
     }
 
     </script>
+<style>
+.comment-count {
+	color: #999;
+	margin-left: 5px;
+}
+</style>
 <body>
 	<jsp:include page="../nav.jsp" />
 
 	<div class="container">
 		<form id="iForm" class="form-container">
-			<h2 class="tit">머니또 커뮤니티</h2>
+			<h2 class="tit">🍀 머니또 커뮤니티 🍀</h2>
 			<div class="button-search-container">
 				<!-- 글 등록 버튼 -->
 				<div id="button-container">
@@ -67,7 +73,12 @@
 			    <c:forEach items="${boardList}" var="boardList">
 			        <tr>
 			            <td id="board-data">${boardList.comm_code}</td>
-			            <td id="board-data"><a href="commBoardView?comm_code=${boardList.comm_code}">${boardList.comm_title}</a></td>
+			           <td id="board-data">
+   <div class="board-info">
+      <a href="commBoardView?comm_code=${boardList.comm_code}" class="board-title">${boardList.comm_title}</a>
+      <span class="comment-count">(${boardList.comment_count})</span>
+   </div>
+</td>
 			            <td id="board-data">${boardList.member_id}</td>
 			            <td id="board-data">${boardList.comm_date}</td>
 			            <td id="board-data">${boardList.comm_count}</td>

@@ -14,6 +14,12 @@ public interface CommunityMapper {
 
 	int increaseViews(String comm_code);
 
+	int addComment(HashMap<String, String> comment);
+
+	List<HashMap<String, String>> replyList(String comm_code);
+
+	int commentCount(String comm_code);
+
 	
 
 	

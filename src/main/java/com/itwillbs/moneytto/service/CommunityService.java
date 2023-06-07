@@ -30,6 +30,23 @@ public class CommunityService {
 	    return mapper.increaseViews(comm_code);
 	}
 
+	public int addComment(HashMap<String, String> comment) {
+		return mapper.addComment(comment);
+	}
+
+
+	public List<HashMap<String, String>> replyList(String comm_code) {
+		return mapper.replyList(comm_code);
+	}
+
+	public int commentCount(String comm_code) {
+		return mapper.commentCount(comm_code);
+	}
+
+
+
+	
+
 
 
 }
