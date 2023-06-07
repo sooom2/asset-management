@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>회원정보관리</title>
 <link href="${path }/resources/css/member.css" rel="stylesheet" >
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="${path }/resources/js/member.js"></script>

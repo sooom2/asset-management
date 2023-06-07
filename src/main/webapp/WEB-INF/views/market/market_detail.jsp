@@ -11,6 +11,7 @@
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.4.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/moment.js"></script>
+<script type="text/javascript" src="${path }/resources/js/wish.js"></script>
 <script type="text/javascript">
 
 $(function() {
@@ -40,6 +41,37 @@ function toggleLike(element) {
 }
 
 
+
+//삭제하기 버튼 클릭 시 itemDeletePro 실행
+	$(function() {
+	  $(".SomeonesDeleteButton").click(function() {
+	    var item_code = $(this).data("cd");
+	    var confirmDelete = confirm("정말로 삭제하시겠습니까?");
+	    if (confirmDelete) {
+	      itemDeleteRequest(item_code);
+	    }
+	  });
+
+	  function itemDeleteRequest(item_code) {
+	    $.ajax({
+	      type: "POST",
+	      url: "itemDeletePro",
+	      data: { item_code: item_code },
+	      success: function(response) {
+	        if (response === "success") {
+	          alert("상품이 삭제되었습니다.");
+	          window.location.href = "main";  // 메인 페이지로 이동
+	        } else {
+	          alert("상품 삭제에 실패하였습니다.");
+	        }
+	      },
+	      error: function() {
+	        alert("상품 삭제 중 오류가 발생하였습니다.");
+	      }
+	    });
+	  }
+	});
+
 </script>
 </head>
 <body>
@@ -49,7 +81,7 @@ function toggleLike(element) {
 <input type="hidden" id="report_content" name="report_content" value=""/>
 <input type="hidden" id="session_id" name="session_id" value="${sId }"/>
 <jsp:include page="../nav.jsp" />
-	<div id="next">
+	<div id="next" data-cd="${marketItem.item_code }" class="item">
 		<div class="layoutChildren"></div>
 		<div class="newDetailWrapper">
 			<div class="newDetailMain">
@@ -196,19 +228,31 @@ function toggleLike(element) {
 <!-- 								<div class="WishText">0</div> --> 
 <!-- 							</div> -->
 								<div class="WishWrapper">
-								  <img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png" alt="좋아요 아이콘" class="WishIcon" onclick="toggleLike(this)">
+								  <c:choose>
+	                       	 		<c:when test="${not empty item.wish_code }">
+	                       	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg" />
+	                           		</c:when>
+	                	 		   	<c:otherwise>
+	                      	 		   	<img src="${path }/resources/images/main/ico_heart_off_x3.png"  alt="좋아요 아이콘" class="WishWishImg wish" >
+	                      	 		</c:otherwise>
+	                             </c:choose>
 								</div>
-								
-								<div width="90%" class="SomeonesItemButton"data-cd="${marketItem.item_code }" style="display: none;">
-								<i class="fa-regular fa-comment-dots fa-flip-horizontal" style="color: white;"></i>&nbsp;
-								<div color="#FFFFFF" class="SomeonesItemText">채팅하기</div>
-								</div>
-								<div width="50%" class="SomeonesModifyButton"data-cd="${marketItem.item_code }" style="display: none;">
-								<div color="#FFFFFF" class="SomeonesItemText">수정하기</div>
-								</div>
-								<div width="50%" class="SomeonesDeleteButton"data-cd="${marketItem.item_code }" style="display: none;">
-								<div color="#FFFFFF" class="SomeonesItemText">삭제하기</div>
-								</div>
+								<c:choose>
+									<c:when test="${marketItem.member_id eq sessionScope.sId}">
+										<div width="50%" class="SomeonesModifyButton"data-cd="${marketItem.item_code }">
+										<div color="#FFFFFF" class="SomeonesItemText">수정하기</div>
+										</div>
+										<div width="50%" class="SomeonesDeleteButton"data-cd="${marketItem.item_code }">
+										<div color="#FFFFFF" class="SomeonesItemText">삭제하기</div>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div width="90%" class="SomeonesItemButton"data-cd="${marketItem.item_code }">
+										<i class="fa-regular fa-comment-dots fa-flip-horizontal" style="color: white;"></i>&nbsp;
+										<div color="#FFFFFF" class="SomeonesItemText">채팅하기</div>
+										</div>
+									</c:otherwise>
+								</c:choose>
 						</div>
 					</div>
 					
@@ -248,10 +292,8 @@ function toggleLike(element) {
 		<!-- 신고 모달창 -->
 		<div class="ReactModalPortal" style="display: none;">
 			<div
-				class="ReactModal__Overlay ReactModal__Overlay--after-open detail_report">
-				<div
-					class="ReactModal__Content ReactModal__Content--after-open modal_main"
-					tabindex="-1" role="dialog">
+				class="detail_report">
+				<div class="modal_main" tabindex="-1" role="dialog">
 					<div class="modal_parent">
 						<div class="modal_container">
 							<div class="ReportWrapper">
@@ -259,52 +301,52 @@ function toggleLike(element) {
 								<div class="Report__Title-sc-140fn8w-2 fwaQok">신고 사유를 선택해 주세요.</div>
 								<div class="Report__ListWrapper-sc-140fn8w-3 gGZdRJ">
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="안전결제 거부" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="안전결제 거부" alt="체크박스 아이콘" class="hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">안전결제 거부</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="주류, 담배" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="주류, 담배" alt="체크박스 아이콘" class="hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">주류, 담배</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
 										<img
-											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="전문 의약품, 의료기기" alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+											src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="전문 의약품, 의료기기" alt="체크박스 아이콘" class="hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">전문 의약품, 의료기기</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="개인정보 거래(신분증, 대포폰 등)"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="개인정보 거래(신분증, 대포폰 등)"  alt="체크박스 아이콘" class="hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">개인정보 거래(신분증, 대포폰 등)</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="음란물/성인용품(중고속옷 포함)"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="음란물/성인용품(중고속옷 포함)"  alt="체크박스 아이콘" class="hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">음란물/성인용품(중고속옷 포함)</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="위조상품"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="위조상품"  alt="체크박스 아이콘" class="hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">위조상품</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="총포 도검류"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="총포 도검류"  alt="체크박스 아이콘" class="hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">총포 도검류</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="화장품 견본품"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="화장품 견본품"  alt="체크박스 아이콘" class="hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">화장품 견본품</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="게임계정"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="게임계정"  alt="체크박스 아이콘" class="hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">게임계정</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="도배행위"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="도배행위"  alt="체크박스 아이콘" class="hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">도배행위</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="동물 분양/입양글"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="동물 분양/입양글"  alt="체크박스 아이콘" class="hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">동물 분양/입양글</div>
 									</div>
 									<div class="Report__ListBox-sc-140fn8w-4 ezioIF">
-										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="기타"  alt="체크박스 아이콘" class="Report__CheckBoxIcon-sc-140fn8w-5 hzjjbI">
+										<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_unChecked.png" id="기타"  alt="체크박스 아이콘" class="hzjjbI">
 										<div class="Report__List-sc-140fn8w-6 ejCmPe">기타</div>
 									</div>
 								<div class="report_content">
@@ -362,12 +404,13 @@ function toggleLike(element) {
 	$(function () {
 		var id = $("#session_id").val();
 		var target = $("#target_id").val();
-		
-		if(id == target) {
-			$(".SomeonesModifyButton, .SomeonesDeleteButton").show();
-		} else {
-			$(".SomeonesItemButton").show();
-		}
+//		display:none / show 방식으로 하면 다른사람이 이부분 지우기만 해도 접근 가능해서
+//		JSTL c:choose로 바꿨어요 확인했으면 주석 지워도돼요 06.06
+// 		if(id == target) {
+// 			$(".SomeonesModifyButton, .SomeonesDeleteButton").show();
+// 		} else {
+// 			$(".SomeonesItemButton").show();
+// 		}
 		
 		
 		var itemDate = "${marketItem.item_date}";

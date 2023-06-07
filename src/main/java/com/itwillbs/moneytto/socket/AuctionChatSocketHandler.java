@@ -32,6 +32,7 @@ public class AuctionChatSocketHandler extends TextWebSocketHandler {
 
 	@Override  
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
+		
 		String msg = (String)message.getPayload();
 		JSONObject jObject = new JSONObject(msg);
 	    String name = jObject.getString("name");

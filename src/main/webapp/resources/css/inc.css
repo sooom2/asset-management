@@ -484,6 +484,10 @@ h2.tit {
     vertical-align: middle;
     margin-left: 5px;
 }
+/* 06.05 커서 추가 */
+.mem_profile > *{
+    cursor : pointer;
+}
 
 .profileImg {
     width: 40px;

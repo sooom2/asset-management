@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -56,7 +57,7 @@ function memberAuth(){
 								<img src="${member.member_image}" alt="머니또의 프로필 이미지">
 							</div>
 							</div>
-							<div class="userDataNickName">${member.member_nickname } 님</div>
+							<div class="userDataNickName">${member.member_nickname }</div>
 					</div>
 					<div class="memberInfoReviewBox">
 						<div class="memberInfoText">등급</div>
@@ -67,16 +68,17 @@ function memberAuth(){
 					<c:if test= "${sessionScope.sId eq member.member_id }">
 					<div class="memberInfoReviewBox">
 						<div class="memberInfoText">또머니</div>
-						<div class="memberInfoCount">${member.member_point }원</div>
+						<div class="memberInfoCount"><fmt:formatNumber value="${member.member_point  }" pattern="#,###" /></div>
 					</div>
 					<div class="memberInfoReviewBox">
 						<div class="memberInfoText">또머니페이</div>
 						<c:choose>
+							
 							<c:when test="${member.member_auth_status eq 'Y'  }">
 								<div class="memberInfoCount" onclick="location.href='bank_userInfo'">계좌 관리</div>
 							</c:when>
 							<c:otherwise>
-								<div class="memberInfoCount" onclick="memberAuth()">계좌 등록</div>
+								<div class="memberInfoCount" onclick="memberAuth()">계좌 등록하기</div>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -166,7 +168,7 @@ function memberAuth(){
 						<div class="itemTextBox">
 							<div class="itemCategory">${item.item_category }</div>
 							<div class="itemText subject">${item.item_subject }</div>
-							<div class="itemText">${item.item_price }원</div>
+							<div class="itemText"><fmt:formatNumber value="${item.item_price  }" pattern="#,###" />원</div>
 							<div class="itemTagBox">
 							<c:forEach var="item_tag" items ="${fn:split(item.item_tag, ',') }">
 							<div class="itemSizeTag">${item_tag }</div>

@@ -35,43 +35,28 @@
 	rel="stylesheet">
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-<script>
-		// 검색 함수
-		function search() {
-			var searchKeyword = document.getElementById("searchInput").value;
-			// 검색 결과 페이지로 이동
-			location.href = "검색결과URL?keyword=" + searchKeyword;
-		}
-	</script>
-
 
 <body>
 	<jsp:include page="../nav.jsp" />
-	<!-- 게시판 등록 -->
+	<!-- 게시글 보기 -->
 	<article id="writeForm">
-		<form action="BoardWritePro" name="writeForm" method="post"
+		<form action="commBoardView" name="viewForm" 
 			enctype="multipart/form-data">
-			<input type="hidden" name="board_name" value="${sessionScope.sId }" />
 			<div class="form-group">
-				<label for="title">Title</label> <input type="text"
-					class="form-control" placeholder="글 제목을 입력해 주세요" id="title" name="comm_title">
-				
+				<label for="title">Title</label> 
+				<input type="text" class="form-control" placeholder="글 제목을 입력해 주세요" id="title" value="${boardDetail.comm_title}" readonly>
 			</div>
 
 			<div class="form-group">
 				<label for="content">Content</label>
 				<textarea class="form-control summernote" rows="5" cols=""
-					id="content" name="comm_content"></textarea>
+					id="content" readonly>${boardDetail.comm_content}</textarea>
 			</div>
-
-			<div>
-				<section id="btnArea"
-					style="display: flex; justify-content: center;">
-					<input type="submit" value="등록"> <input type="reset"
-						value="다시쓰기"> <input type="button" value="취소"
-						onclick="history.back()">
-				</section>
-			</div>
+		<div>
+		<section id="btnArea"style="display: flex; justify-content: center;">
+		<input type="button" value="뒤로가기" onclick="history.back()">
+		</section>
+		</div>
 		</form>
 	</article>
 
@@ -87,10 +72,6 @@
 
 </body>
 </html>
-
-
-
-
 
 
 

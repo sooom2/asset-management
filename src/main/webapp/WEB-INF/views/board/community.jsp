@@ -16,6 +16,24 @@
 <script src="resources/js/jquery-3.6.4.js"></script>
 <%-- <link href="${pageContext.request.contextPath }/resources/css/main.css" rel="stylesheet"> --%>
 
+    <script>
+ // 검색 함수
+    function search() {
+        var searchKeyword = document.getElementById("searchInput").value.toLowerCase();
+        var tableRows = document.querySelectorAll("#board-table tr");
+
+        for (var i = 1; i < tableRows.length; i++) { // i=0은 테이블 헤더이므로 건너뜁니다
+            var title = tableRows[i].querySelector("td:nth-child(2)").innerText.toLowerCase();
+
+            if (title.includes(searchKeyword)) {
+                tableRows[i].style.display = ""; // 검색어가 포함된 제목을 가진 행을 표시합니다
+            } else {
+                tableRows[i].style.display = "none"; // 검색어가 포함되지 않은 제목을 가진 행은 숨깁니다
+            }
+        }
+    }
+
+    </script>
 <body>
 	<jsp:include page="../nav.jsp" />
 
@@ -35,6 +53,7 @@
 					<button type="button" onclick="search()">검색</button>
 				</div>
 			</div>
+			
 
 			<table id="board-table">
 				<tr>
@@ -44,22 +63,16 @@
 					<th id="board-header">날짜</th>
 					<th id="board-header">조회수</th>
 				</tr>
-				<%-- 예시 데이터 --%>
-				<tr>
-					<td id="board-data">1</td>
-					<td id="board-data"><a href="글상세페이지URL">게시글 제목</a></td>
-					<td id="board-data">작성자 이름</td>
-					<td id="board-data">2023-06-01</td>
-					<td id="board-data">100</td>
-				</tr>
-				<tr>
-					<td id="board-data">2</td>
-					<td id="board-data"><a href="글상세페이지URL">게시글 제목</a></td>
-					<td id="board-data">작성자 이름</td>
-					<td id="board-data">2023-05-31</td>
-					<td id="board-data">50</td>
-				</tr>
-				<%-- 여기에 반복문을 통해 실제 데이터를 출력하는 로직을 추가하세요 --%>
+			    <%-- boardList를 반복하여 데이터를 출력 --%>
+			    <c:forEach items="${boardList}" var="boardList">
+			        <tr>
+			            <td id="board-data">${boardList.comm_code}</td>
+			            <td id="board-data"><a href="commBoardView?comm_code=${boardList.comm_code}">${boardList.comm_title}</a></td>
+			            <td id="board-data">${boardList.member_id}</td>
+			            <td id="board-data">${boardList.comm_date}</td>
+			            <td id="board-data">${boardList.comm_count}</td>
+			        </tr>
+			    </c:forEach>
 			</table>
 		</form>
 	</div>

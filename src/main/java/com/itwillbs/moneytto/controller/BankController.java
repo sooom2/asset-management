@@ -1,7 +1,11 @@
 package com.itwillbs.moneytto.controller;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.protobuf.Service;
 import com.itwillbs.moneytto.service.BankApiService;
 import com.itwillbs.moneytto.service.BankService;
 import com.itwillbs.moneytto.service.MarketService;
@@ -105,7 +110,7 @@ public class BankController {
 		
 		// access_token 이 null 일 경우 "계좌 인증 필수" 메세지 출력 후 이전페이지로 돌아가기
 		if(access_token == null) {
-			model.addAttribute("msg", "계좌 인증 필수!");
+			model.addAttribute("msg", "계좌 인증이 필요합니다.");
 			return "fail_back";
 		}
 		
@@ -113,10 +118,15 @@ public class BankController {
 		// BankApiService - requestUserInfo() 메서드 호출
 		// => 파라미터 : 엑세스토큰, 사용자번호   리턴타입 : ResponseUserInfoVO(userInfo)
 		ResponseUserInfoVO userInfo = apiService.requestUserInfo(access_token, user_seq_no);
+		
 		System.out.println(userInfo);
 		
 		// Model 객체에 ResponseUserInfoVO 객체 저장
 		model.addAttribute("userInfo", userInfo);
+		System.out.println("==================================");
+		System.out.println("/bank_userInfo : " + userInfo);
+		System.out.println("==================================");
+		
 		
 		return "bank/bank_user_info";
 	}
@@ -140,7 +150,7 @@ public class BankController {
 		// BankApiService - requestAccountDetail() 메서드를 호출하여
 		// 계좌 상세정보 조회 요청
 		// => 파라미터 : Map 객체   리턴타입 : AccountDetailVO(account)
-		AccountDetailVO account = apiService.requestAccountDetail(map);
+		Map<String, String> account = apiService.requestAccountDetail(map);
 		
 		// 응답코드(rsp_code)가 "A0000" 가 아니면 에러 상황이므로 에러 처리
 		// => "정보 조회 실패!" 출력 후 이전페이지로 돌아가기(fail_bank)
@@ -148,8 +158,8 @@ public class BankController {
 		if(account == null) {
 			model.addAttribute("msg", "정보 조회 실패");
 			return "fail_back";
-		} else if(!account.getRsp_code().equals("A0000")) {
-			model.addAttribute("msg", "정보 조회 실패 - " + account.getRsp_message());
+		} else if(!account.get("rsp_code").equals("A0000")) {
+			model.addAttribute("msg", "정보 조회 실패 - " + account.get("rsp_message"));
 			return "fail_back";
 		}
 		
@@ -168,16 +178,56 @@ public class BankController {
 	public String withdraw(
 			@RequestParam Map<String, String> map, HttpSession session, Model model) {
 		
+		String id = (String)session.getAttribute("sId");
+		
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용해주세요.");
+			return "fail_back";
+		} 
+		
 		map.put("access_token", (String)session.getAttribute("access_token"));
 		
 		// TODO
 		// map에 들어갈 요소 
 		// 사용자의 핀테크 이용번호 받아서 admin 계정의 핀테크 이용번호로 충전하는 느낌
 		
-		AccountWithdrawResponseVO result = apiService.withdraw(map);
-		System.out.println("result = " + result);
 		
-		return "bank/withdraw_result";
+		// 계좌번호 미인증이라고 계속 오류떠서 못하고 있는중..
+		
+//		AccountWithdrawResponseVO result = apiService.withdraw(map);
+		String trade_code = UUID.randomUUID().toString().substring(0, 8);
+//		String trade_amount = result.getTran_amt();
+//		String trade_date = result.getBank_tran_date();
+//		System.out.println("result = " + result);
+		
+		//임시로 넣기
+		String trade_amount = map.get("charge_point");
+		String trade_date = LocalDate.now().toString();
+		//
+		map.put("trade_code", trade_code);
+		map.put("trade_amount", trade_amount);
+		map.put("trade_date", trade_date);
+		
+		System.out.println("==================================");
+		System.out.println(map);
+		System.out.println("==================================");
+		int insertCount = bankService.writeHistory(map);
+		
+		
+		// TODO
+		// member_point bigint타입으로 바꾸기..
+		if(insertCount == 0) {
+			model.addAttribute("msg", "포인트 충전에 실패하였습니다. 다시 확인해주세요.");
+			
+		}else {
+			model.addAttribute("msg", trade_amount + "포인트 충전되었습니다.");
+			model.addAttribute("isClose", true);
+		}
+		
+		
+		
+		
+		return "fail_back";
 		
 	}
 	
@@ -190,6 +240,10 @@ public class BankController {
 		map.put("member_id", id);
 		
 		int insertCount = bankService.updateAccount(map);
+		
+		System.out.println("==================================");
+		System.out.println(map);
+		System.out.println("==================================");
 		
 		// 핀테크번호 등록 성공시 
 		if(insertCount > 0) {
@@ -238,5 +292,12 @@ public class BankController {
 		model.addAttribute("item", item);
 		return "payment/payment";
 	}
-	
+	// TEST CONTROLLER
+		@RequestMapping(value = "test", method = {RequestMethod.GET, RequestMethod.POST})
+		public String test(HttpSession session
+								, Model model
+								,@RequestParam Map<String,String> map) {
+			
+			return "fail_back";
+		}
 }

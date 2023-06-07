@@ -10,8 +10,8 @@
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
 <script>
-// function logout() {
-// 	// 카카오 로그인 아닐시 session "token" = true
+function logout() {
+	// 카카오 로그인 아닐시 session "token" = true
 // 	if(${sessionScope.token == true}){
 // 		let isLogout = confirm("로그아웃 하시겠습니까?");
 		
@@ -21,7 +21,7 @@
 // 	} else {
 // 		location.href="https://kauth.kakao.com/oauth/logout?client_id=bf0c05681627cc5d65f40192f843de1b&logout_redirect_uri=http://192.168.3.126:8080/movie/logout";
 // 	}
-// }
+}
 function payment(){
 	window.open("payment", "_blank","width=500,height=830");
 }
@@ -35,7 +35,6 @@ function payment(){
 			<c:choose>
 				<c:when test="${empty sessionScope.sId }">
 					<li><a href="memLogin" data-reload="reload" class=""><i class="fa-regular fa-circle-user"></i>&nbsp;로그인</a></li>
-					<li><a href="mypage" data-reload="" class="">마이페이지</a></li>
 					<li><a href="memAuth">회원가입</a></li>
 				</c:when>
 				<c:otherwise>
@@ -60,7 +59,7 @@ function payment(){
 			<ul class="nav_left">
 				<li style="width: 80px"><a href="auctionMain" class="">경매</a></li>
 				<li><a href="market_list" class="market_list">중고거래</a></li>
-				<li><a href="community" class="">커뮤니티</a></li>
+				<li><a href="commBoard" class="">커뮤니티</a></li>
 				<li><a href="notice_board" class="">공지사항</a></li>
 			</ul>
 			<div class="searchIconWrapper">
@@ -70,7 +69,7 @@ function payment(){
 			<c:if test="${not empty sessionScope.sId }">
 				<div class="mem_profile">
 					<img src="${sessionScope.member_image }" alt="프로필 이미지" class="profileImg">
-					<div class="mem_nickName" onclick="location.href='mypage?member_id=${sessionScope.sId }'">${sessionScope.nickname }</div>
+					<div class="mem_nickName" >${sessionScope.nickname }</div>
 				</div>	
 			</c:if>
 			<a href="itemRegist" class="menu-item">
@@ -98,6 +97,11 @@ function payment(){
 				$("#searchForm").submit(); // 폼 제출
             }
         });
+		// 프로필 이미지 눌렀을때도 마이페이지 이동하게 할려고 하는데
+		// 더 괜찮은 방법 있으면 이거 지우고 그걸로 바꿔주세요 !
+		$('.mem_profile').children().click(function(){
+			location.href='mypage?member_id=${sessionScope.sId }';
+		})
 	});
 </script>
 </body>

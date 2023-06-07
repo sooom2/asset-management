@@ -88,12 +88,12 @@ public class MarketChatService {
 	
 	
 	//거래내역업데이트
-	public int insertMarketPaid(HashMap<String, String> item_detail, String opponentId) {
-		return mapper.insertMarketPaid(item_detail,opponentId);
+	public int insertMarketPaid(HashMap<String, String> item_detail, String sellId,String buyId,String trade_date) {
+		return mapper.insertMarketPaid(item_detail,sellId,buyId,trade_date);
 	}
 	// 거래내역삭제
-	public int deltMarketPaid(HashMap<String, String> item_detail, String opponentId) {
-		return mapper.delMarketPaid(item_detail,opponentId);
+	public int deltMarketPaid(HashMap<String, String> item_detail, String sellId) {
+		return mapper.delMarketPaid(item_detail,sellId);
 	}
 	
 	// 거래내역업데이트가능한지확인
@@ -142,6 +142,21 @@ public class MarketChatService {
 	}
 	public int getRoomCode(String item_code,String id) {
 		return mapper.roomCode(item_code,id);
+	}
+	public int getTradeDateUpdate(String trade_date,int room_code) {
+		return mapper.tradeDateUpdate(trade_date,room_code);
+	}
+	public HashMap<String, String> getTradeDate(int room_code) {
+		System.out.println("service : "+room_code);
+		return mapper.tradeDate(room_code);
+	}
+	public int updateTradeEnd() {
+		// TODO Auto-generated method stub
+		return mapper.updateTradeEnd();
+	}
+	//나간방 ㅊ
+	public List<HashMap<String, String>> existChatList(String room_code,String id) {
+		return null;
 	}
 	
 

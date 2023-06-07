@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itwillbs.moneytto.mapper.CommunityMapper">
+	
+	<!--커뮤니티 글등록 -->
+	<insert id = "insertBoard">
+		<selectKey keyProperty="comm_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(comm_code), 0) FROM community
+		</selectKey>
+		INSERT 
+			INTO community
+			VALUES (
+				#{comm_code} + 1
+				,#{id}
+				,#{comm_title}
+				,#{comm_content}
+				,now()
+				,"0"			
+			)
+	</insert>
+	
+	<!-- 조회수 증가 -->
+	<update id="increaseViews" parameterType="String">
+	  UPDATE community
+	  SET comm_count = comm_count + 1
+	  WHERE comm_code = #{comm_code}
+	</update>
+
+	<select id = "boardList" resultType="hashmap">
+		SELECT * FROM community
+	</select>
+	
+	<select id="boardDetail" parameterType="String" resultType="HashMap">
+	  SELECT * FROM community WHERE comm_code = #{comm_code}
+	</select>
+	
+</mapper>

@@ -165,9 +165,33 @@
               		 WHERE  sell_member_id = #{id}
              	) a
          	) AS myChatRecentList
-      	WHERE row_num = 1
+      	WHERE 1=1
+      		AND row_num = 1
+<!--       		<if> -->
+<!--       		AND room_code != #{room_code} -->
+<!--       		</if> -->
+      	
      		ORDER BY chat_time desc
 	</select>
+	
+	
+	<select id="existChatList" resultType="hashmap">
+	
+		SELECT *
+			FROM
+				market_chat_messages
+			LEFT JOIN market_chat_rooms ON
+				market_chat_rooms.room_code = market_chat_messages.room_code
+			WHERE
+				sell_member_id = #{id}
+				OR buy_member_id =  #{id}
+				AND market_chat_rooms.room_code != #{room_code}
+	
+	
+	
+	
+	</select>
+	
 	<select id="roomCode" resultType="int">
 		SELECT market_chat_rooms.room_code
 			FROM market_chat_rooms
@@ -202,7 +226,8 @@
 				market_code
 				, member_id
 				, item_code
-				, buy_id, sell_id
+				, buy_id
+				, sell_id
 				, market_price
 				, market_pay_type
 				, market_date
@@ -211,11 +236,18 @@
 			#{market_code} + 1
 			, #{item_detail.member_id}
 			, #{item_detail.item_code}
-			, #{opponentId}
-			, #{item_detail.member_id}
+			, #{buyId} -- 사는사람
+			, #{sellId} -- 파는사람 sellId
 			, #{item_detail.item_price}
 			, '직접거래'
-			, now()
+			<choose>
+	            <when test="trade_date == null">
+	                , now()
+	            </when>
+	            <otherwise>
+	                , #{trade_date}
+	            </otherwise>
+			</choose>
 			)
 	
 	</insert>
@@ -232,7 +264,7 @@
 			FROM market_paid
 				WHERE 1=1
 					AND item_code=#{item_detail.item_code}
-					AND buy_id=#{opponentId};
+					AND sell_id=#{sellId};
 	</delete>
 
 	<!-- 채팅상세내용 -->
@@ -240,6 +272,7 @@
 		SELECT
 			market_chat_messages.*,
 			market_chat_rooms.chat_openDate,
+			market_chat_rooms.trade_date,
 			chat_mem_id,
 			seller.member_nickname as sell_nickname,
 			buyer.member_nickname as buy_nickname,
@@ -377,7 +410,7 @@
 	<select id="item_code" resultType="hashmap">
 		SELECT item_code
 			FROM market_chat_rooms
-				WHERE room_code=#{item_code}
+				WHERE room_code=#{room_code}
 	</select>
 	
 	<update id="updateStatus">
@@ -388,8 +421,42 @@
 			 	item_code=#{item_code} 
 	</update>
 	
+	<select id="tradeDate" resultType="hashmap">
+		SELECT trade_date
+			FROM market_chat_rooms
+				WHERE room_code=#{room_code}
+	</select>
 	
-	
+	<update id="updateTradeEnd">
+		UPDATE
+				item
+			SET
+				item_status = '거래완료'
+			WHERE
+				item_code IN (
+				SELECT
+					tradeEnd.item_code
+				FROM
+					(
+					SELECT
+						item.item_code
+					FROM
+						market_chat_rooms
+					LEFT JOIN item ON
+						item.item_code = market_chat_rooms.item_code
+					WHERE
+						item_status = '거래중'
+						AND trade_date &lt; CURDATE()
+			  ) as tradeEnd
+			)
+	</update>
+	<update id="tradeDateUpdate">
+		UPDATE market_chat_rooms
+			SET
+				trade_date = #{trade_date}
+			WHERE
+				room_code = #{room_code}
+	</update>
 	
 
 	<!-- 마켓 아이템 리스트  -->
@@ -460,9 +527,10 @@
 		   		, im.image_code  
 	</select>
 	
+	
 	 
 	<select id="itemDetail" resultType="hashmap">
-		SELECT item.*,member.member_nickname 
+		SELECT item.*,member.member_nickname ,member.member_image 
 			FROM item
 				LEFT JOIN member 
 						ON member.member_id = item.member_id 
@@ -485,13 +553,20 @@
 	
 	
 	<select id="marketItem" resultType="hashmap">
-		SELECT i.*, m.*
+		SELECT i.*, m.*, w.wish_code
 			FROM 
 				item i
 			JOIN
 				member m
 			ON
 				i.member_id = m.member_id
+			LEFT JOIN (
+					SELECT	*
+					FROM	wish
+					WHERE	member_id = #{member_id}
+				) w
+			ON
+				i.item_code = w.wish_item_code
 			WHERE
 				i.item_code = #{item_code}
 	</select>
@@ -665,6 +740,21 @@
 						, now()
 				)
 	</insert>
+	
+		<!-- 상품 아이템 삭제 -->
+	<delete id ="deleteItem">
+	    DELETE FROM item
+	    WHERE
+	        1=1
+	        AND item_code = #{item_code}
+	        AND member_id = #{id}
+	        AND (item_status = '판매중' OR item_status = '거래완료')
+				
+	</delete>
+	
+	
+	
+	
 	
 </mapper>
 

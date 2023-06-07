@@ -24,14 +24,15 @@
 			<td>${account.balance_amt }</td>
 			<td>${account.available_amt }</td>
 			<td>
-				<form action="bank_withdraw" method="post">
+				<form action="bank_regist" method="POST">
 <%-- 						<input type="hidden" name="access_token" value="${sessionScope.access_token }"> --%>
 					<input type="hidden" name="fintech_use_num" value="${account.fintech_use_num }">
 					<input type="hidden" name="bank_name" value="${account.bank_name }">
 					<input type="hidden" name="balance_amt" value="${account.balance_amt }">
+					<input type="submit" value="등록하기">
 <!-- 					<input type="submit" value="출금이체(X)"> -->
-					<input type="submit" formaction="bank_regist" value="등록하기">
 				</form>
+				
 			</td>
 		</tr>
 	</table>

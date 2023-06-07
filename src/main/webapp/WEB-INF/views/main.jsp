@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <html>
 <head>
@@ -16,6 +17,7 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="resources/js/jquery.bxslider.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/wish.js"></script>
+
 <script type="text/javascript">
 	$(function() {
 		//메인 슬라이 더
@@ -165,7 +167,7 @@
 								<div class="itemTextBox">
 									<div class="itemCategory">${item.item_category }</div>
 									<div class="itemText subject">${item.item_subject }</div>
-									<div class="itemText">${item.item_price }원</div>
+									<div class="itemText"><fmt:formatNumber value="${item.item_price }" pattern="#,###" />원</div>
 									<div class="itemTagBox">
 									<c:forEach var="item_tag" items ="${fn:split(item.item_tag, ',') }">
 									<div class="itemSizeTag">${item_tag }</div>

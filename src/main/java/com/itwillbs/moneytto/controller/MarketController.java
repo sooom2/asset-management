@@ -4,12 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -170,7 +166,12 @@ public class MarketController {
 	// 아이템상태 업데이트
 	@GetMapping("itemStatus_update")
 	@ResponseBody
-	public void itemStatusUpdate(int room_code, String item_status,Model model,HttpSession session) {
+	public void itemStatusUpdate(int room_code, String item_status,String trade_date,Model model,HttpSession session) {
+		
+		//거래 일정 시간이 지나서 거래완료로 바꿔야할때
+		// 거래일정이 지나면 상태를 거래완료로 바꾸게하기
+		int updateTradEnd = marketChatService.updateTradeEnd(); 
+		
 		
 		// 1. 버튼을누르면 해당상대로 변경되야함  ok
 		// 2. 거래완료 버튼을 누르면  2-1 item에서 상품의 상태가 update 2-2 market_paid 에 insert되야함
@@ -181,13 +182,37 @@ public class MarketController {
 		
 		// 1-2 알아낸 상품코드로 아이템 상태를 업데이트함
 		int updateStatus = marketChatService.updateStatus(item_status,item_code.get("item_code"));
+
+		
+		// 1-3 market_chat_rooms 의 trade_date 업데이드함
+		int tradeDateUpdate = marketChatService.getTradeDateUpdate(trade_date,room_code);
+		
+		
 		
 		// item_status 가 '거래완료'일시 > market_paid 에 insert
 		HashMap<String, String> item_detail = marketChatService.getItemList(item_code.get("item_code")); 
 		String get_item_status = item_detail.get("item_status");
 		HashMap<String, String> opponentId= marketChatService.getOpponentId(room_code, (String)session.getAttribute("sId"));
 		
+		//물건판매자
+		HashMap<String, String> sellDetail = marketChatService.getSellID(item_code.get("item_code"));
+		String sellId = null;
+		// 내가판매자
+		if((String)session.getAttribute("sId") == sellDetail.get("member_id")) {
+			sellId = (String)session.getAttribute("sId");
+			System.out.println(sellId + "내가판매자일때");
+		} else {
+			//상대방이 판매자
+			sellId = sellDetail.get("member_id").toString();
+			System.out.println(sellId + "상대방이 판매자일때");
+			
+		}
+		
 		String get_item_code = item_detail.get("item_code");
+		
+		
+		
+		
 		//여기까진됨
 		if(get_item_status.equals("거래완료")) {
 			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -200,13 +225,16 @@ public class MarketController {
 			}else { //거래내역에없을때 
 				// market_paid insert 작업
 				// 거래코드, 판매자아이디, 아이템코드, 산사람, 판사람, 가격 , 판매방법 , 날짜
-				int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,opponentId.get("opponent_id"));
+				System.out.println("사는사람 ==================================");
+				System.out.println(sellId);
+				System.out.println("==================================");
+				int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date);
 			}
 			
 			
 		} else {
 			// market_paid 에서 삭제되야함
-			int delMarketPaid = marketChatService.deltMarketPaid(item_detail,opponentId.get("opponent_id"));
+			int delMarketPaid = marketChatService.deltMarketPaid(item_detail,sellId);
 		}
 	}
 
@@ -312,7 +340,7 @@ public class MarketController {
 			// 1. 최근 room_code 조회
 			chatList = marketChatService.getMyChatRecentList(id);
 			System.out.println("nav1 ========================================");
-			System.out.println(chatList);
+			System.out.println();
 			System.out.println("nav1 ========================================");
 			if (chatList != null && chatList.size() > 0) {
 				System.out.println(chatList.get("member_id"));
@@ -358,24 +386,32 @@ public class MarketController {
 			
 			DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 			DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm");
+			DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("a hh:mm");
 			String chatTime = String.valueOf(chatList.get("chat_time"));
 			LocalDateTime parsedDateTime = LocalDateTime.parse(chatTime, inputFormatter);
 			String formattedDateTime = parsedDateTime.format(outputFormatter);
-		
+			String chatAreaTime = parsedDateTime.format(outputFormatter2);
+			
+			
+			model.addAttribute("chatAreaTime",chatAreaTime);
 			model.addAttribute("chatTime",formattedDateTime);
 
 		}
+		if(chatList !=null) {
+			item = marketChatService.getItemList(item_code);
+			sellId = item.get("member_id");
+		}
 		
-		System.out.println("판매자!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		item = marketChatService.getItemList(item_code);
-		sellId = item.get("member_id");
+		
 		
 		// header에는 판매자 의정보!! ㅠㅠ
 		HashMap<String, String> sellDetail = marketChatService.getSellDetail(room_code);
-		System.out.println("=헷 갈.. 린 .. 다=============================================");
-		System.out.println(sellDetail);
-		System.out.println("==============================================");
-		
+		System.out.println(room_code);
+		HashMap<String, String> trade_date = marketChatService.getTradeDate(room_code);
+		System.out.println("=============== trade_date ======================");
+		System.out.println(trade_date);
+		System.out.println("=============== trade_date ======================");
+		model.addAttribute("trade_date",trade_date);
 		model.addAttribute("sellDetail",sellDetail);
 		model.addAttribute("item_subject",item_subject);
 		model.addAttribute("opponentId", opponentId);
@@ -390,7 +426,7 @@ public class MarketController {
 		return "market/market_chat";
 
 	}// market_chat
-	
+
 	@GetMapping("chatDetail")
 	@ResponseBody
 	public String chatDetail(Model model, @RequestParam(defaultValue="0") int room_code,HttpSession session) {
@@ -406,7 +442,16 @@ public class MarketController {
 		return arrChatDetail.toString();
 	}
 	
-
+	@GetMapping("exitChatRoom")
+	@ResponseBody
+	public String existChatRoom(String room_code,HttpSession session) {
+		
+		String id = (String)session.getAttribute("sId");
+		List<HashMap<String, String>> chatList = marketChatService.existChatList(room_code,id);
+		JSONArray arrChatList = new JSONArray(chatList);
+		return arrChatList.toString();
+	};
+	
 	@GetMapping("reviewForm")
 	public String marketReview(HttpSession session, Model model, String item_code) {
 		
@@ -669,7 +714,31 @@ public class MarketController {
 	}
 
 
-	
+	// 상품 삭제
+	@PostMapping(value = "itemDeletePro")
+	@ResponseBody
+	public String itemDeletePro(@RequestParam("item_code") String itemCode, HttpSession session) {
+	    String id = (String) session.getAttribute("sId");
+	    
+	    if (id == null) {
+	        return "fail_back";
+	    }
+	    
+	    HashMap<String, String> item = new HashMap<>();
+	    item.put("item_code", itemCode);
+	    item.put("id", id);
+	    
+	    int deleteCount = service.deleteItem(item);
+	    
+	    if (deleteCount > 0) {
+	        service.removeImage(itemCode);
+	        return "success";
+	    } else {
+	        return "fail_back";
+	    }
+	}
+
+
 
 
 	

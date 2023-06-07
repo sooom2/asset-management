@@ -72,10 +72,10 @@ public interface MarketMapper {
 
 	
 	// 거래내역업데이트
-	int insertMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("opponentId") String opponentId);
+	int insertMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("sellId") String sellId,@Param("buyId") String buyId,@Param("trade_date") String trade_date);
 	
 	// 거래내역 삭제
-	int delMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("opponentId") String opponentId);
+	int delMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("sellId") String sellId);
 
 	//업데이트 가능한지
 	int isUpdate(String item_detail);
@@ -125,6 +125,19 @@ public interface MarketMapper {
 
 	//대화방있을때 룸코드 찾기
 	int roomCode(@Param("item_code") String item_code,@Param("id") String id);
+
+	int deleteItem(HashMap<String, String> item);
+
+	// 거래일정 업데이트
+	int tradeDateUpdate(@Param("trade_date") String trade_date,@Param("room_code") int room_code);
+
+	// 거래일정 찾기
+	HashMap<String, String> tradeDate(int room_code);
+
+	int updateTradeEnd();
+
+	//나간방
+	List<HashMap<String, String>> existChatList(String room_code);
 
 
 }

@@ -77,6 +77,16 @@ public class MarketService {
 	public int removeImage(String itemCode) {
 		return mapper.removeImage(itemCode);
 	}
+
+
+
+	public int deleteItem(HashMap<String, String> item) {
+		return mapper.deleteItem(item);
+	}
+
+
+
+		
 	
 	
 }

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.itwillbs.moneytto.vo.AccountVO;
 import com.itwillbs.moneytto.vo.ResponseTokenVO;
 
 public interface BankMapper {
@@ -21,5 +20,9 @@ public interface BankMapper {
 	
 	// 핀테크 번호 등록
 	int updateAccount(Map<String, String> map);
+	// 포인트 충전 했을 때
+	int insertAccountHistory(Map<String, String> map);
+
+	int updatePointAmount(Map<String, String> map);
 
 }

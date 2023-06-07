@@ -7,9 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <link href="${path }/resources/css/market.css" rel="stylesheet">
-<script type="text/javascript" src="${path }/resources/js/jquery-3.6.4.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/moment.js"></script>
-<script type="text/javascript" src="${path }/resources/js/wish.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -230,12 +229,12 @@
 				}
 				
 				if(wish == null) {
-					wish = '<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="WishWishImg wish" />'
+					wish = '<img src="${path }/resources/images/main/ico_heart_off_x3.png" alt="좋아요 아이콘" class="WishWishImg wish" onclick="wish.call(this)"/>'
 				}else{
-					wish = '<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg" />'
+					wish = '<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg" onclick="wish.call(this)" />'
 				}
 
-				var str = '<div class="itemThumbnailBox" data-cd="';
+				var str = '<div class="itemThumbnailBox item" data-cd="';
 				str += code;
 				str +=	'">';
 				str += '<div class="itemThumbnailBox">';
@@ -629,9 +628,46 @@
 	            }
 	        });
 			
+			
+			
 		});
+function wish(){
 	
+	event.preventDefault();
+	
+	var $btnWish = $(this);
+	var item_code = $btnWish.closest(".item").attr("data-cd");
+	
+	if(${not empty sessionScope.sId}){
+		$.ajax({
+	   		url : 'clickWish',
+	   		type : 'POST',
+	   		data : {item_code : item_code}
+		}).done(function(){
+			$btnWish.toggleClass("wish");
+			
+			if($btnWish.hasClass("wish")){
+				$btnWish.attr({
+					'src' : 'resources/images/main/ico_heart_off_x3.png',
+					alt : '찜하기 완료'
+				});	
+			}else{
+				$btnWish.attr({
+					'src' : 'resources/images/main/ico_heart_on_x3.png',
+					alt : '찜하기'
+				});
+			}
+		}).fail(function(){
+			
+		})	
+	}else{
+		alert("로그인 후 이용할 수 있습니다.");
+	}
+}	
 </script>
 <jsp:include page="../footer.jsp" />
 </body>
 </html>
+<!-- 페이지 자체가 렉 넘 심해서.. 혹시나 해서 10번 라인에 jQuery 서버경로로 바꿨는데
+	좀 빨라진 체감이 있는것 같기도...?? 잘 작동안되면 원래 버전으로 바꿔주세요 ~
+ -->
