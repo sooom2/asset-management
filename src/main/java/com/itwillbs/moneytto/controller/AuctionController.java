@@ -226,8 +226,9 @@ public class AuctionController {
 		return "redirect:/auction";
 	};
 	
+	// 경매 결제 창
 	@RequestMapping(value="auctionPay", method = RequestMethod.GET)
-	public String auctionPay(@RequestParam Map<String, String> auctionPay, Model model, HttpSession session) { // 이미지 코드와 경매 코드를 받아서 목록 상세
+	public String auctionPay(@RequestParam Map<String, String> auctionPay, Model model, HttpSession session) {
 		String id = (String)session.getAttribute("sId");
 		HashMap<String, String> member = memberService.getMember(id);
 		System.out.println(auctionPay);

@@ -162,6 +162,10 @@
 			//기존값에 카테고리 추가
 			var category = $("#item_category").val();
 			var str = '';
+			
+			console.log("기존 카테고리 아이디 값 :  " + $("#item_category").val());		
+			console.log("새로 받은 categoryId : " + categoryId);
+			
 			switch(categoryId) {
 				case "fashion": str += "패션/의류/잡화/뷰티"; break;
 				case "pc": str += "가전제품/모바일/PC"; break;
@@ -171,6 +175,13 @@
 				case "child": str += "유아동/반려동물"; break;
 				case "etc": str += "기타"; break;
 				case "all": 
+			}
+			
+			console.log("switch에서 나온 str : " + str);
+			
+			console.log("str이 기존 값에 포함되어있음? : " + categoryId.includes(str));
+			if(categoryId.includes(str)) {
+
 			}
 			
 			// all이면 null 넘김

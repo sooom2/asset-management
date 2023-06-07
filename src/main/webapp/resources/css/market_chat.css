@@ -29,11 +29,11 @@
 
 .left_main .left_main_header {
 /*     display: none */
-	text-align: center;
+   text-align: center;
 }
 .left_main .left_main_header .title{
-	line-height: 100px;
-	background: #f1f1f1;
+   line-height: 100px;
+   background: #f1f1f1;
 }
 .left_main ul {
     height: 77vh;
@@ -112,11 +112,11 @@
 }
 
 .exitChatRoom{
-	display: inline-block;
-	float: right;
+   display: inline-block;
+   float: right;
 }
 .etc_dots i{
-/* 	position: absolute; */
+/*    position: absolute; */
     top: 13px;
     right: 10px;
 }
@@ -250,11 +250,11 @@
 
 
 .right_main .chat_header .scheduling{
-	display: inline-block;
+   display: inline-block;
 }
 .chat_header .scheduling .sch_date{
-	color: #BB2649;
-	margin-left: 60px;
+   color: #BB2649;
+   margin-left: 60px;
 }
 
 
@@ -287,9 +287,9 @@
 }
 
 .right_main .chat_header .declaration img {
-	margin-left: 5px;
-	width: 27px;
-	cursor: pointer
+   margin-left: 5px;
+   width: 27px;
+   cursor: pointer
 }
 .right_main .chat_header .trade {
     float: right;
@@ -307,7 +307,7 @@
     cursor: pointer
 }
 
-.chat_wrapper{/* 	position: relative; *//*     display: flex; *//*     align-items: flex-start; *//*     justify-content: flex-start; *//*     flex-direction: column; *//*     width: 100%; *//*     height: 100%; *//* margin-bottom: 10px; */}
+.chat_wrapper{/*    position: relative; *//*     display: flex; *//*     align-items: flex-start; *//*     justify-content: flex-start; *//*     flex-direction: column; *//*     width: 100%; *//*     height: 100%; *//* margin-bottom: 10px; */}
 
 .chat_description {
     overflow: auto;
@@ -1031,9 +1031,9 @@
     z-index: 1;
 }
 .trade_status{
-	display: block;
-	float: right;
-	margin-top: -6px;
+   display: block;
+   float: right;
+   margin-top: -6px;
 }
 .trade_status .active{
     background: #bb2649;
@@ -1041,15 +1041,15 @@
     border: 1px solid #b6b6b6;
 }
 .trade_status input[type="button"]{
-	padding: 4px 7px;
-	border-radius: 6px;
-	border: none;
+   padding: 4px 7px;
+   border-radius: 6px;
+   border: none;
 }
 .trade_status input[type="button"]:disabled{
-	background: #fff;
-	border: 1px solid #a3a3a3;
-	color: #939393;
-	border-radius: 6px;
+   background: #fff;
+   border: 1px solid #a3a3a3;
+   color: #939393;
+   border-radius: 6px;
 }
 
 .card_box .info .subject {
@@ -1066,23 +1066,23 @@
 }
 
 .trade_status input[type="button"]{
-	cursor:pointer;
+   cursor:pointer;
 }
 
 
 .content_area{
-	
-	width: 100%;
-	height: 500px;
-	text-align: center;
-	display: flex;
+   
+   width: 100%;
+   height: 500px;
+   text-align: center;
+   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .content_area{
-	font-size: 20px;
-	
+   font-size: 20px;
+   
 }
 
 .trade_status .active{
@@ -1211,9 +1211,31 @@
     cursor: pointer;
 }
  .exitChatRoom  svg{
- 	color: rgb(0,0,0,0);
+    color: rgb(0,0,0,0);
  }
 .active .exitChatRoom svg{
-	color: black;
+   color: black;
 }
 
+.disabledChat {
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  width: 686px;
+  height: 116px;
+  z-index: 9999;
+  position: absolute;
+  background: rgb(255 255 255 / 74%);
+}
+
+.disabledContent{
+   width: 100%;
+   height: 100%; 
+}
+
+.disabledChat h2{
+   text-align: center;
+   line-height: 118px;
+   font-size: 22px;
+}

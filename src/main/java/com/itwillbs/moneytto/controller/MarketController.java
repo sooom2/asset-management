@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -163,294 +164,313 @@ public class MarketController {
 		return "market/market_itemRegist";
 	}
 	
-	// 아이템상태 업데이트
-	@GetMapping("itemStatus_update")
-	@ResponseBody
-	public void itemStatusUpdate(int room_code, String item_status,String trade_date,Model model,HttpSession session) {
-		
-		//거래 일정 시간이 지나서 거래완료로 바꿔야할때
-		// 거래일정이 지나면 상태를 거래완료로 바꾸게하기
-		int updateTradEnd = marketChatService.updateTradeEnd(); 
-		
-		
-		// 1. 버튼을누르면 해당상대로 변경되야함  ok
-		// 2. 거래완료 버튼을 누르면  2-1 item에서 상품의 상태가 update 2-2 market_paid 에 insert되야함
-		// 3. 거래완료에서 다른버튼을 누르면 ex)다시 판매중이나 거래중으로바뀌면 market_paid에서 삭제되야함
-		
-		// 1-1 상품코드를 알아냄
-		HashMap<String, String> item_code = marketChatService.getItem_code(room_code);
-		
-		// 1-2 알아낸 상품코드로 아이템 상태를 업데이트함
-		int updateStatus = marketChatService.updateStatus(item_status,item_code.get("item_code"));
 
-		
-		// 1-3 market_chat_rooms 의 trade_date 업데이드함
-		int tradeDateUpdate = marketChatService.getTradeDateUpdate(trade_date,room_code);
-		
-		
-		
-		// item_status 가 '거래완료'일시 > market_paid 에 insert
-		HashMap<String, String> item_detail = marketChatService.getItemList(item_code.get("item_code")); 
-		String get_item_status = item_detail.get("item_status");
-		HashMap<String, String> opponentId= marketChatService.getOpponentId(room_code, (String)session.getAttribute("sId"));
-		
-		//물건판매자
-		HashMap<String, String> sellDetail = marketChatService.getSellID(item_code.get("item_code"));
-		String sellId = null;
-		// 내가판매자
-		if((String)session.getAttribute("sId") == sellDetail.get("member_id")) {
-			sellId = (String)session.getAttribute("sId");
-			System.out.println(sellId + "내가판매자일때");
-		} else {
-			//상대방이 판매자
-			sellId = sellDetail.get("member_id").toString();
-			System.out.println(sellId + "상대방이 판매자일때");
-			
-		}
-		
-		String get_item_code = item_detail.get("item_code");
-		
-		
-		
-		
-		//여기까진됨
-		if(get_item_status.equals("거래완료")) {
-			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-			int updateCount = marketChatService.isUpdate(get_item_code);
-			System.out.println("==================================");
-			System.out.println(updateCount);
-			System.out.println("==================================");
-			if(updateCount > 0) {
-				System.out.println("거래내역에 이미있음");
-			}else { //거래내역에없을때 
-				// market_paid insert 작업
-				// 거래코드, 판매자아이디, 아이템코드, 산사람, 판사람, 가격 , 판매방법 , 날짜
-				System.out.println("사는사람 ==================================");
-				System.out.println(sellId);
-				System.out.println("==================================");
-				int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date);
-			}
-			
-			
-		} else {
-			// market_paid 에서 삭제되야함
-			int delMarketPaid = marketChatService.deltMarketPaid(item_detail,sellId);
-		}
-	}
+	   // 아이템상태 업데이트
+	   @GetMapping("itemStatus_update")
+	   @ResponseBody
+	   public void itemStatusUpdate(int room_code, String item_status,String trade_date,Model model,HttpSession session) {
+	      
+	      //거래 일정 시간이 지나서 거래완료로 바꿔야할때
+	      // 거래일정이 지나면 상태를 거래완료로 바꾸게하기
+	      int updateTradEnd = marketChatService.updateTradeEnd(); 
+	      
+	      
+	      // 1. 버튼을누르면 해당상대로 변경되야함  ok
+	      // 2. 거래완료 버튼을 누르면  2-1 item에서 상품의 상태가 update 2-2 market_paid 에 insert되야함
+	      // 3. 거래완료에서 다른버튼을 누르면 ex)다시 판매중이나 거래중으로바뀌면 market_paid에서 삭제되야함
+	      
+	      // 1-1 상품코드를 알아냄
+	      HashMap<String, String> item_code = marketChatService.getItem_code(room_code);
+	      
+	      // 1-2 알아낸 상품코드로 아이템 상태를 업데이트함
+	      int updateStatus = marketChatService.updateStatus(item_status,item_code.get("item_code"));
 
-	@GetMapping(value = "marketChat")
-	public String marketChat(Model model, HttpServletResponse response, HttpSession session,
-			@RequestParam(defaultValue = "") String item_code) {
-		String id = (String) session.getAttribute("sId");
-		HashMap<String, String> member = memberService.getMember(id);
-		if (id == null) {
-			model.addAttribute("msg", "로그인해주세요");
-			return "fail_back";
-		}
-		// 내닉네임
-		String nickname = member.get("member_nickname");
-		model.addAttribute("nickname", nickname);
+	      
+	      // 1-3 market_chat_rooms 의 trade_date 업데이드함
+	      int tradeDateUpdate = marketChatService.getTradeDateUpdate(trade_date,room_code);
+	      
+	      
+	      
+	      // item_status 가 '거래완료'일시 > market_paid 에 insert
+	      HashMap<String, String> item_detail = marketChatService.getItemList(item_code.get("item_code")); 
+	      String get_item_status = item_detail.get("item_status");
+	      HashMap<String, String> opponentId= marketChatService.getOpponentId(room_code, (String)session.getAttribute("sId"));
+	      
+	      //물건판매자
+	      HashMap<String, String> sellDetail = marketChatService.getSellID(item_code.get("item_code"));
+	      String sellId = null;
+	      // 내가판매자
+	      if((String)session.getAttribute("sId") == sellDetail.get("member_id")) {
+	         sellId = (String)session.getAttribute("sId");
+	         System.out.println(sellId + "내가판매자일때");
+	      } else {
+	         //상대방이 판매자
+	         sellId = sellDetail.get("member_id").toString();
+	         System.out.println(sellId + "상대방이 판매자일때");
+	         
+	      }
+	      
+	      String get_item_code = item_detail.get("item_code");
+	      
+	      
+	      
+	      
+	      //여기까진됨
+	      if(get_item_status.equals("거래완료")) {
+	         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+	         int updateCount = marketChatService.isUpdate(get_item_code);
+	         System.out.println("==================================");
+	         System.out.println(updateCount);
+	         System.out.println("==================================");
+	         if(updateCount > 0) {
+	            System.out.println("거래내역에 이미있음");
+	         }else { //거래내역에없을때 
+	            // market_paid insert 작업
+	            // 거래코드, 판매자아이디, 아이템코드, 산사람, 판사람, 가격 , 판매방법 , 날짜
+	            System.out.println("사는사람 ==================================");
+	            System.out.println(sellId);
+	            System.out.println("==================================");
+	            int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date);
+	         }
+	         
+	         
+	      } else {
+	         // market_paid 에서 삭제되야함
+	         int delMarketPaid = marketChatService.deltMarketPaid(item_detail,sellId);
+	      }
+	   }
 
-		// 상대방아이디
-		HashMap<String, String> opponentId = null;
+	   @GetMapping(value = "marketChat")
+	   public String marketChat(Model model, HttpServletResponse response, HttpSession session,
+	         @RequestParam(defaultValue = "") String item_code) {
+	      String id = (String) session.getAttribute("sId");
+	      HashMap<String, String> member = memberService.getMember(id);
+	      if (id == null) {
+	         model.addAttribute("msg", "로그인해주세요");
+	         return "fail_back";
+	      }
+	      // 내닉네임
+	      String nickname = member.get("member_nickname");
+	      model.addAttribute("nickname", nickname);
 
-		HashMap<String, String> item = null;
-		String sellId = null;
-		String item_subject = null;
-		int sellCount = 0;
-		int room_code = 0;
+	      // 상대방아이디
+	      HashMap<String, String> opponentId = null;
+	         
+	      HashMap<String, String> item = null;
+	      String sellId = null;
+	      String item_subject = null;
+	      int sellCount = 0;
+	      int room_code = 0;
 
-		// 마지막 채팅 내역
-		List<HashMap<String, String>> myChatList = null;
-		HashMap<String, Integer> chatList = null;
-		List<HashMap<String, String>> chatDetail = null;
-		
-		// 디테일에서 들어갈때
-		if (!item_code.equals("")) {
-			System.out.println("item_code있음" + item_code);
-			// 아이템선택후 들어가야함
-			// 채팅방이있는지 조회한후 채팅방 생성 //
-			int createRoom = marketChatService.isInsertChatRoom(item_code, id);
-			System.out.println("1 ==========================================");
-			System.out.println(createRoom);
-			System.out.println("1 ==========================================");
-			model.addAttribute("createRoom", createRoom);
-			if (createRoom > 0) { // 방이있을때()
-				
-				// 대화한 내역
-				chatList = marketChatService.getMyChatRecentList(id);
-				System.out.println("1 ==========================================");
-				System.out.println(chatList);
-				System.out.println("1 ==========================================");
+	      // 마지막 채팅 내역
+	      List<HashMap<String, String>> myChatList = null;
+	      HashMap<String, Integer> chatList = null;
+	      List<HashMap<String, String>> chatDetail = null;
+	      
+	      // 디테일에서 들어갈때
+	      if (!item_code.equals("")) {
+	         System.out.println("item_code있음" + item_code);
+	         // 아이템선택후 들어가야함
+	         // 채팅방이있는지 조회한후 채팅방 생성 //
+	         int createRoom = marketChatService.isInsertChatRoom(item_code, id);
+	         System.out.println("1 ==========================================");
+	         System.out.println(createRoom);
+	         System.out.println("1 ==========================================");
+	         model.addAttribute("createRoom", createRoom);
+	         if (createRoom > 0) { // 방이있을때()
+	            
+	            // 대화한 내역
+	            chatList = marketChatService.getMyChatRecentList(id);
+	            System.out.println("1 ==========================================");
+	            System.out.println(chatList);
+	            System.out.println("1 ==========================================");
 
 
-				//아이템코드에 해당하는 roomcode 찾기
-				room_code = marketChatService.getRoomCode(item_code,id);
+	            //아이템코드에 해당하는 roomcode 찾기
+	            room_code = marketChatService.getRoomCode(item_code,id);
 
-				// 2. room_code로 채팅내용조회
-				chatDetail = marketChatService.getChatDetail(room_code);
-				model.addAttribute("chatDetail", chatDetail);
-				System.out.println("2 ==========================================");
-				System.out.println(chatDetail);
-				System.out.println("2 ==========================================");
-				item_subject = chatDetail.get(0).get("item_subject");
-			
-				// 3. 상대방 판매상품갯수조회
-				// 상대방의 아이디 조회
-				opponentId = marketChatService.getOpponentId(room_code, id);
-				System.out.println("3 ==========================================");
-				System.out.println(opponentId.get("opponent_id"));
-				System.out.println("3 ==========================================");
-				// 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
-				sellCount = marketChatService.getSellCount(opponentId.get("opponent_id"));
-				myChatList = marketChatService.getMyChatList(id);
-				
-				System.out.println("4 ==========================================");
-				System.out.println(myChatList);
-				System.out.println("4 ==========================================");
-				item = marketChatService.getItemList(item_code);
-				sellId = item.get("member_id");
+	            // 2. room_code로 채팅내용조회
+	            chatDetail = marketChatService.getChatDetail(room_code);
+	            model.addAttribute("chatDetail", chatDetail);
+	            System.out.println("2 ==========================================");
+	            System.out.println(chatDetail);
+	            System.out.println("2 ==========================================");
+	            item_subject = chatDetail.get(0).get("item_subject");
+	         
+	            // 3. 상대방 판매상품갯수조회
+	            // 상대방의 아이디 조회
+	            opponentId = marketChatService.getOpponentId(room_code, id);
+	            System.out.println("3 ==========================================");
+	            System.out.println(opponentId.get("opponent_id"));
+	            System.out.println("3 ==========================================");
+	            // 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
+	            sellCount = marketChatService.getSellCount(opponentId.get("opponent_id"));
+	            myChatList = marketChatService.getMyChatList(id);
+	            
+	            System.out.println("4 ==========================================");
+	            System.out.println(myChatList);
+	            System.out.println("4 ==========================================");
+	            item = marketChatService.getItemList(item_code);
+	            sellId = item.get("member_id");
 
-				System.out.println("chatDetail 에서  방이있을경우" + item_code + ",룸코드: " + room_code);
-			} else { // 방이없을때
-					
-				// 해당 상품 조회
-				
-				
-	            chatList = marketChatService.getItemDetail(item_code);
-				myChatList = marketChatService.getMyChatList(id);
-				if (myChatList != null) {
-				room_code = marketChatService.getNextRoomCode();
-				} else {
-					room_code = 1;
-				}
-				System.out.println("대화한적이 없다!!!!! 최근 방번호에 active 되야하는디");
-				// 상대방아이디 - 상품의 member_id
-//	            sellId = chatList.get("opponent_id");
-				// 방이없을땐 보통 판매자,,
-				item = marketChatService.getItemList(item_code);
+	            System.out.println("chatDetail 에서  방이있을경우" + item_code + ",룸코드: " + room_code);
+	         } else { // 방이없을때
+	               
+	            // 해당 상품 조회
+	            
+	            
+	               chatList = marketChatService.getItemDetail(item_code);
+	            myChatList = marketChatService.getMyChatList(id);
+	            if (myChatList != null) {
+	            room_code = marketChatService.getNextRoomCode();
+	            } else {
+	               room_code = 1;
+	            }
+	            System.out.println("대화한적이 없다!!!!! 최근 방번호에 active 되야하는디");
+	            // 상대방아이디 - 상품의 member_id
+//	               sellId = chatList.get("opponent_id");
+	            // 방이없을땐 보통 판매자,,
+	            item = marketChatService.getItemList(item_code);
 
-				sellId = item.get("member_id");
+	            sellId = item.get("member_id");
 
-			}
-			model.addAttribute("sellId", sellId);
-		} else { // nav로들어갈때
-			
-			// 최근에 열린 채팅 내역 보이게
-			// 1. 최근 room_code 조회
-			chatList = marketChatService.getMyChatRecentList(id);
-			System.out.println("nav1 ========================================");
-			System.out.println();
-			System.out.println("nav1 ========================================");
-			if (chatList != null && chatList.size() > 0) {
-				System.out.println(chatList.get("member_id"));
-				room_code = chatList.get("room_code");
-				System.out.println(room_code+ "는 뭘까");
-				// 2. room_code로 채팅 내용 조회
-				chatDetail = marketChatService.getChatDetail(room_code);
+	         }
+	         model.addAttribute("sellId", sellId);
+	      } else { // nav로들어갈때
+	         
+	         // 최근에 열린 채팅 내역 보이게
+	         // 1. 최근 room_code 조회
+	         chatList = marketChatService.getMyChatRecentList(id);
+	         System.out.println("nav1 ========================================");
+	         System.out.println();
+	         System.out.println("nav1 ========================================");
+	         if (chatList != null && chatList.size() > 0) {
+	            System.out.println(chatList.get("member_id"));
+	            room_code = chatList.get("room_code");
+	            System.out.println(room_code+ "는 뭘까");
+	            // 2. room_code로 채팅 내용 조회
+	            chatDetail = marketChatService.getChatDetail(room_code);
 
-				System.out.println("nav2 ==================================");
-				System.out.println(chatDetail);
-				System.out.println("nav2 ==================================");
-				item_subject = chatDetail.get(0).get("item_subject");
-				
-				if (chatDetail != null && !chatDetail.isEmpty()) {
+	            System.out.println("nav2 ==================================");
+	            System.out.println(chatDetail);
+	            System.out.println("nav2 ==================================");
+	            item_subject = chatDetail.get(0).get("item_subject");
+	            
+	            if (chatDetail != null && !chatDetail.isEmpty()) {
 
-					model.addAttribute("chatDetail", chatDetail);
-				}
+	               model.addAttribute("chatDetail", chatDetail);
+	            }
 
-				HashMap<String, String> mapItemCode = marketChatService.getItem_code(room_code);
-				item_code = mapItemCode.get("item_code");
-				System.out.println("nav에서 들어갔을때 " + item_code);
-				// 3. 상대방 판매상품갯수조회
-				// 상대방의 아이디 조회
-				opponentId = marketChatService.getOpponentId(room_code, id);
-				// 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
-				sellCount = marketChatService.getSellCount(opponentId.get("opponent_id"));
-				myChatList = marketChatService.getMyChatList(id);
+	            HashMap<String, String> mapItemCode = marketChatService.getItem_code(room_code);
+	            item_code = mapItemCode.get("item_code");
+	            System.out.println("nav에서 들어갔을때 " + item_code);
+	            // 3. 상대방 판매상품갯수조회
+	            // 상대방의 아이디 조회
+	            opponentId = marketChatService.getOpponentId(room_code, id);
+	            // 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
+	            sellCount = marketChatService.getSellCount(opponentId.get("opponent_id"));
+	            myChatList = marketChatService.getMyChatList(id);
 
-			}
+	         }
 
-		}//nav
-		
-		if (chatList != null && myChatList != null && opponentId != null) {
+	      }//nav
+	      
+	      if (chatList != null && myChatList != null && opponentId != null) {
 
-			// 이미지 얻어오기위해 ( 상대방 꺼 조회해야함 )
-			HashMap<String, String> opponentMember = memberService.getMember(opponentId.get("opponent_id"));
-			String oppProfileImg = opponentMember.get("member_image");
+	         // 이미지 얻어오기위해 ( 상대방 꺼 조회해야함 )
+	         HashMap<String, String> opponentMember = memberService.getMember(opponentId.get("opponent_id"));
+	         String oppProfileImg = opponentMember.get("member_image");
 
-			model.addAttribute("oppProfileImg", oppProfileImg);
-			item = marketChatService.getItemList(item_code);
-			sellId = item.get("member_id");
-			
-			
-			DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-			DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm");
-			DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("a hh:mm");
-			String chatTime = String.valueOf(chatList.get("chat_time"));
-			LocalDateTime parsedDateTime = LocalDateTime.parse(chatTime, inputFormatter);
-			String formattedDateTime = parsedDateTime.format(outputFormatter);
-			String chatAreaTime = parsedDateTime.format(outputFormatter2);
-			
-			
-			model.addAttribute("chatAreaTime",chatAreaTime);
-			model.addAttribute("chatTime",formattedDateTime);
+	         model.addAttribute("oppProfileImg", oppProfileImg);
+	         item = marketChatService.getItemList(item_code);
+	         sellId = item.get("member_id");
+	         
+	         
+	         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+	         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm");
+	         DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("a hh:mm");
+	         String chatTime = String.valueOf(chatList.get("chat_time"));
+	         LocalDateTime parsedDateTime = LocalDateTime.parse(chatTime, inputFormatter);
+	         String formattedDateTime = parsedDateTime.format(outputFormatter);
+	         String chatAreaTime = parsedDateTime.format(outputFormatter2);
+	         
+	         
+	         model.addAttribute("chatAreaTime",chatAreaTime);
+	         model.addAttribute("chatTime",formattedDateTime);
 
-		}
-		if(chatList !=null) {
-			item = marketChatService.getItemList(item_code);
-			sellId = item.get("member_id");
-		}
-		
-		
-		
-		// header에는 판매자 의정보!! ㅠㅠ
-		HashMap<String, String> sellDetail = marketChatService.getSellDetail(room_code);
-		System.out.println(room_code);
-		HashMap<String, String> trade_date = marketChatService.getTradeDate(room_code);
-		System.out.println("=============== trade_date ======================");
-		System.out.println(trade_date);
-		System.out.println("=============== trade_date ======================");
-		model.addAttribute("trade_date",trade_date);
-		model.addAttribute("sellDetail",sellDetail);
-		model.addAttribute("item_subject",item_subject);
-		model.addAttribute("opponentId", opponentId);
-		model.addAttribute("myChatList", myChatList);
-		model.addAttribute("chatList", chatList);
-		model.addAttribute("sellCount", sellCount);
-		model.addAttribute("room_code", room_code);
-		model.addAttribute("item_code", item_code);
-		System.out.println("===============????=========================================");
-		System.out.println(chatList + ": " + myChatList + ": " + opponentId);
-		System.out.println("==================????===========================================");
-		return "market/market_chat";
+	      }
+	      if(chatList !=null) {
+	         item = marketChatService.getItemList(item_code);
+	         sellId = item.get("member_id");
+	      }
+	      
+	      // header에는 판매자 의정보!! ㅠㅠ
+	      HashMap<String, String> sellDetail = marketChatService.getSellDetail(room_code);
+	      System.out.println(room_code);
+	      HashMap<String, String> trade_date = marketChatService.getTradeDate(room_code);
+	      model.addAttribute("trade_date",trade_date);
+	      model.addAttribute("sellDetail",sellDetail);
+	      model.addAttribute("item_subject",item_subject);
+	      model.addAttribute("opponentId", opponentId);
+	      model.addAttribute("myChatList", myChatList);
+	      model.addAttribute("chatList", chatList);
+	      model.addAttribute("sellCount", sellCount);
+	      model.addAttribute("room_code", room_code);
+	      model.addAttribute("item_code", item_code);
+	      System.out.println("===============????=========================================");
+	      System.out.println(chatList + ": " + myChatList + ": " + opponentId);
+	      System.out.println("==================????===========================================");
+	      return "market/market_chat";
 
-	}// market_chat
+	   }// market_chat
+	   
+	   @GetMapping("getTarget")
+	   @ResponseBody
+	   public String getTarget(int room_code,HttpSession session) {
+	      String id = (String)session.getAttribute("sId");
+	            
+	      HashMap<String, String> opponentId = marketChatService.getOpponentId(room_code, id);
+	      System.out.println("opponentId ========================================================");
+	      System.out.println(opponentId);
+	      JSONObject arrOpponent = new JSONObject(opponentId);
+	      System.out.println("getTarget ========================================================");
+	      System.out.println(arrOpponent);
+	      System.out.println("getTarget ========================================================");
+	      
+	      return arrOpponent.toString();
+	   }
 
-	@GetMapping("chatDetail")
-	@ResponseBody
-	public String chatDetail(Model model, @RequestParam(defaultValue="0") int room_code,HttpSession session) {
-		
-		String sId = (String)session.getAttribute("sId");
-		
-		List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
-		
-		System.out.println("ajax ========================================================");
-		System.out.println(chatDetail);
-		System.out.println("ajax ========================================================");
-		JSONArray arrChatDetail = new JSONArray(chatDetail);
-		return arrChatDetail.toString();
-	}
-	
-	@GetMapping("exitChatRoom")
-	@ResponseBody
-	public String existChatRoom(String room_code,HttpSession session) {
-		
-		String id = (String)session.getAttribute("sId");
-		List<HashMap<String, String>> chatList = marketChatService.existChatList(room_code,id);
-		JSONArray arrChatList = new JSONArray(chatList);
-		return arrChatList.toString();
-	};
+	   @GetMapping("chatDetail")
+	   @ResponseBody
+	   public String chatDetail(Model model, @RequestParam(defaultValue="0") int room_code,HttpSession session) {
+	      
+	      String sId = (String)session.getAttribute("sId");
+	      
+	      List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
+	      HashMap<String, String> opponentId = marketChatService.getOpponentId(room_code, sId);
+	      System.out.println("ajax ================================"
+	      		+ "========================");
+	      System.out.println(chatDetail);
+	      System.out.println("ajax ========================================================");
+	      JSONObject result = new JSONObject();
+	       result.put("chatDetail", chatDetail);
+	       result.put("opponentId", opponentId);
+	      
+	       System.out.println("ajax  result========================================================");
+	      System.out.println(result);
+	      return result.toString();
+	   }
+	   
+	   
+	   @GetMapping("exitChatRoom")
+	   @ResponseBody
+	   public String existChatRoom(String room_code,HttpSession session) {
+	      
+	      String id = (String)session.getAttribute("sId");
+	      List<HashMap<String, String>> chatList = marketChatService.existChatList(room_code,id);
+	      JSONArray arrChatList = new JSONArray(chatList);
+	      return arrChatList.toString();
+	   }
 	
 	@GetMapping("reviewForm")
 	public String marketReview(HttpSession session, Model model, String item_code) {
