@@ -3,125 +3,127 @@
 <mapper namespace="com.itwillbs.moneytto.mapper.MarketMapper">
 
 <!-- 등록될 상품코드조회 -->
-	<select id="selectItem" resultType="String" >
-		SELECT CONCAT('market', LPAD(CAST(SUBSTRING(item_code, 7) AS UNSIGNED) + 1, 4, '0')) 
-		FROM item
-		ORDER BY item_code DESC
-		LIMIT 1;
-	</select>
-	
+   <select id="selectItem" resultType="String" >
+      SELECT CONCAT('market', LPAD(CAST(SUBSTRING(item_code, 7) AS UNSIGNED) + 1, 4, '0')) 
+      FROM item
+      ORDER BY item_code DESC
+      LIMIT 1;
+   </select>
+   
 <!-- 상품등록 -->
-	<insert id="insertItem">
+   <insert id="insertItem">
     INSERT INTO item 
-	    VALUES (
-	        #{item_code},
-	        #{id},
-	        #{item_subject},
-	        #{item_content},
-	        #{item_price},
-	        IFNULL((SELECT CASE WHEN #{item_price_offer} = 'on' THEN 'Y' ELSE 'N' END), 'N'),
-	        #{item_tag},
-	        #{item_category},
-	        '판매중',
-	        NOW()
-	    )
-	</insert>
+       VALUES (
+           #{item_code},
+           #{id},
+           #{item_subject},
+           #{item_content},
+           #{item_price},
+           IFNULL((SELECT CASE WHEN #{item_price_offer} = 'on' THEN 'Y' ELSE 'N' END), 'N'),
+           #{item_tag},
+           #{item_category},
+           '판매중',
+           NOW()
+       )
+   </insert>
 
-<!-- 상품이미지등록 -->	
-	<insert id="saveImage">
-	
-	INSERT INTO images
-		VALUES (
-			#{image_code}
-			,#{item_code}
-			,#{image_name}
-		)
+<!-- 상품이미지등록 -->   
+   <insert id="saveImage">
+   
+   INSERT INTO images
+      VALUES (
+         #{image_code}
+         ,#{item_code}
+         ,#{image_name}
+      )
 
-	</insert>
-	
-	
-	
-	<!-- 채팅관련 -->
-	<select id="getItem" resultType="hashmap">
-	 	SELECT *
-	 		 FROM market_chat_rooms
-	  			WHERE item_code=#{item_code};
-	</select>
-	
-<!-- 	<select id="sellDetail" resultType="hashmap"> -->
-<!-- 		SELECT item.*,member.member_nickname  -->
-<!-- 			FROM item  -->
-<!-- 				LEFT JOIN member -->
-<!-- 					ON member.member_id=item.member_id  -->
-<!-- 			WHERE item_code =#{item_code}; -->
-<!-- 	</select> -->
-	
-	
-	
-	<select id="getAllItem" resultType="hashmap">
-		SELECT *
-	 		 FROM market_chat_rooms
-	</select>
-	
-	
-	<select id="sellCount" resultType="int">
-		SELECT count(*)
-			FROM item
-				WHERE member_id = #{openentId}
-	</select>
-	
-	<select id="isInsertChatRoom" resultType="int">
-		SELECT count(*)
-			FROM market_chat_rooms
-				LEFT JOIN market_chat_messages
-						ON market_chat_rooms.room_code = market_chat_messages.room_code
-					WHERE 1=1
-					  AND market_chat_rooms.item_code = #{item_code}
-					  AND (sell_member_id = #{id}
-					  OR buy_member_id= #{id})
-	</select>
-	
-	<select id="opponentId" resultType="hashmap">
-		SELECT opponent_id,opponent_nickname,opponent_image
+   </insert>
+   
+   
+   
+   <!-- 채팅관련 -->
+   <select id="getItem" resultType="hashmap">
+       SELECT *
+           FROM market_chat_rooms
+              WHERE item_code=#{item_code};
+   </select>
+   
+<!--    <select id="sellDetail" resultType="hashmap"> -->
+<!--       SELECT item.*,member.member_nickname  -->
+<!--          FROM item  -->
+<!--             LEFT JOIN member -->
+<!--                ON member.member_id=item.member_id  -->
+<!--          WHERE item_code =#{item_code}; -->
+<!--    </select> -->
+   
+   
+   
+   <select id="getAllItem" resultType="hashmap">
+      SELECT *
+           FROM market_chat_rooms
+   </select>
+   
+   
+   <select id="sellCount" resultType="int">
+      SELECT count(*)
+         FROM item
+            WHERE member_id = #{openentId}
+   </select>
+   
+   <select id="isInsertChatRoom" resultType="int">
+      SELECT count(*)
+         FROM market_chat_rooms
+            LEFT JOIN market_chat_messages
+                  ON market_chat_rooms.room_code = market_chat_messages.room_code
+               WHERE 1=1
+                 AND market_chat_rooms.item_code = #{item_code}
+                 AND (sell_member_id = #{id}
+                 OR buy_member_id= #{id})
+   </select>
+   
+   <select id="opponentId" resultType="hashmap">
+      SELECT opponent_id,opponent_nickname,opponent_image,opponent_delete_status
          FROM (
-             SELECT room_code, chat_code, opponent_id,opponent_nickname,opponent_image,
+             SELECT room_code, chat_code, opponent_id,opponent_nickname,opponent_image,opponent_delete_status,
                     ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num
              FROM (
                  SELECT market_chat_rooms.room_code,
                         chat_code,
                         member.member_id AS opponent_id,
                         member.member_nickname  AS opponent_nickname,
-                        member.member_image AS opponent_image
-           	   	  FROM  market_chat_messages
+                        member.member_image AS opponent_image,
+                        member.member_delete_status AS opponent_delete_status
+                      FROM  market_chat_messages
                       LEFT JOIN member
                              ON member.member_id = market_chat_messages.sell_member_id
                       LEFT JOIN market_chat_rooms
-                      		 ON market_chat_rooms.room_code = market_chat_messages.room_code
+                             ON market_chat_rooms.room_code = market_chat_messages.room_code
                       LEFT JOIN item 
-                      		 ON item.item_code=market_chat_rooms.item_code 
-              		 WHERE  buy_member_id = #{session_id}
+                             ON item.item_code=market_chat_rooms.item_code 
+                     WHERE  buy_member_id = #{session_id}
                UNION
-	             SELECT market_chat_rooms.room_code,
-	                    chat_code,
-	                    member.member_id AS opponent_id,
-	                    member.member_nickname  AS opponent_nickname,
-	                    member.member_image AS opponent_image
-	             	FROM   market_chat_messages
-		                    LEFT JOIN member
-		                           ON member.member_id = market_chat_messages.buy_member_id
-		                    LEFT JOIN market_chat_rooms
-	                      		   ON market_chat_rooms.room_code = market_chat_messages.room_code
-                  		   	LEFT JOIN item 
-	                      		 ON item.item_code=market_chat_rooms.item_code 
-              		 WHERE  sell_member_id =#{session_id}
-             	) a
-         	) AS opponentId
+                SELECT market_chat_rooms.room_code,
+                       chat_code,
+                       member.member_id AS opponent_id,
+                       member.member_nickname  AS opponent_nickname,
+                       member.member_image AS opponent_image,
+                       member.member_delete_status AS opponent_delete_status
+                   FROM   market_chat_messages
+                          LEFT JOIN member
+                                 ON member.member_id = market_chat_messages.buy_member_id
+                          LEFT JOIN market_chat_rooms
+                                  ON market_chat_rooms.room_code = market_chat_messages.room_code
+                              LEFT JOIN item 
+                                ON item.item_code=market_chat_rooms.item_code 
+                     WHERE  sell_member_id =#{session_id}
+                ) a
+            ) AS opponentId
       WHERE row_num = 1 and room_code =#{room_code};
-	</select>
-	
-	<!-- 내채팅목록 -->
-	<select id="myChatList" resultType="hashmap">
-		SELECT myChatRecentList.room_code, chat_code, chat_content, member_nickname,member_image,chat_time,myChatRecentList.item_subject,chat_openDate,item_status,item_code
+   </select>
+   
+   <!-- 내채팅목록 -->
+   <select id="myChatList" resultType="hashmap">
+      SELECT myChatRecentList.room_code, chat_code, chat_content, member_nickname,member_image,chat_time,myChatRecentList.item_subject,chat_openDate,item_status,item_code
          FROM (
              SELECT room_code, chat_code, chat_content, member_nickname,member_image,
                     ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate,item_status, item_code
@@ -136,230 +138,230 @@
                         market_chat_rooms.chat_openDate,
                         item.item_status ,
                         item.item_code
-           	   		FROM   market_chat_messages
-	                      JOIN member
-	                             ON member.member_id = market_chat_messages.sell_member_id
-	                      JOIN market_chat_rooms
-	                      		 ON market_chat_rooms.room_code = market_chat_messages.room_code
-	                      JOIN item 
-	                      		 ON item.item_code=market_chat_rooms.item_code 
-              		 WHERE  buy_member_id = #{id}
+                       FROM   market_chat_messages
+                         JOIN member
+                                ON member.member_id = market_chat_messages.sell_member_id
+                         JOIN market_chat_rooms
+                                ON market_chat_rooms.room_code = market_chat_messages.room_code
+                         JOIN item 
+                                ON item.item_code=market_chat_rooms.item_code 
+                     WHERE  buy_member_id = #{id}
                UNION
-	             SELECT market_chat_rooms.room_code,
-	                    chat_code,
-	                    market_chat_rooms.chat_content,
-	                    member.member_nickname,
-	                    member.member_image,
-	                    chat_time,
-	                    item.item_subject,
-	                    market_chat_rooms.chat_openDate,
-	                    item.item_status ,
-	                    item.item_code
-	             	FROM   market_chat_messages
-		                    JOIN member
-		                           ON member.member_id = market_chat_messages.buy_member_id
-		                    JOIN market_chat_rooms
-	                      		   ON market_chat_rooms.room_code = market_chat_messages.room_code
-                  		   	JOIN item 
-	                      		 ON item.item_code=market_chat_rooms.item_code 
-              		 WHERE  sell_member_id = #{id}
-             	) a
-         	) AS myChatRecentList
-      	WHERE 1=1
-      		AND row_num = 1
-<!--       		<if> -->
-<!--       		AND room_code != #{room_code} -->
-<!--       		</if> -->
-      	
-     		ORDER BY chat_time desc
-	</select>
-	
-	
-	<select id="existChatList" resultType="hashmap">
-	
-		SELECT *
-			FROM
-				market_chat_messages
-			LEFT JOIN market_chat_rooms ON
-				market_chat_rooms.room_code = market_chat_messages.room_code
-			WHERE
-				sell_member_id = #{id}
-				OR buy_member_id =  #{id}
-				AND market_chat_rooms.room_code != #{room_code}
-	
-	
-	
-	
-	</select>
-	
-	<select id="roomCode" resultType="int">
-		SELECT market_chat_rooms.room_code
-			FROM market_chat_rooms
-				LEFT JOIN market_chat_messages
-						ON market_chat_rooms.room_code = market_chat_messages.room_code
-					WHERE 1=1
-					  AND market_chat_rooms.item_code = #{item_code}
-					  AND (sell_member_id =  #{id}
-					  OR buy_member_id=  #{id}) LIMIT 1
-	</select>
-	
-	<select id="nextRoomCode" resultType="int">
-		SELECT room_code + 1
-			FROM market_chat_rooms 
-				ORDER BY room_code DESC
-				 LIMIT 1
-	</select>
-	
-	<!-- 아이템상세정보 -->
-	<select id="itemList" resultType="hashmap">
-		SELECT *
-			 FROM item
-		 		WHERE item_code = #{item_code}
-	</select>
-	
-	<insert id="insertMarketPaid">
-		<selectKey keyProperty="market_code" resultType="int" order="BEFORE">
-			SELECT IFNULL(MAX(market_code), 0) FROM market_paid
-		</selectKey>
-		INSERT 
-			INTO market_paid (
-				market_code
-				, member_id
-				, item_code
-				, buy_id
-				, sell_id
-				, market_price
-				, market_pay_type
-				, market_date
-			)
-			VALUES(
-			#{market_code} + 1
-			, #{item_detail.member_id}
-			, #{item_detail.item_code}
-			, #{buyId} -- 사는사람
-			, #{sellId} -- 파는사람 sellId
-			, #{item_detail.item_price}
-			, '직접거래'
-			<choose>
-	            <when test="trade_date == null">
-	                , now()
-	            </when>
-	            <otherwise>
-	                , #{trade_date}
-	            </otherwise>
-			</choose>
-			)
-	
-	</insert>
-	
-	<select id="isUpdate" resultType="int">
-		SELECT count(*)
-			FROM market_paid
-				WHERE 1=1
-					AND item_code = #{item_detail} 
-	</select>
-	
-	<delete id="delMarketPaid">
-		DELETE 
-			FROM market_paid
-				WHERE 1=1
-					AND item_code=#{item_detail.item_code}
-					AND sell_id=#{sellId};
-	</delete>
+                SELECT market_chat_rooms.room_code,
+                       chat_code,
+                       market_chat_rooms.chat_content,
+                       member.member_nickname,
+                       member.member_image,
+                       chat_time,
+                       item.item_subject,
+                       market_chat_rooms.chat_openDate,
+                       item.item_status ,
+                       item.item_code
+                   FROM   market_chat_messages
+                          JOIN member
+                                 ON member.member_id = market_chat_messages.buy_member_id
+                          JOIN market_chat_rooms
+                                  ON market_chat_rooms.room_code = market_chat_messages.room_code
+                              JOIN item 
+                                ON item.item_code=market_chat_rooms.item_code 
+                     WHERE  sell_member_id = #{id}
+                ) a
+            ) AS myChatRecentList
+         WHERE 1=1
+            AND row_num = 1
+<!--             <if> -->
+<!--             AND room_code != #{room_code} -->
+<!--             </if> -->
+         
+           ORDER BY chat_time desc
+   </select>
+   
+   
+   <select id="existChatList" resultType="hashmap">
+   
+      SELECT *
+         FROM
+            market_chat_messages
+         LEFT JOIN market_chat_rooms ON
+            market_chat_rooms.room_code = market_chat_messages.room_code
+         WHERE
+            sell_member_id = #{id}
+            OR buy_member_id =  #{id}
+            AND market_chat_rooms.room_code != #{room_code}
+   
+   
+   
+   
+   </select>
+   
+   <select id="roomCode" resultType="int">
+      SELECT market_chat_rooms.room_code
+         FROM market_chat_rooms
+            LEFT JOIN market_chat_messages
+                  ON market_chat_rooms.room_code = market_chat_messages.room_code
+               WHERE 1=1
+                 AND market_chat_rooms.item_code = #{item_code}
+                 AND (sell_member_id =  #{id}
+                 OR buy_member_id=  #{id}) LIMIT 1
+   </select>
+   
+   <select id="nextRoomCode" resultType="int">
+      SELECT room_code + 1
+         FROM market_chat_rooms 
+            ORDER BY room_code DESC
+             LIMIT 1
+   </select>
+   
+   <!-- 아이템상세정보 -->
+   <select id="itemList" resultType="hashmap">
+      SELECT *
+          FROM item
+             WHERE item_code = #{item_code}
+   </select>
+   
+   <insert id="insertMarketPaid">
+      <selectKey keyProperty="market_code" resultType="int" order="BEFORE">
+         SELECT IFNULL(MAX(market_code), 0) FROM market_paid
+      </selectKey>
+      INSERT 
+         INTO market_paid (
+            market_code
+            , member_id
+            , item_code
+            , buy_id
+            , sell_id
+            , market_price
+            , market_pay_type
+            , market_date
+         )
+         VALUES(
+         #{market_code} + 1
+         , #{item_detail.member_id}
+         , #{item_detail.item_code}
+         , #{buyId} -- 사는사람
+         , #{sellId} -- 파는사람 sellId
+         , #{item_detail.item_price}
+         , '직접거래'
+         <choose>
+               <when test="trade_date == null">
+                   , now()
+               </when>
+               <otherwise>
+                   , #{trade_date}
+               </otherwise>
+         </choose>
+         )
+   
+   </insert>
+   
+   <select id="isUpdate" resultType="int">
+      SELECT count(*)
+         FROM market_paid
+            WHERE 1=1
+               AND item_code = #{item_detail} 
+   </select>
+   
+   <delete id="delMarketPaid">
+      DELETE 
+         FROM market_paid
+            WHERE 1=1
+               AND item_code=#{item_detail.item_code}
+               AND sell_id=#{sellId};
+   </delete>
 
-	<!-- 채팅상세내용 -->
-	<select id="chatDetail" resultType="hashmap">
-		SELECT
-			market_chat_messages.*,
-			market_chat_rooms.chat_openDate,
-			market_chat_rooms.trade_date,
-			chat_mem_id,
-			seller.member_nickname as sell_nickname,
-			buyer.member_nickname as buy_nickname,
-			seller.member_image as sell_image,
-			buyer.member_image as buy_image,
-			chat_time,
-			item.item_status,
-			item.item_subject
-		FROM
-			market_chat_messages
-				LEFT JOIN market_chat_rooms
-				  ON
-					market_chat_messages.room_code = market_chat_rooms.room_code
-				LEFT JOIN member as seller
-				  ON
-					seller.member_id = market_chat_messages.sell_member_id
-				LEFT JOIN member as buyer
-				  ON
-					buyer.member_id = market_chat_messages.buy_member_id
-				LEFT JOIN item 
-				  ON
-				  	item.item_code = market_chat_rooms.item_code 
-		WHERE
-			market_chat_messages.room_code = #{room_code}
-	</select>
-	
-	<select id="sellDetail" resultType="hashmap">
-		SELECT
-			market_chat_messages.*,
-			market_chat_rooms.chat_openDate,
-			chat_mem_id,
-			seller.member_nickname as sell_nickname,
-			buyer.member_nickname as buy_nickname,
-			seller.member_image as sell_image,
-			buyer.member_image as buy_image,
-			chat_time,
-			item.item_status,
-			item.item_subject
-		FROM
-			market_chat_messages
-				LEFT JOIN market_chat_rooms
-				  ON
-					market_chat_messages.room_code = market_chat_rooms.room_code
-				LEFT JOIN member as seller
-				  ON
-					seller.member_id = market_chat_messages.sell_member_id
-				LEFT JOIN member as buyer
-				  ON
-					buyer.member_id = market_chat_messages.buy_member_id
-				LEFT JOIN item 
-				  ON
-				  	item.item_code = market_chat_rooms.item_code 
-		WHERE
-			market_chat_messages.room_code = #{room_code}
-			LIMIT 1
-	</select>
-	
-	
-	
-	<!-- 마지막채팅내용 -->
-	<select id="recentlyMsg" resultType="hashmap">
-		SELECT
-				market_chat_messages.chat_content
-			FROM
-				market_chat_messages
-					LEFT JOIN market_chat_rooms
-					  ON
-						market_chat_messages.room_code = market_chat_rooms.room_code
-					LEFT JOIN member as seller
-					  ON
-						seller.member_id = market_chat_messages.sell_member_id
-					LEFT JOIN member as buyer
-					  ON
-						buyer.member_id = market_chat_messages.buy_member_id
-					LEFT JOIN item 
-					  ON
-					  	item.item_code = market_chat_rooms.item_code 
-			WHERE
-				market_chat_messages.room_code = #{room_code}
-			ORDER BY chat_code DESC 
-			LIMIT 1;
-	
-	</select>
+   <!-- 채팅상세내용 -->
+   <select id="chatDetail" resultType="hashmap">
+      SELECT
+         market_chat_messages.*,
+         market_chat_rooms.chat_openDate,
+         market_chat_rooms.trade_date,
+         chat_mem_id,
+         seller.member_nickname as sell_nickname,
+         buyer.member_nickname as buy_nickname,
+         seller.member_image as sell_image,
+         buyer.member_image as buy_image,
+         chat_time,
+         item.item_status,
+         item.item_subject
+      FROM
+         market_chat_messages
+            LEFT JOIN market_chat_rooms
+              ON
+               market_chat_messages.room_code = market_chat_rooms.room_code
+            LEFT JOIN member as seller
+              ON
+               seller.member_id = market_chat_messages.sell_member_id
+            LEFT JOIN member as buyer
+              ON
+               buyer.member_id = market_chat_messages.buy_member_id
+            LEFT JOIN item 
+              ON
+                 item.item_code = market_chat_rooms.item_code 
+      WHERE
+         market_chat_messages.room_code = #{room_code}
+   </select>
+   
+   <select id="sellDetail" resultType="hashmap">
+      SELECT
+         market_chat_messages.*,
+         market_chat_rooms.chat_openDate,
+         chat_mem_id,
+         seller.member_nickname as sell_nickname,
+         buyer.member_nickname as buy_nickname,
+         seller.member_image as sell_image,
+         buyer.member_image as buy_image,
+         chat_time,
+         item.item_status,
+         item.item_subject
+      FROM
+         market_chat_messages
+            LEFT JOIN market_chat_rooms
+              ON
+               market_chat_messages.room_code = market_chat_rooms.room_code
+            LEFT JOIN member as seller
+              ON
+               seller.member_id = market_chat_messages.sell_member_id
+            LEFT JOIN member as buyer
+              ON
+               buyer.member_id = market_chat_messages.buy_member_id
+            LEFT JOIN item 
+              ON
+                 item.item_code = market_chat_rooms.item_code 
+      WHERE
+         market_chat_messages.room_code = #{room_code}
+         LIMIT 1
+   </select>
+   
+   
+   
+   <!-- 마지막채팅내용 -->
+   <select id="recentlyMsg" resultType="hashmap">
+      SELECT
+            market_chat_messages.chat_content
+         FROM
+            market_chat_messages
+               LEFT JOIN market_chat_rooms
+                 ON
+                  market_chat_messages.room_code = market_chat_rooms.room_code
+               LEFT JOIN member as seller
+                 ON
+                  seller.member_id = market_chat_messages.sell_member_id
+               LEFT JOIN member as buyer
+                 ON
+                  buyer.member_id = market_chat_messages.buy_member_id
+               LEFT JOIN item 
+                 ON
+                    item.item_code = market_chat_rooms.item_code 
+         WHERE
+            market_chat_messages.room_code = #{room_code}
+         ORDER BY chat_code DESC 
+         LIMIT 1;
+   
+   </select>
 
-	<!-- 제일마지막에생성된 방 -->
-	<select id="chatRecentList" resultType="hashmap">
-		SELECT chatRecentListOne.room_code, chat_code, chat_content, member_nickname,member_id,member_image,chat_time,chatRecentListOne.item_subject,chat_openDate,item_status
+   <!-- 제일마지막에생성된 방 -->
+   <select id="chatRecentList" resultType="hashmap">
+      SELECT chatRecentListOne.room_code, chat_code, chat_content, member_nickname,member_id,member_image,chat_time,chatRecentListOne.item_subject,chat_openDate,item_status
          FROM (
              SELECT room_code, chat_code, chat_content, member_nickname,member_id,member_image,
                     ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate,item_status
@@ -374,387 +376,386 @@
                         item.item_subject ,
                         item.item_status,
                         market_chat_rooms.chat_openDate
-           	   		FROM   market_chat_messages
-	                      LEFT JOIN member
-	                             ON member.member_id = market_chat_messages.sell_member_id
-	                      LEFT JOIN market_chat_rooms
-	                      		 ON market_chat_rooms.room_code = market_chat_messages.room_code
-	                      LEFT JOIN item 
-	                      		 ON item.item_code=market_chat_rooms.item_code 
-              		 WHERE  buy_member_id = #{id}
+                       FROM   market_chat_messages
+                         LEFT JOIN member
+                                ON member.member_id = market_chat_messages.sell_member_id
+                         LEFT JOIN market_chat_rooms
+                                ON market_chat_rooms.room_code = market_chat_messages.room_code
+                         LEFT JOIN item 
+                                ON item.item_code=market_chat_rooms.item_code 
+                     WHERE  buy_member_id = #{id}
                UNION
-	             SELECT market_chat_rooms.room_code,
-	                    chat_code,
-	                    market_chat_rooms.chat_content,
-	                    member.member_nickname AS member_nickname,
-	                    member.member_id,
-	                    member.member_image,
-	                    chat_time,
-	                    item.item_subject,
-	                    item.item_status,
-	                    market_chat_rooms.chat_openDate
-	             	FROM   market_chat_messages
-		                    LEFT JOIN member
-		                           ON member.member_id = market_chat_messages.buy_member_id
-		                    LEFT JOIN market_chat_rooms
-	                      		   ON market_chat_rooms.room_code = market_chat_messages.room_code
-                  		   	LEFT JOIN item 
-	                      		 ON item.item_code=market_chat_rooms.item_code 
-              		 WHERE  sell_member_id = #{id}
-             	) a
-         	) AS chatRecentListOne
-      	WHERE row_num = 1 
-      	ORDER BY chat_time DESC LIMIT 1
-	</select>
-	
-	<select id="item_code" resultType="hashmap">
-		SELECT item_code
-			FROM market_chat_rooms
-				WHERE room_code=#{room_code}
-	</select>
-	
-	<update id="updateStatus">
-		UPDATE item
-			SET
-				item_status = #{item_status}
-			 WHERE
-			 	item_code=#{item_code} 
-	</update>
-	
-	<select id="tradeDate" resultType="hashmap">
-		SELECT trade_date
-			FROM market_chat_rooms
-				WHERE room_code=#{room_code}
-	</select>
-	
-	<update id="updateTradeEnd">
-		UPDATE
-				item
-			SET
-				item_status = '거래완료'
-			WHERE
-				item_code IN (
-				SELECT
-					tradeEnd.item_code
-				FROM
-					(
-					SELECT
-						item.item_code
-					FROM
-						market_chat_rooms
-					LEFT JOIN item ON
-						item.item_code = market_chat_rooms.item_code
-					WHERE
-						item_status = '거래중'
-						AND trade_date &lt; CURDATE()
-			  ) as tradeEnd
-			)
-	</update>
-	<update id="tradeDateUpdate">
-		UPDATE market_chat_rooms
-			SET
-				trade_date = #{trade_date}
-			WHERE
-				room_code = #{room_code}
-	</update>
-	
+                SELECT market_chat_rooms.room_code,
+                       chat_code,
+                       market_chat_rooms.chat_content,
+                       member.member_nickname AS member_nickname,
+                       member.member_id,
+                       member.member_image,
+                       chat_time,
+                       item.item_subject,
+                       item.item_status,
+                       market_chat_rooms.chat_openDate
+                   FROM   market_chat_messages
+                          LEFT JOIN member
+                                 ON member.member_id = market_chat_messages.buy_member_id
+                          LEFT JOIN market_chat_rooms
+                                  ON market_chat_rooms.room_code = market_chat_messages.room_code
+                              LEFT JOIN item 
+                                ON item.item_code=market_chat_rooms.item_code 
+                     WHERE  sell_member_id = #{id}
+                ) a
+            ) AS chatRecentListOne
+         WHERE row_num = 1 
+         ORDER BY chat_time DESC LIMIT 1
+   </select>
+   
+   <select id="item_code" resultType="hashmap">
+      SELECT item_code
+         FROM market_chat_rooms
+            WHERE room_code=#{room_code}
+   </select>
+   
+   <update id="updateStatus">
+      UPDATE item
+         SET
+            item_status = #{item_status}
+          WHERE
+             item_code=#{item_code} 
+   </update>
+   
+   <select id="tradeDate" resultType="hashmap">
+      SELECT trade_date
+         FROM market_chat_rooms
+            WHERE room_code=#{room_code}
+   </select>
+   
+   <update id="updateTradeEnd">
+      UPDATE
+            item
+         SET
+            item_status = '거래완료'
+         WHERE
+            item_code IN (
+            SELECT
+               tradeEnd.item_code
+            FROM
+               (
+               SELECT
+                  item.item_code
+               FROM
+                  market_chat_rooms
+               LEFT JOIN item ON
+                  item.item_code = market_chat_rooms.item_code
+               WHERE
+                  item_status = '거래중'
+                  AND trade_date &lt; CURDATE()
+           ) as tradeEnd
+         )
+   </update>
+   <update id="tradeDateUpdate">
+      UPDATE market_chat_rooms
+         SET
+            trade_date = #{trade_date}
+         WHERE
+            room_code = #{room_code}
+   </update>
+   
 
-	<!-- 마켓 아이템 리스트  -->
-	<select id="marketItemList" resultType="hashmap">
-		SELECT i.*, m.grade_score, im.*, COUNT(*) OVER() AS total_count, w.wish_code 
-			FROM 
-				item i
-			LEFT JOIN
-				member m
-			ON
-				i.member_id = m.member_id
-			LEFT JOIN (
-				    SELECT *
-				    FROM (
-				        SELECT *,
-				ROW_NUMBER() OVER (PARTITION BY table_code ORDER BY image_code) AS row_num
-				        FROM images
-				    ) subquery
-				    WHERE row_num = 1
-				) im 
-			ON
-				 i.item_code = im.table_code
-			LEFT JOIN 
-					(SELECT
-						*
-					FROM
-						wish
-					WHERE
-						member_id = #{member_id}) w
-			ON
-				i.item_code = w.wish_item_code 
-			WHERE
-				1 = 1 
-			<if test = 'item_category != null and !item_category.equals("") '>
-				AND	i.item_category REGEXP replace(#{item_category}, '/', '|')
-			</if>
-			<if test = 'item_tag != null and !item_tag.equals("") '>
-				AND	i.item_tag REGEXP #{item_tag}
-			</if>
-			<if test = 'item_status != null and !item_status.equals("") '>
-				AND	i.item_status = #{item_status}
-				AND replace(i.item_price,',','') BETWEEN ${item_price_min} AND ${item_price_max}
-			</if>
-			<if test = 'member_grade != null and !member_grade.equals("") '>
-				AND	m.grade_score >= 50 
-			</if>
-			<if test = 'member_id != null and !member_id.equals("") '>
-				AND ST_Distance_Sphere(
-						(SELECT member_location
-						 FROM 	member
-						 WHERE 	member_id = #{member_id})
-						 , member_location) <![CDATA[<]]> 100000
-			</if>
-		   <choose>
-		      <when test='sort.equals("lowPrice")'>
-	         	ORDER BY 	replace(i.item_price,',','')+0 ASC
-		      </when> 
-		      <when test='sort.equals("highPrice")'>
-		        ORDER BY	replace(i.item_price,',','')+0 DESC
-		      </when>
-		      <when test='sort.equals("highGrade")'>
-	      		ORDER BY	m.grade_score DESC
-		      </when>
-		      <otherwise>
-	      		ORDER BY	i.item_date DESC
-		   	  </otherwise> 
-		   </choose>
-		   		, im.image_code  
-	</select>
-	
-	
-	 
-	<select id="itemDetail" resultType="hashmap">
-		SELECT item.*,member.member_nickname ,member.member_image 
-			FROM item
-				LEFT JOIN member 
-						ON member.member_id = item.member_id 
-			WHERE item_code=#{item_code}
-	</select>
-	
-	<select id="sellId" resultType="hashmap">
-		SELECT item.*,member.member_nickname 
-			FROM item
-				LEFT JOIN member 
-						ON member.member_id = item.member_id 
-			WHERE item_code=#{item_code}
-	</select>
-	
-	<select id="lastRoomCode" resultType="int">
-		SELECT * FROM
-			market_chat_rooms
-				ORDER BY room_code DESC LIMIT 1 
-	</select>
-	
-	
-	<select id="marketItem" resultType="hashmap">
-		SELECT i.*, m.*, w.wish_code
-			FROM 
-				item i
-			JOIN
-				member m
-			ON
-				i.member_id = m.member_id
-			LEFT JOIN (
-					SELECT	*
-					FROM	wish
-					WHERE	member_id = #{member_id}
-				) w
-			ON
-				i.item_code = w.wish_item_code
-			WHERE
-				i.item_code = #{item_code}
-	</select>
-	
-	<!-- 상품 이미지 삭제 -->
-	<delete id ="removeImage">
-		DELETE FROM images
-			WHERE table_code = #{item_code}
-	</delete>
-	
-	<!-- 상품 등록 수정 -->
-	
-	<update id="updateItem">
-	  UPDATE item
-	  SET
-	    item_code = #{item_code},
-	    member_id = #{id},
-	    item_subject = #{item_subject},
-	    item_content = #{item_content},
-	    item_price = #{item_price},
-	    item_price_offer = IFNULL((SELECT CASE WHEN #{item_price_offer} = 'on' THEN 'Y' ELSE 'N' END), 'N'),
-	    item_tag = #{item_tag},
-	    item_category = #{item_category},
-	    item_status = '판매중',
-	    item_date = NOW()
-	  WHERE item_code = #{item_code}
-	</update>
-	
-	<select id="selectBuyItem" resultType="hashmap">
-		SELECT pay.*
-				,r.review_code
-			FROM 
-				market_paid	pay
-			LEFT JOIN
-				review		r
-			ON
-				pay.item_code = r.review_item_code
-			WHERE
-				1 = 1
-				AND	pay.buy_id = #{member_id}
-				AND	pay.item_code = #{item_code}
-	</select>
-	
-	<insert id="insertReview">
-		INSERT INTO
-			review
-		VALUES	(
-			 REPLACE(#{item_code}, 'market', 'review')
-			, #{item_code}
-			, #{target_id}
-			, #{reviewer_id}
-			, #{review_content}
-			, now()
-			, #{rating}
-			)
-	</insert>
-	
-	<update id="updateReview">
-		UPDATE
-			review 
-		SET 
-			, review_content=#{review_content}
-			, rating = #{rating}
-		WHERE
-			1 = 1
-			AND reviewer_id = #{reviewer_id}
-			AND	review_item_code = #{item_code}
-	</update>
-	
-	<delete id="deleteReview">
-		DELETE		
-		FROM
-			review
-		WHERE
-			1=1
-			AND reviewer_id = #{reviewer_id}
-			AND	review_item_code = #{item_code}
-	</delete>
-	
-	<select id="roomCodeExists" resultType="int">
-		SELECT count(room_code)
-		FROM market_chat_messages
-		WHERE room_code = #{room_code}
-	</select>
-	
-<!-- 	채팅방생성 -->
-	<insert id="insertChatRoom">
-	 INSERT INTO market_chat_rooms
-		VALUES(
-				  #{roomCode}
-				, #{itemCode}
-				, #{messages}
-				, now()
-				, null
-			)
-	</insert>
-	<update id="updateChatRoom">
-		UPDATE market_chat_rooms 
-			SET chat_content=#{messages}
-			 WHERE room_Code=#{room_code}
-	</update>
-	
-	<insert id="insertChatMessages">
-		<selectKey keyProperty="chat_code" resultType="int" order="BEFORE">
-			SELECT IFNULL(MAX(chat_code), 0) FROM market_chat_messages
-		</selectKey>
-			 INSERT INTO market_chat_messages
-				VALUES(
-						  #{chat_code} + 1
-						, #{room_code}
-						, #{sellId}
-						, #{buyId}
-						, #{messages}
-						, now()
-						, #{myId}
-				)
-	</insert>
-	
-	
-	<select id="selectItemImage" resultType="hashmap">
-		SELECT *
-			FROM 
-				images
-			WHERE 
-				table_code = #{item_code}
-	</select>
-	
-	<!-- MainService에서 호출  -->
-	<select id="selectItemList" resultType="hashmap">
-		SELECT 	
-			i.*
-			,im.image_name
-			,w.wish_code
-		FROM
-			item i
-		LEFT JOIN (
-			    SELECT *
-			    FROM (
-			        	SELECT *,
-							ROW_NUMBER() OVER (PARTITION BY table_code ORDER BY image_code) AS row_num
-			       		FROM images
-			    	 ) subquery
-			    WHERE row_num = 1
-				 ) im 
-		ON
-			 i.item_code = im.table_code
-		LEFT JOIN (
-				SELECT	*
-				FROM	wish
-				WHERE	member_id = #{member_id}
-				) w
-		ON
-			i.item_code = w.wish_item_code
-		ORDER BY i.item_code DESC LIMIT 10
-	</select>
-	<!--  -->
-	
-	<insert id="insertReport">
-		<selectKey keyProperty="report_code" resultType="int" order="BEFORE">
-			SELECT IFNULL(MAX(report_code), 0) FROM report
-		</selectKey>
-			INSERT 
-				INTO 
-					report
-				VALUES(
-						  #{report_code} + 1
-						, #{targetId}
-						, #{id}
-						, #{reportType}
-						, #{reportContent}
-						, now()
-				)
-	</insert>
-	
-		<!-- 상품 아이템 삭제 -->
-	<delete id ="deleteItem">
-	    DELETE FROM item
-	    WHERE
-	        1=1
-	        AND item_code = #{item_code}
-	        AND member_id = #{id}
-	        AND (item_status = '판매중' OR item_status = '거래완료')
-				
-	</delete>
-	
-	
-	
-	
-	
+   <!-- 마켓 아이템 리스트  -->
+   <select id="marketItemList" resultType="hashmap">
+      SELECT i.*, m.grade_score, im.*, COUNT(*) OVER() AS total_count, w.wish_code 
+         FROM 
+            item i
+         LEFT JOIN
+            member m
+         ON
+            i.member_id = m.member_id
+         LEFT JOIN (
+                SELECT *
+                FROM (
+                    SELECT *,
+            ROW_NUMBER() OVER (PARTITION BY table_code ORDER BY image_code) AS row_num
+                    FROM images
+                ) subquery
+                WHERE row_num = 1
+            ) im 
+         ON
+             i.item_code = im.table_code
+         LEFT JOIN 
+               (SELECT
+                  *
+               FROM
+                  wish
+               WHERE
+                  member_id = #{member_id}) w
+         ON
+            i.item_code = w.wish_item_code 
+         WHERE
+            1 = 1 
+         <if test = 'item_category != null and !item_category.equals("") '>
+            AND   i.item_category REGEXP replace(#{item_category}, '/', '|')
+         </if>
+         <if test = 'item_tag != null and !item_tag.equals("") '>
+            AND   i.item_tag REGEXP #{item_tag}
+         </if>
+         <if test = 'item_status != null and !item_status.equals("") '>
+            AND   i.item_status = #{item_status}
+            AND replace(i.item_price,',','') BETWEEN ${item_price_min} AND ${item_price_max}
+         </if>
+         <if test = 'member_grade != null and !member_grade.equals("") '>
+            AND   m.grade_score >= 50 
+         </if>
+         <if test = 'member_id != null and !member_id.equals("") '>
+            AND ST_Distance_Sphere(
+                  (SELECT member_location
+                   FROM    member
+                   WHERE    member_id = #{member_id})
+                   , member_location) <![CDATA[<]]> 100000
+         </if>
+         <choose>
+            <when test='sort.equals("lowPrice")'>
+               ORDER BY    replace(i.item_price,',','')+0 ASC
+            </when> 
+            <when test='sort.equals("highPrice")'>
+              ORDER BY   replace(i.item_price,',','')+0 DESC
+            </when>
+            <when test='sort.equals("highGrade")'>
+               ORDER BY   m.grade_score DESC
+            </when>
+            <otherwise>
+               ORDER BY   i.item_date DESC
+              </otherwise> 
+         </choose>
+               , im.image_code  
+   </select>
+   
+   
+    
+   <select id="itemDetail" resultType="hashmap">
+      SELECT item.*,member.member_nickname ,member.member_image 
+         FROM item
+            LEFT JOIN member 
+                  ON member.member_id = item.member_id 
+         WHERE item_code=#{item_code}
+   </select>
+   
+   <select id="sellId" resultType="hashmap">
+      SELECT item.*,member.member_nickname 
+         FROM item
+            LEFT JOIN member 
+                  ON member.member_id = item.member_id 
+         WHERE item_code=#{item_code}
+   </select>
+   
+   <select id="lastRoomCode" resultType="int">
+      SELECT * FROM
+         market_chat_rooms
+            ORDER BY room_code DESC LIMIT 1 
+   </select>
+   
+   
+   <select id="marketItem" resultType="hashmap">
+      SELECT i.*, m.*, w.wish_code
+         FROM 
+            item i
+         JOIN
+            member m
+         ON
+            i.member_id = m.member_id
+         LEFT JOIN (
+               SELECT   *
+               FROM   wish
+               WHERE   member_id = #{member_id}
+            ) w
+         ON
+            i.item_code = w.wish_item_code
+         WHERE
+            i.item_code = #{item_code}
+   </select>
+   
+   <!-- 상품 이미지 삭제 -->
+   <delete id ="removeImage">
+      DELETE FROM images
+         WHERE table_code = #{item_code}
+   </delete>
+   
+   <!-- 상품 등록 수정 -->
+   
+   <update id="updateItem">
+     UPDATE item
+     SET
+       item_code = #{item_code},
+       member_id = #{id},
+       item_subject = #{item_subject},
+       item_content = #{item_content},
+       item_price = #{item_price},
+       item_price_offer = IFNULL((SELECT CASE WHEN #{item_price_offer} = 'on' THEN 'Y' ELSE 'N' END), 'N'),
+       item_tag = #{item_tag},
+       item_category = #{item_category},
+       item_status = '판매중',
+       item_date = NOW()
+     WHERE item_code = #{item_code}
+   </update>
+   
+   <select id="selectBuyItem" resultType="hashmap">
+      SELECT pay.*
+            ,r.review_code
+         FROM 
+            market_paid   pay
+         LEFT JOIN
+            review      r
+         ON
+            pay.item_code = r.review_item_code
+         WHERE
+            1 = 1
+            AND   pay.buy_id = #{member_id}
+            AND   pay.item_code = #{item_code}
+   </select>
+   
+   <insert id="insertReview">
+      INSERT INTO
+         review
+      VALUES   (
+          REPLACE(#{item_code}, 'market', 'review')
+         , #{item_code}
+         , #{target_id}
+         , #{reviewer_id}
+         , #{review_content}
+         , now()
+         , #{rating}
+         )
+   </insert>
+   
+   <update id="updateReview">
+      UPDATE
+         review 
+      SET 
+         , review_content=#{review_content}
+         , rating = #{rating}
+      WHERE
+         1 = 1
+         AND reviewer_id = #{reviewer_id}
+         AND   review_item_code = #{item_code}
+   </update>
+   
+   <delete id="deleteReview">
+      DELETE      
+      FROM
+         review
+      WHERE
+         1=1
+         AND reviewer_id = #{reviewer_id}
+         AND   review_item_code = #{item_code}
+   </delete>
+   
+   <select id="roomCodeExists" resultType="int">
+      SELECT count(room_code)
+      FROM market_chat_messages
+      WHERE room_code = #{room_code}
+   </select>
+   
+<!--    채팅방생성 -->
+   <insert id="insertChatRoom">
+    INSERT INTO market_chat_rooms
+      VALUES(
+              #{roomCode}
+            , #{itemCode}
+            , #{messages}
+            , now()
+            , null
+         )
+   </insert>
+   <update id="updateChatRoom">
+      UPDATE market_chat_rooms 
+         SET chat_content=#{messages}
+          WHERE room_Code=#{room_code}
+   </update>
+   
+   <insert id="insertChatMessages">
+      <selectKey keyProperty="chat_code" resultType="int" order="BEFORE">
+         SELECT IFNULL(MAX(chat_code), 0) FROM market_chat_messages
+      </selectKey>
+          INSERT INTO market_chat_messages
+            VALUES(
+                    #{chat_code} + 1
+                  , #{room_code}
+                  , #{sellId}
+                  , #{buyId}
+                  , #{messages}
+                  , now()
+                  , #{myId}
+            )
+   </insert>
+   
+   
+   <select id="selectItemImage" resultType="hashmap">
+      SELECT *
+         FROM 
+            images
+         WHERE 
+            table_code = #{item_code}
+   </select>
+   
+   <!-- MainService에서 호출  -->
+   <select id="selectItemList" resultType="hashmap">
+      SELECT    
+         i.*
+         ,im.image_name
+         ,w.wish_code
+      FROM
+         item i
+      LEFT JOIN (
+             SELECT *
+             FROM (
+                    SELECT *,
+                     ROW_NUMBER() OVER (PARTITION BY table_code ORDER BY image_code) AS row_num
+                      FROM images
+                 ) subquery
+             WHERE row_num = 1
+             ) im 
+      ON
+          i.item_code = im.table_code
+      LEFT JOIN (
+            SELECT   *
+            FROM   wish
+            WHERE   member_id = #{member_id}
+            ) w
+      ON
+         i.item_code = w.wish_item_code
+      ORDER BY i.item_code DESC LIMIT 10
+   </select>
+   <!--  -->
+   
+   <insert id="insertReport">
+      <selectKey keyProperty="report_code" resultType="int" order="BEFORE">
+         SELECT IFNULL(MAX(report_code), 0) FROM report
+      </selectKey>
+         INSERT 
+            INTO 
+               report
+            VALUES(
+                    #{report_code} + 1
+                  , #{targetId}
+                  , #{id}
+                  , #{reportType}
+                  , #{reportContent}
+                  , now()
+            )
+   </insert>
+   
+      <!-- 상품 아이템 삭제 -->
+   <delete id ="deleteItem">
+       DELETE FROM item
+       WHERE
+           1=1
+           AND item_code = #{item_code}
+           AND member_id = #{id}
+           AND (item_status = '판매중' OR item_status = '거래완료')
+            
+   </delete>
+   
+   
+   
+   
+   
 </mapper>
-
