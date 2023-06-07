@@ -358,7 +358,24 @@
 	 		});
 		}
 		
+		
+// 		$(document).ready(function() {
+// 		    var navSearch = $("#navSearch").val();
+// 		    if (navSearch !== undefined && navSearch !== "") {
+// 		       console.log(navSearch);
+// 		    }
+// 		});
+		
+		
 		$(function () {
+			$(document).ready(function() {
+			    var navSearch = $("#navSearch").val();
+			    if (navSearch !== undefined && navSearch !== "") {
+			       console.log("navSearch : " + navSearch);
+			    }
+			});
+			
+			
 			marketItemList();
 			
 			// 더보기

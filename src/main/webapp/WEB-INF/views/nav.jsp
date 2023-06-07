@@ -28,6 +28,7 @@ function payment(){
 </script>
 </head>
 <body>
+<input type="hidden" id="navSearch" name="navSearch" value="">
 <div id="header" data-loginstatus="0">
 		<nav class="secondary">
 			<ul>
@@ -83,14 +84,17 @@ function payment(){
 	$(function () {
 		// 검색 하는중
 		$(document).on("submit", "#searchForm", function(e) {
-			event.preventDefault(); // 폼 제출 기본 동작 막기
+			e.preventDefault(); // 폼 제출 기본 동작 막기
 			var input = $("#search").val();
 			alert(input);
+			$("#navSearch").val(input);
+			location.href = "market_list?navSearch=" + input;
+			
 		});
 		
-		$(".searchSearch input").keydown(function(event) {
-            if(event.which === 13) {
-				event.preventDefault(); // 엔터 키 기본 동작 막기
+		$(".searchSearch input").keydown(function(e) {
+            if(e.which === 13) {
+				e.preventDefault(); // 엔터 키 기본 동작 막기
 				$("#searchForm").submit(); // 폼 제출
             }
         });

@@ -51,7 +51,7 @@ public class MarketController {
 	
 	
 	@GetMapping(value = "market_list")
-	public String marketList(Model model,HttpSession session) {
+	public String marketList(Model model,HttpSession session, String navSearch) {
 		
 		//session아이디로 닉네임 얻기
 		String id = (String)session.getAttribute("sId");
@@ -59,11 +59,10 @@ public class MarketController {
 		    HashMap<String, String> member = memberService.getMember(id);
 		    String nickname = member.get("member_nickname");
 		    model.addAttribute("nickname",nickname);
-		    
-		    
-		    
 		}
 		
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!navSearch : " + navSearch);
+		model.addAttribute("navSearch", navSearch);
 		
 		
 		// 마켓 메인 아이템 리스트
