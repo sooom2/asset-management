@@ -126,4 +126,15 @@
 					ORDER BY log_time DESC LIMIT 1
 	</select>
 	
+	
+	<update id="updateAuctionFinish">
+		UPDATE auction 
+			SET auction_type = '경매 완료'
+				, auction_status = #{success_id}
+				, success_price = #{success_price}
+			WHERE 
+				auction_code = #{auction_code}
+	</update>
+	
+	
 </mapper>

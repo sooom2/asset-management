@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.moneytto.service.*;
 
@@ -51,7 +52,6 @@ public class AuctionController {
 		String formatedNow = now.format(formatter);
 		
 		model.addAttribute("formatedNow", formatedNow);
-		model.addAttribute("auction", auction);
 		
 		// 경매 등록 확인
 		String id = (String)session.getAttribute("sId");
@@ -92,6 +92,10 @@ public class AuctionController {
 		model.addAttribute("askingPrice", askingPrice);
 		model.addAttribute("purchase", purchase);
 		//================================================================================
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용가능합니다.");
+			return "fail_back";
+		}
 		
 		
 		return "auction/auction";
@@ -100,38 +104,41 @@ public class AuctionController {
 	// 기간 경매
 	@RequestMapping(value="auctionPeriod", method = RequestMethod.GET)
 	public String auctionPeriod(@RequestParam String auction_code, HttpSession session, Model model) { // 이미지 코드와 경매 코드를 받아서 목록 상세
-		//================================================================================
-		// 여기서 채팅방 or 내용 검색해서 기록이 있으면 그 기록을 화면에 보여줄꺼
-		// 여기서 넘길수 있는게 auction_code 고 
-		String id = (String)session.getAttribute("sId");
-		
-		/*
-		 * 경매 참가를 하면 기록이 저장되는 방이 생성되어 있는지 확인하고 
-		 * 방이 없으면 새로운 방 생성할꺼고,
-		 * 방이 있으면 기존의 방을 검색하여 저장된 값을 가져올꺼다 
-		 * 그럼 여기서는 방을 먼저 검색하네
-		 * 방 검색 옥션코드
-		 * */
-		// 이부분 셀렉트랑 인설트랑 같이 할 방법 없나?
-		// 셀렉하고 없으면 바로 만들고 있으면 검색된 값 가져오고 ???
-		
-		// 경매 기록(채팅 상세 내용) 검색
-		// 방번호,아이템코드, id 다 넘겨야 하나? 그렇구만
-		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(id);
-		
-//				if() { // 경매 페이지로 들어갈 때 이 아이템에 대한 경매기록이 있는지 확인해야하고 경매 기록이 없을 경우 밑에 코드 사용
-//					채팅방에는 방번호, 아이템 번호, chat_content 이렇게 있고
-			
-			/* 여기서 아이템 번호에는 옥션_코드 들가면 되고 방번호는 내가 임의로 넣으면 되나? 
-			예를 들어 구분자나 경매기록이니 'log'를 붙여서 사용하거나 다 공통된거 사용하는게 좋긴 한데 다른곳에서 쓸일이 있으려나? 
-			쓸일이 있어도 /log 같은거 사용해서 구분하는게 best같은데 맞지 
-			마이페이지에서도 필요할꺼고 */
-//				} else if() {} // 경매 관련 기록이 있을경우 그 기록의 정보를 화면에 표시 
-		
-		// 이것도 바뀔건 아니고
 		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
-		System.out.println(auction);
 		model.addAttribute("auction", auction);
+		System.out.println("auction확인 " + auction);
+		// 년 월 일
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+		String formatedNow = now.format(formatter);
+		
+		model.addAttribute("formatedNow", formatedNow);
+		
+		// 경매 등록 확인
+		String id = (String)session.getAttribute("sId");
+		HashMap<String, String> auctionEnroll = service.selectAuctionEnroll(auction_code, id);
+		System.out.println("auctionEnroll1111111" + auctionEnroll);
+		
+		// 방 번호 대신 방에 등록이 되었는지 저장해서 그걸로 확인
+		boolean result = auctionEnroll != null ? true : false;
+		model.addAttribute("auctionEnroll", result);
+		
+		// 경매 로그===============================================================================
+		
+		// 경매 기록(상세 내용) 검색
+		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(auction_code);
+		// 경매 기록 최고값 검색
+		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
+		// 내가 입찰한 가격
+		HashMap<String, String> myLog = service.selectMyLog(id, auction_code);
+		boolean lastLogYN = lastLog != null ? true : false; 
+		model.addAttribute("auctionLog", auctionLog);
+		model.addAttribute("lastLog", lastLog);
+		model.addAttribute("lastLogYN", lastLogYN);
+		model.addAttribute("myLog", myLog);
+		System.out.println("출력ㄱㄱㄱㄱㄱㄱㄱㄱ" + auctionLog + "여긱ㄱㄱㄱㄱ");
+		System.out.println("myLog 출력22222" + myLog);
+		
 		// 시작 가격 - 이건 계속 바뀌는 거 그래도 필요하네
 		String price = Integer.parseInt(auction.get("auction_present_price").replace(",", "")) + "";
 		model.addAttribute("price", price);
@@ -141,10 +148,15 @@ public class AuctionController {
 		String askingPrice = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.01) + "";
 		// 즉시 구매 - 고정
 		String purchase = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 1.8) + "";
+//		int purchase = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 1.8);
 		model.addAttribute("deposit", deposit);
 		model.addAttribute("askingPrice", askingPrice);
 		model.addAttribute("purchase", purchase);
 		//================================================================================
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용가능합니다.");
+			return "fail_back";
+		}
 				
 		
 		return "auction/auctionPeriod";
@@ -152,9 +164,28 @@ public class AuctionController {
 	
 	// 완료된 경매
 	@RequestMapping(value="auctionFinish", method = RequestMethod.GET)
-	public String auctionFinish() { // 이미지 코드와 경매 코드를 받아서 목록 상세
-		return "auction/auctionFinish";
+	public String auctionFinish(@RequestParam String auction_code, Model model, HttpSession session) {
+		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
+		model.addAttribute("auction", auction);
+		
+		// 경매 기록(상세 내용) 검색
+		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(auction_code);
+		// 경매 기록 최고값 검색
+		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
+		model.addAttribute("auctionLog", auctionLog);
+		model.addAttribute("lastLog", lastLog);
+		
+		if(session.getAttribute("sId") == null) {
+			model.addAttribute("msg", "로그인 후 이용가능합니다.");
+			return "fail_back";
+		}
+		
+		
+		
+		return "auction/auctionFinish";			
 	}
+	
+	
 	
 	// 경매 입찰 등록
 	@RequestMapping(value="auctionDeposit", method = RequestMethod.GET)
@@ -206,6 +237,14 @@ public class AuctionController {
 		return "auction/auctionPay";
 	}
 	
+	// 경매 종료 업데이트
+	@RequestMapping(value="auctionUpdateFinish", method = RequestMethod.GET)
+	@ResponseBody
+	public void auctionUpdateFinish(@RequestParam Map<String, String> auction) {
+		// 경매 종료 -> '판매 완료', 낙찰자 이름 업데이트
+		int updateCount = service.updateAuctionFinish(auction.get("auction_code"), auction.get("success_id"), auction.get("success_price"));
+		
+	}
 	
 	// 0524 test 여기서==========================
 //	@Controller

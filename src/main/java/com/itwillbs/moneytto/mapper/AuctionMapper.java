@@ -32,4 +32,6 @@ public interface AuctionMapper {
 	// 나의 경매 기록
 	HashMap<String, String> selectMyLog(@Param("id") String id, @Param("auction_code") String auction_code);
 
+	int updateAuctionFinish(@Param("auction_code") String auction_code,@Param("success_id") String success_id, @Param("success_price") String success_price);
+
 }

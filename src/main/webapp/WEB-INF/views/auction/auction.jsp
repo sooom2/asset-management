@@ -83,7 +83,7 @@
 				
 				
 				// 경매 남은시간 분, 초 
-				let diffMinutes = 10 - parseInt(((current_time - start_time) / (1000 * 60)));
+				let diffMinutes = 30 - parseInt(((current_time - start_time) / (1000 * 60)));
 				let diffSeconds = 60 - (((current_time - start_time) % (1000 * 60)) / 1000);
 				let diffSecondsResult = diffSeconds < 10 ? "0" + (diffSeconds - 1) : diffSeconds - 1; 
 				let resultClock = (diffMinutes - 1) + ":" + diffSecondsResult;
@@ -92,17 +92,21 @@
 				// 경매시작 시간 지나면 (시간 카운트)
 				if(start_time <= current_time) {
 					$("#con_countDown").html(resultClock);
-// 					$('#auction_input_after *').prop('disabled', false);
+					
+					// 경매 입찰 가능.
+					$('#auction_input_after *').prop('disabled', false);
 				} 
 				
-				// 경매 시작 후 (10분 이 지나면 종료)
-				if(current_time - start_time > 600000) {
+				// 경매 시작 후 (30분 이 지나면 종료)
+				if(current_time - start_time > 1800000) {
 					
 					window.setTimeout(function(){ // setInterval 함수 종료
 						window.clearInterval(time);
 						$("#con_countDown").html("경매가 종료 되었습니다.");
+						
 						auctionFinish();
 					});
+					
 				}
 			
 			
@@ -114,8 +118,9 @@
 
 	$(document).ready(function() {
 		
+		// 경매 시작 전 경매 입찰 불가.
+		$('#auction_input_after *').prop('disabled', true);
 		
-// 		$('#auction_input_after *').prop('disabled', true);
 		// 경매 등록 확인
 		if(${auctionEnroll}) {
 			$("#auction_input_before").css('display', 'none');
@@ -223,7 +228,7 @@
 				
 				$(".chatBox").append(str);
 			};
-			
+			$('.chat_description').scrollTop($('.chat_description')[0].scrollHeight + 100);
 			
 			
 		};
@@ -234,47 +239,70 @@
 	
 	// 경매 종료 이벤트
 	function auctionFinish() {
-		// 경매 종료 닉네임이 현재 세션과 같을 때 -> 낙찰자
-		if($("#auctionLog_nickname").html() == "${nickname}님") {
-			swal({
-			    title: "경매 낙찰을 축하합니다.",
-			    text: "1. 낙찰 포기 시 보증금은 되돌려 받을 수 없습니다.\n2. 결제 시 보증금을 뺀 낙찰가격으로 결제합니다.",
-			    icon: "success",
-			    buttons: {
-			      confirm: {
-			        text: "결제하기",
-			        value: true,
-			        visible: true,
-			        className: "",
-			        closeModal: true,
-			      },
-			      cancel: {
-			        text: "취소",
-			        value: false,
-			        visible: true,
-			        className: "",
-			        closeModal: true,
-			      },
-			    },
-			  }).then((result) => {
-			    if (result) {
-			    	location.href = "auctionPay?auction_code=${auction.get('auction_code') }&successPrice=" + $("#lastLogPrice").html();
-			    } else {
-			    	location.href = "auctionMain";
-			    }
-		  	});
-		} else { // 닉네임과 세션 다를 때 -> 유찰
-			swal({
-			    title: "경매가 종료 되었습니다.",
-			    text: "유찰되었습니다. \n낙찰자: " + $("#auctionLog_nickname").html(),
-			    icon: "warning",
-			    buttons: "확인"
-			  }).then((result) => {
-			    if (result) {
-			    	location.href = "auctionMain";
-			    }
-		  	});
-		}
+		// 경매 종료 시 이벤트 동작 불가.
+		$('#auction_input_after *').prop('disabled', true);
+		$('#auction_input_before *').prop('disabled', true);
+		$('.chat_footer *').prop('disabled', true);
+		
+		
+		$.ajax({
+            type: "GET",
+            url: "auctionUpdateFinish",
+            dataType: "text",
+            data: {
+                auction_code: "${auction.auction_code }",
+                success_id: $("#auctionLog_nickname").html(),
+                success_price: $("#lastLogPrice").html()
+            },
+            success: function(result) {
+            	// 경매 종료 닉네임이 현재 세션과 같을 때 -> 낙찰자
+        		if($("#auctionLog_nickname").html() == "${nickname}님") {
+        			swal({
+        			    title: "경매 낙찰을 축하합니다.",
+        			    text: "1. 낙찰 포기 시 보증금은 되돌려 받을 수 없습니다.\n2. 결제 시 보증금을 뺀 낙찰가격으로 결제합니다.",
+        			    icon: "success",
+        			    buttons: {
+        			      confirm: {
+        			        text: "결제하기",
+        			        value: true,
+        			        visible: true,
+        			        className: "",
+        			        closeModal: true,
+        			      },
+        			      cancel: {
+        			        text: "취소",
+        			        value: false,
+        			        visible: true,
+        			        className: "",
+        			        closeModal: true,
+        			      },
+        			    },
+        			  }).then((result) => {
+        			    if (result) {
+        			    	location.href = "auctionPay?auction_code=${auction.get('auction_code') }&successPrice=" + $("#lastLogPrice").html();
+        			    } else {
+        			    	location.href = "auctionMain";
+        			    }
+        		  	});
+        		} else { // 닉네임과 세션 다를 때 -> 유찰
+        			swal({
+        			    title: "경매가 종료 되었습니다.",
+        			    text: "유찰되었습니다. \n낙찰자: " + $("#auctionLog_nickname").html(),
+        			    icon: "warning",
+        			    buttons: "확인"
+        			  }).then((result) => {
+        			    if (result) {
+        			    	location.href = "auctionMain";
+        			    }
+        		  	});
+        		}
+            },
+            error: function(error) {
+                alert("error:" + error);
+            }
+        });
+		
+		
 		
 	};
 	
@@ -350,7 +378,7 @@
 								<span id="auctionLog_nickname">${lastLog.member_nickname }님</span>
 							</c:when>
 							<c:otherwise>
-								<span id="auctionLog_nickname">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+								<span id="auctionLog_nickname"></span>
 							</c:otherwise>
 						</c:choose>
 						</div>
@@ -380,14 +408,14 @@
 								<div>보증금</div>
 							</div>
 							<div class="bid_right">
-								<div>${deposit }원</div>
+								<div style="font-weight:bold"><span style="color:#bb2649">${deposit }</span>원</div>
 							</div>
 						</div>
 						<input id="auctionRegist" class="auction_input_button" type="button" value="참여하기">
 					</div>
 					<!-- 경매 등록 후 -->
 					<div id="auction_input_after" class="auction_input" style="display:none">
-						<div class="auction_input_title">입찰입찰입찰 제목좀바꿔죠</div>
+						<div class="auction_input_title">입찰</div>
 						<hr>
 <!-- 						<div style="float: right;"> -->
 <!-- 						<div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<span>명</span></div></div><br> -->
@@ -493,11 +521,61 @@ $(document).ready(function() {
 	$(".btn").click(function(){
 		//버튼을 눌렀을때 data-price가 없으면	
 		// data-price 없는게 직접 입력 버튼
+		var numPurchase = parseInt(${purchase }, 10);
 		if($(this).attr("data-price") == ""){ // 가격 직접 입력시 
 			// id = message 값을 message에
-			chatLog = $("#logPrice").val();			
+			chatLog = $("#logPrice").val();
+			
+			if(chatLog == ""){
+				alert("금액을 입력해주세요");
+				return false;
+			} else if(chatLog < ${price} ) {
+				alert("최소금액 보다 높게 입력해주세요");
+				$("#logPrice").val("");
+				chatLog = nowPrice;
+				return false;
+			} else if(chatLog <= $("#lastLogPrice").html()) {
+				alert("현재 입찰금액 보다 높게 입력해주세요");
+				$("#logPrice").val("");
+				chatLog = nowPrice;
+				return false;
+			} else if(chatLog > numPurchase) {
+				alert("즉시구매 가격 이하로 입력해주세요");
+				$("#logPrice").val("");
+				chatLog = nowPrice;
+				numPurchase += "";
+				return false;
+			} 
+			chatSend2();
 		} else if($(this).attr("data-price") == ${purchase }) {
-			chatLog = ${purchase } + "";
+			swal({
+			    title: "정말 즉시 구매가로 낙찰 하시겠습니까?",
+			    text: "1. 낙찰 후 '경매 포기' 시 보증금은 되돌려 받을 수 없습니다.\n2. 결제 시 보증금을 뺀 낙찰가격으로 결제합니다.",
+			    icon: "warning",
+			    buttons: {
+			      confirm: {
+			        text: "결제하기",
+			        value: true,
+			        visible: true,
+			        className: "",
+			        closeModal: true,
+			      },
+			      cancel: {
+			        text: "취소",
+			        value: false,
+			        visible: true,
+			        className: "",
+			        closeModal: true,
+			      },
+			    },
+			  }).then((result) => {
+			    if (result) {
+			    	chatLog = ${purchase } + "";
+			    	chatSend2();
+			    } 
+		  	});
+// 			chatLog = ${purchase } + "";
+			
 		} else if($(this).attr("data-price") == ${askingPrice }) { // 입찰하기(1%값) 버튼 클릭시 
 // 			message = $(".auction_price").find("span").html();
 			// 누른 값에 해당하는 data-price 속성의 값을 메시지에
@@ -515,34 +593,23 @@ $(document).ready(function() {
 			console.log(${lastLog.log_content});
 			console.log("2번" + chatLog);
 // 			}
+			if(chatLog > numPurchase) {
+				alert("즉시구매 가격 이하로 입력해주세요");
+				$("#logPrice").val("");
+				chatLog = nowPrice;
+				numPurchase += "";
+				return false;
+			}
+			chatSend2();
 		}
-		var numPurchase = parseInt(${purchase }, 10);
-		if(chatLog == ""){
-			alert("금액을 입력해주세요");
-			return false;
-		} else if(chatLog < ${price} ) {
-			alert("최소금액 보다 높게 입력해주세요");
-			$("#logPrice").val("");
-			chatLog = nowPrice;
-			return false;
-		} else if(chatLog <= $("#lastLogPrice").html()) {
-			alert("현재 입찰금액 보다 높게 입력해주세요");
-			$("#logPrice").val("");
-			chatLog = nowPrice;
-			return false;
-		} else if(chatLog > numPurchase) {
-			alert("즉시구매 가격 이하로 입력해주세요");
-			$("#logPrice").val("");
-			chatLog = nowPrice;
-			numPurchase += "";
-			return false;
-		} 
+		
+		
 		
 		if(nowPrice < chatLog) {
 			nowPrice = chatLog;
 		}
 		
-		chatSend2();
+		
 	})
 	
 	connect2();
@@ -591,6 +658,7 @@ function connect2() {
 		// 경매 로그
 		var auctionLog = "<div class='chat_myself'>" + "<" + hours + ":" + minutes + "> " + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + "</div>";
 		$(".logBox").append(auctionLog);
+		$('.auction_log').scrollTop($('.auction_log')[0].scrollHeight + 100);
 		
 		if(sessionId == cur_session) { // 세션 ID 와 입력된 금액의 ID가 같을 경우
 			// 내가 입력한 낙찰가
