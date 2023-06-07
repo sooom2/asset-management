@@ -1,6 +1,7 @@
 package com.itwillbs.moneytto.mapper;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
@@ -24,5 +25,8 @@ public interface BankMapper {
 	int insertAccountHistory(Map<String, String> map);
 
 	int updatePointAmount(Map<String, String> map);
+
+	// 계좌 내역 조회
+	List<HashMap<String, String>> selectAccountHistory();
 
 }

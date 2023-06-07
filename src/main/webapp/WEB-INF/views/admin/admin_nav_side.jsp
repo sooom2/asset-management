@@ -21,7 +21,7 @@
 					<!-- board -->
 
 						<div class="sb-sidenav-menu-heading">ACCOUNT</div>
-							<a class="nav-link" href="adminChatBot">
+							<a class="nav-link" href="adminAccount">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-columns"></i>
 							</div> 계좌관리

@@ -51,10 +51,10 @@
 </script>
 </head>
 <body>
-<jsp:include page="admin_nav2.jsp" />
+<jsp:include page="admin_nav_top.jsp" />
 	<div id="layoutSidenav">
 		<!-- 고정  -->
-		<jsp:include page="admin_nav.jsp" />
+		<jsp:include page="admin_nav_side.jsp" />
 		<!-- 고정 -->
 
 		<div id="layoutSidenav_content">
@@ -123,17 +123,7 @@
 					
 				<!-- 테이블 -->
 				<div class="datatable-container">
-					<h3 class="text-center font-weight-light my-4">자유게시판관리</h3>
-					
-					
-										
-						
-					
-					
-					
-					
-					
-					
+					<h3 class="text-center font-weight-light my-4">경매품목관리</h3>
 					
 					<form id="iForm">
 					<div class="">
@@ -141,21 +131,17 @@
 							style="display: inline-block; float: right; margin-bottom: 25px; margin-top: -19px; width: 520px; padding-left: 11px;">
 							<div class="cinema_name">
 								<label for="cinema_name"></label>
-								<select name="cinema_name" onchange="" style="margin-top: 0px; !important"> 
-									<option value="전체공지" selected="selected" >전체공지</option>
-									<c:forEach var="cinema" items="${cinemaList }">
-										<option value="${cinema.cinema_name}" ${paramMap.cinema_name == cinema.cinema_name ? 'selected' : ''}>${cinema.cinema_name}</option>
-									</c:forEach>
-								</select>
+<!-- 								<select name="cinema_name" onchange="" style="margin-top: 0px; !important">  -->
+<!-- 									<option value="전체" selected="selected" >전체</option> -->
+<%-- 									<c:forEach var="cinema" items="${cinemaList }"> --%>
+<%-- 										<option value="${cinema.cinema_name}" ${paramMap.cinema_name == cinema.cinema_name ? 'selected' : ''}>${cinema.cinema_name}</option> --%>
+<%-- 									</c:forEach> --%>
+<!-- 								</select> -->
 								<select name="rep_board" onchange="" style="margin-top: 0px; !important">
 									<option value="전체" <c:if test="${paramMap.rep_board eq '전체'}">selected</c:if>>전체</option>
-									<option value="답변완료" <c:if test="${paramMap.rep_board eq '답변완료'}">selected</c:if>>답변완료</option>
-									<option value="미답변" <c:if test="${paramMap.rep_board eq '미답변'}">selected</c:if>>미답변</option>
+									<option value="거래완료" <c:if test="${paramMap.rep_board eq '경매완료'}">selected</c:if>>경매완료</option>
+									<option value="거래중" <c:if test="${paramMap.rep_board eq '진행중'}">selected</c:if>>진행중</option>
 								</select>
-								<c:forEach var="cinema" items="${cinemaList }">
-									<input type="hidden" name="location_code"
-										value="${cinema.get('location_code') }">
-								</c:forEach>
 								<input class="datatable-input" value="${param.searchKeyword }" name="searchKeyword" type="search" 
 								placeholder="검색어를 입력해 주세요." aria-controls="datatablesSimple" style="width: 210px;">
 								<input class="btn btn-block btn-more" type="button" value="검색" onclick="search('0');"
@@ -171,18 +157,18 @@
 							<tr>
 								<th data-sortable="true" style="width: 5%;"><a href="#"
 									class="datatable-sorter">글번호</a></th>
-								<th data-sortable="true" style="width: 10%;"><a href="#"
+								<th data-sortable="true" style="width: 30%;"><a href="#"
 									class="datatable-sorter">제목</a></th>
 								<th data-sortable="true" style="width: 13%;"><a href="#"
-									class="datatable-sorter">내용</a></th>
-								<th data-sortable="true" style="width: 30%;"><a href="#"
-									class="datatable-sorter">작성자</a></th>
+									class="datatable-sorter">경매상태</a></th>
+<!-- 								<th data-sortable="true" style="width: 30%;"><a href="#" -->
+<!-- 									class="datatable-sorter">작성자</a></th> -->
 								<th data-sortable="true" style="width: 8%;"><a href="#"
 									class="datatable-sorter">작성일자</a></th>
-								<th data-sortable="true" style="width: 20%;"><a href="#"
-									class="datatable-sorter">freeBoard#</a></th>
+<!-- 								<th data-sortable="true" style="width: 20%;"><a href="#" -->
+<!-- 									class="datatable-sorter">freeBoard#</a></th> -->
 								<th data-sortable="true" style="width: 8%;"><a href="#"
-									class="datatable-sorter">답글등록</a></th>
+									class="datatable-sorter">버튼</a></th>
 							</tr>
 						</thead>
 						<!-- 회원목록 -->
@@ -195,16 +181,16 @@
 <%-- 							<input type="hidden" name="pageNum" value="${paramMap.pageNum}"> --%>
 <!-- 							<input type="hidden" name="table_name" value=""> -->
 <!-- 							<input type="hidden" name="code" value=""> -->
-							<c:forEach var="oneBoard" items="${oneBoardList }">
+							<c:forEach var="auction" items="${auction }">
 								<tr>
-									<td>${oneBoard.rownum }</td>
-									<td>${oneBoard.one_name }</td>
-									<td>${oneBoard.cinema_name }</td>
-									<td>${oneBoard.one_subject }</td>
-									<td>${oneBoard.one_rep_board }</td>
-									<td>${oneBoard.one_write_date }</td>
+									<td>${auction.rownum }</td>
+									<td>${auction.auction_item_name }</td>
+									<td>${auction.auction_type }</td>
+<%-- 									<td>${oneBoard.one_subject }</td> --%>
+									<td>${auction.auction_date }</td>
+<%-- 									<td>${oneBoard.one_write_date }</td> --%>
 									<td class="modi"><input class="btn btn-block btn-more"
-										type="button" value="M O R E" onclick="location.href='admin_one_rep?one_code=${oneBoard.one_code }'"></td>
+										type="button" value="M O R E" onclick="location.href='admin_one_rep?one_code=${auction.auction_code }'"></td>
 								</tr>
 							</c:forEach>
 						</tbody>

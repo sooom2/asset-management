@@ -1,6 +1,7 @@
 package com.itwillbs.moneytto.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,11 @@ public class BankService {
 			return mapper.updatePointAmount(map);
 		}
 		return 0;
+	}
+	
+	// 계좌 내역 조회
+	public List<HashMap<String, String>> selectAccountHistory() {
+		return mapper.selectAccountHistory();
 	}
 	
 	

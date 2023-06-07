@@ -20,6 +20,7 @@
 		   , table_code
 		   , image_name
 		   , COALESCE(enroll_count, 0) AS enroll_count -- enroll_count 가 null이면 0
+		   , ROW_NUMBER() OVER(ORDER BY a.auction_date ) AS rownum
 		FROM auction a 
 			JOIN images i ON a.auction_code = i.table_code
 			LEFT JOIN (

@@ -46,7 +46,8 @@
 		WHERE
 			id = #{member_id}			
 	</update>
-	<!-- 파라미터 수정중 -->
+	
+	<!-- 관리자 계좌 상세 내역 파라미터 수정중 -->
 	<insert id="insertAccountHistory">
 		<selectKey keyProperty="trade_balance" resultType="java.lang.Long" order="BEFORE">
     		SELECT
@@ -72,6 +73,11 @@
 				, #{trade_date}
 			)
 	</insert>
+	
+	<!-- 계좌 내역 조회 -->
+	<select id="selectAccountHistory" resultType="hashmap">
+<!-- 		SELECT ROW_NUMBER() OVER(ORDER BY trade_code ) AS rownum, lb.*, count(*) over() AS totalCnt -->
+	</select>
 	
 	<update id="updatePointAmount">
 		UPDATE member

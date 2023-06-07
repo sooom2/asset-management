@@ -121,10 +121,10 @@ function previewImage(targetObj, View_area) {
 
 </head>
 <body>
-		<jsp:include page="admin_nav2.jsp" />
+		<jsp:include page="admin_nav_top.jsp" />
 	<div id="layoutSidenav">
 		<!-- 고정  -->
-		<jsp:include page="admin_nav.jsp" />
+		<jsp:include page="admin_nav_side.jsp" />
 		
 		<!-- 고정 -->
 

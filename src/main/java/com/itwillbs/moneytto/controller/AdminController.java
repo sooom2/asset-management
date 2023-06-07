@@ -1,6 +1,8 @@
 package com.itwillbs.moneytto.controller;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.moneytto.service.AdminService;
+import com.itwillbs.moneytto.service.AuctionService;
+import com.itwillbs.moneytto.service.BankService;
 
 @Controller
 public class AdminController {
@@ -23,6 +27,11 @@ public class AdminController {
 	@Autowired
 	private AdminService service;
 	
+	@Autowired
+	private AuctionService auctionService;
+	
+	@Autowired
+	private BankService bankService;
 	
 	// =============================================
 	@RequestMapping(value = "admin")
@@ -56,9 +65,15 @@ public class AdminController {
 		
 		return "admin/adminFreeBoard";
 	}
-	
+	// =============================================
+	// 관리자 경매
 	@GetMapping("/adminAuction")
-	public String adminAuction() {
+	public String adminAuction(Model model) {
+		
+		// 경매 목록 검색
+		List<HashMap<String, String>> auction = auctionService.selectAuction();
+		model.addAttribute("auction", auction);
+		System.out.println("adminAuction에서" + auction);
 		
 		return "admin/adminAuction";
 	}
@@ -100,8 +115,7 @@ public class AdminController {
 	}
 	
 	
-	
-	
+	// =============================================
 	
 	
 	@RequestMapping(value = "adminChatBot")
@@ -114,5 +128,18 @@ public class AdminController {
 	public String adminMember() {
 		
 		return "admin/adminMember";
+	}
+	
+	// =============================================
+	// 관리자 계좌
+	@RequestMapping(value = "adminAccount")
+	public String adminAccount(Model model) {
+		
+		// 계좌내역 조회
+//		List<HashMap<String, String>> accountHistory = bankService.selectAccountHistory();
+//		model.addAttribute("accountHistory", accountHistory);
+//		System.out.println("adminAccount에서" + accountHistory);
+		
+		return "admin/adminAccount";
 	}
 }

@@ -1,5 +1,7 @@
 package com.itwillbs.moneytto.service;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ public class AdminService {
 
 	public int registImage(Map<String, String> images) {
 		return mapper.registImage(images);
-	}	
+	}
+
 	
 }
