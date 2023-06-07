@@ -96,7 +96,7 @@ function memberAuth(){
 					<div class="tabTab active"  data-attr="sellItem"><a href="#">판매 상품</a></div>
 					<div class="tabTab" data-attr="wishItem"><a href="#">찜한 상품</a></div>
 					<div class="tabTab" data-attr="buyItem"><a href="#">구매 상품</a></div>
-					<div class="tabTab"><a href="#">#참여 중인 경매</a></div>
+					<div class="tabTab"><a href="auctionPay">낙찰된 경매</a></div>
 					<div class="tabTab"><a href="market_review">리뷰 보기</a></div>
 					<div class="tabTab"><a href="reviewRegist">리뷰 작성</a></div>
 				</div>
@@ -104,33 +104,7 @@ function memberAuth(){
 				<div class="filterBarWrapper">
 					<div class="tabPcBox">
 						<div class="tabFilterTab">
-							<div style = "width:180px" class="DropBoxWrapper">
-								<div class="DropBoxBox">
-									<div class="CategoryText">카테고리 전체</div>
-									<img
-										src="https://ccimage.hellomarket.com/img/common/arrow/arrow_drop_down.svg"
-										alt="화살표 이미지" class="CategoryArrow">
-								</div>
-							</div>
-							
-							<div style = "width:130px" class="DropBoxWrapper">
-								<div class="DropBoxBox">
-									<div class="SellStatusText">판매상태</div>
-									<img
-										src="https://ccimage.hellomarket.com/img/common/arrow/arrow_drop_down.svg"
-										alt="화살표 이미지" class="SellStatusArrow">
-								</div>
-							</div>
-							
-							<div style = "width:140px" class="DropBoxWrapper">
-								<div class="DropBoxBox">
-									<div class="PriceText">가격</div>
-									<img
-										src="https://ccimage.hellomarket.com/img/common/arrow/arrow_drop_down.svg"
-										alt="화살표 이미지" class="PriceArrow">
-								</div>
-							</div>
-							<form class="SearchWrapper" style="width: 257px">
+							<form class="SearchWrapper" style="width: 690px">
 								<input type="text" placeholder="상품명 검색"
 									class="SearchInput-ukztbj-1 inqgpT" value=""><img
 									src="https://ccimage.hellomarket.com/img/web/common/black_glass.svg"
@@ -145,6 +119,7 @@ function memberAuth(){
 				</div>
 				
 				<div class="itemWrapper">
+					<c:if test='${not empty itemList }'>
 					<c:forEach var="item" items="${itemList }">
 					<div class="item" data-cd="${item.item_code }">
 						<div class="itemThumbnailBox">
@@ -178,6 +153,20 @@ function memberAuth(){
 						</div>
 					</div>
 					</c:forEach>
+					</c:if>
+					<c:if test= '${empty itemList }'>
+                      	<div class="EmptyEmptyBox">
+							<div class="EmptyTitle">아쉽게도, 현재 검색된 상품이 없어요</div>
+							<div class="EmptyGuide">필터를 재설정하거나 전체 상품 보기를 선택해주세요</div>
+							<div class="EmptyBtnBox">
+								<img
+									src="https://ccimage.hellomarket.com/img/web/common/refresh_mark.svg"
+									alt="초기화 마크" class="EmptyResetMark-xvqyzf-4 YrGaN">
+								<div class="EmptyShowAllText">전체 상품 보기</div>
+							</div>
+						</div>
+						<div class="EmptyNoticeBox"></div>
+					</c:if>
 				</div>
 			</div>
 		</div>

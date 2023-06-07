@@ -33,8 +33,11 @@ public class CommunityController {
 	
 	@GetMapping(value = "commBoardWrite")
 	public String commBoardWrite(Model model,HttpSession session) {
-		
-		
+		String id = (String)session.getAttribute("sId");
+		if(id==null) {
+			model.addAttribute("msg","로그인이 필요합니다.");
+			return "fail_back";
+		}
 		return "board/commBoardWrite";
 	}
 
