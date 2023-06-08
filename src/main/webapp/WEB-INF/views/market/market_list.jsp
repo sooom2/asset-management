@@ -175,23 +175,28 @@
 			}
 			
 			// 중복 카테고리 처리
-			if(category.includes(str)) return;
+			if(str != "" && category.includes(str)) return;
 			
 			
 			// 카테고리 필터에 추가
-			var title = str;
-			var tagStr = '';
-			tagStr += '<div class="tagListTag">';
-			tagStr += '<div class="tagListName" data-cd="1">';
-			tagStr += title;
-			tagStr += '</div>';
-			tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div>';
-			$(".tagListFilterBox").append(tagStr);
+			if(str != "") {
+				var title = str;
+				var tagStr = '';
+				tagStr += '<div class="tagListTag">';
+				tagStr += '<div class="tagListName" data-cd="1">';
+				tagStr += title;
+				tagStr += '</div>';
+				tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div>';
+				$(".tagListFilterBox").append(tagStr);
+			}
+			
+
 			
 			
 			// all이면 null 넘김
 			if(categoryId == "all") {
 				$("#item_category").val("");
+				$(".tagListName[data-cd='1']").parent().remove();
 			} else {
 				if(category != ""){
 					category += "/";
