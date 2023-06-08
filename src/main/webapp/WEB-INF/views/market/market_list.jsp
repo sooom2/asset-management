@@ -163,8 +163,8 @@
 			var category = $("#item_category").val();
 			var str = '';
 			
-			console.log("기존 카테고리 아이디 값 :  " + $("#item_category").val());		
-			console.log("새로 받은 categoryId : " + categoryId);
+// 			console.log("기존 카테고리 아이디 값 :  " + $("#item_category").val());		
+// 			console.log("새로 받은 categoryId : " + categoryId);
 			
 			switch(categoryId) {
 				case "fashion": str += "패션/의류/잡화/뷰티"; break;
@@ -177,12 +177,24 @@
 				case "all": 
 			}
 			
-			console.log("switch에서 나온 str : " + str);
+// 			console.log("switch에서 나온 str : " + str);
 			
-			console.log("str이 기존 값에 포함되어있음? : " + categoryId.includes(str));
-			if(categoryId.includes(str)) {
-
+// 			console.log("str이 기존 값에 포함되어있음? : " + category.includes(str));
+			if(category.includes(str)) {
+				return;
 			}
+			
+			
+			// 카테고리 필터에 추가
+			var title = str;
+			var tagStr = '';
+			tagStr += '<div class="tagListTag">';
+			tagStr += '<div class="tagListName" data-cd="1">';
+			tagStr += title;
+			tagStr += '</div>';
+			tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div>';
+			$(".tagListFilterBox").append(tagStr);
+			
 			
 			// all이면 null 넘김
 			if(categoryId == "all") {
@@ -295,17 +307,24 @@
 		}
 		
 		
-		// 카테고리 첫 문자나 마지막 문자가 "/" 이면 제거, 태그 첫 문자나 마지막 문자가 "|" 이면 제거
+		// 중복 구분자 제거
 		function removeChar(str, character){
-		  if(str[0] == character){
-		    str = str.substring(1);
-		  }
+			var doubleChar = character + character;
+			
+			if(str[0] == character){
+				str = str.substring(1);
+			}
 
-		  if(str[str.length - 1] == character){
-		    str = str.slice(0, -1);
-		  }
+			if(str[str.length - 1] == character){
+				str = str.slice(0, -1);
+			}
+ 
+			if(str.includes(doubleChar)) {
+				console.log("중복 구분자 제거");
+				str = str.replace(doubleChar, character);
+			}
 
-		  return str;
+			return str;
 		}
 		
 		
@@ -323,7 +342,7 @@
 			var sort = $("#sort").val();
 			
 			
-			// 카테고리 첫 문자나 마지막 문자가 "/" 이면 제거, 태그 첫 문자나 마지막 문자가 "|" 이면 제거
+			// 중복 구분자 제거
 			item_category = removeChar(item_category, "/");
 			item_tag = removeChar(item_tag, "|");
 			$("#item_category").val(item_category);
@@ -418,15 +437,15 @@
 				var categoryId = $(this).attr("id");
 				category(categoryId);
 				
-				// 카테고리 필터에 추가
-				var title = $(this).attr("title");
-				var tagStr = '';
-				tagStr += '<div class="tagListTag">';
-				tagStr += '<div class="tagListName" data-cd="1">';
-				tagStr += title;
-				tagStr += '</div>';
-				tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div>';
-				$(".tagListFilterBox").append(tagStr);
+// // 				// 카테고리 필터에 추가
+// 				var title = $(this).attr("title");
+// 				var tagStr = '';
+// 				tagStr += '<div class="tagListTag">';
+// 				tagStr += '<div class="tagListName" data-cd="1">';
+// 				tagStr += title;
+// 				tagStr += '</div>';
+// 				tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div>';
+// 				$(".tagListFilterBox").append(tagStr);
 				
 				
 			});

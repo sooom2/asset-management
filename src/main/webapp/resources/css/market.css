@@ -703,4 +703,5 @@ button {
     padding: 5px;
     text-align: center;
     color: #000;
+    cursor: pointer;
 }

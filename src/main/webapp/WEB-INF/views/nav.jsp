@@ -81,22 +81,22 @@ function payment(){
 
 <script type="text/javascript">
 	$(function () {
-		// 검색 하는중
-		$(document).on("submit", "#searchForm", function(e) {
-			e.preventDefault(); // 폼 제출 기본 동작 막기
-			var input = $("#search").val();
-			alert(input);
-			$("#navSearch").val(input);
-			location.href = "market_list?navSearch=" + input;
+		// 검색 하는중 -- 하다가 태그 검색 꼬여서 주석
+// 		$(document).on("submit", "#searchForm", function(e) {
+// 			e.preventDefault(); // 폼 제출 기본 동작 막기
+// 			var input = $("#search").val();
+// 			alert(input);
+// 			$("#navSearch").val(input);
+// 			location.href = "market_list?navSearch=" + input;
 			
-		});
+// 		});
 		
-		$(".searchSearch input").keydown(function(e) {
-            if(e.which === 13) {
-				e.preventDefault(); // 엔터 키 기본 동작 막기
-				$("#searchForm").submit(); // 폼 제출
-            }
-        });
+// 		$(".searchSearch input").keydown(function(e) {
+//             if(e.which === 13) {
+// 				e.preventDefault(); // 엔터 키 기본 동작 막기
+// 				$("#searchForm").submit(); // 폼 제출
+//             }
+//         });
 		// 프로필 이미지 눌렀을때도 마이페이지 이동하게 할려고 하는데
 		// 더 괜찮은 방법 있으면 이거 지우고 그걸로 바꿔주세요 !
 		$('.mem_profile').children().click(function(){
