@@ -137,5 +137,8 @@ public interface MarketMapper {
    //나간방
    List<HashMap<String, String>> existChatList(String room_code);
 
+   
+   List<HashMap<String, String>> navMarketItemList(@Param("navSearch") String navSearch, @Param("sort") String sort, @Param("id") String id);
+
 
 }

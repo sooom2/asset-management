@@ -86,6 +86,12 @@ public class MarketService {
 
 
 
+	public List<HashMap<String, String>> getNavMarketItemList(String navSearch, String sort, String id) {
+		return mapper.navMarketItemList(navSearch, sort, id);
+	}
+
+
+
 		
 	
 	
