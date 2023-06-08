@@ -15,8 +15,8 @@ public class AuctionService {
 	private AuctionMapper mapper;
 	
 	
-	public List<HashMap<String, String>> selectAuction() {
-		return mapper.selectAuction();
+	public List<HashMap<String, String>> selectAuction(HashMap<String, String> map) {
+		return mapper.selectAuction(map);
 	}
 
 	public HashMap<String, String> selectAuctionCode(String auction_code) {

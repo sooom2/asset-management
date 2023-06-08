@@ -21,11 +21,21 @@
 					<!-- board -->
 
 						<div class="sb-sidenav-menu-heading">ACCOUNT</div>
-							<a class="nav-link" href="adminAccount">
+							<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#accountMgm" aria-expanded="false" aria-controls="tradeMgm">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-columns"></i>
 							</div> 계좌관리
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div>
 						</a>
+						<div class="collapse" id="accountMgm" aria-labelledby="" data-bs-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+								<a class="nav-link" href="adminAccount">현금계좌</a>
+								<a class="nav-link" href="adminAccountPoint">포인트계좌</a>
+							</nav>
+						</div>
+						
 						<div class="sb-sidenav-menu-heading">TRADE</div>
 						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#tradeMgm" aria-expanded="false" aria-controls="tradeMgm">
 							<div class="sb-nav-link-icon">
@@ -38,9 +48,8 @@
 						</a>
 						<div class="collapse" id="tradeMgm" aria-labelledby="" data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-								<a class="nav-link" href="adminNoticeBoard">중고거래</a>
+								<a class="nav-link" href="adminItem">중고거래</a>
 								<a class="nav-link" href="adminAuction">경매관리</a>
-								<a class="nav-link" href="adminFreeBoard">오픈채팅</a>
 							</nav>
 						</div>
 						

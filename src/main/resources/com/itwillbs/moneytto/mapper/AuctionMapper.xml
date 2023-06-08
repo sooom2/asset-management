@@ -22,13 +22,24 @@
 		   , image_name
 		   , COALESCE(enroll_count, 0) AS enroll_count -- enroll_count 가 null이면 0
 		   , ROW_NUMBER() OVER(ORDER BY a.auction_date ) AS rownum
+		   , count(*) over() AS totalCnt
 		FROM auction a 
 			JOIN images i ON a.auction_code = i.table_code
 			LEFT JOIN (
 			    SELECT auction_code, COUNT(*) AS enroll_count
 				    FROM auction_enroll
 					    GROUP BY auction_code) AS ae 
-				ON a.auction_code = ae.auction_code;
+				ON a.auction_code = ae.auction_code
+		WHERE 1=1
+			<if test="searchKeyword != null and !searchKeyword.equals('')">
+				AND (auction_item_name LIKE '%${searchKeyword}%' OR auction_content LIKE '%${searchKeyword}%')
+			</if>
+			<if test="typeSelect != null and !typeSelect.equals('') and !typeSelect.equals('전체')">
+				AND auction_type = #{typeSelect}
+			</if>
+			<if test="startNum != null and !startNum.equals('')">
+				LIMIT ${startNum}, ${endNum}
+			</if>
 	</select>
 	
 	<select id="selectAuctionCode" resultType="hashmap">

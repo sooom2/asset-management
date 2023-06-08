@@ -27,6 +27,6 @@ public interface BankMapper {
 	int updatePointAmount(Map<String, String> map);
 
 	// 계좌 내역 조회
-	List<HashMap<String, String>> selectAccountHistory();
+	List<HashMap<String, String>> selectAccountHistory(HashMap<String, String> map);
 
 }

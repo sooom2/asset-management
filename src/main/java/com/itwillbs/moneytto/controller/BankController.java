@@ -1,6 +1,7 @@
 package com.itwillbs.moneytto.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -202,7 +203,7 @@ public class BankController {
 		
 		//임시로 넣기
 		String trade_amount = map.get("charge_point");
-		String trade_date = LocalDate.now().toString();
+		String trade_date = LocalDateTime.now().toString();
 		//
 		map.put("trade_code", trade_code);
 		map.put("trade_amount", trade_amount);

@@ -47,8 +47,8 @@ public class BankService {
 	}
 	
 	// 계좌 내역 조회
-	public List<HashMap<String, String>> selectAccountHistory() {
-		return mapper.selectAccountHistory();
+	public List<HashMap<String, String>> selectAccountHistory(HashMap<String, String> map) {
+		return mapper.selectAccountHistory(map);
 	}
 	
 	

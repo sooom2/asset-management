@@ -728,14 +728,13 @@
    <!--  -->
    
    <insert id="insertReport">
-      <selectKey keyProperty="report_code" resultType="int" order="BEFORE">
-         SELECT IFNULL(MAX(report_code), 0) FROM report
-      </selectKey>
          INSERT 
             INTO 
                report
             VALUES(
-                    #{report_code} + 1
+				((SELECT *
+					FROM 
+						(SELECT IFNULL(MAX(CAST(report_code AS UNSIGNED)) ,0) FROM report) A)+1)
                   , #{targetId}
                   , #{id}
                   , #{reportType}
@@ -743,7 +742,7 @@
                   , now()
             )
    </insert>
-   
+
       <!-- 상품 아이템 삭제 -->
    <delete id ="deleteItem">
        DELETE FROM item
@@ -754,9 +753,26 @@
            AND (item_status = '판매중' OR item_status = '거래완료')
             
    </delete>
-   
-   
-   
+
+	<!-- 관리자 아이템 목록 -->
+	<select id="selectadminItem" resultType="hashmap">
+		SELECT 
+			i.*
+			, ROW_NUMBER() OVER(ORDER BY i.item_date ) AS rownum
+			, count(*) over() AS totalCnt
+		FROM item i
+<!-- 			LEFT JOIN -->
+			WHERE 1=1
+			<if test="searchKeyword != null and !searchKeyword.equals('')">
+				AND (item_subject LIKE '%${searchKeyword}%' OR item_content LIKE '%${searchKeyword}%')
+			</if>
+			<if test="typeSelect != null and !typeSelect.equals('') and !typeSelect.equals('전체')">
+				AND item_status = #{typeSelect}
+			</if>
+			<if test="startNum != null and !startNum.equals('')">
+				LIMIT ${startNum}, ${endNum}
+			</if>
+	</select>
    
    
 </mapper>

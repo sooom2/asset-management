@@ -60,7 +60,7 @@
 
 				<!-- 테이블 -->
 				<div class="datatable-container">
-					<h3 class="text-center font-weight-light my-4">관리자 계좌</h3>
+					<h3 class="text-center font-weight-light my-4">포인트 계좌</h3>
 					<form id="iForm">
 					<div class="">
 						<div class="selectbox searchbox"

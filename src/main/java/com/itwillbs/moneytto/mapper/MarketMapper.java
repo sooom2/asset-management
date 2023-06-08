@@ -137,5 +137,9 @@ public interface MarketMapper {
    //나간방
    List<HashMap<String, String>> existChatList(String room_code);
 
+// 관리자에서 사용하기 위한======================================================================================
+   // 관리자 아이템 목록
+   List<HashMap<String, String>> selectadminItem(HashMap<String, String> map);
+
 
 }

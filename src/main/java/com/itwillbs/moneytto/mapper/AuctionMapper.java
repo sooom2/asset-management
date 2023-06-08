@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public interface AuctionMapper {
 
-	List<HashMap<String, String>> selectAuction();
+	List<HashMap<String, String>> selectAuction(HashMap<String, String> map);
 
 	HashMap<String, String> selectAuctionCode(String auction_code);
 

@@ -32,9 +32,9 @@ public class AuctionController {
 	
 	// 경매 메인페이지
 	@RequestMapping(value = "auctionMain", method = RequestMethod.GET)
-	public String auctionMain(Model model) { 
+	public String auctionMain(@RequestParam HashMap<String, String> map, Model model) { 
 		// 이미지 코드와 경매 코드를 찾아서 목록 뿌리기
-		List<HashMap<String, String>> auction = service.selectAuction();
+		List<HashMap<String, String>> auction = service.selectAuction(map);
 		System.out.println("@@@@@@@@@@@@@@@" + auction);
 		model.addAttribute("auction", auction);
 		

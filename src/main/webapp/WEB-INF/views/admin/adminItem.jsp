@@ -14,7 +14,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
 	rel="stylesheet" />
-<link href="${pageContext.request.contextPath }/resources/css/adminAuction.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath }/resources/css/adminItem.css" rel="stylesheet" />
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
 	crossorigin="anonymous"></script>
@@ -26,7 +26,7 @@
 		document.querySelector("input[name=startNum]").value = Number(idx)*10;
 		document.querySelector("input[name=endNum]").value = (Number(idx)+1)*10 - Number(idx)*10;
 		let form = document.querySelector('#iForm');
-		form.action = 'adminAuction';
+		form.action = 'adminItem';
 		form.method = 'post';
 		form.submit();
 	}
@@ -61,68 +61,68 @@
 			<!-- 들어갈내용 -->
 			<main>
 				<!-- 모달 -->
-				<div class="regist_container">
-					<div class="content">
-						<form action="auction_regist" class="myForm" method="post" enctype="multipart/form-data">
-						<h4>경매 등록</h4>
-							<div>
-								<label for="auction_name">상품명</label>
-								<input type="text" name="auction_item_name" required placeholder="상품명을 입력하세요.">
-							</div>
-							<div class="form-group">
-							    <label for="comments">상품 설명</label>
-							    <textarea name="auction_content" maxlength="500"></textarea>
-							</div>
-							<div>
-								<label for="auction_type">경매 타입</label>
-								<input type="radio" name="auction_type" value="실시간 경매" checked="checked">
-								<input type="radio" name="auction_type" value="기간 경매">
-							</div>
-							<div>
-								<label for="auction_category">카테고리</label>
-								<select name="auction_category">
-									<option value="">항목선택</option>
-									<option value="의류">의류</option>
-									<option value="시계/쥬얼리">시계/쥬얼리</option>
-									<option value="디지털/가전">디지털/가전</option>
-									<option value="스포츠/레저">스포츠/레저</option>
-									<option value="차량/오토바이">차량/오토바이</option>
-								</select>
-							</div>
-							<div>
-								<label for="customer_name">시작가</label>
-								<input type="text" name="auction_present_price" required placeholder="시작가를 입력하세요.">
-							</div>
-							<div>
-								<label for="customer_name">즉시 구매가</label>
-								<input type="text" name="auction_immediate_price" required placeholder="즉시 구매가를 입력하세요.">
-							</div>
-							<div>
-								<label for="customer_name">시작일</label>
-								<input type="datetime-local" name="auction_start_date" required="required">
-							</div>
-							<div>
-								<label for="customer_name">종료일</label>
-								<input type="datetime-local" name="auction_end_date" required="required">
-							</div>
-							<div class="form-group">
-							    <label for="comments">공지사항</label>
-							    <textarea name="auction_notice" maxlength="500"></textarea>
-							</div>
-							<div>
-								<label for="customer_name">이미지 등록</label>
-								<input type="text" name="image_name" required placeholder="상품 이미지를 등록하세요.">
-							</div>
-							<div>
-								<input type="submit" value="등록" style="border: 1px solid #8d8d8d;">
-							</div>
-						</form>
-					</div>
-				</div>
+<!-- 				<div class="regist_container"> -->
+<!-- 					<div class="content"> -->
+<!-- 						<form action="adminItem_regist" class="myForm" method="post" enctype="multipart/form-data"> -->
+<!-- 						<h4>경매 등록</h4> -->
+<!-- 							<div> -->
+<!-- 								<label for="adminItem_name">상품명</label> -->
+<!-- 								<input type="text" name="adminItem_item_name" required placeholder="상품명을 입력하세요."> -->
+<!-- 							</div> -->
+<!-- 							<div class="form-group"> -->
+<!-- 							    <label for="comments">상품 설명</label> -->
+<!-- 							    <textarea name="adminItem_content" maxlength="500"></textarea> -->
+<!-- 							</div> -->
+<!-- 							<div> -->
+<!-- 								<label for="adminItem_type">경매 타입</label> -->
+<!-- 								<input type="radio" name="adminItem_type" value="실시간 경매" checked="checked"> -->
+<!-- 								<input type="radio" name="adminItem_type" value="기간 경매"> -->
+<!-- 							</div> -->
+<!-- 							<div> -->
+<!-- 								<label for="adminItem_category">카테고리</label> -->
+<!-- 								<select name="adminItem_category"> -->
+<!-- 									<option value="">항목선택</option> -->
+<!-- 									<option value="의류">의류</option> -->
+<!-- 									<option value="시계/쥬얼리">시계/쥬얼리</option> -->
+<!-- 									<option value="디지털/가전">디지털/가전</option> -->
+<!-- 									<option value="스포츠/레저">스포츠/레저</option> -->
+<!-- 									<option value="차량/오토바이">차량/오토바이</option> -->
+<!-- 								</select> -->
+<!-- 							</div> -->
+<!-- 							<div> -->
+<!-- 								<label for="customer_name">시작가</label> -->
+<!-- 								<input type="text" name="adminItem_present_price" required placeholder="시작가를 입력하세요."> -->
+<!-- 							</div> -->
+<!-- 							<div> -->
+<!-- 								<label for="customer_name">즉시 구매가</label> -->
+<!-- 								<input type="text" name="adminItem_immediate_price" required placeholder="즉시 구매가를 입력하세요."> -->
+<!-- 							</div> -->
+<!-- 							<div> -->
+<!-- 								<label for="customer_name">시작일</label> -->
+<!-- 								<input type="datetime-local" name="adminItem_start_date" required="required"> -->
+<!-- 							</div> -->
+<!-- 							<div> -->
+<!-- 								<label for="customer_name">종료일</label> -->
+<!-- 								<input type="datetime-local" name="adminItem_end_date" required="required"> -->
+<!-- 							</div> -->
+<!-- 							<div class="form-group"> -->
+<!-- 							    <label for="comments">공지사항</label> -->
+<!-- 							    <textarea name="adminItem_notice" maxlength="500"></textarea> -->
+<!-- 							</div> -->
+<!-- 							<div> -->
+<!-- 								<label for="customer_name">이미지 등록</label> -->
+<!-- 								<input type="text" name="image_name" required placeholder="상품 이미지를 등록하세요."> -->
+<!-- 							</div> -->
+<!-- 							<div> -->
+<!-- 								<input type="submit" value="등록" style="border: 1px solid #8d8d8d;"> -->
+<!-- 							</div> -->
+<!-- 						</form> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 					
 				<!-- 테이블 -->
 				<div class="datatable-container">
-					<h3 class="text-center font-weight-light my-4">경매품목관리</h3>
+					<h3 class="text-center font-weight-light my-4">거래 물품</h3>
 					
 					<form id="iForm" >
 					<div class="">
@@ -138,9 +138,9 @@
 <!-- 								</select> -->
 								<select name="typeSelect" onchange="" style="margin-top: 0px; !important">
 									<option value="전체" <c:if test="${pageCnt.typeSelect eq '전체'}">selected</c:if>>전체</option>
-									<option value="경매 완료" <c:if test="${pageCnt.typeSelect eq '경매 완료'}">selected</c:if>>경매 완료</option>
-									<option value="실시간 경매" <c:if test="${pageCnt.typeSelect eq '실시간 경매'}">selected</c:if>>실시간 경매</option>
-									<option value="기간 경매" <c:if test="${pageCnt.typeSelect eq '기간 경매'}">selected</c:if>>기간 경매</option>
+									<option value="판매중" <c:if test="${pageCnt.typeSelect eq '판매중'}">selected</c:if>>판매중</option>
+									<option value="거래중" <c:if test="${pageCnt.typeSelect eq '거래중'}">selected</c:if>>거래중</option>
+									<option value="거래완료" <c:if test="${pageCnt.typeSelect eq '거래완료'}">selected</c:if>>거래완료</option>
 								</select>
 								<input class="datatable-input" value="${pageCnt.searchKeyword }" name="searchKeyword" type="search" 
 								placeholder="검색어를 입력해 주세요." aria-controls="datatablesSimple" style="width: 210px;">
@@ -166,31 +166,31 @@
 								<th data-sortable="true" style="width: 5%;"><a href="#"
 									class="datatable-sorter">글번호</a></th>
 								<th data-sortable="true" style="width: 30%;"><a href="#"
-									class="datatable-sorter">제목</a></th>
-								<th data-sortable="true" style="width: 13%;"><a href="#"
-									class="datatable-sorter">경매상태</a></th>
-<!-- 								<th data-sortable="true" style="width: 30%;"><a href="#" -->
-<!-- 									class="datatable-sorter">작성자</a></th> -->
+									class="datatable-sorter">상품이름</a></th>
+								<th data-sortable="true" style="width: 10%;"><a href="#"
+									class="datatable-sorter">거래상태</a></th>
+								<th data-sortable="true" style="width: 10%;"><a href="#"
+									class="datatable-sorter">신고자</a></th>
+								<th data-sortable="true" style="width: 18%;"><a href="#"
+									class="datatable-sorter">신고내용</a></th>
 								<th data-sortable="true" style="width: 8%;"><a href="#"
-									class="datatable-sorter">작성일자</a></th>
-<!-- 								<th data-sortable="true" style="width: 20%;"><a href="#" -->
-<!-- 									class="datatable-sorter">freeBoard#</a></th> -->
+									class="datatable-sorter">신고횟수</a></th>
 								<th data-sortable="true" style="width: 8%;"><a href="#"
-									class="datatable-sorter">버튼</a></th>
+									class="datatable-sorter">삭제</a></th>
 							</tr>
 						</thead>
 						<!-- 회원목록 -->
 						<tbody>
-							<c:forEach var="auction" items="${auction }">
+							<c:forEach var="adminItem" items="${adminItem }">
 								<tr>
-									<td>${auction.rownum }</td>
-									<td>${auction.auction_item_name }</td>
-									<td>${auction.auction_type }</td>
-<%-- 									<td>${oneBoard.one_subject }</td> --%>
-									<td>${auction.auction_date }</td>
-<%-- 									<td>${oneBoard.one_write_date }</td> --%>
+									<td>${adminItem.rownum }</td>
+									<td>${adminItem.item_subject }</td>
+									<td>${adminItem.item_status }</td>
+									<td>${adminItem.member_id }</td>
+									<td>${adminItem.item_content }</td>
+									<td>${adminItem.rownum }</td>
 									<td class="modi"><input class="btn btn-block btn-more"
-										type="button" value="M O R E" onclick="location.href='admin_one_rep?one_code=${auction.auction_code }'"></td>
+										type="button" value="삭제" onclick="location.href='admin_one_rep?one_code=${adminItem.item_code }'"></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -201,7 +201,7 @@
 						<ul class="datatable-pagination-list">
 							<c:if test="${1 < pageCnt.pageNum }">
 									<li class="datatable-pagination-list-item datatable-hidden"
-										onclick="location.href='adminAuction?pageNum=${pageNum - 1}'">
+										onclick="location.href='adminItem?pageNum=${pageNum - 1}'">
 										<a href="javascript:search('${pageCnt.pageNum-2}')" class="datatable-pagination-list-item-link" pagenum="1">‹</a>
 									</li>
 							</c:if>
@@ -217,7 +217,7 @@
 							</c:forEach>
 							<c:if test="${pageCnt.totalCnt > 10*pageCnt.pageNum }">
 								<li class="datatable-pagination-list-item datatable-hidden"
-									onclick="location.href='adminAuction?pageNum=${pageNum + 1}'">
+									onclick="location.href='adminItem?pageNum=${pageNum + 1}'">
 									<a href="javascript:search('${pageCnt.pageNum}')" class="datatable-pagination-list-item-link">›</a>
 								</li>
 							</c:if>
