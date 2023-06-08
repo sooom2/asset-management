@@ -282,7 +282,8 @@
          buyer.member_image as buy_image,
          chat_time,
          item.item_status,
-         item.item_subject
+         item.item_subject,
+         item.item_code
       FROM
          market_chat_messages
             LEFT JOIN market_chat_rooms
@@ -312,7 +313,8 @@
          buyer.member_image as buy_image,
          chat_time,
          item.item_status,
-         item.item_subject
+         item.item_subject,
+         item.item_code
       FROM
          market_chat_messages
             LEFT JOIN market_chat_rooms
@@ -428,6 +430,7 @@
          FROM market_chat_rooms
             WHERE room_code=#{room_code}
    </select>
+   
    
    <update id="updateTradeEnd">
       UPDATE
