@@ -534,8 +534,10 @@
    <select id="itemDetail" resultType="hashmap">
       SELECT item.*,member.member_nickname ,member.member_image 
          FROM item
-            LEFT JOIN member 
-                  ON member.member_id = item.member_id 
+            LEFT JOIN
+            	 member 
+             ON 
+                  member.member_id = item.member_id 
          WHERE item_code=#{item_code}
    </select>
    
@@ -555,20 +557,13 @@
    
    
    <select id="marketItem" resultType="hashmap">
-      SELECT i.*, m.*, w.wish_code
+      SELECT i.*, m.*
          FROM 
             item i
          JOIN
             member m
          ON
             i.member_id = m.member_id
-         LEFT JOIN (
-               SELECT   *
-               FROM   wish
-               WHERE   member_id = #{member_id}
-            ) w
-         ON
-            i.item_code = w.wish_item_code
          WHERE
             i.item_code = #{item_code}
    </select>

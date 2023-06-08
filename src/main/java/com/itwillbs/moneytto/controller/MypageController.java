@@ -54,7 +54,7 @@ public class MypageController {
 			model.addAttribute("msg", "잘못된 접근입니다.");
 			return "fail_back";
 		}
-		if(member_id == null  ||  sId.equals(member_id) ) {
+		if(member_id == null  ||  sId == member_id ) {
 			member_id = sId;
 			HashMap<String, String> account = bankService.getAccount(member_id);
 			
@@ -66,6 +66,8 @@ public class MypageController {
 		    case "sellItem" : itemList  = memberService.getSellItemList(member_id); break;
 		    case "wishItem" : itemList  = memberService.getWishItemList(member_id); break;
 	        case "buyItem" 	: itemList  = memberService.getBuyItemList(member_id); break;
+	        case "auctionPay" : itemList = null; break;
+	        
 	    }
 	    
 	    HashMap<String,String> member = memberService.getMember(member_id);
