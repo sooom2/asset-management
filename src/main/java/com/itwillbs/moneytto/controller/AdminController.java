@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.itwillbs.moneytto.service.AdminService;
-import com.itwillbs.moneytto.service.AuctionService;
-import com.itwillbs.moneytto.service.BankService;
-import com.itwillbs.moneytto.service.MarketService;
+import com.itwillbs.moneytto.service.*;
 
 @Controller
 public class AdminController {
@@ -37,6 +34,9 @@ public class AdminController {
 	
 	@Autowired
 	private MarketService marketService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 // 메인=============================================
 	@RequestMapping(value = "admin")
@@ -213,7 +213,26 @@ public class AdminController {
 	
 // 회원관리=============================================
 	@RequestMapping(value = "adminMember")
-	public String adminMember() {
+	public String adminMember(@RequestParam HashMap<String, String> map, Model model) {
+		// 페이지 번호, 글목록수 제한
+		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
+			map.put("pageNum", "1");
+			map.put("startNum", "0");
+			map.put("endNum", "10");
+		}
+		// 계좌내역 조회
+		List<HashMap<String, String>> adminMember = memberService.selectAdminMember(map);
+		// 내역이 존재할 경우
+		if(adminMember.size() > 0) {
+			HashMap<String, String> countMap = adminMember.get(0);
+			map.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+		}
+		// 내역을 model에 저장
+		model.addAttribute("adminMember", adminMember);
+		// 
+		model.addAttribute("pageCnt", map);
+		System.out.println("adminMember에서" + adminMember);
+		System.out.println("adminMember에서" + map);
 		
 		return "admin/adminMember";
 	}

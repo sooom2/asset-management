@@ -53,6 +53,10 @@ public interface MemberMapper {
 
 	String selectImage(String name);
 
+// 관리자===============================================================
+	// 회원목록
+	List<HashMap<String, String>> selectAdminMember(HashMap<String, String> map);
+
 
 	
 	

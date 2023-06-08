@@ -1,244 +1,143 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>머니머니머니또</title>
-<link href="${path }/resources/css/main.css" rel="stylesheet">
-<link href="${path }/resources/css/market_payment.css" rel="stylesheet">
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta charset="utf-8">
+<!-- 기기 분기처리 스크립트 -->
+
+<script type="text/javascript">
+	var doc = document.documentElement;
+	doc.setAttribute('data-useragent', navigator.userAgent);
+	var sAgent =  navigator.userAgent;
+	if (sAgent.indexOf("WebKit") < 0) {
+		window.onerror = function(){
+			return true;
+		}
+	}
+</script>
+<title>머니또페이</title>
+<link rel="shortcut icon" href="https://img.pay.naver.net/static/images/customer/favicon.ico" />
+<!-- 넘빨개여,,,ㅠ -->
+<link type="text/css" rel="stylesheet" href="//img.pay.naver.net/z/mstatic/css/service/mobile/nsp/order_common.css?1684912786775">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+<link href="${path }/resources/css/payment.css" rel ="stylesheet">
 </head>
+<script type="text/javascript">
+$(function(){
+	$('.button_section').click(function(){
+		if(confirm("등록된 간편결제 계좌로 충전하시겠습니까?")){
+			$("form").submit();
+		}
+					
+	})
+	
+	$('#point2').change(function(){
+		console.log($('#point2').val());
+		console.log($('#point1').text());
+		var point1 = Number($('#point1').text());
+		var point2 = Number($('#point2').val());
+		$('._totalPayAmt').text(point1 + point2)
+	})
+})
+</script>
 <body>
-	<jsp:include page="../nav.jsp" />
-	<div class="item_list_area">
-		<div class="breadcrumbs">
-			<ul>
-				<li><a href="/">HOME</a></li>
-			</ul>
+<div class="wrap">
+	<!-- header -->
+	<div class="header">
+		<h1 class="h1 recurrent_h1">결제</h1>
+		<p class="sp_header gnb_logo"><span class="blind">ttoPay</span></p>
+	</div>
+
+<form method="post" autocomplete="off" action="bank_withdraw">
+<input type="hidden" name="id" value="${member.member_id }"> 
+<input type="hidden" name="trade_type" value="이체">
+<div class="container" id="container">
+    <div class="info_login">
+		<div class="img_area">
+			<img src="${member.member_image}" alt="프로필 이미지" width="32" height="32" class="thumb">
 		</div>
-		<div class="main_area">
-			<div class="main_area_center">
-				<div class="main">
-					<div class="order_title_wrapper">
-						<div class="title">주문서</div>
-					</div>
-					<div class="order_content_wrapper">
-						<ul>
-							<li class="order_card"><div class="card_cont deal_card_cont">
-									<ul class="item_list">
-										<li><div class="card_box card_box_list">
-												<div
-													class="image_wrapper image_wrapper_main_col_1 deal_image_wrapper">
-													<div class="image_outside">
-														<div class="image_centerbox">
-															<img class="thumbnail_img"
-																src="https://ccimg.hellomarket.com/images/2023/item/05/04/16/3014274_4045984_1.jpg?size=s4"
-																alt="디올 어딕트 숄더백">
-														</div>
-													</div>
-												</div>
-												<div class="cont cont_main_col_1">
-													<div class="item_title title_main_col_1">디올 어딕트 숄더백</div>
-													<div class="item_price pri_main_col_1">1,599,000원</div>
-													<div class="item_hasdeliveryfee">무료배송</div>
-												</div>
-											</div></li>
-									</ul>
-								</div></li>
-							<li class="order_card "><div class="title_box">배송지</div>
-								<div class="parcel_wrapper">
-									<div class="label adress_label">배송지선택</div>
-									<div class="selectbox_order se_order_adress">
-										<label for="adressList">배송지를 선택해주세요.</label><select
-											disabled=""><option hidden="">배송지를 선택해주세요.</option>0
-										</select>
-									</div>
-									<div class="adress_btn_wrapper">
-										<button type="button">주소 초기화</button>
-									</div>
-								</div>
-								<ul class="order_member_info">
-									<li><dl>
-											<dt>이름</dt>
-											<dd class="order_member_name">
-												<input type="text" class="w_10" name="receiverName"
-													placeholder="이름 입력" value="">
-											</dd>
-										</dl></li>
-									<li><dl>
-											<dt>연락처</dt>
-											<dd class="order_member_phone">
-												<input type="number" class="w_10" placeholder="숫자만 입력"
-													value="">
-											</dd>
-										</dl></li>
-									<li><dl>
-											<dt>주소</dt>
-											<dd>
-												<div readonly="" name="senderHide" class="div_input_st">우편번호
-													입력</div>
-												<button class="addr_search">주소찾기</button>
-											</dd>
-										</dl></li>
-									<li><dl>
-											<dt></dt>
-											<dd>
-												<div readonly="" name="receiverAddr1" class="div_input_st">기본주소
-													입력</div>
-												<input type="text" name="receiverAddr2"
-													placeholder="상세주소 입력" class="w_10" value="">
-											</dd>
-										</dl></li>
-								</ul></li>
-							<li class="order_card last_order_card"><div
-									class="order_card_left">
-									<div class="title_box">쿠폰/포인트 할인</div>
-									<div>
-										<div class="wallet_wrapper wallet_items_wrapper">
-											<div class="box_coupon">
-												<div class="title order_sub_title">쿠폰</div>
-												<div class="box_coupon_right">
-													<div>
-														<div class="description">적용 0장 | 보유 3장</div>
-														<div class="coupon_btn">쿠폰선택</div>
-													</div>
-													<div class="price">
-														0<span>원</span>
-													</div>
-												</div>
-											</div>
-											<div class="certified_box hide">
-												<div class="title_txt">
-													<span>핸드폰 인증</span>
-												</div>
-												<div class="phone_number_box">
-													<input type="number" placeholder="숫자만 입력">
-													<button class="addr_search">인증요청</button>
-												</div>
-												<div class="auth_code_box">
-													<input type="number" placeholder="인증번호 입력">
-													<button class="addr_search">인증</button>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="title_box sub_title_box">
-										<span class="payment_method"> 결제수단</span>
-										<div class="etc_other_wrapper_form">
-											<span class="other_wrapper_description other_wrapper_box">택배나
-												등기 이외 방법으로 거래하시나요? <span>&gt;</span>
-											</span>
-										</div>
-									</div>
-									
-									<div><div><ul class="pay_method_list item_pay_method_list"><div class="other_wrapper_div"><ul><li><div class="wrapper_div other_wrapper_div_option checked"><div class="info"><label for="Kakaopay" class="radio_desc">카카오페이</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="EasyBank" class="radio_desc">간편 계좌이체</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="CreditCard" class="radio_desc">신용카드</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="Toss" class="radio_desc">토스결제</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="MobilePhone" class="radio_desc">휴대폰</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="VirtualBank" class="radio_desc">무통장(가상계좌)</label></div><div class="exp"></div></div></li></ul></div><div class="other_wrapper_consignment"><span>카카오페이 수수료 : 3.2%</span></div></ul></div><div class="certified_box hide"><div class="title_txt"><span>핸드폰 인증</span></div><div class="phone_number_box"><input type="number" placeholder="숫자만 입력"><button class="addr_search">인증요청</button></div><div class="auth_code_box"><input type="number" placeholder="인증번호 입력"><button class="addr_search">인증</button></div></div></div>
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									<div>
-										<div class="certified_box hide">
-											<div class="title_txt">
-												<span>핸드폰 인증</span>
-											</div>
-											<div class="phone_number_box">
-												<input type="number" placeholder="숫자만 입력">
-												<button class="addr_search">인증요청</button>
-											</div>
-											<div class="auth_code_box">
-												<input type="number" placeholder="인증번호 입력">
-												<button class="addr_search">인증</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="order_card_right">
-									<div class="title_box sub_last_title_box">최종결제금액</div>
-									<div class="final_order_wrapper">
-										<div class="final_order_price">
-											<dl
-												class="final_order_price_border_bottom final_order_price_padding">
-												<dt>상품가격</dt>
-												<dd>1,599,000원</dd>
-											</dl>
-											<dl>
-												<dt>쿠폰 사용</dt>
-												<dd>0원</dd>
-											</dl>
-											<dl class="final_order_price_margin">
-												<dt>배송비</dt>
-												<dd style="color: rgb(114, 120, 127); font-size: 13px;">무료배송</dd>
-											</dl>
-											<dl>
-												<dt>
-													결제수수료<span class="payment_method_credit">간편 계좌이체
-														1.9%적용</span>
-												</dt>
-												<dd>30,381원</dd>
-											</dl>
-											<dl
-												class="final_order_price_border_bottom final_order_price_padding">
-												<dt>안전거래수수료</dt>
-												<dd>1,000원</dd>
-											</dl>
-										</div>
-										<div class="order_total_price">
-											<div class="title">최종결제금액</div>
-											<div class="price" id="orderTotalPrice">1,630,381원</div>
-										</div>
-										<div class="policy_area">
-											<div class="info">
-												<label class="feature_option feature_option_checkbox">&nbsp;
-													<div class="feature_option_checkbox_indicator"></div>
-												</label>
-											</div>
-											<div class="description">
-												결제하기 클릭시 <span class="txt-bl-12 txt_un">결제시 유의사항</span> 및 <span
-													class="txt-bl-12 txt_un">반품환불정책</span>을 모두 이해하고 이에 동의함을
-												의미합니다.
-											</div>
-										</div>
-										<div class="success_btn_box">
-											<div class="success_btn btn_disabled">결제하기</div>
-										</div>
-									</div>
-								</div></li>
-							<form method="post" id="SETTLEBANK_PAYINFO"
-								target="orderServiceForm">
-								<input type="hidden" name="PMid"><input type="hidden"
-									name="PAmt"><input type="hidden" name="PGoods"><input
-									type="hidden" name="POid"><input type="hidden"
-									name="PMname"><input type="hidden" name="PEname"
-									value="HELLOMARKET"><input type="hidden" name="PUname"><input
-									type="hidden" name="PNoti" value=""><input
-									type="hidden" name="PNoteUrl"><input type="hidden"
-									name="PNextPUrl"><input type="hidden" name="PCancPUrl"><input
-									type="hidden" name="PUserid"><input type="hidden"
-									name="PVtransDt"><input type="hidden" name="PBnkCd"><input
-									type="hidden" name="PUiFlag" value="Y"><input
-									type="hidden" name="PAppScheme" value="hellomarket://"><input
-									type="hidden" name="PCardType" value="6"><input
-									type="hidden" name="PChainUserId">
-							</form>
-						</ul>
+        <span class="name">${member.member_name }</span>
+        <span class="eng_name">(${member.member_id })</span>
+	</div>
+		<input type="checkbox" class="hidden" checked>
+			<div class="fold_wrap">
+				<label class="fold_head sp_heading head_nppoint" for="c1">
+					<h3 class="fold_h">&#127808; 머니또페이</h3>
+				</label>
+				<div class="fold_content verification">
+					<ul class="form_area box_margin">
+					<li class="full_area label_margin button_margin">
+						<span class="label" >보유 포인트</span>
+						<span class="value number point_green align_right" id = "point1">${member.member_point }</span>
+<!-- 						<span class="unit">원</span> -->
+					</li>
+					<li class="full_area label_margin button_margin2">
+						<label for="point2" class="label">충전 포인트</label>
+						<input title="사용포인트" id="point2" name="charge_point" type="tel" class="value number _onlyPriceTarget _naverMileage _payForm _blur(checkout.mobile.nsp.paymentSheet.checkInputTextAmountValue()) _focus(checkout.mobile.nsp.paymentSheet.beforeInputPrice()) _stopDefault" placeholder="0">
+						<span class="text_won">원</span>
+					</li>
+					</ul>
+					<div class="amount_total">
+						<span class="label">최종 보유포인트</span>
+						<span class="value number">
+							<span class="_totalPayAmt">${member.member_point }</span>
+							<span class="unit">원</span>
+						</span>
 					</div>
 				</div>
 			</div>
+	<input type="checkbox" class="hidden" id="c2">
+	<div class="agree_section">
+		<div class="checkall">
+            <input type="checkbox" class="hidden _allAgreeBtn _click(checkout.mobile.nsp.paymentSheet.onToggleAllAgree()) _certificationForm" name="payAgreement">
+            <label for="agree_all" class="check_agree sp_checkbox large">전체 동의하기</label>
+		</div>
+		<div class="checklist">
+			<ul>
+			<li class="check_item">
+                <input type="checkbox" class="hidden _agreeBtn _click(checkout.mobile.nsp.paymentSheet.checkAllAgreed()) ">
+                <label for="agree_c1" class="check_agree sp_checkbox large">등록된 계좌로 출금을 동의</label>
+			</li>
+			<li class="check_item">
+                <input type="checkbox" class="hidden _agreeBtn _click(checkout.mobile.nsp.paymentSheet.checkAllAgreed()) ">
+                <label for="agree_c1" class="check_agree sp_checkbox large">위 구매조건 확인 및 결제진행 동의</label>
+			</li>
+			</ul>
 		</div>
 	</div>
-	<jsp:include page="../footer.jsp" />
+	<div class="button_section">
+		<div class="button_area">
+			<div class="button_bottom">
+			<a href="#" class="button _click(checkout.mobile.nsp.paymentSheet.create()) _stopDefault _doPayButton"><span class="sp_button_icon icon_check">결제하기</span></a></div>
+		</div>
+	</div>
+</div>
+</form>
+
+<div class="_tempLayer"></div>
+<div class="ly_bx" id="pointAlert" style="top:200px;display:none;">
+    <div class="error_cont sp_ordersheet icon_error_big">
+        <dl class="error_tx">
+            <dt>잠시 후 다시 시도해 주세요.</dt>
+            <dd>
+                머니또페이 <em class="point_txt">포인트 정보 확인이 불가</em>하여<br>일시적으로 결제가 불가합니다.
+            </dd>
+        </dl>
+    </div>
+    <div class="cls_btn cls_btn_v2">
+        <a href="#">확인</a>
+    </div>
+</div>
+<div class="footer">
+    <span class="corp">© MONNYTTO FINANCIAL Corp.</span>
+</div>
+</div>
+<div class="_repurchase">&nbsp;</div>
+<div class="_repurchaseDtl">
+</div>
 </body>
 </html>

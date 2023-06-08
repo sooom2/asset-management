@@ -20,7 +20,6 @@
 
 <script type="text/javascript">
 
-
 let target;
 let room_code;
 let item_code;
@@ -33,14 +32,75 @@ let item_code;
 
 
 function payment() {
-  window.open("payment", "_blank", "width=500,height=660,top=300,left=300");
+  window.open("market_payment", "_blank", "width=500,height=660,top=300,left=300");
 }
 
 
 
 $(function() {
 	
+		// 판매상태 버튼 처리 >> db에 상태 업데이트
+	    $(".trade_status input").on("click", function() {
+	        let item_status = $(this).val();
+	        
+	        if ($('input.sch_box').val() === "" && item_status === "거래중") {
+	            swal({	
+	        		icon: "warning",
+	        		text: "일정을 먼저 잡아주세요"
+	            });
 	
+	            return;
+	        }
+	        
+	        
+	        
+	        
+	        let result = swal({
+	        	icon: "info",
+	            buttons: {
+	                confirm: {
+	                    text: "네",
+	                    value: true,
+	                    visible: true,
+	                    className: "",
+	                    closeModal: true,
+	                },
+	                cancel: {
+	                    text: "취소",
+	                    value: false,
+	                    visible: true,
+	                    className: "",
+	                    closeModal: true,
+	                }
+	            },
+	            text:item_status + "(으)로 상태를 변경하시겠습니까"
+	        });
+	        
+	        result.then((confirmed) => {
+	            if (confirmed) {
+	            	 $.ajax({
+	 	                type: "GET",
+	 	                url: "itemStatus_update",
+	 	                dataType: "text",
+	 	                data: {
+	 	                    item_status: item_status,
+	 	                    room_code: room_code
+	 	                },
+	 	                success: function(result) {
+	 	                    location.reload();
+	 	                }
+	 	            });
+	            	
+	            }
+	        });
+	        
+	    });//$(".trade_status input").on("click", function() 				
+
+
+	    if ($("input.active").val() == "판매중") {
+	        $(".sch_box").val("");
+	
+	    }
 
 	
 	   //리뷰작성
@@ -293,15 +353,17 @@ $(function() {
 	                   room_code: room_code
 	               },
 	               success: function(result) {
+	            	   
+	            	   
 	                   //조회한 채팅방 내용에서의 room_code는 동일함 그래서 젤첨값인 resul[0]으로 조회
 	                   //                     room_code = result[0].room_code;
 
 	                   // 채팅 생성 날짜 (처음에 날짜 지정 포맷으로 변경)
 	                   
 	            	  
-	       			if ( $('input.active').val() != '거래완료') && new Date($("input.sch_box").val() < new Date()){
-	       			    alert(room_code + "번방의 거래가 일정이 지났습니다");
-	       			}
+// 	       			if ( $('input.active').val() != '거래완료') && new Date($("input.sch_box").val() < new Date()){
+// 	       			    alert(room_code + "번방의 거래가 일정이 지났습니다");
+// 	       			}
 	                   
 	                   
 	                   
@@ -393,9 +455,6 @@ $(function() {
 	                    }
 
 
-	                   //                     if (sId == result.chatDetail[0].buy_member_id) {
-	                   //                         opponent_nickname = result.chatDetail[0].sell_nickname;
-	                   //                     }
 	                    $(".chat_header a .info div").empty();
 	                    // 헤더에 파는사람아이디
 	                    $(".chat_header a .info div").append("<span>[" + sell_nickname + "]<br><i class='fa-regular fa-comment-dots fa-flip-horizontal'></i> " + item_subject + "</span>");
@@ -443,7 +502,7 @@ $(function() {
 	                                "<div class='chat_opponent_timeago'>" + formatChatTime + "</div></div></div></div>";
 	                            $(".chat_timeago").append(str);
 	                        }
-
+	                        $('.chat_description').scrollTop($('.chat_description')[0].scrollHeight + 1000);
 	                        succ(result);
 
 
@@ -624,57 +683,7 @@ $(function() {
 			
 		
 
-	    // 판매상태 버튼 처리 >> db에 상태 업데이트
-	    $(".trade_status input").on("click", function() {
-
-	        let item_status = $(this).val();
-	        let result = swal({
-            	icon: "info",
-                buttons: {
-                    confirm: {
-                        text: "네",
-                        value: true,
-                        visible: true,
-                        className: "",
-                        closeModal: true,
-                    },
-                    cancel: {
-                        text: "취소",
-                        value: false,
-                        visible: true,
-                        className: "",
-                        closeModal: true,
-                    }
-                },
-                text:item_status + "(으)로 상태를 변경하시겠습니까"
-            });
-	        
-	        
-	        result.then((confirmed) => {
-                if (confirmed) {
-                	 $.ajax({
-     	                type: "GET",
-     	                url: "itemStatus_update",
-     	                dataType: "text",
-     	                data: {
-     	                    item_status: item_status,
-     	                    room_code: room_code
-     	                },
-     	                success: function(result) {
-     	                    location.reload();
-     	                }
-     	            });
-                	
-                }
-            });
-	        
-	    });
-
-
-	    if ($("input.active").val() == "판매중") {
-	        $(".sch_box").val("");
-
-	    }
+	    
 
 
 });
@@ -1070,7 +1079,8 @@ $(function() {
                                        <div class="chat_myself_box">
                                            <div class="chat_myself_message">
                                                <span>${chatDetail.chat_content }</span>
-                                               <div class="chat_myself_timeago">${chatAreaTime }</div>
+												<fmt:parseDate var="formattedDate" value="${chatDetail.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+												<div class="chat_myself_timeago"><fmt:formatDate value="${formattedDate}" pattern="a hh:mm" /></div>
                                            </div>
                                        </div>
                                    </div>
@@ -1084,7 +1094,8 @@ $(function() {
                                            <div class="chat_opponent_title">${opponentId.opponent_nickname }</div>
                                            <div class="chat_opponent_message">
                                                <span>${chatDetail.chat_content }</span>
-                                               <div class="chat_opponent_timeago">${chatAreaTime }</div>
+												<fmt:parseDate var="formattedDate" value="${chatDetail.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+												<div class="chat_opponent_timeago"><fmt:formatDate value="${formattedDate}" pattern="a hh:mm" /></div>
                                            </div>
                                        </div>
                                    </div>

@@ -416,17 +416,17 @@ public class MarketController {
 	         sellId = item.get("member_id");
 	         
 	         
-	         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-	         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm");
-	         DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("a hh:mm");
-	         String chatTime = String.valueOf(chatList.get("chat_time"));
-	         LocalDateTime parsedDateTime = LocalDateTime.parse(chatTime, inputFormatter);
-	         String formattedDateTime = parsedDateTime.format(outputFormatter);
-	         String chatAreaTime = parsedDateTime.format(outputFormatter2);
-	         
-	         
-	         model.addAttribute("chatAreaTime",chatAreaTime);
-	         model.addAttribute("chatTime",formattedDateTime);
+//	         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+//	         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm");
+//	         DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("a hh:mm");
+//	         String chatTime = String.valueOf(chatList.get("chat_time"));
+//	         LocalDateTime parsedDateTime = LocalDateTime.parse(chatTime, inputFormatter);
+//	         String formattedDateTime = parsedDateTime.format(outputFormatter);
+//	         String chatAreaTime = parsedDateTime.format(outputFormatter2);
+//	         
+//	         
+//	         model.addAttribute("chatAreaTime",chatAreaTime);
+//	         model.addAttribute("chatTime",formattedDateTime);
 
 	      }
 	      if(chatList !=null) {
@@ -454,6 +454,42 @@ public class MarketController {
 	      return "market/market_chat";
 
 	   }// market_chat
+	   
+	// TEST CONTROLLER
+		@RequestMapping(value = "market_payment", method = {RequestMethod.GET, RequestMethod.POST})
+		public String store_pay2(HttpSession session
+								, Model model
+								, @RequestParam(value = "item_code", defaultValue = "market0029") String item_code) {
+								// 테스트용으로 임의로 default 값 넣어둔 상태
+			
+			
+			HashMap<String, String> item = service.getMarketItem(item_code);
+			String id = (String)session.getAttribute("sId");
+			if(id == null) {
+				id = "admin";
+			}
+			HashMap<String, String> member = memberService.getMember(id);
+			
+//					model.addAttribute("item_price", item_price);
+			
+			
+			System.out.println("======================================================");
+			System.out.println("item : " + item.toString());
+			System.out.println("member : " + member.toString());
+			System.out.println("======================================================");
+			
+//					if(id == null) {
+//						model.addAttribute("msg", "로그인 후 이용가능합니다.");
+//						model.addAttribute("target", "memLogin");
+//						return "success";
+//					} else {
+//						return "store/store_pay";
+//					}
+			model.addAttribute("member", member);
+			model.addAttribute("item", item);
+			return "market/market_payment";
+		}
+	   
 	   
 	   @GetMapping("getTradeDate")
 	   @ResponseBody

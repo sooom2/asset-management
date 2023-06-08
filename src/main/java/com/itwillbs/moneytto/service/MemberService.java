@@ -205,4 +205,10 @@ public class MemberService {
 	public String selectImage(String name) {
 		return mapper.selectImage(name);
 	}
+
+// 관리자===============================================================
+	// 회원목록
+	public List<HashMap<String, String>> selectAdminMember(HashMap<String, String> map) {
+		return mapper.selectAdminMember(map);
+	}
 }

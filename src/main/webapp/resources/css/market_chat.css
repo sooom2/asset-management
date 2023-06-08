@@ -266,6 +266,10 @@
     font-weight: 700;
     display: block;
     line-height: 27px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 500px;
 }
 
 .right_main .chat_header .info span:nth-child(2) {
