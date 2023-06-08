@@ -275,4 +275,13 @@
 						END);
 	</select>
 	
+	<select id="selectImage" resultType="string">
+		SELECT 
+			member_image
+		FROM 
+			member
+		WHERE member_nickname = #{name}
+		
+	</select>
+	
 </mapper>

@@ -199,7 +199,10 @@ public class MemberService {
 	
 	public HashMap<String, String> getMemberGrade(String id) {
 		
-		
 		return mapper.selectMemberGradeById(id);
+	}
+
+	public String selectImage(String name) {
+		return mapper.selectImage(name);
 	}
 }
