@@ -85,7 +85,14 @@
 				// 경매 남은시간 분, 초 
 				let diffMinutes = 30 - parseInt(((current_time - start_time) / (1000 * 60)));
 				let diffSeconds = 60 - (((current_time - start_time) % (1000 * 60)) / 1000);
-				let diffSecondsResult = diffSeconds < 10 ? "0" + (diffSeconds - 1) : diffSeconds - 1; 
+				let diffSecondsResult;
+				if (diffSeconds < 10) {
+					diffSecondsResult = "0" + diffSeconds;
+				} else if(diffSeconds == 60) {
+					diffSecondsResult = "00";
+				} else {
+					diffSecondsResult = diffSeconds;
+				}
 				let resultClock = (diffMinutes - 1) + ":" + diffSecondsResult;
 				
 				
@@ -131,8 +138,8 @@
 		function chatSend() {
 			const data = {
 					"auctionCode" :  "${auction.get('auction_code') }",
-	                "name" : "${ sessionScope.sId }",
-	                "message"   : $('#message').val()
+	                "name" : "${member.get('member_nickname') }",
+	                "message" : $('#message').val(),
 	            };
 	        let jsonData = JSON.stringify(data);
 			socket.send(jsonData);
@@ -188,7 +195,7 @@
 			console.log('Info: connection opened');
 			const data = {
 					"auctionCode" :  "${auction.get('auction_code') }",
-	                "name" : "${ sessionScope.sId }",
+	                "name" : "${member.get('member_nickname') }",
 	                "message"   : "ENTER"
 	            };
 			
@@ -203,28 +210,30 @@
 			var sessionId = null; //데이터를 보낸 사람
 			var message = null;
 			
-			var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
+			var cur_session = "${member.get('member_nickname')}"; //현재 세션에 로그인 한 사람
 			
-			sessionId = data.split(":")[0];
-			message = data.split(":")[1];
+			sessionNickname = data.split("|")[0];
+			message = data.split("|")[1];
+			image = data.split("|")[2];
+			chatTime = data.split("|")[3];
 			
 		    // 로그인 한 클라이언트와 타 클라이언트를 분류
-			if(sessionId == cur_session) {
+			if(sessionNickname == cur_session) {
 				var str = "<div class='chat_myself'>";
 				str += "<div class='chat_myself_box'>";
 				str += "<div class='chat_myself_message'>";
 				str += "<span>" + message + "</span>";
-				str += "<div class='chat_myself_timeago'>" + amPm + " " + hours + ":" + minutes + "</div></div></div></div>";
+				str += "<div class='chat_myself_timeago'>" + chatTime + "</div></div></div></div>";
 				
 				$(".chatBox").append(str);
 			} else {
 				var str = "<div class='OpponentChat__Wrapper-qv8pn4-0 cFvuGS'>";
-				str += "<img src='https://ccimage.hellomarket.com/img/web/common/empty_profile.svg' alt='상대방 프로필 이미지' class='OpponentChat__ProfileImage-qv8pn4-2 eLwuXd'>";
-				str += "<div class='OpponentChat__Nick-qv8pn4-3 hYaaYd'>" + sessionId + "</div>";
+				str += "<img src='" + image + "'alt='상대방 프로필 이미지' class='OpponentChat__ProfileImage-qv8pn4-2 eLwuXd'>";
+				str += "<div class='OpponentChat__Nick-qv8pn4-3 hYaaYd'>" + sessionNickname + "</div>";
 				str += "<div class='OpponentChat__MyChatList-qv8pn4-1 lecfCu'>";
 				str += "<div class='OpponentChat__TextBox-qv8pn4-5 giIZqy'>";
 				str += "<span class='OpponentChat__Text-qv8pn4-6 ZPeEt'>" + message + "</span>";
-				str += "<div class='OpponentChat__TimeAgo-qv8pn4-7 jXWPOW'>" + amPm + " " + hours + ":" + minutes + "</div></div></div></div>";
+				str += "<div class='OpponentChat__TimeAgo-qv8pn4-7 jXWPOW'>" + chatTime + "</div></div></div></div>";
 				
 				$(".chatBox").append(str);
 			};
@@ -244,6 +253,7 @@
 		$('#auction_input_before *').prop('disabled', true);
 		$('.chat_footer *').prop('disabled', true);
 		
+		let success_nickname = $("#auctionLog_nickname").html();
 		
 		$.ajax({
             type: "GET",
@@ -251,7 +261,7 @@
             dataType: "text",
             data: {
                 auction_code: "${auction.auction_code }",
-                success_id: $("#auctionLog_nickname").html(),
+                success_id: success_nickname.substring(0, success_nickname.length -1),
                 success_price: $("#lastLogPrice").html().toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","),
                 deposit: ${deposit}
             },
@@ -280,12 +290,15 @@
         			    },
         			  }).then((result) => {
         			    if (result) {
-        			    	location.href = "auctionPay?auction_code=${auction.get('auction_code') }&successPrice=" + $("#lastLogPrice").html();
+        			    	
+        			    	location.href = "auctionPay?auction_code=${auction.get('auction_code') }&successPrice=" 
+        			    					+ $("#lastLogPrice").html() + "&deposit=${deposit}";
         			    } else {
         			    	location.href = "auctionMain";
         			    }
         		  	});
         		} else { // 닉네임과 세션 다를 때 -> 유찰
+        			
         			swal({
         			    title: "경매가 종료 되었습니다.",
         			    text: "유찰되었습니다. \n낙찰자: " + $("#auctionLog_nickname").html(),
@@ -453,12 +466,12 @@
 							<a href="mypage" target="_blank" rel="noopener noreferrer">
 								<div class="image_box">
 									<div class="image_table">
-										<img src="https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png" alt="명품인증님의 프로필 이미지">
+										<img src="${member.get('member_image') }" alt="">
 									</div>
 								</div>
 								<div class="info">
 									<div id="sessionCount">
-										<span>${sessionScope.sId }</span>
+										<span>${member.get('member_nickname') }</span>
 										<span id="sessionCount2">0/100명</span>
 									</div>
 								</div>
@@ -480,7 +493,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div><br>
 						<div class="chat_footer">
 							<div class="chat_footer_area">
 								<input type="text" id="message" contenteditable="true" placeholder="메세지를 입력해주세요.">
@@ -634,14 +647,16 @@ function connect2() {
 		var sessionId = null; //데이터를 보낸 사람
 		var sessionName = null; 
 		var message = null;
+		var logTime = null;
 // 		var enrollCode = ${enrollCode};
 		var auctionCode = "${auction.auction_code }";
 		
 		var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
 		console.log("메세지 수신" + data);
-		sessionId = data.split(":")[0];
-		sessionName = data.split(":")[1];
-		message = data.split(":")[2];
+		sessionId = data.split("|")[0];
+		sessionName = data.split("|")[1];
+		message = data.split("|")[2];
+		logTime = data.split("|")[3];
 	
 		
 		// 낙찰 최대금액
@@ -659,7 +674,7 @@ function connect2() {
 		$("#auctionLog_nickname").html(sessionName + "님");
 		
 		// 경매 로그
-		var auctionLog = "<div class='chat_myself'>" + "<" + hours + ":" + minutes + "> " + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + "</div>";
+		var auctionLog = "<div class='chat_myself'>" + "<" + logTime + "> " + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + "</div>";
 		$(".logBox").append(auctionLog);
 		$('.auction_log').scrollTop($('.auction_log')[0].scrollHeight + 100);
 		

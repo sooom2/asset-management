@@ -191,5 +191,18 @@ public class MemberService {
 	public int updatePoint(String id, String point) {
 		return mapper.updatePoint(id, point);
 	}
+	// 회원등급조회
+	public HashMap<String, String> getMemberGrade(HashMap<String, String> member) {
+		
+		return mapper.selectMemberGradeByMember(member);
+	}
+	
+	public HashMap<String, String> getMemberGrade(String id) {
+		
+		return mapper.selectMemberGradeById(id);
+	}
 
+	public String selectImage(String name) {
+		return mapper.selectImage(name);
+	}
 }

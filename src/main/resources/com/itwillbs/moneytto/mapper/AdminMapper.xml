@@ -15,6 +15,7 @@
 				   , DATE_FORMAT(#{auction_start_date}, '%Y.%m.%d %H:%i')
 				   , DATE_FORMAT(#{auction_end_date}, '%Y.%m.%d %H:%i')
 				   , 'N'
+				   , 'N'
 				   , #{auction_notice}
 				   , #{auction_category}
 			)

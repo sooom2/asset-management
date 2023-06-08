@@ -163,9 +163,6 @@
 			var category = $("#item_category").val();
 			var str = '';
 			
-			console.log("기존 카테고리 아이디 값 :  " + $("#item_category").val());		
-			console.log("새로 받은 categoryId : " + categoryId);
-			
 			switch(categoryId) {
 				case "fashion": str += "패션/의류/잡화/뷰티"; break;
 				case "pc": str += "가전제품/모바일/PC"; break;
@@ -177,16 +174,29 @@
 				case "all": 
 			}
 			
-			console.log("switch에서 나온 str : " + str);
+			// 중복 카테고리 처리
+			if(str != "" && category.includes(str)) return;
 			
-			console.log("str이 기존 값에 포함되어있음? : " + categoryId.includes(str));
-			if(categoryId.includes(str)) {
-
+			
+			// 카테고리 필터에 추가
+			if(str != "") {
+				var title = str;
+				var tagStr = '';
+				tagStr += '<div class="tagListTag">';
+				tagStr += '<div class="tagListName" data-cd="1">';
+				tagStr += title;
+				tagStr += '</div>';
+				tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div>';
+				$(".tagListFilterBox").append(tagStr);
 			}
+			
+
+			
 			
 			// all이면 null 넘김
 			if(categoryId == "all") {
 				$("#item_category").val("");
+				$(".tagListName[data-cd='1']").parent().remove();
 			} else {
 				if(category != ""){
 					category += "/";
@@ -195,6 +205,32 @@
 				$("#item_category").val(category);
 			}
 			marketItemList();
+		}
+		
+		
+		// 태그 처리
+		function tag(input) {
+			var tagValue = $("#tag").val();
+
+			if(tagValue.includes(input)) return;
+			
+			if(tagValue != ""){
+				tagValue += "|";
+			}
+			
+			tagValue += input;
+			$("#tag").val(tagValue);
+
+
+			// 태그 필터에 추가
+			var tagStr = '';
+			tagStr += '<div class="tagSearch">';
+			tagStr += '<div class="tagListTag">';
+			tagStr += '<div class="tagListName" data-cd="3">';
+			tagStr += input;
+			tagStr += '</div>';
+			tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div></div>';
+			$(".tagListFilterBox").append(tagStr);
 		}
 		
 		
@@ -295,17 +331,24 @@
 		}
 		
 		
-		// 카테고리 첫 문자나 마지막 문자가 "/" 이면 제거, 태그 첫 문자나 마지막 문자가 "|" 이면 제거
+		// 중복 구분자 제거
 		function removeChar(str, character){
-		  if(str[0] == character){
-		    str = str.substring(1);
-		  }
+			var doubleChar = character + character;
+			
+			if(str[0] == character){
+				str = str.substring(1);
+			}
 
-		  if(str[str.length - 1] == character){
-		    str = str.slice(0, -1);
-		  }
+			if(str[str.length - 1] == character){
+				str = str.slice(0, -1);
+			}
+ 
+			if(str.includes(doubleChar)) {
+				console.log("중복 구분자 제거");
+				str = str.replace(doubleChar, character);
+			}
 
-		  return str;
+			return str;
 		}
 		
 		
@@ -323,7 +366,7 @@
 			var sort = $("#sort").val();
 			
 			
-			// 카테고리 첫 문자나 마지막 문자가 "/" 이면 제거, 태그 첫 문자나 마지막 문자가 "|" 이면 제거
+			// 중복 구분자 제거
 			item_category = removeChar(item_category, "/");
 			item_tag = removeChar(item_tag, "|");
 			$("#item_category").val(item_category);
@@ -369,23 +412,7 @@
 		}
 		
 		
-// 		$(document).ready(function() {
-// 		    var navSearch = $("#navSearch").val();
-// 		    if (navSearch !== undefined && navSearch !== "") {
-// 		       console.log(navSearch);
-// 		    }
-// 		});
-		
-		
 		$(function () {
-			$(document).ready(function() {
-			    var navSearch = $("#navSearch").val();
-			    if (navSearch !== undefined && navSearch !== "") {
-			       console.log("navSearch : " + navSearch);
-			    }
-			});
-			
-			
 			marketItemList();
 			
 			// 더보기
@@ -417,16 +444,6 @@
 				
 				var categoryId = $(this).attr("id");
 				category(categoryId);
-				
-				// 카테고리 필터에 추가
-				var title = $(this).attr("title");
-				var tagStr = '';
-				tagStr += '<div class="tagListTag">';
-				tagStr += '<div class="tagListName" data-cd="1">';
-				tagStr += title;
-				tagStr += '</div>';
-				tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div>';
-				$(".tagListFilterBox").append(tagStr);
 				
 				
 			});
@@ -486,28 +503,19 @@
 				var item_price_min = $(".item_price_min").val();
 				var item_price_max = $(".item_price_max").val();
 				
-// 				console.log("item_price_min : " + item_price_min);
-// 				console.log("item_price_max : " + item_price_max);
-				
-				if(item_price_min == "" && item_price_max == "") {
-					return;
-				}
+				if(item_price_min == "" && item_price_max == "") return;
 				
 				if(item_price_min == "") {
-// 					item_price_min = 0;
 					$("#item_price_min").val(0);
 				} else {
 					$("#item_price_min").val(item_price_min);
 				}
+				
 				if(item_price_max == "") {
-// 					item_price_max = 999999999999999;
 					$("#item_price_max").val(999999999999999);
 				} else {
 					$("#item_price_max").val(item_price_max);
 				}
-				
-				
-				
 				
 				
 				// 가격 필터에 추가
@@ -537,9 +545,6 @@
 				
 				
 				$(".tagListFilterBox").append(tagStr);
-				
-				
-				
 				
 				marketItemList();
 			});
@@ -603,32 +608,17 @@
 			
 			
 			
-			// 검색
+			// 태그 검색
 			$(document).on("submit", "#searchForm", function(e) {
 				event.preventDefault(); // 폼 제출 기본 동작 막기
 				var input = $("#searchTag").val();
-				var tag = $("#tag").val();
-				
-				if(tag != ""){
-					tag += "|";
-				}
-				tag += input;
-				
-				$("#tag").val(tag);
-				console.log($("#tag").val());
+				var tagValue = $("#tag").val();
+				console.log("tagValue : " + tagValue);
+				console.log("input : " + input);
+
+				tag(input);
 				
 				marketItemList();
-				
-				// 태그 필터에 추가
-				var tagStr = '';
-				tagStr += '<div class="tagSearch">';
-				tagStr += '<div class="tagListTag">';
-				tagStr += '<div class="tagListName" data-cd="3">';
-				tagStr += input;
-				tagStr += '</div>';
-				tagStr += '<img src="https://ccimage.hellomarket.com/img/web/search/filter/mweb/ico_close_tag.png" alt="remove" class="tagListRemove"></div></div>';
-				$(".tagListFilterBox").append(tagStr);
-				
 				return false;
 			});
 			

@@ -101,8 +101,8 @@
 }
 
 .PreviewImgListItemImg {
-    width: 90px;
-    height: 90px;
+    width: 86px;
+    height: 86px;
     margin-right: 4px;
     object-fit: cover;
     opacity: 100%;
@@ -576,11 +576,11 @@
   }
 
 
- .DescriptionWrapper {
-     margin: 0 42px 58px 0;
-     padding-top: 32px;
-     border-top: 1px solid #e5e8eb;
-     line-height: 160%;
+.DescriptionWrapper {
+    margin: 40px 42px 58px 0;
+    padding-top: 32px;
+    border-top: 1px solid #e5e8eb;
+    line-height: 160%;
 }
 /* sc-component-id: Description__Text-l27tpk-1 */
  .DescriptionText {

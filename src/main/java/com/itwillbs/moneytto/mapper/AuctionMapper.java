@@ -33,5 +33,11 @@ public interface AuctionMapper {
 	HashMap<String, String> selectMyLog(@Param("id") String id, @Param("auction_code") String auction_code);
 
 	int updateAuctionFinish(@Param("auction_code") String auction_code,@Param("success_id") String success_id, @Param("success_price") String success_price);
+	// 내가 입찰한 경매 목록 06.08 14:41 추가 mypage에서 사용함
+	// ==========================================================
+	List<HashMap<String, String>> selectMyAuctionByNickname(String id);
+	
+	List<HashMap<String, String>> selectMyAuctionByMember(HashMap<String, String> member);
+	// ==========================================================
 
 }

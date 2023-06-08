@@ -1239,3 +1239,20 @@
    line-height: 118px;
    font-size: 22px;
 }
+.swal-text {
+/*   background-color: #FEFAE3; */
+  padding: 17px;
+/*   border: 1px solid #F0E1A1; */
+  display: block;
+  margin: 22px;
+  text-align: center;
+  color: #61534e;
+}
+
+
+.swal-footer {
+  background-color: rgb(245, 248, 250);
+  margin-top: 32px;
+  border-top: 1px solid #E9EEF1;
+  overflow: hidden;
+}

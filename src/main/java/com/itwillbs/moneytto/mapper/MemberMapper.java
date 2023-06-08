@@ -47,6 +47,13 @@ public interface MemberMapper {
 
 	int updatePoint(@Param("id")String id, @Param("point") String point);
 
+	HashMap<String, String> selectMemberGradeByMember(HashMap<String, String> member);
+
+	HashMap<String, String> selectMemberGradeById(String id);
+
+	String selectImage(String name);
+
+
 	
 	
 }

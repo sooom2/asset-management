@@ -35,7 +35,7 @@ public class MainController {
 		model.addAttribute("itemList", itemList);
 		
 		System.out.println("==================================");
-		System.out.println("itemList : " + itemList);
+		System.out.println("메인 아이템 : ");
 		System.out.println("==================================");
 		
 		return "main";

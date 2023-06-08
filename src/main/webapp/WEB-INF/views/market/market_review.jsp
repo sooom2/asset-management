@@ -151,7 +151,10 @@ h2{
 				history.back();	
 				
 			}
-		})
+// 			window.close();
+		});
+		
+		
 		
 	});
 </script>

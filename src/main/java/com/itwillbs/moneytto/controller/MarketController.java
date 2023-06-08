@@ -48,6 +48,20 @@ public class MarketController {
 	
 	
 	@GetMapping(value = "market_list")
+	public String marketList(Model model,HttpSession session) {
+		
+		//session아이디로 닉네임 얻기
+		String id = (String)session.getAttribute("sId");
+		if (id != null) {
+		    HashMap<String, String> member = memberService.getMember(id);
+		    String nickname = member.get("member_nickname");
+		    model.addAttribute("nickname",nickname);
+		}
+		
+		return "market/market_list";
+	}
+	
+	@GetMapping(value = "nav_market_list")
 	public String marketList(Model model,HttpSession session, String navSearch) {
 		
 		//session아이디로 닉네임 얻기
@@ -58,15 +72,30 @@ public class MarketController {
 		    model.addAttribute("nickname",nickname);
 		}
 		
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!navSearch : " + navSearch);
-		model.addAttribute("navSearch", navSearch);
+		System.out.println("navSearch!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + navSearch);
 		
-		
-		// 마켓 메인 아이템 리스트
-//		List<HashMap<String, String>> marketItemList = marketService.getMarketItemList();
-//		model.addAttribute("marketItemList", marketItemList);
-		return "market/market_list";
+		return "market/nav_market_list";
 	}
+	
+	
+	@ResponseBody
+	@GetMapping(value = "navMarketItemList")
+	public String selectListNav(Model model, 
+			@RequestParam(defaultValue = "") String navSearch, 
+			@RequestParam(defaultValue = "default") String sort, 
+			HttpSession session) {
+		
+		String id = (String)session.getAttribute("sId");
+		
+		
+		List<HashMap<String, String>> navMarketItemList = service.getNavMarketItemList(navSearch, sort, id);
+		model.addAttribute("navMarketItemList", navMarketItemList);
+		JSONArray ja = new JSONArray(navMarketItemList);
+			
+		
+		return ja.toString();
+	}
+	
 	
 	@ResponseBody
 	@GetMapping(value = "marketItemList")
@@ -118,7 +147,8 @@ public class MarketController {
 		List<HashMap<String, String>> itemImage = service.getItemImage(item_code);
 		model.addAttribute("itemImage", itemImage);
 		
-		
+		List<HashMap<String, String>> itemWish = memberService.getWishItem(id, item_code);
+		model.addAttribute("itemWish", itemWish);
 		
 
 		return "market/market_detail";
@@ -408,6 +438,7 @@ public class MarketController {
 	      HashMap<String, String> sellDetail = marketChatService.getSellDetail(room_code);
 	      System.out.println(room_code);
 	      HashMap<String, String> trade_date = marketChatService.getTradeDate(room_code);
+
 	      model.addAttribute("trade_date",trade_date);
 	      model.addAttribute("sellDetail",sellDetail);
 	      model.addAttribute("item_subject",item_subject);
@@ -423,6 +454,16 @@ public class MarketController {
 	      return "market/market_chat";
 
 	   }// market_chat
+	   
+	   @GetMapping("getTradeDate")
+	   @ResponseBody
+	   public String getTradeDate(int room_code) {
+		   HashMap<String, String> tradeDate = marketChatService.getTradeDate(room_code);
+	   
+		   JSONObject arrTradeDate = new JSONObject(tradeDate);
+		   
+		   return arrTradeDate.toString();
+	   }
 	   
 	   @GetMapping("getTarget")
 	   @ResponseBody
@@ -529,7 +570,7 @@ public class MarketController {
 			break;
 		}
 		
-		//TODO 도착 위치 지정 필요
+		//TODO 도착 위치 지정 필요 해죠 성공하면 창꺼지게해죠 06.08
 		return"fail_back";
 		
 	}

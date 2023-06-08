@@ -84,14 +84,16 @@ public class MarketService {
 		return mapper.deleteItem(item);
 	}
 
+	public List<HashMap<String, String>> getNavMarketItemList(String navSearch, String sort, String id) {
+		return mapper.navMarketItemList(navSearch, sort, id);
+	}
 
-
+	
 // 관리자에서 사용하기 위한======================================================================================
 	// 관리자 아이템 목록
 	public List<HashMap<String, String>> selectadminItem(HashMap<String, String> map) {
 		return mapper.selectadminItem(map);
 	}
-
 
 
 		
