@@ -71,6 +71,9 @@ public class MypageController {
 	    
 	    HashMap<String,String> member = memberService.getMember(member_id);
 	    
+	    
+	    System.out.println(memberService.getMemberGrade(member));
+	    
 	    model.addAttribute("member", member);
 	    
 	    model.addAttribute("itemList", itemList);
