@@ -416,17 +416,17 @@ public class MarketController {
 	         sellId = item.get("member_id");
 	         
 	         
-	         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-	         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm");
-	         DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("a hh:mm");
-	         String chatTime = String.valueOf(chatList.get("chat_time"));
-	         LocalDateTime parsedDateTime = LocalDateTime.parse(chatTime, inputFormatter);
-	         String formattedDateTime = parsedDateTime.format(outputFormatter);
-	         String chatAreaTime = parsedDateTime.format(outputFormatter2);
-	         
-	         
-	         model.addAttribute("chatAreaTime",chatAreaTime);
-	         model.addAttribute("chatTime",formattedDateTime);
+//	         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+//	         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm");
+//	         DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("a hh:mm");
+//	         String chatTime = String.valueOf(chatList.get("chat_time"));
+//	         LocalDateTime parsedDateTime = LocalDateTime.parse(chatTime, inputFormatter);
+//	         String formattedDateTime = parsedDateTime.format(outputFormatter);
+//	         String chatAreaTime = parsedDateTime.format(outputFormatter2);
+//	         
+//	         
+//	         model.addAttribute("chatAreaTime",chatAreaTime);
+//	         model.addAttribute("chatTime",formattedDateTime);
 
 	      }
 	      if(chatList !=null) {

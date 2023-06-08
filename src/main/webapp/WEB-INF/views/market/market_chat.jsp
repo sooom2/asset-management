@@ -20,7 +20,6 @@
 
 <script type="text/javascript">
 
-
 let target;
 let room_code;
 let item_code;
@@ -1080,7 +1079,8 @@ $(function() {
                                        <div class="chat_myself_box">
                                            <div class="chat_myself_message">
                                                <span>${chatDetail.chat_content }</span>
-                                               <div class="chat_myself_timeago">${chatAreaTime }</div>
+												<fmt:parseDate var="formattedDate" value="${chatDetail.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+												<div class="chat_myself_timeago"><fmt:formatDate value="${formattedDate}" pattern="a hh:mm" /></div>
                                            </div>
                                        </div>
                                    </div>
@@ -1094,7 +1094,8 @@ $(function() {
                                            <div class="chat_opponent_title">${opponentId.opponent_nickname }</div>
                                            <div class="chat_opponent_message">
                                                <span>${chatDetail.chat_content }</span>
-                                               <div class="chat_opponent_timeago">${chatAreaTime }</div>
+												<fmt:parseDate var="formattedDate" value="${chatDetail.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+												<div class="chat_opponent_timeago"><fmt:formatDate value="${formattedDate}" pattern="a hh:mm" /></div>
                                            </div>
                                        </div>
                                    </div>
