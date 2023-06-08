@@ -33,7 +33,7 @@ let item_code;
 
 
 function payment() {
-  window.open("payment", "_blank", "width=500,height=660,top=300,left=300");
+  window.open("market_payment", "_blank", "width=500,height=660,top=300,left=300");
 }
 
 
@@ -354,6 +354,8 @@ $(function() {
 	                   room_code: room_code
 	               },
 	               success: function(result) {
+	            	   
+	            	   
 	                   //조회한 채팅방 내용에서의 room_code는 동일함 그래서 젤첨값인 resul[0]으로 조회
 	                   //                     room_code = result[0].room_code;
 
@@ -501,7 +503,7 @@ $(function() {
 	                                "<div class='chat_opponent_timeago'>" + formatChatTime + "</div></div></div></div>";
 	                            $(".chat_timeago").append(str);
 	                        }
-
+	                        $('.chat_description').scrollTop($('.chat_description')[0].scrollHeight + 1000);
 	                        succ(result);
 
 

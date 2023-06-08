@@ -455,6 +455,42 @@ public class MarketController {
 
 	   }// market_chat
 	   
+	// TEST CONTROLLER
+		@RequestMapping(value = "market_payment", method = {RequestMethod.GET, RequestMethod.POST})
+		public String store_pay2(HttpSession session
+								, Model model
+								, @RequestParam(value = "item_code", defaultValue = "market0029") String item_code) {
+								// 테스트용으로 임의로 default 값 넣어둔 상태
+			
+			
+			HashMap<String, String> item = service.getMarketItem(item_code);
+			String id = (String)session.getAttribute("sId");
+			if(id == null) {
+				id = "admin";
+			}
+			HashMap<String, String> member = memberService.getMember(id);
+			
+//					model.addAttribute("item_price", item_price);
+			
+			
+			System.out.println("======================================================");
+			System.out.println("item : " + item.toString());
+			System.out.println("member : " + member.toString());
+			System.out.println("======================================================");
+			
+//					if(id == null) {
+//						model.addAttribute("msg", "로그인 후 이용가능합니다.");
+//						model.addAttribute("target", "memLogin");
+//						return "success";
+//					} else {
+//						return "store/store_pay";
+//					}
+			model.addAttribute("member", member);
+			model.addAttribute("item", item);
+			return "market/market_payment";
+		}
+	   
+	   
 	   @GetMapping("getTradeDate")
 	   @ResponseBody
 	   public String getTradeDate(int room_code) {
