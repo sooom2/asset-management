@@ -1,6 +1,7 @@
 package com.itwillbs.moneytto.socket;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -43,14 +44,29 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 	    String room_code = jObject.getString("room_code");
 	    String item_code = jObject.getString("item_code");
 	    System.out.println("===========================");
-	    System.out.println("상대방 id : "+ target);
-		System.out.println("name : " + name); // 
+	    System.out.println("상대방 id : "+ target); 
+		System.out.println("name : " + name); // 내아이디(세션)
 		System.out.println("messages : " + messages);
 		System.out.println("room_code : " + room_code);
 		System.out.println("item_code : " + item_code);
+//		System.out.println("sellmember : " );
 		System.out.println("===========================");
 		
 		// 채팅 세션 목록에 채팅방이 존재 X
+		
+		HashMap<String, String> sellDetail = marketChatService.getSellID(item_code);
+		String buyId = null;
+		String sellId = sellDetail.get("member_id");
+		
+		
+		// 내아이디랑 sellId랑 다르면 buy아이디는 target
+		if(name != sellId ) {
+			buyId = target;
+		}
+		
+		System.out.println("sellId ===========================");
+		System.out.println(sellId);
+		System.out.println("===========================");
 		
 		if(marketList.get(room_code) == null && messages.contains(name)) {
 			System.out.println("===========================");
@@ -97,10 +113,10 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 				sess.sendMessage(textMessage);
 				sessionCount++;
 			}
-                
-            String sellId = target;
+			
+			
             System.out.println("===============================");
-            System.out.println(room_code+", "+sellId+", "+name+", "+messages+", "+name);
+            System.out.println(room_code+", "+ sellId +", "+name+", "+messages+", "+name);
             System.out.println("===============================");
             
            
@@ -115,8 +131,8 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
             	// 채팅방이있을땐 marketChatRoom 업데이트 
             	int updateChatRoom = marketChatService.updateChatRoom(messages,room_code);	
             }
-            int insertChatMessages = marketChatService.insertChatMessages(room_code,sellId,name,messages,name);
-           
+            int insertChatMessages = marketChatService.insertChatMessages(room_code,sellId,buyId,messages,name);
+            																		// 파는사람   //사는사람 	 //채팅보낸사람
 		}
             
             
