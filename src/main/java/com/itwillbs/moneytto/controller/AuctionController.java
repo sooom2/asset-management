@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.search.IntegerComparisonTerm;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -230,6 +231,7 @@ public class AuctionController {
 	@RequestMapping(value="auctionPay", method = RequestMethod.GET)
 	public String auctionPay(@RequestParam Map<String, String> auctionPay, Model model, HttpSession session) {
 		String id = (String)session.getAttribute("sId");
+		DecimalFormat formatter = new DecimalFormat("###,###");
 		HashMap<String, String> member = memberService.getMember(id);
 		HashMap<String, String> auction = service.selectAuctionCode(auctionPay.get("auction_code"));
 		// 경매 기록 최고값 검색
@@ -242,7 +244,6 @@ public class AuctionController {
 		// 결제 금액(낙찰가 - 보증금)
 		int deposit = (int)(Integer.parseInt(auction.get("auction_present_price").replace(",", "")) * 0.1);
 		int payPrice = Integer.parseInt(lastLog.get("log_content")) - deposit;
-		DecimalFormat formatter = new DecimalFormat("###,###");
 		model.addAttribute("deposit", deposit);
 		model.addAttribute("payPrice", formatter.format(payPrice));
 		
