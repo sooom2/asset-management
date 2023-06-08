@@ -51,6 +51,8 @@ public interface MemberMapper {
 
 	HashMap<String, String> selectMemberGradeById(String id);
 
+	String selectImage(String name);
+
 
 	
 	
