@@ -136,7 +136,7 @@ function memberAuth(){
 						            <td id="board-data">${status.index +1}</td>
 						           <td id="board-data">
 									   <div class="board-info">
-									      <a href="AuctionPay?comm_code=${item.comm_code}" class="board-title">${item.auction_item_name}</a>
+									      <a href="AuctionPay?auction_code=${item.auction_code}" class="board-title">${item.auction_item_name}</a>
 									   </div>
 									</td>
 						            <td id="board-data">${item.success_price}</td>
