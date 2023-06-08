@@ -10,6 +10,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="${path }/resources/css/market.css">
 <link rel="stylesheet" href="${path }/resources/css/member.css">
+<link href="${path }/resources/css/board.css"rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/wish.js"></script>
 <script>
@@ -96,7 +97,7 @@ function memberAuth(){
 					<div class="tabTab active"  data-attr="sellItem"><a href="#">판매 상품</a></div>
 					<div class="tabTab" data-attr="wishItem"><a href="#">찜한 상품</a></div>
 					<div class="tabTab" data-attr="buyItem"><a href="#">구매 상품</a></div>
-					<div class="tabTab"><a href="auctionPay">낙찰된 경매</a></div>
+					<div class="tabTab" data-attr="auctionPay"><a href="#">낙찰된 경매</a></div>
 					<div class="tabTab"><a href="market_review">리뷰 보기</a></div>
 					<div class="tabTab"><a href="reviewRegist">리뷰 작성</a></div>
 				</div>
@@ -119,54 +120,88 @@ function memberAuth(){
 				</div>
 				
 				<div class="itemWrapper">
-					<c:if test='${not empty itemList }'>
-					<c:forEach var="item" items="${itemList }">
-					<div class="item" data-cd="${item.item_code }">
-						<div class="itemThumbnailBox">
-							<c:choose>
-                              	<c:when test="${not empty item.image_name }">
-                              		<img src="${item.image_name }" alt="itemImg" class="itemThumbnail"/>
-                              	</c:when>
-                              	<c:otherwise>
-									<img src="${path }/resources/images/main/noThumbnail.jpg" alt="itemImg" class="itemThumbnail" />		                                  		
-                              	</c:otherwise>
-                            </c:choose>
-							<c:choose>
-                       	 		<c:when test="${not empty item.wish_code }">
-                       	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg" />
-                           		</c:when>
-                	 		   	<c:otherwise>
-                      	 		   	<img src="${path }/resources/images/main/ico_heart_off_x3.png"  alt="좋아요 아이콘" class="WishWishImg wish" >
-                      	 		</c:otherwise>
-                             </c:choose>
-						</div>
-						<div class="itemTextBox">
-							<div class="itemCategory">${item.item_category }</div>
-							<div class="itemText subject">${item.item_subject }</div>
-							<div class="itemText"><fmt:formatNumber value="${item.item_price  }" pattern="#,###" />원</div>
-							<div class="itemTagBox">
-							<c:forEach var="item_tag" items ="${fn:split(item.item_tag, ',') }">
-							<div class="itemSizeTag">${item_tag }</div>
-							</c:forEach>
+					<c:choose>
+					<c:when test='${not empty itemList }'>
+						<c:forEach var="item" items="${itemList }">
+						<div class="item" data-cd="${item.item_code }">
+							<div class="itemThumbnailBox">
+								<c:choose>
+	                              	<c:when test="${not empty item.image_name }">
+	                              		<img src="${item.image_name }" alt="itemImg" class="itemThumbnail"/>
+	                              	</c:when>
+	                              	<c:otherwise>
+										<img src="${path }/resources/images/main/noThumbnail.jpg" alt="itemImg" class="itemThumbnail" />		                                  		
+	                              	</c:otherwise>
+	                            </c:choose>
+								<c:choose>
+	                       	 		<c:when test="${not empty item.wish_code }">
+	                       	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg" />
+	                           		</c:when>
+	                	 		   	<c:otherwise>
+	                      	 		   	<img src="${path }/resources/images/main/ico_heart_off_x3.png"  alt="좋아요 아이콘" class="WishWishImg wish" >
+	                      	 		</c:otherwise>
+	                             </c:choose>
 							</div>
-							<div class="itemTimeTag">${item.item_date }</div>
-						</div>
-					</div>
-					</c:forEach>
-					</c:if>
-					<c:if test= '${empty itemList }'>
-                      	<div class="EmptyEmptyBox">
-							<div class="EmptyTitle">아쉽게도, 현재 검색된 상품이 없어요</div>
-							<div class="EmptyGuide">필터를 재설정하거나 전체 상품 보기를 선택해주세요</div>
-							<div class="EmptyBtnBox">
-								<img
-									src="https://ccimage.hellomarket.com/img/web/common/refresh_mark.svg"
-									alt="초기화 마크" class="EmptyResetMark-xvqyzf-4 YrGaN">
-								<div class="EmptyShowAllText">전체 상품 보기</div>
+							<div class="itemTextBox">
+								<div class="itemCategory">${item.item_category }</div>
+								<div class="itemText subject">${item.item_subject }</div>
+								<div class="itemText"><fmt:formatNumber value="${item.item_price  }" pattern="#,###" />원</div>
+								<div class="itemTagBox">
+								<c:forEach var="item_tag" items ="${fn:split(item.item_tag, ',') }">
+								<div class="itemSizeTag">${item_tag }</div>
+								</c:forEach>
+								</div>
+								<div class="itemTimeTag">${item.item_date }</div>
 							</div>
 						</div>
-						<div class="EmptyNoticeBox"></div>
-					</c:if>
+						</c:forEach>
+					</c:when>
+					
+					
+					
+					<c:when test="${itemList eq auctionPay}">
+						<table id="board-table">
+							<tr>
+								<th id="board-header">글번호</th>
+								<th id="board-header">제목</th>
+								<th id="board-header">작성자</th>
+								<th id="board-header">날짜</th>
+								<th id="board-header">조회수</th>
+							</tr>
+						    <c:forEach items="${itemList}" var="item">
+						        <tr>
+						            <td id="board-data">${boardList.comm_code}</td>
+						           <td id="board-data">
+									   <div class="board-info">
+									      <a href="commBoardView?comm_code=${boardList.comm_code}" class="board-title">${boardList.comm_title}</a>
+									      <span class="comment-count">(${boardList.comment_count})</span>
+									   </div>
+									</td>
+						            <td id="board-data">${boardList.member_id}</td>
+						            <td id="board-data">${boardList.comm_date}</td>
+						            <td id="board-data">${boardList.comm_count}</td>
+						        </tr>
+						    </c:forEach>
+						</table>
+					</c:when>
+					
+					
+					
+					
+						<c:when test= '${empty itemList }'>
+	                      	<div class="EmptyEmptyBox">
+								<div class="EmptyTitle">아쉽게도, 현재 검색된 상품이 없어요</div>
+								<div class="EmptyGuide">필터를 재설정하거나 전체 상품 보기를 선택해주세요</div>
+								<div class="EmptyBtnBox">
+									<img
+										src="https://ccimage.hellomarket.com/img/web/common/refresh_mark.svg"
+										alt="초기화 마크" class="EmptyResetMark-xvqyzf-4 YrGaN">
+									<div class="EmptyShowAllText">전체 상품 보기</div>
+								</div>
+							</div>
+							<div class="EmptyNoticeBox"></div>
+						</c:when>
+					</c:choose>
 				</div>
 			</div>
 		</div>

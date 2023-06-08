@@ -128,10 +128,15 @@
 			, im.image_name
 		FROM
 			item i
-		LEFT JOIN
-			wish w
-		ON
-			i.item_code = w.wish_item_code
+		LEFT JOIN 
+               (SELECT
+                  *
+               FROM
+                  wish
+               WHERE
+                  member_id = #{member_id}) w
+         ON
+            i.item_code = w.wish_item_code 
 		LEFT JOIN (
 				    SELECT *
 				    FROM (
@@ -187,9 +192,14 @@
 				    ) subquery
 				    WHERE row_num = 1
 				) im ON p.item_code = im.table_code
-		LEFT JOIN
-			wish w
-		ON
+		LEFT JOIN 
+               (SELECT
+                  *
+               FROM
+                  wish
+               WHERE
+                  member_id = #{member_id}) w
+         ON
 			p.item_code = w.wish_item_code
 		WHERE
 			buy_id = #{member_id} 
