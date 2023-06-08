@@ -141,4 +141,19 @@
 	</update>
 	
 	
+	<!-- 06.08. 14:44 추가 -->
+	<select id="selectMyAuctionByNickname" resultType="hashmap">
+		SELECT *
+		FROM auction
+		WHERE auction_status = #{member_nickname}
+		ORDER BY auction_end_date DESC
+	</select>
+	
+	<select id="selectMyAuctionByMember" resultType="hashmap">
+		SELECT *
+		FROM auction
+		WHERE auction_status = #{member_nickname}
+		ORDER BY auction_end_date DESC
+	</select>
+	
 </mapper>

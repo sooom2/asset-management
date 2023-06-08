@@ -233,11 +233,11 @@ function toggleLike(element) {
 <!-- 								<img -->
 <!-- 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png" -->
 <!-- 									alt="좋아요 아이콘" class="WishIcon"> -->
-<!-- 								<div class="WishText">0</div> --> 
+<!-- 								<div class="WishText">0</div>  -->
 <!-- 							</div> -->
-								<div class="WishWrapper">
+								<div class="WishWrapper" data-cd="${marketItem.item_code }">
 								  <c:choose>
-	                       	 		<c:when test="${not empty item.wish_code }">
+	                       	 		<c:when test="${not empty itemWish}">
 	                       	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg" />
 	                           		</c:when>
 	                	 		   	<c:otherwise>

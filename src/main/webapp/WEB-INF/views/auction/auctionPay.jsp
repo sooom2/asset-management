@@ -12,6 +12,55 @@
 <link href="${path }/resources/css/market_payment.css" rel="stylesheet">
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript">
+$(function() {
+	// 다음 주소 API
+	$('.addr_search').on("click", function() {
+		new daum.Postcode({
+            oncomplete: function(data) {
+            	 $('input[name=receiverAddr1]').val(data.address);
+            	 $('input[name=receiverAddr2]').focus(); //상세입력 포커싱
+            }
+        }).open();
+	});
+	
+	// 전액 사용 버튼
+	$('.coupon_btn').on("click", function() {
+		let payPrice = "${payPrice}".replaceAll(",", "") + "원";
+		if(${member.member_point} <= ${payPrice}) {
+			$('#usePoint').html(${member.member_point});
+		} else {
+			$('#usePoint').html(payPrice);
+		}
+		
+		
+	});
+	
+	// 이용 약관 체크.
+	$('.feature_option_checkbox_indicator').on("click", function() {
+		if($(this).attr('class') != 'feature_option_checkbox_indicator checked') {
+			$(this).addClass('checked');
+    		$('.success_btn').removeClass('btn_disabled');
+    		$('.success_btn').attr('disabled', false);
+        } else {
+    		$(this).removeClass('checked');
+    		$('.success_btn').addClass('btn_disabled');
+    		$('.success_btn').attr('disabled', true);
+        }
+		
+	});
+	
+	
+	
+	// 결제 수단
+	$('.wrapper_div').click(function() {
+		$('.wrapper_div').removeClass('checked');
+		$(this).addClass('checked');
+	});
+	
+});
+</script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
@@ -44,10 +93,17 @@
 												</div>
 												<div class="cont cont_main_col_1">
 													<div class="item_title title_main_col_1">${auction.auction_item_name}</div>
-													<div class="item_price pri_main_col_1">${payPrice }원</div>
+													<div class="item_price pri_main_col_1">${lastLog.log_content }원</div>
 													<div class="item_hasdeliveryfee">무료배송</div>
 												</div>
-											</div></li>
+												<div class="cont cont_main_col_1">
+													<div class="item_hasdeliveryfee">&nbsp;</div>
+													<div class="item_hasdeliveryfee">&nbsp;</div>
+													<div class="item_title title_main_col_1">보증금</div>
+													<div class="item_price pri_main_col_1">${deposit }원</div>
+												</div>
+											</div>
+										</li>
 									</ul>
 								</div></li>
 							<li class="order_card "><div class="title_box">배송지</div>
@@ -72,18 +128,18 @@
 									<li><dl>
 											<dt>주소</dt>
 											<dd>
-												<div readonly="" name="senderHide" class="div_input_st">우편번호
-													입력</div>
+												<div readonly="" name="receiverAddr1" class="div_input_st">주소</div>
+												<input type="text" name="receiverAddr1"
+													placeholder="주소 입력" class="w_10" value="${member.member_address }">
 												<button class="addr_search">주소찾기</button>
 											</dd>
 										</dl></li>
 									<li><dl>
 											<dt></dt>
 											<dd>
-												<div readonly="" name="receiverAddr1" class="div_input_st">기본주소
-													입력</div>
+												<div readonly="" name="receiverAddr2" class="div_input_st">상세주소</div>
 												<input type="text" name="receiverAddr2"
-													placeholder="상세주소 입력" class="w_10" value="">
+													placeholder="상세주소 입력" class="w_10" value="${member.member_address_detail }">
 											</dd>
 										</dl></li>
 								</ul></li>
@@ -93,16 +149,19 @@
 									<div>
 										<div class="wallet_wrapper wallet_items_wrapper">
 											<div class="box_coupon">
-												<div class="title order_sub_title">포인트</div>
+												<div class="title order_sub_title">사용가능 머니또</div>
 												<div class="box_coupon_right">
 													<div>
 														<div class="description">${member.member_point }원</div>
 														<div class="coupon_btn">전액사용</div>
 													</div>
-													<div class="price">
-														<input type="text">
-														<span>원</span>
-													</div>
+												</div>
+											</div>
+											<div class="box_coupon">
+												<div class="title order_sub_title">직접 입력</div>
+												<div class="price">
+													<input type="text" style="margin-left:60px">
+													<span>원</span>
 												</div>
 											</div>
 											<div class="certified_box hide">
@@ -123,25 +182,54 @@
 									<div class="title_box sub_title_box">
 										<span class="payment_method"> 결제수단</span>
 										<div class="etc_other_wrapper_form">
-											<span class="other_wrapper_description other_wrapper_box">택배나
-												등기 이외 방법으로 거래하시나요? <span>&gt;</span>
+											<span class="other_wrapper_description other_wrapper_box">
+											머니또 포인트 외 결제는 수수료 3.2% 부가됩니다.
 											</span>
 										</div>
 									</div>
-									
-									<div><div><ul class="pay_method_list item_pay_method_list"><div class="other_wrapper_div"><ul><li><div class="wrapper_div other_wrapper_div_option checked"><div class="info"><label for="Kakaopay" class="radio_desc">카카오페이</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="EasyBank" class="radio_desc">간편 계좌이체</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="CreditCard" class="radio_desc">신용카드</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="Toss" class="radio_desc">토스결제</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="MobilePhone" class="radio_desc">휴대폰</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="VirtualBank" class="radio_desc">무통장(가상계좌)</label></div><div class="exp"></div></div></li></ul></div><div class="other_wrapper_consignment"><span>카카오페이 수수료 : 3.2%</span></div></ul></div><div class="certified_box hide"><div class="title_txt"><span>핸드폰 인증</span></div><div class="phone_number_box"><input type="number" placeholder="숫자만 입력"><button class="addr_search">인증요청</button></div><div class="auth_code_box"><input type="number" placeholder="인증번호 입력"><button class="addr_search">인증</button></div></div></div>
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
+										<div>
+											<div>
+												<ul class="pay_method_list item_pay_method_list">
+													<div class="other_wrapper_div">
+														<ul>
+															<li>
+																<div class="wrapper_div other_wrapper_div_option checked">
+																	<div class="info">
+																		<label for="CreditCard" class="radio_desc">신용카드</label>
+																	</div>
+																	<div class="exp"></div>
+																</div>
+															</li>
+															<li>
+																<div class="wrapper_div other_wrapper_div_option">
+																	<div class="info">
+																		<label for="Kakaopay" class="radio_desc">카카오페이</label>
+																	</div>
+																	<div class="exp"></div>
+																</div>
+															</li>
+															<li>
+																<div class="wrapper_div other_wrapper_div_option">
+																	<div class="info">
+																		<label for="Toss" class="radio_desc">토스결제</label>
+																	</div>
+																	<div class="exp"></div>
+																</div>
+															</li>
+														</ul>
+													</div>
+													<div class="other_wrapper_consignment"><span>수수료 : 3.2%</span>
+													</div>
+												</ul>
+											</div>
+											<div class="certified_box hide">
+											<div class="title_txt"><span>핸드폰 인증</span></div>
+											<div class="phone_number_box"><input type="number" placeholder="숫자만 입력">
+											<button class="addr_search">인증요청</button></div><div class="auth_code_box">
+											<input type="number" placeholder="인증번호 입력"><button class="addr_search">인증</button>
+											</div>
+											</div>
+										</div>
 									<div>
 										<div class="certified_box hide">
 											<div class="title_txt">
@@ -164,28 +252,16 @@
 										<div class="final_order_price">
 											<dl
 												class="final_order_price_border_bottom final_order_price_padding">
-												<dt>상품가격</dt>
-												<dd>1,599,000원</dd>
+												<dt>결제가격</dt>
+												<dd>${payPrice }원</dd>
 											</dl>
 											<dl>
 												<dt>포인트 사용</dt>
-												<dd>0원</dd>
+												<dd id="usePoint">0원</dd>
 											</dl>
 											<dl class="final_order_price_margin">
 												<dt>배송비</dt>
 												<dd style="color: rgb(114, 120, 127); font-size: 13px;">무료배송</dd>
-											</dl>
-											<dl>
-												<dt>
-													결제수수료<span class="payment_method_credit">간편 계좌이체
-														1.9%적용</span>
-												</dt>
-												<dd>30,381원</dd>
-											</dl>
-											<dl
-												class="final_order_price_border_bottom final_order_price_padding">
-												<dt>안전거래수수료</dt>
-												<dd>1,000원</dd>
 											</dl>
 										</div>
 										<div class="order_total_price">
@@ -205,27 +281,15 @@
 											</div>
 										</div>
 										<div class="success_btn_box">
-											<div class="success_btn btn_disabled">결제하기</div>
+											<form  method="post">
+												<input type="hidden" name="PMid">
+												<input type="hidden" name="PAmt">
+												<input type="hidden" name="PGoods">
+												<input class="success_btn btn_disabled" type="button" value="결제하기" disabled="disabled" style="width: 100%; border: none;">
+											</form>
 										</div>
 									</div>
 								</div></li>
-							<form method="post" id="SETTLEBANK_PAYINFO"
-								target="orderServiceForm">
-								<input type="hidden" name="PMid"><input type="hidden"
-									name="PAmt"><input type="hidden" name="PGoods"><input
-									type="hidden" name="POid"><input type="hidden"
-									name="PMname"><input type="hidden" name="PEname"
-									value="HELLOMARKET"><input type="hidden" name="PUname"><input
-									type="hidden" name="PNoti" value=""><input
-									type="hidden" name="PNoteUrl"><input type="hidden"
-									name="PNextPUrl"><input type="hidden" name="PCancPUrl"><input
-									type="hidden" name="PUserid"><input type="hidden"
-									name="PVtransDt"><input type="hidden" name="PBnkCd"><input
-									type="hidden" name="PUiFlag" value="Y"><input
-									type="hidden" name="PAppScheme" value="hellomarket://"><input
-									type="hidden" name="PCardType" value="6"><input
-									type="hidden" name="PChainUserId">
-							</form>
 						</ul>
 					</div>
 				</div>

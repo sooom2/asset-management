@@ -147,7 +147,8 @@ public class MarketController {
 		List<HashMap<String, String>> itemImage = service.getItemImage(item_code);
 		model.addAttribute("itemImage", itemImage);
 		
-		
+		List<HashMap<String, String>> itemWish = memberService.getWishItem(id, item_code);
+		model.addAttribute("itemWish", itemWish);
 		
 
 		return "market/market_detail";
