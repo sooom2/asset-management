@@ -84,13 +84,20 @@
 				
 				
 				// 경매 남은시간 일, 시, 분, 초
-				let diffDays = parseInt(((end_time - current_time) / (1000 * 60 * 60 * 24))) - 1;
-				let diffHours = parseInt(((end_time - current_time) / (1000 * 60 * 60)));
+				let diffDays = parseInt((end_time - current_time) / (1000 * 60 * 60 * 24)) - 1;
+				let diffHours = parseInt(((end_time - current_time) % (1000 * 60 * 60 * 25)) / (1000 * 60 * 60));
 				let diffMinutes = parseInt(((end_time - current_time) / (1000 * 60)));
-				let diffSeconds = (((end_time - current_time) % (1000 * 60)) / 1000);
-				let diffSecondsResult = diffSeconds < 10 ? "0" + (diffSeconds - 1) : diffSeconds - 1; 
-				let resultClock = diffDays + "일 " + diffHours + "시" + (diffMinutes - 1) + ":" + diffSecondsResult;
+				let diffSeconds = parseInt(((end_time - current_time) % (1000 * 60)) / 1000);
+				let diffSecondsResult = diffSeconds < 10 ? "0" + diffSeconds : diffSeconds; 
+				let resultClock;
 				
+				if(diffDays > 1) {
+					resultClock = diffDays + " Days";
+				} else if(diffDays < 1 && diffHours > 1) {
+					resultClock = diffHours + " Hours";
+				} else {
+					resultClock = diffMinutes + ":" + diffSecondsResult;
+				}
 				
 				// 경매시작 시간 지나면 (시간 카운트)
 				if(start_time <= current_time) {
@@ -102,7 +109,6 @@
 				
 				// 경매 종료 시간 지나면 이벤트. 
 				if(end_time < current_time) {
-					
 					window.setTimeout(function(){ // setInterval 함수 종료
 						window.clearInterval(time);
 						$("#con_countDown").html("경매가 종료 되었습니다.");
@@ -134,8 +140,8 @@
 		function chatSend() {
 			const data = {
 					"auctionCode" :  "${auction.get('auction_code') }",
-	                "name" : "${ sessionScope.sId }",
-	                "message"   : $('#message').val()
+	                "name" : "${member.get('member_nickname') }",
+	                "message" : $('#message').val(),
 	            };
 	        let jsonData = JSON.stringify(data);
 			socket.send(jsonData);
@@ -191,7 +197,7 @@
 			console.log('Info: connection opened');
 			const data = {
 					"auctionCode" :  "${auction.get('auction_code') }",
-	                "name" : "${ sessionScope.sId }",
+	                "name" : "${member.get('member_nickname') }",
 	                "message"   : "ENTER"
 	            };
 			
@@ -206,28 +212,30 @@
 			var sessionId = null; //데이터를 보낸 사람
 			var message = null;
 			
-			var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
+			var cur_session = "${member.get('member_nickname')}"; //현재 세션에 로그인 한 사람
 			
-			sessionId = data.split(":")[0];
-			message = data.split(":")[1];
+			sessionNickname = data.split("|")[0];
+			message = data.split("|")[1];
+			image = data.split("|")[2];
+			chatTime = data.split("|")[3];
 			
 		    // 로그인 한 클라이언트와 타 클라이언트를 분류
-			if(sessionId == cur_session) {
+			if(sessionNickname == cur_session) {
 				var str = "<div class='chat_myself'>";
 				str += "<div class='chat_myself_box'>";
 				str += "<div class='chat_myself_message'>";
 				str += "<span>" + message + "</span>";
-				str += "<div class='chat_myself_timeago'>" + amPm + " " + hours + ":" + minutes + "</div></div></div></div>";
+				str += "<div class='chat_myself_timeago'>" + chatTime + "</div></div></div></div>";
 				
 				$(".chatBox").append(str);
 			} else {
 				var str = "<div class='OpponentChat__Wrapper-qv8pn4-0 cFvuGS'>";
-				str += "<img src='https://ccimage.hellomarket.com/img/web/common/empty_profile.svg' alt='상대방 프로필 이미지' class='OpponentChat__ProfileImage-qv8pn4-2 eLwuXd'>";
-				str += "<div class='OpponentChat__Nick-qv8pn4-3 hYaaYd'>" + sessionId + "</div>";
+				str += "<img src='" + image + "'alt='상대방 프로필 이미지' class='OpponentChat__ProfileImage-qv8pn4-2 eLwuXd'>";
+				str += "<div class='OpponentChat__Nick-qv8pn4-3 hYaaYd'>" + sessionNickname + "</div>";
 				str += "<div class='OpponentChat__MyChatList-qv8pn4-1 lecfCu'>";
 				str += "<div class='OpponentChat__TextBox-qv8pn4-5 giIZqy'>";
 				str += "<span class='OpponentChat__Text-qv8pn4-6 ZPeEt'>" + message + "</span>";
-				str += "<div class='OpponentChat__TimeAgo-qv8pn4-7 jXWPOW'>" + amPm + " " + hours + ":" + minutes + "</div></div></div></div>";
+				str += "<div class='OpponentChat__TimeAgo-qv8pn4-7 jXWPOW'>" + chatTime + "</div></div></div></div>";
 				
 				$(".chatBox").append(str);
 			};
@@ -247,15 +255,17 @@
 		$('#auction_input_before *').prop('disabled', true);
 		$('.chat_footer *').prop('disabled', true);
 		
+		let success_nickname = $("#auctionLog_nickname").html();
 		
 		$.ajax({
             type: "GET",
             url: "auctionUpdateFinish",
             dataType: "text",
             data: {
-                auction_code: "${auction.auction_code }",
-                success_id: $("#auctionLog_nickname").html(),
-                success_price: $("#lastLogPrice").html()
+            	auction_code: "${auction.auction_code }",
+                success_id: success_nickname.substring(0, success_nickname.length -1),
+                success_price: $("#lastLogPrice").html().toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","),
+                deposit: ${deposit}
             },
             success: function(result) {
             	// 경매 종료 닉네임이 현재 세션과 같을 때 -> 낙찰자
@@ -282,7 +292,8 @@
         			    },
         			  }).then((result) => {
         			    if (result) {
-        			    	location.href = "auctionPay?auction_code=${auction.get('auction_code') }&successPrice=" + $("#lastLogPrice").html();
+        			    	location.href = "auctionPay?auction_code=${auction.get('auction_code') }&successPrice=" 
+		    					+ $("#lastLogPrice").html() + "&deposit=${deposit}";
         			    } else {
         			    	location.href = "auctionMain";
         			    }
@@ -454,12 +465,12 @@
 							<a href="mypage" target="_blank" rel="noopener noreferrer">
 								<div class="image_box">
 									<div class="image_table">
-										<img src="https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png" alt="명품인증님의 프로필 이미지">
+										<img src="${member.get('member_image') }" alt="명품인증님의 프로필 이미지">
 									</div>
 								</div>
 								<div class="info">
 									<div id="sessionCount">
-										<span>${sessionScope.sId }</span>
+										<span>${member.get('member_nickname') }</span>
 										<span id="sessionCount2">0/100명</span>
 									</div>
 								</div>
@@ -481,7 +492,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div><br>
 						<div class="chat_footer">
 							<div class="chat_footer_area">
 								<input type="text" id="message" contenteditable="true" placeholder="메세지를 입력해주세요.">
@@ -590,7 +601,7 @@ $(document).ready(function() {
 // 				console.log("4번" + message + typeof message); // 303000  string
 // 			} else {
 // 				console.log("else도착");
-			let lastLogPrice = $("#lastLogPrice").html().split(",")[0] + $("#lastLogPrice").html().split(",")[1];
+			let lastLogPrice = $("#lastLogPrice").html().replaceAll(",", "");
 			chatLog = (parseInt($(this).attr("data-price")) + parseInt(lastLogPrice)) + "";
 				
 			console.log(${lastLog.log_content});
@@ -634,14 +645,16 @@ function connect2() {
 		var sessionId = null; //데이터를 보낸 사람
 		var sessionName = null; 
 		var message = null;
+		var logTime = null;
 // 		var enrollCode = ${enrollCode};
 		var auctionCode = "${auction.auction_code }";
 		
 		var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
 		console.log("메세지 수신" + data);
-		sessionId = data.split(":")[0];
-		sessionName = data.split(":")[1];
-		message = data.split(":")[2];
+		sessionId = data.split("|")[0];
+		sessionName = data.split("|")[1];
+		message = data.split("|")[2];
+		logTime = data.split("|")[3];
 	
 		
 		// 낙찰 최대금액
@@ -659,7 +672,7 @@ function connect2() {
 		$("#auctionLog_nickname").html(sessionName + "님");
 		
 		// 경매 로그
-		var auctionLog = "<div class='chat_myself'>" + "<" + hours + ":" + minutes + "> " + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + "</div>";
+		var auctionLog = "<div class='chat_myself'>" + "<" + logTime + "> " + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + "</div>";
 		$(".logBox").append(auctionLog);
 		$('.auction_log').scrollTop($('.auction_log')[0].scrollHeight + 100);
 		

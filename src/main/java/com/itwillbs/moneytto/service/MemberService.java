@@ -184,4 +184,25 @@ public class MemberService {
 		return mapper.updateQuitMember(member);
 	}
 
+	public int updateDeposit(String auction_code, String success_id, int deposit) {
+		return mapper.updateDeposit(auction_code, success_id, deposit);
+	}
+
+	public int updatePoint(String id, String point) {
+		return mapper.updatePoint(id, point);
+	}
+	// 회원등급조회
+	public HashMap<String, String> getMemberGrade(HashMap<String, String> member) {
+		
+		return mapper.selectMemberGradeByMember(member);
+	}
+	
+	public HashMap<String, String> getMemberGrade(String id) {
+		
+		return mapper.selectMemberGradeById(id);
+	}
+
+	public String selectImage(String name) {
+		return mapper.selectImage(name);
+	}
 }

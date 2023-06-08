@@ -28,7 +28,7 @@ function payment(){
 </script>
 </head>
 <body>
-<input type="hidden" id="navSearch" name="navSearch" value="">
+<input type="hidden" id="navSearchInput" name="navSearchInput" value="">
 <div id="header" data-loginstatus="0">
 		<nav class="secondary">
 			<ul>
@@ -64,7 +64,7 @@ function payment(){
 			</ul>
 			<div class="searchIconWrapper">
 				<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
-				<div class="searchSearch"><form id="searchForm"><input class="goodsName" id="search" type="text" placeholder="어떤 상품을 찾으시나요?"></form></div>
+				<div class="searchSearch"><form id="navSearchForm"><input class="goodsName" id="navSearch" type="text" placeholder="어떤 상품을 찾으시나요?"></form></div>
 			</div>
 			<c:if test="${not empty sessionScope.sId }">
 				<div class="mem_profile">
@@ -81,22 +81,23 @@ function payment(){
 
 <script type="text/javascript">
 	$(function () {
-		// 검색 하는중
-		$(document).on("submit", "#searchForm", function(e) {
+		// 검색 하는중 -- 하다가 태그 검색 꼬여서 주석
+		$(document).on("submit", "#navSearchForm", function(e) {
 			e.preventDefault(); // 폼 제출 기본 동작 막기
-			var input = $("#search").val();
+			var input = $("#navSearch").val();
 			alert(input);
-			$("#navSearch").val(input);
-			location.href = "market_list?navSearch=" + input;
-			
+			$("#navSearchInput").val(input);
+			location.href = "nav_market_list?navSearch=" + input;
+			return false;
 		});
 		
 		$(".searchSearch input").keydown(function(e) {
             if(e.which === 13) {
 				e.preventDefault(); // 엔터 키 기본 동작 막기
-				$("#searchForm").submit(); // 폼 제출
+				$("#navSearchForm").submit(); // 폼 제출
             }
         });
+		
 		// 프로필 이미지 눌렀을때도 마이페이지 이동하게 할려고 하는데
 		// 더 괜찮은 방법 있으면 이거 지우고 그걸로 바꿔주세요 !
 		$('.mem_profile').children().click(function(){

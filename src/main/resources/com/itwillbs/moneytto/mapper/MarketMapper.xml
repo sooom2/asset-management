@@ -463,6 +463,67 @@
             room_code = #{room_code}
    </update>
    
+   
+   
+	<!-- 통합 검색 마켓 아이템 리스트 -->
+	<select id="navMarketItemList" resultType="hashmap">
+		SELECT i.*, im.*, COUNT(*) OVER() AS total_count, w.wish_code 
+         FROM 
+            item i
+         LEFT JOIN
+            member m
+         ON
+            i.member_id = m.member_id
+         LEFT JOIN (
+                SELECT *
+                FROM (
+                    SELECT *,
+            ROW_NUMBER() OVER (PARTITION BY table_code ORDER BY image_code) AS row_num
+                    FROM images
+                ) subquery
+                WHERE row_num = 1
+            ) im 
+         ON
+             i.item_code = im.table_code
+         LEFT JOIN 
+               (SELECT
+                  *
+               FROM
+                  wish
+               WHERE
+                  member_id = #{id}) w
+         ON
+            i.item_code = w.wish_item_code 
+         WHERE
+            i.item_subject like #{navSearch}
+         OR 
+            i.item_content like #{navSearch}
+         OR 
+            i.item_tag like #{navSearch}
+         <if test = 'id != null and !id.equals("") '>
+            AND ST_Distance_Sphere(
+                  (SELECT member_location
+                   FROM    member
+                   WHERE    member_id = #{id})
+                   , member_location) <![CDATA[<]]> 100000
+         </if>
+         <choose>
+            <when test='sort.equals("lowPrice")'>
+               ORDER BY    replace(i.item_price,',','')+0 ASC
+            </when> 
+            <when test='sort.equals("highPrice")'>
+              ORDER BY   replace(i.item_price,',','')+0 DESC
+            </when>
+            <when test='sort.equals("highGrade")'>
+               ORDER BY   m.grade_score DESC
+            </when>
+            <otherwise>
+               ORDER BY   i.item_date DESC
+              </otherwise> 
+         </choose>
+               , im.image_code  
+	</select>
+   
 
    <!-- 마켓 아이템 리스트  -->
    <select id="marketItemList" resultType="hashmap">
@@ -537,8 +598,10 @@
    <select id="itemDetail" resultType="hashmap">
       SELECT item.*,member.member_nickname ,member.member_image 
          FROM item
-            LEFT JOIN member 
-                  ON member.member_id = item.member_id 
+            LEFT JOIN
+            	 member 
+             ON 
+                  member.member_id = item.member_id 
          WHERE item_code=#{item_code}
    </select>
    
@@ -558,20 +621,13 @@
    
    
    <select id="marketItem" resultType="hashmap">
-      SELECT i.*, m.*, w.wish_code
+      SELECT i.*, m.*
          FROM 
             item i
          JOIN
             member m
          ON
             i.member_id = m.member_id
-         LEFT JOIN (
-               SELECT   *
-               FROM   wish
-               WHERE   member_id = #{member_id}
-            ) w
-         ON
-            i.item_code = w.wish_item_code
          WHERE
             i.item_code = #{item_code}
    </select>

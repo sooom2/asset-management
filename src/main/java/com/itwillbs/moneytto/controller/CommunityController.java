@@ -20,14 +20,30 @@ public class CommunityController {
 	@Autowired
 	private CommunityService service;
 	
+//	@GetMapping(value = "commBoard")
+//	public String commBoard(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
+//	    List<HashMap<String, String>> boardList = service.boardList(board);
+//
+//	    model.addAttribute("boardList", boardList); // boardList를 모델에 추가
+//
+//	    return "board/community";
+//	}
+	
 	@GetMapping(value = "commBoard")
 	public String commBoard(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
 	    List<HashMap<String, String>> boardList = service.boardList(board);
 
-	    model.addAttribute("boardList", boardList); // boardList를 모델에 추가
+	    for (HashMap<String, String> boardItem : boardList) {
+	        String comm_code = boardItem.get("comm_code");
+	        int commentCount = service.commentCount(comm_code);
+	        boardItem.put("comment_count", String.valueOf(commentCount));
+	    }
+
+	    model.addAttribute("boardList", boardList);
 
 	    return "board/community";
 	}
+
 
 	
 	
@@ -70,16 +86,37 @@ public class CommunityController {
 	    service.increaseViews(board.get("comm_code"));
 
 	    HashMap<String, String> boardDetail = service.boardDetail(comm_code); // comm_code에 해당하는 글 내용을 조회합니다.
-	    
+	    List<HashMap<String, String>> replyList = service.replyList(comm_code);
+
 	    if (boardDetail != null) {
-	        model.addAttribute("boardDetail", boardDetail); // 조회한 글 내용을 모델에 추가합니다.
+	        model.addAttribute("boardDetail", boardDetail);
+	        model.addAttribute("replyList", replyList); // 댓글 리스트를 모델에 추가합니다.
 	        return "board/commBoardView";
 	    } else {
-	    	
 	        return "fail_back";
 	    }
 	}
 
-	
+	@PostMapping(value = "addComment")
+	public String addComment(@RequestParam HashMap<String, String> comment, @RequestParam("comm_code") String commCode, Model model, HttpSession session) {
+	    String id = (String) session.getAttribute("sId");
+	    comment.put("id", id);
+
+	    // 댓글 추가 작업
+	    comment.put("comm_code", commCode); // comm_code 값을 comment에 추가합니다.
+	    int replyCount = service.addComment(comment);
+
+	    if (replyCount > 0) {
+	        model.addAttribute("msg", "댓글이 등록되었습니다.");
+	        model.addAttribute("target", "commBoardView?comm_code=" + commCode);
+	        return "success";
+	    } else {
+	        model.addAttribute("msg", "댓글 등록에 실패했습니다.");
+	        model.addAttribute("target", "main");
+	        return "fail_back";
+	    }
+	}
+
+
 
 }

@@ -13,7 +13,9 @@
 		   , DATE_FORMAT(auction_date, '%Y.%m.%d %H:%i') AS auction_date
 		   , DATE_FORMAT(auction_start_date, '%Y.%m.%d %H:%i') AS auction_start_date
 		   , DATE_FORMAT(auction_end_date, '%Y.%m.%d %H:%i') AS auction_end_date
+		   , DATEDIFF(auction_start_date, now()) AS auction_datediff
 		   , auction_status
+		   , success_price
 		   , auction_notice
 		   , auction_category
 		   , image_code
@@ -42,6 +44,7 @@
 		   , DATE_FORMAT(auction_start_date, '%Y.%m.%d %H:%i') 'auction_start_date'
 		   , DATE_FORMAT(auction_end_date, '%Y.%m.%d %H:%i') 'auction_end_date'
 		   , auction_status
+		   , success_price
 		   , auction_notice
 		   , auction_category
 		   , image_code
@@ -137,5 +140,20 @@
 				auction_code = #{auction_code}
 	</update>
 	
+	
+	<!-- 06.08. 14:44 추가 -->
+	<select id="selectMyAuctionByNickname" resultType="hashmap">
+		SELECT *
+		FROM auction
+		WHERE auction_status = #{member_nickname}
+		ORDER BY auction_end_date DESC
+	</select>
+	
+	<select id="selectMyAuctionByMember" resultType="hashmap">
+		SELECT *
+		FROM auction
+		WHERE auction_status = #{member_nickname}
+		ORDER BY auction_end_date DESC
+	</select>
 	
 </mapper>

@@ -91,7 +91,6 @@ public class BankApiClient {
 	// 사용자 정보 요청
 	public ResponseUserInfoVO requestUserInfo(String access_token, String user_seq_no) {
 		System.out.println("◇◇◇◇◇ requestUserInfo() : " + access_token + ", " + user_seq_no);
-		logger.info("◇◇◇◇◇ requestUserInfo() : " + access_token + ", " + user_seq_no);
 		
 		// 사용자 정보 요청 API 의 URL - GET 방식 요청
 		String url = baseUrl + "/v2.0/user/me";

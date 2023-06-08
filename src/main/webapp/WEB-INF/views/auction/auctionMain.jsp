@@ -55,7 +55,7 @@ $(function() {
 											<div class="landingPickWrap">
 												<div class="contentImage" style="background-image:url('${auction.get('image_name')}')">
 													<div class="ddday">
-														시작<br>D-10
+														시작<br>D-${auction.get('auction_datediff') }
 													</div>
 		<!-- 											<div class="ddday"> -->
 		<!-- 												마감임박(몇분)<br>10분 -->
@@ -67,8 +67,8 @@ $(function() {
 													<hr>
 													<div class="con_detail">
 														<div><span>시작일</span><div class="con_period">${auction.get('auction_start_date') }</div></div>
-														<div><span>현재가</span><div class="con_price"><span class="won">&nbsp;${auction.get("auction_present_price") }원</span></div></div>
-														<div><span>즉시구매가</span><div class="con_price">&nbsp;<span class="won">${auction.get("auction_present_price") }원</span></div></div>
+														<div><span>시작가</span><div class="con_price"><span class="won">&nbsp;${auction.get("auction_present_price") }원</span></div></div>
+														<div><span>즉시구매가</span><div class="con_price">&nbsp;<span class="won">${auction.get("auction_immediate_price") }원</span></div></div>
 														<hr>
 														<div><div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${auction.enroll_count }<span>명</span></div></div><br>
 					<!-- 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/20<span>명</span></div><br> -->
@@ -92,10 +92,14 @@ $(function() {
 										<li class="pickedContent">
 											<div class="landingPickWrap">
 												<div class="contentImage" style="background-image:url('${auction.get('image_name')}')">
-													<div class="ddday">
-														진 행
-		<!-- 												시작<br>D-10 -->
-													</div>
+													<c:choose>
+														<c:when test="${auction.get('auction_datediff') < 0}">
+															<div class="ddday">진 행</div>
+														</c:when>
+														<c:otherwise>
+															<div class="ddday">시작<br>D-${auction.get('auction_datediff') }</div>
+														</c:otherwise>
+													</c:choose>
 												</div>
 												<div class="contentBox">
 					<!-- 								<div  class="con_period">[소비방]</div> -->
@@ -104,7 +108,7 @@ $(function() {
 													<div class="con_detail">
 														<div><span>시작일</span><div class="con_period">${auction.get("auction_start_date") }</div></div>
 														<div><span>종료일</span><div class="con_period">${auction.get("auction_end_date") }</div></div>
-														<div><span>현재가</span><div class="con_price"><span class="won">&nbsp;${auction.get("auction_present_price") }원</span></div></div>
+														<div><span>시작가</span><div class="con_price"><span class="won">&nbsp;${auction.get("auction_present_price") }원</span></div></div>
 														<div><span>즉시구매가</span><div class="con_price">&nbsp;<span class="won">${auction.get("auction_immediate_price") }원</span></div></div>
 														<hr>
 														<div><div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${auction.enroll_count }<span>명</span></div></div><br>
@@ -140,8 +144,8 @@ $(function() {
 													<div class="con_detail">
 														<div><span>시작일</span><div class="con_period">${auction.get("auction_start_date") }</div></div>
 														<div><span>종료일</span><div class="con_period">${auction.get("auction_end_date") }</div></div>
-														<div><span>현재가</span><div class="con_price"><span class="won">&nbsp;${auction.get("auction_present_price") }원</span></div></div>
-														<div><span>즉시구매가</span><div class="con_price">&nbsp;<span class="won">${auction.get("auction_immediate_price") }원</span></div></div>
+														<div><span>시작가</span><div class="con_price"><span class="won">&nbsp;${auction.get("auction_present_price") }원</span></div></div>
+														<div><span>낙찰가</span><div class="con_price">&nbsp;<span class="won">${auction.get("success_price") }원</span></div></div>
 														<hr>
 														<div><div class="con_pick"><i class="fas fa-user"></i>&nbsp;<span>입찰자</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${auction.enroll_count }<span>명</span></div></div><br>
 					<!-- 									<div class="con_numPeo"><i class="fas fa-user"></i>&nbsp;4/20<span>명</span></div><br> -->

@@ -56,6 +56,9 @@
 <script type="text/javascript">
 
 $(function() {
+	$("#payment").on("click", function() {
+		alert("payment 클릭 1 :" + "${auction.auction_code }" + " 2 : " + ${lastLog.log_content });
+	});
 	
 	$("#auctionEnroll").on("click", function() {
 		event.preventDefault()
@@ -81,21 +84,22 @@ $(function() {
 			    },
 			  }).then((confirmResult) => {
 			    if (confirmResult) {
-			    	
-			    	location.href="auctionEnroll?auction_code=${auction.get('auction_code')}&deposit=${deposit}";
+			    	location.href="auctionEnroll?auction_code=${auction.get('auction_code')}";
 			    }
 		  	});
 		
-		
 	});// onclick
-	
 	
 });
 
+window.history.forward(); function noBack(){ 
+	window.history.forward();
+	}
 
 </script>
 </head>
-<body>
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
+
 	<jsp:include page="../nav.jsp" />
 	<div id="next">
 
@@ -115,7 +119,7 @@ $(function() {
 							<div class="swiper-wrapper">
 								<div class="swiper-slide">
 									<div class="swiper-wrapper">
-										<img src="${auction.get('image_name')}" class="MainImgItemImg">
+										<img src="${auction.image_name}" class="MainImgItemImg">
 									</div>
 								</div>
 							</div>
@@ -128,7 +132,7 @@ $(function() {
 								<div class="swiper-wrapper">
 									<div class="swiper-slide">
 										<div class="TitleWrapper" >
-											<div class="TitleText1">&nbsp;&nbsp;${auction.get('auction_item_name')}</div>
+											<div class="TitleText1">&nbsp;&nbsp;${auction.auction_item_name}</div>
 										</div>
 									</div>
 								</div>
@@ -136,20 +140,6 @@ $(function() {
 						</div>
 					</div>
 					<div class="DescriptionWrapper"></div>
-					<div class="PreviewImgListWrapper">
-						<div class="PreviewImgListPreviewImgContainer">
-							<div class="swiper-container" modules="[object Object]">
-								<div class="swiper-wrapper">
-									<div class="swiper-slide">
-										<div class="TitleWrapper" style="background-color:gainsboro">
-											<div class="TitleText1">&nbsp;&nbsp;즉시 구매가</div>
-											<div class="TitleText1" style="color:#BB2649">&nbsp;&nbsp;${auction.get('auction_immediate_price')}원</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 				
 				<!--오른쪽섹션 -->
@@ -164,50 +154,28 @@ $(function() {
 							alt="공유하기" class="TopNavigationIcon">
 					</div>
 					<div class="TitleWrapper">
-						<div class="TitleText1" style="color:#BB2649">경매 입찰 보증금 금액</div>
-						<div class="TitleText2">${deposit}원</div>
+						<div class="TitleText1" style="color:#BB2649">경매 낙찰 결제 금액</div>
+						<div class="TitleText2">${payPrice }원</div>
 					</div>
 					<div class="SubTitleWrapper">
 						<div class="SubTitleDetailBox">
-							<div class="SubTitleDetailText">${auction.get('auction_item_name')}</div>
+							<div class="SubTitleDetailText">${auction.auction_item_name}</div>
 						</div>
-
 					</div>
 					<div class="itemControllerWrapper">
 						<div class="SomeonesItemWrapper">
-							<div width="90%" id="auctionEnroll" class="SomeonesModifyButton"data-cd="${marketItem.item_code }">
-								<div color="#FFFFFF" class="SomeonesItemText">경매 참여</div>
+							<div width="90%" id="payment" class="SomeonesModifyButton" data-cd="${marketItem.item_code }">
+								<div color="#FFFFFF" class="SomeonesItemText">결제하기</div>
 							</div>
 						</div>
 					</div>
 					<div class="DescriptionWrapper"></div>
 					
-					<!-- 카테고리 -->
-					<div class="CategoryWrapper">
-						<div class="CategoryTitle">카테고리</div>
-						<div class="CategoryCategoryBox">
-							<div class="DivergedLinkTitle">${auction.get('auction_category')}</div>
-<!-- 							<img -->
-<!-- 								src="https://ccimage.hellomarket.com/img/web/item/detail/ico_arrow_right_category.png" -->
-<!-- 								alt="오른쪽 화살표 아이콘" class="CategoryArrow"> -->
-<!-- 							<div class="DivergedLinkTitle">기타 가방</div> -->
-						</div>
-					</div>
-					<!-- 태그 -->
-					<div class="Tag__Wrapper-td2hyd-0 jLVEzu">
-						<div class="Tag__Title-td2hyd-1 irWNGN">상품설명</div>
-						<div class="Tag__TagWrapper-td2hyd-2 TitNF">
-								<div class="Tag__TagBox-td2hyd-3 jsrScO">
-								<div class="Tag-td2hyd-4 fKGvTO">${auction.get("auction_content")}</div>
-							</div>
-						</div>
-					</div>
-					
 					<!-- 가격 제안-->
 					<div class="Delivery__Wrapper-sc-1og3un6-0 ddxgBm">
 						<div class="Delivery__Title-sc-1og3un6-1 iijbrT" >현재 머니또 포인트</div>
 						<div class="Delivery__DeliveryBox-sc-1og3un6-2 jOMSSb">
-								<div width="63px" class="Delivery__Text-sc-1og3un6-4 bOvaxU" style="color:#268BF">${member.get("member_point")}원</div>
+							<div width="63px" class="Delivery__Text-sc-1og3un6-4 bOvaxU" style="color:#268BF">${member.member_point}원</div>
 						</div>
 					</div>
 
@@ -219,20 +187,6 @@ $(function() {
 						</div>
 					</div>
 					
-					
-					<!-- 안전거래 -->
-					<div class="SafePayment__Wrapper-a27qmi-0 cmuUgc">
-						<img
-							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_safe_payment.svg"
-							alt="안전결제 노티스 아이콘" class="SafePayment__Img-a27qmi-1 ctnThu">
-						<div class="SafePayment__TextWrapper-a27qmi-2 gEcoNf">
-							<div class="SafePayment__Text-a27qmi-3 fgLKso">경매 유찰 시 보증금은 바로 돌려받습니다.</div>
-						</div>
-					</div>
-					
-					
-					<div></div>
-					<div></div>
 					<div class="DescriptionWrapper"></div>
 
 					<div style="margin: -19px 20px 10px"
@@ -246,7 +200,6 @@ $(function() {
 				</div>
 			</div>
 		</div>
-		
 		
 		<!-- 신고 모달창 -->
 		<div class="ReactModalPortal" style="display: none;">
@@ -314,7 +267,6 @@ $(function() {
 				</div>
 			</div>
 		</div>
-
 	</div>
 	
 <script type="text/javascript">
@@ -330,9 +282,6 @@ $(function() {
 			$(".ReactModalPortal").remove();
 		});
 		
-		
-
-	
 	});
 
 </script>

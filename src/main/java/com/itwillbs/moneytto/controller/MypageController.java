@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.itwillbs.moneytto.service.AuctionService;
 import com.itwillbs.moneytto.service.BankService;
 import com.itwillbs.moneytto.service.MarketService;
 import com.itwillbs.moneytto.service.MemberService;
@@ -39,6 +40,9 @@ public class MypageController {
 	@Autowired
 	private BankService bankService;
 	
+	@Autowired
+	private AuctionService auctionService;
+	
 	@Value("${client_id}")
 	private String client_id;
 	
@@ -49,30 +53,32 @@ public class MypageController {
 		String sId = (String)session.getAttribute("sId");
 		
 		model.addAttribute("client_id", client_id);
-		
+		System.out.println("sId" + sId);
 		if(member_id == null && sId == null ) {
 			model.addAttribute("msg", "잘못된 접근입니다.");
 			return "fail_back";
 		}
-		if(member_id == null  ||  sId == member_id) {
+		if(member_id == null  ||  sId == member_id ) {
 			member_id = sId;
 			HashMap<String, String> account = bankService.getAccount(member_id);
 			
-			
 		}
+		HashMap<String,String> member = memberService.getMember(member_id);
 		
 		List<HashMap<String,String>> itemList = null;
 		
 	    switch (itemType) {
-		    case "sellItem" : itemList  = memberService.getSellItemList(member_id); break;
-		    case "wishItem" : itemList  = memberService.getWishItemList(member_id); break;
-	        case "buyItem" 	: itemList  = memberService.getBuyItemList(member_id); break;
+		    case "sellItem"  : itemList  = memberService.getSellItemList(member_id); break;
+		    case "wishItem"  : itemList  = memberService.getWishItemList(member_id); break;
+	        case "buyItem" 	 : itemList  = memberService.getBuyItemList(member_id); break;
+	        case "auctionPay": itemList =  auctionService.getMyAuction(member);  break;
 	    }
 	    
-	    HashMap<String,String> member = memberService.getMember(member_id);
+	    System.out.println(memberService.getMemberGrade(member));
 	    
 	    model.addAttribute("member", member);
-	    
+	    model.addAttribute("itemType", itemType);
+	    System.out.println("itemType : " + itemType);
 	    model.addAttribute("itemList", itemList);
 	    
 		return "mypage/mypage";

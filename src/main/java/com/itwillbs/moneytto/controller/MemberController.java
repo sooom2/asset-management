@@ -143,7 +143,10 @@ public class MemberController {
 		        HashMap<String, String> account = bankService.getAccount(member.get("member_id"));
 				if(account != null) {
 					// 세션 객체에 access_token, user_seq_no 저장
-					System.out.println(account);
+					System.out.println("==================================");
+					System.out.println("account : " + account);
+					System.out.println("==================================");
+					
 					session.setAttribute("access_token", account.get("access_token"));
 					session.setAttribute("user_seq_no", account.get("user_seq_no"));
 				}

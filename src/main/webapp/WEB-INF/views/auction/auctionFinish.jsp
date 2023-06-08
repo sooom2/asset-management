@@ -160,13 +160,13 @@
 							<a href="mypage" target="_blank" rel="noopener noreferrer">
 								<div class="image_box">
 									<div class="image_table">
-										<img src="https://ccimage.hellomarket.com/web/2019/member/img_apply_profile_4x_0419.png" alt="명품인증님의 프로필 이미지">
+										<img src="${member.get('member_image') }" alt="명품인증님의 프로필 이미지">
 									</div>
 								</div>
 								<div class="info">
 									<div id="sessionCount">
-										<span>${sessionScope.sId }</span>
-										<span id="sessionCount2">0/100명</span>
+										<span>${member.get('member_nickname') }</span>
+										<span id="sessionCount2"></span>
 									</div>
 								</div>
 							</a>
