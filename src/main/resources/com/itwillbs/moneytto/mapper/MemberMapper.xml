@@ -294,4 +294,20 @@
 		
 	</select>
 	
+	<!-- 관리자 회원목록 -->
+	<select id="selectAdminMember" resultType="hashmap">
+		SELECT ROW_NUMBER() OVER(ORDER BY member_bday DESC ) AS rownum, m.*, count(*) over() AS totalCnt
+			FROM member m
+				WHERE 1=1
+				<if test="searchKeyword != null and !searchKeyword.equals('')">
+					AND (member_id LIKE '%${searchKeyword}%' OR member_nickname LIKE '%${searchKeyword}%')
+				</if>
+				<if test="typeSelect != null and !typeSelect.equals('') and !typeSelect.equals('전체')">
+					AND member_auth_status = #{typeSelect}
+				</if>
+				<if test="startNum != null and !startNum.equals('')">
+					LIMIT ${startNum}, ${endNum}
+				</if>
+	</select>
+	
 </mapper>
