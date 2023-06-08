@@ -55,7 +55,15 @@ public class AuctionService {
 	public int updateAuctionFinish(String auction_code, String success_id, String success_price) {
 		return mapper.updateAuctionFinish(auction_code, success_id, success_price);
 	}
-
-
+	// 내가 입찰한 경매 목록 06.08 14:41 추가 mypage에서 사용함
+	// ========================================================== 
+	public List<HashMap<String, String>> getMyAuction(String member_nickname){
+		return mapper.selectMyAuctionByNickname(member_nickname);
+	}
+	
+	public List<HashMap<String, String>> getMyAuction(HashMap<String, String> member){
+		return mapper.selectMyAuctionByMember(member);
+	}
+	// ==========================================================
 
 }

@@ -120,7 +120,32 @@ function memberAuth(){
 				</div>
 				
 				<div class="itemWrapper">
+				
 					<c:choose>
+					
+					<c:when test="${param.itemList eq 'auctionPay'}">
+						<table id="board-table">
+							<tr>
+								<th id="board-header">글번호</th>
+								<th id="board-header">경매 이름</th>
+								<th id="board-header">낙찰가</th>
+								<th id="board-header">날짜</th>
+							</tr>
+						    <c:forEach items="${itemList}" var="item" varStatus="status">
+						        <tr>
+						            <td id="board-data">${status.index +1}</td>
+						           <td id="board-data">
+									   <div class="board-info">
+									      <a href="AuctionPay?comm_code=${item.comm_code}" class="board-title">${item.auction_item_name}</a>
+									   </div>
+									</td>
+						            <td id="board-data">${item.success_price}</td>
+						            <td id="board-data">${item.auction_end_date}</td>
+						        </tr>
+						    </c:forEach>
+						</table>
+					</c:when>
+					
 					<c:when test='${not empty itemList }'>
 						<c:forEach var="item" items="${itemList }">
 						<div class="item" data-cd="${item.item_code }">
@@ -159,31 +184,7 @@ function memberAuth(){
 					
 					
 					
-					<c:when test="${itemList eq auctionPay}">
-						<table id="board-table">
-							<tr>
-								<th id="board-header">글번호</th>
-								<th id="board-header">제목</th>
-								<th id="board-header">작성자</th>
-								<th id="board-header">날짜</th>
-								<th id="board-header">조회수</th>
-							</tr>
-						    <c:forEach items="${itemList}" var="item">
-						        <tr>
-						            <td id="board-data">${boardList.comm_code}</td>
-						           <td id="board-data">
-									   <div class="board-info">
-									      <a href="commBoardView?comm_code=${boardList.comm_code}" class="board-title">${boardList.comm_title}</a>
-									      <span class="comment-count">(${boardList.comment_count})</span>
-									   </div>
-									</td>
-						            <td id="board-data">${boardList.member_id}</td>
-						            <td id="board-data">${boardList.comm_date}</td>
-						            <td id="board-data">${boardList.comm_count}</td>
-						        </tr>
-						    </c:forEach>
-						</table>
-					</c:when>
+					
 					
 					
 					
