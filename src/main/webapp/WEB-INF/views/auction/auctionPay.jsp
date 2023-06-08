@@ -44,7 +44,7 @@
 												</div>
 												<div class="cont cont_main_col_1">
 													<div class="item_title title_main_col_1">${auction.auction_item_name}</div>
-													<div class="item_price pri_main_col_1">${payPrice }원</div>
+													<div class="item_price pri_main_col_1">${lastLog.log_content }원</div>
 													<div class="item_hasdeliveryfee">무료배송</div>
 												</div>
 											</div></li>
@@ -123,25 +123,78 @@
 									<div class="title_box sub_title_box">
 										<span class="payment_method"> 결제수단</span>
 										<div class="etc_other_wrapper_form">
-											<span class="other_wrapper_description other_wrapper_box">택배나
-												등기 이외 방법으로 거래하시나요? <span>&gt;</span>
+											<span class="other_wrapper_description other_wrapper_box">
+											택배나 등기 이외 방법으로 거래하시나요? <span>&gt;</span>
 											</span>
 										</div>
 									</div>
-									
-									<div><div><ul class="pay_method_list item_pay_method_list"><div class="other_wrapper_div"><ul><li><div class="wrapper_div other_wrapper_div_option checked"><div class="info"><label for="Kakaopay" class="radio_desc">카카오페이</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="EasyBank" class="radio_desc">간편 계좌이체</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="CreditCard" class="radio_desc">신용카드</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="Toss" class="radio_desc">토스결제</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="MobilePhone" class="radio_desc">휴대폰</label></div><div class="exp"></div></div></li><li><div class="wrapper_div other_wrapper_div_option"><div class="info"><label for="VirtualBank" class="radio_desc">무통장(가상계좌)</label></div><div class="exp"></div></div></li></ul></div><div class="other_wrapper_consignment"><span>카카오페이 수수료 : 3.2%</span></div></ul></div><div class="certified_box hide"><div class="title_txt"><span>핸드폰 인증</span></div><div class="phone_number_box"><input type="number" placeholder="숫자만 입력"><button class="addr_search">인증요청</button></div><div class="auth_code_box"><input type="number" placeholder="인증번호 입력"><button class="addr_search">인증</button></div></div></div>
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
+										<div>
+											<div>
+												<ul class="pay_method_list item_pay_method_list">
+													<div class="other_wrapper_div">
+														<ul>
+															<li>
+																<div class="wrapper_div other_wrapper_div_option checked">
+																	<div class="info">
+																		<label for="Kakaopay" class="radio_desc">카카오페이</label>
+																	</div>
+																	<div class="exp"></div>
+																</div>
+															</li>
+															<li>
+																<div class="wrapper_div other_wrapper_div_option">
+																	<div class="info">
+																		<label for="EasyBank" class="radio_desc">간편 계좌이체</label>
+																	</div>
+																	<div class="exp"></div>
+																</div>
+															</li>
+															<li>
+																<div class="wrapper_div other_wrapper_div_option">
+																	<div class="info">
+																		<label for="CreditCard" class="radio_desc">신용카드</label>
+																	</div>
+																	<div class="exp"></div>
+																</div>
+															</li>
+															<li>
+																<div class="wrapper_div other_wrapper_div_option">
+																	<div class="info">
+																		<label for="Toss" class="radio_desc">토스결제</label>
+																	</div>
+																	<div class="exp"></div>
+																</div>
+															</li>
+															<li>
+																<div class="wrapper_div other_wrapper_div_option">
+																	<div class="info">
+																		<label for="MobilePhone" class="radio_desc">휴대폰</label>
+																	</div>
+																	<div class="exp"></div>
+																</div>
+															</li>
+															<li>
+																<div class="wrapper_div other_wrapper_div_option">
+																	<div class="info">
+																		<label for="VirtualBank" class="radio_desc">무통장(가상계좌)</label>
+																	</div>
+																	<div class="exp"></div>
+																</div>
+															</li>
+														</ul>
+													</div>
+													<div class="other_wrapper_consignment"><span>카카오페이 수수료 : 3.2%</span>
+													</div>
+												</ul>
+											</div>
+											<div class="certified_box hide">
+											<div class="title_txt"><span>핸드폰 인증</span></div>
+											<div class="phone_number_box"><input type="number" placeholder="숫자만 입력">
+											<button class="addr_search">인증요청</button></div><div class="auth_code_box">
+											<input type="number" placeholder="인증번호 입력"><button class="addr_search">인증</button>
+											</div>
+											</div>
+										</div>
 									<div>
 										<div class="certified_box hide">
 											<div class="title_txt">
