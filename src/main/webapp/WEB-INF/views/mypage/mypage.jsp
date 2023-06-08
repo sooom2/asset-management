@@ -36,7 +36,7 @@ function memberAuth(){
 	+"?response_type=code"
 	+"&client_id=${client_id}"
 	+"&redirect_uri=http://localhost:8082/moneytto/memberAuth"
-	+"&scope=login inquiry transfer"
+	+"&scope=login inquiry transfer oob"
 	+"&state=11111111111111111111111111111111"
 	+"&auth_type=0";
 	

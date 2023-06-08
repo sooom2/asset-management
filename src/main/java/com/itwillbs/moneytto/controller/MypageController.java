@@ -49,15 +49,14 @@ public class MypageController {
 		String sId = (String)session.getAttribute("sId");
 		
 		model.addAttribute("client_id", client_id);
-		
+		System.out.println("sId" + sId);
 		if(member_id == null && sId == null ) {
 			model.addAttribute("msg", "잘못된 접근입니다.");
 			return "fail_back";
 		}
-		if(member_id == null  ||  sId == member_id) {
+		if(member_id == null  ||  sId.equals(member_id) ) {
 			member_id = sId;
 			HashMap<String, String> account = bankService.getAccount(member_id);
-			
 			
 		}
 		
