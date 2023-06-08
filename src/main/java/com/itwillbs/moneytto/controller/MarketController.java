@@ -171,11 +171,6 @@ public class MarketController {
 	
 	
 		
-	@GetMapping(value = "market_payment")
-	public String marketPayment() {
-		
-		return "market/market_payment";
-	}
 	
 	@GetMapping(value = "itemRegist")
 	public String itemRegist(Model model,HttpSession session) {

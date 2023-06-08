@@ -1480,4 +1480,20 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
     height: 8px;
     content: '';
 }
+.item_detail{
+	margin-top:20px;
+	font-family: Pretendard Variable;
+}
 
+.item_detail .item_title{
+   font-weight: 600;
+   font-size: 20px;
+   margin-bottom: 20px;
+   margin-top:35px;
+}
+
+.item_detail .item_price{
+	font-weight: 600;
+	font-size:20px;
+	margin-bottom: 19px;
+}

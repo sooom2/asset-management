@@ -291,8 +291,8 @@
 }
 
 .right_main .chat_header .declaration img {
-   margin-left: 5px;
-   width: 27px;
+   margin-left: 8px;
+   width: 30px;
    cursor: pointer
 }
 .right_main .chat_header .trade {
@@ -307,7 +307,7 @@
 }
 
 .right_main .chat_header .trade img {
-    width: 21px;
+    width: 30px;
     cursor: pointer
 }
 
@@ -1244,9 +1244,7 @@
    font-size: 22px;
 }
 .swal-text {
-/*   background-color: #FEFAE3; */
   padding: 17px;
-/*   border: 1px solid #F0E1A1; */
   display: block;
   margin: 22px;
   text-align: center;

@@ -31,8 +31,8 @@ let item_code;
 // 안되면그냥 바로 결제로 연결
 
 
-function payment() {
-  window.open("market_payment", "_blank", "width=500,height=660,top=300,left=300");
+function market_payment() {
+  window.open("market_payment", "_blank", "width=500,height=650,top=100,left=600");
 }
 
 
@@ -118,7 +118,6 @@ $(function() {
 	       $(".chat_input").attr("disabled", true);
 	       $(".chat_input").attr("placeholder", "탈퇴한회원입니다");
 	   } else {
-	       //       $(".chat_header").remove();
 	       $(".chat_input").attr("disabled", false);
 	       $(".chat_input").attr("placeholder", "메세지를 입력해주세요.");
 	   }
@@ -318,7 +317,7 @@ $(function() {
 		                                $('.schdule').remove();
 		                                $('.card_box.active .sch_box').val(trade_date);
 		                                $('div.card_box.active .profile div').text("거래중");
-		                                $(".declaration").after("<div class='trade' onclick='payment()'><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+		                                $(".declaration").after("<div class='trade' onclick='market_payment()'><div><span style='position: fixed;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
 		                            }
 		                        });
 		                    }
@@ -354,19 +353,6 @@ $(function() {
 	               },
 	               success: function(result) {
 	            	   
-	            	   
-	                   //조회한 채팅방 내용에서의 room_code는 동일함 그래서 젤첨값인 resul[0]으로 조회
-	                   //                     room_code = result[0].room_code;
-
-	                   // 채팅 생성 날짜 (처음에 날짜 지정 포맷으로 변경)
-	                   
-	            	  
-// 	       			if ( $('input.active').val() != '거래완료') && new Date($("input.sch_box").val() < new Date()){
-// 	       			    alert(room_code + "번방의 거래가 일정이 지났습니다");
-// 	       			}
-	                   
-	                   
-	                   
 	                   let dateString = result.chatDetail[0].chat_openDate;
 	                   let date = new Date(dateString);
 	                   let year = date.getFullYear();
@@ -386,8 +372,8 @@ $(function() {
 	                    let profileImg = sell_profileImg;
 	                    let trade_date = result.chatDetail[0].trade_date;
 	                    let opponent_delete_status = result.opponentId.opponent_delete_status;
-						let item_code = result.chatDetail[0].item_code;
 						let opponent_nickname;
+						item_code = result.chatDetail[0].item_code;
 
 	                    //Y일때 탈퇴
 	                    if (opponent_delete_status == 'Y') {
@@ -408,9 +394,6 @@ $(function() {
 	                    $(".trade_status").append("<input type='button' value='판매중'> <input type='button' value='거래중'> ");
 	                    $(".trade_status").append(sellButton);
 
-	                    if (result.chatDetail[0].item_status === '거래완료') {
-	                        $(".trade_status").append($("<div class='reviewForm' style='text-align: right;font-size: 13px; color: #bbb'><input type='hidden'value='"+item_code+"'><a>후기작성</a></div>"));
-	                    }
 
 	                    $(".trade_status input").each(function() {
 	                        if ($(this).val() === result.chatDetail[0].item_status) {
@@ -418,7 +401,12 @@ $(function() {
 	                        }
 	                    });
 
-
+	                    if (result.chatDetail[0].item_status === '거래완료') {
+                            $(".trade_status").append($("<div class='reviewForm' style='text-align: right;font-size: 13px; color: #bbb'><input type='hidden' value='" + item_code + "'><a>후기작성</a></div>"));
+                        } else {
+                            $(".reviewForm").remove();
+                        }
+	                    
 	                    $("input.sch_box").val(trade_date);
 
 	                    if (sId == buy_id) {
@@ -429,7 +417,7 @@ $(function() {
  
 
 	                        if (result.chatDetail[0].item_status == '거래중') {
-	                            $(".declaration").after("<div class='trade' onclick='payment()'  ><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+	                            $(".declaration").after("<div class='trade' onclick='market_payment()' ><div><span style='position: fixed;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
 	                        } else {
 	                            $(".trade").remove();
 	                        }
@@ -510,80 +498,81 @@ $(function() {
 	                }
 	            }); //ajax
 
-	        }).then((arg) => { //then    
-	            $(".trade_status input").on("click", function() {
-	                let item_status = $(this).val();
-	                let clickedButton = $(this);
+			}).then((arg) => { // then
+			    $(".trade_status input").on("click", function() {
+			        let item_status = $(this).val();
+			        let clickedButton = $(this);
 
-	                if ($('input.sch_box').val() === "" && item_status === "거래중") {
-	                    swal({	
-                    		icon: "warning",
-                    		text: "일정을 먼저 잡아주세요"
-	                    });
+			        if ($('input.sch_box').val() === "" && item_status === "거래중") {
+			            swal({
+			                icon: "warning",
+			                text: "일정을 먼저 잡아주세요"
+			            });
+			            return;
+			        }
 
-	                    return;
-	                }
-	                
-	                
-	                let result = swal({
-	                	icon: "info",
-	                    buttons: {
-	                        confirm: {
-	                            text: "네",
-	                            value: true,
-	                            visible: true,
-	                            className: "",
-	                            closeModal: true,
-	                        },
-	                        cancel: {
-	                            text: "취소",
-	                            value: false,
-	                            visible: true,
-	                            className: "",
-	                            closeModal: true,
-	                        }
-	                    },
-	                    text: item_status + "(으)로 상태를 변경하시겠습니까",
-	                });
+			        swal({
+			            icon: "info",
+			            buttons: {
+			                confirm: {
+			                    text: "네",
+			                    value: true,
+			                    visible: true,
+			                    className: "",
+			                    closeModal: true,
+			                },
+			                cancel: {
+			                    text: "취소",
+			                    value: false,
+			                    visible: true,
+			                    className: "",
+			                    closeModal: true,
+			                }
+			            },
+			            text: item_status + "(으)로 상태를 변경하시겠습니까",
+			        }).then((confirmed) => {
+			            if (confirmed) {
+			            	
+			            	
+			                if (item_status == '거래중') {
+			                    $(".declaration").after("<div class='trade' onclick='market_payment()'><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+			                } else {
+			                    $(".trade").remove();
+			                }
 
-	                result.then((confirmed) => {
-	                    if (confirmed) {
+			                if (item_status == '판매중') {
+			                    $('input.sch_box').val("");
+			                }
+			                
 
-	                    	if (item_status == '거래중') {
-	                            $(".declaration").after("<div class='trade' onclick='payment()'><div><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
-	                        } else {
-	                            $(".trade").remove();
-	                        }
+			                $.ajax({ // 두번째 ajax
+			                    type: "GET",
+			                    url: "itemStatus_update",
+			                    dataType: "text",
+			                    data: {
+			                        item_status: item_status,
+			                        room_code: room_code
+			                    },
+			                    success: function(result2) {
+			                        $('.trade_status input.active').removeClass('active');
+			                        clickedButton.addClass('active');
+			                        $('div.card_box.active .profile div').text(item_status);
 
-	                        if (item_status == '판매중') {
-	                            $('input.sch_box').val("");
-	                        }
+			                        // 거래완료인 경우 후기 작성 영역 보이기
+			                        if (item_status === '거래완료') {
+			                            $(".trade_status").append($("<div class='reviewForm' style='text-align: right;font-size: 13px; color: #bbb'><input type='hidden' value='" + item_code + "'><a>후기작성</a></div>"));
+			                        } else {
+			                            $(".reviewForm").remove();
+			                        }
 
-	                        $.ajax({ //두번째 ajax
-	                            type: "GET",
-	                            url: "itemStatus_update",
-	                            dataType: "text",
-	                            data: {
-	                                item_status: item_status,
-	                                room_code: room_code
-	                            },
-	                            success: function(result2) {
-	                                $('.trade_status input.active').removeClass('active');
-	                                clickedButton.addClass('active');
-	                                $('div.card_box.active .profile div').text(item_status);
-	                                
-	                                
-	                            }
-	                        });
-	                    }
-	                });
+			                        swal("처리되었습니다.");
+			                    }
+			                });
+			            }
+			        });
+			    });
+			});
 
-
-	               
-	            });	                
-
-
-	        }); //then(arg)
 	        
 
 
@@ -1013,8 +1002,9 @@ $(function() {
                      
                      <c:if test="${sellDetail.buy_member_id eq sessionScope.sId and chatList.item_status eq '거래중' }">
                         <div class="trade"  >
-                           <div class="moneyttoPay" onclick="payment()">
-                              <img src="${path }/resources/images/chat/btn_trade_x2.png" alt="송금이미지">
+                           <div class="moneyttoPay" onclick="market_payment()">
+								<span style="position: fixed;font-size: 8px;margin-top: -11px;  margin-left: -2px;">안전결제</span>
+								<img src="${path }/resources/images/chat/btn_trade_x2.png" alt="송금이미지">
                            </div>
                         </div>
                      </c:if>
