@@ -1,5 +1,6 @@
 package com.itwillbs.moneytto.socket;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.json.JSONObject;
@@ -53,12 +54,16 @@ public class AuctionLogSocketHandler extends TextWebSocketHandler {
 //		System.out.println(session.getAttributes());
 //		System.out.println(session);
 //		System.out.println("sessionList : " + sessionList);
-	    
+	    // 로그 시간
+	    Date nowDate = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm"); 
+		String logTime = simpleDateFormat.format(nowDate); 
+		
 	    // DB저장 방코드와 채팅코드도 넘겨야 하고 그건 컨트롤러에서 받을꺼고 페이지 들어올때
         int insertCount = service.insertAuctionLog(id, messages, auctionCode);
         if(insertCount > 0) {
         	for(WebSocketSession sess: sessionList) {
-        		sess.sendMessage(new TextMessage(id + ":" + name + ":" + messages));
+        		sess.sendMessage(new TextMessage(id + "|" + name + "|" + messages + "|" + logTime));
         	}
 		} 
 	}

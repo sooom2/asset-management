@@ -13,6 +13,7 @@
 		   , DATE_FORMAT(auction_date, '%Y.%m.%d %H:%i') AS auction_date
 		   , DATE_FORMAT(auction_start_date, '%Y.%m.%d %H:%i') AS auction_start_date
 		   , DATE_FORMAT(auction_end_date, '%Y.%m.%d %H:%i') AS auction_end_date
+		   , DATEDIFF(auction_start_date, now()) AS auction_datediff
 		   , auction_status
 		   , success_price
 		   , auction_notice

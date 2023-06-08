@@ -107,7 +107,6 @@ public class AuctionController {
 	public String auctionPeriod(@RequestParam String auction_code, HttpSession session, Model model) { // 이미지 코드와 경매 코드를 받아서 목록 상세
 		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
 		model.addAttribute("auction", auction);
-		System.out.println("auction확인 " + auction);
 		// 년 월 일
 		LocalDate now = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
@@ -118,7 +117,6 @@ public class AuctionController {
 		// 경매 등록 확인
 		String id = (String)session.getAttribute("sId");
 		HashMap<String, String> auctionEnroll = service.selectAuctionEnroll(auction_code, id);
-		System.out.println("auctionEnroll1111111" + auctionEnroll);
 		
 		// 방 번호 대신 방에 등록이 되었는지 저장해서 그걸로 확인
 		boolean result = auctionEnroll != null ? true : false;
@@ -137,8 +135,6 @@ public class AuctionController {
 		model.addAttribute("lastLog", lastLog);
 		model.addAttribute("lastLogYN", lastLogYN);
 		model.addAttribute("myLog", myLog);
-		System.out.println("출력ㄱㄱㄱㄱㄱㄱㄱㄱ" + auctionLog + "여긱ㄱㄱㄱㄱ");
-		System.out.println("myLog 출력22222" + myLog);
 		
 		// 시작 가격 - 이건 계속 바뀌는 거 그래도 필요하네
 		String price = Integer.parseInt(auction.get("auction_present_price").replace(",", "")) + "";
@@ -223,7 +219,7 @@ public class AuctionController {
 		
 		model.addAttribute("auction_code", auction_code);
 		
-		return "redirect:/auction";
+		return "redirect:/auctionMain";
 	};
 	
 	// 경매 결제 창
@@ -239,6 +235,11 @@ public class AuctionController {
 		model.addAttribute("member", member);
 		model.addAttribute("auction", auction);
 		model.addAttribute("lastLog", lastLog);
+		
+		// 결제 금액(낙찰가 - 보증금)
+		int payPrice = Integer.parseInt(lastLog.get("log_content")) - Integer.parseInt(auctionPay.get("deposit"));
+		model.addAttribute("payPrice", payPrice);
+		
 //		model.addAttribute("deposit", payMap.get("deposit"));
 		
 //		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
@@ -254,10 +255,9 @@ public class AuctionController {
 	@ResponseBody
 	public void auctionUpdateFinish(@RequestParam Map<String, String> auction) {
 		
-		
 		// 경매 종료 낙찰자 -> '판매 완료', 낙찰자 이름 업데이트
 		int updateCount = service.updateAuctionFinish(auction.get("auction_code"), auction.get("success_id"), auction.get("success_price"));
-			
+		
 		// 보증금 입금
 		int updatePoint = memberService.updateDeposit(auction.get("auction_code"), auction.get("success_id"), Integer.parseInt(auction.get("deposit")));
 			

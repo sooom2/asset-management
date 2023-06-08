@@ -85,7 +85,14 @@
 				// 경매 남은시간 분, 초 
 				let diffMinutes = 30 - parseInt(((current_time - start_time) / (1000 * 60)));
 				let diffSeconds = 60 - (((current_time - start_time) % (1000 * 60)) / 1000);
-				let diffSecondsResult = diffSeconds < 10 ? "0" + (diffSeconds - 1) : diffSeconds - 1; 
+				let diffSecondsResult;
+				if (diffSeconds < 10) {
+					diffSecondsResult = "0" + diffSeconds;
+				} else if(diffSeconds == 60) {
+					diffSecondsResult = "00";
+				} else {
+					diffSecondsResult = diffSeconds;
+				}
 				let resultClock = (diffMinutes - 1) + ":" + diffSecondsResult;
 				
 				
@@ -244,6 +251,7 @@
 		$('#auction_input_before *').prop('disabled', true);
 		$('.chat_footer *').prop('disabled', true);
 		
+		let success_nickname = $("#auctionLog_nickname").html();
 		
 		$.ajax({
             type: "GET",
@@ -251,7 +259,7 @@
             dataType: "text",
             data: {
                 auction_code: "${auction.auction_code }",
-                success_id: $("#auctionLog_nickname").html(),
+                success_id: success_nickname.substring(0, success_nickname.length -1),
                 success_price: $("#lastLogPrice").html().toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","),
                 deposit: ${deposit}
             },
@@ -280,12 +288,15 @@
         			    },
         			  }).then((result) => {
         			    if (result) {
-        			    	location.href = "auctionPay?auction_code=${auction.get('auction_code') }&successPrice=" + $("#lastLogPrice").html();
+        			    	
+        			    	location.href = "auctionPay?auction_code=${auction.get('auction_code') }&successPrice=" 
+        			    					+ $("#lastLogPrice").html() + "&deposit=${deposit}";
         			    } else {
         			    	location.href = "auctionMain";
         			    }
         		  	});
         		} else { // 닉네임과 세션 다를 때 -> 유찰
+        			
         			swal({
         			    title: "경매가 종료 되었습니다.",
         			    text: "유찰되었습니다. \n낙찰자: " + $("#auctionLog_nickname").html(),
@@ -634,14 +645,16 @@ function connect2() {
 		var sessionId = null; //데이터를 보낸 사람
 		var sessionName = null; 
 		var message = null;
+		var logTime = null;
 // 		var enrollCode = ${enrollCode};
 		var auctionCode = "${auction.auction_code }";
 		
 		var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
 		console.log("메세지 수신" + data);
-		sessionId = data.split(":")[0];
-		sessionName = data.split(":")[1];
-		message = data.split(":")[2];
+		sessionId = data.split("|")[0];
+		sessionName = data.split("|")[1];
+		message = data.split("|")[2];
+		logTime = data.split("|")[3];
 	
 		
 		// 낙찰 최대금액
@@ -659,7 +672,7 @@ function connect2() {
 		$("#auctionLog_nickname").html(sessionName + "님");
 		
 		// 경매 로그
-		var auctionLog = "<div class='chat_myself'>" + "<" + hours + ":" + minutes + "> " + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + "</div>";
+		var auctionLog = "<div class='chat_myself'>" + "<" + logTime + "> " + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + "</div>";
 		$(".logBox").append(auctionLog);
 		$('.auction_log').scrollTop($('.auction_log')[0].scrollHeight + 100);
 		

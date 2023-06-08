@@ -155,7 +155,7 @@ window.history.forward(); function noBack(){
 					</div>
 					<div class="TitleWrapper">
 						<div class="TitleText1" style="color:#BB2649">경매 낙찰 결제 금액</div>
-						<div class="TitleText2">${lastLog.log_content }원</div>
+						<div class="TitleText2">${payPrice }원</div>
 					</div>
 					<div class="SubTitleWrapper">
 						<div class="SubTitleDetailBox">

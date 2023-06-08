@@ -99,7 +99,6 @@
 					resultClock = diffMinutes + ":" + diffSecondsResult;
 				}
 				
-				
 				// 경매시작 시간 지나면 (시간 카운트)
 				if(start_time <= current_time) {
 					$("#con_countDown").html(resultClock);
@@ -110,7 +109,6 @@
 				
 				// 경매 종료 시간 지나면 이벤트. 
 				if(end_time < current_time) {
-					
 					window.setTimeout(function(){ // setInterval 함수 종료
 						window.clearInterval(time);
 						$("#con_countDown").html("경매가 종료 되었습니다.");
@@ -642,14 +640,16 @@ function connect2() {
 		var sessionId = null; //데이터를 보낸 사람
 		var sessionName = null; 
 		var message = null;
+		var logTime = null;
 // 		var enrollCode = ${enrollCode};
 		var auctionCode = "${auction.auction_code }";
 		
 		var cur_session = "${sessionScope.sId}"; //현재 세션에 로그인 한 사람
 		console.log("메세지 수신" + data);
-		sessionId = data.split(":")[0];
-		sessionName = data.split(":")[1];
-		message = data.split(":")[2];
+		sessionId = data.split("|")[0];
+		sessionName = data.split("|")[1];
+		message = data.split("|")[2];
+		logTime = data.split("|")[3];
 	
 		
 		// 낙찰 최대금액
@@ -667,7 +667,7 @@ function connect2() {
 		$("#auctionLog_nickname").html(sessionName + "님");
 		
 		// 경매 로그
-		var auctionLog = "<div class='chat_myself'>" + "<" + hours + ":" + minutes + "> " + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + "</div>";
+		var auctionLog = "<div class='chat_myself'>" + "<" + logTime + "> " + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + "</div>";
 		$(".logBox").append(auctionLog);
 		$('.auction_log').scrollTop($('.auction_log')[0].scrollHeight + 100);
 		
