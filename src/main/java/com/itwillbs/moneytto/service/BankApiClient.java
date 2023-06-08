@@ -1,14 +1,13 @@
 package com.itwillbs.moneytto.service;
 
-import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,6 +21,8 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.itwillbs.moneytto.generator.BankValueGenerator;
+import com.itwillbs.moneytto.vo.AccountDepositListResponseVO;
+import com.itwillbs.moneytto.vo.AccountDetailVO;
 import com.itwillbs.moneytto.vo.AccountWithdrawResponseVO;
 import com.itwillbs.moneytto.vo.ResponseTokenVO;
 import com.itwillbs.moneytto.vo.ResponseUserInfoVO;
@@ -37,6 +38,14 @@ public class BankApiClient {
 	
 	@Value("${client_secret}")
 	private String client_secret;
+	
+	@Value("${client_name}")
+	private String client_name;
+	@Value("${client_bank_code}")
+	private String client_bank_code;
+	@Value("${client_account_num}")
+	private String client_account_num;
+	
 	
 //	@Autowired
 	private RestTemplate restTemplate;
@@ -135,7 +144,7 @@ public class BankApiClient {
 	}
 
 	// 계좌 상세정보(잔고) 조회 요청 - GET
-	public Map<String,String> requestAccountDetail(Map<String, String> map) {
+	public AccountDetailVO requestAccountDetail(Map<String, String> map) {
 //		System.out.println("거래코드 : " + valueGenerator.getBankTranId());
 //		System.out.println("거래일시 : " + valueGenerator.getTranDTime());
 		String bank_tran_id = valueGenerator.getBankTranId();
@@ -158,7 +167,9 @@ public class BankApiClient {
 				.queryParam("fintech_use_num", map.get("fintech_use_num"))
 				.queryParam("tran_dtime", tran_dtime)
 				.build();
-		logger.info("＠＠＠＠＠ 잔액조회 요청 URI 정보 : " + uriBuilder.toString());
+		System.out.println("=========================================");
+		System.out.println("잔액조회 요청 URI 정보 : " + uriBuilder.toString());
+		System.out.println("=========================================");
 		
 		// REST API 요청을 위해 RestTemplate 객체의 exchange() 메서드 호출
 		// 파라미터1) URI 정보(UriComponents 객체의 toString() 메서드 활용하여 문자열로 변환)
@@ -168,21 +179,22 @@ public class BankApiClient {
 		// 리턴타입 : ResponseEntity<AccountDetailVO>
 		
 		//VO 삒쳐서..
-		ParameterizedTypeReference<Map<String, String>> responseType = new ParameterizedTypeReference<Map<String, String>>() {};
 		
 		restTemplate = new RestTemplate();
-		ResponseEntity<Map<String,String>> responseEntity = restTemplate.exchange(
+		ResponseEntity<AccountDetailVO> responseEntity = restTemplate.exchange(
 																uriBuilder.toString(), 
 																HttpMethod.GET, 
 																httpEntity, 
-																responseType);
-
+																AccountDetailVO.class);
 		
 		System.out.println("=========================================");
 		System.out.println("/v2.0/account/balance/fin_num 리턴값 : " + responseEntity.getBody());
 		System.out.println("=========================================");
+		
 		return responseEntity.getBody();
 	}
+	
+	// 출금 이체 요청 - POST(Content-type : application/json)
 	public AccountWithdrawResponseVO withdraw(Map<String, String> map) {
 		// 토큰 요청에 사용될 API URL 설정
 		String url = baseUrl + "/v2.0/transfer/withdraw/fin_num";
@@ -192,31 +204,32 @@ public class BankApiClient {
 	    httpHeaders.add("Authorization", "Bearer " + map.get("access_token"));
 	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 	    
-	    
-	    String tran_amt = map.get("charge_point");
-	    
+	      
 	    JSONObject jo = new JSONObject();
 	    jo.put("bank_tran_id", valueGenerator.getBankTranId());
-	    // N이 기본값
-	    jo.put("cntr_account_type", "N");
-	    // 등록할때 썼던 계좌번호
-	    // DB에 저장될 수 없어서 여기서 임의로 기록
+	    jo.put("cntr_account_type", "N");	
+	    jo.put("cntr_account_num", "70667066"); // cntr_account_num(약정 계좌 = 쌤꺼 고정)
 	    // 운영자 핀테크 번호 =====================================================
-	    jo.put("cntr_account_num", "11111129");				// 약정 계좌/계정 번호 ?
 	    jo.put("dps_print_content", "머니또머니 충전");				// 출금계좌에 찍히는 내용 
-	    jo.put("fintech_use_num", "120211385488932372196408");				// 사용자 핀테크번호
-	    // 거래금액
+	    jo.put("fintech_use_num", map.get("fintech_use_num"));				// 사용자 핀테크번호
+	    jo.put("wd_print_content", "머니또 충전금");			// wd_print_content(출금계좌 인자내역, 내 통장에 표시할 내역) 
+	    // ================================================ 기존 코드
+	    // String tran_amt = map.get("charge_point");
+	    // ================================================
 	    // TODO
-	    jo.put("tran_amt", tran_amt);											// 거래금액
+	    jo.put("tran_amt", map.get("tran_amt"));		    // 거래금액
 	    jo.put("tran_dtime", valueGenerator.getTranDTime());				// 거래일자	
 	    // 요청 고객
-	    jo.put("req_client_name", "머니또");								
-	    jo.put("req_client_fintech_use_num", "120211385488932372196159");	// 운영자 고정
-	    jo.put("req_client_num", "1");										//
-	    jo.put("transfer_purpose", "TR");									
-	    jo.put("recv_client_name", "머니또");
-	    jo.put("recv_client_bank_code", "002");						// 산업 002
-	    jo.put("recv_client_account_num", "11111124");				// 최종수취고객계좌번호
+	    jo.put("req_client_name", map.get("member_name"));							// 요청 고객명 				
+	    jo.put("req_client_fintech_use_num", map.get("fintech_use_num"));	// 
+	    jo.put("req_client_num", map.get("fintech_use_num").toUpperCase());	// req_client_num(요청고객회원번호 = 아이디(문자 사용 시 대문자 필수!)			//
+	    
+	    jo.put("transfer_purpose", "TR");
+	    
+	    // 관리계정의 정보
+	    jo.put("recv_client_name", client_name); // 입력받은 데이터
+		jo.put("recv_client_bank_code",client_bank_code); // 입력받은 데이터
+		jo.put("recv_client_account_num", client_account_num); // 입력받은 데이터
 	    
 	    HttpEntity<String> request = 
 	    	      new HttpEntity<String>(jo.toString(), httpHeaders);
@@ -224,9 +237,58 @@ public class BankApiClient {
 	    ResponseEntity<AccountWithdrawResponseVO> responseEntityStr = restTemplate.
 	    	      postForEntity(url, request, AccountWithdrawResponseVO.class);
 	    
+	    System.out.println("=========================================");
 	    System.out.println(responseEntityStr.getBody());
+	    System.out.println("=========================================");
 	    
 	    return responseEntityStr.getBody();
+	}
+	
+	// 입금 처리 요청 - POST(Content-type : application/json)
+	public AccountDepositListResponseVO deposit(Map<String, String> map) {
+		// 입금 이체 API(핀테크 번호 사용) URL
+		String url = baseUrl + "/v2.0/transfer/deposit/fin_num";
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.add("Authorization", "Bearer " + map.get("access_token"));
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+		
+		// 1건의 입금 정보 갖는 JSONObject 객체 생성
+		JSONObject req = new JSONObject();
+		req.put("tran_no", 1); // 거래순번(단건이체이므로 1 고정)
+		req.put("bank_tran_id", valueGenerator.getBankTranId()); // bank_tran_id(거래고유번호 - BankValueGenerator 클래스 활용)
+		req.put("fintech_use_num", map.get("recv_client_fintech_use_num")); // fintech_use_num(입금계좌 핀테크 이용번호)
+		req.put("print_content", "머니또거래"); // dps_print_content(입금계좌 인자내역, 상대방 통장에 표시할 내역)
+		req.put("tran_amt", map.get("tran_amt")); // 입금금액
+		req.put("req_client_name", "요청고객성명"); // req_client_name(요청고객성명)
+		req.put("req_client_fintech_use_num", map.get("fintech_use_num")); // req_client_fintech_use_num(요청고객 핀테크 이용번호)
+		req.put("req_client_num", "ADMIN"); // req_client_num(요청고객회원번호 = 아이디(문자 사용 시 대문자 필수!)
+		req.put("transfer_purpose", "TR"); // transfer_purpose(이체용도 - 송금을 의미하는 "TR" 전달)
+		// => 이 정보를 리스트 형태로 담기 위해 JSONArray 객체 활용
+		JSONArray req_list = new JSONArray();
+		req_list.put(req);
+		// --------------------------------------------------------------------
+		// JSONObject 객체를 활용하여 요청 파라미터를 JSON 객체 형식으로 생성
+		JSONObject jo = new JSONObject();
+		jo.put("cntr_account_num", "99999999999999"); // cntr_account_num(약정 계좌)
+		jo.put("cntr_account_type", "N"); // cntr_account_type(계좌형태 - 계좌를 의미하는 "N" 전달)
+		
+		jo.put("wd_pass_phrase", "NONE"); // 입금이체용 암호문구(테스트 계좌는 "NONE" 값 설정)
+		jo.put("wd_print_content", "용돈"); // wd_print_content(출금계좌 인자내역, 내 통장에 표시할 내역)
+		jo.put("name_check_option", "on"); // 수취인 성명 검증 여부
+		jo.put("tran_dtime", valueGenerator.getTranDTime()); // tran_dtime(요청일시 - BankValueGenerator 클래스 활용)
+		jo.put("req_cnt", 1); // 입금요청건수(1 고정 => 다건 이체 불가능)
+		jo.put("req_list", req_list); // 입금요청 리스트 전달
+		
+		HttpEntity<String> httpEntity = new HttpEntity<String>(jo.toString(), httpHeaders);
+		
+		restTemplate = new RestTemplate();
+		ResponseEntity<AccountDepositListResponseVO> responseEntity = 
+				restTemplate.postForEntity(url, httpEntity, AccountDepositListResponseVO.class);
+		
+		System.out.println(responseEntity.getBody());
+		
+		return responseEntity.getBody();
 	}
 	
 

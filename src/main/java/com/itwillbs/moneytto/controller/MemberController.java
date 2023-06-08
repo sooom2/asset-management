@@ -60,8 +60,6 @@ public class MemberController {
 							,Model model, HttpSession session
 							,@RequestParam("file") MultipartFile file) {
 		
-		System.out.println(member);
-		
 		// 1) 암호화된 비밀번호 생성 
 		String securePasswd = new BCryptPasswordEncoder().encode(member.get("member_pw"));
 		
@@ -71,8 +69,11 @@ public class MemberController {
 		
 		member.put("member_location",location);		
 		
+		
 		// 3) 입력받은 사진 이미지 설정
-		if(!file.isEmpty() ) {
+		// 기본 이미지 설정 안하면 통과하게.. 
+		if(member.get("file") == null) {
+			
 			// 실제 파일 저장 경로
 			String uploadDir = session.getServletContext().getRealPath("/resources/upload/member");
 			// 파일 확장자
@@ -93,6 +94,8 @@ public class MemberController {
 			}
 	        member.put("member_image", saveDir);
 		}
+		
+		member.put("member_image", "http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg");
 		// 등록된 프로필 이미지가 없을 때는 디폴트값 적용
 		int insertCount = memberService.registMember(member);
 		
@@ -104,9 +107,9 @@ public class MemberController {
 			
 		} 
 		 // 가입 실패
-		model.addAttribute("msg", "회원 가입 실패!");
+		model.addAttribute("msg", "회원 가입에 실패했습니다. 입력된 정보를 다시 확인해주세요.");
 		
-		return "member/fail_back";
+		return "fail_back";
 		
 	}
 	

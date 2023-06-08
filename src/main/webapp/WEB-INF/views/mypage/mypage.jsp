@@ -37,10 +37,10 @@ function memberAuth(){
 	+"?response_type=code"
 	+"&client_id=${client_id}"
 	+"&redirect_uri=http://localhost:8082/moneytto/memberAuth"
-	+"&scope=login inquiry transfer oob"
+	+"&scope=login inquiry transfer"
 	+"&state=11111111111111111111111111111111"
 	+"&auth_type=0";
-	
+	// oob 삭제 06.09
 }
 
 </script>

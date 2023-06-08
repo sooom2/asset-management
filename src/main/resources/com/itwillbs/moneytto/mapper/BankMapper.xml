@@ -43,6 +43,7 @@
 			account
 		SET
 			fintech_use_num = #{fintech_use_num}
+			, balance_amt = #{balance_amt}
 		WHERE
 			id = #{member_id}			
 	</update>

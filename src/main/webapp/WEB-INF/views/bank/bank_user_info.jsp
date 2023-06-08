@@ -54,7 +54,7 @@
 						<input type="hidden" name="fintech_use_num" value="${account.fintech_use_num }">
 						<input type="hidden" name="user_name" value="${userInfo.user_name }">
 						<input type="submit" value="상세조회">
-						<input type="submit" formaction="bank_regist" formmethod="POST"value="등록하기">
+<!-- 						<input type="submit" formaction="bank_regist" formmethod="POST"value="등록하기"> -->
 					</form>
 				</td>
 			</tr>

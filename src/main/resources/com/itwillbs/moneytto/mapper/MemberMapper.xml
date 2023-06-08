@@ -18,7 +18,7 @@
 				   , 'N' -- member_auth_status
 				   , now() 
 				   , #{member_image}	-- member_image
-				   , '1' -- #{grade_score}
+				   , '1' -- gradeScore 
 				   , '0' -- declare_count
 				   , POINT(${member_location})
 				   , 'N' -- member_delete_status

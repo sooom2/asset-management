@@ -1,11 +1,11 @@
 package com.itwillbs.moneytto.service;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itwillbs.moneytto.vo.AccountDepositListResponseVO;
 import com.itwillbs.moneytto.vo.AccountDetailVO;
 import com.itwillbs.moneytto.vo.AccountWithdrawResponseVO;
 import com.itwillbs.moneytto.vo.ResponseTokenVO;
@@ -21,7 +21,6 @@ public class BankApiService {
 	public ResponseTokenVO requestToken(Map<String, String> authResponse) {
 		// BankApiClient - requestToken() 메서드 호출 후 결과값 리턴
 		return apiClient.requestToken(authResponse);
-//		return null;
 	}
 
 	// 사용자 정보 조회 요청
@@ -31,13 +30,20 @@ public class BankApiService {
 	}
 
 	// 계좌 상세정보(잔고) 조회 요청
-	public Map<String, String> requestAccountDetail(Map<String, String> map) {
+	public AccountDetailVO requestAccountDetail(Map<String, String> map) {
 		// BankApiClient - requestAccountDetail() 메서드 호출 후 결과값 리턴
 		return apiClient.requestAccountDetail(map);
 	}
 
+	// 출금 이체 요청
 	public AccountWithdrawResponseVO withdraw(Map<String, String> map) {
+		// BankApiClient - withdraw() 메서드 호출 후 결과값 리턴
 		return apiClient.withdraw(map);
+	}
+
+	// 입금 요청
+	public AccountDepositListResponseVO deposit(Map<String, String> map) {
+		return apiClient.deposit(map);
 	}
 	
 }
