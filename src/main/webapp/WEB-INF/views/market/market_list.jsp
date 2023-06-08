@@ -635,7 +635,6 @@
 				tag(input);
 				
 				marketItemList();
-				
 				return false;
 			});
 			
