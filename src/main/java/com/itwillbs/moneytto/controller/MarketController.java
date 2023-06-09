@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,16 +25,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itwillbs.moneytto.service.BankApiService;
 import com.itwillbs.moneytto.service.BankService;
 import com.itwillbs.moneytto.service.MarketChatService;
 import com.itwillbs.moneytto.service.MarketService;
 import com.itwillbs.moneytto.service.MemberService;
+import com.itwillbs.moneytto.vo.AccountDetailVO;
+import com.itwillbs.moneytto.vo.AccountVO;
+import com.itwillbs.moneytto.vo.ResponseUserInfoVO;
 
 
 
 
 @Controller
 public class MarketController {
+	
+	@Autowired
+	private BankApiService apiService;
 	
 	@Autowired
 	private MarketService service;
@@ -131,6 +136,20 @@ public class MarketController {
 		
 		return ja.toString();
 	}
+	
+	@ResponseBody
+	@GetMapping(value = "tagList")
+	public String selectTagList(Model model) {
+		List<HashMap<String, String>> tagList = service.getTagList();
+		model.addAttribute("tagList", tagList);
+		JSONArray ja = new JSONArray(tagList);
+		
+		return ja.toString();
+	}
+	
+	
+	
+	
 	
 	@GetMapping(value = "market_detail")
 	public String marketDetail(Model model, HttpSession session, String item_code) {
@@ -478,6 +497,36 @@ public class MarketController {
 			HashMap<String, String> member = memberService.getMember(id);
 			HashMap<String, String> account = bankService.getAccount(id);
 //					model.addAttribute("item_price", item_price);
+
+			
+			// 세션에 저장된 엑세스 토큰 및 사용자 번호 변수에 저장
+			String access_token = (String)session.getAttribute("access_token");
+			String user_seq_no =  (String)session.getAttribute("user_seq_no");
+			System.out.println("access_token : " + access_token);
+			System.out.println("user_seq_no : " + user_seq_no);
+			
+			// access_token 이 null 일 경우 "계좌 인증 필수" 메세지 출력 후 이전페이지로 돌아가기
+			if(access_token == null) {
+				model.addAttribute("msg", "계좌 인증이 필요합니다.");
+				return "fail_back";
+			}
+			
+			// 사용자 정보 조회(REST API 요청)		
+			// BankApiService - requestUserInfo() 메서드 호출
+			// => 파라미터 : 엑세스토큰, 사용자번호   리턴타입 : ResponseUserInfoVO(userInfo)
+			ResponseUserInfoVO userInfo = apiService.requestUserInfo(access_token, user_seq_no);
+			
+			System.out.println("유저인포");
+			System.out.println(userInfo.getRes_list());
+
+			
+//			120211385488932372196844
+			// Model 객체에 ResponseUserInfoVO 객체 저장
+			model.addAttribute("userInfo", userInfo);
+			System.out.println("==================================");
+			System.out.println("/bank_userInfo : " + userInfo);
+			System.out.println("==================================");
+//			if(userInfo.getRes_list())
 			
 			
 			System.out.println("======================================================");
@@ -492,6 +541,70 @@ public class MarketController {
 			return "market/market_payment";
 		}
 	   
+		// 계좌 상세정보 조회(2.3.1. 잔액조회 API)
+		// /balance/fin_num
+		@PostMapping(value="bank_accountDetail_pay", produces = "application/text; charset=UTF-8")
+		@ResponseBody
+		public String getAccountDetail(
+				@RequestParam Map<String, String> map, HttpSession session, Model model) throws JsonProcessingException {
+
+			
+//			response.setCharacterEncoding("UTF-8");
+
+			
+			System.out.println("map ===================================================");
+			System.out.println(map);
+			System.out.println("===================================================");
+			// 미로그인 또는 엑세스토큰 없을 경우 "fail_back" 페이지를 통해
+			// "권한이 없습니다!" 출력 후 이전페이지로 돌아가기
+			if(session.getAttribute("sId") == null || session.getAttribute("access_token") == null) {
+				model.addAttribute("msg", "권한이 없습니다!");
+				return "fail_back";
+			}
+			
+			// 세션 객체의 엑세스 토큰을 Map 객체에 추가
+			map.put("access_token", (String)session.getAttribute("access_token"));
+			
+			// BankApiService - requestAccountDetail() 메서드를 호출하여
+			// 계좌 상세정보 조회 요청
+			// => 파라미터 : Map 객체   리턴타입 : AccountDetailVO(account)
+			AccountDetailVO account = apiService.requestAccountDetail(map);
+			
+			// 응답코드(rsp_code)가 "A0000" 가 아니면 에러 상황이므로 에러 처리
+			// => "정보 조회 실패!" 출력 후 이전페이지로 돌아가기(fail_bank)
+			// => 출력메세지에 응답메세지(rsp_message) 도 함께 출력
+			if(account == null) {
+				model.addAttribute("msg", "정보 조회 실패");
+				return "fail_back";
+			} else if(!account.getRsp_code().equals("A0000")) {
+				model.addAttribute("msg", "정보 조회 실패 - " + account.getRsp_message());
+				return "fail_back";
+			}
+			System.out.println("account ======================================================");
+			System.out.println(account);
+			System.out.println("account ======================================================");
+			
+			//AccountDetailVO 객체 저장
+			model.addAttribute("account", account);
+			model.addAttribute("account_num_masked", map.get("account_num_masked"));
+			model.addAttribute("user_name", map.get("user_name"));
+//			long amt = account.getBalance_amt();
+			
+			
+			
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonStr = mapper.writeValueAsString(account);
+			System.out.println("jsonStr ======================================================");
+			System.out.println(jsonStr);
+			System.out.println("jsonStr ======================================================");
+			
+			
+			return jsonStr;
+			
+		}
+		
+	
+		
 	   
 	   @GetMapping("getTradeDate")
 	   @ResponseBody
@@ -702,6 +815,7 @@ public class MarketController {
 
 	
 	@GetMapping(value = "itemModify")
+	
 	public String marketModify(Model model, HttpSession session, String item_code) {
 		
 		//session아이디로 닉네임 얻기
@@ -837,8 +951,18 @@ public class MarketController {
 	    }
 	}
 
-
-
-
+	//payment
 	
+	
+//	// 사용자 정보 조회
+//	@GetMapping("/bank_userInfoPay")
+//	public String requestUserInfo(HttpSession session, Model model) {
+//		
+//		
+//		return "bank/bank_user_info";
+//	}
+
+
+
+
 }

@@ -595,7 +595,12 @@
                , im.image_code  
    </select>
    
-   
+   <!-- 태그 리스트 -->
+   <select id="selectTag" resultType="hashmap">
+   	SELECT item_tag
+   		FROM
+   			item
+   </select>
     
    <select id="itemDetail" resultType="hashmap">
       SELECT item.*,member.member_nickname ,member.member_image 

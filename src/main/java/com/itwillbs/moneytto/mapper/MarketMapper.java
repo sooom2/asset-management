@@ -149,4 +149,7 @@ public interface MarketMapper {
 
 
 
+   // 태그 리스트
+   List<HashMap<String, String>> selectTag();
+
 }
