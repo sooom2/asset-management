@@ -352,7 +352,7 @@ $(function() {
 	                   room_code: room_code
 	               },
 	               success: function(result) {
-	            	   
+	            	   console.log(result.opponentId);
 	                   let dateString = result.chatDetail[0].chat_openDate;
 	                   let date = new Date(dateString);
 	                   let year = date.getFullYear();
@@ -372,7 +372,7 @@ $(function() {
 	                    let profileImg = sell_profileImg;
 	                    let trade_date = result.chatDetail[0].trade_date;
 	                    let opponent_delete_status = result.opponentId.opponent_delete_status;
-						let opponent_nickname;
+						let opponent_nickname = result.opponentId.opponent_nickname;
 						item_code = result.chatDetail[0].item_code;
 
 	                    //Y일때 탈퇴
@@ -484,7 +484,7 @@ $(function() {
 	                                "<div class='chat_opponent_image_box'>" +
 	                                "<img class='chat_opponent_profile_image' src='" + profileImg + "' alt='상대방이미지'></div>" +
 
-	                                "<div class='chat_opponent_title'>" + result.chatDetail[i].buy_nickname + "</div>" +
+	                                "<div class='chat_opponent_title'>" + opponent_nickname + "</div>" +
 	                                "<div class='chat_opponent_message'>" +
 	                                "<span>" + result.chatDetail[i].chat_content + "</span>" +
 	                                "<div class='chat_opponent_timeago'>" + formatChatTime + "</div></div></div></div>";
