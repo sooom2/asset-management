@@ -43,7 +43,16 @@ public class BankController {
 	private static final Logger logger = LoggerFactory.getLogger(BankController.class);
 	
 	/* ===========================================================================================
+			핀테크
+			120211385488932372338507
+			
+			계좌
 			333123456789
+			
+			일련번호
+			1101032192
+			
+			
 			[ 송금 원리 ]
 			구매자A -> 판매자B
 			1) 구매자A -> 이용기관C : 출금이체
@@ -148,6 +157,11 @@ public class BankController {
 		System.out.println("/bank_userInfo : " + userInfo);
 		System.out.println("==================================");
 		
+		String id = (String)session.getAttribute("sId");
+		HashMap<String, String> selectedAccount = bankService.getAccount(id);
+		
+		model.addAttribute("selectedAccount", selectedAccount);
+		
 		
 		return "bank/bank_user_info";
 	}
@@ -190,6 +204,7 @@ public class BankController {
 		model.addAttribute("account", account);
 		model.addAttribute("account_num_masked", map.get("account_num_masked"));
 		model.addAttribute("user_name", map.get("user_name"));
+		
 		
 		return "bank/bank_account_detail";
 		
