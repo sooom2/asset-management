@@ -140,7 +140,7 @@ public class AdminController {
 			map.put("startNum", "0");
 			map.put("endNum", "10");
 		}
-		// 경매 목록 검색
+		// 중고거래 목록 검색
 		List<HashMap<String, String>> adminItem = marketService.selectadminItem(map);
 		// 내역이 존재할 경우
 		if(adminItem.size() > 0) {
@@ -150,7 +150,7 @@ public class AdminController {
 		// 내역을 model에 저장
 		model.addAttribute("adminItem", adminItem);
 		model.addAttribute("pageCnt", map);
-		System.out.println("adminItem에서" + adminItem);
+		System.out.println("adminItem에서1" + adminItem);
 		System.out.println("adminItem에서" + map);
 		
 		return "admin/adminItem";
@@ -248,7 +248,26 @@ public class AdminController {
 	
 // 신고=============================================
 	@RequestMapping(value = "adminReport")
-	public String adminReport() {
+	public String adminReport(@RequestParam HashMap<String, String> map, Model model) {
+		// 페이지 번호, 글목록수 제한
+		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
+			map.put("pageNum", "1");
+			map.put("startNum", "0");
+			map.put("endNum", "10");
+		}
+		// 계좌내역 조회
+		List<HashMap<String, String>> adminReport = marketService.selectAdminReport(map);
+		// 내역이 존재할 경우
+		if(adminReport.size() > 0) {
+			HashMap<String, String> countMap = adminReport.get(0);
+			map.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+		}
+		// 내역을 model에 저장
+		model.addAttribute("adminReport", adminReport);
+		// 
+		model.addAttribute("pageCnt", map);
+		System.out.println("adminReport에서1" + adminReport);
+		System.out.println("adminReport에서2" + map);
 		
 		return "admin/adminReport";
 	}

@@ -67,9 +67,9 @@ public class MarketService {
 	}
 
 
-
-	public int insertReport(String id, String targetId, String reportType, String reportContent) {
-		return mapper.insertReport(id, targetId, reportType, reportContent);
+	// 신고하기
+	public int insertReport(HashMap<String, String> map) {
+		return mapper.insertReport(map);
 	}
 
 
@@ -93,6 +93,11 @@ public class MarketService {
 	// 관리자 아이템 목록
 	public List<HashMap<String, String>> selectadminItem(HashMap<String, String> map) {
 		return mapper.selectadminItem(map);
+	}
+
+	// 관리자 신고 목록
+	public List<HashMap<String, String>> selectAdminReport(HashMap<String, String> map) {
+		return mapper.selectAdminReport(map);
 	}
 
 

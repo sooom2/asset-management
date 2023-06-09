@@ -209,25 +209,22 @@ public class BankApiClient {
 	    JSONObject jo = new JSONObject();
 	    jo.put("bank_tran_id", valueGenerator.getBankTranId());
 	    jo.put("cntr_account_type", "N");	
-	    jo.put("cntr_account_num", "333123456789"); // cntr_account_num(약정 계좌 = 쌤꺼 고정)
-	    // 운영자 핀테크 번호 =====================================================
+	    jo.put("cntr_account_num", "99999999999999"); 
 	    jo.put("dps_print_content", "머니또머니 충전");				// 출금계좌에 찍히는 내용 
-	    jo.put("fintech_use_num", map.get("fintech_use_num"));				// 사용자 핀테크번호
 	    jo.put("wd_print_content", "머니또 충전금");			// wd_print_content(출금계좌 인자내역, 내 통장에 표시할 내역) 
-	    jo.put("tran_amt", map.get("tran_amt"));		    // 거래금액
-	    jo.put("tran_dtime", valueGenerator.getTranDTime());				// 거래일자	
-	    // 요청 고객
-//	    jo.put("req_client_name", map.get("member_name"));							// 요청 고객명
-	    jo.put("req_client_name", "홍길동");							// 요청 고객명 				
-	    jo.put("req_client_fintech_use_num", map.get("fintech_use_num"));	// 
-	    jo.put("req_client_num", map.get("id").toUpperCase());	// req_client_num(요청고객회원번호 = 아이디(문자 사용 시 대문자 필수!)			//
-	    
 	    jo.put("transfer_purpose", "TR");
+	    jo.put("tran_dtime", valueGenerator.getTranDTime());				// 거래일자	
+	    jo.put("req_client_num", map.get("id").toUpperCase());	// req_client_num(요청고객회원번호 = 아이디(문자 사용 시 대문자 필수!)
+	    // TODO 테스트베드에 등록해줘야하는 부분
+	    jo.put("req_client_name", map.get("member_name"));		// 요청 고객명
+	    jo.put("fintech_use_num", map.get("fintech_use_num"));	// 요청 핀테크번호 = 핀테크번호
+	    jo.put("req_client_fintech_use_num",map.get("fintech_use_num"));// 요청고객핀테크번호 
+	    jo.put("tran_amt",map.get("tran_amt"));
 	    
-	    // 관리계정의 정보
-	    jo.put("recv_client_name", "머니또"); // 입력받은 데이터
-		jo.put("recv_client_bank_code",client_bank_code); // 입력받은 데이터
-		jo.put("recv_client_account_num", client_account_num); // 입력받은 데이터
+	    // oob scope 있는 관리자용 계정의 정보
+	    jo.put("recv_client_name", "머니또"); 
+		jo.put("recv_client_bank_code","002"); 
+		jo.put("recv_client_account_num", "21111129"); 
 		
 	    HttpEntity<String> request = 
 	    	      new HttpEntity<String>(jo.toString(), httpHeaders);
@@ -269,9 +266,8 @@ public class BankApiClient {
 		// --------------------------------------------------------------------
 		// JSONObject 객체를 활용하여 요청 파라미터를 JSON 객체 형식으로 생성
 		JSONObject jo = new JSONObject();
-		jo.put("cntr_account_num", "333123456789"); // cntr_account_num(약정 계좌)
+		jo.put("cntr_account_num", "99999999999999"); // cntr_account_num(약정 계좌)
 		jo.put("cntr_account_type", "N"); // cntr_account_type(계좌형태 - 계좌를 의미하는 "N" 전달)
-		
 		jo.put("wd_pass_phrase", "NONE"); // 입금이체용 암호문구(테스트 계좌는 "NONE" 값 설정)
 		jo.put("wd_print_content", "용돈"); // wd_print_content(출금계좌 인자내역, 내 통장에 표시할 내역)
 		jo.put("name_check_option", "on"); // 수취인 성명 검증 여부

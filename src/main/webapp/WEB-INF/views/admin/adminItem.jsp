@@ -165,8 +165,10 @@
 							<tr>
 								<th data-sortable="true" style="width: 5%;"><a href="#"
 									class="datatable-sorter">글번호</a></th>
-								<th data-sortable="true" style="width: 30%;"><a href="#"
+								<th data-sortable="true" style="width: 20%;"><a href="#"
 									class="datatable-sorter">상품이름</a></th>
+								<th data-sortable="true" style="width: 10%;"><a href="#"
+									class="datatable-sorter">상품등록자ID</a></th>
 								<th data-sortable="true" style="width: 10%;"><a href="#"
 									class="datatable-sorter">거래상태</a></th>
 								<th data-sortable="true" style="width: 10%;"><a href="#"
@@ -185,12 +187,15 @@
 								<tr>
 									<td>${adminItem.rownum }</td>
 									<td>${adminItem.item_subject }</td>
+									<td>${adminItem.report_targetId }</td>
 									<td>${adminItem.item_status }</td>
-									<td>${adminItem.member_id }</td>
-									<td>${adminItem.item_content }</td>
-									<td>${adminItem.rownum }</td>
-									<td class="modi"><input class="btn btn-block btn-more"
-										type="button" value="삭제" onclick="location.href='admin_one_rep?one_code=${adminItem.item_code }'"></td>
+									<td>${adminItem.repId }</td>
+									<td>${adminItem.report_content }</td>
+									<td>${adminItem.rep_cnt }</td>
+									<td class="modi">
+										<input class="btn btn-block btn-more"
+										type="button" value="삭제" onclick="location.href='admin_one_rep?one_code=${adminItem.item_code }'">
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>

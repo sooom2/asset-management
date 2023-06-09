@@ -185,18 +185,22 @@ public class MarketController {
 		return "market/market_detail";
 	}
 	
+	// 신고하기
 	@ResponseBody
 	@GetMapping(value = "report")
-	public void report(Model model, HttpSession session, String targetId, String reportType, String reportContent) {
-		System.out.println("값이 왔을까여");
+	public boolean report(Model model, HttpSession session, @RequestParam HashMap<String, String> map) {
 		String id = (String)session.getAttribute("sId");
-		System.out.println(id);
-		System.out.println(targetId);
-		System.out.println(reportType);
-		System.out.println(reportContent);
+		map.put("id", id);
+		System.out.println("report 확인용: " + map);
+		// view 에 보낼 결과
+		boolean result = false;
 		
-		int insertReport = service.insertReport(id, targetId, reportType, reportContent);
-		System.out.println("insertReport : " + insertReport);
+		int insertReport = service.insertReport(map);
+//		System.out.println("insertReport : " + insertReport);
+		if(insertReport > 0 ) {
+			result = true;
+		}
+		return result;
 	}
 	
 	
