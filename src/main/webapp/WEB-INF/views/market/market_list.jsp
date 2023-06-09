@@ -480,7 +480,7 @@
 						break;
 					case 3: 
 						// 태그 처리
-// 						console.log("태그 처리");
+						console.log("태그 처리");
 						$("#tag").val(item_tag.replace(text, ""))
 				}
 				
