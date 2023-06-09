@@ -58,10 +58,12 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 		String buyId = null;
 		String sellId = sellDetail.get("member_id");
 		
-		
+													//상대방아이디
 		// 내아이디랑 sellId랑 다르면 buy아이디는 target
-		if(name != sellId ) {
-			buyId = target;
+		if(name != sellId) {
+			buyId = name;
+		} else {
+			sellId = target;
 		}
 		
 		System.out.println("sellId ===========================");

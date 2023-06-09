@@ -345,6 +345,7 @@
     /* margin-top: 8px; */
     line-height: 20px;
     flex-wrap: wrap;
+    height: 60px;
 }
 
 .itemWrapper .itemSizeTag {

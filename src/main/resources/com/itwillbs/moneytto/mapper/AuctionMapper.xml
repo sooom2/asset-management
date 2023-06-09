@@ -186,4 +186,16 @@
 					)
 	</insert>
 	
+	<select id="selectAuctionPaid" resultType="hashmap">
+		SELECT ap.*, i.image_name 
+			FROM 
+				auction_paid ap JOIN images i 
+			ON 
+				ap.auction_code = i.table_code 
+			WHERE 
+				ap.auction_code = 'a69fb5fb';
+	</select>
+	
+	
+	
 </mapper>
