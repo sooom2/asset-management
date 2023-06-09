@@ -145,12 +145,12 @@ function memberAuth(){
 						            <c:choose>
 						            	<c:when test="${not empty item.pay_code }">
 						            		<td id="board-data">
-						            			<a href="AuctionPay?auction_code=${item.auction_code}" class="board-title">확인하기</a>
+						            			<a href="auctionPayDetail?auction_code=${item.auction_code}" class="board-title">확인하기</a>
 						            		</td>
 						            	</c:when>
 						            	<c:otherwise>
 						       		     	<td id="board-data">
-						       		     		<a href="auctionPayResult?auction_code=${item.auction_code}" class="board-title">결제하기</a>
+						       		     		<a href="auctionPay?auction_code=${item.auction_code}" class="board-title">결제하기</a>
 						       		     	</td>
 						            	</c:otherwise>
 						            </c:choose>

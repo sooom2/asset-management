@@ -67,4 +67,8 @@ public class AuctionService {
 		return mapper.insertPayResult(map);
 	}
 
+	public HashMap<String, String> selectAuctionPaid(String auction_code) {
+		return mapper.selectAuctionPaid(auction_code);
+	}
+
 }

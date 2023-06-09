@@ -44,4 +44,6 @@ public interface AuctionMapper {
 
 	List<HashMap<String, String>> selectMyAuctionPaid(HashMap<String, String> member);
 
+	HashMap<String, String> selectAuctionPaid(String auction_code);
+
 }

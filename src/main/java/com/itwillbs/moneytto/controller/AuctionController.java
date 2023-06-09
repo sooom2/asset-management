@@ -278,6 +278,15 @@ public class AuctionController {
 		return "redirect:/auctionMain";
 	}
 	
+	// 결제 정보 페이지.
+	@GetMapping("/auctionPayDetail")
+	public String auctionPayDetail(@RequestParam Map<String, String> map, Model model) {
+		HashMap<String, String> auction = service.selectAuctionPaid(map.get("auction_code"));
+		model.addAttribute("auction", auction);
+		
+		return "auction/auctionPayDetail";
+	}
+	
 	
 	// 경매 종료 낙찰자 업데이트
 	@RequestMapping(value="auctionUpdateFinish", method = RequestMethod.GET)
