@@ -87,9 +87,7 @@ $(function(){
 <div class="container" id="container">
 <!-- 인증받은 핀테크번호 -->
 <!-- 등록된 계좌의 핀테크번호를 알아내야함 -->
-<%-- <c:if test="${userInfo.account_num_masked eq '11111***' }"> --%>
-	<input type="hidden" name="fintech_use_num" value="120211385488932372338507"> 
-<%-- </c:if> --%>
+<input type="hidden" name="fintech_use_num" value="${fintech_use_num }"> 
 <input type="hidden" name="user_name" value="${userInfo.user_name }">
     <div class="info_login">
     	<div style="display: inline-block;float: left;">

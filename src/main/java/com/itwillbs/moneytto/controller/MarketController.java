@@ -445,18 +445,6 @@ public class MarketController {
 	         item = marketChatService.getItemList(item_code);
 	         sellId = item.get("member_id");
 	         
-	         
-//	         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-//	         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm");
-//	         DateTimeFormatter outputFormatter2 = DateTimeFormatter.ofPattern("a hh:mm");
-//	         String chatTime = String.valueOf(chatList.get("chat_time"));
-//	         LocalDateTime parsedDateTime = LocalDateTime.parse(chatTime, inputFormatter);
-//	         String formattedDateTime = parsedDateTime.format(outputFormatter);
-//	         String chatAreaTime = parsedDateTime.format(outputFormatter2);
-//	         
-//	         
-//	         model.addAttribute("chatAreaTime",chatAreaTime);
-//	         model.addAttribute("chatTime",formattedDateTime);
 
 	      }
 	      if(chatList !=null) {
@@ -469,6 +457,13 @@ public class MarketController {
 	      System.out.println(room_code);
 	      HashMap<String, String> trade_date = marketChatService.getTradeDate(room_code);
 
+	      
+	      //리뷰가 있으면 후기작성 안보이게 - 후기작성까지 됬으면 거래중 판매중 disabled
+	      
+	      int isReview = marketChatService.isReview(item_code);
+	      
+		  model.addAttribute("isReview",isReview);
+	      
 	      model.addAttribute("trade_date",trade_date);
 	      model.addAttribute("sellDetail",sellDetail);
 	      model.addAttribute("item_subject",item_subject);
@@ -485,7 +480,6 @@ public class MarketController {
 
 	   }// market_chat
 	   
-	// TEST CONTROLLER
 		@RequestMapping(value = "market_payment", method = {RequestMethod.GET, RequestMethod.POST})
 		public String store_pay2(HttpSession session
 								, Model model
@@ -500,7 +494,6 @@ public class MarketController {
 			}
 			HashMap<String, String> member = memberService.getMember(id);
 			HashMap<String, String> account = bankService.getAccount(id);
-//					model.addAttribute("item_price", item_price);
 
 			
 			// 세션에 저장된 엑세스 토큰 및 사용자 번호 변수에 저장
@@ -521,16 +514,17 @@ public class MarketController {
 			ResponseUserInfoVO userInfo = apiService.requestUserInfo(access_token, user_seq_no);
 			
 			System.out.println("유저인포");
-			System.out.println(userInfo.getRes_list());
-
+		
+			HashMap<String, String> accountInfo = bankService.getAccount((String)session.getAttribute("sId"));
 			
+			String fintech_use_num = accountInfo.get("fintech_use_num");
+			model.addAttribute("fintech_use_num",fintech_use_num);
 //			120211385488932372196844
 			// Model 객체에 ResponseUserInfoVO 객체 저장
 			model.addAttribute("userInfo", userInfo);
 			System.out.println("==================================");
 			System.out.println("/bank_userInfo : " + userInfo);
 			System.out.println("==================================");
-//			if(userInfo.getRes_list())
 			
 			
 			System.out.println("======================================================");
@@ -607,12 +601,24 @@ public class MarketController {
 			
 		}
 	
-		
+		@GetMapping("isReview")
+		@ResponseBody
+		public int isReview(int room_code) {
+			HashMap<String, String> item = marketChatService.getItem_code(room_code);
+			String item_code = item.get("item_code");
+			int isReview = marketChatService.isReview(item_code);
+			System.out.println("isReview ==================================");
+		    System.out.println(room_code+","+isReview);
+		    System.out.println("isReview ==================================");
+			
+			return isReview;
+		}
 	   
-	   @GetMapping("getTradeDate")
-	   @ResponseBody
-	   public String getTradeDate(int room_code) {
-		   HashMap<String, String> tradeDate = marketChatService.getTradeDate(room_code);
+		
+		@GetMapping("getTradeDate")
+		@ResponseBody
+		public String getTradeDate(int room_code) {
+			HashMap<String, String> tradeDate = marketChatService.getTradeDate(room_code);
 	   
 		   JSONObject arrTradeDate = new JSONObject(tradeDate);
 		   

@@ -884,6 +884,12 @@
              item_code = #{item_code} 
    </update>
    
+   <select id="isReview" resultType="int">
+	SELECT count(*)
+		FROM review
+			WHERE 1=1
+				AND review_item_code =#{item_code}
+   </select>
    
    
 </mapper>

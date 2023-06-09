@@ -158,6 +158,10 @@ public class MarketChatService {
 	public List<HashMap<String, String>> existChatList(String room_code,String id) {
 		return null;
 	}
+	//리뷰있는지 확인
+	public int isReview(String item_code) {
+		return mapper.isReview(item_code);
+	}
 	
 
 

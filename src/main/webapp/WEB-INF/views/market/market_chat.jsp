@@ -30,30 +30,42 @@ let item_code;
 
 // 안되면그냥 바로 결제로 연결
 
-
-function market_payment() {
-  window.open("market_payment", "_blank", "width=500,height=650,top=100,left=600");
-}
+ function market_payment() {
+   	  window.open("market_payment?item_code="+item_code, "_blank", "width=500,height=650,top=100,left=600");
+   	}
 
 
 
 $(function() {
+	let isReview = ${isReview};
+	// 거래버튼  
+    $(".trade img").attr("src", "${path}/resources/images/chat/btn_trade_x2.png");
+    if ($("input#tradeButton.active").val() == '거래중') {
+        $(".declaration").after("<div class='trade' onclick='market_payment()' ><div><span style='position: absolute;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+    } else {
+        $(".trade").remove();
+    }
 	
-		// 판매상태 버튼 처리 >> db에 상태 업데이트
-	    $(".trade_status input").on("click", function() {
-	        let item_status = $(this).val();
-	        
-	        if ($('input.sch_box').val() === "" && item_status === "거래중") {
-	            swal({	
-	        		icon: "warning",
-	        		text: "일정을 먼저 잡아주세요"
-	            });
+    //리뷰작성
+	$(document).on("click", ".reviewForm", function() {
+		let item_code = $('.item_code').val();
+		let options = "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=400,height=400,left=350,top=200";
+		window.open('reviewForm?item_code=' + item_code, '후기작성', options);
+	});
 	
-	            return;
-	        }
-	        
-	        
-	        
+	
+	// 판매상태 버튼 처리 >> db에 상태 업데이트
+    $(".trade_status input").on("click", function() {
+        let item_status = $(this).val();
+        
+        if ($('input.sch_box').val() === "" && item_status === "거래중") {
+            swal({	
+        		icon: "warning",
+        		text: "일정을 먼저 잡아주세요"
+            });
+
+            return;
+        }
 	        
 	        let result = swal({
 	        	icon: "info",
@@ -103,12 +115,6 @@ $(function() {
 	    }
 
 	
-	   //리뷰작성
-	   $(document).on("click", ".reviewForm", function() {
-			let item_code = $(this).find('input[type="hidden"]').val();
-			let options = "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=400,height=400,left=350,top=200";
-			window.open('reviewForm?item_code=' + item_code, '리뷰작성', options);
-		});
 
 	   // 탈퇴한회원처리 ( disabled 하기)
 	   let isExistMember = "${opponentId.opponent_delete_status}"
@@ -232,6 +238,18 @@ $(function() {
 	       });
 	   }
 
+	   
+	    //리뷰썼을때 후기 작성 지워지고/ 버튼들 disabled
+	    if(isReview = 1){
+			$(".reviewForm").remove();
+			$("#buyButton").prop("disabled", true); 
+			$("#tradeButton").css({
+		           "background": "#fff",
+		           "border": "1px solid #a3a3a3",
+		           "color": "#939393"
+		       });
+			$("#tradeButton").prop("disabled", true); 
+	    }
 
 	   $('.chat_description').scrollTop($('.chat_description')[0].scrollHeight + 1000);
 
@@ -344,7 +362,11 @@ $(function() {
 		//왼쪽 list 눌렸을때
 		function chatDetail(room_code) {
 			//다른채팅방에서 글을쓰고 다른 채팅방 누를경우
+			
 			$('.chat_input').val('');
+			
+			
+			
 			
 			new Promise((succ, fail) => {
 				$.ajax({
@@ -394,7 +416,7 @@ $(function() {
 	                    // 상품판매상태 버튼
 	                    $(".trade_status").empty();
  
-	                    $(".trade_status").append("<input type='button' value='판매중'> <input type='button' value='거래중'> ");
+	                    $(".trade_status").append("<input type='button' value='판매중' id='buyButton'> <input type='button' value='거래중' id='tradeButton'> ");
 	                    $(".trade_status").append(sellButton);
 
 
@@ -411,22 +433,13 @@ $(function() {
                         }
 	                    
 	                    $("input.sch_box").val(trade_date);
-
+	                    
 	                    if (sId == buy_id) {
-	                        $(".trade").empty();
+						 	$(".trade").empty();
 	                        $('.image_table img').attr('src', sell_profileImg);
-	                        profileImg = sell_profileImg;
-	                        $(".trade img").attr("src", "${path}/resources/images/chat/btn_trade_x2.png");
- 
-
-	                        if (result.chatDetail[0].item_status == '거래중') {
-	                            $(".declaration").after("<div class='trade' onclick='market_payment()' ><div><span style='position: absolute;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
-	                        } else {
-	                            $(".trade").remove();
-	                        }
-
-
-	                        // 파는사람일땐 거래완료를 하면안됨
+	                        profileImg = sell_profileImg;						
+						
+						// 파는사람일땐 거래완료를 하면안됨
 	                    } else if (sId == sell_id) {
 	                        let str = "<br><span style='font-size: 11px;  display: inline-block; float:right;margin-top:5px;font-weight: bolder;'><i class='fa-brands fa-bilibili'></i> 판매자는 거래완료버튼을 누를수 없습니다.</span>";
 	                        $('.image_table img').attr('src', sell_profileImg);
@@ -444,6 +457,16 @@ $(function() {
 	                        }
 
 	                    }
+	                    
+		                // 거래버튼  
+                        $(".trade img").attr("src", "${path}/resources/images/chat/btn_trade_x2.png");
+
+                        if (result.chatDetail[0].item_status == '거래중') {
+                            $(".declaration").after("<div class='trade' onclick='market_payment()' ><div><span style='position: absolute;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+                        } else {
+                            $(".trade").remove();
+                        }
+
 
 
 	                    $(".chat_header a .info div").empty();
@@ -574,6 +597,35 @@ $(function() {
 			            }
 			        });
 			    });
+			}).then((arg) => { // then
+
+				$.ajax({
+					type: "GET",
+					url: "isReview",
+					dataType: "json",
+					data: {
+						room_code: room_code
+					},
+					success: function(result) {
+						if(result === 1){
+							$(".reviewForm").remove();
+			      			$("#buyButton").prop("disabled", true); 
+		      				$("#tradeButton").css({
+	      			           "background": "#fff",
+	      			           "border": "1px solid #a3a3a3",
+	      			           "color": "#939393"
+	      			       	});
+		      				$("#tradeButton").prop("disabled", true); 
+		      		    }
+		            	   
+	               }
+	          });
+				
+			
+			
+			
+			
+			
 			});
 
 	        
@@ -1021,7 +1073,7 @@ $(function() {
                              <input type="text" class="sch_box" style="border: none; width: 90px;" readonly value="${trade_date.trade_date }"/>
                          </div>
                          <div class="trade_status">
-                            <input type="button" class="${chatList.item_status eq '판매중' ? 'active' : ''}" value="판매중">
+                            <input type="button" class="${chatList.item_status eq '판매중' ? 'active' : ''}" value="판매중" id="buyButton">
                             <c:choose>
                                <c:when test="${trade_date.trade_date eq null }">
                                   <input type="button" class="${chatList.item_status eq '거래중' ? 'active' : ''}" value="거래중" id="tradeButton" disabled="disabled" style="border: none;background-color: #f0f0f0;color: #000" onclick="tradeBtn()">
@@ -1045,10 +1097,8 @@ $(function() {
                             <br>
                                <c:if test="${chatList.item_status eq '거래완료' and sellDetail.sell_member_id ne sessionScope.sId }">
                                    <div class="reviewForm" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>
-                              		<input type="hidden" value="${sellDetail.item_code }">
+                              		<input type="hidden" value="${sellDetail.item_code }" class="item_code">
                                </c:if>
-                            <c:if test="">
-                            </c:if>
                          </div>
                      </div>
                      
@@ -1188,9 +1238,9 @@ $(function() {
                          </div>
                          <div class="trade_status">
       
-                            <input type="button" class="${chatList.item_status eq '판매중' ? 'active' : ''}" value="판매중">
-                            <input type="button" class="${chatList.item_status eq '거래중' ? 'active' : ''}" value="거래중">
-                            <input type="button" class="${chatList.item_status eq '거래완료' ? 'active' : ''}" value="거래완료">
+                            <input type="button" class="${chatList.item_status eq '판매중' ? 'active' : ''}" value="판매중" id="buyButton">
+                            <input type="button" class="${chatList.item_status eq '거래중' ? 'active' : ''}" value="거래중" id="tradeButton">
+                            <input type="button" class="${chatList.item_status eq '거래완료' ? 'active' : ''}" value="거래완료" id="sellButton">
                             <br>
                             <c:if test="${chatList.item_status eq '거래완료'}">
                                 <div class="reviewForm" style="text-align: right;font-size: 13px; color: #bbb"><a>후기작성</a></div>

@@ -155,4 +155,7 @@ public interface MarketMapper {
    // 태그 리스트
    List<HashMap<String, String>> selectTag();
 
+   //리뷰 있는지 확인
+   int isReview(String item_code);
+
 }
