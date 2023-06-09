@@ -9,6 +9,9 @@
 <link href="${path }/resources/css/market.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/moment.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -59,11 +62,13 @@
 						</div>
 					</div>
 			        
-			        	
+			        <!-- 태그 검색 -->	
 					<div class="searchIconWrapper marketListSearch">
 						<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
-						<div class="searchSearch"><form id="searchForm"><input class="goodsName tag" id="searchTag" type="text" placeholder="태그검색"></form></div>
+						<div class="searchSearch"><form id="searchForm"><input class="goodsName tag" id="searchTag" type="text" placeholder="태그를 검색해보세요!"></form></div>
 				 	</div>
+				 	<!-- 자동완성 단어 리스트 -->
+					<div class="autocomplete"></div>
                	</div>
 	         </div>
 	         <!-- 카테고리 end -->
@@ -339,7 +344,7 @@
 			}
  
 			if(str.includes(doubleChar)) {
-				console.log("중복 구분자 제거");
+// 				console.log("중복 구분자 제거");
 				str = str.replace(doubleChar, character);
 			}
 
@@ -367,14 +372,14 @@
 			$("#item_category").val(item_category);
 			$("#tag").val(item_tag);
 			
-			console.log("------ marketItemList 요청 시 들어가는 값 ------")
-			console.log("item_category : " + item_category);
-			console.log("item_tag : " + item_tag);
-			console.log("item_status : " + item_status);
-			console.log("item_price_min : " + item_price_min);
-			console.log("item_price_max : " + item_price_max);
-			console.log("member_grade : " + member_grade);
-			console.log("sort : " + sort);
+// 			console.log("------ marketItemList 요청 시 들어가는 값 ------")
+// 			console.log("item_category : " + item_category);
+// 			console.log("item_tag : " + item_tag);
+// 			console.log("item_status : " + item_status);
+// 			console.log("item_price_min : " + item_price_min);
+// 			console.log("item_price_max : " + item_price_max);
+// 			console.log("member_grade : " + member_grade);
+// 			console.log("sort : " + sort);
 			
 			$.ajax({													
 	 			type: "GET",
@@ -451,7 +456,7 @@
 				var item_tag = $("#tag").val();
 				var item_price_min = $("#item_price_min").val();
 				var item_price_max = $("#item_price_max").val();
-				console.log("text : " + text);
+// 				console.log("text : " + text);
 				
 				/*
 					1: 카테고리
@@ -459,23 +464,23 @@
 					3: 태그
 				*/
 				var data = $(this).parent().find(".tagListName").data("cd");
-				console.log(data);
+// 				console.log(data);
 				
 				switch(data) {
 					case 1: 
 						// 카테고리 처리
-						console.log("카테고리 처리");
+// 						console.log("카테고리 처리");
 						$("#item_category").val(category.replace(text, ""))
 						break;
 					case 2: 
 						// 가격 처리
-						console.log("가격 처리");
+// 						console.log("가격 처리");
 						$("#item_price_min").val(0);
 						$("#item_price_max").val(999999999999999);
 						break;
 					case 3: 
 						// 태그 처리
-						console.log("태그 처리");
+// 						console.log("태그 처리");
 						$("#tag").val(item_tag.replace(text, ""))
 				}
 				
@@ -609,8 +614,8 @@
 				event.preventDefault(); // 폼 제출 기본 동작 막기
 				var input = $("#searchTag").val();
 				var tagValue = $("#tag").val();
-				console.log("tagValue : " + tagValue);
-				console.log("input : " + input);
+// 				console.log("tagValue : " + tagValue);
+// 				console.log("input : " + input);
 
 				tag(input);
 				
@@ -626,7 +631,49 @@
 	        });
 			
 			
+			// tag list 초기화
+			var availableTag = [];
 			
+			// tagList
+			function tagList() {
+				$.ajax({													
+		 			type: "GET",
+		 			url: "tagList", 
+		 			dataType: "json",
+		 			success: function(response) { 
+		 				console.log("tagList : 요청처리성공");
+// 		 				console.log(response);
+		 				for(let item of response) {
+							let tags2 = item.item_tag;
+		 					let tag2 = tags2.split(',');
+		 					
+		 					for (let tag of tag2) {
+								if (!availableTag.includes(tag)) {
+									availableTag.push(tag);
+								}
+							}
+		 				}
+		 				// 자동완성
+		 			    implementAutocomplete();
+		 			},
+		 			error: function(xhr, textStatus, errorThrown) {
+		 				console.log("tagList : 요청처리실패");
+		 			}
+		 		});
+			}
+			// 자동완성
+			function implementAutocomplete() {
+				$("#searchTag").autocomplete({
+					source: availableTag,
+					select: function(event, ui) {
+					console.log(ui.item);
+					},
+					focus: function(event, ui) {
+					return false;
+					}
+				});
+			}
+			tagList();
 		});
 function wish(){
 	

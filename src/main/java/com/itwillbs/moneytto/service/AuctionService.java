@@ -57,9 +57,6 @@ public class AuctionService {
 	}
 	// 내가 입찰한 경매 목록 06.08 14:41 추가 mypage에서 사용함
 	// ========================================================== 
-	public List<HashMap<String, String>> getMyAuction(String member_nickname){
-		return mapper.selectMyAuctionByNickname(member_nickname);
-	}
 	
 	public List<HashMap<String, String>> getMyAuction(HashMap<String, String> member){
 		return mapper.selectMyAuctionByMember(member);

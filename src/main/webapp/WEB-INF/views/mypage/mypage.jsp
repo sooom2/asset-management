@@ -135,14 +135,24 @@ function memberAuth(){
 						    <c:forEach items="${itemList}" var="item" varStatus="status">
 						        <tr>
 						            <td id="board-data">${status.index +1}</td>
-						           <td id="board-data">
-									   <div class="board-info">
-									      <a href="AuctionPay?auction_code=${item.auction_code}" class="board-title">${item.auction_item_name}</a>
-									   </div>
-									</td>
-						            <td id="board-data">${item.success_price}</td>
-						            <td id="board-data">${item.auction_end_date}</td>
-						            <td id="board-data">#결제상태</td>
+						           <c:choose>
+						            	<c:when test="${not empty item.pay_code }">
+						            		<td id="board-data">
+						            			<a href="AuctionPay?auction_code=${item.auction_code}" class="board-title">${item.auction_item_name}</a>
+						            		</td>
+						            		<td id="board-data">${item.success_price}</td>
+								            <td id="board-data">${item.auction_end_date}</td>
+								            <td id="board-data">결제 완료</td>
+						            	</c:when>
+						            	<c:otherwise>
+						       		     	<td id="board-data">
+						       		     		<a href="auctionPayResult?auction_code=${item.auction_code}" class="board-title">${item.auction_item_name}</a>
+						       		     	</td>
+						       		     	<td id="board-data">${item.success_price}</td>
+						           			<td id="board-data">${item.auction_end_date}</td>
+						          			<td id="board-data">결제 대기중</td>
+						            	</c:otherwise>
+						            </c:choose>
 						        </tr>
 						    </c:forEach>
 						</table>
