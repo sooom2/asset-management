@@ -186,8 +186,8 @@
 						</c:forEach>
 					</div>
 				</div>
-				<a href="challange">
-					<div class="chall_more">MORE</div>
+				<a href="market_list">
+					<div class="chall_more">더 많은 상품 보러가기</div>
 				</a>
 			</div>
 		</div>
