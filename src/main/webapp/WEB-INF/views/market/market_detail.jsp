@@ -13,6 +13,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.4.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/moment.js"></script>
 <script type="text/javascript" src="${path }/resources/js/wish.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 
 $(function() {
@@ -377,32 +378,6 @@ function toggleLike(element) {
 	}
 	
 	
-// 	function shareMessage() {
-// 		    Kakao.Share.sendDefault({
-// 		      objectType: 'feed',
-// 		      content: {
-// 		        title: $("#item_subject").val(),
-// 		        description: $("#item_content").val(),
-// 		        imageUrl:
-// 		          $("#item_image").val(),
-// 		        link: {
-// 		          // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
-// 		          mobileWebUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
-// 		          webUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
-// 		        },
-// 		      },
-// 		      buttons: [
-// 		        {
-// 		          title: '웹으로 보기',
-// 		          link: {
-// 		            mobileWebUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
-// 		            webUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
-// 					},
-// 				},
-// 			],
-// 		});
-// 	}
-	
 	
 	function shareMessage() {
 		    Kakao.Share.sendDefault({
@@ -522,9 +497,15 @@ function toggleLike(element) {
 			var reportType = $("#report_type").val();
 			
 			if(reportType == "") {
-				alert("신고 사유를 선택해주세요!");
+				swal({	
+	        		icon: "warning",
+	        		text: "신고 사유를 선택해주세요!"
+		        });
 			} else {
-				alert("신고 접수 되었습니다!");
+				swal({	
+	        		icon: "success",
+	        		text: "신고가 성공적으로 접수되었습니다!"
+		        });
 				report();
 				$(".ReactModalPortal").remove();
 			}

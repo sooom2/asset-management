@@ -9,6 +9,9 @@
 <link href="${path }/resources/css/market.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/moment.js"></script>
+<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 <title>Insert title here</title>
 </head>
 <body>
@@ -62,7 +65,7 @@
 			        	
 					<div class="searchIconWrapper marketListSearch">
 						<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
-						<div class="searchSearch"><form id="searchForm"><input class="goodsName tag" id="searchTag" type="text" placeholder="태그검색"></form></div>
+						<div class="searchSearch"><form id="searchForm"><input class="goodsName tag" id="searchTag" type="text" placeholder="태그를 검색해보세요!"></form></div>
 				 	</div>
                	</div>
 	         </div>
@@ -624,8 +627,14 @@
 					$("#searchForm").submit(); // 폼 제출
 	            }
 	        });
-			
-			
+			var availableTags = [
+				'인형',
+				'미스트'
+			];
+			$("#searchTag").autocomplete(availableTags,{ 
+		        matchContains: true,
+		        selectFirst: false
+		    });
 			
 		});
 function wish(){
