@@ -495,11 +495,11 @@
          ON
             i.item_code = w.wish_item_code 
          WHERE
-            i.item_subject like #{navSearch}
+            i.item_subject like CONCAT('%', #{navSearch} , '%')
          OR 
-            i.item_content like #{navSearch}
+            i.item_content like CONCAT('%', #{navSearch} , '%')
          OR 
-            i.item_tag like #{navSearch}
+            i.item_tag like CONCAT('%', #{navSearch} , '%')
          <if test = 'id != null and !id.equals("") '>
             AND ST_Distance_Sphere(
                   (SELECT member_location

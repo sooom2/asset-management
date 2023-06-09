@@ -37,9 +37,6 @@
 	        </div>
 <!-- 	         카테고리 end -->
 			
-
-아니 왜 하나만 나옴?
-			
 			<div class="searchedListWrapper">
 				<div class="searchedListTopWrapper">
  					<div class="CountListCount">
