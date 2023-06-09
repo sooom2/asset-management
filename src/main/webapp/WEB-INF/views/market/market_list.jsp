@@ -9,9 +9,9 @@
 <link href="${path }/resources/css/market.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/moment.js"></script>
-<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
-<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -62,11 +62,13 @@
 						</div>
 					</div>
 			        
-			        	
+			        <!-- 태그 검색 -->	
 					<div class="searchIconWrapper marketListSearch">
 						<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
 						<div class="searchSearch"><form id="searchForm"><input class="goodsName tag" id="searchTag" type="text" placeholder="태그를 검색해보세요!"></form></div>
 				 	</div>
+				 	<!-- 자동완성 단어 리스트 -->
+					<div class="autocomplete"></div>
                	</div>
 	         </div>
 	         <!-- 카테고리 end -->
@@ -627,15 +629,50 @@
 					$("#searchForm").submit(); // 폼 제출
 	            }
 	        });
-// 			var availableTags = [
-// 				'인형',
-// 				'미스트'
-// 			];
-// 			$("#searchTag").autocomplete(availableTags,{ 
-// 		        matchContains: true,
-// 		        selectFirst: false
-// 		    });
 			
+			// tag list 초기화
+			var availableTag = [];
+			
+			// tagList
+			function tagList() {
+				$.ajax({													
+		 			type: "GET",
+		 			url: "tagList", 
+		 			dataType: "json",
+		 			success: function(response) { 
+		 				console.log("tagList : 요청처리성공");
+		 				console.log(response);
+		 				for(let item of response) {
+							let tags2 = item.item_tag;
+		 					let tag2 = tags2.split(',');
+		 					
+		 					for (let tag of tag2) {
+								if (!availableTag.includes(tag)) {
+									availableTag.push(tag);
+								}
+							}
+		 				}
+		 				// 자동완성
+		 			    implementAutocomplete();
+		 			},
+		 			error: function(xhr, textStatus, errorThrown) {
+		 				console.log("tagList : 요청처리실패");
+		 			}
+		 		});
+			}
+			// 자동완성
+			function implementAutocomplete() {
+				$("#searchTag").autocomplete({
+					source: availableTag,
+					select: function(event, ui) {
+					console.log(ui.item);
+					},
+					focus: function(event, ui) {
+					return false;
+					}
+				});
+			}
+			tagList();
 		});
 function wish(){
 	

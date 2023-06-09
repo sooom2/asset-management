@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -131,6 +129,20 @@ public class MarketController {
 		
 		return ja.toString();
 	}
+	
+	@ResponseBody
+	@GetMapping(value = "tagList")
+	public String selectTagList(Model model) {
+		List<HashMap<String, String>> tagList = service.getTagList();
+		model.addAttribute("tagList", tagList);
+		JSONArray ja = new JSONArray(tagList);
+		
+		return ja.toString();
+	}
+	
+	
+	
+	
 	
 	@GetMapping(value = "market_detail")
 	public String marketDetail(Model model, HttpSession session, String item_code) {

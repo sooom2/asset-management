@@ -96,6 +96,12 @@ public class MarketService {
 	}
 
 
+
+	public List<HashMap<String, String>> getTagList() {
+		return mapper.selectTag();
+	}
+
+
 		
 	
 	
