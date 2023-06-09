@@ -211,4 +211,8 @@ public class MemberService {
 	public List<HashMap<String, String>> selectAdminMember(HashMap<String, String> map) {
 		return mapper.selectAdminMember(map);
 	}
+
+	public int updateMemberPoint(String id, int pay_price) {
+		return mapper.updateMemberPoint(id, pay_price);
+	}
 }

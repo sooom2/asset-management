@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.mail.search.IntegerComparisonTerm;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -258,6 +261,24 @@ public class AuctionController {
 		return "auction/auctionPay";
 	}
 	
+	// 결제 완료 
+	@PostMapping("/auctionPayResult")
+	public String auctionPayResult(@RequestParam Map<String, String> map, HttpSession session) {
+		String id = (String)session.getAttribute("sId");
+		// pay_code 생성, 추가
+		String uuid = UUID.randomUUID().toString().substring(0, 8);
+		map.put("pay_code", uuid);
+		map.put("member_id", id);
+		// 결제 등록
+		int insertCount = service.insertPayResult(map);
+		
+		// 포인트 차감
+		int updateCount = memberService.updateMemberPoint(id, Integer.parseInt(map.get("pay_price")));
+		
+		return "redirect:/auctionMain";
+	}
+	
+	
 	// 경매 종료 낙찰자 업데이트
 	@RequestMapping(value="auctionUpdateFinish", method = RequestMethod.GET)
 	@ResponseBody
@@ -268,7 +289,6 @@ public class AuctionController {
 		
 		// 보증금 입금
 		int updatePoint = memberService.updateDeposit(auction.get("auction_code"), auction.get("success_id"), Integer.parseInt(auction.get("deposit")));
-			
 		
 	}
 	

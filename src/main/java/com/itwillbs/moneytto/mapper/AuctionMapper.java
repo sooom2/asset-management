@@ -40,4 +40,6 @@ public interface AuctionMapper {
 	List<HashMap<String, String>> selectMyAuctionByMember(HashMap<String, String> member);
 	// ==========================================================
 
+	int insertPayResult(Map<String, String> map);
+
 }

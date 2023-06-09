@@ -66,4 +66,8 @@ public class AuctionService {
 	}
 	// ==========================================================
 
+	public int insertPayResult(Map<String, String> map) {
+		return mapper.insertPayResult(map);
+	}
+
 }

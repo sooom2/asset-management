@@ -167,4 +167,21 @@
 		ORDER BY auction_end_date DESC
 	</select>
 	
+	<!-- 결제 결과 등록 -->
+	<insert id="insertPayResult">
+		INSERT 
+			INTO auction_paid
+			VALUES (
+					  #{pay_code}
+					, #{auction_code}
+					, #{pay_price}
+					, #{member_id}
+					, #{member_tel}
+					, #{member_address}
+					, #{member_address_detail}
+					, #{pay_request}
+					, now()
+					)
+	</insert>
+	
 </mapper>

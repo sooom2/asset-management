@@ -57,6 +57,8 @@ public interface MemberMapper {
 	// 회원목록
 	List<HashMap<String, String>> selectAdminMember(HashMap<String, String> map);
 
+	int updateMemberPoint(@Param("id")String id, @Param("pay_price") int pay_price);
+
 
 	
 	
