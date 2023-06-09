@@ -96,6 +96,13 @@ public class MarketService {
 	}
 
 
+
+	public void increaseViews(String item_code) {
+	    mapper.increaseViews(item_code);
+		
+	}
+
+
 		
 	
 	

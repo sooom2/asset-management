@@ -143,7 +143,8 @@ public class MarketController {
 		    model.addAttribute("nickname",nickname);
 		}
 		
-		
+		// 상품 조회수 증가 처리
+		service.increaseViews(item_code);
 		
 		// 아이템 상세
 		HashMap<String, String> marketItem = service.getMarketItem(item_code);
