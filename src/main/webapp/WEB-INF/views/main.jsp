@@ -155,6 +155,7 @@
 										<img src="${path }/resources/images/main/noThumbnail.jpg" alt="itemImg" class="itemThumbnail" />		                                  		
 	                              	</c:otherwise>
 	                            </c:choose>
+									<input type="button" value="${item.item_status }" class="status active">
 								<c:choose>
 	                       	 		<c:when test="${not empty item.wish_code }">
 	                       	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg" />
