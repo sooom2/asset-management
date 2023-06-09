@@ -25,7 +25,7 @@
 		document.querySelector("input[name=startNum]").value = Number(idx)*10;
 		document.querySelector("input[name=endNum]").value = (Number(idx)+1)*10 - Number(idx)*10;
 		let form = document.querySelector('#iForm');
-		form.action = 'admin_oneOnOne';
+		form.action = 'adminReport';
 		form.method = 'post';
 		form.submit();
 	}
@@ -71,22 +71,13 @@
 							style="display: inline-block; float: right; margin-bottom: 25px; margin-top: -19px; width: 520px; padding-left: 11px;">
 							<div class="cinema_name">
 								<label for="cinema_name"></label>
-								<select name="cinema_name" onchange="" style="margin-top: 0px; !important"> 
-									<option value="전체공지" selected="selected" >전체공지</option>
-									<c:forEach var="cinema" items="${cinemaList }">
-										<option value="${cinema.cinema_name}" ${paramMap.cinema_name == cinema.cinema_name ? 'selected' : ''}>${cinema.cinema_name}</option>
-									</c:forEach>
+								<select name="typeSelect" onchange="" style="margin-top: 0px; !important">
+									<option value="전체" <c:if test="${pageCnt.typeSelect eq '전체'}">selected</c:if>>전체</option>
+									<option value="판매중" <c:if test="${pageCnt.typeSelect eq '판매중'}">selected</c:if>>판매중</option>
+									<option value="거래중" <c:if test="${pageCnt.typeSelect eq '거래중'}">selected</c:if>>거래중</option>
+									<option value="거래완료" <c:if test="${pageCnt.typeSelect eq '거래완료'}">selected</c:if>>거래완료</option>
 								</select>
-								<select name="rep_board" onchange="" style="margin-top: 0px; !important">
-									<option value="전체" <c:if test="${paramMap.rep_board eq '전체'}">selected</c:if>>전체</option>
-									<option value="답변완료" <c:if test="${paramMap.rep_board eq '답변완료'}">selected</c:if>>답변완료</option>
-									<option value="미답변" <c:if test="${paramMap.rep_board eq '미답변'}">selected</c:if>>미답변</option>
-								</select>
-								<c:forEach var="cinema" items="${cinemaList }">
-									<input type="hidden" name="location_code"
-										value="${cinema.get('location_code') }">
-								</c:forEach>
-								<input class="datatable-input" value="${param.searchKeyword }" name="searchKeyword" type="search" 
+								<input class="datatable-input" value="${pageCnt.searchKeyword }" name="searchKeyword" type="search" 
 								placeholder="검색어를 입력해 주세요." aria-controls="datatablesSimple" style="width: 210px;">
 								<input class="btn btn-block btn-more" type="button" value="검색" onclick="search('0');"
 									style="height: 32px; line-height: 16px; margin-bottom: 5px; background-color: #ffffff;">
@@ -94,47 +85,50 @@
 						</div>
 					</div>
 					<div>
-						<strong>전체 <em class="font-gblue">${paramMap.totalCnt == null ? 0 : paramMap.totalCnt}</em>건</strong>
+						<strong>전체 <em class="font-gblue">${pageCnt.totalCnt == null ? 0 : pageCnt.totalCnt}</em>건</strong>
 					</div>
+<%-- 				<input type="hidden" name="memberName" value="${pageCnt.memberName}"> --%>
+<%-- 				<input type="hidden" name="memberTel" value="${pageCnt.memberTel}"> --%>
+<%-- 				<input type="hidden" name="memberEmail" value="${pageCnt.memberEmail}"> --%>
+					<input type="hidden" name="startNum" value="${pageCnt.startNum}">
+					<input type="hidden" name="endNum" value="${pageCnt.endNum}">
+					<input type="hidden" name="pageNum" value="${pageCnt.pageNum}">
+<!-- 				<input type="hidden" name="table_name" value=""> -->
+<!-- 				<input type="hidden" name="code" value=""> -->
 					<table id="datatablesSimple" class="datatable-table">
 						<thead>
 							<tr>
 								<th data-sortable="true" style="width: 5%;"><a href="#"
-									class="datatable-sorter">신고코드</a></th>
+									class="datatable-sorter">번호</a></th>
+								<th data-sortable="true" style="width: 10%;"><a href="#"
+									class="datatable-sorter">물건코드</a></th>
 								<th data-sortable="true" style="width: 10%;"><a href="#"
 									class="datatable-sorter">신고된회원</a></th>
-								<th data-sortable="true" style="width: 13%;"><a href="#"
-									class="datatable-sorter">Report#</a></th>
+								<th data-sortable="true" style="width: 10%;"><a href="#"
+									class="datatable-sorter">신고한회원</a></th>
 								<th data-sortable="true" style="width: 30%;"><a href="#"
-									class="datatable-sorter">신고사유</a></th>
+									class="datatable-sorter">사유</a></th>
 								<th data-sortable="true" style="width: 8%;"><a href="#"
-									class="datatable-sorter">신고일자</a></th>
-								<th data-sortable="true" style="width: 20%;"><a href="#"
-									class="datatable-sorter">Report#</a></th>
+									class="datatable-sorter">일자</a></th>
 								<th data-sortable="true" style="width: 8%;"><a href="#"
-									class="datatable-sorter">답글등록</a></th>
+									class="datatable-sorter">처리상태</a></th>
+								<th data-sortable="true" style="width: 8%;"><a href="#"
+									class="datatable-sorter">처리</a></th>
 							</tr>
 						</thead>
 						<!-- 회원목록 -->
 						<tbody>
-<%-- 							<input type="hidden" name="memberName" value="${paramMap.memberName}"> --%>
-<%-- 							<input type="hidden" name="memberTel" value="${paramMap.memberTel}"> --%>
-<%-- 							<input type="hidden" name="memberEmail" value="${paramMap.memberEmail}"> --%>
-<%-- 							<input type="hidden" name="startNum" value="${paramMap.startNum}"> --%>
-<%-- 							<input type="hidden" name="endNum" value="${paramMap.endNum}"> --%>
-<%-- 							<input type="hidden" name="pageNum" value="${paramMap.pageNum}"> --%>
-<!-- 							<input type="hidden" name="table_name" value=""> -->
-<!-- 							<input type="hidden" name="code" value=""> -->
-							<c:forEach var="oneBoard" items="${oneBoardList }">
+							<c:forEach var="adminReport" items="${adminReport }">
 								<tr>
-									<td>${oneBoard.rownum }</td>
-									<td>${oneBoard.one_name }</td>
-									<td>${oneBoard.cinema_name }</td>
-									<td>${oneBoard.one_subject }</td>
-									<td>${oneBoard.one_rep_board }</td>
-									<td>${oneBoard.one_write_date }</td>
+									<td>${adminReport.rownum }</td>
+									<td>${adminReport.item_code }</td>
+									<td>${adminReport.report_targetId }</td>
+									<td>${adminReport.member_id }</td>
+									<td>${adminReport.report_content }</td>
+									<td>${adminReport.report_date }</td>
+									<td>${adminReport.report_statusYN }</td>
 									<td class="modi"><input class="btn btn-block btn-more"
-										type="button" value="M O R E" onclick="location.href='admin_one_rep?one_code=${oneBoard.one_code }'"></td>
+										type="button" value="M O R E" onclick="location.href='admin_one_rep?one_code=${adminReport.one_code }'"></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -143,15 +137,15 @@
 						<div class="datatable-bottom">
 						<nav class="datatable-pagination">
 						<ul class="datatable-pagination-list">
-							<c:if test="${1 < paramMap.pageNum }">
+							<c:if test="${1 < pageCnt.pageNum }">
 									<li class="datatable-pagination-list-item datatable-hidden"
-										onclick="location.href='admin_schedule_register?pageNum=${pageNum - 1}'">
-										<a href="javascript:search('${paramMap.pageNum-2}')" class="datatable-pagination-list-item-link" pagenum="1">‹</a>
+										onclick="location.href='adminReport?pageNum=${pageNum - 1}'">
+										<a href="javascript:search('${pageCnt.pageNum-2}')" class="datatable-pagination-list-item-link" pagenum="1">‹</a>
 									</li>
 							</c:if>
-							<c:forEach begin="${paramMap.pageNum-paramMap.pageNum%10}" end="${(paramMap.totalCnt == null ? 1 : paramMap.totalCnt/10) + (paramMap.totalCnt%10> 0 ? 1 : 0) -1}" varStatus="status">
+							<c:forEach begin="${pageCnt.pageNum-pageCnt.pageNum%10}" end="${(pageCnt.totalCnt == null ? 1 : pageCnt.totalCnt/10) + (pageCnt.totalCnt%10> 0 ? 1 : 0) -1}" varStatus="status">
 								<c:choose>
-									<c:when test="${paramMap.pageNum eq status.index+1}">
+									<c:when test="${pageCnt.pageNum eq status.index+1}">
 										<strong class="active">${status.index+1}</strong>
 									</c:when>
 									<c:otherwise>
@@ -159,10 +153,10 @@
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
-							<c:if test="${paramMap.totalCnt > 10*paramMap.pageNum }">
+							<c:if test="${pageCnt.totalCnt > 10*pageCnt.pageNum }">
 								<li class="datatable-pagination-list-item datatable-hidden"
-									onclick="location.href='admin_schedule_register?pageNum=${pageNum + 1}'">
-									<a href="javascript:search('${paramMap.pageNum}')" class="datatable-pagination-list-item-link">›</a>
+									onclick="location.href='adminReport?pageNum=${pageNum + 1}'">
+									<a href="javascript:search('${pageCnt.pageNum}')" class="datatable-pagination-list-item-link">›</a>
 								</li>
 							</c:if>
 						</ul>

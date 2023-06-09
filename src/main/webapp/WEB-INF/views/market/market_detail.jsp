@@ -439,6 +439,7 @@ function toggleLike(element) {
 		var targetId = $("#target_id").val();
 		var reportType = $("#report_type").val();
 		var reportContent = $("#report_content").val();
+		var item_code = $("#item_code").val();
 		
 		$.ajax({													
 				type: "GET",
@@ -446,9 +447,21 @@ function toggleLike(element) {
 				data: { 
 					targetId : targetId,
 					reportType : reportType,
-					reportContent : reportContent
+					reportContent : reportContent,
+					item_code : item_code
 				},
-				dataType: "json"
+				dataType: "json",
+					success : function(result){
+		       			if(result){
+		       				alert("신고가 접수되었습니다");
+		       				$(".ReactModalPortal").remove();
+		       			} else {
+		       				alert("신고 접수에 실패하였습니다.");
+		       			}
+		       		},
+		       		error : function(XMLHttpRequest, textStatus, errorThrown) {
+		       			alert("신고 접수에 실패하였습니다.");
+					}
 			});
 	}
 	
@@ -524,9 +537,8 @@ function toggleLike(element) {
 			if(reportType == "") {
 				alert("신고 사유를 선택해주세요!");
 			} else {
-				alert("신고 접수 되었습니다!");
 				report();
-				$(".ReactModalPortal").remove();
+				
 			}
 		});
 		

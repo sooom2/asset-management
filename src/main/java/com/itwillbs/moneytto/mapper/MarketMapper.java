@@ -107,8 +107,8 @@ public interface MarketMapper {
    // 아이템 이미지
    List<HashMap<String, String>> selectItemImage(String item_code);
 
-   // 신고
-   int insertReport(@Param("id") String id, @Param("targetId") String targetId, @Param("reportType") String reportType, @Param("reportContent") String reportContent);
+   // 신고하기
+   int insertReport(HashMap<String, String> map);
 
    // 아이템 이미지 삭제 
    int removeImage(String itemCode);
@@ -144,4 +144,7 @@ public interface MarketMapper {
    // 관리자 아이템 목록
    List<HashMap<String, String>> selectadminItem(HashMap<String, String> map);
 
+   // 관리자 신고 목록
+   List<HashMap<String, String>> selectAdminReport(HashMap<String, String> map);
+   
 }
