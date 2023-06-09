@@ -131,7 +131,7 @@ $(function() {
 				<form action="auctionPayResult" id="form" method="post">
 					<div class="main">
 						<div class="order_title_wrapper">
-							<div class="title">주문서</div>
+							<div class="title">결제 내역</div>
 						</div>
 						<div class="order_content_wrapper">
 							<ul>
@@ -170,7 +170,7 @@ $(function() {
 												<dt>이름</dt>
 												<dd class="order_member_name">
 													<input type="text" class="w_10" name="member_id"
-														placeholder="이름 입력" value="${member.get('member_name') }">
+														placeholder="이름 입력" value="${auction.get('member_name') }">
 												</dd>
 											</dl>
 										</li>
@@ -178,7 +178,7 @@ $(function() {
 												<dt>연락처</dt>
 												<dd class="order_member_phone">
 													<input type="number" class="w_10" placeholder="숫자만 입력" name="member_tel"
-														value="${member.get('member_tel') }">
+														value="${auction.get('member_tel') }">
 												</dd>
 											</dl></li>
 										<li><dl>
@@ -186,7 +186,7 @@ $(function() {
 												<dd>
 													<div readonly="" name="receiverAddr1" class="div_input_st">주소</div>
 													<input type="text" name="member_address"
-														placeholder="주소 입력" class="w_10" value="${member.get('member_address') }">&nbsp;&nbsp;
+														placeholder="주소 입력" class="w_10" value="${auction.get('member_address') }">&nbsp;&nbsp;
 													<button class="addr_search">주소찾기</button>
 												</dd>
 											</dl></li>
@@ -196,7 +196,7 @@ $(function() {
 												<dd>
 													<div readonly="" name="receiverAddr2" class="div_input_st">상세주소</div>
 													<input type="text" name="member_address_detail"
-														placeholder="상세주소 입력" class="w_10" value="${member.get('member_address_detail') }">
+														placeholder="상세주소 입력" class="w_10" value="${auction.get('member_address_detail') }">
 												</dd>
 											</dl>
 										</li>

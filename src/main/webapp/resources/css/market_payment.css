@@ -395,9 +395,9 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
 }
 
 .order_card .order_member_info .addr_search {
-    border: 1px solid #0484f6;
+    border: 1px solid #BB2649;
     font-size: 14px;
-    color: #0484f6;
+    color: #BB2649;
     padding: 0 10px;
     border-radius: 3px;
     background-color: #fff;
@@ -548,8 +548,8 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
 }
 
 .order_card_left .pay_method_list.item_pay_method_list .wrapper_div.other_wrapper_div_option.checked .info {
-    border: 1px solid #0484f6;
-    background-color: #0484f6;
+    border: 1px solid #BB2649;
+    background-color: #BB2649;
 }
 
 .order_card_left .pay_method_list.item_pay_method_list .wrapper_div.other_wrapper_div_option .info {
@@ -750,7 +750,7 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
 }
 
 .txt-bl-12 {
-    color: #0484f6;
+    color: #BB2649;
     font-size: 12px;
     font-weight: 700;
 }
@@ -778,11 +778,11 @@ select {
 }
 
 .final_order_wrapper .success_btn.btn_disabled {
-    background-color: #b2e1f5!important;
+    background-color: #BB2649!important;
 }
 
 .final_order_wrapper .success_btn {
-    background-color: #0484f6;
+    background-color: #BB2649;
     line-height: 60px;
     color: #fff;
     font-size: 18px;
@@ -857,8 +857,8 @@ select {
 }
 
 .feature_option_checkbox_indicator.checked {
-    background: #0484f6!important;
-    border: 1px solid #0484f6;
+    background: #BB2649!important;
+    border: 1px solid #BB2649;
 }
 
 .feature_option_checkbox_indicator {

@@ -310,4 +310,12 @@
 				</if>
 	</select>
 	
+	<update id="updateMemberPoint">
+		UPDATE member
+			SET 
+				member_point = CAST(member_point AS UNSIGNED) - #{pay_price}
+			WHERE 
+				member_id = #{id}
+	</update>
+	
 </mapper>

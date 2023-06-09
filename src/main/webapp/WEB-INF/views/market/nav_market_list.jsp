@@ -14,6 +14,7 @@
 <body>
 <input type="hidden" id="sort" name="sort" value="default">
 <input type="hidden" id="navSearch" name="navSearch" value="${param.navSearch }">
+<input type="hidden" id="item_code" name="item_code" value="">
   
 <jsp:include page="../nav.jsp" />
 <div id="__next">
@@ -26,16 +27,20 @@
    	    <div class="newSearchWrapper">
 <!--    	    카테고리 -->
 			<div class="webWrapper">
-				
-	         </div>
+				<div class="barWrapper">
+					<div class="FilterMore">
+						<div class="FilterBoxTopic" >
+							<div class="FilterBoxName FilterBoxMore" onclick="location.href='market_list'">더 많은 상품 보기</div>
+						</div>
+					</div>
+               	</div>
+	        </div>
 <!-- 	         카테고리 end -->
-			
-
-아니 왜 하나만 나옴?
 			
 			<div class="searchedListWrapper">
 				<div class="searchedListTopWrapper">
  					<div class="CountListCount">
+						<font style="color: #3232ff; font-weight: bold; font-size: large;"> ${param.navSearch }</font>에 대한 
 						<span class="Count"></span>개의 상품이 있습니다.                    
 					</div>
                     <!-- 정렬 -->
@@ -77,6 +82,7 @@
 			let code = item.item_code;
 			let image = item.image_name;
 			let count = item.total_count;
+			let status = item.item_status;
 			var wish = item.wish_code;
 			
 			price = price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
@@ -100,6 +106,9 @@
 			str +=	'">';
 			str += '<div class="itemThumbnailBox">';
 			str += '<img src="' + image + '" alt="썸네일" class="itemThumbnail" style="cursor: pointer">';
+			str += '<input type="button" value="';
+			str += status;
+			str += '" class="status active">';
 			str += wish;
 			str += '</div>';
 			str += '<div class="itemTextBox">';
@@ -182,6 +191,13 @@
 				}
 			});
 	}
+	
+	// 상세 페이지로 이동
+	function marketDetail() {
+		var item_code = $(this).parent().parent().data("cd");
+		$("#item_code").val(item_code);
+		location.href="market_detail?item_code=" + $("#item_code").val();
+	}
 
 
 	$(function () {
@@ -191,6 +207,39 @@
 		});
 		
 		navMarketItemList();
+		
+		
+		// 제목 클릭, 이미지 클릭
+		$(document).on("click", ".itemThumbnail, .subject", marketDetail);
+		
+		
+		// 정렬 박스 열기
+		$(document).on("click", ".sortSortBox", function(e) {
+			$('.SortListWrapper').toggle();
+		});
+		
+		
+		// 정렬 선택
+		$(document).on("click", ".SortListList", function(e) {
+			$(".sortSortBox").remove();
+			var title = $(this).attr("title");
+			
+			// 정렬 글자 변경
+			var str = '';
+			str += '<div class="sortSortBox">';
+			str += '<div class="sortSort">';
+			str += title;
+			str += '</div>';
+			str += '<img src="https://ccimage.hellomarket.com/img/web/search/itemList/ico_sort.png" alt="정렬 아이콘" class="sortSortImg"/></div>';
+			
+			$(".SortListWrapper").after(str);
+			$('.SortListWrapper').toggle();
+			
+			var sort = $(this).attr("id");
+			$("#sort").val(sort);
+			navMarketItemList();
+		});
+		
 		
 	});
 	

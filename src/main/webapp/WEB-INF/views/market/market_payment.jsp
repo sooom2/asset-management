@@ -57,6 +57,8 @@ $(function(){
 
 <form method="post" autocomplete="off" action="bank_withdraw">
 <input type="hidden" name="id" value="${member.member_id }"> 
+<input type="hidden" name="member_name" value="${member.member_name }">
+<input type="hidden" name="fintech_use_num" value="${account.fintech_use_num }"> 
 <input type="hidden" name="trade_type" value="이체">
 <div class="container" id="container">
     <div class="info_login">
@@ -109,7 +111,7 @@ $(function(){
 <!-- 			</li> -->
 			<li class="full_area label_margin button_margin2">
 				<label for="point2" class="label">충전 포인트</label>
-				<input title="사용포인트" id="point2" name="charge_point" type="tel" class="value number _onlyPriceTarget _naverMileage _payForm _blur(checkout.mobile.nsp.paymentSheet.checkInputTextAmountValue()) _focus(checkout.mobile.nsp.paymentSheet.beforeInputPrice()) _stopDefault" placeholder="0">
+				<input title="사용포인트" id="point2" name="tran_amt" type="tel" class="value number _onlyPriceTarget _naverMileage _payForm _blur(checkout.mobile.nsp.paymentSheet.checkInputTextAmountValue()) _focus(checkout.mobile.nsp.paymentSheet.beforeInputPrice()) _stopDefault" placeholder="0">
 				<span class="text_won">원</span>
 			</li>
 			</ul>

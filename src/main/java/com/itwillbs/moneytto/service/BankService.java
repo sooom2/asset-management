@@ -29,8 +29,15 @@ public class BankService {
 	// 계좌 정보 조회
 	public HashMap<String, String> getAccount(String member_id) {
 		
-		return mapper.selectAccount(member_id);
+		return mapper.selectAccountById(member_id);
 	}
+	// 계좌 정보 조회
+	public HashMap<String, String> getAccount(HashMap<String, String> member) {
+		
+		return mapper.selectAccountByMember(member);
+	}
+	
+	
 	
 	public int updateAccount(Map<String, String> map) {
 

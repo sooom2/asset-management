@@ -153,18 +153,49 @@
 	
 	
 	<!-- 06.08. 14:44 추가 -->
-	<select id="selectMyAuctionByNickname" resultType="hashmap">
-		SELECT *
-		FROM auction
-		WHERE auction_status = #{member_nickname}
-		ORDER BY auction_end_date DESC
+	<select id="selectMyAuctionByMember" resultType="hashmap">
+		SELECT 
+			a.*
+			, ap.pay_code
+		FROM 
+			auction a
+		LEFT JOIN
+				(SELECT *
+				FROM	auction_paid
+				WHERE member_id = #{member_id}) ap
+		ON
+			a.auction_code = ap.auction_code
+		WHERE a.auction_status = #{member_nickname}
+		ORDER BY a.auction_end_date DESC
 	</select>
 	
-	<select id="selectMyAuctionByMember" resultType="hashmap">
-		SELECT *
-		FROM auction
-		WHERE auction_status = #{member_nickname}
-		ORDER BY auction_end_date DESC
+	<!-- 결제 결과 등록 -->
+	<insert id="insertPayResult">
+		INSERT 
+			INTO auction_paid
+			VALUES (
+					  #{pay_code}
+					, #{auction_code}
+					, #{pay_price}
+					, #{member_id}
+					, #{member_tel}
+					, #{member_address}
+					, #{member_address_detail}
+					, #{pay_request}
+					, now()
+					)
+	</insert>
+	
+	<select id="selectAuctionPaid" resultType="hashmap">
+		SELECT ap.*, i.image_name 
+			FROM 
+				auction_paid ap JOIN images i 
+			ON 
+				ap.auction_code = i.table_code 
+			WHERE 
+				ap.auction_code = 'a69fb5fb';
 	</select>
+	
+	
 	
 </mapper>

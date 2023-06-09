@@ -55,15 +55,21 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 		// 채팅 세션 목록에 채팅방이 존재 X
 		
 		HashMap<String, String> sellDetail = marketChatService.getSellID(item_code);
-		String buyId = null;
+		String buyId = target;
 		String sellId = sellDetail.get("member_id");
 		
-		
+												//상대방아이디
 		// 내아이디랑 sellId랑 다르면 buy아이디는 target
-		if(name != sellId ) {
+		
+		if(name == sellId) {
 			buyId = target;
+		} else if(name != sellId) {
+			buyId = name;
 		}
 		
+		// name 세션 // sellId 아이템 조회
+		// sellId  = name >>> sellId
+		// target = buyId
 		System.out.println("sellId ===========================");
 		System.out.println(sellId);
 		System.out.println("===========================");

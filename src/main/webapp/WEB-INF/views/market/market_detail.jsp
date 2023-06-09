@@ -13,6 +13,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.4.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/moment.js"></script>
 <script type="text/javascript" src="${path }/resources/js/wish.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 
 $(function() {
@@ -189,7 +190,11 @@ function toggleLike(element) {
 <!-- 							</div> -->
 						</div>
 					</div>
-					
+						<div class="DescriptionWrapper">
+						<div class="DescriptionText">
+							${marketItem.item_content }
+						</div>
+					</div>
 					<!-- 카테고리 -->
 					<div class="CategoryWrapper">
 						<div class="CategoryTitle">카테고리</div>
@@ -229,12 +234,6 @@ function toggleLike(element) {
 
 					<div class="itemControllerWrapper">
 						<div class="SomeonesItemWrapper">
-<!-- 							<div class="WishWrapper"> -->
-<!-- 								<img -->
-<!-- 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png" -->
-<!-- 									alt="좋아요 아이콘" class="WishIcon"> -->
-<!-- 								<div class="WishText">0</div>  -->
-<!-- 							</div> -->
 								<div class="WishWrapper" data-cd="${marketItem.item_code }">
 								  <c:choose>
 	                       	 		<c:when test="${not empty itemWish}">
@@ -276,13 +275,11 @@ function toggleLike(element) {
 						</div>
 					</div>
 					
-					<div></div>
-					<div></div>
-					<div class="DescriptionWrapper">
-						<div class="DescriptionText">
-							${marketItem.item_content }
-						</div>
-					</div>
+<!-- 					<div class="DescriptionWrapper"> -->
+<!-- 						<div class="DescriptionText"> -->
+<%-- 							${marketItem.item_content } --%>
+<!-- 						</div> -->
+<!-- 					</div> -->
 
 					<div style="margin: -19px 20px 10px"
 						class="AdSenseWrapper">
@@ -376,32 +373,6 @@ function toggleLike(element) {
 	  Kakao.init('02e5170f8bbb4a73ba5e5575b5b198b4');
 	}
 	
-	
-// 	function shareMessage() {
-// 		    Kakao.Share.sendDefault({
-// 		      objectType: 'feed',
-// 		      content: {
-// 		        title: $("#item_subject").val(),
-// 		        description: $("#item_content").val(),
-// 		        imageUrl:
-// 		          $("#item_image").val(),
-// 		        link: {
-// 		          // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
-// 		          mobileWebUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
-// 		          webUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
-// 		        },
-// 		      },
-// 		      buttons: [
-// 		        {
-// 		          title: '웹으로 보기',
-// 		          link: {
-// 		            mobileWebUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
-// 		            webUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
-// 					},
-// 				},
-// 			],
-// 		});
-// 	}
 	
 	
 	function shareMessage() {
@@ -535,8 +506,18 @@ function toggleLike(element) {
 			var reportType = $("#report_type").val();
 			
 			if(reportType == "") {
-				alert("신고 사유를 선택해주세요!");
+				swal({	
+	        		icon: "warning",
+	        		text: "신고 사유를 선택해주세요!"
+		        });
 			} else {
+<<<<<<< HEAD
+=======
+				swal({	
+	        		icon: "success",
+	        		text: "신고가 성공적으로 접수되었습니다!"
+		        });
+>>>>>>> branch 'main' of https://github.com/sooom2/asset-management.git
 				report();
 				
 			}

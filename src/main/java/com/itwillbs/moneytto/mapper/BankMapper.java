@@ -29,4 +29,8 @@ public interface BankMapper {
 	// 계좌 내역 조회
 	List<HashMap<String, String>> selectAccountHistory(HashMap<String, String> map);
 
+	HashMap<String, String> selectAccountById(String member_id);
+
+	HashMap<String, String> selectAccountByMember(HashMap<String, String> member);
+
 }

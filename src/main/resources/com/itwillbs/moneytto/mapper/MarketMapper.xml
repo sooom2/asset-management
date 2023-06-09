@@ -23,7 +23,8 @@
            #{item_tag},
            #{item_category},
            '판매중',
-           NOW()
+           NOW(),
+           '0'
        )
    </insert>
 
@@ -217,6 +218,7 @@
       SELECT *
           FROM item
              WHERE item_code = #{item_code}
+             
    </select>
    
    <insert id="insertMarketPaid">
@@ -495,11 +497,11 @@
          ON
             i.item_code = w.wish_item_code 
          WHERE
-            i.item_subject like #{navSearch}
+            i.item_subject like CONCAT('%', #{navSearch} , '%')
          OR 
-            i.item_content like #{navSearch}
+            i.item_content like CONCAT('%', #{navSearch} , '%')
          OR 
-            i.item_tag like #{navSearch}
+            i.item_tag like CONCAT('%', #{navSearch} , '%')
          <if test = 'id != null and !id.equals("") '>
             AND ST_Distance_Sphere(
                   (SELECT member_location
@@ -593,7 +595,12 @@
                , im.image_code  
    </select>
    
-   
+   <!-- 태그 리스트 -->
+   <select id="selectTag" resultType="hashmap">
+   	SELECT item_tag
+   		FROM
+   			item
+   </select>
     
    <select id="itemDetail" resultType="hashmap">
       SELECT item.*,member.member_nickname ,member.member_image 
@@ -782,7 +789,8 @@
             ) w
       ON
          i.item_code = w.wish_item_code
-      ORDER BY i.item_code DESC LIMIT 10
+      ORDER BY i.item_count DESC LIMIT 10
+      
    </select>
    
    <!-- 신고하기  -->
@@ -866,4 +874,15 @@
 				LIMIT ${startNum}, ${endNum}
 			</if>
 	</select>
+	
+<!-- 	상품디테일 조회수 증가 -->
+   <update id="increaseViews">
+      UPDATE item
+         SET
+             item_count = item_count + 1
+          WHERE
+             item_code = #{item_code} 
+   </update>
+   
+   
 </mapper>

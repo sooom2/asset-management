@@ -37,7 +37,7 @@ function memberAuth(){
 	+"?response_type=code"
 	+"&client_id=${client_id}"
 	+"&redirect_uri=http://localhost:8082/moneytto/memberAuth"
-	+"&scope=login inquiry transfer"
+	+"&scope=login inquiry transfer oob"
 	+"&state=11111111111111111111111111111111"
 	+"&auth_type=0";
 	// oob 삭제 06.09
@@ -130,6 +130,7 @@ function memberAuth(){
 								<th id="board-header">경매 이름</th>
 								<th id="board-header">낙찰가</th>
 								<th id="board-header">날짜</th>
+								<th id="board-header">결제상태</th>
 							</tr>
 						    <c:forEach items="${itemList}" var="item" varStatus="status">
 						        <tr>
@@ -141,6 +142,18 @@ function memberAuth(){
 									</td>
 						            <td id="board-data">${item.success_price}</td>
 						            <td id="board-data">${item.auction_end_date}</td>
+						            <c:choose>
+						            	<c:when test="${not empty item.pay_code }">
+						            		<td id="board-data">
+						            			<a href="auctionPayDetail?auction_code=${item.auction_code}" class="board-title">확인하기</a>
+						            		</td>
+						            	</c:when>
+						            	<c:otherwise>
+						       		     	<td id="board-data">
+						       		     		<a href="auctionPay?auction_code=${item.auction_code}" class="board-title">결제하기</a>
+						       		     	</td>
+						            	</c:otherwise>
+						            </c:choose>
 						        </tr>
 						    </c:forEach>
 						</table>

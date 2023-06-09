@@ -13,7 +13,9 @@
 <link href="${path }/resources/css/main.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <style type="text/css">
-
+.contentImage {
+	height: 220px;
+}
 
 </style>
 <script type="text/javascript">

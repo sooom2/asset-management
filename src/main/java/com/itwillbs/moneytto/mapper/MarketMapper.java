@@ -147,4 +147,12 @@ public interface MarketMapper {
    // 관리자 신고 목록
    List<HashMap<String, String>> selectAdminReport(HashMap<String, String> map);
    
+   void increaseViews(String item_code);
+
+
+
+
+   // 태그 리스트
+   List<HashMap<String, String>> selectTag();
+
 }

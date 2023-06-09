@@ -39,8 +39,6 @@ public class BankApiClient {
 	@Value("${client_secret}")
 	private String client_secret;
 	
-	@Value("${client_name}")
-	private String client_name;
 	@Value("${client_bank_code}")
 	private String client_bank_code;
 	@Value("${client_account_num}")
@@ -198,6 +196,9 @@ public class BankApiClient {
 	public AccountWithdrawResponseVO withdraw(Map<String, String> map) {
 		// 토큰 요청에 사용될 API URL 설정
 		String url = baseUrl + "/v2.0/transfer/withdraw/fin_num";
+		System.out.println("========================================");
+		System.out.println("withdraw : " +  map);
+		System.out.println("========================================");
 		
 		restTemplate = new RestTemplate();
 	    HttpHeaders httpHeaders = new HttpHeaders();
@@ -208,29 +209,23 @@ public class BankApiClient {
 	    JSONObject jo = new JSONObject();
 	    jo.put("bank_tran_id", valueGenerator.getBankTranId());
 	    jo.put("cntr_account_type", "N");	
-	    jo.put("cntr_account_num", "70667066"); // cntr_account_num(약정 계좌 = 쌤꺼 고정)
-	    // 운영자 핀테크 번호 =====================================================
+	    jo.put("cntr_account_num", "99999999999999"); 
 	    jo.put("dps_print_content", "머니또머니 충전");				// 출금계좌에 찍히는 내용 
-	    jo.put("fintech_use_num", map.get("fintech_use_num"));				// 사용자 핀테크번호
 	    jo.put("wd_print_content", "머니또 충전금");			// wd_print_content(출금계좌 인자내역, 내 통장에 표시할 내역) 
-	    // ================================================ 기존 코드
-	    // String tran_amt = map.get("charge_point");
-	    // ================================================
-	    // TODO
-	    jo.put("tran_amt", map.get("tran_amt"));		    // 거래금액
-	    jo.put("tran_dtime", valueGenerator.getTranDTime());				// 거래일자	
-	    // 요청 고객
-	    jo.put("req_client_name", map.get("member_name"));							// 요청 고객명 				
-	    jo.put("req_client_fintech_use_num", map.get("fintech_use_num"));	// 
-	    jo.put("req_client_num", map.get("fintech_use_num").toUpperCase());	// req_client_num(요청고객회원번호 = 아이디(문자 사용 시 대문자 필수!)			//
-	    
 	    jo.put("transfer_purpose", "TR");
+	    jo.put("tran_dtime", valueGenerator.getTranDTime());				// 거래일자	
+	    jo.put("req_client_num", map.get("id").toUpperCase());	// req_client_num(요청고객회원번호 = 아이디(문자 사용 시 대문자 필수!)
+	    // TODO 테스트베드에 등록해줘야하는 부분
+	    jo.put("req_client_name", map.get("member_name"));		// 요청 고객명
+	    jo.put("fintech_use_num", map.get("fintech_use_num"));	// 요청 핀테크번호 = 핀테크번호
+	    jo.put("req_client_fintech_use_num",map.get("fintech_use_num"));// 요청고객핀테크번호 
+	    jo.put("tran_amt",map.get("tran_amt"));
 	    
-	    // 관리계정의 정보
-	    jo.put("recv_client_name", client_name); // 입력받은 데이터
-		jo.put("recv_client_bank_code",client_bank_code); // 입력받은 데이터
-		jo.put("recv_client_account_num", client_account_num); // 입력받은 데이터
-	    
+	    // oob scope 있는 관리자용 계정의 정보
+	    jo.put("recv_client_name", "머니또"); 
+		jo.put("recv_client_bank_code","002"); 
+		jo.put("recv_client_account_num", "21111129"); 
+		
 	    HttpEntity<String> request = 
 	    	      new HttpEntity<String>(jo.toString(), httpHeaders);
 	    	    
@@ -238,6 +233,7 @@ public class BankApiClient {
 	    	      postForEntity(url, request, AccountWithdrawResponseVO.class);
 	    
 	    System.out.println("=========================================");
+	    System.out.println(jo);
 	    System.out.println(responseEntityStr.getBody());
 	    System.out.println("=========================================");
 	    
@@ -260,7 +256,7 @@ public class BankApiClient {
 		req.put("fintech_use_num", map.get("recv_client_fintech_use_num")); // fintech_use_num(입금계좌 핀테크 이용번호)
 		req.put("print_content", "머니또거래"); // dps_print_content(입금계좌 인자내역, 상대방 통장에 표시할 내역)
 		req.put("tran_amt", map.get("tran_amt")); // 입금금액
-		req.put("req_client_name", "요청고객성명"); // req_client_name(요청고객성명)
+		req.put("req_client_name", "홍길동"); // req_client_name(요청고객성명)
 		req.put("req_client_fintech_use_num", map.get("fintech_use_num")); // req_client_fintech_use_num(요청고객 핀테크 이용번호)
 		req.put("req_client_num", "ADMIN"); // req_client_num(요청고객회원번호 = 아이디(문자 사용 시 대문자 필수!)
 		req.put("transfer_purpose", "TR"); // transfer_purpose(이체용도 - 송금을 의미하는 "TR" 전달)
@@ -272,7 +268,6 @@ public class BankApiClient {
 		JSONObject jo = new JSONObject();
 		jo.put("cntr_account_num", "99999999999999"); // cntr_account_num(약정 계좌)
 		jo.put("cntr_account_type", "N"); // cntr_account_type(계좌형태 - 계좌를 의미하는 "N" 전달)
-		
 		jo.put("wd_pass_phrase", "NONE"); // 입금이체용 암호문구(테스트 계좌는 "NONE" 값 설정)
 		jo.put("wd_print_content", "용돈"); // wd_print_content(출금계좌 인자내역, 내 통장에 표시할 내역)
 		jo.put("name_check_option", "on"); // 수취인 성명 검증 여부
