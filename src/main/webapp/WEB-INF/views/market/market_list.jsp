@@ -594,6 +594,7 @@
 				str += '<img src="https://ccimage.hellomarket.com/img/web/search/itemList/ico_sort.png" alt="정렬 아이콘" class="sortSortImg"/></div>';
 				
 				$(".SortListWrapper").after(str);
+				$('.SortListWrapper').toggle();
 				
 				var sort = $(this).attr("id");
 				$("#sort").val(sort);
