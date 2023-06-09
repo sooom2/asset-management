@@ -1,9 +1,7 @@
 package com.itwillbs.moneytto.controller;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -328,9 +326,8 @@ public class BankController {
 		
 		HashMap<String, String> item = marketService.getMarketItem(item_code);
 		String id = (String)session.getAttribute("sId");
-		if(id == null) {
-			id = "admin";
-		}
+		
+		
 		HashMap<String, String> member = memberService.getMember(id);
 		
 //				model.addAttribute("item_price", item_price);

@@ -39,8 +39,6 @@ public class BankApiClient {
 	@Value("${client_secret}")
 	private String client_secret;
 	
-	@Value("${client_name}")
-	private String client_name;
 	@Value("${client_bank_code}")
 	private String client_bank_code;
 	@Value("${client_account_num}")
@@ -198,6 +196,9 @@ public class BankApiClient {
 	public AccountWithdrawResponseVO withdraw(Map<String, String> map) {
 		// 토큰 요청에 사용될 API URL 설정
 		String url = baseUrl + "/v2.0/transfer/withdraw/fin_num";
+		System.out.println("========================================");
+		System.out.println("withdraw : " +  map);
+		System.out.println("========================================");
 		
 		restTemplate = new RestTemplate();
 	    HttpHeaders httpHeaders = new HttpHeaders();
@@ -208,7 +209,7 @@ public class BankApiClient {
 	    JSONObject jo = new JSONObject();
 	    jo.put("bank_tran_id", valueGenerator.getBankTranId());
 	    jo.put("cntr_account_type", "N");	
-	    jo.put("cntr_account_num", "70667066"); // cntr_account_num(약정 계좌 = 쌤꺼 고정)
+	    jo.put("cntr_account_num", "99999999999999"); // cntr_account_num(약정 계좌 = 쌤꺼 고정)
 	    // 운영자 핀테크 번호 =====================================================
 	    jo.put("dps_print_content", "머니또머니 충전");				// 출금계좌에 찍히는 내용 
 	    jo.put("fintech_use_num", map.get("fintech_use_num"));				// 사용자 핀테크번호
@@ -222,12 +223,12 @@ public class BankApiClient {
 	    // 요청 고객
 	    jo.put("req_client_name", map.get("member_name"));							// 요청 고객명 				
 	    jo.put("req_client_fintech_use_num", map.get("fintech_use_num"));	// 
-	    jo.put("req_client_num", map.get("fintech_use_num").toUpperCase());	// req_client_num(요청고객회원번호 = 아이디(문자 사용 시 대문자 필수!)			//
+	    jo.put("req_client_num", map.get("id").toUpperCase());	// req_client_num(요청고객회원번호 = 아이디(문자 사용 시 대문자 필수!)			//
 	    
 	    jo.put("transfer_purpose", "TR");
 	    
 	    // 관리계정의 정보
-	    jo.put("recv_client_name", client_name); // 입력받은 데이터
+	    jo.put("recv_client_name", "머니또"); // 입력받은 데이터
 		jo.put("recv_client_bank_code",client_bank_code); // 입력받은 데이터
 		jo.put("recv_client_account_num", client_account_num); // 입력받은 데이터
 	    
@@ -238,6 +239,7 @@ public class BankApiClient {
 	    	      postForEntity(url, request, AccountWithdrawResponseVO.class);
 	    
 	    System.out.println("=========================================");
+	    System.out.println(jo);
 	    System.out.println(responseEntityStr.getBody());
 	    System.out.println("=========================================");
 	    

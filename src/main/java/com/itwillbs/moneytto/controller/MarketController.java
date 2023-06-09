@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itwillbs.moneytto.service.BankService;
 import com.itwillbs.moneytto.service.MarketChatService;
 import com.itwillbs.moneytto.service.MarketService;
 import com.itwillbs.moneytto.service.MemberService;
@@ -42,6 +43,9 @@ public class MarketController {
 	
 	@Autowired
 	private MarketChatService marketChatService;
+	
+	@Autowired
+	private BankService bankService;
 	
 	@Autowired
 	private MemberService memberService;
@@ -464,24 +468,19 @@ public class MarketController {
 				id = "admin";
 			}
 			HashMap<String, String> member = memberService.getMember(id);
-			
+			HashMap<String, String> account = bankService.getAccount(id);
 //					model.addAttribute("item_price", item_price);
 			
 			
 			System.out.println("======================================================");
 			System.out.println("item : " + item.toString());
 			System.out.println("member : " + member.toString());
+			System.out.println("account : " + account);
 			System.out.println("======================================================");
 			
-//					if(id == null) {
-//						model.addAttribute("msg", "로그인 후 이용가능합니다.");
-//						model.addAttribute("target", "memLogin");
-//						return "success";
-//					} else {
-//						return "store/store_pay";
-//					}
 			model.addAttribute("member", member);
 			model.addAttribute("item", item);
+			model.addAttribute("account", account);
 			return "market/market_payment";
 		}
 	   

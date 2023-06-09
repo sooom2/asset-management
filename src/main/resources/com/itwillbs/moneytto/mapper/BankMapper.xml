@@ -30,12 +30,17 @@
 	</update>
 	
 	<!-- 계좌 정보 조회 - SELECT -->
-	<select id="selectAccount" resultType="hashmap">
+	<select id="selectAccountById" resultType="hashmap">
 		SELECT *
 		FROM account
 		WHERE id = #{member_id}
 	</select>
 	
+	<select id="selectAccountByMember" resultType="hashmap">
+		SELECT *
+		FROM account
+		WHERE id = #{member_id}
+	</select>
 	
 	
 	<update id="updateAccount">
