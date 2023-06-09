@@ -130,6 +130,7 @@ function memberAuth(){
 								<th id="board-header">경매 이름</th>
 								<th id="board-header">낙찰가</th>
 								<th id="board-header">날짜</th>
+								<th id="board-header">결제상태</th>
 							</tr>
 						    <c:forEach items="${itemList}" var="item" varStatus="status">
 						        <tr>
@@ -141,6 +142,7 @@ function memberAuth(){
 									</td>
 						            <td id="board-data">${item.success_price}</td>
 						            <td id="board-data">${item.auction_end_date}</td>
+						            <td id="board-data">#결제상태</td>
 						        </tr>
 						    </c:forEach>
 						</table>
