@@ -317,7 +317,7 @@ $(function() {
 		                                $('.schdule').remove();
 		                                $('.card_box.active .sch_box').val(trade_date);
 		                                $('div.card_box.active .profile div').text("거래중");
-		                                $(".declaration").after("<div class='trade' onclick='market_payment()'><div><span style='position: fixed;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+		                                $(".declaration").after("<div class='trade' onclick='market_payment()'><div><span style='position: absolute;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
 		                            }
 		                        });
 		                    }
@@ -417,7 +417,7 @@ $(function() {
  
 
 	                        if (result.chatDetail[0].item_status == '거래중') {
-	                            $(".declaration").after("<div class='trade' onclick='market_payment()' ><div><span style='position: fixed;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+	                            $(".declaration").after("<div class='trade' onclick='market_payment()' ><div><span style='position: absolute;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
 	                        } else {
 	                            $(".trade").remove();
 	                        }
@@ -1003,7 +1003,7 @@ $(function() {
                      <c:if test="${sellDetail.buy_member_id eq sessionScope.sId and chatList.item_status eq '거래중' }">
                         <div class="trade"  >
                            <div class="moneyttoPay" onclick="market_payment()">
-								<span style="position: fixed;font-size: 8px;margin-top: -11px;  margin-left: -2px;">안전결제</span>
+								<span style="position: absolute;font-size: 8px;margin-top: -11px;  margin-left: -2px;">안전결제</span>
 								<img src="${path }/resources/images/chat/btn_trade_x2.png" alt="송금이미지">
                            </div>
                         </div>

@@ -194,6 +194,7 @@ public class BankController {
 		return "bank/bank_account_detail";
 		
 	}
+	
 	// 2.3.1 출금이체
 	// 핀테크 이용번호(fintech_use_num) 전달받기 - Map
 	@PostMapping("bank_withdraw")

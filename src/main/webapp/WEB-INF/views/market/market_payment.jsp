@@ -23,7 +23,6 @@
 
 <title>머니또페이</title>
 <link rel="shortcut icon" href="https://img.pay.naver.net/static/images/customer/favicon.ico" />
-<!-- 넘빨개여,,,ㅠ -->
 <link type="text/css" rel="stylesheet" href="//img.pay.naver.net/z/mstatic/css/service/mobile/nsp/order_common.css?1684912786775">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -45,7 +44,33 @@ $(function(){
 		var point2 = Number($('#point2').val());
 		$('._totalPayAmt').text(point1 + point2)
 	})
+
+
+	$('.getAccountAmt').on("click", function() {
+	    let queryString = $("form[name=accountInfo]").serialize();
+	    $.ajax({
+	        type: 'post',
+	        url: 'bank_accountDetail_pay',
+	        data: queryString,
+	        dataType: 'text',
+	        success: function(result) {
+	            var parsedResult = JSON.parse(result);
+// 	            var strAmtValue = parsedResult.strAmt;
+// 	            alert(parsedResult.bank_name);
+	            let bank_name = parsedResult.bank_name;
+	            let balance_amt = parsedResult.balance_amt;
+	            $(".accountAmtResult").text(bank_name+" - " + balance_amt+"원");
+	            $("input.getAccountAmt").remove();
+	        }
+	    });
+	});
+
+	
+
 })
+
+
+
 </script>
 <body>
 <div class="wrap">
@@ -55,14 +80,19 @@ $(function(){
 		<p class="sp_header gnb_logo"><span class="blind">ttoPay</span></p>
 	</div>
 
-<form method="post" autocomplete="off" action="bank_withdraw">
+<form method="post" name="accountInfo" autocomplete="off" action="bank_accountDetail">
 <input type="hidden" name="id" value="${member.member_id }"> 
 <input type="hidden" name="member_name" value="${member.member_name }">
-<input type="hidden" name="fintech_use_num" value="${account.fintech_use_num }"> 
 <input type="hidden" name="trade_type" value="이체">
 <div class="container" id="container">
+<!-- 인증받은 핀테크번호 -->
+<!-- 등록된 계좌의 핀테크번호를 알아내야함 -->
+<%-- <c:if test="${userInfo.account_num_masked eq '11111***' }"> --%>
+	<input type="hidden" name="fintech_use_num" value="120211385488932372338507"> 
+<%-- </c:if> --%>
+<input type="hidden" name="user_name" value="${userInfo.user_name }">
     <div class="info_login">
-    	<div>
+    	<div style="display: inline-block;float: left;">
 			<div class="img_area">
 				<img src="${member.member_image}" alt="프로필 이미지" width="32" height="32" class="thumb">
 			</div>
@@ -70,7 +100,8 @@ $(function(){
 	        <span class="eng_name">(${member.member_id })</span>
     	</div>
 		<div>
-			<input type="button" value="내계좌 잔고조회" class="getAccountAmt" style="float: right;  display: block;cursor: pointer;   width: 150px;background-color:#fff;border: 1px solid #bababa;height: 30px;   font-size: 15px;  margin-top: -37px;">
+			<input type="button" value="내계좌 잔고조회" class="getAccountAmt" style="display: block;    float: right;    cursor: pointer;    width: 150px; background-color: #fff;    border: 1px solid #bababa;    height: 30px;    font-size: 15px;    margin-top: 8px;">
+			<div class="accountAmtResult" style="display: inline-block;  float: right; font-size: 15px;"></div>
 		</div>	        
 	</div>
 	<div class="fold_wrap item_detail">
