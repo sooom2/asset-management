@@ -739,3 +739,7 @@ button {
     background: #bb2649;
     color: #fff!important;
 }
+
+.topBtn {
+	width : 70px;
+}
