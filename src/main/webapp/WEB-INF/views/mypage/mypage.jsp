@@ -142,7 +142,18 @@ function memberAuth(){
 									</td>
 						            <td id="board-data">${item.success_price}</td>
 						            <td id="board-data">${item.auction_end_date}</td>
-						            <td id="board-data">#결제상태</td>
+						            <c:choose>
+						            	<c:when test="${not empty item.pay_code }">
+						            		<td id="board-data">
+						            			<a href="AuctionPay?auction_code=${item.auction_code}" class="board-title">확인하기</a>
+						            		</td>
+						            	</c:when>
+						            	<c:otherwise>
+						       		     	<td id="board-data">
+						       		     		<a href="auctionPayResult?auction_code=${item.auction_code}" class="board-title">결제하기</a>
+						       		     	</td>
+						            	</c:otherwise>
+						            </c:choose>
 						        </tr>
 						    </c:forEach>
 						</table>
