@@ -194,7 +194,7 @@ public class BankController {
 		return "bank/bank_account_detail";
 		
 	}
-	// 2.3.1 출금이체
+	// 2.5.1 출금이체
 	// 핀테크 이용번호(fintech_use_num) 전달받기 - Map
 	@PostMapping("bank_withdraw")
 	public String withdraw(
@@ -228,9 +228,6 @@ public class BankController {
 		// 출금계좌 핀테크 이용번호(송금요청 계좌) 저장 
 		model.addAttribute("fintech_use_num", map.get("fintech_use_num"));
 		
-		//임시로 넣기
-//		String trade_amount = map.get("charge_point");
-//		String trade_date = LocalDateTime.now().toString();
 		// 만약, 응답코드(rsp_code) 가 "A0000" 이 아니면, 처리 실패이므로
 		// 응답메세지(rsp_message) 를 화면에 출력 후 이전페이지로 돌아가기
 		if(!result.getRsp_code().equals("A0000")) {
