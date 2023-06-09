@@ -144,6 +144,11 @@ public interface MarketMapper {
    // 관리자 아이템 목록
    List<HashMap<String, String>> selectadminItem(HashMap<String, String> map);
 
+   void increaseViews(String item_code);
+
+
+
+
    // 태그 리스트
    List<HashMap<String, String>> selectTag();
 

@@ -23,7 +23,8 @@
            #{item_tag},
            #{item_category},
            '판매중',
-           NOW()
+           NOW(),
+           '0'
        )
    </insert>
 
@@ -217,6 +218,7 @@
       SELECT *
           FROM item
              WHERE item_code = #{item_code}
+             
    </select>
    
    <insert id="insertMarketPaid">
@@ -787,7 +789,8 @@
             ) w
       ON
          i.item_code = w.wish_item_code
-      ORDER BY i.item_code DESC LIMIT 10
+      ORDER BY i.item_count DESC LIMIT 10
+      
    </select>
    <!--  -->
    
@@ -837,6 +840,15 @@
 				LIMIT ${startNum}, ${endNum}
 			</if>
 	</select>
+	
+<!-- 	상품디테일 조회수 증가 -->
+   <update id="increaseViews">
+      UPDATE item
+         SET
+             item_count = item_count + 1
+          WHERE
+             item_code = #{item_code} 
+   </update>
    
    
 </mapper>

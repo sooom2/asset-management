@@ -344,7 +344,7 @@
 			}
  
 			if(str.includes(doubleChar)) {
-				console.log("중복 구분자 제거");
+// 				console.log("중복 구분자 제거");
 				str = str.replace(doubleChar, character);
 			}
 
@@ -372,14 +372,14 @@
 			$("#item_category").val(item_category);
 			$("#tag").val(item_tag);
 			
-			console.log("------ marketItemList 요청 시 들어가는 값 ------")
-			console.log("item_category : " + item_category);
-			console.log("item_tag : " + item_tag);
-			console.log("item_status : " + item_status);
-			console.log("item_price_min : " + item_price_min);
-			console.log("item_price_max : " + item_price_max);
-			console.log("member_grade : " + member_grade);
-			console.log("sort : " + sort);
+// 			console.log("------ marketItemList 요청 시 들어가는 값 ------")
+// 			console.log("item_category : " + item_category);
+// 			console.log("item_tag : " + item_tag);
+// 			console.log("item_status : " + item_status);
+// 			console.log("item_price_min : " + item_price_min);
+// 			console.log("item_price_max : " + item_price_max);
+// 			console.log("member_grade : " + member_grade);
+// 			console.log("sort : " + sort);
 			
 			$.ajax({													
 	 			type: "GET",
@@ -456,7 +456,7 @@
 				var item_tag = $("#tag").val();
 				var item_price_min = $("#item_price_min").val();
 				var item_price_max = $("#item_price_max").val();
-				console.log("text : " + text);
+// 				console.log("text : " + text);
 				
 				/*
 					1: 카테고리
@@ -464,17 +464,17 @@
 					3: 태그
 				*/
 				var data = $(this).parent().find(".tagListName").data("cd");
-				console.log(data);
+// 				console.log(data);
 				
 				switch(data) {
 					case 1: 
 						// 카테고리 처리
-						console.log("카테고리 처리");
+// 						console.log("카테고리 처리");
 						$("#item_category").val(category.replace(text, ""))
 						break;
 					case 2: 
 						// 가격 처리
-						console.log("가격 처리");
+// 						console.log("가격 처리");
 						$("#item_price_min").val(0);
 						$("#item_price_max").val(999999999999999);
 						break;
@@ -614,8 +614,8 @@
 				event.preventDefault(); // 폼 제출 기본 동작 막기
 				var input = $("#searchTag").val();
 				var tagValue = $("#tag").val();
-				console.log("tagValue : " + tagValue);
-				console.log("input : " + input);
+// 				console.log("tagValue : " + tagValue);
+// 				console.log("input : " + input);
 
 				tag(input);
 				
@@ -630,6 +630,7 @@
 	            }
 	        });
 			
+			
 			// tag list 초기화
 			var availableTag = [];
 			
@@ -641,7 +642,7 @@
 		 			dataType: "json",
 		 			success: function(response) { 
 		 				console.log("tagList : 요청처리성공");
-		 				console.log(response);
+// 		 				console.log(response);
 		 				for(let item of response) {
 							let tags2 = item.item_tag;
 		 					let tag2 = tags2.split(',');
