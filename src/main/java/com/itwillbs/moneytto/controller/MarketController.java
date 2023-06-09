@@ -143,6 +143,8 @@ public class MarketController {
 		    model.addAttribute("nickname",nickname);
 		}
 		
+		
+		
 		// 아이템 상세
 		HashMap<String, String> marketItem = service.getMarketItem(item_code);
 		model.addAttribute("marketItem", marketItem);
@@ -154,6 +156,11 @@ public class MarketController {
 		List<HashMap<String, String>> itemWish = memberService.getWishItem(id, item_code);
 		model.addAttribute("itemWish", itemWish);
 		
+		// 탈퇴한 회원의 상품 조회 불가
+		if(marketItem.get("member_delete_status").equals("Y")) {
+			model.addAttribute("msg", "탈퇴한 회원입니다.");
+			return "fail_back";
+		}
 
 		return "market/market_detail";
 	}

@@ -33,24 +33,15 @@
    	    <!-- 카테고리 -->
 			<div class="webWrapper">
 				<div class="barWrapper">
-<!-- 	           	 	<div class="FilterBoxWrapper-active"> -->
-<!-- 	           	 		<div class="FilterBoxTopic"> -->
-<!-- 		           	 		<div class="FilterBoxName">#내지역이름</div> -->
-<!-- 		           	 		<div class="FilterBoxCount">#</div> -->
-<!-- 	           	 		</div> -->
-<!--            	 		<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow"> -->
-<!-- 	          	 	</div> -->
 					<div class="FilterBoxWrapper FilterCategory">
 						<div class="FilterBoxTopic" >
 							<div class="FilterBoxName">#카테고리</div>
-<!-- 	           	 			<div class="FilterBoxCount">#</div> -->
 						</div>
 						<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
 					</div>
 					<div class="FilterBoxWrapper FilterPrice">
 						<div class="FilterBoxTopic">
 							<div class="FilterBoxName">#가격</div>
-<!-- 	           	 			<div class="FilterBoxCount">#</div> -->
 						</div>
 						<img src="https://ccimage.hellomarket.com/img/web/search/filter/blue_arrow.svg" alt="화살표 아래 아이콘" class="FilterBoxArrow">
 					</div>
@@ -263,6 +254,7 @@
 				let code = item.item_code;
 				let image = item.image_name;
 				let count = item.total_count;
+				let status = item.item_status;
 				var wish = item.wish_code;
 				
 				price = price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
@@ -286,6 +278,9 @@
 				str +=	'">';
 				str += '<div class="itemThumbnailBox">';
 				str += '<img src="' + image + '" alt="썸네일" class="itemThumbnail" style="cursor: pointer">';
+				str += '<input type="button" value="';
+				str += status;
+				str += '" class="status active">';
 				str += wish;
 				str += '</div>';
 				str += '<div class="itemTextBox">';

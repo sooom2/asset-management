@@ -727,3 +727,15 @@ button {
 .FilterBoxMore{
     margin: auto 3px auto 550px !important;
 }
+
+
+.status {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    padding: 4px 7px;
+    border-radius: 6px;
+    border: none;
+    background: #bb2649;
+    color: #fff!important;
+}
