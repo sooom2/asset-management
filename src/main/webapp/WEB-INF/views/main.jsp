@@ -169,12 +169,29 @@
 									<div class="itemCategory">${item.item_category }</div>
 									<div class="itemText subject">${item.item_subject }</div>
 									<div class="itemText"><fmt:formatNumber value="${item.item_price }" pattern="#,###" />원</div>
+<!-- 									<div class="itemTagBox"> -->
+<%-- 									<c:forEach var="item_tag" items ="${fn:split(item.item_tag, ',') }"> --%>
+<%-- 									<div class="itemSizeTag">${item_tag }</div> --%>
+<%-- 									</c:forEach> --%>
+<!-- 									</div> -->
+
 									<div class="itemTagBox">
-									<c:forEach var="item_tag" items ="${fn:split(item.item_tag, ',') }">
-									<div class="itemSizeTag">${item_tag }</div>
-									</c:forEach>
+										<c:forEach var="item_tag"
+											items="${fn:split(item.item_tag, ',')}">
+											<c:choose>
+												<c:when test="${not empty item_tag}">
+													<div class="itemSizeTag">${item_tag}</div>
+												</c:when>
+												<c:otherwise>
+													<div class="itemSizeTag" style="visibility: hidden;"></div>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
 									</div>
-<%-- 									<div class="itemTimeTag">${item.item_date }</div> --%>
+
+
+
+									<%-- 									<div class="itemTimeTag">${item.item_date }</div> --%>
 									<div class="itemTimeTag">
 										<fmt:parseDate var="parsedDate" value="${item.item_date}"
 											pattern="yyyy-MM-dd'T'HH:mm:ss" />
