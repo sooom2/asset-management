@@ -627,14 +627,14 @@
 					$("#searchForm").submit(); // 폼 제출
 	            }
 	        });
-			var availableTags = [
-				'인형',
-				'미스트'
-			];
-			$("#searchTag").autocomplete(availableTags,{ 
-		        matchContains: true,
-		        selectFirst: false
-		    });
+// 			var availableTags = [
+// 				'인형',
+// 				'미스트'
+// 			];
+// 			$("#searchTag").autocomplete(availableTags,{ 
+// 		        matchContains: true,
+// 		        selectFirst: false
+// 		    });
 			
 		});
 function wish(){
