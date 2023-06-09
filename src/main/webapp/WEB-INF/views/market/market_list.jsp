@@ -151,7 +151,8 @@
 				</div>
             </div>
         </div>
-   	</div>
+<%-- 		<img src="${path }/resources/images/top.png" alt="top" class="topBtn" onclick=""/> --%>
+	</div>
           
 <script type="text/javascript">
 		function category(categoryId) {
