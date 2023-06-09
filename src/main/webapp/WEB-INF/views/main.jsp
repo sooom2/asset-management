@@ -174,7 +174,13 @@
 									<div class="itemSizeTag">${item_tag }</div>
 									</c:forEach>
 									</div>
-									<div class="itemTimeTag">${item.item_date }</div>
+<%-- 									<div class="itemTimeTag">${item.item_date }</div> --%>
+									<div class="itemTimeTag">
+										<fmt:parseDate var="parsedDate" value="${item.item_date}"
+											pattern="yyyy-MM-dd'T'HH:mm:ss" />
+										<fmt:formatDate value="${parsedDate}"
+											pattern="yyyy-MM-dd HH:mm" />
+									</div>
 								</div>
 							</div>
 						</c:forEach>
