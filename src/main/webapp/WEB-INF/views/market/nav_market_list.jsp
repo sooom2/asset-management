@@ -85,6 +85,7 @@
 			let code = item.item_code;
 			let image = item.image_name;
 			let count = item.total_count;
+			let status = item.item_status;
 			var wish = item.wish_code;
 			
 			price = price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
@@ -108,6 +109,9 @@
 			str +=	'">';
 			str += '<div class="itemThumbnailBox">';
 			str += '<img src="' + image + '" alt="썸네일" class="itemThumbnail" style="cursor: pointer">';
+			str += '<input type="button" value="';
+			str += status;
+			str += '" class="status active">';
 			str += wish;
 			str += '</div>';
 			str += '<div class="itemTextBox">';
