@@ -190,7 +190,11 @@ function toggleLike(element) {
 <!-- 							</div> -->
 						</div>
 					</div>
-					
+						<div class="DescriptionWrapper">
+						<div class="DescriptionText">
+							${marketItem.item_content }
+						</div>
+					</div>
 					<!-- 카테고리 -->
 					<div class="CategoryWrapper">
 						<div class="CategoryTitle">카테고리</div>
@@ -230,12 +234,6 @@ function toggleLike(element) {
 
 					<div class="itemControllerWrapper">
 						<div class="SomeonesItemWrapper">
-<!-- 							<div class="WishWrapper"> -->
-<!-- 								<img -->
-<!-- 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_default.png" -->
-<!-- 									alt="좋아요 아이콘" class="WishIcon"> -->
-<!-- 								<div class="WishText">0</div>  -->
-<!-- 							</div> -->
 								<div class="WishWrapper" data-cd="${marketItem.item_code }">
 								  <c:choose>
 	                       	 		<c:when test="${not empty itemWish}">
@@ -277,13 +275,11 @@ function toggleLike(element) {
 						</div>
 					</div>
 					
-					<div></div>
-					<div></div>
-					<div class="DescriptionWrapper">
-						<div class="DescriptionText">
-							${marketItem.item_content }
-						</div>
-					</div>
+<!-- 					<div class="DescriptionWrapper"> -->
+<!-- 						<div class="DescriptionText"> -->
+<%-- 							${marketItem.item_content } --%>
+<!-- 						</div> -->
+<!-- 					</div> -->
 
 					<div style="margin: -19px 20px 10px"
 						class="AdSenseWrapper">
