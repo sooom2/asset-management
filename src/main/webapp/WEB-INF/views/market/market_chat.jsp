@@ -317,7 +317,7 @@ $(function() {
 		                                $('.schdule').remove();
 		                                $('.card_box.active .sch_box').val(trade_date);
 		                                $('div.card_box.active .profile div').text("거래중");
-		                                $(".declaration").after("<div class='trade' onclick='market_payment()'><div><span style='position: fixed;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+		                                $(".declaration").after("<div class='trade' onclick='market_payment()'><div><span style='position: absolute;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
 		                            }
 		                        });
 		                    }
@@ -343,6 +343,9 @@ $(function() {
 		
 		//왼쪽 list 눌렸을때
 		function chatDetail(room_code) {
+			//다른채팅방에서 글을쓰고 다른 채팅방 누를경우
+			$('.chat_input').val('');
+			
 			new Promise((succ, fail) => {
 				$.ajax({
 	               type: "GET",
@@ -352,7 +355,7 @@ $(function() {
 	                   room_code: room_code
 	               },
 	               success: function(result) {
-	            	   console.log(result.opponentId);
+	            	   
 	                   let dateString = result.chatDetail[0].chat_openDate;
 	                   let date = new Date(dateString);
 	                   let year = date.getFullYear();
@@ -372,7 +375,7 @@ $(function() {
 	                    let profileImg = sell_profileImg;
 	                    let trade_date = result.chatDetail[0].trade_date;
 	                    let opponent_delete_status = result.opponentId.opponent_delete_status;
-						let opponent_nickname = result.opponentId.opponent_nickname;
+						let opponent_nickname;
 						item_code = result.chatDetail[0].item_code;
 
 	                    //Y일때 탈퇴
@@ -417,7 +420,7 @@ $(function() {
  
 
 	                        if (result.chatDetail[0].item_status == '거래중') {
-	                            $(".declaration").after("<div class='trade' onclick='market_payment()' ><div><span style='position: fixed;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+	                            $(".declaration").after("<div class='trade' onclick='market_payment()' ><div><span style='position: absolute;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
 	                        } else {
 	                            $(".trade").remove();
 	                        }
@@ -484,7 +487,7 @@ $(function() {
 	                                "<div class='chat_opponent_image_box'>" +
 	                                "<img class='chat_opponent_profile_image' src='" + profileImg + "' alt='상대방이미지'></div>" +
 
-	                                "<div class='chat_opponent_title'>" + opponent_nickname + "</div>" +
+	                                "<div class='chat_opponent_title'>" + result.chatDetail[i].buy_nickname + "</div>" +
 	                                "<div class='chat_opponent_message'>" +
 	                                "<span>" + result.chatDetail[i].chat_content + "</span>" +
 	                                "<div class='chat_opponent_timeago'>" + formatChatTime + "</div></div></div></div>";
@@ -1003,7 +1006,7 @@ $(function() {
                      <c:if test="${sellDetail.buy_member_id eq sessionScope.sId and chatList.item_status eq '거래중' }">
                         <div class="trade"  >
                            <div class="moneyttoPay" onclick="market_payment()">
-								<span style="position: fixed;font-size: 8px;margin-top: -11px;  margin-left: -2px;">안전결제</span>
+								<span style="position: absolute;font-size: 8px;margin-top: -11px;  margin-left: -2px;">안전결제</span>
 								<img src="${path }/resources/images/chat/btn_trade_x2.png" alt="송금이미지">
                            </div>
                         </div>

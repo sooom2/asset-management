@@ -602,7 +602,6 @@ public class MarketController {
 			return jsonStr;
 			
 		}
-		
 	
 		
 	   
@@ -640,8 +639,6 @@ public class MarketController {
 	      
 	      List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
 	      HashMap<String, String> opponentId = marketChatService.getOpponentId(room_code, sId);
-	      System.out.println("ajax ================================"
-	      		+ "========================");
 	      System.out.println(chatDetail);
 	      System.out.println("ajax ========================================================");
 	      JSONObject result = new JSONObject();
