@@ -51,5 +51,10 @@ public class MainService {
 		
 		return mapper.selectItemList(id);
 	}
+
+	public List<HashMap<String, String>> getRecentItemList(String id) {
+
+		return mapper.selectRecentItemList(id);
+	}
 	
 }

@@ -121,6 +121,7 @@ public class BankController {
 		session.setAttribute("user_seq_no", responseToken.getUser_seq_no());
 		
 		// model 객체에 target 속성으로 리다이렉트할 페이지 저장(bank_userInfo)
+		model.addAttribute("msg", "사용자 인증 되었습니다!");
 		model.addAttribute("target", "bank_userInfo");
 		
 		// 성공 처리를 위한 success.jsp 페이지로 포워딩

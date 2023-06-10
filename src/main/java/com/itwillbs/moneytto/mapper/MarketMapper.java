@@ -157,5 +157,7 @@ public interface MarketMapper {
 
    //리뷰 있는지 확인
    int isReview(String item_code);
+   // 메인리스트 최근 아이템
+   List<HashMap<String, String>> selectRecentItemList(String id);
 
 }

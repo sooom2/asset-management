@@ -169,12 +169,6 @@
 									<div class="itemCategory">${item.item_category }</div>
 									<div class="itemText subject">${item.item_subject }</div>
 									<div class="itemText"><fmt:formatNumber value="${item.item_price }" pattern="#,###" />원</div>
-<!-- 									<div class="itemTagBox"> -->
-<%-- 									<c:forEach var="item_tag" items ="${fn:split(item.item_tag, ',') }"> --%>
-<%-- 									<div class="itemSizeTag">${item_tag }</div> --%>
-<%-- 									</c:forEach> --%>
-<!-- 									</div> -->
-
 									<div class="itemTagBox">
 										<c:forEach var="item_tag"
 											items="${fn:split(item.item_tag, ',')}">
@@ -189,20 +183,77 @@
 										</c:forEach>
 									</div>
 
-
-
 									<%-- 									<div class="itemTimeTag">${item.item_date }</div> --%>
 									<div class="itemTimeTag">
-										<fmt:parseDate var="parsedDate" value="${item.item_date}"
-											pattern="yyyy-MM-dd'T'HH:mm:ss" />
-										<fmt:formatDate value="${parsedDate}"
-											pattern="yyyy-MM-dd HH:mm" />
+										<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+										<fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd HH:mm" />
 									</div>
 								</div>
 							</div>
 						</c:forEach>
 					</div>
 				</div>
+				
+				
+				<div class="bestSell_list_wrap">
+					<div class="top">
+						<div class="bestSell_title"><i class="fa-brands fa-hotjar"></i>&nbsp;머니또 최근상품</div>
+					</div>
+				</div>
+				<div class="itemListWrapper">
+					<div class="itemWrapper">
+						<!-- 상품 하나 -->
+						<c:forEach var="item" items="${recentItemList }">
+							<div class="item" data-cd="${item.item_code }">
+								<div class="itemThumbnailBox">
+									<c:choose>
+	                              	<c:when test="${not empty item.image_name }">
+	                              		<img src="${item.image_name }" alt="itemImg" class="itemThumbnail"/>
+	                              	</c:when>
+	                              	<c:otherwise>
+										<img src="${path }/resources/images/main/noThumbnail.jpg" alt="itemImg" class="itemThumbnail" />		                                  		
+	                              	</c:otherwise>
+	                            </c:choose>
+									<input type="button" value="${item.item_status }" class="status active">
+								<c:choose>
+	                       	 		<c:when test="${not empty item.wish_code }">
+	                       	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg" />
+	                           		</c:when>
+	                	 		   	<c:otherwise>
+	                      	 		   	<img src="${path }/resources/images/main/ico_heart_off_x3.png"  alt="좋아요 아이콘" class="WishWishImg wish" >
+	                      	 		</c:otherwise>
+	                             </c:choose>
+								</div>
+								<div class="itemTextBox">
+									<div class="itemCategory">${item.item_category }</div>
+									<div class="itemText subject">${item.item_subject }</div>
+									<div class="itemText"><fmt:formatNumber value="${item.item_price }" pattern="#,###" />원</div>
+									<div class="itemTagBox">
+										<c:forEach var="item_tag"
+											items="${fn:split(item.item_tag, ',')}">
+											<c:choose>
+												<c:when test="${not empty item_tag}">
+													<div class="itemSizeTag">${item_tag}</div>
+												</c:when>
+												<c:otherwise>
+													<div class="itemSizeTag" style="visibility: hidden;"></div>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</div>
+
+									<%-- 									<div class="itemTimeTag">${item.item_date }</div> --%>
+									<div class="itemTimeTag">
+										<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+										<fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd HH:mm" />
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+				</div>
+				
+				
 				<a href="market_list">
 					<div class="chall_more">더 많은 상품 보러가기</div>
 				</a>

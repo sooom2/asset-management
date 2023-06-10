@@ -29,10 +29,12 @@ public class MainController {
 		
 		String id = (String)session.getAttribute("sId");
 		
-		// 파라미터 없이 LIMIT 10만 넣어서 대충 만들어둔 상태
+
 		List<HashMap<String,String>> itemList = mainService.getMainItemList(id);
+		List<HashMap<String,String>> recentItemList = mainService.getRecentItemList(id);
 		
 		model.addAttribute("itemList", itemList);
+		model.addAttribute("recentItemList", recentItemList);
 		
 		System.out.println("==================================");
 		System.out.println("메인 아이템 : ");
