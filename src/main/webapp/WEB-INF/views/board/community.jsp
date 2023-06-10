@@ -71,13 +71,46 @@
 	color: #999;
 	margin-left: 5px;
 }
+.tit {
+  position: relative;
+  font-size: 27px;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  color: #303030;
+  margin: 20px 0;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.emoji {
+  font-size: 40px;
+  color: #FFD700;
+  margin-left: 3px;
+}
+
+@keyframes titleAnimation {
+  0% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+.tit {
+  animation: titleAnimation 2s ease-in-out;
+  animation-fill-mode: forwards;
+}
 </style>
 <body>
 	<jsp:include page="../nav.jsp" />
 
 	<div class="container">
 		<form id="iForm" class="form-container">
-			<h2 class="tit">🍀 머니또 커뮤니티 🍀</h2>
+			<h2 class="tit">머니또 커뮤니티<span class="emoji">🍀</span></h2>
 			<div class="button-search-container">
 				<!-- 글 등록 버튼 -->
 				<div id="button-container">
