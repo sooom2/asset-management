@@ -114,8 +114,9 @@ $(function() {
 	
 	    }
 
-	
-
+		$('a.sch_date').on("click",function(){
+			sch_date();
+		});
 	   // 탈퇴한회원처리 ( disabled 하기)
 	   let isExistMember = "${opponentId.opponent_delete_status}"
 	   if (isExistMember == 'Y') {
@@ -229,11 +230,9 @@ $(function() {
 
 
 
-	   $("#tradeButton").prop("disabled", true).css({
-	       "backgroundColor": "#BB2649",
-	       "border": "none"
-	   });
-
+	   if($("#buyButton").hasClass("active")){
+		   $("#tradeButton").prop("disabled",false);
+	   }
 
 	   if (!$("#tradeButton").hasClass("active")) {
 	       $("#tradeButton").css({
@@ -245,7 +244,7 @@ $(function() {
 
 	   
 	    //리뷰썼을때 후기 작성 지워지고/ 버튼들 disabled
-	    if(isReview = 1){
+	    if(isReview === 1){
 			$(".reviewForm").remove();
 			$("#buyButton").prop("disabled", true); 
 			$("#tradeButton").css({
@@ -428,7 +427,6 @@ $(function() {
 					           },
 					           dataType: "json",
 					           success: function(result) {
-					        	   location.reload();
 					           }
 					           
 					       });
