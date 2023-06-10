@@ -66,6 +66,7 @@
     }
   }
 </script>
+
 <style>
 .comment-count {
 	color: #999;
@@ -137,7 +138,6 @@
 				<%-- boardList를 반복하여 데이터를 출력 --%>
 				<c:forEach items="${boardList}" var="boardList" varStatus="loop">
 					<tr>
-						<%-- 			            <td id="board-data">${boardList.comm_code}</td> --%>
 						<td id="board-data">${loop.index + 1}</td>
 						<td id="board-data">
 							<div class="board-info">

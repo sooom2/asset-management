@@ -151,7 +151,8 @@ public class CommunityController {
 	    }
 	}
 	
-	
+
+
 
 	@PostMapping(value = "deleteComment")
 	@ResponseBody

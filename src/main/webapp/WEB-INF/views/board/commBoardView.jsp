@@ -170,7 +170,7 @@
 			<div>
 				<section id="btnArea"
 					style="display: flex; justify-content: center;">
-					<input type="button" value="뒤로가기" onclick="history.back()">
+					<input type="button" value="뒤로가기" onclick="window.location.href='commBoard'">
 					<c:if test="${boardDetail.member_id eq sessionScope.sId}">
 						<input type="button" value="글삭제"
 							onclick="deleteBoard(${boardDetail.comm_code})">
