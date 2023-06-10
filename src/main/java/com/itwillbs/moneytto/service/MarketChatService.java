@@ -162,6 +162,9 @@ public class MarketChatService {
 	public int isReview(String item_code) {
 		return mapper.isReview(item_code);
 	}
+	public HashMap<String, String> getMarketPaid(String item_code) {
+		return mapper.marketPaid(item_code);
+	}
 	
 
 
