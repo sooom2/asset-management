@@ -46,9 +46,10 @@
 
 .comment-table th,
 .comment-table td {
-    border: 1px solid #ddd !important;
+    border: none !important;
     padding: 8px !important;
     text-align: center !important;
+    position: relative;
 }
 
 .comment-table th {
@@ -60,10 +61,24 @@
 
 .comment-table tbody tr:first-child td {
     padding-top: 12px !important;
+    border-top: 1px solid #ddd !important; /* 행의 위쪽 선 추가 */
 }
 
 .comment-table tbody tr:last-child td {
     padding-bottom: 12px !important;
+}
+
+.comment-table td.comment {
+    width: 60%;
+    text-align: left;
+    padding-left: 10px;
+    word-wrap: break-word;
+}
+
+.comment-table td.nickname,
+.comment-table td.date {
+    width: 20%;
+    text-align: center;
 }
 
 .comment-buttons {
@@ -88,28 +103,74 @@
     border: 1px solid #ddd;
     border-radius: 5px;
 }
+
+.comment-table td .delete-button {
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.comment-table td .delete-button .delete-btn {
+    border: none;
+    background: transparent;
+    font-size: 12px;
+    color: #999;
+    cursor: pointer;
+}
+
+.comment-table td .delete-button .delete-btn:hover {
+    color: #ff0000;
+}
+
+.comment-table:before,
+.comment-table:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.comment-table {
+    border: 1px solid #ddd !important;
+    border-spacing: 0; /* 선이 보이도록 border-spacing 추가 */
+}
+
+.comment-table th,
+.comment-table td {
+    border-bottom: 1px solid #ddd !important; /* 행의 아래쪽 선 추가 */
+    border-right: none !important;
+}
+
+.comment-table tr:last-child td {
+    border-bottom: none !important;
+}
+
 </style>
+
 <body>
     <input type="hidden" id="commCode" name="comm_code" value="${param.comm_code}">
 
 
 	<jsp:include page="../nav.jsp" />
-	<!-- 게시글 보기 -->
+
 	<article id="writeForm">
 		<form action="addComment" method="post" name="viewForm"
 			enctype="multipart/form-data">
 			<div class="form-group">
-				<label for="title">Title</label>
-				<input type="text" class="form-control" id="title" value="${boardDetail.comm_title}" readonly>
+				<label for="title">Title</label> <input type="text"
+					class="form-control" id="title" value="${boardDetail.comm_title}"
+					readonly>
 			</div>
 
 			<div class="form-group">
 				<label for="content">Content</label>
-				<textarea class="form-control summernote" rows="5" cols="" id="content" readonly>${boardDetail.comm_content}</textarea>
+				<textarea class="form-control summernote" rows="5" cols=""
+					id="content" readonly>${boardDetail.comm_content}</textarea>
 			</div>
 
 			<div>
-				<section id="btnArea" style="display: flex; justify-content: center;">
+				<section id="btnArea"
+					style="display: flex; justify-content: center;">
 					<input type="button" value="뒤로가기" onclick="history.back()">
 				</section>
 			</div>
@@ -121,14 +182,20 @@
 							<th>작성자</th>
 							<th>댓글</th>
 							<th>일자</th>
+							<th></th>
+							<!-- 삭제 버튼을 위한 빈 열 추가 -->
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="reply" items="${replyList}">
 							<tr>
-								<td>${reply.member_id}</td>
+								<td>${reply.member_nickname}</td>
 								<td>${reply.comment}</td>
 								<td>${reply.reply_date}</td>
+								<td><a href="#" class="delete-comment"
+									data-reply-code="${reply.reply_code}">삭제</a> <input
+									type="hidden" class="reply-code" value="${reply.reply_code}">
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -147,55 +214,72 @@
 						value="${param.comm_code}">
 					<button type="submit" class="btn btn-primary">댓글 작성</button>
 				</div>
-			</form></article>
-		<script>
-		$('.summernote').summernote({
-			tabsize : 2,
-			height : 300
-		});
+			</form>
+	</article>
 
-		$(document).ready(function() {
-			// 댓글 작성 폼 제출 이벤트 처리
-			$("#commentForm").submit(function(event) {
-				event.preventDefault(); // 폼의 기본 동작 방지
+	<script>
+$(document).ready(function() {
+    $('.summernote').summernote({
+        tabsize: 2,
+        height: 300
+    });
 
-				// 입력된 내용 가져오기
-				var content = $("#commentContent").val();
-				var commCode = $("#commCode").val();
+    // 댓글 작성 폼 제출 이벤트 처리
+    $("#commentForm").submit(function(event) {
+        event.preventDefault(); // 폼의 기본 동작 방지
 
-				// AJAX를 사용하여 서버로 데이터 전송
-				$.ajax({
-					type : "POST",
-					url : "addComment",
-					data : {
-						content : content,
-						comm_code : commCode
-					},
-					success : function(response) {
-						if (response === "success") {
-							alert("댓글이 등록되었습니다.");
-							location.reload(); // 페이지 새로고침
-						} else {
-							alert("댓글 등록에 실패했습니다.");
-						}
-					},
-					error : function() {
-						alert("댓글 등록에 실패했습니다.");
-					}
-				});
-			});
-		});
-		
-		
-		var comm_code = getUrlParameter('comm_code');
+        // 입력된 내용 가져오기
+        var content = $("#commentContent").val();
+        var commCode = $("#commCode").val();
 
-		function getUrlParameter(name) {
-		    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-		    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-		    var results = regex.exec(location.search);
-		    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-		}
-		
+        // AJAX를 사용하여 서버로 데이터 전송
+        $.ajax({
+            type: "POST",
+            url: "addComment",
+            data: {
+                content: content,
+                comm_code: commCode
+            },
+            success: function(response) {
+                if (response === "success") {
+                    alert("댓글이 등록되었습니다.");
+                    location.reload(); // 페이지 새로고침
+                } else {
+                    alert("댓글 등록에 실패했습니다.");
+                }
+            },
+            error: function() {
+                alert("댓글 등록에 실패했습니다.");
+            }
+        });
+    });
+
+    // 댓글 삭제 링크 클릭 이벤트 처리
+    $(document).on("click", ".delete-comment", function(event) {
+        event.preventDefault(); // 링크의 기본 동작 방지
+
+        var replyCode = $(this).data("reply-code");
+
+        $.ajax({
+            url: "deleteComment",
+            type: "POST",
+            data: { reply_code: replyCode },
+            success: function(response) {
+                if (response === "success") {
+                    alert("댓글이 삭제되었습니다.");
+                    $("#comment-" + replyCode).remove();
+                    location.reload(); // 페이지 새로고침
+                } else {
+                    alert("댓글 삭제에 실패했습니다.");
+                }
+            },
+            error: function() {
+                alert("댓글 삭제에 실패했습니다.");
+            }
+        });
+    });
+});
+
 	</script>
 
 	<jsp:include page="../footer.jsp" />
