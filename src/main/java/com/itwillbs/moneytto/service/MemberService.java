@@ -198,8 +198,9 @@ public class MemberService {
 	}
 	
 	public HashMap<String, String> getMemberGrade(String id) {
+		HashMap<String, String> member = mapper.selectMember(id);
 		
-		return mapper.selectMemberGradeById(id);
+		return mapper.selectMemberGradeByMember(member);
 	}
 
 	public String selectImage(String name) {

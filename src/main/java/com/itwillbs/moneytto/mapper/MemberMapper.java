@@ -49,8 +49,6 @@ public interface MemberMapper {
 
 	HashMap<String, String> selectMemberGradeByMember(HashMap<String, String> member);
 
-	HashMap<String, String> selectMemberGradeById(String id);
-
 	String selectImage(String name);
 
 // 관리자===============================================================
