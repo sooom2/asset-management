@@ -35,14 +35,7 @@
 	rel="stylesheet">
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-<script>
-		// 검색 함수
-		function search() {
-			var searchKeyword = document.getElementById("searchInput").value;
-			// 검색 결과 페이지로 이동
-			location.href = "검색결과URL?keyword=" + searchKeyword;
-		}
-	</script>
+
 
 
 <body>
@@ -54,14 +47,14 @@
 			<input type="hidden" name="board_name" value="${sessionScope.sId }" />
 			<div class="form-group">
 				<label for="title">Title</label> <input type="text"
-					class="form-control" placeholder="글 제목을 입력해 주세요" id="title" name="comm_title">
+					class="form-control" placeholder="글 제목을 입력해 주세요" id="title" name="comm_title" required>
 				
 			</div>
 
 			<div class="form-group">
 				<label for="content">Content</label>
 				<textarea class="form-control summernote" rows="5" cols=""
-					id="content" name="comm_content"></textarea>
+					id="content" name="comm_content" required></textarea>
 			</div>
 
 			<div>

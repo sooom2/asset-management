@@ -81,11 +81,18 @@
 	<select id="commentCount" resultType="int">
 		SELECT count(*) from reply
 		WHERE comm_code = #{comm_code}
-		
+	</select>
 	
+	<select id="getComment" resultType="hashMap">
+		SELECT * from reply
+		WHERE reply_code = #{reply_code}
 	</select>
 
-	
+
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM reply
+		WHERE reply_code = #{reply_code}
+	</delete>
 	
 	
 </mapper>

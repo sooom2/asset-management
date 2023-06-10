@@ -43,6 +43,16 @@ public class CommunityService {
 		return mapper.commentCount(comm_code);
 	}
 
+	public HashMap<String, String> getComment(int reply_code) {
+		return mapper.getComment(reply_code);
+	}
+
+	public int deleteComment(int reply_code) {
+		return mapper.deleteComment(reply_code);
+	}
+
+
+
 
 
 	
