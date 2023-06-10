@@ -30,6 +30,8 @@ public interface BankMapper {
 
 	HashMap<String, String> selectAccountByMember(HashMap<String, String> member);
 
+	int insertPointHistory(Map<String, String> map);
+
 	
 // 관리자 계좌 내역들=========================================================================
 	// 계좌 내역 조회

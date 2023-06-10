@@ -248,6 +248,8 @@ public class BankController {
 //			model.addAttribute("msg", result.getRsp_message());
 //			return "fail_back";
 //		}
+		System.out.println("===================================================");
+		System.out.println(result);
 		map.put("trade_code", trade_code);
 		map.put("trade_amount", trade_amount);
 		map.put("trade_date", trade_date);

@@ -132,6 +132,25 @@
 			</if>
 	</select>
 	
+	<insert id="insertPointHistory">
+		INSERT
+			INTO 
+				point_history(
+					point_code
+					, member_id
+					, point_change
+					, point_type
+					, point_date
+				)
+			VALUES (
+				 #{trade_code}
+				, #{id}
+				, #{trade_amount}
+				, #{trade_type}
+				, #{trade_date}
+			)
+	</insert>
+	
 </mapper>
 
 

@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.moneytto.service.CommunityService;
+import com.itwillbs.moneytto.service.MemberService;
 
 @Controller
 public class CommunityController {
 	
 	@Autowired
 	private CommunityService service;
+	
+	@Autowired
+	private MemberService memberService;
 	
 //	@GetMapping(value = "commBoard")
 //	public String commBoard(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
@@ -32,7 +36,14 @@ public class CommunityController {
 	@GetMapping(value = "commBoard")
 	public String commBoard(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
 	    List<HashMap<String, String>> boardList = service.boardList(board);
-
+	    
+	    String id = (String)session.getAttribute("sId");
+	    if (id != null) {
+		    HashMap<String, String> member = memberService.getMember(id);
+		    String nickname = member.get("member_nickname");
+		    model.addAttribute("nickname",nickname);
+		}
+	    
 	    for (HashMap<String, String> boardItem : boardList) {
 	        String comm_code = boardItem.get("comm_code");
 	        int commentCount = service.commentCount(comm_code);
@@ -40,6 +51,7 @@ public class CommunityController {
 	    }
 
 	    model.addAttribute("boardList", boardList);
+	  
 
 	    return "board/community";
 	}
@@ -81,7 +93,12 @@ public class CommunityController {
 	@GetMapping(value = "commBoardView")
 	public String commBoardView(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
 	    String comm_code = board.get("comm_code"); // comm_code 값을 가져옵니다.
-	   
+	    String id = (String)session.getAttribute("sId");
+	    if (id != null) {
+		    HashMap<String, String> member = memberService.getMember(id);
+		    String nickname = member.get("member_nickname");
+		    model.addAttribute("nickname",nickname);
+		}
 	    // 게시물 조회수 증가 처리
 	    service.increaseViews(board.get("comm_code"));
 
