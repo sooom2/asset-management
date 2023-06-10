@@ -114,8 +114,9 @@ $(function() {
 	
 	    }
 
-	
-
+		$('a.sch_date').on("click",function(){
+			sch_date();
+		});
 	   // 탈퇴한회원처리 ( disabled 하기)
 	   let isExistMember = "${opponentId.opponent_delete_status}"
 	   if (isExistMember == 'Y') {
@@ -148,12 +149,12 @@ $(function() {
 
 	   //============================================================================================
 	   // 신고관련
-	   $(document).on("click", ".declaration div", function(e) {
+	   $(document).on("click", ".declaration div", function() {
 	       $(".ReactModalPortal").show();
 	   });
 
 	   // 신고 상세
-	   $(document).on("click", ".report_check_icon", function(e) {
+	   $(document).on("click", ".report_check_icon", function() {
 	       var originalImage = "${path}/resources/images/chat/ico_unChecked.png";
 	       var activeImage = "${path}/resources/images/chat/ico_checked.png";
 
@@ -177,9 +178,9 @@ $(function() {
 
 
 	   // 신고하기 버튼
-	   $(document).on("click", ".report_btn", function(e) {
+	   $(document).on("click", ".report_btn", function() {
+		 
 	       var reportType = $("#report_type").val();
-
 	       if (reportType == "") {
 	           swal({	
            		icon: "warning",
@@ -188,7 +189,7 @@ $(function() {
 	       } else {
 	           swal({	
 	           		icon: "success",
-	           		text: "신고 사유를 선택해주세요!"
+	           		text: "신고 완료!"
                });
 	           
 	           report();
@@ -197,9 +198,9 @@ $(function() {
 	   });
 
 	   // 모달창 닫기
-	   $(document).on("click", ".close", function(e) {
+	   $(document).on("click", ".close", function() {
 	       $(".ReactModalPortal").remove();
-	       location.reload();
+// 	       location.reload();
 	   });
 
 
@@ -214,9 +215,14 @@ $(function() {
 	           data: {
 	               targetId: opponentId,
 	               reportType: reportType,
-	               reportContent: reportContent
+	               reportContent: reportContent,
+	               item_code: item_code
 	           },
-	           dataType: "json"
+	           dataType: "json",
+	           success: function(result) {
+	        	   location.reload();
+	           }
+	           
 	       });
 	   }
 
@@ -224,11 +230,9 @@ $(function() {
 
 
 
-	   $("#tradeButton").prop("disabled", true).css({
-	       "backgroundColor": "#BB2649",
-	       "border": "none"
-	   });
-
+	   if($("#buyButton").hasClass("active")){
+		   $("#tradeButton").prop("disabled",false);
+	   }
 
 	   if (!$("#tradeButton").hasClass("active")) {
 	       $("#tradeButton").css({
@@ -240,7 +244,7 @@ $(function() {
 
 	   
 	    //리뷰썼을때 후기 작성 지워지고/ 버튼들 disabled
-	    if(isReview = 1){
+	    if(isReview === 1){
 			$(".reviewForm").remove();
 			$("#buyButton").prop("disabled", true); 
 			$("#tradeButton").css({
@@ -269,87 +273,89 @@ $(function() {
 	       chatDetail(room_code);
 
 	   });
+// 	   if($('.'))
+	
+	   function sch_date(){
+		   $(".sch_date").click(function() {
+			    $(".sch_box").datepicker("setDate", null);
+			    $(".schdule").remove();
+			    var schBox = $(".sch_box");
+			    $(".sch_box").datepicker({
+			        dateFormat: 'yy-mm-dd',
+			        showOtherMonths: true,
+			        showMonthAfterYear: true,
+			        changeYear: true,
+			        changeMonth: true,
+			        yearSuffix: "년",
+			        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+			        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+			        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+			        dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+			        minDate: "0D",
+			        maxDate: "+30D",
+			        show: "fast",
+			        onSelect: function(dateText, inst) {
+			            let scheduleButton = $("<input type='button' class='schdule' value='확인'>");
+			            trade_date = dateText;
+			            $(".scheduling").append(scheduleButton);
+	
+			            scheduleButton.click(function() {
+			                let result = swal({
+			                	icon: "info",
+			                    buttons: {
+			                        confirm: {
+			                            text: "확인",
+			                            value: true,
+			                            visible: true,
+			                            className: "",
+			                            closeModal: true,
+			                        },
+			                        cancel: {
+			                            text: "취소",
+			                            value: false,
+			                            visible: true,
+			                            className: "",
+			                            closeModal: true,
+			                        }
+			                    },
+			                    text: trade_date + "\n해당 일자로 일정을 잡으시겠습니까?\n확인 버튼을 누를 시 거래중으로 상태가 바뀝니다.",
+			                });
+	
+			                result.then((confirmed) => {
+			                    if (confirmed) {
+			                        $.ajax({
+			                            type: "GET",
+			                            url: "itemStatus_update",
+			                            dataType: "text",
+			                            data: {
+			                                item_status: "거래중",
+			                                room_code: room_code,
+			                                trade_date: trade_date
+			                            },
+			                            success: function(result) {
+			                                $('.trade img').remove();
+			                                $('.card_box input.room_code[value="' + room_code + '"]').closest('.card_box').addClass('active');
+			                                $('.trade_status input.active').removeClass('active');
+			                                $('.trade_status input[value="거래중"]').addClass('active');
+			                                $('.schdule').remove();
+			                                $('.card_box.active .sch_box').val(trade_date);
+			                                $('div.card_box.active .profile div').text("거래중");
+			                                $(".declaration").after("<div class='trade' onclick='market_payment()'><div><span style='position: absolute;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
+			                            }
+			                        });
+			                    }
+			                });
+			            });
+			        }
+			    });
+			});
+	
+	
+		   $(".sch_date").click(function() {
+		       $(".sch_box").datepicker("show");
+		   });
 
-
-	   $(".sch_date").click(function() {
-		    $(".sch_box").datepicker("setDate", null);
-		    $(".schdule").remove();
-		    var schBox = $(".sch_box");
-		    $(".sch_box").datepicker({
-		        dateFormat: 'yy-mm-dd',
-		        showOtherMonths: true,
-		        showMonthAfterYear: true,
-		        changeYear: true,
-		        changeMonth: true,
-		        yearSuffix: "년",
-		        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-		        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-		        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-		        dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
-		        minDate: "0D",
-		        maxDate: "+30D",
-		        show: "fast",
-		        onSelect: function(dateText, inst) {
-		            let scheduleButton = $("<input type='button' class='schdule' value='확인'>");
-		            trade_date = dateText;
-		            $(".scheduling").append(scheduleButton);
-
-		            scheduleButton.click(function() {
-		                let result = swal({
-		                	icon: "info",
-		                    buttons: {
-		                        confirm: {
-		                            text: "확인",
-		                            value: true,
-		                            visible: true,
-		                            className: "",
-		                            closeModal: true,
-		                        },
-		                        cancel: {
-		                            text: "취소",
-		                            value: false,
-		                            visible: true,
-		                            className: "",
-		                            closeModal: true,
-		                        }
-		                    },
-		                    text: trade_date + "\n해당 일자로 일정을 잡으시겠습니까?\n확인 버튼을 누를 시 거래중으로 상태가 바뀝니다.",
-		                });
-
-		                result.then((confirmed) => {
-		                    if (confirmed) {
-		                        $.ajax({
-		                            type: "GET",
-		                            url: "itemStatus_update",
-		                            dataType: "text",
-		                            data: {
-		                                item_status: "거래중",
-		                                room_code: room_code,
-		                                trade_date: trade_date
-		                            },
-		                            success: function(result) {
-		                                $('.trade img').remove();
-		                                $('.card_box input.room_code[value="' + room_code + '"]').closest('.card_box').addClass('active');
-		                                $('.trade_status input.active').removeClass('active');
-		                                $('.trade_status input[value="거래중"]').addClass('active');
-		                                $('.schdule').remove();
-		                                $('.card_box.active .sch_box').val(trade_date);
-		                                $('div.card_box.active .profile div').text("거래중");
-		                                $(".declaration").after("<div class='trade' onclick='market_payment()'><div><span style='position: absolute;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
-		                            }
-		                        });
-		                    }
-		                });
-		            });
-		        }
-		    });
-		});
-
-
-	   $(".sch_date").click(function() {
-	       $(".sch_box").datepicker("show");
-	   });
-
+	   }
 
 		let currentDate;
 		let tradeDate;
@@ -360,9 +366,10 @@ $(function() {
 // 		}
 		
 		//왼쪽 list 눌렸을때
+		
 		function chatDetail(room_code) {
 			//다른채팅방에서 글을쓰고 다른 채팅방 누를경우
-			
+// 			alert(room_code);	
 			$('.chat_input').val('');
 			
 			
@@ -385,7 +392,6 @@ $(function() {
 	                   let day = date.getDate().toString().padStart(2, '0');
 
 	                   let formatDate = year + '년 ' + month + '월 ' + day + '일';
-
 	                   // 채팅 헤더 상대방 닉네임
 	                    let buy_nickname = result.chatDetail[0].buy_nickname;
 	                    let item_subject = result.chatDetail[0].item_subject;
@@ -399,7 +405,35 @@ $(function() {
 	                    let opponent_delete_status = result.opponentId.opponent_delete_status;
 						let opponent_nickname;
 						item_code = result.chatDetail[0].item_code;
-
+						
+						let opponent_id = result.opponentId.opponent_id;
+						
+						
+						
+						
+						//신고
+				  	  function report(opponent_id,item_code) {
+					       let reportType = $("#report_type").val();
+					       let reportContent = $("#report_content").val();
+					       alert(sell_id);
+					       $.ajax({
+					           type: "GET",
+					           url: "report",
+					           data: {
+					               targetId: opponent_id,
+					               reportType: reportType,
+					               reportContent: reportContent,
+					               item_code: item_code
+					           },
+					           dataType: "json",
+					           success: function(result) {
+					           }
+					           
+					       });
+					   }
+						
+						
+						
 	                    //Y일때 탈퇴
 	                    if (opponent_delete_status == 'Y') {
 	                        let str = "<div class='disabledChat'><div class='disabledContent'><h2>😮 대화가 불가능한 상태입니다</h2></div></div>"
@@ -612,7 +646,7 @@ $(function() {
 			      			$("#buyButton").prop("disabled", true); 
 		      				$("#tradeButton").css({
 	      			           "background": "#fff",
-	      			           "border": "1px solid #a3a3a3",
+								"border": "1px solid #a3a3a3",
 	      			           "color": "#939393"
 	      			       	});
 		      				$("#tradeButton").prop("disabled", true); 
@@ -620,48 +654,53 @@ $(function() {
 		            	   
 	               }
 	          });
-				
 			
-			
-			
-			
-			
+		}).then((arg) => { // then
+
+				$.ajax({
+					type: "GET",
+					url: "marketPaid",
+					dataType: "json",
+					data: {
+						room_code: room_code
+					},
+					success: function(result) {
+// 						alert("일정날짜 : " + result.tradeDate.trade_date);
+// 						alert("거래완료날짜 : " + result.marketPaid.market_date);
+// 						alert("일정날짜 : " + trade_date);
+// 						alert("거래완료날짜 : "+marketPaid_date);
+		
+						//거래내역 없을때
+						if((result.marketPaid.market_date == null && result.tradeDate.trade_date != null)|| (result.marketPaid.market_date == null && result.tradeDate.trade_date == null)){
+							
+							$('.scheduling').empty();
+							if(result.tradeDate.trade_date ==null){
+								result.tradeDate.trade_date  = '';
+							}
+							let str = '';
+							   	str += '<a class="sch_date">';
+							   	str += '<i class="fa-regular fa-calendar"></i> 일정잡기 ';
+							   	str += '<input type="text" class="sch_box" style="border: none; width: 90px;" readonly value="' + result.tradeDate.trade_date + '"/>';
+							   	str += '</a>';
+							$('.scheduling').append(str);
+							sch_date();
+						}else if(result.marketPaid.market_date != null && result.tradeDate.trade_date == null){
+							//거래내역 있을때
+							$('.scheduling').empty();
+							let str = '';
+								str+= '<a class="sch_date">';
+								str+= '<i class="fa-regular fa-circle-check"></i>';
+								str+= '<input type="text" class="sch_box" style="border: none; width: 90px;" readonly value="'+result.marketPaid.market_date+'"/>거래완료';
+							   	str += '</a>';
+						   	$('.scheduling').append(str);
+						} 
+		            	   
+	           	  }
 			});
+    
+		});
 
-	        
-
-
-// 	        cuurentDate = new Date();
-// 			alert(tradeDate);
-// 			if (tradeDate < currentDate && $('input.active').val() != '거래완료' && sId != sellMember) {
-// 	            let tradeResult = confirm(room_code + "해당방의 거래가 일정이 지났습니다. 거래를 완료하시겠습니까?");
-
-// 	            if (tradeResult) {
-// 	                $.ajax({
-// 	                    type: "GET",
-// 	                    url: "itemStatus_update",
-// 	                    dataType: "text",
-// 	                    data: {
-// 	                        item_status: "거래완료",
-// 	                        room_code: room_code,
-// 	                        trade_date: $("input.sch_box").val()
-// 	                    },
-// 	                    success: function(result) {
-// 	                        $("#tradeButton").removeClass("active");
-// 	                        $("#tradeButton").css({
-// 	                            "background-color": "#F0F0F0",
-// 	                            "border": "none",
-// 	                            "color": "#000"
-// 	                        });
-// 	                        $(".sellTrade").addClass("active");
-// 	                        $(".trade_status").append(reviewElement);
-// 	                    }
-// 	                });
-// 	            }
-// 	        }
-	        
-
-	    } //function chatDetail()
+    } //function chatDetail()
 
 
 // 	    let tradeDate = new Date($("input.sch_box").val());
@@ -721,14 +760,6 @@ $(function() {
 	        
 // 	    }
  
-		   
-
- 
-			
-		
-
-	    
-
 
 });
 </script>
@@ -814,6 +845,10 @@ $(function() {
 	        const clickedListItem = $(this);
 	        room_code = clickedListItem.find('.room_code').val();
 	        item_code = clickedListItem.find('.item_code').val();
+	        
+	 
+	        
+	        
 	        console.log("room_code: " + room_code + " item_code: " + item_code);
 	        $.ajax({
 	            type: "GET",
@@ -841,6 +876,15 @@ $(function() {
 	                };
 	            }
 	        });
+	        
+	        
+	    
+	        
+	        
+	        
+	        
+	        
+	        
 	    });
 	    function messages(target,opponent_img,opponent_nickname) {
 	        ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
@@ -1067,10 +1111,21 @@ $(function() {
                      
                      <div>
                          <div class="scheduling">
-                             <a class="sch_date">
-                                 <i class="fa-regular fa-calendar"></i> 일정잡기 
-                             </a>
-                             <input type="text" class="sch_box" style="border: none; width: 90px;" readonly value="${trade_date.trade_date }"/>
+                           	<c:choose>
+                           		<c:when test="${empty market_paid }">
+	                             <a class="sch_date">
+	                                 <i class="fa-regular fa-calendar"></i> 일정잡기 
+		                             <input type="text" class="sch_box" style="border: none; width: 90px;" readonly value="${trade_date.trade_date }"/>
+	                             </a>
+                           		</c:when>
+                           		<c:otherwise>
+		                             <a class="sch_date">
+		                             	<i class="fa-regular fa-circle-check"></i>
+			                            <input type="text" class="sch_box" style="border: none; width: 90px;" readonly value="${market_paid.market_date }"/>
+		                           		<span>거래완료</span>
+		                             </a>
+                           		</c:otherwise>
+                           	</c:choose>
                          </div>
                          <div class="trade_status">
                             <input type="button" class="${chatList.item_status eq '판매중' ? 'active' : ''}" value="판매중" id="buyButton">
@@ -1231,10 +1286,21 @@ $(function() {
                      </div>
                      <div>
                          <div class="scheduling">
-                             <a class="sch_date">
-                                 <i class="fa-regular fa-calendar"></i> 일정잡기 
-                             </a>
-                             <input type="text" class="sch_box" style="border: none; width: 98px;" readonly value="${trade_date.trade_date }"/>
+                         	<c:choose>
+                           		<c:when test="${empty market_paid }">
+	                             <a class="sch_date">
+	                                 <i class="fa-regular fa-calendar"></i> 일정잡기 
+		                             <input type="text" class="sch_box" style="border: none; width: 90px;" readonly value="${trade_date.trade_date }"/>
+	                             </a>
+                           		</c:when>
+                           		<c:otherwise>
+		                             <a class="sch_date">
+		                             	<i class="fa-regular fa-circle-check"></i>
+			                            <input type="text" class="sch_box" style="border: none; width: 90px;" readonly value="${market_paid.market_date }"/>
+		                           		<span>거래완료</span>
+		                             </a>
+                           		</c:otherwise>
+                           	</c:choose>
                          </div>
                          <div class="trade_status">
       

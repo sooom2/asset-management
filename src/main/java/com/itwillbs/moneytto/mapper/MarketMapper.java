@@ -160,4 +160,7 @@ public interface MarketMapper {
    // 메인리스트 최근 아이템
    List<HashMap<String, String>> selectRecentItemList(String id);
 
+   //거래내역
+   HashMap<String, String> marketPaid(String item_code);
+
 }

@@ -2,6 +2,7 @@ package com.itwillbs.moneytto.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.spi.FileSystemProvider;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -193,6 +194,9 @@ public class MarketController {
 	@ResponseBody
 	@GetMapping(value = "report")
 	public boolean report(Model model, HttpSession session, @RequestParam HashMap<String, String> map) {
+		System.out.println("report =========================================================");
+		System.out.println(map);
+		System.out.println("report =========================================================");
 		String id = (String)session.getAttribute("sId");
 		map.put("id", id);
 		System.out.println("report 확인용: " + map);
@@ -460,13 +464,14 @@ public class MarketController {
 	      HashMap<String, String> sellDetail = marketChatService.getSellDetail(room_code);
 	      System.out.println(room_code);
 	      HashMap<String, String> trade_date = marketChatService.getTradeDate(room_code);
-
+	      
 	      
 	      //리뷰가 있으면 후기작성 안보이게 - 후기작성까지 됬으면 거래중 판매중 disabled
 	      
 	      int isReview = marketChatService.isReview(item_code);
-	      
+	      HashMap<String, String> market_paid = marketChatService.getMarketPaid(item_code);
 		  model.addAttribute("isReview",isReview);
+		  model.addAttribute("market_paid",market_paid);
 	      
 	      model.addAttribute("trade_date",trade_date);
 	      model.addAttribute("sellDetail",sellDetail);
@@ -484,8 +489,10 @@ public class MarketController {
 
 	   }// market_chat
 	   
-		@RequestMapping(value = "market_payment", method = {RequestMethod.GET, RequestMethod.POST})
-		public String store_pay2(HttpSession session
+	   
+	   
+	   @RequestMapping(value = "market_payment", method = {RequestMethod.GET, RequestMethod.POST})
+	   public String store_pay2(HttpSession session
 								, Model model
 								, @RequestParam(value = "item_code", defaultValue = "market0029") String item_code) {
 								// 테스트용으로 임의로 default 값 넣어둔 상태
@@ -604,7 +611,24 @@ public class MarketController {
 			return jsonStr;
 			
 		}
-	
+		
+		@GetMapping("marketPaid")
+		@ResponseBody
+		public String marketPaid(int room_code) {
+			HashMap<String, String> item = marketChatService.getItem_code(room_code);
+			String item_code = item.get("item_code");
+			
+			
+			HashMap<String, String> marketPaid = marketChatService.getMarketPaid(item_code);
+			HashMap<String, String> tradeDate = marketChatService.getTradeDate(room_code);
+			
+			
+			JSONObject result = new JSONObject();
+			result.put("marketPaid", marketPaid);
+			result.put("tradeDate", tradeDate);
+			
+			return result.toString();
+		}
 		@GetMapping("isReview")
 		@ResponseBody
 		public int isReview(int room_code) {
@@ -623,10 +647,9 @@ public class MarketController {
 		@ResponseBody
 		public String getTradeDate(int room_code) {
 			HashMap<String, String> tradeDate = marketChatService.getTradeDate(room_code);
-	   
-		   JSONObject arrTradeDate = new JSONObject(tradeDate);
+			JSONObject arrTradeDate = new JSONObject(tradeDate);
 		   
-		   return arrTradeDate.toString();
+			return arrTradeDate.toString();
 	   }
 	   
 	   @GetMapping("getTarget")
@@ -635,12 +658,7 @@ public class MarketController {
 	      String id = (String)session.getAttribute("sId");
 	            
 	      HashMap<String, String> opponentId = marketChatService.getOpponentId(room_code, id);
-	      System.out.println("opponentId ========================================================");
-	      System.out.println(opponentId);
 	      JSONObject arrOpponent = new JSONObject(opponentId);
-	      System.out.println("getTarget ========================================================");
-	      System.out.println(arrOpponent);
-	      System.out.println("getTarget ========================================================");
 	      
 	      return arrOpponent.toString();
 	   }
@@ -653,14 +671,10 @@ public class MarketController {
 	      
 	      List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
 	      HashMap<String, String> opponentId = marketChatService.getOpponentId(room_code, sId);
-	      System.out.println(chatDetail);
-	      System.out.println("ajax ========================================================");
 	      JSONObject result = new JSONObject();
-	       result.put("chatDetail", chatDetail);
-	       result.put("opponentId", opponentId);
+	      result.put("chatDetail", chatDetail);
+	      result.put("opponentId", opponentId);
 	      
-	       System.out.println("ajax  result========================================================");
-	      System.out.println(result);
 	      return result.toString();
 	   }
 	   

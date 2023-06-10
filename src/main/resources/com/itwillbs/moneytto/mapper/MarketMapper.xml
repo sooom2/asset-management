@@ -3,12 +3,12 @@
 <mapper namespace="com.itwillbs.moneytto.mapper.MarketMapper">
 
 <!-- 등록될 상품코드조회 -->
-   <select id="selectItem" resultType="String" >
+	<select id="selectItem" resultType="String" >
       SELECT CONCAT('market', LPAD(CAST(SUBSTRING(item_code, 7) AS UNSIGNED) + 1, 4, '0')) 
       FROM item
       ORDER BY item_code DESC
       LIMIT 1;
-   </select>
+	</select>
    
 <!-- 상품등록 -->
    <insert id="insertItem">
@@ -39,7 +39,7 @@
       )
 
    </insert>
-   
+
    
    
    <!-- 채팅관련 -->
@@ -918,6 +918,11 @@
          i.item_code = w.wish_item_code
       ORDER BY i.item_date DESC LIMIT 5
       
+   </select>
+   <select id="marketPaid" resultType="hashmap">
+      SELECT *
+      	FROM market_paid
+      	   WHERE item_code = #{item_code}
    </select>
    
 </mapper>
