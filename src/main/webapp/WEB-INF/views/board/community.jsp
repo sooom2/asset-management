@@ -21,23 +21,50 @@
 <%-- <link href="${pageContext.request.contextPath }/resources/css/main.css" rel="stylesheet"> --%>
 
 <script>
-	// 검색 함수
-	function search() {
-		var searchKeyword = document.getElementById("searchInput").value
-				.toLowerCase();
-		var tableRows = document.querySelectorAll("#board-table tr");
+  // 검색 함수
+  function search() {
+    var searchKeyword = document.getElementById("searchInput").value.toLowerCase();
+    var tableRows = document.querySelectorAll("#board-table tr");
 
-		for (var i = 1; i < tableRows.length; i++) { // i=0은 테이블 헤더이므로 건너뜁니다
-			var title = tableRows[i].querySelector("td:nth-child(2)").innerText
-					.toLowerCase();
+    var found = false; // 검색 결과 여부를 나타내는 변수
 
-			if (title.includes(searchKeyword)) {
-				tableRows[i].style.display = ""; // 검색어가 포함된 제목을 가진 행을 표시합니다
-			} else {
-				tableRows[i].style.display = "none"; // 검색어가 포함되지 않은 제목을 가진 행은 숨깁니다
-			}
-		}
-	}
+    for (var i = 1; i < tableRows.length; i++) { // i=0은 테이블 헤더이므로 건너뜁니다
+      var title = tableRows[i].querySelector("td:nth-child(2)").innerText.toLowerCase();
+
+      if (title.includes(searchKeyword)) {
+        tableRows[i].style.display = ""; // 검색어가 포함된 제목을 가진 행을 표시합니다
+        found = true;
+      } else {
+        tableRows[i].style.display = "none"; // 검색어가 포함되지 않은 제목을 가진 행은 숨깁니다
+      }
+    }
+    // 엔터 키 이벤트 처리
+    function handleEnterKey(event) {
+      if (event.keyCode === 13) { 
+        event.preventDefault(); 
+        search(); 
+      }
+    }
+
+    // 검색 결과가 없을 때 메시지를 표시합니다
+    var noResultMessage = document.getElementById("noResultMessage");
+    if (found) {
+      noResultMessage.style.display = "none";
+    } else {
+      noResultMessage.style.display = "block";
+    }
+  }
+  
+
+  // 페이지 로드 시 URL에서 검색어 추출하여 검색 수행
+  window.onload = function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var searchKeyword = urlParams.get('searchKeyword');
+    if (searchKeyword) {
+      document.getElementById("searchInput").value = decodeURIComponent(searchKeyword);
+      search();
+    }
+  }
 </script>
 <style>
 .comment-count {
@@ -60,7 +87,7 @@
 				<!-- 검색 입력 박스와 검색 버튼 -->
 				<div id="search-container">
 					<input type="text" id="searchInput" name="searchKeyword"
-						placeholder="검색어를 입력하세요">
+						placeholder="검색어를 입력하세요" onkeydown="handleEnterKey(event)">
 					<button type="button" onclick="search()">검색</button>
 				</div>
 			</div>
@@ -92,19 +119,13 @@
 					</tr>
 				</c:forEach>
 			</table>
+			 <p id="noResultMessage" style="display: none; color: red;">검색 결과가 없습니다.</p>
 		</form>
 	</div>
 
 	<jsp:include page="../footer.jsp" />
 
-	<script>
-		// 검색 함수
-		function search() {
-			var searchKeyword = document.getElementById("searchInput").value;
-			// 검색 결과 페이지로 이동
-			location.href = "검색결과URL?keyword=" + searchKeyword;
-		}
-	</script>
+	
 </body>
 
 </html>
