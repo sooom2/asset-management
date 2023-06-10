@@ -33,4 +33,6 @@ public interface BankMapper {
 
 	HashMap<String, String> selectAccountByMember(HashMap<String, String> member);
 
+	int insertPointHistory(Map<String, String> map);
+
 }
