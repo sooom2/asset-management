@@ -80,6 +80,20 @@
 			)
 	</insert>
 	
+	<update id="updatePointAmount">
+		UPDATE member
+			SET member_point = (
+				 SELECT t.member_point + #{trade_amount}
+					  FROM (
+					    SELECT member_point
+					    FROM member
+					    WHERE member_id = #{id}
+					  ) AS t
+			)
+			WHERE member_id = #{id}
+	</update>
+	
+<!-- 관리자 계좌===================================================== -->
 	<!-- 계좌 내역 조회 -->
 	<select id="selectAccountHistory" resultType="hashmap">
 		SELECT ROW_NUMBER() OVER(ORDER BY trade_date DESC ) AS rownum, ah.*, count(*) over() AS totalCnt
@@ -96,18 +110,27 @@
 				</if>
 	</select>
 	
-	<update id="updatePointAmount">
-		UPDATE member
-			SET member_point = (
-				 SELECT t.member_point + #{trade_amount}
-					  FROM (
-					    SELECT member_point
-					    FROM member
-					    WHERE member_id = #{id}
-					  ) AS t
-			)
-			WHERE member_id = #{id}
-	</update>
+	<!-- 포인트 내역 조회 -->
+	<select id="selectPointHistory"  resultType="hashmap">
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY point_date DESC ) AS rownum
+			, ph.*
+			, count(*) over() AS totalCnt
+			, m.member_point
+		FROM point_history ph
+			LEFT JOIN member m
+			ON ph.member_id = m.member_id 
+			WHERE 1=1
+			<if test="searchKeyword != null and !searchKeyword.equals('')">
+				AND (member_id LIKE '%${searchKeyword}%' OR point_date LIKE '%${searchKeyword}%')
+			</if>
+			<if test="typeSelect != null and !typeSelect.equals('') and !typeSelect.equals('전체')">
+				AND point_type = #{typeSelect}
+			</if>
+			<if test="startNum != null and !startNum.equals('')">
+				LIMIT ${startNum}, ${endNum}
+			</if>
+	</select>
 	
 	<insert id="insertPointHistory">
 		INSERT

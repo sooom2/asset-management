@@ -54,18 +54,57 @@ public class AdminController {
 	}
 	
 	
-// 게시판=============================================
-	// 공지
-	@RequestMapping(value = "adminNoticeBoard")
-	public String adminNoticeBoard(Model model) {
-		return "admin/adminNoticeBoard";
-	}
-	
-	// 커뮤니티
-	@RequestMapping(value = "adminFreeBoard")
-	public String adminFreeBoard() {
+// 계좌관리=============================================
+	// 관리자 현금 계좌
+	@RequestMapping(value = "adminAccount", method = {RequestMethod.GET, RequestMethod.POST})
+	public String adminAccount(@RequestParam HashMap<String, String> map, Model model) {
+		// 페이지 번호, 글목록수 제한
+		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
+			map.put("pageNum", "1");
+			map.put("startNum", "0");
+			map.put("endNum", "10");
+		}
+		// 계좌내역 조회
+		List<HashMap<String, String>> accountHistory = bankService.selectAccountHistory(map);
+		// 내역이 존재할 경우
+		if(accountHistory.size() > 0) {
+			HashMap<String, String> countMap = accountHistory.get(0);
+			map.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+		}
+		// 내역을 model에 저장
+		model.addAttribute("accountHistory", accountHistory);
+		// 
+		model.addAttribute("pageCnt", map);
+		System.out.println("adminAccount에서" + accountHistory);
+		System.out.println("adminAccount에서" + map);
 		
-		return "admin/adminFreeBoard";
+		return "admin/adminAccount";
+	}
+
+	// 관리자 포인트 계좌
+	@RequestMapping(value = "adminPoint", method = {RequestMethod.GET, RequestMethod.POST})
+	public String adminPoint(@RequestParam HashMap<String, String> map, Model model) {
+		// 페이지 번호, 글목록수 제한
+		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
+			map.put("pageNum", "1");
+			map.put("startNum", "0");
+			map.put("endNum", "10");
+		}
+		// 계좌내역 조회
+		List<HashMap<String, String>> pointHistory = bankService.selectPointHistory(map);
+		// 내역이 존재할 경우
+		if(pointHistory.size() > 0) {
+			HashMap<String, String> countMap = pointHistory.get(0);
+			map.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+		}
+		// 내역을 model에 저장
+		model.addAttribute("pointHistory", pointHistory);
+		// 
+		model.addAttribute("pageCnt", map);
+		System.out.println("adminPoint에서" + pointHistory);
+		System.out.println("adminPoint에서" + map);
+		
+		return "admin/adminPoint";
 	}
 	
 	
@@ -157,59 +196,20 @@ public class AdminController {
 	}
 	
 	
-// 계좌관리=============================================
-	// 관리자 현금 계좌
-	@RequestMapping(value = "adminAccount", method = {RequestMethod.GET, RequestMethod.POST})
-	public String adminAccount(@RequestParam HashMap<String, String> map, Model model) {
-		// 페이지 번호, 글목록수 제한
-		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
-			map.put("pageNum", "1");
-			map.put("startNum", "0");
-			map.put("endNum", "10");
+	// 게시판=============================================
+		// 공지
+		@RequestMapping(value = "adminNoticeBoard")
+		public String adminNoticeBoard(Model model) {
+			return "admin/adminNoticeBoard";
 		}
-		// 계좌내역 조회
-		List<HashMap<String, String>> accountHistory = bankService.selectAccountHistory(map);
-		// 내역이 존재할 경우
-		if(accountHistory.size() > 0) {
-			HashMap<String, String> countMap = accountHistory.get(0);
-			map.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
-		}
-		// 내역을 model에 저장
-		model.addAttribute("accountHistory", accountHistory);
-		// 
-		model.addAttribute("pageCnt", map);
-		System.out.println("adminAccount에서" + accountHistory);
-		System.out.println("adminAccount에서" + map);
 		
-		return "admin/adminAccount";
-	}
-
-	// 관리자 포인트 계좌
-	@RequestMapping(value = "adminAccountPoint", method = {RequestMethod.GET, RequestMethod.POST})
-	public String adminAccountPoint(@RequestParam HashMap<String, String> map, Model model) {
-		// 페이지 번호, 글목록수 제한
-		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
-			map.put("pageNum", "1");
-			map.put("startNum", "0");
-			map.put("endNum", "10");
+		// 커뮤니티
+		@RequestMapping(value = "adminFreeBoard")
+		public String adminFreeBoard() {
+			
+			return "admin/adminFreeBoard";
 		}
-		// 계좌내역 조회
-		List<HashMap<String, String>> accountHistory = bankService.selectAccountHistory(map);
-		// 내역이 존재할 경우
-		if(accountHistory.size() > 0) {
-			HashMap<String, String> countMap = accountHistory.get(0);
-			map.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
-		}
-		// 내역을 model에 저장
-		model.addAttribute("accountHistory", accountHistory);
-		// 
-		model.addAttribute("pageCnt", map);
-		System.out.println("adminAccount에서" + accountHistory);
-		System.out.println("adminAccount에서" + map);
 		
-		return "admin/adminAccountPoint";
-	}
-	
 	
 // 회원관리=============================================
 	@RequestMapping(value = "adminMember")

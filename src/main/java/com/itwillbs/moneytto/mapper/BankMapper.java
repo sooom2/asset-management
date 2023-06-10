@@ -26,13 +26,18 @@ public interface BankMapper {
 
 	int updatePointAmount(Map<String, String> map);
 
-	// 계좌 내역 조회
-	List<HashMap<String, String>> selectAccountHistory(HashMap<String, String> map);
-
 	HashMap<String, String> selectAccountById(String member_id);
 
 	HashMap<String, String> selectAccountByMember(HashMap<String, String> member);
 
 	int insertPointHistory(Map<String, String> map);
+
+	
+// 관리자 계좌 내역들=========================================================================
+	// 계좌 내역 조회
+	List<HashMap<String, String>> selectAccountHistory(HashMap<String, String> map);
+		
+	// 포인트 내역 조회
+	List<HashMap<String, String>> selectPointHistory(HashMap<String, String> map);
 
 }

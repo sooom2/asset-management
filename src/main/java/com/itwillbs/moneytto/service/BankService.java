@@ -61,9 +61,16 @@ public class BankService {
 	    }
 	}
 	
+	
+// 관리자 계좌 내역들=========================================================================
 	// 계좌 내역 조회
 	public List<HashMap<String, String>> selectAccountHistory(HashMap<String, String> map) {
 		return mapper.selectAccountHistory(map);
+	}
+	
+	// 포인트 내역 조회
+	public List<HashMap<String, String>> selectPointHistory(HashMap<String, String> map) {
+		return mapper.selectPointHistory(map);
 	}
 	
 	

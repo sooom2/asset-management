@@ -21,7 +21,7 @@
 		document.querySelector("input[name=startNum]").value = Number(idx)*10;
 		document.querySelector("input[name=endNum]").value = (Number(idx)+1)*10 - Number(idx)*10;
 		let form = document.querySelector('#iForm');
-		form.action = 'adminAccount';
+		form.action = 'adminPoint';
 		form.method = 'post';
 		form.submit();
 	}
@@ -112,14 +112,14 @@
 						</thead>
 						<!-- 회원목록 -->
 						<tbody>
-							<c:forEach var="accountHistory" items="${accountHistory }">
+							<c:forEach var="pointHistory" items="${pointHistory }">
 								<tr>
-									<td>${accountHistory.rownum }</td>
-									<td>${accountHistory.trade_member_id }</td>
-									<td>${accountHistory.trade_amount }</td>
-									<td>${accountHistory.trade_type }</td>
-									<td>${accountHistory.trade_balance }</td>
-									<td>${accountHistory.trade_date }</td>
+									<td>${pointHistory.rownum }</td>
+									<td>${pointHistory.member_id }</td>
+									<td>${pointHistory.point_change }</td>
+									<td>${pointHistory.point_type }</td>
+									<td>${pointHistory.member_point }</td>
+									<td>${pointHistory.point_date }</td>
 <!-- 									<td class="modi"><input class="btn btn-block btn-more" -->
 <%-- 										type="button" value="M O R E" onclick="location.href='admin_one_rep?one_code=${oneBoard.one_code }'"></td> --%>
 								</tr>
@@ -132,7 +132,7 @@
 						<ul class="datatable-pagination-list">
 							<c:if test="${1 < pageCnt.pageNum }">
 									<li class="datatable-pagination-list-item datatable-hidden"
-										onclick="location.href='adminadminAccount?pageNum=${pageNum - 1}'">
+										onclick="location.href='adminPoint?pageNum=${pageNum - 1}'">
 										<a href="javascript:search('${pageCnt.pageNum-2}')" class="datatable-pagination-list-item-link" pagenum="1">‹</a>
 									</li>
 							</c:if>
@@ -148,7 +148,7 @@
 							</c:forEach>
 							<c:if test="${pageCnt.totalCnt > 10*pageCnt.pageNum }">
 								<li class="datatable-pagination-list-item datatable-hidden"
-									onclick="location.href='adminAccount?pageNum=${pageNum + 1}'">
+									onclick="location.href='adminPoint?pageNum=${pageNum + 1}'">
 									<a href="javascript:search('${pageCnt.pageNum}')" class="datatable-pagination-list-item-link">›</a>
 								</li>
 							</c:if>
