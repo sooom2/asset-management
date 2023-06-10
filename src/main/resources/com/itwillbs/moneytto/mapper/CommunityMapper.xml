@@ -94,5 +94,13 @@
 		WHERE reply_code = #{reply_code}
 	</delete>
 	
+	<delete id="deleteBoard" parameterType="string">
+    DELETE r, c
+    FROM community c
+    LEFT JOIN reply r ON r.comm_code = c.comm_code
+    WHERE c.comm_code = #{comm_code}
+</delete>
+
+	
 	
 </mapper>

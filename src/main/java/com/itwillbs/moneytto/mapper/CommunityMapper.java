@@ -24,6 +24,8 @@ public interface CommunityMapper {
 
 	HashMap<String, String> getComment(int reply_code);
 
+	int deleteBoard(String comm_code);
+
 	
 
 	

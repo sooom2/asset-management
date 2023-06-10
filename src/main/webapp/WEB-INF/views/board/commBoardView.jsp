@@ -154,8 +154,7 @@
 	<jsp:include page="../nav.jsp" />
 
 	<article id="writeForm">
-		<form action="addComment" method="post" name="viewForm"
-			enctype="multipart/form-data">
+		<form action="addComment" method="post" name="viewForm" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="title">Title</label> <input type="text"
 					class="form-control" id="title" value="${boardDetail.comm_title}"
@@ -172,6 +171,10 @@
 				<section id="btnArea"
 					style="display: flex; justify-content: center;">
 					<input type="button" value="뒤로가기" onclick="history.back()">
+					<c:if test="${boardDetail.member_id eq sessionScope.sId}">
+						<input type="button" value="글삭제"
+							onclick="deleteBoard(${boardDetail.comm_code})">
+					</c:if>
 				</section>
 			</div>
 			<!-- 댓글 리스트 -->
@@ -279,6 +282,31 @@ $(document).ready(function() {
         });
     });
 });
+
+
+
+
+function deleteBoard(comm_code) {
+  if (confirm("정말로 게시글을 삭제하시겠습니까?")) {
+    $.ajax({
+      url: "deleteBoard",
+      type: "POST",
+      data: { comm_code: comm_code },
+      success: function (response) {
+        if (response === "success") {
+          // 게시글 삭제 성공 시, commBoard 페이지로 이동
+          location.href = "commBoard";
+        } else {
+          alert("게시글 삭제에 실패했습니다.");
+        }
+      },
+      error: function () {
+        alert("서버와의 통신에 문제가 발생했습니다.");
+      }
+    });
+  }
+}
+
 
 	</script>
 

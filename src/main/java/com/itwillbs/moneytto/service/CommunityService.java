@@ -51,6 +51,10 @@ public class CommunityService {
 		return mapper.deleteComment(reply_code);
 	}
 
+	public int deleteBoard(String comm_code) {
+		return mapper.deleteBoard(comm_code);
+	}
+
 
 
 

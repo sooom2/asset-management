@@ -152,13 +152,52 @@ public class CommunityController {
 	        int deleteCount = service.deleteComment(reply_code);
 
 	        if (deleteCount > 0) {
-	            // 삭제 후 페이지 새로고침
 	            return "success";
 	        }
 	    }
 
 	    return "fail_back";
 	}
+
+//	@PostMapping(value = "deleteBoard")
+//	@ResponseBody
+//	public String deleteBoard(@RequestParam HashMap<String, String> board, HttpSession session) {
+//		String comm_code = board.get("comm_code"); // comm_code 값을 가져옵니다.
+//	    String id = (String)session.getAttribute("sId");
+//	    HashMap<String, String> boardDetail = service.boardDetail(comm_code); // 게시글 정보를 가져옵니다.
+//
+//	    if (boardDetail != null && boardDetail.get("member_id").equals(id)) {
+//	        // 게시글 작성자와 로그인한 멤버가 일치하면 삭제 작업 수행
+//	        int deleteCount = service.deleteBoard(comm_code);
+//
+//	        if (deleteCount > 0) {
+//	            // 삭제 후 페이지 이동 또는 응답 처리
+//	            return "success";
+//	        }
+//	    }
+//
+//	    return "fail_back";
+//	}
+	
+	@PostMapping(value = "deleteBoard")
+	@ResponseBody
+	public String deleteBoard(@RequestParam("comm_code") String comm_code, HttpSession session, Model model) {
+	    String id = (String)session.getAttribute("sId");
+	    HashMap<String, String> boardDetail = service.boardDetail(comm_code); // 게시글 정보를 가져옵니다.
+
+	    if (boardDetail != null && boardDetail.get("member_id").equals(id)) {
+	        // 게시글 작성자와 로그인한 멤버가 일치하면 삭제 작업 수행
+	        int deleteCount = service.deleteBoard(comm_code);
+
+	        if (deleteCount > 0) {
+	        	
+	            return "success";
+	        }
+	    }
+
+	    return "fail_back";
+	}
+
 
 
 }
