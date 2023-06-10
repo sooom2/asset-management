@@ -138,9 +138,9 @@ function toggleLike(element) {
 								</div>
 								<div class="ProfileInfoRating">
 									<img
-										src="https://ccimage.hellomarket.com/img/web/common/full_star.png"
+										src="${grade.grade_img }"
 										alt="rating" class="ProfileInfoStarImg">
-									<div class="ProfileInfoRatingScore">${marketItem.grade_score}</div>
+									<div class="ProfileInfoRatingScore">${grade.grade_name }</div>
 								</div>
 							</div>
 						</div>

@@ -176,6 +176,10 @@ public class MarketController {
 		List<HashMap<String, String>> itemWish = memberService.getWishItem(id, item_code);
 		model.addAttribute("itemWish", itemWish);
 		
+		HashMap<String, String> grade= memberService.getMemberGrade(marketItem.get("member_id"));
+		System.out.println(grade);
+		model.addAttribute("grade", grade);
+		
 		// 탈퇴한 회원의 상품 조회 불가
 		if(marketItem.get("member_delete_status").equals("Y")) {
 			model.addAttribute("msg", "탈퇴한 회원입니다.");

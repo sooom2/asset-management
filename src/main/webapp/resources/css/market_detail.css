@@ -274,8 +274,8 @@
 
  .ProfileInfoStarImg {
      object-fit: cover;
-     width: 10px;
-     height: 10px;
+     width: 25px;
+     height: 25px;
      margin-right: 2px;
 }
  .ProfileInfoRatingScore {

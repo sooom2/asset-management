@@ -263,27 +263,6 @@
 							ELSE '1'  
 						END);
 	</select>
-	<select id="selectMemberGradeById" resultType="hashmap">
-		SELECT 
-			grade_id ,grade_name, grade_img 
-		FROM
-			 grades g
-		WHERE
-			 grade_id = (CASE  
-							WHEN #{grade_score} = 0 		THEN '10'
-							WHEN #{grade_score} >= 5000		THEN '9'
-							WHEN #{grade_score} >= 3000		THEN '8'
-							WHEN #{grade_score} >= 1000		THEN '7'
-							WHEN #{grade_score} >= 500		THEN '6'
-							WHEN #{grade_score} >= 250		THEN '5'
-							WHEN #{grade_score} >= 100		THEN '4'
-							WHEN #{grade_score} >= 50		THEN '3'
-							WHEN #{grade_score} >= 10		THEN '2'
-							WHEN #{grade_score} >= 1		THEN '1'
-							WHEN #{grade_score} >= -5		THEN '0'
-							ELSE '1'  
-						END);
-	</select>
 	
 	<select id="selectImage" resultType="string">
 		SELECT 

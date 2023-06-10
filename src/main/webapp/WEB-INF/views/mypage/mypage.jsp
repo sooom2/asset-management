@@ -62,7 +62,7 @@ function memberAuth(){
 					<div class="memberInfoReviewBox">
 						<div class="memberInfoText">등급</div>
 						<div class="memberInfoRating">
-							<div class="memberInfoCount">${grade.grade_name }</div>
+							<div class="memberInfoCount"><img src="${grade.grade_img }" style="display:inline; width: 25px; height: 25px;">${grade.grade_name }</div>
 						</div>
 					</div>
 					<c:if test= "${sessionScope.sId eq member.member_id }">
