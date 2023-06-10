@@ -116,7 +116,7 @@
 									<a href="#" class="datatable-sorter">등급</a>
 								</th>
 								<th data-sortable="true" style="width: 10%;">
-									<a href="#" class="datatable-sorter">신고횟수</a>
+									<a href="#" class="datatable-sorter">신고된횟수</a>
 								</th>
 								<th data-sortable="true" style="width: 10%;">
 									<a href="#" class="datatable-sorter">가입일자</a>
@@ -133,7 +133,7 @@
 									<td>${adminMember.member_point }</td>
 									<td>${adminMember.member_auth_status }</td>
 									<td>${adminMember.grade_score }</td>
-									<td>${adminMember.grade_score }</td>
+									<td>${adminMember.rep_cnt }</td>
 									<td>${adminMember.member_bday }</td>
 <!-- 									<td class="modi"><input class="btn btn-block btn-more" -->
 <%-- 										type="button" value="M O R E" onclick="location.href='admin_one_rep?one_code=${adminMember.member_id }'"></td> --%>

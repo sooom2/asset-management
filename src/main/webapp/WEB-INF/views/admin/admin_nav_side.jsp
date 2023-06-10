@@ -32,7 +32,7 @@
 						<div class="collapse" id="accountMgm" aria-labelledby="" data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
 								<a class="nav-link" href="adminAccount">현금계좌</a>
-								<a class="nav-link" href="adminAccountPoint">포인트계좌</a>
+								<a class="nav-link" href="adminPoint">포인트계좌</a>
 							</nav>
 						</div>
 						
