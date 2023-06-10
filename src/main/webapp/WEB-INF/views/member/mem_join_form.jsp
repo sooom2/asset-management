@@ -9,67 +9,8 @@
 <link href="${path }/resources/css/member.css" rel="stylesheet" >
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="${path }/resources/js/member.js"></script>
-<script>
-
-// 다음 주소 API
-window.onload = function(){
-    document.getElementById("postSearch").addEventListener("click", function(){
-       
-        new daum.Postcode({
-            oncomplete: function(data) { 
-                document.getElementById("member_address").value = data.address; // 주소 넣기
-                document.querySelector("#member_address_detail").focus(); //상세입력 포커싱
-            }
-        }).open();
-    });
-    
-    $('input[type="file"]').change(function(){
-    	var file = $(this)[0].files[0]
-    	$(".previewImg").attr('src', URL.createObjectURL(file))
-    })
-}
-
-$("form").submit(function() {
-	if(!nameStatus) {
-		alert("이름을 확인하세요");
-		$("#member_name").focus();
-		return false;
-	} else if(!idStatus) {
-		alert("아이디를 확인하세요");
-		$("#member_id").focus();
-		return false;
-	} else if(!passwdStatus) {
-		alert("비밀번호를 확인하세요");
-		$("#memeber_pw").focus();
-		return false;
-	} else if(!passwd2Status) {
-		alert("비밀번호확인을 확인하세요");
-		$("#member_pw2").focus();
-		return false;
-	} else if($("#member_address1").val() == "") {
-		alert("주소를 입력하세요");
-		$("#member_address1").focus();
-		return false;
-	} else if($("#member_address2").val() == "") {
-		alert("상세주소를 입력하세요");
-		$("#member_address2").focus();
-		return false;
-	} else if($("#member_bday").val() == "") {
-		alert("주소를 입력하세요");
-		$("#member_bday").focus();
-		return false;
-	} else if($("#member_tel").val() == "") {
-		alert("주소를 입력하세요");
-		$("#member_tel").focus();
-		return false;
-	}
-	
-	return true;
-	
-});
-
-</script>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />

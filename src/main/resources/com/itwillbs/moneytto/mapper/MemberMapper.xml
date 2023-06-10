@@ -16,7 +16,7 @@
 				   , #{member_tel}
 				   , '0'
 				   , 'N' -- member_auth_status
-				   , now() 
+				   , now()
 				   , #{member_image}	-- member_image
 				   , '1' -- gradeScore 
 				   , '0' -- declare_count

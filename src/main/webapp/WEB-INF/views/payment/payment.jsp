@@ -55,6 +55,8 @@ $(function(){
 <form method="post" autocomplete="off" action="bank_withdraw">
 <input type="hidden" name="id" value="${member.member_id }"> 
 <input type="hidden" name="trade_type" value="이체">
+<input type="hidden" name="fintech_use_num" value="120211385488932372338507">
+<input type="hidden" name="member_name" value="${member.member_name }">
 <div class="container" id="container">
     <div class="info_login">
 		<div class="img_area">
@@ -90,25 +92,6 @@ $(function(){
 					</div>
 				</div>
 			</div>
-	<input type="checkbox" class="hidden" id="c2">
-	<div class="agree_section">
-		<div class="checkall">
-            <input type="checkbox" class="hidden _allAgreeBtn _click(checkout.mobile.nsp.paymentSheet.onToggleAllAgree()) _certificationForm" name="payAgreement">
-            <label for="agree_all" class="check_agree sp_checkbox large">전체 동의하기</label>
-		</div>
-		<div class="checklist">
-			<ul>
-			<li class="check_item">
-                <input type="checkbox" class="hidden _agreeBtn _click(checkout.mobile.nsp.paymentSheet.checkAllAgreed()) ">
-                <label for="agree_c1" class="check_agree sp_checkbox large">등록된 계좌로 출금을 동의</label>
-			</li>
-			<li class="check_item">
-                <input type="checkbox" class="hidden _agreeBtn _click(checkout.mobile.nsp.paymentSheet.checkAllAgreed()) ">
-                <label for="agree_c1" class="check_agree sp_checkbox large">위 구매조건 확인 및 결제진행 동의</label>
-			</li>
-			</ul>
-		</div>
-	</div>
 	<div class="button_section">
 		<div class="button_area">
 			<div class="button_bottom">

@@ -40,7 +40,6 @@ function memberAuth(){
 	+"&scope=login inquiry transfer oob"
 	+"&state=11111111111111111111111111111111"
 	+"&auth_type=0";
-	// oob 삭제 06.09
 }
 
 </script>
@@ -63,7 +62,7 @@ function memberAuth(){
 					<div class="memberInfoReviewBox">
 						<div class="memberInfoText">등급</div>
 						<div class="memberInfoRating">
-							<div class="memberInfoCount">${member.grade_score }</div>
+							<div class="memberInfoCount">${grade.grade_name }</div>
 						</div>
 					</div>
 					<c:if test= "${sessionScope.sId eq member.member_id }">
@@ -76,7 +75,7 @@ function memberAuth(){
 						<c:choose>
 							
 							<c:when test="${member.member_auth_status eq 'Y'  }">
-								<div class="memberInfoCount" onclick="location.href='bank_userInfo'">계좌 관리</div>
+								<div class="memberInfoCount" onclick="location.href='bank_userInfo'">계좌 관리하기</div>
 							</c:when>
 							<c:otherwise>
 								<div class="memberInfoCount" onclick="memberAuth()">계좌 등록하기</div>

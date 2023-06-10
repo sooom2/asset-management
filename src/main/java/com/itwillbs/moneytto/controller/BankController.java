@@ -214,12 +214,6 @@ public class BankController {
 	@PostMapping("bank_withdraw")
 	public String withdraw(
 			@RequestParam Map<String, String> map, HttpSession session, Model model) {
-		//TODO
-		// 1) 로그인 했을때만 진행할 수 있게 함
-		// => 로그인된 세션에 있는 token을 가져올거기때문에
-		// 2) map에 fintech_num 을 넣어줘야함
-		// => 어디서...???????????
-		//
 		
 		map.put("access_token", (String)session.getAttribute("access_token"));
 		System.out.println("==================================");

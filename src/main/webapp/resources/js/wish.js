@@ -1,13 +1,10 @@
 $(document).ready(function(){
-// 위시(좋아요) 기능 설명
-// 하트 이미지 클래스 : .WishWishImg
-// 하트 이미지 상위 클래스에 data-code라는 속성에
-// 해당 물건 코드 할당하기
-// id랑 data-code(물건 코드) 있어야 쓸수있음
 	$('.WishWishImg').click(function(){
+		
+		event.preventDefault();
 		// .WishWishImg 부모 선택자 "data-code" 속성에 넣어준 item_code를 item_code 변수로 저장
 		var $btnWish = $(this)
-		var item_code = $(this).parent().attr("data-code");
+		var item_code = $(this).closest(".item").attr("data-cd");
 		console.log(item_code);
 		// /clickWish MemberController에 매핑
 		$.ajax({
@@ -27,7 +24,7 @@ $(document).ready(function(){
 							})
 			}
 		}).fail(function(){
-			alert("ERROR 위시리스트 추가 실패");
+			alert("로그인 후 이용할 수 있습니다.");
 		})
 	})
 })

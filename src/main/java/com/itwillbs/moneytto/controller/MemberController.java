@@ -69,10 +69,10 @@ public class MemberController {
 		
 		member.put("member_location",location);		
 		
-		
+		member.put("member_image", "http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg");
 		// 3) 입력받은 사진 이미지 설정
 		// 기본 이미지 설정 안하면 통과하게.. 
-		if(member.get("file") == null) {
+		if(member.get("file") != null) {
 			
 			// 실제 파일 저장 경로
 			String uploadDir = session.getServletContext().getRealPath("/resources/upload/member");
@@ -95,8 +95,6 @@ public class MemberController {
 	        member.put("member_image", saveDir);
 		}
 		
-		member.put("member_image", "http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg");
-		// 등록된 프로필 이미지가 없을 때는 디폴트값 적용
 		int insertCount = memberService.registMember(member);
 		
 		if(insertCount > 0) { // 가입 성공

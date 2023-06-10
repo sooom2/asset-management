@@ -13,27 +13,10 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="${path }/resources/js/member.js"></script>
 <script>
-window.onload = function(){
-    document.getElementById("postSearch").addEventListener("click", function(){ //주소입력칸을 클릭하면
-        //카카오 지도 발생
-        new daum.Postcode({
-            oncomplete: function(data) { //선택시 입력값 세팅
-                document.getElementById("member_address").value = data.address; // 주소 넣기
-                document.querySelector("#member_address_detail").value = "";
-                document.querySelector("#member_address_detail").focus(); //상세입력 포커싱
-            }
-        }).open();
-    });
-    swal("비밀번호 변경하기를 원하시는 경우\n 비밀번호 확인란에 새 비밀번호를 입력해주세요.");
-
-    $('input[type="file"]').change(function(){
-    	var file = $(this)[0].files[0]
-    	$(".previewImg").attr('src', URL.createObjectURL(file))
-    })
-    
+$(function(){
 	
+    swal("비밀번호 변경하기를 원하시는 경우\n 비밀번호 확인란에 새 비밀번호를 입력해주세요.");
 }
-
 
 </script>
 </head>

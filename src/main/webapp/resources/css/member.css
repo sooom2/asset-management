@@ -755,6 +755,10 @@
 	vertical-align: top;
 }
 
+.section-member .wrap-member-box .join-detail > span {
+	margin-left: 128px;
+}
+
 .section-member .wrap-member-box .join-detail.long {
 	height: 100px;
 }
@@ -866,7 +870,7 @@
 
 .section-member .wrap-member-box .join-detail:after {
 	content: "";
-	display: block;
+	display: none;
 	position: relative;
 	background-color: #ececec;
 	width: 680px;

@@ -76,7 +76,7 @@ public class MypageController {
 	    }
 	    
 	    
-	    System.out.println(memberService.getMemberGrade(member));
+	   model.addAttribute("grade", memberService.getMemberGrade(member));
 	    
 	    model.addAttribute("member", member);
 	    model.addAttribute("itemType", itemType);
