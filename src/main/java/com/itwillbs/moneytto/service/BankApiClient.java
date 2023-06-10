@@ -198,14 +198,17 @@ public class BankApiClient {
 		String url = baseUrl + "/v2.0/transfer/withdraw/fin_num";
 		System.out.println("========================================");
 		System.out.println("withdraw : " +  map);
+		System.out.println(map.get("user_name"));
+	    System.out.println(map.get("fintech_use_num"));
 		System.out.println("========================================");
 		
 		restTemplate = new RestTemplate();
 	    HttpHeaders httpHeaders = new HttpHeaders();
-	    httpHeaders.add("Authorization", "Bearer " + map.get("access_token"));
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+	    	httpHeaders.add("Authorization", "Bearer " + map.get("access_token"));
+	    	httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 	    
-	      
+	    
+	    
 	    JSONObject jo = new JSONObject();
 	    jo.put("bank_tran_id", valueGenerator.getBankTranId());
 	    jo.put("cntr_account_type", "N");	
@@ -216,7 +219,7 @@ public class BankApiClient {
 	    jo.put("tran_dtime", valueGenerator.getTranDTime());				// 거래일자	
 	    jo.put("req_client_num", map.get("id").toUpperCase());	// req_client_num(요청고객회원번호 = 아이디(문자 사용 시 대문자 필수!)
 	    // TODO 테스트베드에 등록해줘야하는 부분
-	    jo.put("req_client_name", map.get("member_name"));		// 요청 고객명
+	    jo.put("req_client_name", map.get("user_name"));		// 요청 고객명
 	    jo.put("fintech_use_num", map.get("fintech_use_num"));	// 요청 핀테크번호 = 핀테크번호
 	    jo.put("req_client_fintech_use_num",map.get("fintech_use_num"));// 요청고객핀테크번호 
 	    jo.put("tran_amt",map.get("tran_amt"));
@@ -224,17 +227,14 @@ public class BankApiClient {
 	    // oob scope 있는 관리자용 계정의 정보
 	    jo.put("recv_client_name", "머니또"); 
 		jo.put("recv_client_bank_code","002"); 
-		jo.put("recv_client_account_num", "21111129"); 
+		jo.put("recv_client_account_num", "333123456789"); 
 		
-	    HttpEntity<String> request = 
-	    	      new HttpEntity<String>(jo.toString(), httpHeaders);
-	    	    
-	    ResponseEntity<AccountWithdrawResponseVO> responseEntityStr = restTemplate.
-	    	      postForEntity(url, request, AccountWithdrawResponseVO.class);
+	    HttpEntity<String> request = new HttpEntity<String>(jo.toString(), httpHeaders); 
+	    ResponseEntity<AccountWithdrawResponseVO> responseEntityStr = restTemplate.postForEntity(url, request, AccountWithdrawResponseVO.class);
+	    	      
 	    
 	    System.out.println("=========================================");
-	    System.out.println(jo);
-	    System.out.println(responseEntityStr.getBody());
+	    System.out.println("ApiClient : "  + jo);
 	    System.out.println("=========================================");
 	    
 	    return responseEntityStr.getBody();

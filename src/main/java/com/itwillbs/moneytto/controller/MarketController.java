@@ -493,8 +493,8 @@ public class MarketController {
 			
 			HashMap<String, String> item = service.getMarketItem(item_code);
 			String id = (String)session.getAttribute("sId");
-			if(id == null) {
-				id = "admin";
+			if(id == null) {		//TODO 임시로 넣어둔건데 세션아이디 없으면 fail_back으로 가게 하면될거같아요
+				id = "admin";		
 			}
 			HashMap<String, String> member = memberService.getMember(id);
 			HashMap<String, String> account = bankService.getAccount(id);

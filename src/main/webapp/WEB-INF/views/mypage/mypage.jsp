@@ -29,6 +29,8 @@ $(document).ready(function(){
 		// active된 탭에 대한 css 작업 필요
 		location.href = "mypage?itemList="+ itemType + "&member_id=${member.member_id }" ;
 		})
+	
+		
 		
 })
 function memberAuth(){
@@ -41,6 +43,10 @@ function memberAuth(){
 	+"&state=11111111111111111111111111111111"
 	+"&auth_type=0";
 }
+function bankDeposit(){
+		window.open("depositForm", "_blank","width=500,height=650,top=100,left=600");
+	}	
+
 
 </script>
 </head>
@@ -66,26 +72,31 @@ function memberAuth(){
 						</div>
 					</div>
 					<c:if test= "${sessionScope.sId eq member.member_id }">
-					<div class="memberInfoReviewBox">
-						<div class="memberInfoText">또머니</div>
-						<div class="memberInfoCount"><fmt:formatNumber value="${member.member_point  }" pattern="#,###" /></div>
-					</div>
-					<div class="memberInfoReviewBox">
-						<div class="memberInfoText">또머니페이</div>
-						<c:choose>
-							
-							<c:when test="${member.member_auth_status eq 'Y'  }">
-								<div class="memberInfoCount" onclick="location.href='bank_userInfo'">계좌 관리하기</div>
-							</c:when>
-							<c:otherwise>
-								<div class="memberInfoCount" onclick="memberAuth()">계좌 등록하기</div>
-							</c:otherwise>
-						</c:choose>
-					</div>
-					
-					<div class="memberInfoMyDataBox" onclick='location.href="memberUpdateForm"'>
-						<div class="memberInfoSettingMyData">내정보 수정하기</div>
-					</div>
+						<div class="memberInfoReviewBox">
+							<div class="memberInfoText">또머니</div>
+							<div class="memberInfoCount"><fmt:formatNumber value="${member.member_point  }" pattern="#,###" /></div>
+						</div>
+						<div class="memberInfoReviewBox">
+							<div class="memberInfoText">또머니페이</div>
+							<c:choose>
+								
+								<c:when test="${member.member_auth_status eq 'Y'  }">
+									<div class="memberInfoCount" onclick="location.href='bank_userInfo'">계좌 관리하기</div>
+								</c:when>
+								<c:otherwise>
+									<div class="memberInfoCount" onclick="memberAuth()">계좌 등록하기</div>
+								</c:otherwise>
+							</c:choose>
+						</div>
+						
+						<div class="memberInfoMyDataBox" onclick='location.href="memberUpdateForm"'>
+							<div class="memberInfoSettingMyData">내정보 수정하기</div>
+						</div>
+						<c:if test="${member.member_auth_status eq 'Y'  }">
+							<div class="memberInfoMyDataBox" onclick='bankDeposit()' style="margin-top: 10px;">
+								<div class="memberInfoSettingMyData">포인트 환급받기</div>
+							</div>
+						</c:if>
 					</c:if>
 				</div>
 			</div>
@@ -193,14 +204,6 @@ function memberAuth(){
 						</div>
 						</c:forEach>
 					</c:when>
-					
-					
-					
-					
-					
-					
-					
-					
 						<c:when test= '${empty itemList }'>
 	                      	<div class="EmptyEmptyBox">
 								<div class="EmptyTitle">아쉽게도, 현재 검색된 상품이 없어요</div>
