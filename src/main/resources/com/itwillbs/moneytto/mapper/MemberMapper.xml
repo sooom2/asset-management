@@ -181,6 +181,7 @@
 		 	p.*
 		 	, im.image_name
 		 	,w.wish_code
+		 	, i.*
 		FROM
 			market_paid p
 		LEFT JOIN (
@@ -201,8 +202,14 @@
                   member_id = #{member_id}) w
          ON
 			p.item_code = w.wish_item_code
+		LEFT JOIN
+			item i
+		ON
+			p.item_code = i.item_code
 		WHERE
 			buy_id = #{member_id} 
+			
+			
 	</select>
 <!-- 마이페이지 조회 -->	
 	
@@ -305,5 +312,42 @@
 			WHERE 
 				member_id = #{id}
 	</update>
+	
+	<!-- 작성한 리뷰 -->
+	<select id="selectWrittenReviewListByMember" resultType="hashmap">
+		SELECT
+			 *
+		FROM
+			review a
+		WHERE
+			reviewer_id = #{member_id}
+	</select>
+	<select id="selectWrittenReviewListById" resultType="hashmap">
+		SELECT
+			 *
+		FROM
+			review a
+		WHERE
+			reviewer_id = #{member_id}
+	</select>
+	<!-- 받은 리뷰 -->
+	<select id="selectRecivedReviewListByMember" resultType="hashmap">
+		SELECT
+			 *
+		FROM
+			review a
+		WHERE
+			target_id = #{member_id}
+	</select>
+	<select id="selectRecivedReviewListById" resultType="hashmap">
+		SELECT
+			 *
+		FROM
+			review a
+		WHERE
+			target_id = #{member_id}
+	</select>
+	
+	
 	
 </mapper>

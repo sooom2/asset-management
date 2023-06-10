@@ -266,7 +266,7 @@ public class BankController {
 			
 		}
 		model.addAttribute("isClose", true);
-		return "bank/withdraw_result";
+		return "fail_back";
 		
 	}
 	
@@ -336,6 +336,7 @@ public class BankController {
 		if(id == null) {
 			
 			model.addAttribute("msg", "잘못된 접근입니다.");
+			model.addAttribute("isClose", true);
 			return "fail_back";
 			
 		}

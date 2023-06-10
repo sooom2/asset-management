@@ -7,7 +7,11 @@ $(document).ready(function() {
 	swal({
 		text : message,
 	}).then(function(){
-	 	history.back();		
+	 	if("${isClose}"){
+	 		window.close();
+	 	}else{
+	 		history.back();
+	 	}
 	});
 });
 </script>
