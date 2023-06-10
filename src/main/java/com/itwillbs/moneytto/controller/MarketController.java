@@ -163,8 +163,19 @@ public class MarketController {
 		    model.addAttribute("nickname",nickname);
 		}
 		
+	    Set<String> viewedItems = (Set<String>) session.getAttribute("viewed_items");
+	    
+	    if (viewedItems == null) {
+	        viewedItems = new HashSet<>();
+	    }
+
+		
 		// 상품 조회수 증가 처리
-		service.increaseViews(item_code);
+	    if (!viewedItems.contains(item_code)) {
+	        service.increaseViews(item_code);
+	        viewedItems.add(item_code);
+	        session.setAttribute("viewed_items", viewedItems);
+	    }
 		
 		// 아이템 상세
 		HashMap<String, String> marketItem = service.getMarketItem(item_code);

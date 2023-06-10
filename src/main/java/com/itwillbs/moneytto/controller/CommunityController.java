@@ -1,7 +1,9 @@
 package com.itwillbs.moneytto.controller;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -90,21 +92,31 @@ public class CommunityController {
 	}
 
 	
-	
 	@GetMapping(value = "commBoardView")
 	public String commBoardView(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
 	    String comm_code = board.get("comm_code"); // comm_code 값을 가져옵니다.
 	    String id = (String)session.getAttribute("sId");
+	    
+	    // 세션에서 조회한 게시글 식별자 목록을 가져옵니다
+	    Set<String> viewedPosts = (Set<String>) session.getAttribute("viewed_posts");
+	    if (viewedPosts == null) {
+	        viewedPosts = new HashSet<>();
+	    }
+
 	    if (id != null) {
-		    HashMap<String, String> member = memberService.getMember(id);
-		    String member_id = member.get("member_id");
-		    String nickname = member.get("member_nickname");
-		    model.addAttribute("nickname",nickname);
-		    model.addAttribute("member_id", member_id); 
-		    
-		}
+	        HashMap<String, String> member = memberService.getMember(id);
+	        String member_id = member.get("member_id");
+	        String nickname = member.get("member_nickname");
+	        model.addAttribute("nickname",nickname);
+	        model.addAttribute("member_id", member_id); 
+	    }
+
 	    // 게시물 조회수 증가 처리
-	    service.increaseViews(board.get("comm_code"));
+	    if (!viewedPosts.contains(comm_code)) {
+	        service.increaseViews(board.get("comm_code"));
+	        viewedPosts.add(comm_code);
+	        session.setAttribute("viewed_posts", viewedPosts);
+	    }
 
 	    HashMap<String, String> boardDetail = service.boardDetail(comm_code); // comm_code에 해당하는 글 내용을 조회합니다.
 	    List<HashMap<String, String>> replyList = service.replyList(comm_code);
@@ -117,6 +129,7 @@ public class CommunityController {
 	        return "fail_back";
 	    }
 	}
+
 
 	@PostMapping(value = "addComment")
 	public String addComment(@RequestParam HashMap<String, String> comment, @RequestParam("comm_code") String commCode, Model model, HttpSession session) {
@@ -159,25 +172,7 @@ public class CommunityController {
 	    return "fail_back";
 	}
 
-//	@PostMapping(value = "deleteBoard")
-//	@ResponseBody
-//	public String deleteBoard(@RequestParam HashMap<String, String> board, HttpSession session) {
-//		String comm_code = board.get("comm_code"); // comm_code 값을 가져옵니다.
-//	    String id = (String)session.getAttribute("sId");
-//	    HashMap<String, String> boardDetail = service.boardDetail(comm_code); // 게시글 정보를 가져옵니다.
-//
-//	    if (boardDetail != null && boardDetail.get("member_id").equals(id)) {
-//	        // 게시글 작성자와 로그인한 멤버가 일치하면 삭제 작업 수행
-//	        int deleteCount = service.deleteBoard(comm_code);
-//
-//	        if (deleteCount > 0) {
-//	            // 삭제 후 페이지 이동 또는 응답 처리
-//	            return "success";
-//	        }
-//	    }
-//
-//	    return "fail_back";
-//	}
+
 	
 	@PostMapping(value = "deleteBoard")
 	@ResponseBody
