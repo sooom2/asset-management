@@ -118,7 +118,7 @@ function reviewDelete(item_code){
 	<jsp:include page="../nav.jsp" />
 							
 	<div class="profileWrapper">
-		<div class="profileContainer" style="min-height:880px">
+		<div class="profileContainer" style="min-height:1120px">
 			<div class="memberInfoWrapper">
 				<div class="memberInfoInfoArea">
 					<div class="userDataWrapper">
@@ -145,7 +145,7 @@ function reviewDelete(item_code){
 							<c:choose>
 								
 								<c:when test="${member.member_auth_status eq 'Y'  }">
-									<div class="memberInfoCount" onclick="location.href='bank_userInfo'">계좌 관리하기</div>
+									<div class="memberInfoCount" onclick="openCenteredWindow('bank_userInfo','계좌 관리하기', 1000, 500)">계좌 관리하기</div>
 								</c:when>
 								<c:otherwise>
 									<div class="memberInfoCount" onclick="memberAuth()">계좌 등록하기</div>

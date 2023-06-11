@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.itwillbs.moneytto.mapper.MarketMapper;
 
@@ -50,8 +51,10 @@ public class MarketService {
 
 		return mapper.selectBuyItem(id, item_code);
 	}
-
+	
 	public int writeReview(HashMap<String, String> review) {
+		
+//		mapper.updateMemberGrade(review);
 		
 		return mapper.insertReview(review);
 	}

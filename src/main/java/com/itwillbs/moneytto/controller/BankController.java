@@ -316,8 +316,9 @@ public class BankController {
 		
 		// 핀테크번호 등록 성공시 
 		if(insertCount > 0) {
-			
-			return "redirect:/mypage";
+			model.addAttribute("msg", "간편계좌를 등록하였습니다.");
+			model.addAttribute("isClose", true);
+			return "fail_back";
 			
 		}
 		

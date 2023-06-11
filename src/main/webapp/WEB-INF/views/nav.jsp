@@ -40,15 +40,12 @@ function payment(){
 					<li><a href="myAlarm"><i class="fa-regular fa-bell"></i> 나의알림</a></li>
 					<li><a href="marketChat"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> 채팅</a></li>
 					<li><a href="logout" data-reload="reload" class="">로그아웃</a></li>
-					<%-- 관리자페이지 접근 서비스시 주석 해지할것  --%>
-<%-- 					<c:if test="${sessionScope.sId eq 'admin' }"> --%>
-<!-- 						<li><a href="admin" class="">관리자</a></li> -->
-<%-- 					</c:if> --%>
+					<c:if test="${sessionScope.sId eq 'admin' }">
+						<li><a href="admin" class="">관리자</a></li>
+					</c:if>
 				</c:otherwise>
 			</c:choose>
-					<%-- 실제 서비스시 없앨것 --%>
 					<li><a href="#" onclick="payment()"> 결제페이지(샘플)</a>
-					<li><a href="admin"  class="">관리자</a></li>
 			</ul>
 		</nav>
 	
