@@ -25,9 +25,6 @@ let room_code;
 let item_code;
 
 
-// 해야할거 > 송금하기누르면 메세지창에 해당물건 메세지 출력되면서 누르면 결제하기로 하고싶은디....
-
-
 // 안되면그냥 바로 결제로 연결
 
  function market_payment() {
@@ -137,17 +134,42 @@ $(function() {
 	   $(".exitChatRoom").on("click", function(event) {
 		   // 부모 선택자의 이벤트 실행 안되게 
 		   event.stopPropagation();
-	       $.ajax({
-	           type: "POST",			//GET하면 방 털릴까봐 POST로 바꿔보기
-	           url: "exitChatRoom", 
-	           data: {
-	               room_code: room_code
-	           },
-	           dataType: "json",
-	           success: function(result) {
-					console.log(result.result);
-	           }
-	       });
+		   let result = swal({
+			    icon: "info",
+			    buttons: {
+			        confirm: {
+			            text: "확인",
+			            value: true,
+			            visible: true,
+			            className: "",
+			            closeModal: true,
+			        },
+			        cancel: {
+			            text: "취소",
+			            value: false,
+			            visible: true,
+			            className: "",
+			            closeModal: true,
+			        }
+			    },
+			    text: "해당방을 나가시겠습니까?"
+			});
+
+			result.then((confirmed) => {
+			    if (confirmed) {
+			        $.ajax({
+			            type: "POST",
+			            url: "exitChatRoom",
+			            data: {
+			                room_code: room_code
+			            },
+			            dataType: "json",
+			            success: function(result) {
+			                console.log(result.result);
+			            }
+			        });
+			    }
+			});
 	   });
 
 	   //============================================================================================

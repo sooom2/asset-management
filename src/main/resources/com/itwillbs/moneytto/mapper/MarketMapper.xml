@@ -124,12 +124,13 @@
    
    <!-- 내채팅목록 -->
    <select id="myChatList" resultType="hashmap">
-      SELECT myChatRecentList.room_code, chat_code, chat_content, member_nickname,member_image,chat_time,myChatRecentList.item_subject,chat_openDate,item_status,item_code
+      SELECT myChatRecentList.room_code,is_exist_status, chat_code, chat_content, member_nickname,member_image,chat_time,myChatRecentList.item_subject,chat_openDate,item_status,item_code
          FROM (
-             SELECT room_code, chat_code, chat_content, member_nickname,member_image,
+             SELECT room_code,is_exist_status, chat_code, chat_content, member_nickname,member_image,
                     ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate,item_status, item_code
              FROM (
                  SELECT market_chat_rooms.room_code,
+                 		market_chat_rooms.is_exist_status ,
                         chat_code,
                         market_chat_rooms.chat_content,
                         member.member_nickname,
@@ -150,6 +151,7 @@
                      	
                UNION
                 SELECT market_chat_rooms.room_code,
+                	   market_chat_rooms.is_exist_status ,
                        chat_code,
                        market_chat_rooms.chat_content,
                        member.member_nickname,
@@ -172,11 +174,8 @@
             ) AS myChatRecentList
          WHERE 1=1
             AND row_num = 1
-<!--             <if> -->
-<!--             AND room_code != #{room_code} -->
-<!--             </if> -->
-         
-           ORDER BY chat_time desc
+            AND is_exist_status = 'N'
+	        ORDER BY chat_time desc
    </select>
    
    
@@ -368,12 +367,13 @@
 
    <!-- 제일마지막에생성된 방 -->
    <select id="chatRecentList" resultType="hashmap">
-      SELECT chatRecentListOne.room_code, chat_code, chat_content, member_nickname,member_id,member_image,chat_time,chatRecentListOne.item_subject,chat_openDate,item_status
+      SELECT chatRecentListOne.room_code,chatRecentListOne.is_exist_status, chat_code, chat_content, member_nickname,member_id,member_image,chat_time,chatRecentListOne.item_subject,chat_openDate,item_status
          FROM (
-             SELECT room_code, chat_code, chat_content, member_nickname,member_id,member_image,
+             SELECT room_code,is_exist_status, chat_code, chat_content, member_nickname,member_id,member_image,
                     ROW_NUMBER() OVER (PARTITION BY room_code ORDER BY chat_code DESC) AS row_num , chat_time, a.item_subject ,chat_openDate,item_status
              FROM (
                  SELECT market_chat_rooms.room_code,
+                		market_chat_rooms.is_exist_status ,
                         chat_code,
                         market_chat_rooms.chat_content,
                         member.member_nickname AS member_nickname,
@@ -393,6 +393,7 @@
                      WHERE  buy_member_id = #{id}
                UNION
                 SELECT market_chat_rooms.room_code,
+                	   market_chat_rooms.is_exist_status ,
                        chat_code,
                        market_chat_rooms.chat_content,
                        member.member_nickname AS member_nickname,
@@ -413,7 +414,9 @@
                      	
                 ) a
             ) AS chatRecentListOne
-         WHERE row_num = 1 
+         WHERE 1=1 
+         	AND row_num = 1 
+          	AND is_exist_status = 'N'
          ORDER BY chat_time DESC LIMIT 1
    </select>
    

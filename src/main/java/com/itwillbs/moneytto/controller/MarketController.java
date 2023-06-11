@@ -423,7 +423,7 @@ public class MarketController {
 	         // 1. 최근 room_code 조회
 	         chatList = marketChatService.getMyChatRecentList(id);
 	         System.out.println("nav1 ========================================");
-	         System.out.println();
+	         System.out.println(chatList);
 	         System.out.println("nav1 ========================================");
 	         if (chatList != null && chatList.size() > 0) {
 	            System.out.println(chatList.get("member_id"));
@@ -448,6 +448,9 @@ public class MarketController {
 	            // 3. 상대방 판매상품갯수조회
 	            // 상대방의 아이디 조회
 	            opponentId = marketChatService.getOpponentId(room_code, id);
+	            System.out.println("opponentId ==========================");
+	            System.out.println(opponentId);
+	            System.out.println("==========================");
 	            // 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
 	            sellCount = marketChatService.getSellCount(opponentId.get("opponent_id"));
 	            myChatList = marketChatService.getMyChatList(id);
@@ -485,7 +488,6 @@ public class MarketController {
 	      HashMap<String, String> market_paid = marketChatService.getMarketPaid(item_code);
 		  model.addAttribute("isReview",isReview);
 		  model.addAttribute("market_paid",market_paid);
-	      
 	      model.addAttribute("trade_date",trade_date);
 	      model.addAttribute("sellDetail",sellDetail);
 	      model.addAttribute("item_subject",item_subject);

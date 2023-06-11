@@ -124,7 +124,7 @@ $(function(){
 			});
 		} else {
 			$.ajax({
-		      type: "get",
+		      type: "GET",
 		      url: "pointTrade",
 		      data: {
 		        my_point: my_point,
