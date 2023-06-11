@@ -65,7 +65,14 @@ $(function(){
 	    });
 	});
 
+	let today = new Date();
 	
+	var year = today.getFullYear();
+	var month = ('0' + (today.getMonth() + 1)).slice(-2);
+	var day = ('0' + today.getDate()).slice(-2);
+	var dateString = year + '-' + month  + '-' + day;
+
+	$('.item_pay_date span').append('<strong>'+dateString+'</strong>');
 
 })
 
@@ -107,14 +114,15 @@ $(function(){
 <!-- 		</label> -->
 			<div style="height: 215px; display: block; font-size: 16px;padding: 15px; border: 1px solid #ececec;">
 				<div style="display: block; width: 45%; float: left; padding: 5px;">
-					<img src="http://c3d2212t3.itwillbs.com/images/51f48ee8.jpg" style="position: relative; width: 200px; height: 200px; object-fit: cover;">
+					<img src='${itemImg }' style="position: relative; width: 200px; height: 200px; object-fit: cover;">
 				</div>
 				<div style="display: block; width:45%;float: right;  padding: 5px 10px;  margin-right: 0;margin-top: 20px;}">
-					<h3 style="font-size: 20px; margin-bottom: 15px">&#128196; 상 품 정 보</h3>
+					<h3 style="font-size: 20px; margin-bottom: 15px;text-align: center">&#128196; 상 품 정 보</h3>
 					<hr style="display: block !important;">
-					<div class="item_title">노래불러드려요</div>
-					<div class="item_price">10000원</div>
-					<div class="item_member_nickname">판매자 꾸꾸꾸</div>
+					<div class="item_pay_date" style="text-align: right;font-size: 14px">결제일  <span></span></div>
+					<div class="item_title" style="text-align: right;">${item.item_subject }</div>
+					<div class="item_price" style="text-align: right;">${item.item_price } 원</div>
+					<div class="item_member_nickname" style="text-align: right;font-size: 14px">받는사람 <strong> ${item.member_name }</strong></div>
 				</div>
 			</div>
 	</div>

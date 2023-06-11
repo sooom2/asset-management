@@ -530,24 +530,37 @@ public class MarketController {
 			
 			String fintech_use_num = accountInfo.get("fintech_use_num");
 			model.addAttribute("fintech_use_num",fintech_use_num);
-//			120211385488932372196844
+			
+			
+			//아이템이미지
+			List<HashMap<String, String>> itemImage = service.getItemImage(item_code);
 			// Model 객체에 ResponseUserInfoVO 객체 저장
 			model.addAttribute("userInfo", userInfo);
 			System.out.println("==================================");
 			System.out.println("/bank_userInfo : " + userInfo);
 			System.out.println("==================================");
 			
+			System.out.println("itemImage.get(0) ==================================");
+			System.out.println(itemImage.get(0));
+			String itemImg = itemImage.get(0).get("image_name");
+			System.out.println("itemImage.get(0).get(\"image_name\") ==================================");
+			
 			
 			System.out.println("======================================================");
 			System.out.println("item : " + item.toString());
+			System.out.println("item_image : " + itemImage.toString());
 			System.out.println("member : " + member.toString());
 			System.out.println("account : " + account);
 			System.out.println("======================================================");
-			
+			System.out.println(itemImg);
+			System.out.println("======================================================");
+			model.addAttribute("itemImg", itemImg);
 			model.addAttribute("member", member);
 			model.addAttribute("item", item);
 			model.addAttribute("account", account);
 			return "market/market_payment";
+			
+			
 		}
 	   
 		// 계좌 상세정보 조회(2.3.1. 잔액조회 API)

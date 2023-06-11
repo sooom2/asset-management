@@ -32,7 +32,7 @@ let item_code;
 
  function market_payment() {
    	  window.open("market_payment?item_code="+item_code, "_blank", "width=500,height=650,top=100,left=600");
-   	}
+}
 
 
 
@@ -372,7 +372,10 @@ $(function() {
 // 			alert(room_code);	
 			$('.chat_input').val('');
 			
-			
+		 	function market_payment() {
+		   	  window.open("market_payment?item_code="+item_code, "_blank", "width=500,height=650,top=100,left=600");
+			}
+
 			
 			
 			new Promise((succ, fail) => {
