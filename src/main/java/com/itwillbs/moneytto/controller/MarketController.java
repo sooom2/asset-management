@@ -531,7 +531,9 @@ public class MarketController {
 			// access_token 이 null 일 경우 "계좌 인증 필수" 메세지 출력 후 이전페이지로 돌아가기
 			if(access_token == null) {
 				model.addAttribute("msg", "계좌 인증이 필요합니다.");
-				return "fail_back";
+				model.addAttribute("target","mypage");
+				model.addAttribute("isClose", true);
+				return "success";
 			}
 			
 			// 사용자 정보 조회(REST API 요청)		
