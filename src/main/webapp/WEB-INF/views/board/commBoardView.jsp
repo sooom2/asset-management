@@ -195,10 +195,17 @@
 								<td>${reply.member_nickname}</td>
 								<td>${reply.comment}</td>
 								<td>${reply.reply_date}</td>
-								<td><a href="#" class="delete-comment"
-									data-reply-code="${reply.reply_code}">삭제</a> <input
-									type="hidden" class="reply-code" value="${reply.reply_code}">
-								</td>
+								<td><c:choose>
+										<c:when test="${empty sessionScope.sId}">
+										</c:when>
+										<c:otherwise>
+											<a href="#" class="delete-comment"
+												data-reply-code="${reply.reply_code}">&#9746;</a>
+											<input type="hidden" class="reply-code"
+												value="${reply.reply_code}">
+										</c:otherwise>
+									</c:choose></td>
+
 							</tr>
 						</c:forEach>
 					</tbody>
