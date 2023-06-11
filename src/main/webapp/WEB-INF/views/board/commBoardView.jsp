@@ -16,7 +16,7 @@
 	rel="stylesheet">
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="../js/main.js"></script>
+<!-- <script type="text/javascript" src="../js/main.js"></script> -->
 <script src="resources/js/jquery-3.6.4.js"></script>
 
 <!-- 썸머노트 -->
@@ -35,6 +35,8 @@
 	rel="stylesheet">
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <style>
 .comment-table {
     border-collapse: collapse !important;
@@ -214,108 +216,128 @@
 
 			<!-- 댓글 작성 폼 -->
 			<form id="commentForm">
+
+
 				<div class="form-group">
 					<label for="commentContent">Comment</label>
 					<textarea class="form-control" rows="2" id="commentContent"
 						name="content"></textarea>
 				</div>
+<!-- 				<div class="form-group"> -->
+<!-- 					<input type="hidden" id="commCode" name="comm_code" -->
+<%-- 						value="${param.comm_code}"> --%>
+<!-- 					<button type="submit" class="btn btn-primary">댓글 작성</button> -->
+<!-- 				</div> -->
 				<div class="form-group">
 					<input type="hidden" id="commCode" name="comm_code"
 						value="${param.comm_code}">
-					<button type="submit" class="btn btn-primary">댓글 작성</button>
+					<button type="button" class="btn btn-primary" id="submitComment">댓글
+						작성</button>
 				</div>
-			</form>
-	</article>
 
-	<script>
-$(document).ready(function() {
-    $('.summernote').summernote({
-        tabsize: 2,
-        height: 300
-    });
+			</form></article>
 
-    // 댓글 작성 폼 제출 이벤트 처리
-    $("#commentForm").submit(function(event) {
-        event.preventDefault(); // 폼의 기본 동작 방지
+<!-- 	<script> -->
+<!-- // $(document).ready(function() { -->
+<!-- //     $('.summernote').summernote({ -->
+<!-- //         tabsize: 2, -->
+<!-- //         height: 300 -->
+<!-- //     }); -->
+<script>
+    $(document).ready(function() {
+        $('.summernote').summernote({
+            tabsize: 2,
+            height: 300
+        });
+     // 댓글 작성 폼 제출 이벤트 처리
+        $("#submitComment").click(function(event) {
+            event.preventDefault(); // 클릭 이벤트의 기본 동작 방지
 
-        // 입력된 내용 가져오기
-        var content = $("#commentContent").val();
-        var commCode = $("#commCode").val();
+            // 입력된 내용 가져오기
+            var content = $("#commentContent").val();
+            var commCode = $("#commCode").val();
 
-        // AJAX를 사용하여 서버로 데이터 전송
-        $.ajax({
-            type: "POST",
-            url: "addComment",
-            data: {
-                content: content,
-                comm_code: commCode
-            },
-            success: function(response) {
-                if (response === "success") {
-                    alert("댓글이 등록되었습니다.");
-                    location.reload(); // 페이지 새로고침
-                } else {
-                    alert("댓글 등록에 실패했습니다.");
+            // AJAX를 사용하여 서버로 데이터 전송
+            $.ajax({
+                type: "POST",
+                url: "addComment",
+                data: {
+                    content: content,
+                    comm_code: commCode
+                },
+                dataType: "json", // 반환되는 데이터 형식을 JSON으로 지정
+                success: function(response) {
+                    if (response.status === "success") {
+                        swal("댓글이 등록되었습니다.", "", "success");
+                        clearCommentForm(); // 댓글 작성 폼 초기화
+                    } else {
+                        swal("댓글 등록에 실패했습니다.", "", "error");
+                    }
+                },
+                error: function() {
+                    swal("댓글 등록에 실패했습니다.", "", "error");
                 }
-            },
-            error: function() {
-                alert("댓글 등록에 실패했습니다.");
-            }
+            });
+        });
+
+
+        // 댓글 삭제 링크 클릭 이벤트 처리
+        $(document).on("click", ".delete-comment", function(event) {
+            event.preventDefault(); // 링크의 기본 동작 방지
+
+            var replyCode = $(this).data("reply-code");
+
+            $.ajax({
+                url: "deleteComment",
+                type: "POST",
+                data: { reply_code: replyCode },
+                success: function(response) {
+                    if (response === "success") {
+                        swal("댓글이 삭제되었습니다.", "", "success").then(function() {
+                            $("#comment-" + replyCode).remove();
+                            location.reload(); // 페이지 새로고침
+                        });
+                    } else {
+                        swal("댓글 삭제에 실패했습니다.", "", "error");
+                    }
+                },
+                error: function() {
+                    swal("댓글 삭제에 실패했습니다.", "", "error");
+                }
+            });
         });
     });
 
-    // 댓글 삭제 링크 클릭 이벤트 처리
-    $(document).on("click", ".delete-comment", function(event) {
-        event.preventDefault(); // 링크의 기본 동작 방지
-
-        var replyCode = $(this).data("reply-code");
-
-        $.ajax({
-            url: "deleteComment",
-            type: "POST",
-            data: { reply_code: replyCode },
-            success: function(response) {
-                if (response === "success") {
-                    alert("댓글이 삭제되었습니다.");
-                    $("#comment-" + replyCode).remove();
-                    location.reload(); // 페이지 새로고침
-                } else {
-                    alert("댓글 삭제에 실패했습니다.");
-                }
-            },
-            error: function() {
-                alert("댓글 삭제에 실패했습니다.");
+    function deleteBoard(comm_code) {
+        swal({
+            title: "게시글 삭제",
+            text: "정말로 게시글을 삭제하시겠습니까?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then(function(confirmDelete) {
+            if (confirmDelete) {
+                $.ajax({
+                    url: "deleteBoard",
+                    type: "POST",
+                    data: { comm_code: comm_code },
+                    success: function(response) {
+                        if (response === "success") {
+                            swal("게시글이 삭제되었습니다.", "", "success").then(function() {
+                                location.href = "commBoard";
+                            });
+                        } else {
+                            swal("게시글 삭제에 실패했습니다.", "", "error");
+                        }
+                    },
+                    error: function() {
+                        swal("서버와의 통신에 문제가 발생했습니다.", "", "error");
+                    }
+                });
             }
         });
-    });
-});
-
-
-
-
-function deleteBoard(comm_code) {
-  if (confirm("정말로 게시글을 삭제하시겠습니까?")) {
-    $.ajax({
-      url: "deleteBoard",
-      type: "POST",
-      data: { comm_code: comm_code },
-      success: function (response) {
-        if (response === "success") {
-          // 게시글 삭제 성공 시, commBoard 페이지로 이동
-          location.href = "commBoard";
-        } else {
-          alert("게시글 삭제에 실패했습니다.");
-        }
-      },
-      error: function () {
-        alert("서버와의 통신에 문제가 발생했습니다.");
-      }
-    });
-  }
-}
-
-
-	</script>
+    }
+</script>
 
 	<jsp:include page="../footer.jsp" />
 
