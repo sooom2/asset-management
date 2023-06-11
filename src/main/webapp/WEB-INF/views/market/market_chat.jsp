@@ -166,7 +166,7 @@ $(function() {
 			            dataType: "json",
 			            success: function(result) {
 			                console.log(result.result);
-			                window.reload();
+			                location.reload();
 			            }
 			        });
 			    }
