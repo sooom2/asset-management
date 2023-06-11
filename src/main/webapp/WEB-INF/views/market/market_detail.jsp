@@ -511,13 +511,10 @@ function toggleLike(element) {
 	        		text: "신고 사유를 선택해주세요!"
 		        });
 			} else {
-<<<<<<< HEAD
-=======
 				swal({	
 	        		icon: "success",
 	        		text: "신고가 성공적으로 접수되었습니다!"
 		        });
->>>>>>> branch 'main' of https://github.com/sooom2/asset-management.git
 				report();
 				
 			}

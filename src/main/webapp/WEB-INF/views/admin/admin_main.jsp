@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -45,13 +45,13 @@
 									
 <!-- 								막대	============================================================== -->
 									<div>
-									  <canvas id="myChart"></canvas>
+									  <canvas id="barChart"></canvas>
 									</div>
 									
 									<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 									
 									<script>
-									  const ctx = document.getElementById('myChart');
+									  const ctx = document.getElementById('barChart');
 									
 									  new Chart(ctx, {
 									    type: 'bar',
@@ -92,15 +92,14 @@
 							</div>
 						</div>
 						<div class="col-xl-3 col-md-6">
-							<div class="card bg-warning text-black mb-4">
+							<div class="card bg-primary text-black mb-4">
 								<div class="card-body font20">
-									오픈 채팅<br>
-									<span class="fontB">${todayCount }</span> 건
+									소셜가계부<br> <span class="fontB">${resCount }</span>건
 									
 <!-- 								도넛	============================================================== -->									
-									<canvas id="doughnutChartCanvas"></canvas>
+									<canvas id="doughnutChart"></canvas>
 									<script>
-										const canvas = document.getElementById("doughnutChartCanvas");
+										const canvas = document.getElementById("doughnutChart");
 										const data = {
 										  labels: ["Red", "Blue", "Yellow"],
 										  datasets: [
@@ -120,15 +119,66 @@
 										  type: "doughnut",
 										  data,
 										});
-										</script>
-<!-- 								도넛끝	============================================================== -->									
-									
-									
+									</script>
+<!-- 								도넛끝	============================================================== -->	
+
 									
 								</div>
 								<div
 									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-black stretched-link" href="admin_schedule_register">더보기</a>
+									<a class="small text-black stretched-link" href="resList">더보기</a>
+									<div class="small text-black">
+										<svg class="svg-inline--fa fa-angle-right" aria-hidden="true"
+											focusable="false" data-prefix="fas" data-icon="angle-right"
+											role="img" xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 256 512" data-fa-i2svg="">
+											<path fill="currentColor"
+												d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path>
+										</svg>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-primary text-black mb-4">
+								<div class="card-body font20">
+									소셜가계부<br> <span class="fontB">${resCount }</span>건
+									
+<!-- 								막대	============================================================== -->
+									<div>
+									  <canvas id="barChart2"></canvas>
+									</div>
+									
+									
+									<script>
+									  const ctx = document.getElementById('barChart2');
+									
+									  new Chart(ctx, {
+									    type: 'bar',
+									    data: {
+									      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+									      datasets: [{
+									        label: '# of Votes',
+									        data: [12, 19, 3, 5, 2, 3],
+									        borderWidth: 1
+									      }]
+									    },
+									    options: {
+									      scales: {
+									        y: {
+									          beginAtZero: true
+									        }
+									      }
+									    }
+									  });
+									</script>
+<!-- 								막대끝	============================================================== -->
+
+									
+								</div>
+								<div
+									class="card-footer d-flex align-items-center justify-content-between">
+									<a class="small text-black stretched-link" href="resList">더보기</a>
 									<div class="small text-black">
 										<svg class="svg-inline--fa fa-angle-right" aria-hidden="true"
 											focusable="false" data-prefix="fas" data-icon="angle-right"
@@ -145,30 +195,78 @@
 							<div class="card bg-success text-black mb-4">
 								<div class="card-body font20">
 									스토어 주문<br> <span class="fontB">${payCount }</span> 건
+									
+<!-- 								라인시작	============================================================== -->		
+									<div style="width:100%;">
+									  <canvas id="lineChart"></canvas>
+									</div>
+									
+									<script>
+									new Chart(document.getElementById("lineChart"), {
+									    type: 'line',
+									    data: {
+									        labels: ['1', '2', '3', '4', '5', '6', '7'],
+									        datasets: [{
+									            label: '테스트 데이터셋',
+									            data: [
+									                10,
+									                3,
+									                30,
+									                23,
+									                10,
+									                5,
+									                50
+									            ],
+									            borderColor: "rgba(255, 201, 14, 1)",
+									            backgroundColor: "rgba(255, 255, 255, 0)",
+									            fill: true,
+									            lineTension: 0
+									        }]
+									    },
+									    options: {
+									        responsive: true,
+									        title: {
+									            display: true,
+									            text: '라인 차트 테스트'
+									        },
+									        tooltips: {
+									            mode: 'index',
+									            intersect: false,
+									        },
+									        hover: {
+									            mode: 'nearest',
+									            intersect: true
+									        },
+									        scales: {
+									            xAxes: [{
+									                display: true,
+									                scaleLabel: {
+									                    display: true,
+									                    labelString: 'x축'
+									                }
+									            }],
+									            yAxes: [{
+									                display: true,
+									                ticks: {
+									                    suggestedMin: 0,
+									                },
+									                scaleLabel: {
+									                    display: true,
+									                    labelString: 'y축'
+									                }
+									            }]
+									        }
+									    }
+									});
+									
+									</script>						
+<!-- 								라인 끝	============================================================== -->									
+								
+								
 								</div>
 								<div
 									class="card-footer d-flex align-items-center justify-content-between">
 									<a class="small text-black stretched-link" href="admin_item_pay">더보기</a>
-									<div class="small text-black">
-										<svg class="svg-inline--fa fa-angle-right" aria-hidden="true"
-											focusable="false" data-prefix="fas" data-icon="angle-right"
-											role="img" xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 256 512" data-fa-i2svg="">
-											<path fill="currentColor"
-												d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path>
-										</svg>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-3 col-md-6">
-							<div class="card bg-danger text-black mb-4">
-								<div class="card-body font20">
-									회원수<br> <span class="fontB">${memCount }</span>명
-								</div>
-								<div
-									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-black stretched-link" href="#">더보기</a>
 									<div class="small text-black">
 										<svg class="svg-inline--fa fa-angle-right" aria-hidden="true"
 											focusable="false" data-prefix="fas" data-icon="angle-right"
