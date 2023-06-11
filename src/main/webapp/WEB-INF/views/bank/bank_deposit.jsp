@@ -6,18 +6,6 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta charset="utf-8">
-<!-- 기기 분기처리 스크립트 -->
-
-<script type="text/javascript">
-	var doc = document.documentElement;
-	doc.setAttribute('data-useragent', navigator.userAgent);
-	var sAgent =  navigator.userAgent;
-	if (sAgent.indexOf("WebKit") < 0) {
-		window.onerror = function(){
-			return true;
-		}
-	}
-</script>
 <title>머니또페이</title>
 <link rel="shortcut icon" href="https://img.pay.naver.net/static/images/customer/favicon.ico" />
 <!-- 넘빨개여,,,ㅠ -->
@@ -36,12 +24,24 @@ $(function(){
 	})
 	
 	$('#point2').change(function(){
-		console.log($('#point2').val());
-		console.log($('#point1').text());
 		var point1 = Number($('#point1').text());
 		var point2 = Number($('#point2').val());
-		$('._totalPayAmt').text(point1 + point2)
+		
+		 if (point2 > point1) {
+		        point2 = point1;
+		        $('#point2').val(point2);
+		    }
+		
+		var totalPayAmt = point1 - point2;
+		
+		if (totalPayAmt < 0) {
+	        totalPayAmt = 0;
+	    }
+
+	    $('._totalPayAmt').text(totalPayAmt);
 	})
+	
+	
 })
 </script>
 <body>
@@ -52,9 +52,9 @@ $(function(){
 		<p class="sp_header gnb_logo"><span class="blind">ttoPay</span></p>
 	</div>
 
-<form method="post" autocomplete="off" action="bank_withdraw">
+<form method="post" autocomplete="off" action="bank_deposit">
 <input type="hidden" name="id" value="${member.member_id }"> 
-<input type="hidden" name="trade_type" value="이체">
+<input type="hidden" name="trade_type" value="출금">
 <input type="hidden" name="fintech_use_num" value="120211385488932372338507">
 <input type="hidden" name="member_name" value="${member.member_name }">
 <div class="container" id="container">
