@@ -40,8 +40,61 @@ public class AdminController {
 	
 // 메인=============================================
 	@RequestMapping(value = "admin")
-	public String adminMain(Model model) {
-			
+	public String adminMain(@RequestParam HashMap<String, String> map, Model model) {
+		// 페이지 번호, 글목록수 제한
+		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
+			map.put("pageNum", "1");
+			map.put("startNum", "0");
+			map.put("endNum", "10");
+		}
+		// 1. 수익률 비교 위해 계좌내역 조회
+		List<HashMap<String, String>> accountChart = bankService.selectAccountHistory(map); // 좀 있다 수정
+		// 2. 카테고리별 차트
+		List<HashMap<String, String>> categoryChart = service.selectCategoryChart(map);
+		// 3. 직거래, 안전거래 비교 차트
+		List<HashMap<String, String>> payTypeChart = service.selectPayTypeChart(map);
+		// 4. 리뷰 작성률 차트
+		List<HashMap<String, String>> reviewChart = memberService.selectAdminMember(map);  // 좀 있다 수정
+		// 중복제거 위해 사용
+		HashMap<String, String> countMap = new HashMap<>();
+		// 내역이 존재할 경우
+		// 1. 
+		if(accountChart.size() > 0) {
+			HashMap<String, String> accountCnt = new HashMap<>();
+			countMap = accountChart.get(0);
+			accountCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+			model.addAttribute("accountCnt", accountCnt);
+		}
+		// 2. 
+		if(categoryChart.size() > 0) {
+			HashMap<String, String> categoryCnt = new HashMap<>();
+			countMap = categoryChart.get(0);
+			categoryCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+			model.addAttribute("categoryCnt", categoryCnt);
+		}
+		// 3. 
+		if(payTypeChart.size() > 0) {
+			HashMap<String, String> payTypeCnt = new HashMap<>();
+			countMap = payTypeChart.get(0);
+			payTypeCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+			model.addAttribute("payTypeCnt", payTypeCnt);
+		}
+		// 4. 
+		if(reviewChart.size() > 0) {
+			HashMap<String, String> reviewCnt = new HashMap<>();
+			countMap = reviewChart.get(0);
+			reviewCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+			model.addAttribute("reviewCnt", reviewCnt);
+		}
+		// 내역을 model에 저장
+		model.addAttribute("accountChart", accountChart);
+		model.addAttribute("categoryChart", categoryChart);
+		model.addAttribute("payTypeChart", payTypeChart);
+		model.addAttribute("reviewChart", reviewChart);
+		model.addAttribute("pageCnt", map);
+		System.out.println("adminMain에서" + accountChart);
+		System.out.println("adminMain에서" + model);
+		
 		return "admin/admin_main";
 	}
 

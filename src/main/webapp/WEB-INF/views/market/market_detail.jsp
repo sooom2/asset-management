@@ -424,7 +424,7 @@ function toggleLike(element) {
 				dataType: "json",
 					success : function(result){
 		       			if(result){
-		       				alert("신고가 접수되었습니다");
+// 		       				alert("신고가 접수되었습니다");
 		       				$(".ReactModalPortal").remove();
 		       			} else {
 		       				alert("신고 접수에 실패하였습니다.");
