@@ -265,10 +265,12 @@ public class AuctionController {
 	@PostMapping("/auctionPayResult")
 	public String auctionPayResult(@RequestParam Map<String, String> map, HttpSession session) {
 		String id = (String)session.getAttribute("sId");
+		HashMap<String, String> member = memberService.getMember(id);
 		// pay_code 생성, 추가
 		String uuid = UUID.randomUUID().toString().substring(0, 8);
 		map.put("pay_code", uuid);
 		map.put("member_id", id);
+		map.put("member_name", member.get("member_name"));
 		// 결제 등록
 		int insertCount = service.insertPayResult(map);
 		

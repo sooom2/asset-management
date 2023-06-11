@@ -178,6 +178,7 @@
 					, #{auction_code}
 					, #{pay_price}
 					, #{member_id}
+					, #{member_name}
 					, #{member_tel}
 					, #{member_address}
 					, #{member_address_detail}

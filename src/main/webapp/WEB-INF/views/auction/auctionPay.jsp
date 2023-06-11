@@ -66,7 +66,7 @@ $(function() {
 	$('#item_deposit').html("${deposit }".replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원");
 	$('#item_point').html("${member.member_point }".replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원");
 	// 콤마 빼기.
-	$('input[name=pay_price]').val('${payPrice}'.replaceAll(",", ""));
+	$('input[name=pay_price]').val(${lastLog.log_content });
 	
 	
 	
