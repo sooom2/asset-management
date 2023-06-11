@@ -516,7 +516,9 @@ public class MarketController {
 			}
 			HashMap<String, String> member = memberService.getMember(id);
 			HashMap<String, String> account = bankService.getAccount(id);
-
+			System.out.println("member ==================================");
+			System.out.println(member);
+			System.out.println("==================================");
 			
 			// 세션에 저장된 엑세스 토큰 및 사용자 번호 변수에 저장
 			String access_token = (String)session.getAttribute("access_token");
@@ -620,6 +622,7 @@ public class MarketController {
 			//AccountDetailVO 객체 저장
 			model.addAttribute("account", account);
 			model.addAttribute("account_num_masked", map.get("account_num_masked"));
+			model.addAttribute("access_token", map.get("access_token"));
 			model.addAttribute("user_name", map.get("user_name"));
 //			long amt = account.getBalance_amt();
 			
@@ -634,6 +637,22 @@ public class MarketController {
 			
 			return jsonStr;
 			
+		}
+		
+		@GetMapping("pointTrade")
+		@ResponseBody
+		public void pointTrade(HttpSession session,Model model , @RequestParam("item_price") int itemPrice, @RequestParam("my_point") int my_point) {
+		    String id = (String) session.getAttribute("sId");
+		    System.out.println(id);
+		    System.out.println(itemPrice);
+		    System.out.println(my_point);
+		    
+		    int updatePoint = marketChatService.pointWithDraw(id,itemPrice);
+		   
+		    if(updatePoint > 0 ) {
+		    	
+		    }
+		    
 		}
 		
 		@GetMapping("marketPaid")

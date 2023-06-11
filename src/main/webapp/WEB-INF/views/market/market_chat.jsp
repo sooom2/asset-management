@@ -31,6 +31,7 @@ let item_code;
 // 안되면그냥 바로 결제로 연결
 
  function market_payment() {
+// 	alert("market_payment : " + item_code);
    	  window.open("market_payment?item_code="+item_code, "_blank", "width=500,height=650,top=100,left=600");
 }
 
@@ -38,9 +39,11 @@ let item_code;
 
 $(function() {
 	let isReview = ${isReview};
+	item_code = "${item_code}";
 	// 거래버튼  
     $(".trade img").attr("src", "${path}/resources/images/chat/btn_trade_x2.png");
     if ($("input#tradeButton.active").val() == '거래중') {
+        $(".trade").empty();
         $(".declaration").after("<div class='trade' onclick='market_payment()' ><div><span style='position: absolute;font-size: 8px;margin-top: -11px;  margin-left: -2px;'>안전결제</span><img src='${path }/resources/images/chat/btn_trade_x2.png' alt='송금이미지'></div></div>");
     } else {
         $(".trade").remove();
@@ -48,11 +51,10 @@ $(function() {
 	
     //리뷰작성
 	$(document).on("click", ".reviewForm", function() {
-		let item_code = $('.item_code').val();
+		item_code = $('.item_code').val();
 		let options = "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=400,height=400,left=350,top=200";
 		window.open('reviewForm?item_code=' + item_code, '후기작성', options);
 	});
-	
 	
 	// 판매상태 버튼 처리 >> db에 상태 업데이트
     $(".trade_status input").on("click", function() {
@@ -359,7 +361,6 @@ $(function() {
 
 		let currentDate;
 		let tradeDate;
-		let item_code;
 // 		if (new Date($("input.sch_box").val()) < new Date() && $('input.active').val() != '거래완료' ){
 // 	    	alert("ddd");
 // 			alert(room_code + "해당방의 거래가 일정이 지났습니다. 거래를 완료를 해주세요");
@@ -372,11 +373,8 @@ $(function() {
 // 			alert(room_code);	
 			$('.chat_input').val('');
 			
-		 	function market_payment() {
-		   	  window.open("market_payment?item_code="+item_code, "_blank", "width=500,height=650,top=100,left=600");
-			}
 
-			
+// 			alert("chatDetail 눌렸을때 잘못됨 : " + item_code);
 			
 			new Promise((succ, fail) => {
 				$.ajax({
@@ -418,7 +416,6 @@ $(function() {
 				  	  function report(opponent_id,item_code) {
 					       let reportType = $("#report_type").val();
 					       let reportContent = $("#report_content").val();
-					       alert(sell_id);
 					       $.ajax({
 					           type: "GET",
 					           url: "report",
@@ -509,9 +506,8 @@ $(function() {
 	                    $(".chat_header a .info div").empty();
 	                    // 헤더에 파는사람아이디
 	                    $(".chat_header a .info div").append("<span>[" + sell_nickname + "]<br><i class='fa-regular fa-comment-dots fa-flip-horizontal'></i> " + item_subject + "</span>");
-
-
-
+	                
+						$('.right_main .info').attr("onclick","location.href='mypage?member_id=" + sell_id + "'");
 
 	                    //날짜표시
 	                    $(".chat_wrapper").empty();
@@ -706,64 +702,6 @@ $(function() {
     } //function chatDetail()
 
 
-// 	    let tradeDate = new Date($("input.sch_box").val());
-// 	    currentDate = new Date();
-// 	    let sellMember = "${sellDetail.sell_member_id}";
-// 	    item_code = "${sellDetail.item_code}"
-// 	    if (new Date($("input.sch_box").val()) < new Date() && $('input.active').val() != '거래완료' && sId != sellMember) {
-// 	    	confirm(room_code + "해당방의 거래가 일정이 지났습니다. 거래를 완료하시겠습니까?");
-	    	
-// 	        let tradeResult = swal({
-//             	icon: "info",
-//                 buttons: {
-//                     confirm: {
-//                         text: "네",
-//                         value: true,
-//                         visible: true,
-//                         className: "",
-//                         closeModal: true,
-//                     },
-//                     cancel: {
-//                         text: "취소",
-//                         value: false,
-//                         visible: true,
-//                         className: "",
-//                         closeModal: true,
-//                     }
-//                 },
-//                 text: room_code + "해당방의 거래가 일정이 지났습니다. 거래를 완료하시겠습니까?"
-//             });
-// 	        tradeResult.then((confirmed) => {
-//                 if (confirmed) {
-                  
-//                 	 $.ajax({
-//      	                type: "GET",
-//      	                url: "itemStatus_update",
-//      	                dataType: "text",
-//      	                data: {
-//      	                    item_status: "거래완료",
-//      	                    room_code: room_code,
-//      	                    trade_date: $("input.sch_box").val()
-//      	                },
-//      	                success: function(result) {
-//      	                    $("#tradeButton").removeClass("active");
-//      	                    $("#tradeButton").css({
-//      	                        "background-color": "#F0F0F0",
-//      	                        "border": "none",
-//      	                        "color": "#000"
-//      	                    });
-//      	                    $(".sellTrade").addClass("active");
-//      	                    $(".trade_status").append($("<div class='reviewForm' style='text-align: right;font-size: 13px; color: #bbb'><input type='hidden'value='"+item_code+"'><a>후기작성</a></div>"));
-//      	                }
-//      	             });
-                	
-//                 }
-//             });
-	        
-	        
-// 	    }
- 
-
 });
 </script>
 <script type="text/javascript">
@@ -784,11 +722,10 @@ $(function() {
 	hours = String(hours).padStart(2, '0');
 	minutes = String(minutes).padStart(2, '0');
 	
-	let formatDate = year + "-" + month + "-" + day + " " + amPm + " " + hours + ":" + minutes;
+	let formatDate = amPm + " " + hours + ":" + minutes;
 	
 	var ws = null;
 	var socket = null;
-	
 	$(function() {
 	    ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
 	    socket = ws;
@@ -811,8 +748,8 @@ $(function() {
 			opponent_img = "${opponentId.opponent_image}"
 			opponent_nickname = "${opponentId.opponent_nickname}"
 	    }
+	    
 	    messages(target,opponent_img,opponent_nickname);
-	
 	    console.log("nav에서 아이템코드: " + item_code + " room_code: " + room_code + " target: " + target);
 	
 	    function chatSend(target) {
@@ -835,10 +772,11 @@ $(function() {
 	    });
 	
 	    $("#message").on("keydown", function(key) {
-	        if (key.keyCode == 13 && $('#message').val() != '') {
-	            chatSend(target);
-	            $('#message').val('');
-	        }
+	    	if (key.keyCode == 13 && $('#message').val() != '') {
+	    	    chatSend(target);
+	    	    $('#message').val('');
+	    	    return false;
+	    	}
 	    });
 	
 	
@@ -848,9 +786,7 @@ $(function() {
 	        const clickedListItem = $(this);
 	        room_code = clickedListItem.find('.room_code').val();
 	        item_code = clickedListItem.find('.item_code').val();
-	        
-	 
-	        
+	        messages(target,opponent_img,opponent_nickname);
 	        
 	        console.log("room_code: " + room_code + " item_code: " + item_code);
 	        $.ajax({
@@ -867,10 +803,8 @@ $(function() {
 	                if (!$(this).parent().is("ul > div:first-child")) {
 	                	opponent_img = parsedObject.opponent_image;
 	                	opponent_nickname = parsedObject.opponent_nickname;
-	                    messages(target,opponent_img,opponent_nickname);
+	                    
 	                }
-	
-	
 	                ws.onclose = function(event) {
 	                    console.log('연결종료');
 	                };
@@ -879,16 +813,10 @@ $(function() {
 	                };
 	            }
 	        });
-	        
-	        
-	    
-	        
-	        
-	        
-	        
-	        
-	        
 	    });
+	    
+	    
+	    
 	    function messages(target,opponent_img,opponent_nickname) {
 	        ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
 	        socket = ws;
@@ -1084,7 +1012,7 @@ $(function() {
                            
                         </div>
                         
-                        <div class="info" onclick="location.href='mypage?member_id=${marketItem.member_id}'">
+                        <div class='info' onclick='location.href="mypage?member_id=${sellDetail.sell_id}"'>
                            <div>
                               <!-- 판매자 닉네임 -->
                               <span>[${sellDetail.sell_nickname }]<br><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${item_subject }</span>

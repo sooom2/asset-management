@@ -309,6 +309,7 @@
          market_chat_messages.*,
          market_chat_rooms.chat_openDate,
          chat_mem_id,
+         seller.member_id as sell_id,
          seller.member_nickname as sell_nickname,
          buyer.member_nickname as buy_nickname,
          seller.member_image as sell_image,
@@ -924,5 +925,13 @@
       	FROM market_paid
       	   WHERE item_code = #{item_code}
    </select>
+   
+   <update id="pointWithDraw">
+   		 UPDATE member
+         SET
+            member_point = member_point - #{itemPrice}
+          WHERE
+             member_id=#{id} 
+   </update>
    
 </mapper>

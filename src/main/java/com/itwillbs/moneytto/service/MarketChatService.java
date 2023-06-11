@@ -165,6 +165,9 @@ public class MarketChatService {
 	public HashMap<String, String> getMarketPaid(String item_code) {
 		return mapper.marketPaid(item_code);
 	}
+	public int pointWithDraw(String id, int itemPrice) {
+		return mapper.pointWithDraw(id,itemPrice);
+	}
 	
 
 

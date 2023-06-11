@@ -163,4 +163,7 @@ public interface MarketMapper {
    //거래내역
    HashMap<String, String> marketPaid(String item_code);
 
+   //포인트출금
+   int pointWithDraw(@Param("id") String id,@Param("itemPrice") int itemPrice);
+
 }

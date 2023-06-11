@@ -1490,9 +1490,12 @@ input:-moz-placeholder{font-size:14px;color:#b3b3b3}
    font-size: 20px;
    margin-bottom: 20px;
    margin-top: 13px;
-   height: 40px;
+   height: 29px;
    width: 200px;
    float: right;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
    line-height: 24px;
 }
 

@@ -215,7 +215,6 @@ public class BankController {
 	@PostMapping("bank_withdraw")
 	public String withdraw(
 			@RequestParam Map<String, String> map, HttpSession session, Model model) {
-		
 		map.put("access_token", (String)session.getAttribute("access_token"));
 		System.out.println("==================================");
 		System.out.println("Controller - bank_withdraw");

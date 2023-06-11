@@ -26,24 +26,27 @@
 <link type="text/css" rel="stylesheet" href="//img.pay.naver.net/z/mstatic/css/service/mobile/nsp/order_common.css?1684912786775">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 <link href="${path }/resources/css/payment.css" rel ="stylesheet">
 </head>
 <script type="text/javascript">
 $(function(){
-	$('.button_section').click(function(){
-		if(confirm("등록된 간편결제 계좌로 충전하시겠습니까?")){
-			$("form").submit();
-		}
+// 	$('.button_section').click(function(){
+// 		if(confirm("등록된 간편결제 계좌로 충전하시겠습니까?")){
+// 			$("form").submit();
+// 		}
 					
-	})
+// 	})
 	
-	$('#point2').change(function(){
-		console.log($('#point2').val());
-		console.log($('#point1').text());
-		var point1 = Number($('#point1').text());
-		var point2 = Number($('#point2').val());
-		$('._totalPayAmt').text(point1 + point2)
-	})
+// 	$('#point2').change(function(){
+// 		console.log($('#point2').val());
+// 		console.log($('#point1').text());
+// 		var point1 = Number($('#point1').text());
+// 		var point2 = Number($('#point2').val());
+// 		$('._totalPayAmt').text(point1 + point2)
+// 	})
 
 
 	$('.getAccountAmt').on("click", function() {
@@ -55,8 +58,6 @@ $(function(){
 	        dataType: 'text',
 	        success: function(result) {
 	            var parsedResult = JSON.parse(result);
-// 	            var strAmtValue = parsedResult.strAmt;
-// 	            alert(parsedResult.bank_name);
 	            let bank_name = parsedResult.bank_name;
 	            let balance_amt = parsedResult.balance_amt;
 	            $(".accountAmtResult").text(bank_name+" - " + balance_amt+"원");
@@ -73,10 +74,79 @@ $(function(){
 	var dateString = year + '-' + month  + '-' + day;
 
 	$('.item_pay_date span').append('<strong>'+dateString+'</strong>');
+	
+	
+	
+	$('.chargePay').on("click",function(){
+		let chargePoint = $('#point2').val();
+		let fintech_use_num = "${fintech_use_num }";
+		let user_name = "${userInfo.user_name}";
+		let queryString = $("form[name=withdraw]").serialize();
+		let access_token = "${access_token}";
+		let id = "${sessionScope.sId}";
+		
+		$.ajax({
+			type: 'post',
+			url: 'bank_withdraw',
+		 	data: {
+		 		fintech_use_num: fintech_use_num,
+		 		user_name: user_name,
+		 	    chargePoint: chargePoint,
+		 	   	tran_amt : chargePoint,
+		 	    id: id,
+		 	    trade_type:'이체'
+		 	},
+			success: function(response) {
+				swal({	
+	        		icon: "success",
+	        		text: chargePoint+"point 충전되었습니다"
+				}).then(function() {
+				    location.reload();
+				});
+	 	  	}
+		});
+		
+		
+	});
+	
+	let item_price = parseInt("${item.item_price}");
+	let my_point = parseInt("${member.member_point}");
+	$('.tradeBtn').on("click",function(){
+		alert("내포인트 : "+my_point+"아이템가격 : "+item_price);
+		alert(my_point >= item_price);
+		// 		if(my_point >= item_price){
+// 			alert('ddd');
+// 			my_point -= item_price;
+// 		}
+		if(my_point < item_price){
+			swal({	
+        		icon: "warning",
+        		text: "POINT를 충전해주세요"
+			});
+		} else {
+			$.ajax({
+		      type: "get",
+		      url: "pointTrade",
+		      data: {
+		        my_point: my_point,
+		        item_price: item_price
+		      },
+		      success: function(response) {
+		    	  swal({	
+		        		icon: "success",
+		        		text: "송금완료"
+		    	  }).then(function() {
+					    window.close();
+					});
+		    	  
+		    	  
+		    	  
+		      }
+		    });
+		}
+	});
 
 })
-
-
 
 </script>
 <body>
@@ -87,15 +157,10 @@ $(function(){
 		<p class="sp_header gnb_logo"><span class="blind">ttoPay</span></p>
 	</div>
 
-<form method="post" name="accountInfo" autocomplete="off" action="bank_accountDetail">
-<input type="hidden" name="id" value="${member.member_id }"> 
-<input type="hidden" name="member_name" value="${member.member_name }">
-<input type="hidden" name="trade_type" value="이체">
+
 <div class="container" id="container">
 <!-- 인증받은 핀테크번호 -->
 <!-- 등록된 계좌의 핀테크번호를 알아내야함 -->
-<input type="hidden" name="fintech_use_num" value="${fintech_use_num }"> 
-<input type="hidden" name="user_name" value="${userInfo.user_name }">
     <div class="info_login">
     	<div style="display: inline-block;float: left;">
 			<div class="img_area">
@@ -104,10 +169,18 @@ $(function(){
 	        <span class="name">${member.member_name }</span>
 	        <span class="eng_name">(${member.member_id })</span>
     	</div>
-		<div>
-			<input type="button" value="내계좌 잔고조회" class="getAccountAmt" style="display: block;    float: right;    cursor: pointer;    width: 150px; background-color: #fff;    border: 1px solid #bababa;    height: 30px;    font-size: 15px;    margin-top: 8px;">
-			<div class="accountAmtResult" style="display: inline-block;  float: right; font-size: 15px;"></div>
-		</div>	        
+    	
+    	<form method="post" name="accountInfo" autocomplete="off" action="bank_accountDetail" accept-charset="UTF-8">
+			<input type="hidden" name="fintech_use_num" value="${fintech_use_num }"> 
+			<input type="hidden" name="user_name" value="${userInfo.user_name }">
+			<input type="hidden" name="id" value="${member.member_id }"> 
+			<input type="hidden" name="member_name" value="${member.member_name }">
+			<input type="hidden" name="trade_type" value="이체">
+			<div>
+				<input type="button" value="내계좌 잔고조회" class="getAccountAmt" style="display: block;    float: right;    cursor: pointer;    width: 150px; background-color: #fff;    border: 1px solid #bababa;    height: 30px;    font-size: 15px;    margin-top: 8px;">
+				<div class="accountAmtResult" style="display: inline-block;  float: right; font-size: 15px;"></div>
+			</div>	
+		</form>        
 	</div>
 	<div class="fold_wrap item_detail">
 <!-- 		<label class="fold_head sp_heading head_nppoint" for="c1"> -->
@@ -126,10 +199,25 @@ $(function(){
 				</div>
 			</div>
 	</div>
+	
+ <form method="post" name="withdraw" autocomplete="off" action="bank_withdraw" style="display:inline;" accept-charset="UTF-8">
+	<input type="hidden" name="fintech_use_num" value="${fintech_use_num}"> 
+	<input type="hidden" name="user_name" value="${userInfo.user_name}">
+	<input type="hidden" name="id" value="${member.member_id}"> 
+	<input type="hidden" name="member_name" value="${member.member_name}">
+</form>	
 	<div class="fold_wrap">
 		<label class="fold_head sp_heading head_nppoint" for="c1">
-			<h3 class="fold_h">&#127808; 머니또페이</h3>
-		</label>
+			<h3 class="fold_h" style="display: inline-block;">&#127808; 머니또페이</h3>
+			    <span class="chargePay" style="display: block;float: right;line-height: 25px;margin-right: 25px; cursor: pointer; border: 1px solid #ccc; height: 25px; margin-top: 10px; padding: 3px 13px;">충전하기</span>
+		</label> 
+<!-- 		<div class="button_section"> -->
+<!-- 			<div class="button_area"> -->
+<!-- 				<div class="button_bottom"> -->
+<!-- 					<a href="#" class="button _click()"><span class="sp_button_icon icon_check">충전하기</span></a> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 		<div class="fold_content verification">
 			<div class="amount_total">
 				<span class="label" style="color: #000">보유포인트</span>
@@ -148,21 +236,20 @@ $(function(){
 <!-- 			</li> -->
 			<li class="full_area label_margin button_margin2">
 				<label for="point2" class="label">충전 포인트</label>
-				<input title="사용포인트" id="point2" name="tran_amt" type="tel" class="value number _onlyPriceTarget _naverMileage _payForm _blur(checkout.mobile.nsp.paymentSheet.checkInputTextAmountValue()) _focus(checkout.mobile.nsp.paymentSheet.beforeInputPrice()) _stopDefault" placeholder="0">
+<!-- 				<input type="number"  title="사용포인트">  -->
+<!-- 				<input title="사용포인트" id="" name="" type="number" class="" placeholder="0"> -->
+				<input title="사용포인트" id="point2" name="tran_amt" type="text" class="value number _onlyPriceTarget _naverMileage _payForm _blur(checkout.mobile.nsp.paymentSheet.checkInputTextAmountValue()) _focus(checkout.mobile.nsp.paymentSheet.beforeInputPrice()) _stopDefault" onKeyup="this.value=this.value.replace(/[^-0-9]/g,'');">
 				<span class="text_won">원</span>
 			</li>
 			</ul>
-			
 		</div>
 	</div>
-	<div class="button_section">
-		<div class="button_area">
-			<div class="button_bottom">
-			<a href="#" class="button _click(checkout.mobile.nsp.paymentSheet.create()) _stopDefault _doPayButton"><span class="sp_button_icon icon_check">송금하기</span></a></div>
-		</div>
+	<!-- 출금하는건 내계좌에서 출금해서 내 포인트로 충전 -->
+	<div>
+		<div class="tradeBtn" style="text-align: center;padding: 12px; background-color: #bb2649;color: #fff;cursor:pointer;">송금하기</div>
 	</div>
 </div>
-</form>
+
 
 <div class="_tempLayer"></div>
 <div class="ly_bx" id="pointAlert" style="top:200px;display:none;">
