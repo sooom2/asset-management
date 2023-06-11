@@ -182,12 +182,6 @@ function toggleLike(element) {
 					<div class="SubTitleWrapper">
 						<div class="SubTitleDetailBox">
 							<div class="SubTitleDetailText">${marketItem.item_date}</div>
-<!-- 							<div class="SubTitleWishBox"> -->
-<!-- 								<img -->
-<!-- 									src="https://ccimage.hellomarket.com/img/web/item/detail/ico_wish_small.png" -->
-<!-- 									alt="좋아요 아이콘" class="SubTitleIcon"> -->
-<!-- 								<div class="SubTitleDetailText">0</div> -->
-<!-- 							</div> -->
 						</div>
 					</div>
 						<div class="DescriptionWrapper">
@@ -275,11 +269,6 @@ function toggleLike(element) {
 						</div>
 					</div>
 					
-<!-- 					<div class="DescriptionWrapper"> -->
-<!-- 						<div class="DescriptionText"> -->
-<%-- 							${marketItem.item_content } --%>
-<!-- 						</div> -->
-<!-- 					</div> -->
 
 					<div style="margin: -19px 20px 10px"
 						class="AdSenseWrapper">
@@ -424,7 +413,6 @@ function toggleLike(element) {
 				dataType: "json",
 					success : function(result){
 		       			if(result){
-// 		       				alert("신고가 접수되었습니다");
 		       				$(".ReactModalPortal").remove();
 		       			} else {
 		       				alert("신고 접수에 실패하였습니다.");
@@ -459,14 +447,6 @@ function toggleLike(element) {
 	$(function () {
 		var id = $("#session_id").val();
 		var target = $("#target_id").val();
-//		display:none / show 방식으로 하면 다른사람이 이부분 지우기만 해도 접근 가능해서
-//		JSTL c:choose로 바꿨어요 확인했으면 주석 지워도돼요 06.06
-// 		if(id == target) {
-// 			$(".SomeonesModifyButton, .SomeonesDeleteButton").show();
-// 		} else {
-// 			$(".SomeonesItemButton").show();
-// 		}
-// 		alert(typeof($("#item_price").val()));
 		
 		var itemDate = "${marketItem.item_date}";
 		var formattedDate = moment(itemDate).format("YYYY-MM-DD HH:mm");

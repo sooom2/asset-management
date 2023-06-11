@@ -10,7 +10,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/moment.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <title>Insert title here</title>
 </head>
@@ -643,7 +642,6 @@
 		 			dataType: "json",
 		 			success: function(response) { 
 		 				console.log("tagList : 요청처리성공");
-// 		 				console.log(response);
 		 				for(let item of response) {
 							let tags2 = item.item_tag;
 		 					let tag2 = tags2.split(',');
