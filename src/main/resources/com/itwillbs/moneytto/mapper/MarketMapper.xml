@@ -309,6 +309,7 @@
          market_chat_messages.*,
          market_chat_rooms.chat_openDate,
          chat_mem_id,
+         seller.member_id as sell_id,
          seller.member_nickname as sell_nickname,
          buyer.member_nickname as buy_nickname,
          seller.member_image as sell_image,
@@ -696,7 +697,7 @@
       UPDATE
          review 
       SET 
-         , review_content=#{review_content}
+          review_content=#{review_content}
          , rating = #{rating}
       WHERE
          1 = 1
@@ -710,8 +711,8 @@
          review
       WHERE
          1=1
-         AND reviewer_id = #{reviewer_id}
-         AND   review_item_code = #{item_code}
+         AND reviewer_id = #{id}
+         AND review_item_code = #{item_code}
    </delete>
    
    <select id="roomCodeExists" resultType="int">
@@ -873,6 +874,13 @@
       	   WHERE item_code = #{item_code}
    </select>
 
+   <update id="pointWithDraw">
+   		 UPDATE member
+         SET
+            member_point = member_point - #{itemPrice}
+          WHERE
+             member_id=#{id} 
+   </update>
 
 
 <!-- 관리자 시작======================================================================================= -->
@@ -928,6 +936,5 @@
 	</select>
 <!-- 관리자 끝======================================================================================= -->
 
-
-
+   
 </mapper>

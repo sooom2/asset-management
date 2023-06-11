@@ -516,7 +516,9 @@ public class MarketController {
 			}
 			HashMap<String, String> member = memberService.getMember(id);
 			HashMap<String, String> account = bankService.getAccount(id);
-
+			System.out.println("member ==================================");
+			System.out.println(member);
+			System.out.println("==================================");
 			
 			// 세션에 저장된 엑세스 토큰 및 사용자 번호 변수에 저장
 			String access_token = (String)session.getAttribute("access_token");
@@ -541,24 +543,37 @@ public class MarketController {
 			
 			String fintech_use_num = accountInfo.get("fintech_use_num");
 			model.addAttribute("fintech_use_num",fintech_use_num);
-//			120211385488932372196844
+			
+			
+			//아이템이미지
+			List<HashMap<String, String>> itemImage = service.getItemImage(item_code);
 			// Model 객체에 ResponseUserInfoVO 객체 저장
 			model.addAttribute("userInfo", userInfo);
 			System.out.println("==================================");
 			System.out.println("/bank_userInfo : " + userInfo);
 			System.out.println("==================================");
 			
+			System.out.println("itemImage.get(0) ==================================");
+			System.out.println(itemImage.get(0));
+			String itemImg = itemImage.get(0).get("image_name");
+			System.out.println("itemImage.get(0).get(\"image_name\") ==================================");
+			
 			
 			System.out.println("======================================================");
 			System.out.println("item : " + item.toString());
+			System.out.println("item_image : " + itemImage.toString());
 			System.out.println("member : " + member.toString());
 			System.out.println("account : " + account);
 			System.out.println("======================================================");
-			
+			System.out.println(itemImg);
+			System.out.println("======================================================");
+			model.addAttribute("itemImg", itemImg);
 			model.addAttribute("member", member);
 			model.addAttribute("item", item);
 			model.addAttribute("account", account);
 			return "market/market_payment";
+			
+			
 		}
 	   
 		// 계좌 상세정보 조회(2.3.1. 잔액조회 API)
@@ -607,6 +622,7 @@ public class MarketController {
 			//AccountDetailVO 객체 저장
 			model.addAttribute("account", account);
 			model.addAttribute("account_num_masked", map.get("account_num_masked"));
+			model.addAttribute("access_token", map.get("access_token"));
 			model.addAttribute("user_name", map.get("user_name"));
 //			long amt = account.getBalance_amt();
 			
@@ -621,6 +637,22 @@ public class MarketController {
 			
 			return jsonStr;
 			
+		}
+		
+		@GetMapping("pointTrade")
+		@ResponseBody
+		public void pointTrade(HttpSession session,Model model , @RequestParam("item_price") int itemPrice, @RequestParam("my_point") int my_point) {
+		    String id = (String) session.getAttribute("sId");
+		    System.out.println(id);
+		    System.out.println(itemPrice);
+		    System.out.println(my_point);
+		    
+		    int updatePoint = marketChatService.pointWithDraw(id,itemPrice);
+		   
+		    if(updatePoint > 0 ) {
+		    	
+		    }
+		    
 		}
 		
 		@GetMapping("marketPaid")
@@ -707,19 +739,21 @@ public class MarketController {
 		// 거래 내역에서 내가 산 물건 조회		
 		HashMap<String, String> item= service.getBuyItem(id ,item_code);
 		
-//		if(!item.isEmpty()) {	//거래 내역이 없을때
-//			
-//			model.addAttribute("msg", "권한이 없습니다.");
-//			return "fail_back";
-//		
-//		}
+		if(item == null) {	//거래 내역이 없을때
+			
+			model.addAttribute("msg", "권한이 없습니다.");
+			model.addAttribute("isClose", true);
+			return "fail_back";
+		
+		}
 		
 		if(item.get("review_code")==null) {
 			
 			model.addAttribute("review_type", "insert");	//작성된 리뷰가 없을때 추가
 			
 		}else {
-			
+			HashMap<String,String> review = memberService.getReview(id ,item_code);
+			model.addAttribute("review", review);
 			model.addAttribute("review_type", "update");	//작성된 리뷰가 있을때 수정
 		}
 		
@@ -749,7 +783,8 @@ public class MarketController {
 				
 				if(updateCount > 0) {				//insert 성공
 					
-					model.addAttribute("msg", "리뷰가 성공적으로 등록되었습니다.");
+					model.addAttribute("msg", "리뷰가 수정 되었습니다.");
+					
 				}else {								//insert 실패
 					model.addAttribute("msg", "리뷰 작성에 실패하였습니다.");
 					
@@ -757,7 +792,11 @@ public class MarketController {
 			break;
 		}
 		
-		//TODO 도착 위치 지정 필요 해죠 성공하면 창꺼지게해죠 06.08
+		//TODO 성공하면 창꺼지게해죠 06.08
+		//TODO 네~ 06.11
+		model.addAttribute("isClose", true);
+		model.addAttribute("isReload", true);
+		
 		return"fail_back";
 		
 	}
@@ -986,7 +1025,30 @@ public class MarketController {
 	        return "fail_back";
 	    }
 	}
-
+	
+	@RequestMapping(value = "deleteReview", method = RequestMethod.GET)
+	public String deleteReview(@RequestParam Map<String, String> paramMap
+								,HttpSession session, Model model) {
+		
+		String id = (String) session.getAttribute("sId");
+	    
+	    if (id == null) {
+	    	model.addAttribute("msg", "권한이 없습니다.");
+	        return "fail_back";
+	    }
+		
+	    paramMap.put("id", id);
+	    
+		int deleteCount = service.deleteReview(paramMap);
+		if(deleteCount > 0) {
+			model.addAttribute("msg", "리뷰가 삭제되었습니다.");
+		}else {
+			model.addAttribute("msg", "리뷰 삭제에 실패하였습니다.");
+		}
+		
+		return "fail_back";
+	}
+	
 	//payment
 	
 	

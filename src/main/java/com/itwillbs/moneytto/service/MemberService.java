@@ -183,14 +183,14 @@ public class MemberService {
 	public String selectImage(String name) {
 		return mapper.selectImage(name);
 	}
-	// 리뷰
+	// 리뷰 ==================================================================
 	public List<HashMap<String, String>> getWrittenReviewList(HashMap<String, String> member) {
 		return mapper.selectWrittenReviewListByMember(member);
 	}
 	public List<HashMap<String, String>> getWrittenReviewList(String id) {
 		return mapper.selectWrittenReviewListById(id);
 	}
-
+	// ================================================================== 리뷰
 	public List<HashMap<String, String>> getReceivedReviewList(HashMap<String, String> member) {
 		// TODO Auto-generated method stub
 		return mapper.selectRecivedReviewListByMember(member);
@@ -199,6 +199,9 @@ public class MemberService {
 		return mapper.selectRecivedReviewListById(id);
 	}
 	
+	public HashMap<String, String> getReview(String id, String item_code) {
+		return mapper.selectReview(id, item_code);
+	}
 	
 // 관리자===============================================================
 	// 회원목록
@@ -209,6 +212,8 @@ public class MemberService {
 	public int updateMemberPoint(String id, int pay_price) {
 		return mapper.updateMemberPoint(id, pay_price);
 	}
+
+	
 
 	
 }

@@ -2,6 +2,7 @@ package com.itwillbs.moneytto.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -110,6 +111,13 @@ public class MarketService {
 
 	public List<HashMap<String, String>> getTagList() {
 		return mapper.selectTag();
+	}
+
+
+
+	public int deleteReview(Map<String, String> paramMap) {
+		
+		return mapper.deleteReview(paramMap);
 	}
 
 		

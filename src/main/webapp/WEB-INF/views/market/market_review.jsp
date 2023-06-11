@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,45 +118,16 @@ h2{
 			// 선택된 별점 값에 따라 이모지를 추가합니다.
 			var emoji = '';
 			switch (ratingValue) {
-				case '5':
-					emoji = '😍';
-					break;
-				case '4':
-					emoji = '🤩';
-					break;
-				case '3':
-					emoji = '🤔';
-					break;
-				case '2':
-					emoji = '😑';
-					break;
-				case '1':
-					emoji = '&#128545';
-					break;
-				default:
-					emoji="";
-					break;
+				case '5':	emoji = '😍';	break;
+				case '4':	emoji = '🤩';	break;
+				case '3':	emoji = '🤔';	break;
+				case '2':	emoji = '😑';	break;	
+				case '1':	emoji = '&#128545';	break;
+				default:	emoji="";	break;	
 			}
-
 			// 이모지를 추가합니다.
 			$(".star-rating").after('<span class="selected-emoji">' + emoji + '</span>');
 		});
-		
-		
-		$("form").submit(function(){
-			
-			if($("review_type") == 'update'){
-				
-				if(confirm("이미 등록된 리뷰가 있습니다. 수정 하시겠습니까?")){
-							
-				}
-				history.back();	
-				
-			}
-// 			window.close();
-		});
-		
-		
 		
 	});
 </script>
@@ -176,7 +149,7 @@ h2{
 			</div>
 			<h2>거래는 어떠셨나요?</h2>
 			<div class="review_area">
-				<textarea rows="3" cols="2" class="textArea" name="review_content"></textarea>
+				<textarea rows="3" cols="2" class="textArea" name="review_content"><c:if test="${not empty review }">${fn:trim(review.review_content) }</c:if></textarea>
 				<input type="hidden" name="item_code"value="${item.item_code }">
 				<input type="hidden" name="target_id"value="${item.sell_id }">
 				<input type="hidden" name="reviewer_id"value="${item.buy_id }">

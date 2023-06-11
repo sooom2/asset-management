@@ -8,6 +8,9 @@ $(document).ready(function() {
 		text : message,
 	}).then(function(){
 	 	if("${isClose}"){
+	 		if("${isReload}"){
+	 			window.opener.location.reload()
+	 		}
 	 		window.close();
 	 	}else{
 	 		history.back();

@@ -134,7 +134,7 @@
 									<td>${adminMember.member_auth_status }</td>
 									<td>${adminMember.grade_score }</td>
 									<td>${adminMember.rep_cnt }</td>
-									<td>${adminMember.member_bday }</td>
+									<td>${adminMember.member_date }</td>
 <!-- 									<td class="modi"><input class="btn btn-block btn-more" -->
 <%-- 										type="button" value="M O R E" onclick="location.href='admin_one_rep?one_code=${adminMember.member_id }'"></td> --%>
 								</tr>
