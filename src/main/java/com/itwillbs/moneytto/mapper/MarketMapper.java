@@ -173,6 +173,12 @@ public interface MarketMapper {
    // 포인트입금
    int pointDeposit(@Param("sellId")String sellId,@Param("itemPrice") int itemPrice);
 	
+   
+   //TODO 139번 줄에 id 안받고 existChatList 있긴하던데... service엔 파라미터 두개 받길래 일단 만들어봤어요
+   // > 아.. 하다만거였어가지고 ....
+   List<HashMap<String, String>> existChatList(@Param("room_code")String room_code, @Param("id") String id);
+
+   int updateExistStatus(String room_code);
 
 
 	

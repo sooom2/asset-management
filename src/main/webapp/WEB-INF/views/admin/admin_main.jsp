@@ -94,32 +94,27 @@
 						<div class="col-xl-3 col-md-6">
 							<div class="card bg-primary text-black mb-4">
 								<div class="card-body font20">
-									소셜가계부<br> <span class="fontB">${resCount }</span>건
+									카테고리별<br>
 									
-<!-- 								도넛	============================================================== -->									
-									<canvas id="doughnutChart"></canvas>
+<!-- 								도넛 2. 카테고리별 차트	============================================================== -->									
+									<canvas id="chart1"></canvas>
 									<script>
-										const canvas = document.getElementById("doughnutChart");
-										const data = {
-										  labels: ["Red", "Blue", "Yellow"],
-										  datasets: [
-										    {
-										      label: "My First Dataset",
-										      data: [300, 50, 100],
-										      backgroundColor: [
-										        "rgb(255, 99, 132)",
-										        "rgb(54, 162, 235)",
-										        "rgb(255, 205, 86)",
-										      ],
-										      hoverOffset: 4,
+										var ctx1 = document.getElementById('chart1').getContext('2d');
+										var chart1 = new Chart(ctx1, {
+										    type: 'doughnut',
+										    data: {
+										    	labels: ['패션/의류/잡화/뷰티', '가전제품/모바일/PC', '가구/인테리어', '도서/음반/문구/티켓', '게임/스포츠/취미', '유아동/반려동물', '그외기타'],
+										        datasets: [{
+										            data: [15, 25, 35, 20, 30, 10],
+										            backgroundColor: ['#4bc0c0', '#9966ff', '#ff9f40', '#ff00ff', '#00ffff', '#ffff00', '0000ff',]
+										        }]
 										    },
-										  ],
-										};
-										new Chart(canvas, {
-										  type: "doughnut",
-										  data,
+										    options: {
+										        // 차트 옵션 설정
+										    }
 										});
 									</script>
+									
 <!-- 								도넛끝	============================================================== -->	
 
 									
@@ -142,37 +137,27 @@
 						<div class="col-xl-3 col-md-6">
 							<div class="card bg-primary text-black mb-4">
 								<div class="card-body font20">
-									소셜가계부<br> <span class="fontB">${resCount }</span>건
+									거래비율<br>
 									
-<!-- 								막대	============================================================== -->
-									<div>
-									  <canvas id="barChart2"></canvas>
-									</div>
-									
-									
+<!-- 								도넛 3. 직거래, 안전거래 비교 차트	============================================================== -->									
+									<canvas id="chart2"></canvas>
 									<script>
-									  const ctx = document.getElementById('barChart2');
-									
-									  new Chart(ctx, {
-									    type: 'bar',
-									    data: {
-									      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-									      datasets: [{
-									        label: '# of Votes',
-									        data: [12, 19, 3, 5, 2, 3],
-									        borderWidth: 1
-									      }]
-									    },
-									    options: {
-									      scales: {
-									        y: {
-									          beginAtZero: true
-									        }
-									      }
-									    }
-									  });
+										var ctx2 = document.getElementById('chart2').getContext('2d');
+										var chart2 = new Chart(ctx2, {
+										    type: 'doughnut',
+										    data: {
+										    	labels: ['직접거래', '안전거래'],
+										        datasets: [{
+										            data: [10, 20],
+										            backgroundColor: ['#ff6384', '#36a2eb']
+										        }]
+										    },
+										    options: {
+										        // 차트 옵션 설정
+										    }
+										});
 									</script>
-<!-- 								막대끝	============================================================== -->
+<!-- 								도넛끝	============================================================== -->
 
 									
 								</div>

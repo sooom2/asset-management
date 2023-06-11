@@ -154,9 +154,9 @@ public class MarketChatService {
 		// TODO Auto-generated method stub
 		return mapper.updateTradeEnd();
 	}
-	//나간방 ㅊ
+	//나간방 여부
 	public List<HashMap<String, String>> existChatList(String room_code,String id) {
-		return null;
+		return mapper.existChatList(room_code,id);
 	}
 	//리뷰있는지 확인
 	public int isReview(String item_code) {
@@ -175,6 +175,10 @@ public class MarketChatService {
 		return mapper.pointDeposit(sellId,itemPrice);
 	}
 	
+	//TODO 06.11 19:08 채팅방 나가기 YN 설정
+	public int updateExistStatus(String room_code) {
+		return mapper.updateExistStatus(room_code);
+	}
 
 
 }

@@ -134,17 +134,18 @@ $(function() {
 
 
 
-	   $(".exitChatRoom").on("click", function() {
-
+	   $(".exitChatRoom").on("click", function(event) {
+		   // 부모 선택자의 이벤트 실행 안되게 
+		   event.stopPropagation();
 	       $.ajax({
-	           type: "GET",
-	           url: "exitChatRoom",
+	           type: "POST",			//GET하면 방 털릴까봐 POST로 바꿔보기
+	           url: "exitChatRoom", 
 	           data: {
 	               room_code: room_code
 	           },
 	           dataType: "json",
 	           success: function(result) {
-
+					console.log(result.result);
 	           }
 	       });
 	   });
