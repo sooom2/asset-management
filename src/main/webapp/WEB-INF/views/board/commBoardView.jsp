@@ -180,7 +180,7 @@
 				</section>
 			</div>
 			<!-- 댓글 리스트 -->
-			<div id="commentList">
+			<div id="commentList" style="max-height: 300px; overflow-y: auto;">
 				<table class="comment-table">
 					<thead>
 						<tr>
@@ -223,11 +223,7 @@
 					<textarea class="form-control" rows="2" id="commentContent"
 						name="content"></textarea>
 				</div>
-<!-- 				<div class="form-group"> -->
-<!-- 					<input type="hidden" id="commCode" name="comm_code" -->
-<%-- 						value="${param.comm_code}"> --%>
-<!-- 					<button type="submit" class="btn btn-primary">댓글 작성</button> -->
-<!-- 				</div> -->
+
 				<div class="form-group">
 					<input type="hidden" id="commCode" name="comm_code"
 						value="${param.comm_code}">
