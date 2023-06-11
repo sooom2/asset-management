@@ -38,27 +38,42 @@
 			, category
 			, buy_id
 			, date
+			, cate_cnt
 		FROM 
 			(SELECT 
 				mp.item_code  AS code
 				, i.item_category AS category
 				, mp.buy_id
 				, mp.market_date AS date
+				, ic.it_cate_cnt AS cate_cnt
 			FROM market_paid mp
 				LEFT JOIN item i
 					ON mp.item_code  = i.item_code
+				LEFT JOIN 
+					(SELECT  item_category, count(item_category) AS it_cate_cnt
+						FROM item
+							WHERE item_status in('거래완료')
+								GROUP BY item_category) AS ic
+					ON i.item_category = ic.item_category
 			union	
 			SELECT
 				a.auction_code AS code
-				, auction_category AS category
+				, a.auction_category AS category
 				, m.member_id AS buy_id
 				, ap.pay_date AS date
+				, ac.au_cate_cnt AS cate_cnt
 			FROM auction a
 				LEFT JOIN member m
 					ON a.auction_status = m.member_nickname 
 				LEFT JOIN auction_paid ap 
-					ON a.auction_code = ap.auction_code 
-				WHERE auction_type  = '경매 완료') AS ca
+					ON a.auction_code = ap.auction_code
+				LEFT JOIN 
+					(SELECT  auction_category, count(auction_category) AS au_cate_cnt
+						FROM auction
+							WHERE auction_status NOT in('N')
+								GROUP BY auction_category) AS ac
+					ON a.auction_category = ac.auction_category
+				WHERE auction_type  = '경매 완료') AS auction
 		WHERE 1=1
 		<if test="startNum != null and !startNum.equals('')">
 			LIMIT ${startNum}, ${endNum}
@@ -71,13 +86,21 @@
 			ROW_NUMBER() OVER(ORDER BY market_code DESC ) AS rownum
 			, mp.*
 			, count(mp.market_code) over() AS totalCnt
-			, mpc.pay_type_cnt
+			, mpc1.trade_type_cnt AS trade_cnt
+			, mpc2.safe_type_cnt AS safe_cnt
 		FROM market_paid mp
 			LEFT JOIN 
-				(SELECT  market_pay_type, count(market_pay_type) AS pay_type_cnt
+				(SELECT  market_pay_type, count(market_pay_type) AS trade_type_cnt
 					FROM market_paid
-					GROUP BY market_pay_type) AS mpc
-				ON mp.market_pay_type = mpc.market_pay_type
+					WHERE market_pay_type = '직접거래'
+					GROUP BY market_pay_type) AS mpc1
+				ON mp.market_pay_type = mpc1.market_pay_type
+			LEFT JOIN 
+				(SELECT  market_pay_type, count(market_pay_type) AS safe_type_cnt
+					FROM market_paid
+					WHERE market_pay_type = '안전결제'
+					GROUP BY market_pay_type) AS mpc2
+				ON mp.market_pay_type = mpc2.market_pay_type
 		WHERE 1=1
 		<if test="startNum != null and !startNum.equals('')">
 			LIMIT ${startNum}, ${endNum}

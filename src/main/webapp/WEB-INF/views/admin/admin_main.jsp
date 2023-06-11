@@ -99,14 +99,23 @@
 <!-- 								도넛 2. 카테고리별 차트	============================================================== -->									
 									<canvas id="chart1"></canvas>
 									<script>
+										
+										var cate1 = ${categoryCnt.cate1};
+										var cate2 = ${categoryCnt.cate2};
+										var cate3 = ${categoryCnt.cate3};
+										var cate4 = ${categoryCnt.cate4};
+										var cate5 = ${categoryCnt.cate5};
+										var cate6 = ${categoryCnt.cate6};
+										var cate7 = ${categoryCnt.cate7};
+										
 										var ctx1 = document.getElementById('chart1').getContext('2d');
 										var chart1 = new Chart(ctx1, {
 										    type: 'doughnut',
 										    data: {
 										    	labels: ['패션/의류/잡화/뷰티', '가전제품/모바일/PC', '가구/인테리어', '도서/음반/문구/티켓', '게임/스포츠/취미', '유아동/반려동물', '그외기타'],
 										        datasets: [{
-										            data: [15, 25, 35, 20, 30, 10],
-										            backgroundColor: ['#4bc0c0', '#9966ff', '#ff9f40', '#ff00ff', '#00ffff', '#ffff00', '0000ff',]
+										            data: [cate1, cate2, cate3, cate4, cate5, cate6, cate7],
+										            backgroundColor: ['#4bc0c0', '#9966ff', '#ff9f40', '#ff00ff', '#00ffff', '#ffff00', '#0000ff',]
 										        }]
 										    },
 										    options: {
@@ -142,13 +151,17 @@
 <!-- 								도넛 3. 직거래, 안전거래 비교 차트	============================================================== -->									
 									<canvas id="chart2"></canvas>
 									<script>
+										
+										var tradeType = ${payTypeCnt.tradeCnt};
+										var safeType = ${payTypeCnt.safeCnt};
+										
 										var ctx2 = document.getElementById('chart2').getContext('2d');
 										var chart2 = new Chart(ctx2, {
 										    type: 'doughnut',
 										    data: {
 										    	labels: ['직접거래', '안전거래'],
 										        datasets: [{
-										            data: [10, 20],
+										            data: [tradeType, safeType],
 										            backgroundColor: ['#ff6384', '#36a2eb']
 										        }]
 										    },

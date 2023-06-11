@@ -39,7 +39,7 @@ public class AdminController {
 	private MemberService memberService;
 	
 // 메인=============================================
-	@RequestMapping(value = "admin")
+	@RequestMapping(value = "admin", method = {RequestMethod.GET, RequestMethod.POST})
 	public String adminMain(@RequestParam HashMap<String, String> map, Model model) {
 		// 페이지 번호, 글목록수 제한
 		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
@@ -60,29 +60,113 @@ public class AdminController {
 		// 내역이 존재할 경우
 		// 1. 
 		if(accountChart.size() > 0) {
+			// 새로운 이름 필요해서 생성
 			HashMap<String, String> accountCnt = new HashMap<>();
+			// 인덱스 첫번째
 			countMap = accountChart.get(0);
+			// 스트링 타입으로 생성한 이름으로 저장
 			accountCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
 			model.addAttribute("accountCnt", accountCnt);
 		}
 		// 2. 
 		if(categoryChart.size() > 0) {
+			// 새로운 이름 필요해서 생성
 			HashMap<String, String> categoryCnt = new HashMap<>();
+			// 인덱스 첫번째
 			countMap = categoryChart.get(0);
+			// 스트링 타입으로 생성한 이름으로 저장
 			categoryCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+			String cate1 = "0";
+			String cate2 = "0";
+			String cate3 = "0";
+			String cate4 = "0";
+			String cate5 = "0";
+			String cate6 = "0";
+			String cate7 = "0";
+			// categoryChart에 저장된 List들 중 맞는 값 찾기 위해 반복
+			for (HashMap<String, String> chart : categoryChart) {
+				// 중복이라
+				String cateResult = chart.get("cate_cnt") != null ? String.valueOf(chart.get("cate_cnt")) : "0";
+				// switch 조건
+				String categorySwi = chart.get("category");
+				switch (categorySwi) {
+					case "패션/의류/잡화/뷰티":
+						cate1 = cateResult;
+						break;
+					case "가전제품/모바일/PC":
+						cate2 = cateResult;
+						break;
+					case "가구/인테리어":
+						cate3 = cateResult;
+						break;
+					case "도서/음반/문구/티켓":
+						cate4 = cateResult;
+						break;
+					case "게임/스포츠/취미":
+						cate5 = cateResult;
+						break;
+					case "유아동/반려동물":
+						cate6 = cateResult;
+						break;
+					case "그외기타":
+						cate7 = cateResult;
+						break;
+					default:
+						break;
+				}
+			}
+			System.out.println("확인1: " + cate1 + " 2: " + cate2 + " 3: " + cate3 + " 4: " + cate4 + " 5: " + cate5 + " 6: " + cate6 + " 7: " + cate7);
+			// categoryCnt에 저장위해
+			categoryCnt.put("cate1", cate1);
+			categoryCnt.put("cate2", cate2);
+			categoryCnt.put("cate3", cate3);
+			categoryCnt.put("cate4", cate4);
+			categoryCnt.put("cate5", cate5);
+			categoryCnt.put("cate6", cate6);
+			categoryCnt.put("cate7", cate7);
+//			for (int i = 1; i <= 7; i++) {
+//				categoryCnt.put("cate" + i, "cate" + i);
+//			}
 			model.addAttribute("categoryCnt", categoryCnt);
+			System.out.println("확인용333333" + model);
 		}
 		// 3. 
 		if(payTypeChart.size() > 0) {
+			// 새로운 이름 필요해서 생성
 			HashMap<String, String> payTypeCnt = new HashMap<>();
+			// 인덱스 첫번째
 			countMap = payTypeChart.get(0);
+			// 스트링 타입으로 생성한 이름으로 저장
 			payTypeCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+			String tradeCnt = "";
+			String safeCnt = "";
+			// categoryChart에 저장된 List들 중 맞는 값 찾기 위해 반복
+			for (HashMap<String, String> chart : payTypeChart) {
+				// switch 조건
+				String marketPayType = chart.get("market_pay_type");
+				switch (marketPayType) {
+					case "직접거래":
+						tradeCnt = String.valueOf(chart.get("trade_cnt")) != null ? String.valueOf(chart.get("trade_cnt")) : "0";
+						break;
+					case "안전결제":
+						safeCnt = String.valueOf(chart.get("safe_cnt")) != null ? String.valueOf(chart.get("safe_cnt")) : "0";
+						break;
+					default:
+						break;
+				}
+			}
+			// payTypeCnt에 저장
+			payTypeCnt.put("tradeCnt", tradeCnt);
+			payTypeCnt.put("safeCnt", safeCnt);
 			model.addAttribute("payTypeCnt", payTypeCnt);
 		}
 		// 4. 
 		if(reviewChart.size() > 0) {
+			// 새로운 이름 필요해서 생성
 			HashMap<String, String> reviewCnt = new HashMap<>();
+			// 인덱스 첫번째
 			countMap = reviewChart.get(0);
+			// 스트링 타입으로 생성한 이름으로 저장
 			reviewCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
 			model.addAttribute("reviewCnt", reviewCnt);
 		}
