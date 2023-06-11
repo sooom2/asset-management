@@ -27,15 +27,6 @@ public class CommunityController {
 	@Autowired
 	private MemberService memberService;
 	
-//	@GetMapping(value = "commBoard")
-//	public String commBoard(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
-//	    List<HashMap<String, String>> boardList = service.boardList(board);
-//
-//	    model.addAttribute("boardList", boardList); // boardList를 모델에 추가
-//
-//	    return "board/community";
-//	}
-	
 	@GetMapping(value = "commBoard")
 	public String commBoard(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
 	    List<HashMap<String, String>> boardList = service.boardList(board);
@@ -85,7 +76,6 @@ public class CommunityController {
 	        model.addAttribute("target", "commBoard");
 	        return "success";
 	    } else {
-	        // 게시물 삽입 중 오류가 발생했습니다
 	        model.addAttribute("msg", "게시물 등록에 실패했습니다."); // 오류 메시지를 모델에 추가
 	        return "fail_back";
 	    }
