@@ -55,9 +55,8 @@ $(function(){
 <form method="post" autocomplete="off" action="bank_withdraw">
 <input type="hidden" name="id" value="${member.member_id }"> 
 <input type="hidden" name="trade_type" value="이체">
+<input type="hidden" name="fintech_use_num" value="120211385488932372338507">
 <input type="hidden" name="member_name" value="${member.member_name }">
-<input type="hidden" name="fintech_use_num" value="${fintech_use_num }"> 
-<input type="hidden" name="user_name" value="${user_name }">
 <div class="container" id="container">
     <div class="info_login">
 		<div class="img_area">
@@ -79,7 +78,7 @@ $(function(){
 <!-- 						<span class="unit">원</span> -->
 					</li>
 					<li class="full_area label_margin button_margin2">
-						<label for="point2" class="label">충전 포인트</label>
+						<label for="point2" class="label">환급할 포인트</label>
 						<input title="사용포인트" id="point2" name="tran_amt" type="tel" class="value number _onlyPriceTarget _naverMileage _payForm _blur(checkout.mobile.nsp.paymentSheet.checkInputTextAmountValue()) _focus(checkout.mobile.nsp.paymentSheet.beforeInputPrice()) _stopDefault" placeholder="0">
 						<span class="text_won">원</span>
 					</li>
@@ -96,7 +95,7 @@ $(function(){
 	<div class="button_section">
 		<div class="button_area">
 			<div class="button_bottom">
-			<a href="#" class="button _click(checkout.mobile.nsp.paymentSheet.create()) _stopDefault _doPayButton"><span class="sp_button_icon icon_check">결제하기</span></a></div>
+			<a href="#" class="button _click(checkout.mobile.nsp.paymentSheet.create()) _stopDefault _doPayButton"><span class="sp_button_icon icon_check">환급받기</span></a></div>
 		</div>
 	</div>
 </div>

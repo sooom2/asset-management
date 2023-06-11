@@ -46,7 +46,6 @@ public class BankValueGenerator {
 		
 		// 거래번호 생성
 		bank_tran_id = client_use_code + "U" + String.format("%09d", rNum);
-		System.out.println("bank_tran_id : " + bank_tran_id);
 		
 		return bank_tran_id;
 	}
@@ -60,7 +59,6 @@ public class BankValueGenerator {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		
 		String now = localDateTime.format(dateTimeFormatter);
-		System.out.println("now : " + now);
 		
 		return now;
 	}

@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <link href="${path}/resources/css/member.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="${path}/resources/js/naveridlogin_js_sdk_2.0.2.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 <script>
@@ -46,7 +46,7 @@ function naverLogin(){
 	naverloginpop.location = "https://nid.naver.com/oauth2.0/authorize"
 	+"?response_type=code"
 	+"&client_id=mV2ILHR9EiZ5mjCPt4vg"
-	+"&redirect_uri=http://localhost:8080/moneytto/naverLogin"
+	+"&redirect_uri=http://localhost:8082/moneytto/naverLogin"
 	+"&state=63fbad94-92d6-45b2-9eb3-b879e454a289"
 	
 	

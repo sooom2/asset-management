@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
+<c:set var="listCount" value="${fn:length(itemList)}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,13 +25,39 @@ $(document).ready(function(){
 	 
 	$(".tabTab").on("click",function(){
 		var itemType = $(this).attr('data-attr');
-		$(".tabTab").removeClass("active")
-		$(this).addClass("active")
-		// active된 탭에 대한 css 작업 필요
 		location.href = "mypage?itemList="+ itemType + "&member_id=${member.member_id }" ;
 		})
 		
-})
+	$('#searchInput').on('input', function(){
+		var searchKeyword = $(this).val();
+		if (searchKeyword === '') {
+			$('.item').show();
+			$('.listCount').text('전체: ' + ${listCount});
+	      	return;
+		}
+		
+		var searchCount = 0;
+		
+ 	 	$('.item').each(function() {
+ 	      var itemTitle = $(this).find('.itemText.subject').text(); 
+
+ 	      if (itemTitle.toLowerCase().indexOf(searchKeyword.toLowerCase()) === -1) {
+ 	        $(this).hide();
+ 	      } else {
+ 	        $(this).show();
+ 	        searchCount++;
+ 	      }
+ 	   });
+ 	 	
+ 	 	updateSearchCount(searchCount);
+ 	});
+  	
+  	function updateSearchCount(count) {
+  	    $('.listCount').text('검색된 항목 수: ' + count);
+  	  }
+  	
+ });
+ 
 function memberAuth(){
 	let authWindow = window.open("about:blank","authWindow","width=500, height=700");
 	authWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize"
@@ -41,6 +68,10 @@ function memberAuth(){
 	+"&state=11111111111111111111111111111111"
 	+"&auth_type=0";
 }
+function bankDeposit(){
+		window.open("depositForm", "_blank","width=500,height=650,top=100,left=600");
+	}	
+
 
 </script>
 </head>
@@ -66,26 +97,31 @@ function memberAuth(){
 						</div>
 					</div>
 					<c:if test= "${sessionScope.sId eq member.member_id }">
-					<div class="memberInfoReviewBox">
-						<div class="memberInfoText">또머니</div>
-						<div class="memberInfoCount"><fmt:formatNumber value="${member.member_point  }" pattern="#,###" /></div>
-					</div>
-					<div class="memberInfoReviewBox">
-						<div class="memberInfoText">또머니페이</div>
-						<c:choose>
-							
-							<c:when test="${member.member_auth_status eq 'Y'  }">
-								<div class="memberInfoCount" onclick="location.href='bank_userInfo'">계좌 관리하기</div>
-							</c:when>
-							<c:otherwise>
-								<div class="memberInfoCount" onclick="memberAuth()">계좌 등록하기</div>
-							</c:otherwise>
-						</c:choose>
-					</div>
-					
-					<div class="memberInfoMyDataBox" onclick='location.href="memberUpdateForm"'>
-						<div class="memberInfoSettingMyData">내정보 수정하기</div>
-					</div>
+						<div class="memberInfoReviewBox">
+							<div class="memberInfoText">또머니</div>
+							<div class="memberInfoCount"><fmt:formatNumber value="${member.member_point  }" pattern="#,###" /></div>
+						</div>
+						<div class="memberInfoReviewBox">
+							<div class="memberInfoText">또머니페이</div>
+							<c:choose>
+								
+								<c:when test="${member.member_auth_status eq 'Y'  }">
+									<div class="memberInfoCount" onclick="location.href='bank_userInfo'">계좌 관리하기</div>
+								</c:when>
+								<c:otherwise>
+									<div class="memberInfoCount" onclick="memberAuth()">계좌 등록하기</div>
+								</c:otherwise>
+							</c:choose>
+						</div>
+						
+						<div class="memberInfoMyDataBox" onclick='location.href="memberUpdateForm"'>
+							<div class="memberInfoSettingMyData">내정보 수정하기</div>
+						</div>
+						<c:if test="${member.member_auth_status eq 'Y'  }">
+							<div class="memberInfoMyDataBox" onclick='bankDeposit()' style="margin-top: 10px;">
+								<div class="memberInfoSettingMyData">포인트 환급받기</div>
+							</div>
+						</c:if>
 					</c:if>
 				</div>
 			</div>
@@ -93,19 +129,19 @@ function memberAuth(){
 			<!-- 탭 -->
 			<div class="listWrapper">
 				<div class="tabWrapper">
-					<div class="tabTab active"  data-attr="sellItem"><a href="#">판매 상품</a></div>
+					<div class="tabTab" data-attr="sellItem"><a href="#">판매 상품</a></div>
 					<div class="tabTab" data-attr="wishItem"><a href="#">찜한 상품</a></div>
 					<div class="tabTab" data-attr="buyItem"><a href="#">구매 상품</a></div>
 					<div class="tabTab" data-attr="auctionPay"><a href="#">낙찰된 경매</a></div>
-					<div class="tabTab"><a href="market_review">리뷰 보기</a></div>
-					<div class="tabTab"><a href="reviewRegist">리뷰 작성</a></div>
+					<div class="tabTab" data-attr="writtenReview"><a href="#">나의 리뷰</a></div>
+					<div class="tabTab" data-attr="recivedReview"><a href="#">받은 리뷰</a></div>
 				</div>
 				
 				<div class="filterBarWrapper">
 					<div class="tabPcBox">
 						<div class="tabFilterTab">
 							<form class="SearchWrapper" style="width: 690px">
-								<input type="text" placeholder="상품명 검색"
+								<input type="text" placeholder="상품명 검색" id="searchInput"
 									class="SearchInput-ukztbj-1 inqgpT" value=""><img
 									src="https://ccimage.hellomarket.com/img/web/common/black_glass.svg"
 									alt="카테고리 검색 아이콘" class="SearchSearchImg-ukztbj-2 gSfjHN">
@@ -158,6 +194,42 @@ function memberAuth(){
 						</table>
 					</c:when>
 					
+					<c:when test="${fn:contains(param.itemList, 'Review')}">
+						<table id="board-table">
+							<tr>
+								<th id="board-header">리뷰</th>
+								<th id="board-header">게시물</th>
+								<th id="board-header">리뷰 내용</th>
+								<th id="board-header">리뷰날짜</th>
+								<th id="board-header">별점</th>
+							</tr>
+						    <c:forEach items="${itemList}" var="item" varStatus="status">
+						        <tr>
+						            <td id="board-data">${status.index +1}</td>
+						           <td id="board-data">
+									   <div class="board-info">
+									      <a href="AuctionPay?auction_code=${item.review_item_code}" class="board-title">${item.auction_item_name}</a>
+									   </div>
+									</td>
+						            <td id="board-data">${item.review_content}</td>
+						            <td id="board-data">${item.review_date}</td>
+						            <c:choose>
+						            	<c:when test="${not empty item.rating }">
+						            		<td id="board-data">
+						            			<a href="auctionPayDetail?auction_code=${item.rating}" class="board-title">확인하기</a>
+						            		</td>
+						            	</c:when>
+						            	<c:otherwise>
+						       		     	<td id="board-data">
+						       		     		<a href="auctionPay?auction_code=${item.rating}" class="board-title">결제하기</a>
+						       		     	</td>
+						            	</c:otherwise>
+						            </c:choose>
+						        </tr>
+						    </c:forEach>
+						</table>
+					</c:when>
+					
 					<c:when test='${not empty itemList }'>
 						<c:forEach var="item" items="${itemList }">
 						<div class="item" data-cd="${item.item_code }">
@@ -188,19 +260,10 @@ function memberAuth(){
 								<div class="itemSizeTag">${item_tag }</div>
 								</c:forEach>
 								</div>
-								<div class="itemTimeTag">${item.item_date }</div>
 							</div>
 						</div>
 						</c:forEach>
 					</c:when>
-					
-					
-					
-					
-					
-					
-					
-					
 						<c:when test= '${empty itemList }'>
 	                      	<div class="EmptyEmptyBox">
 								<div class="EmptyTitle">아쉽게도, 현재 검색된 상품이 없어요</div>

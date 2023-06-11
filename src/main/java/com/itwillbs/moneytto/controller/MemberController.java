@@ -2,6 +2,7 @@ package com.itwillbs.moneytto.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -9,7 +10,11 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.itwillbs.moneytto.service.BankService;
 import com.itwillbs.moneytto.service.MailSendService;
@@ -165,9 +172,8 @@ public class MemberController {
 	// ******************************************************************
 	//네이버 로그인 확인
 	@RequestMapping(value = "naverLogin", method = {RequestMethod.GET, RequestMethod.POST})
-	public String naver(@RequestParam HashMap<String, String> naver) {
+	public String naver(@RequestParam HashMap<String, String> paramMap,HttpSession session) {
 		
-		System.out.println(naver);
 		return "member/mem_join_form";
 	}
 	

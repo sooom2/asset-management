@@ -20,6 +20,12 @@ public interface CommunityMapper {
 
 	int commentCount(String comm_code);
 
+	int deleteComment(int reply_code);
+
+	HashMap<String, String> getComment(int reply_code);
+
+	int deleteBoard(String comm_code);
+
 	
 
 	

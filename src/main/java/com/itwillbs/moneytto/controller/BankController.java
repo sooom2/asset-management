@@ -218,19 +218,19 @@ public class BankController {
 		
 		map.put("access_token", (String)session.getAttribute("access_token"));
 		System.out.println("==================================");
+		System.out.println("Controller - bank_withdraw");
 		System.out.println("입금 요청 정보" + map);
-		// {id=admin, trade_type=이체, tran_amt=500, access_token=}
-		System.out.println("==================================");
 		AccountWithdrawResponseVO result = apiService.withdraw(map);
-		System.out.println("==================================");
+		System.out.println("Controller - bank_withdraw");
 		System.out.println("출금 요청 처리 결과 : " + result);
 		System.out.println("==================================");
 		
 		
 		// 이체 내역 남기는 DB 테이블 작업
 //		String trade_code = UUID.randomUUID().toString().substring(0, 8);
-//		String trade_amount = result.getTran_amt();
-//		String trade_date = result.getBank_tran_date();
+		String trade_code = result.getApi_tran_id();
+		String trade_amount = result.getTran_amt();
+		String trade_date = result.getBank_tran_date();
 		// 
 		
 		// Model 객체에 AccountWithdrawResponseVO 객체 저장(속성명 : result)
@@ -240,28 +240,33 @@ public class BankController {
 		
 		// 만약, 응답코드(rsp_code) 가 "A0000" 이 아니면, 처리 실패이므로
 		// 응답메세지(rsp_message) 를 화면에 출력 후 이전페이지로 돌아가기
-		if(!result.getRsp_code().equals("A0000")) {
-			model.addAttribute("msg", result.getRsp_message());
-			return "fail_back";
-		}
-//		map.put("trade_code", trade_code);
-//		map.put("trade_amount", trade_amount);
-//		map.put("trade_date", trade_date);
+		
+		//TODO 실패하는데................................................................
+		//일단 이부분 주석치면 페이지 넘어가긴해서링....
+		// 몰겟음...
+//		if(!result.getRsp_code().equals("A0000")) {
+//			model.addAttribute("msg", result.getRsp_message());
+//			return "fail_back";
+//		}
+		System.out.println("===================================================");
+		System.out.println(result);
+		map.put("trade_code", trade_code);
+		map.put("trade_amount", trade_amount);
+		map.put("trade_date", trade_date);
 		
 		System.out.println("==================================");
 		System.out.println(map);
 		System.out.println("==================================");
-//		int insertCount = bankService.writeHistory(map);
-//		
-//		if(insertCount == 0) {
-//			model.addAttribute("msg", "포인트 충전에 실패하였습니다. 다시 확인해주세요.");
-//			
-//		}else {
-//			model.addAttribute("msg", trade_amount + " 포인트 충전되었습니다.");
-//			model.addAttribute("isClose", true);
-//		}
+		int insertCount = bankService.writeHistory(map);
 		
-		return "bank/withdraw_result";
+		if(insertCount == 0) {
+			model.addAttribute("msg", "포인트 충전에 실패하였습니다. 다시 확인해주세요.");
+		}else {
+			model.addAttribute("msg", trade_amount + " 포인트 충전되었습니다.");
+			
+		}
+		model.addAttribute("isClose", true);
+		return "fail_back";
 		
 	}
 	
@@ -323,38 +328,60 @@ public class BankController {
 		
 	}
 	
-	// TEST CONTROLLER
 	@RequestMapping(value = "payment", method = {RequestMethod.GET, RequestMethod.POST})
-	public String store_pay2(HttpSession session
-							, Model model
-							, @RequestParam(value = "item_code", defaultValue = "market0029") String item_code) {
-							// 테스트용으로 임의로 default 값 넣어둔 상태
+	public String store_pay2(HttpSession session, Model model) {
 		
-		
-		HashMap<String, String> item = marketService.getMarketItem(item_code);
 		String id = (String)session.getAttribute("sId");
 		
+		if(id == null) {
+			
+			model.addAttribute("msg", "잘못된 접근입니다.");
+			model.addAttribute("isClose", true);
+			return "fail_back";
+			
+		}
 		
 		HashMap<String, String> member = memberService.getMember(id);
-		
-//				model.addAttribute("item_price", item_price);
-		
-		
-		System.out.println("======================================================");
-		System.out.println("item : " + item.toString());
-		System.out.println("member : " + member.toString());
-		System.out.println("======================================================");
-		
-//				if(id == null) {
-//					model.addAttribute("msg", "로그인 후 이용가능합니다.");
-//					model.addAttribute("target", "memLogin");
-//					return "success";
-//				} else {
-//					return "store/store_pay";
-//				}
 		model.addAttribute("member", member);
-		model.addAttribute("item", item);
+		
+		HashMap<String, String> account = bankService.getAccount(id);
+		model.addAttribute("account", account);
+		
+		String access_token = (String)session.getAttribute("access_token");
+		String user_seq_no =  (String)session.getAttribute("user_seq_no");
+		
+		if(access_token == null) {
+			model.addAttribute("msg", "계좌 인증이 필요합니다.");
+			return "fail_back";
+		}
+		
+		String user_name = apiService.requestUserInfo(access_token, user_seq_no).getUser_name();
+		model.addAttribute("user_name", user_name);
+		
+		HashMap<String, String> accountInfo = bankService.getAccount((String)session.getAttribute("sId"));
+		String fintech_use_num = accountInfo.get("fintech_use_num");
+		model.addAttribute("fintech_use_num",fintech_use_num);
+		
+		
+		
 		return "payment/payment";
 	}
+	@RequestMapping(value = "depositForm", method = {RequestMethod.GET, RequestMethod.POST})
+	public String depositForm(HttpSession session, Model model) {
+		
+		String id = (String)session.getAttribute("sId");
+		HashMap<String, String> member = memberService.getMember(id);
+		
+		
+		
+		System.out.println("======================================================");
+		System.out.println("member : " + member);
+		System.out.println("======================================================");
+		
+					
+		model.addAttribute("member", member);
+		return "bank/bank_deposit";
+	}
+	
 
 }

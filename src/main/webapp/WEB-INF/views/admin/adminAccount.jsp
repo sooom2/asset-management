@@ -132,7 +132,7 @@
 						<ul class="datatable-pagination-list">
 							<c:if test="${1 < pageCnt.pageNum }">
 									<li class="datatable-pagination-list-item datatable-hidden"
-										onclick="location.href='adminadminAccount?pageNum=${pageNum - 1}'">
+										onclick="location.href='adminAccount?pageNum=${pageNum - 1}'">
 										<a href="javascript:search('${pageCnt.pageNum-2}')" class="datatable-pagination-list-item-link" pagenum="1">‹</a>
 									</li>
 							</c:if>

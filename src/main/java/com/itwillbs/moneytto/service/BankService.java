@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.itwillbs.moneytto.mapper.BankMapper;
 import com.itwillbs.moneytto.vo.ResponseTokenVO;
@@ -43,19 +44,33 @@ public class BankService {
 
 		return mapper.updateAccount(map);
 	}
-	// 포인트 충전 내역 작성 
+	
+	@Transactional 
 	public int writeHistory(Map<String, String> map) {
 		
-		int insertCount = mapper.insertAccountHistory(map);
-		if(insertCount > 0) {
-			return mapper.updatePointAmount(map);
-		}
-		return 0;
+		int insertAccountHistory = mapper.insertAccountHistory(map);
+		
+		int insertPointHistory = mapper.insertPointHistory(map);
+		
+		int updateAccount = mapper.updatePointAmount(map);
+		
+		if (insertAccountHistory > 0 && insertPointHistory > 0 && updateAccount > 0) {
+	        return 1; 
+	    } else {
+	        return 0;
+	    }
 	}
 	
+	
+// 관리자 계좌 내역들=========================================================================
 	// 계좌 내역 조회
 	public List<HashMap<String, String>> selectAccountHistory(HashMap<String, String> map) {
 		return mapper.selectAccountHistory(map);
+	}
+	
+	// 포인트 내역 조회
+	public List<HashMap<String, String>> selectPointHistory(HashMap<String, String> map) {
+		return mapper.selectPointHistory(map);
 	}
 	
 	

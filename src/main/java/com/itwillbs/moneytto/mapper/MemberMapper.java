@@ -50,12 +50,25 @@ public interface MemberMapper {
 	HashMap<String, String> selectMemberGradeByMember(HashMap<String, String> member);
 
 	String selectImage(String name);
+	// 작성한 리뷰
+	List<HashMap<String, String>> selectWrittenReviewListByMember(HashMap<String, String> member);
 
+	List<HashMap<String, String>> selectWrittenReviewListById(String id);
+
+	List<HashMap<String, String>> selectRecivedReviewListByMember(HashMap<String, String> member);
+	
+	List<HashMap<String, String>> selectRecivedReviewListById(String id);
+	
 // 관리자===============================================================
 	// 회원목록
 	List<HashMap<String, String>> selectAdminMember(HashMap<String, String> map);
 
 	int updateMemberPoint(@Param("id")String id, @Param("pay_price") int pay_price);
+
+	
+
+	
+
 
 
 	
