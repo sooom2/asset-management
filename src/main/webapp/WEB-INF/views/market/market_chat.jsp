@@ -372,7 +372,6 @@ $(function() {
 			//다른채팅방에서 글을쓰고 다른 채팅방 누를경우
 // 			alert(room_code);	
 			$('.chat_input').val('');
-			
 
 // 			alert("chatDetail 눌렸을때 잘못됨 : " + item_code);
 			
@@ -458,11 +457,21 @@ $(function() {
 	                        if ($(this).val() === result.chatDetail[0].item_status) {
 	                            $(this).addClass('active');
 	                        }
+
 	                    });
+	                    
+	                    $(document).on("click", ".reviewForm", function() {
+	                    	  let item_code = $(this).find('input[type="hidden"]').val(); 
+	                    	  let options = "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=400,height=400,left=350,top=200";
+	                    	  window.open('reviewForm?item_code=' + item_code, '후기작성', options);
+                    	});
+                    
 
 	                    if (result.chatDetail[0].item_status === '거래완료') {
                             $(".trade_status").append($("<div class='reviewForm' style='text-align: right;font-size: 13px; color: #bbb'><input type='hidden' value='" + item_code + "'><a>후기작성</a></div>"));
-                        } else {
+                        
+	                    
+	                    } else {
                             $(".reviewForm").remove();
                         }
 	                    
@@ -500,7 +509,6 @@ $(function() {
                         } else {
                             $(".trade").remove();
                         }
-
 
 
 	                    $(".chat_header a .info div").empty();

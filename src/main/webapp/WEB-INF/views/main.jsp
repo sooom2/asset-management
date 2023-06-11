@@ -88,6 +88,7 @@
 		location.href="market_detail?item_code="+item_code
 	})
 	
+	
 });
 </script>
 </head>
@@ -182,11 +183,15 @@
 											</c:choose>
 										</c:forEach>
 									</div>
-
-									<%-- 									<div class="itemTimeTag">${item.item_date }</div> --%>
-									<div class="itemTimeTag">
-										<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
-										<fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd HH:mm" />
+									<div>
+										<div class="itemTimeTag">
+											<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+											<fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd " />
+										</div>
+										<div class="itemTimeTag">
+											<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+											<fmt:formatDate value="${parsedDate}" pattern="ahh시 mm분" />
+										</div>
 									</div>
 								</div>
 							</div>
@@ -194,10 +199,10 @@
 					</div>
 				</div>
 				
-				
+				<hr style="margin-top: 50px">
 				<div class="bestSell_list_wrap">
 					<div class="top">
-						<div class="bestSell_title"><i class="fa-brands fa-hotjar"></i>&nbsp;머니또 최근상품</div>
+						<div class="bestSell_title"><i class="fa-solid fa-magnifying-glass fa-flip-horizontal"></i>&nbsp;머니또 최근상품</div>
 					</div>
 				</div>
 				<div class="itemListWrapper">
@@ -241,11 +246,13 @@
 											</c:choose>
 										</c:forEach>
 									</div>
-
-									<%-- 									<div class="itemTimeTag">${item.item_date }</div> --%>
 									<div class="itemTimeTag">
 										<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
-										<fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd HH:mm" />
+										<fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd " />
+									</div>
+									<div class="itemTimeTag">
+										<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+										<fmt:formatDate value="${parsedDate}" pattern="ahh시 mm분" />
 									</div>
 								</div>
 							</div>

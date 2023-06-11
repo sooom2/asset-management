@@ -309,7 +309,8 @@ public class MarketController {
 	            System.out.println("사는사람 ==================================");
 	            System.out.println(sellId);
 	            System.out.println("==================================");
-	            int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date);
+	            String str ="직접결제";
+	            int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date,str);
 	         }
 	         
 	         
@@ -398,7 +399,7 @@ public class MarketController {
 	            // 해당 상품 조회
 	            
 	            
-	               chatList = marketChatService.getItemDetail(item_code);
+	            chatList = marketChatService.getItemDetail(item_code);
 	            myChatList = marketChatService.getMyChatList(id);
 	            if (myChatList != null) {
 	            room_code = marketChatService.getNextRoomCode();
@@ -641,16 +642,26 @@ public class MarketController {
 		
 		@GetMapping("pointTrade")
 		@ResponseBody
-		public void pointTrade(HttpSession session,Model model , @RequestParam("item_price") int itemPrice, @RequestParam("my_point") int my_point) {
+		public void pointTrade(HttpSession session,Model model , @RequestParam("item_price") int itemPrice, @RequestParam("my_point") int my_point,@RequestParam(defaultValue = "") String item_code,String sellId,String trade_date) {
 		    String id = (String) session.getAttribute("sId");
 		    System.out.println(id);
 		    System.out.println(itemPrice);
 		    System.out.println(my_point);
 		    
 		    int updatePoint = marketChatService.pointWithDraw(id,itemPrice);
-		   
+		    HashMap<String, String> item = marketChatService.getItemList(item_code);
+	        sellId = item.get("member_id");
 		    if(updatePoint > 0 ) {
-		    	
+			    HashMap<String, String> item_detail = marketChatService.getItemList(item_code); 
+			    
+			    
+			    int updateOpponentPoint = marketChatService.pointDeposit(sellId,itemPrice);
+			    
+			    int updateTrade = marketChatService.updateTradeSuccess(item_code);
+			    
+			    String str ="안전결제";
+	            int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date,str);
+
 		    }
 		    
 		}
@@ -738,7 +749,7 @@ public class MarketController {
 		String id = (String)session.getAttribute("sId");
 		// 거래 내역에서 내가 산 물건 조회		
 		HashMap<String, String> item= service.getBuyItem(id ,item_code);
-		
+		System.out.println(item);
 		if(item == null) {	//거래 내역이 없을때
 			
 			model.addAttribute("msg", "권한이 없습니다.");

@@ -111,13 +111,12 @@ $(function(){
 	
 	let item_price = parseInt("${item.item_price}");
 	let my_point = parseInt("${member.member_point}");
+	let urlParams = new URLSearchParams(window.location.search);
+    let item_code = urlParams.get('item_code');
+	let sellId = "${item.member_name }";
 	$('.tradeBtn').on("click",function(){
 		alert("내포인트 : "+my_point+"아이템가격 : "+item_price);
 		alert(my_point >= item_price);
-		// 		if(my_point >= item_price){
-// 			alert('ddd');
-// 			my_point -= item_price;
-// 		}
 		if(my_point < item_price){
 			swal({	
         		icon: "warning",
@@ -129,7 +128,10 @@ $(function(){
 		      url: "pointTrade",
 		      data: {
 		        my_point: my_point,
-		        item_price: item_price
+		        item_price: item_price,
+		        item_code: item_code,
+		        sellId: sellId,
+		        trade_date: dateString
 		      },
 		      success: function(response) {
 		    	  swal({	
@@ -137,9 +139,8 @@ $(function(){
 		        		text: "송금완료"
 		    	  }).then(function() {
 					    window.close();
+					    opener.parent.location.reload(); 
 					});
-		    	  
-		    	  
 		    	  
 		      }
 		    });

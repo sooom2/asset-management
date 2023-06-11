@@ -234,7 +234,7 @@
 
 .itemWrapper .item{
 	display: inline-block;
-	width: 220px;
+	width: 235px;
 	margin-right: 10px;
 }
 
@@ -302,10 +302,11 @@
     font-family: "Pretendard Variable";
     color: rgb(51, 61, 75);
     margin-bottom: 2px;
-    line-height: 133%;
+    line-height: 135%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    width: 220px;
 }
 
 .subject {
@@ -363,12 +364,13 @@
 
 .itemWrapper .itemTimeTag {
     letter-spacing: -0.4px;
-    font-weight: 400;
+    font-weight: 700;
     font-size: 0.875rem;
     font-family: "Pretendard Variable";
     line-height: 145%;
     color: rgb(107, 118, 132);
-    margin-top: 12px;
+    margin-top: 0px;
+    margin-right: 13px;
 }
 
 
@@ -680,7 +682,7 @@ button {
 .itemWrapper .itemTextBox{
 
     display: inline-block;
-    width: 240px;
+    width: 235px;
     height: 200px;
     
 }

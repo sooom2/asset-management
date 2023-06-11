@@ -243,7 +243,7 @@
          , #{buyId} -- 사는사람
          , #{sellId} -- 파는사람 sellId
          , #{item_detail.item_price}
-         , '직접거래'
+         , #{str}
          <choose>
                <when test="trade_date == null">
                    , now()
@@ -465,7 +465,14 @@
          WHERE
             room_code = #{room_code}
    </update>
-   
+   <update id="tradeSuccess">
+	   UPDATE
+	            item
+	         SET
+	            item_status = '거래완료'
+            WHERE 
+            	item_code =#{item_code}
+   </update>
    
    
 	<!-- 통합 검색 마켓 아이템 리스트 -->
@@ -932,6 +939,13 @@
             member_point = member_point - #{itemPrice}
           WHERE
              member_id=#{id} 
+   </update>
+   <update id="pointDeposit">
+   		 UPDATE member
+         SET
+            member_point = member_point + #{itemPrice}
+          WHERE
+             member_id=#{sellId} 
    </update>
    
 </mapper>

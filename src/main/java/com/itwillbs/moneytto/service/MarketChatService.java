@@ -88,8 +88,8 @@ public class MarketChatService {
 	
 	
 	//거래내역업데이트
-	public int insertMarketPaid(HashMap<String, String> item_detail, String sellId,String buyId,String trade_date) {
-		return mapper.insertMarketPaid(item_detail,sellId,buyId,trade_date);
+	public int insertMarketPaid(HashMap<String, String> item_detail, String sellId,String buyId,String trade_date,String str) {
+		return mapper.insertMarketPaid(item_detail,sellId,buyId,trade_date,str);
 	}
 	// 거래내역삭제
 	public int deltMarketPaid(HashMap<String, String> item_detail, String sellId) {
@@ -167,6 +167,12 @@ public class MarketChatService {
 	}
 	public int pointWithDraw(String id, int itemPrice) {
 		return mapper.pointWithDraw(id,itemPrice);
+	}
+	public int updateTradeSuccess(String item_code) {
+		return mapper.tradeSuccess(item_code);
+	}
+	public int pointDeposit(String sellId, int itemPrice) {
+		return mapper.pointDeposit(sellId,itemPrice);
 	}
 	
 

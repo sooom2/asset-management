@@ -71,7 +71,7 @@ public interface MarketMapper {
 
    
    // 거래내역업데이트
-   int insertMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("sellId") String sellId,@Param("buyId") String buyId,@Param("trade_date") String trade_date);
+   int insertMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("sellId") String sellId,@Param("buyId") String buyId,@Param("trade_date") String trade_date,@Param("str") String str);
    
    // 거래내역 삭제
    int delMarketPaid(@Param("item_detail") HashMap<String, String> item_detail, @Param("sellId") String sellId);
@@ -168,5 +168,12 @@ public interface MarketMapper {
    int pointWithDraw(@Param("id") String id,@Param("itemPrice") int itemPrice);
 
    int deleteReview(Map<String, String> paramMap);
+   
+   int tradeSuccess(String item_code);
+   // 포인트입금
+   int pointDeposit(@Param("sellId")String sellId,@Param("itemPrice") int itemPrice);
+	
 
+
+	
 }
