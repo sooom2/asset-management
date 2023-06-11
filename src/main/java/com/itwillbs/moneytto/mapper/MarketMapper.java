@@ -2,6 +2,7 @@
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -162,5 +163,7 @@ public interface MarketMapper {
 
    //거래내역
    HashMap<String, String> marketPaid(String item_code);
+
+   int deleteReview(Map<String, String> paramMap);
 
 }

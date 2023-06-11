@@ -696,7 +696,7 @@
       UPDATE
          review 
       SET 
-         , review_content=#{review_content}
+          review_content=#{review_content}
          , rating = #{rating}
       WHERE
          1 = 1
@@ -710,8 +710,8 @@
          review
       WHERE
          1=1
-         AND reviewer_id = #{reviewer_id}
-         AND   review_item_code = #{item_code}
+         AND reviewer_id = #{id}
+         AND review_item_code = #{item_code}
    </delete>
    
    <select id="roomCodeExists" resultType="int">

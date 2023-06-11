@@ -59,11 +59,15 @@ public interface MemberMapper {
 	
 	List<HashMap<String, String>> selectRecivedReviewListById(String id);
 	
+	HashMap<String, String> selectReview(@Param("id")String id, @Param("item_code")String item_code);
+	
 // 관리자===============================================================
 	// 회원목록
 	List<HashMap<String, String>> selectAdminMember(HashMap<String, String> map);
 
 	int updateMemberPoint(@Param("id")String id, @Param("pay_price") int pay_price);
+
+	
 
 	
 

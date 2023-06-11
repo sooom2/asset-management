@@ -76,7 +76,7 @@ public class MypageController {
 	        case "buyItem" 	   		: itemList  = memberService.getBuyItemList(member_id); break;
 	        case "auctionPay"		: itemList =  auctionService.getMyAuction(member); break;
 	        case "writtenReview"	: itemList =  memberService.getWrittenReviewList(member); break;
-	        case "receivedReview"	: itemList =  memberService.getReceivedReviewList(member); break;
+	        case "recivedReview"	: itemList =  memberService.getReceivedReviewList(member); break;
 	    }
 	    
 	    
