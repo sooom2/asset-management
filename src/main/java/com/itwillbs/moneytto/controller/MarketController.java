@@ -739,19 +739,21 @@ public class MarketController {
 		// 거래 내역에서 내가 산 물건 조회		
 		HashMap<String, String> item= service.getBuyItem(id ,item_code);
 		
-//		if(!item.isEmpty()) {	//거래 내역이 없을때
-//			
-//			model.addAttribute("msg", "권한이 없습니다.");
-//			return "fail_back";
-//		
-//		}
+		if(item == null) {	//거래 내역이 없을때
+			
+			model.addAttribute("msg", "권한이 없습니다.");
+			model.addAttribute("isClose", true);
+			return "fail_back";
+		
+		}
 		
 		if(item.get("review_code")==null) {
 			
 			model.addAttribute("review_type", "insert");	//작성된 리뷰가 없을때 추가
 			
 		}else {
-			
+			HashMap<String,String> review = memberService.getReview(id ,item_code);
+			model.addAttribute("review", review);
 			model.addAttribute("review_type", "update");	//작성된 리뷰가 있을때 수정
 		}
 		
@@ -781,7 +783,8 @@ public class MarketController {
 				
 				if(updateCount > 0) {				//insert 성공
 					
-					model.addAttribute("msg", "리뷰가 성공적으로 등록되었습니다.");
+					model.addAttribute("msg", "리뷰가 수정 되었습니다.");
+					
 				}else {								//insert 실패
 					model.addAttribute("msg", "리뷰 작성에 실패하였습니다.");
 					
@@ -789,7 +792,11 @@ public class MarketController {
 			break;
 		}
 		
-		//TODO 도착 위치 지정 필요 해죠 성공하면 창꺼지게해죠 06.08
+		//TODO 성공하면 창꺼지게해죠 06.08
+		//TODO 네~ 06.11
+		model.addAttribute("isClose", true);
+		model.addAttribute("isReload", true);
+		
 		return"fail_back";
 		
 	}
@@ -1018,7 +1025,30 @@ public class MarketController {
 	        return "fail_back";
 	    }
 	}
-
+	
+	@RequestMapping(value = "deleteReview", method = RequestMethod.GET)
+	public String deleteReview(@RequestParam Map<String, String> paramMap
+								,HttpSession session, Model model) {
+		
+		String id = (String) session.getAttribute("sId");
+	    
+	    if (id == null) {
+	    	model.addAttribute("msg", "권한이 없습니다.");
+	        return "fail_back";
+	    }
+		
+	    paramMap.put("id", id);
+	    
+		int deleteCount = service.deleteReview(paramMap);
+		if(deleteCount > 0) {
+			model.addAttribute("msg", "리뷰가 삭제되었습니다.");
+		}else {
+			model.addAttribute("msg", "리뷰 삭제에 실패하였습니다.");
+		}
+		
+		return "fail_back";
+	}
+	
 	//payment
 	
 	

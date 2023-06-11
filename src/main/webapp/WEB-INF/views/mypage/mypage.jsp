@@ -13,7 +13,9 @@
 <link rel="stylesheet" href="${path }/resources/css/member.css">
 <link href="${path }/resources/css/board.css"rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/wish.js"></script>
+<script type="text/javascript" src="${path }/resources/js/common.js"></script>
 <script>
 
 $(document).ready(function(){
@@ -70,7 +72,44 @@ function memberAuth(){
 }
 function bankDeposit(){
 		window.open("depositForm", "_blank","width=500,height=650,top=100,left=600");
-	}	
+	}
+function reviewDelete(item_code){
+	event.preventDefault();
+
+	swal({
+		text: "리뷰를 삭제하시겠습니까?",
+		icon: "warning",
+		buttons: {
+			confirm: {
+				text: "삭제",
+				value: true,
+				visible: true,
+				className: "",
+				closeModal: true,
+			},
+			cancel: {
+				text: "취소",
+				value: false,
+				visible: true,
+				className: "",
+				closeModal: true,
+			},
+		},
+	}).then((result) => {
+		if(result){
+			$.ajax({
+				url: "deleteReview?item_code=" + item_code,
+				method: "GET",
+				success: function(response){
+					location.reload();
+				},
+				error: function(xhr, status, error){
+					console.error(error);
+				}
+			});
+		}
+	});
+}
 
 
 </script>
@@ -132,8 +171,10 @@ function bankDeposit(){
 					<div class="tabTab" data-attr="sellItem"><a href="#">판매 상품</a></div>
 					<div class="tabTab" data-attr="wishItem"><a href="#">찜한 상품</a></div>
 					<div class="tabTab" data-attr="buyItem"><a href="#">구매 상품</a></div>
+					<c:if test= "${sessionScope.sId eq member.member_id }">
 					<div class="tabTab" data-attr="auctionPay"><a href="#">낙찰된 경매</a></div>
 					<div class="tabTab" data-attr="writtenReview"><a href="#">나의 리뷰</a></div>
+					</c:if>
 					<div class="tabTab" data-attr="recivedReview"><a href="#">받은 리뷰</a></div>
 				</div>
 				
@@ -194,37 +235,61 @@ function bankDeposit(){
 						</table>
 					</c:when>
 					
-					<c:when test="${fn:contains(param.itemList, 'Review')}">
+					<c:when test="${param.itemList eq 'writtenReview'}">
 						<table id="board-table">
 							<tr>
 								<th id="board-header">리뷰</th>
-								<th id="board-header">게시물</th>
-								<th id="board-header">리뷰 내용</th>
-								<th id="board-header">리뷰날짜</th>
-								<th id="board-header">별점</th>
+								<th id="board-header">상세보기</th>
+								<th id="board-header" style="width: 4%;">별점</th>
+								<th id="board-header" style="width: 10%;">리뷰</th>
+								<th id="board-header" style="width: 15%;">날짜</th>
 							</tr>
 						    <c:forEach items="${itemList}" var="item" varStatus="status">
 						        <tr>
-						            <td id="board-data">${status.index +1}</td>
-						           <td id="board-data">
-									   <div class="board-info">
-									      <a href="AuctionPay?auction_code=${item.review_item_code}" class="board-title">${item.auction_item_name}</a>
-									   </div>
-									</td>
-						            <td id="board-data">${item.review_content}</td>
-						            <td id="board-data">${item.review_date}</td>
+						            <td id="board-data">${itemList.size() - status.index}</td>
+						            <td id="board-data" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"><a href="market_detail?item_code=${item.item_code}" class="board-title">${item.item_subject}</a></td>
+						            <td id="board-data">${item.rating}</td>
 						            <c:choose>
 						            	<c:when test="${not empty item.rating }">
-						            		<td id="board-data">
-						            			<a href="auctionPayDetail?auction_code=${item.rating}" class="board-title">확인하기</a>
-						            		</td>
+					            		<td id="board-data">
+							            	<a href="javascript:void(0)" onclick="openCenteredWindow('reviewForm?item_code=${item.item_code}' , '머니또', 400 ,400)" class="board-title">
+							       		     			수정 </a>|
+							       		    <a href="#"class="board-title" onclick="reviewDelete('${item.item_code}')">삭제</a>
+					            		</td>
 						            	</c:when>
 						            	<c:otherwise>
 						       		     	<td id="board-data">
-						       		     		<a href="auctionPay?auction_code=${item.rating}" class="board-title">결제하기</a>
+						       		     		<a href="javascript:void(0)" onclick="openCenteredWindow('reviewForm?item_code=${item.item_code}' , '머니또', 400 ,400)" class="board-title">
+						       		     			리뷰 작성</a>
 						       		     	</td>
 						            	</c:otherwise>
 						            </c:choose>
+						            <td id="board-data">${item.market_date}</td>
+						        </tr>
+						    </c:forEach>
+						</table>
+					</c:when>
+					
+					<c:when test="${param.itemList eq 'recivedReview'}">
+						<table id="board-table">
+							<tr>
+								<th id="board-header">리뷰</th>
+								<th id="board-header">상세보기</th>
+								<th id="board-header" style="width: 4%;">별점</th>
+								<th id="board-header" style="width: 10%;">리뷰</th>
+								<th id="board-header" style="width: 15%;">날짜</th>
+							</tr>
+						    <c:forEach items="${itemList}" var="item" varStatus="status">
+						        <tr>
+						            <td id="board-data">${itemList.size() - status.index}</td>
+						            <td id="board-data" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"><a href="market_detail?item_code=${item.review_item_code}" class="board-title">${item.review_content}</a></td>
+						            <td id="board-data">${item.rating}</td>
+				            		<td id="board-data">
+				            			<c:if test= "${sessionScope.sId eq member.member_id }">
+						       		    <a href="#"class="board-title" onclick="reviewDelete('${item.item_code}')">삭제</a>
+						       		    </c:if>
+				            		</td>
+						            <td id="board-data">${item.review_date}</td>
 						        </tr>
 						    </c:forEach>
 						</table>

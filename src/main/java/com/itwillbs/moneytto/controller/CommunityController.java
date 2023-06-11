@@ -3,6 +3,7 @@ package com.itwillbs.moneytto.controller;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -26,15 +27,6 @@ public class CommunityController {
 	
 	@Autowired
 	private MemberService memberService;
-	
-//	@GetMapping(value = "commBoard")
-//	public String commBoard(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
-//	    List<HashMap<String, String>> boardList = service.boardList(board);
-//
-//	    model.addAttribute("boardList", boardList); // boardList를 모델에 추가
-//
-//	    return "board/community";
-//	}
 	
 	@GetMapping(value = "commBoard")
 	public String commBoard(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
@@ -85,7 +77,6 @@ public class CommunityController {
 	        model.addAttribute("target", "commBoard");
 	        return "success";
 	    } else {
-	        // 게시물 삽입 중 오류가 발생했습니다
 	        model.addAttribute("msg", "게시물 등록에 실패했습니다."); // 오류 메시지를 모델에 추가
 	        return "fail_back";
 	    }
@@ -131,8 +122,28 @@ public class CommunityController {
 	}
 
 
+//	@PostMapping(value = "addComment")
+//	public String addComment(@RequestParam HashMap<String, String> comment, @RequestParam("comm_code") String commCode, Model model, HttpSession session) {
+//	    String id = (String) session.getAttribute("sId");
+//	    comment.put("id", id);
+//
+//	    // 댓글 추가 작업
+//	    comment.put("comm_code", commCode); // comm_code 값을 comment에 추가합니다.
+//	    int replyCount = service.addComment(comment);
+//
+//	    if (replyCount > 0) {
+//	        model.addAttribute("msg", "댓글이 등록되었습니다.");
+//	        model.addAttribute("target", "commBoardView?comm_code=" + commCode);
+//	        return "success";
+//	    } else {
+//	        model.addAttribute("msg", "댓글 등록에 실패했습니다.");
+//	        model.addAttribute("target", "main");
+//	        return "fail_back";
+//	    }
+//	}
 	@PostMapping(value = "addComment")
-	public String addComment(@RequestParam HashMap<String, String> comment, @RequestParam("comm_code") String commCode, Model model, HttpSession session) {
+	@ResponseBody
+	public Map<String, String> addComment(@RequestParam HashMap<String, String> comment, @RequestParam("comm_code") String commCode, HttpSession session) {
 	    String id = (String) session.getAttribute("sId");
 	    comment.put("id", id);
 
@@ -140,17 +151,18 @@ public class CommunityController {
 	    comment.put("comm_code", commCode); // comm_code 값을 comment에 추가합니다.
 	    int replyCount = service.addComment(comment);
 
+	    Map<String, String> response = new HashMap<>();
 	    if (replyCount > 0) {
-	        model.addAttribute("msg", "댓글이 등록되었습니다.");
-	        model.addAttribute("target", "commBoardView?comm_code=" + commCode);
-	        return "success";
+	        response.put("status", "success");
+	        response.put("msg", "댓글이 등록되었습니다.");
 	    } else {
-	        model.addAttribute("msg", "댓글 등록에 실패했습니다.");
-	        model.addAttribute("target", "main");
-	        return "fail_back";
+	        response.put("status", "failure");
+	        response.put("msg", "댓글 등록에 실패했습니다.");
 	    }
+
+	    return response;
 	}
-	
+
 
 
 
@@ -195,5 +207,17 @@ public class CommunityController {
 	}
 
 
+// ----------------공지사항추가 ---------------------
+	
+	@GetMapping(value = "noticeList")
+	public String noticeList(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
+	    List<HashMap<String, String>> boardList = service.boardList(board);
+	    
+	    String id = (String)session.getAttribute("sId");
+	
+
+	    return "board/noticeList";
+	}
+	
 
 }

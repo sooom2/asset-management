@@ -316,38 +316,79 @@
 	<!-- 작성한 리뷰 -->
 	<select id="selectWrittenReviewListByMember" resultType="hashmap">
 		SELECT
-			 *
+			 r.*
+			 , mp.*
+			 , i.item_subject
 		FROM
-			review a
-		WHERE
-			reviewer_id = #{member_id}
+			review r
+		RIGHT JOIN
+			(SELECT *
+			FROM market_paid
+			WHERE buy_id = #{member_id} 
+			) mp
+		ON
+			r.review_item_code = mp.item_code
+		LEFT JOIN
+			item i
+		ON
+			i.item_code = mp.item_code
 	</select>
 	<select id="selectWrittenReviewListById" resultType="hashmap">
 		SELECT
-			 *
+			 r.*
+			 , mp.*
+			 , i.item_subject
 		FROM
-			review a
-		WHERE
-			reviewer_id = #{member_id}
+			review r
+		RIGHT JOIN
+			(SELECT *
+			FROM market_paid
+			WHERE buy_id = #{member_id} 
+			) mp
+		ON
+			r.review_item_code = mp.item_code
+		LEFT JOIN
+			item i
+		ON
+			i.item_code = mp.item_code
 	</select>
 	<!-- 받은 리뷰 -->
 	<select id="selectRecivedReviewListByMember" resultType="hashmap">
 		SELECT
-			 *
+			 r.*
+			 , i.item_subject
 		FROM
-			review a
+			review r
+		LEFT JOIN
+			item i
+		ON
+			i.item_code = r.review_item_code
 		WHERE
-			target_id = #{member_id}
+			r.target_id = #{member_id}
 	</select>
 	<select id="selectRecivedReviewListById" resultType="hashmap">
 		SELECT
+			 r.*
+			 , i.item_subject
+		FROM
+			review r
+		LEFT JOIN
+			item i
+		ON
+			i.item_code = r.item_code
+		WHERE
+			r.target_id = #{member_id}
+	</select>
+	<!-- 리뷰 한개 조회 -->
+	<select id="selectReview" resultType="hashmap">
+		SELECT
 			 *
 		FROM
-			review a
+			review
 		WHERE
-			target_id = #{member_id}
+				review_item_code = #{item_code}
+			AND	reviewer_id = #{id}
 	</select>
-	
 	
 	
 </mapper>

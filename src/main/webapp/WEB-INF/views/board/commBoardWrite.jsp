@@ -16,6 +16,7 @@
 	rel="stylesheet">
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	
 <script type="text/javascript" src="../js/main.js"></script>
 <script src="resources/js/jquery-3.6.4.js"></script>
 
@@ -36,7 +37,7 @@
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <body>
 	<jsp:include page="../nav.jsp" />
@@ -69,12 +70,39 @@
 	</article>
 
 	<script>
-		$('.summernote').summernote({
-			tabsize : 2,
-			height : 300
-		});
-	</script>
+	   $(document).ready(function() {
+	        $('.summernote').summernote({
+	            tabsize: 2,
+	            height: 300
+	        });
+	    });
 
+
+	</script>
+<script>
+$(document).ready(function() {
+	$("form[name='writeForm']").submit(function(e) {
+		e.preventDefault(); // 기본 폼 제출 동작을 막음
+		
+		$.ajax({
+			url: "BoardWritePro",
+			type: "POST",
+			data: $(this).serialize(),
+			success: function(response) {
+				var message = "게시물이 등록되었습니다.";
+				swal({
+					text: message,
+				}).then(function() {
+					window.location.href = "commBoard";
+				});
+			},
+			error: function() {
+				alert("게시물 등록에 실패했습니다.");
+			}
+		});
+	});
+});
+</script>
 
 	<jsp:include page="../footer.jsp" />
 

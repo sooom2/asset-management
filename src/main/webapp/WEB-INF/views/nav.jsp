@@ -59,7 +59,7 @@ function payment(){
 				<li style="width: 80px"><a href="auctionMain" class="">경매</a></li>
 				<li><a href="market_list" class="market_list">중고거래</a></li>
 				<li><a href="commBoard" class="">커뮤니티</a></li>
-				<li><a href="notice_board" class="">공지사항</a></li>
+				<li><a href="noticeList" class="">공지사항</a></li>
 			</ul>
 			<div class="searchIconWrapper">
 				<img src="${path }/resources/images/main/ico_search.png" alt="돋보기 아이콘" class="searchIcon">
