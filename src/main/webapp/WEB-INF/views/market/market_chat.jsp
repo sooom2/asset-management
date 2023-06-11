@@ -1195,6 +1195,7 @@ $(function() {
                                  <img src="${chatList.member_image}" alt="프사">
                                  <div style="font-size: 13px;  text-align: center;}">${chatList.get('item_status')}</div>
                               </div>
+                              <div class="exitChatRoom" ><i class="fa-solid fa-arrow-right-from-bracket exitChatRoomIcon"></i></div>
                               <div class="info">
                                  <div class="nick">[${chatList.get('member_nickname') }]</div>
                                  <div class="subject"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> ${chatList.get('item_subject') }</div>
