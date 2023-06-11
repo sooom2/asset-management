@@ -185,7 +185,7 @@ section#btnArea input[type="button"]:hover {
 article#writeForm  {
 	display: flex;
 	justify-content: center;
-	height: 100vh;
+/* 	height: 100vh; */
 	margin-top: 100px;
 	}
 
