@@ -23,5 +23,15 @@ public class AdminService {
 		return mapper.registImage(images);
 	}
 
+	// 2. 관리자 카테고리별 차트
+	public List<HashMap<String, String>> selectCategoryChart(HashMap<String, String> map) {
+		return mapper.selectCategoryChart(map);
+	}
+
+	// 3. 관리자 직거래, 안전거래 비교 차트
+	public List<HashMap<String, String>> selectPayTypeChart(HashMap<String, String> map) {
+		return mapper.selectPayTypeChart(map);
+	}
+
 	
 }

@@ -30,4 +30,59 @@
 			)
 	</insert>
 
+<!-- 2. 관리자 카테고리별 차트 -->
+	<select id="selectCategoryChart" resultType="hashmap">
+		SELECT
+			ROW_NUMBER() OVER(ORDER BY date DESC ) AS rownum
+			, code
+			, category
+			, buy_id
+			, date
+		FROM 
+			(SELECT 
+				mp.item_code  AS code
+				, i.item_category AS category
+				, mp.buy_id
+				, mp.market_date AS date
+			FROM market_paid mp
+				LEFT JOIN item i
+					ON mp.item_code  = i.item_code
+			union	
+			SELECT
+				a.auction_code AS code
+				, auction_category AS category
+				, m.member_id AS buy_id
+				, ap.pay_date AS date
+			FROM auction a
+				LEFT JOIN member m
+					ON a.auction_status = m.member_nickname 
+				LEFT JOIN auction_paid ap 
+					ON a.auction_code = ap.auction_code 
+				WHERE auction_type  = '경매 완료') AS ca
+		WHERE 1=1
+		<if test="startNum != null and !startNum.equals('')">
+			LIMIT ${startNum}, ${endNum}
+		</if>
+	</select>
+
+<!-- 3. 관리자 직거래, 안전거래 비교 차트 -->
+	<select id="selectPayTypeChart" resultType="hashmap">
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY market_code DESC ) AS rownum
+			, mp.*
+			, count(mp.market_code) over() AS totalCnt
+			, mpc.pay_type_cnt
+		FROM market_paid mp
+			LEFT JOIN 
+				(SELECT  market_pay_type, count(market_pay_type) AS pay_type_cnt
+					FROM market_paid
+					GROUP BY market_pay_type) AS mpc
+				ON mp.market_pay_type = mpc.market_pay_type
+		WHERE 1=1
+		<if test="startNum != null and !startNum.equals('')">
+			LIMIT ${startNum}, ${endNum}
+		</if>
+	</select>
+	
+	
 </mapper>
