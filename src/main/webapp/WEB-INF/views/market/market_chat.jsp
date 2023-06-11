@@ -114,7 +114,7 @@ $(function() {
 	    }
 
 		$('a.sch_date').on("click",function(){
-			sch_date();
+// 			sch_date();
 		});
 	   // 탈퇴한회원처리 ( disabled 하기)
 	   let isExistMember = "${opponentId.opponent_delete_status}"
@@ -166,6 +166,7 @@ $(function() {
 			            dataType: "json",
 			            success: function(result) {
 			                console.log(result.result);
+			                window.reload();
 			            }
 			        });
 			    }
@@ -298,7 +299,6 @@ $(function() {
 	       chatDetail(room_code);
 
 	   });
-// 	   if($('.'))
 	
 	   function sch_date(){
 		   $(".sch_date").click(function() {
@@ -426,7 +426,7 @@ $(function() {
 	                    let profileImg = sell_profileImg;
 	                    let trade_date = result.chatDetail[0].trade_date;
 	                    let opponent_delete_status = result.opponentId.opponent_delete_status;
-						let opponent_nickname;
+						let opponent_nickname = result.opponentId.opponent_nickname;
 						item_code = result.chatDetail[0].item_code;
 						
 						let opponent_id = result.opponentId.opponent_id;
@@ -574,7 +574,7 @@ $(function() {
 	                                "<div class='chat_opponent_image_box'>" +
 	                                "<img class='chat_opponent_profile_image' src='" + profileImg + "' alt='상대방이미지'></div>" +
 
-	                                "<div class='chat_opponent_title'>" + result.chatDetail[i].buy_nickname + "</div>" +
+	                                "<div class='chat_opponent_title'>" + opponent_nickname + "</div>" +
 	                                "<div class='chat_opponent_message'>" +
 	                                "<span>" + result.chatDetail[i].chat_content + "</span>" +
 	                                "<div class='chat_opponent_timeago'>" + formatChatTime + "</div></div></div></div>";
@@ -699,10 +699,8 @@ $(function() {
 // 						alert("거래완료날짜 : " + result.marketPaid.market_date);
 // 						alert("일정날짜 : " + trade_date);
 // 						alert("거래완료날짜 : "+marketPaid_date);
-		
 						//거래내역 없을때
 						if((result.marketPaid.market_date == null && result.tradeDate.trade_date != null)|| (result.marketPaid.market_date == null && result.tradeDate.trade_date == null)){
-							
 							$('.scheduling').empty();
 							if(result.tradeDate.trade_date ==null){
 								result.tradeDate.trade_date  = '';
@@ -714,7 +712,7 @@ $(function() {
 							   	str += '</a>';
 							$('.scheduling').append(str);
 							sch_date();
-						}else if(result.marketPaid.market_date != null && result.tradeDate.trade_date == null){
+						}else if((result.marketPaid.market_date != null && result.tradeDate.trade_date == null) || (result.marketPaid.market_date != null && result.tradeDate.trade_date != null) ){
 							//거래내역 있을때
 							$('.scheduling').empty();
 							let str = '';
@@ -723,7 +721,7 @@ $(function() {
 								str+= '<input type="text" class="sch_box" style="border: none; width: 90px;" readonly value="'+result.marketPaid.market_date+'"/>거래완료';
 							   	str += '</a>';
 						   	$('.scheduling').append(str);
-						} 
+						}
 		            	   
 	           	  }
 			});
