@@ -2,10 +2,12 @@ package com.itwillbs.moneytto.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.spi.FileSystemProvider;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -32,7 +34,6 @@ import com.itwillbs.moneytto.service.MarketChatService;
 import com.itwillbs.moneytto.service.MarketService;
 import com.itwillbs.moneytto.service.MemberService;
 import com.itwillbs.moneytto.vo.AccountDetailVO;
-import com.itwillbs.moneytto.vo.AccountVO;
 import com.itwillbs.moneytto.vo.ResponseUserInfoVO;
 
 
@@ -722,14 +723,19 @@ public class MarketController {
 	   }
 	   
 	   
-	   @GetMapping("exitChatRoom")
+	   @PostMapping("exitChatRoom")
 	   @ResponseBody
-	   public String existChatRoom(String room_code,HttpSession session) {
+	   public String exitChatRoom(String room_code,HttpSession session) {
 	      
-	      String id = (String)session.getAttribute("sId");
-	      List<HashMap<String, String>> chatList = marketChatService.existChatList(room_code,id);
-	      JSONArray arrChatList = new JSONArray(chatList);
-	      return arrChatList.toString();
+	      int updateCount = marketChatService.updateExistStatus(room_code);
+	      JSONObject result = new JSONObject();
+	      if(updateCount > 0) {
+	    	  result.put("result", "채팅방 나가기 성공");
+	      }else {
+	    	  result.put("result", "채팅방 지박령 성공");
+	      }
+	      return result.toString();
+	     
 	   }
 	
 	@GetMapping("reviewForm")

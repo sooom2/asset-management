@@ -118,7 +118,7 @@ function reviewDelete(item_code){
 	<jsp:include page="../nav.jsp" />
 							
 	<div class="profileWrapper">
-		<div class="profileContainer">
+		<div class="profileContainer" style="min-height:880px">
 			<div class="memberInfoWrapper">
 				<div class="memberInfoInfoArea">
 					<div class="userDataWrapper">
@@ -340,7 +340,6 @@ function reviewDelete(item_code){
 									<div class="EmptyShowAllText">전체 상품 보기</div>
 								</div>
 							</div>
-							<div class="EmptyNoticeBox"></div>
 						</c:when>
 					</c:choose>
 				</div>
