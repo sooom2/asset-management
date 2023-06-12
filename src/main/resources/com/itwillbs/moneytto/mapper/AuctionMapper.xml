@@ -194,7 +194,7 @@
 			ON 
 				ap.auction_code = i.table_code 
 			WHERE 
-				ap.auction_code = 'a69fb5fb';
+				ap.auction_code = #{auction_code};
 	</select>
 	
 	
