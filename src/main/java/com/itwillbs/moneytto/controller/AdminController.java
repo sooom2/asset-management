@@ -83,6 +83,11 @@ public class AdminController {
 			String cate5 = "0";
 			String cate6 = "0";
 			String cate7 = "0";
+			String cate8 = "0";
+			String cate9 = "0";
+			String cate10 = "0";
+			String cate11 = "0";
+			String cate12 = "0";
 			// categoryChart에 저장된 List들 중 맞는 값 찾기 위해 반복
 			for (HashMap<String, String> chart : categoryChart) {
 				// 중복이라
@@ -111,6 +116,21 @@ public class AdminController {
 					case "그외기타":
 						cate7 = cateResult;
 						break;
+					case "의류":
+						cate8 = cateResult;
+						break;
+					case "시계/쥬얼리":
+						cate9 = cateResult;
+						break;
+					case "디지털/가전":
+						cate10 = cateResult;
+						break;
+					case "스포츠/레저":
+						cate11 = cateResult;
+						break;
+					case "차량/오토바이":
+						cate12 = cateResult;
+						break;
 					default:
 						break;
 				}
@@ -124,6 +144,11 @@ public class AdminController {
 			categoryCnt.put("cate5", cate5);
 			categoryCnt.put("cate6", cate6);
 			categoryCnt.put("cate7", cate7);
+			categoryCnt.put("cate8", cate8);
+			categoryCnt.put("cate9", cate9);
+			categoryCnt.put("cate10", cate10);
+			categoryCnt.put("cate11", cate11);
+			categoryCnt.put("cate12", cate12);
 //			for (int i = 1; i <= 7; i++) {
 //				categoryCnt.put("cate" + i, "cate" + i);
 //			}
@@ -146,10 +171,10 @@ public class AdminController {
 				String marketPayType = chart.get("market_pay_type");
 				switch (marketPayType) {
 					case "직접거래":
-						tradeCnt = String.valueOf(chart.get("trade_cnt")) != null ? String.valueOf(chart.get("trade_cnt")) : "0";
+						tradeCnt = String.valueOf(chart.get("trade_cnt"));
 						break;
 					case "안전결제":
-						safeCnt = String.valueOf(chart.get("safe_cnt")) != null ? String.valueOf(chart.get("safe_cnt")) : "0";
+						safeCnt = String.valueOf(chart.get("safe_cnt"));
 						break;
 					default:
 						break;

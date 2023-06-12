@@ -20,10 +20,27 @@ $(function() {
 	// 결제 금액
 	$('#item_price').html("${auction.get('pay_price') }".replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원");
 	
-	
+	// 확인 버튼
+	$('#confirmBtn').on("click", function() {
+		location.href = "mypage?itemList=auctionPay&member_id=${sessionScope.sId}";
+	});
 	
 });
 </script>
+<style type="text/css">
+#confirmBtn {
+    width: 25%;
+    background-color: #BB2649;
+    color: white !important;
+    height: 40px;
+    margin: auto;
+    display: block;
+    border-radius: 10px;
+    border: none;
+    margin-top: 35px;
+    cursor: pointer;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="../nav.jsp" />
@@ -61,8 +78,8 @@ $(function() {
 													</div>
 													<div class="cont cont_main_col_1">
 														<div class="item_hasdeliveryfee">&nbsp;</div>
-														<div class="item_hasdeliveryfee">&nbsp;</div><br><br>
-														<div class="item_title title_main_col_1">택배 배송은 문자로 알려드립니다.</div>
+														<div class="item_hasdeliveryfee">&nbsp;</div><br><br><br>
+														<div class="item_title title_main_col_1">*택배 배송 후 택배사에서 문자로 알려드립니다.</div>
 														<div id="item_deposit" class="item_price pri_main_col_1"></div>
 													</div>
 												</div>
@@ -112,6 +129,13 @@ $(function() {
 													<textarea disabled="disabled" name="pay_request" rows="5" cols="50" class="w_10" placeholder="요청사항 입력">${auction.get('pay_request') }</textarea>
 												</dd>
 											</dl>
+										</li>
+									</ul>
+								</li>
+								<li class="order_card "><div class="title_box"></div>
+									<ul class="order_member_info">
+										<li>
+											<input id="confirmBtn" type="button" value="확인">
 										</li>
 									</ul>
 								</li>
