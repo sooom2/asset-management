@@ -115,8 +115,6 @@ $(function(){
     let item_code = urlParams.get('item_code');
 	let sellId = "${item.member_name }";
 	$('.tradeBtn').on("click",function(){
-		alert("내포인트 : "+my_point+"아이템가격 : "+item_price);
-		alert(my_point >= item_price);
 		if(my_point < item_price){
 			swal({	
         		icon: "warning",
