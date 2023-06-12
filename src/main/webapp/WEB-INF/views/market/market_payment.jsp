@@ -139,6 +139,7 @@ $(function(){
 		        		text: "송금완료"
 		    	  }).then(function() {
 					    window.close();
+					    
 					    opener.parent.location.reload(); 
 					});
 		    	  

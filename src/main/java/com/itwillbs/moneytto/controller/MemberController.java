@@ -344,10 +344,9 @@ public class MemberController {
 	}
 	
 	//알람페이지
-	@GetMapping("todayAlram")
+	@GetMapping("todayAlarm")
 	public String todayAlram(HttpSession session,Model model) {
 		String id = (String)session.getAttribute("sId");
-		
 		List<HashMap<String, String>> chatList = memberService.getChat(id);
 		List<HashMap<String, String>> report = memberService.getReport(id);
 		List<HashMap<String, String>> point = memberService.getPoint(id);
@@ -363,13 +362,13 @@ public class MemberController {
 			}
 		}
 		System.out.println(opponentId);
-		
+		System.out.println(chatList);
 		model.addAttribute("opponentId",opponentId);
 		model.addAttribute("chatList",chatList);
 		model.addAttribute("report",report);
 		model.addAttribute("point",point);
 		model.addAttribute("auction",auction);
 		
-		return "mypage/my_alram";
+		return "mypage/my_alarm";
 	}
 }

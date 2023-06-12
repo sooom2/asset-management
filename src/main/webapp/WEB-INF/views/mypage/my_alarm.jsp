@@ -53,7 +53,7 @@ $(function() {
 				<div class="alarm_list_box">
 					<li class="alarm_date"></li>
 				</div>
-				<c:forEach var="chat" items="${chat}">
+				<c:forEach var="chatList" items="${chatList}">
 				<div class="alarm_list_box">
 					<li class="alarm_list isRead">
 						<div class="alarm_list_contents" style="right: 0; pointer-events: auto">
@@ -63,7 +63,14 @@ $(function() {
 												<img src="https://ccimg.hellomarket.com/images/2023/member_profile/03/08/13/0838615_53080_1.jpg?size=s4" alt="세컨웨어 할인 쿠폰">
 										</div>
 										<div class="info_no_item_img">
-											<p class="title">ㅇㅇㅇ 님에게 메세지가 도착했습니다</p>
+											<c:choose>
+												<c:when test="${sessionScope.sId ne chatList.buy_member_id}">
+													<p class="title">${chatList.buy_member_id} 님에게 메세지가 도착했습니다</p>
+												</c:when>
+												<c:otherwise>
+													<p class="title">${chatList.sell_member_id} 님에게 메세지가 도착했습니다</p>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</a>
@@ -74,6 +81,76 @@ $(function() {
 					</li>
 				</div>
 				</c:forEach>
+				<c:forEach var="report" items="${report}">
+					<div class="alarm_list_box">
+						<li class="alarm_list isRead">
+							<div class="alarm_list_contents" style="right: 0; pointer-events: auto">
+									<a href="https://www.hellomarket.com/m/coupon" target="_blank" rel="noreferrer">
+										<div class="contents">
+											<div class="profile">
+												<img src="https://ccimg.hellomarket.com/images/2023/member_profile/03/08/13/0838615_53080_1.jpg?size=s4" alt="세컨웨어 할인 쿠폰">
+											</div>
+											<div class="info_no_item_img">
+													<p class="title">${report.member_id}님 께서 신고 하셨습니다</p>
+											</div>
+										</div>
+									</a>
+								<button>
+									<div class="close"></div>
+								</button>
+							</div>
+						</li>
+					</div>
+				</c:forEach>
+<!-- 			포인트 -->
+					<c:forEach var="report" items="${point}">
+						<c:choose>
+						<c:when test="${point eq null }">
+						<div class="alarm_list_box">
+							<li class="alarm_list isRead">
+								<div class="alarm_list_contents" style="right: 0; pointer-events: auto">
+										<a href="https://www.hellomarket.com/m/coupon" target="_blank" rel="noreferrer">
+											<div class="contents">
+												<div class="profile">
+													<img src="https://ccimg.hellomarket.com/images/2023/member_profile/03/08/13/0838615_53080_1.jpg?size=s4" alt="세컨웨어 할인 쿠폰">
+												</div>
+												<div class="info_no_item_img">
+														<p class="title">[${point.point_type}]  ${point.point_change } 원 ${point.point_type} 완료</p>
+												</div>
+											</div>
+										</a>
+									<button>
+										<div class="close"></div>
+									</button>
+								</div>
+							</li>
+						</div>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+				<!-- 경매 -->
+				<c:forEach var="report" items="${auction}">
+					<div class="alarm_list_box">
+						<li class="alarm_list isRead">
+							<div class="alarm_list_contents" style="right: 0; pointer-events: auto">
+									<a href="https://www.hellomarket.com/m/coupon" target="_blank" rel="noreferrer">
+										<div class="contents">
+											<div class="profile">
+												<img src="https://ccimg.hellomarket.com/images/2023/member_profile/03/08/13/0838615_53080_1.jpg?size=s4" alt="세컨웨어 할인 쿠폰">
+											</div>
+											<div class="info_no_item_img">
+													<p class="title">${auction.auction_item_name } - ${auction.pay_price}원에  낙찰 완료</p>
+											</div>
+										</div>
+									</a>
+								<button>
+									<div class="close"></div>
+								</button>
+							</div>
+						</li>
+					</div>
+				</c:forEach>
+				
 			</div>
 		</div>
 	</section>

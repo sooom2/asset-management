@@ -37,7 +37,7 @@ function payment(){
 					<li><a href="memAuth">회원가입</a></li>
 				</c:when>
 				<c:otherwise>
-					<li><a href="myAlarm"><i class="fa-regular fa-bell"></i> 나의알림</a></li>
+					<li><a href="todayAlarm"><i class="fa-regular fa-bell"></i> 나의알림</a></li>
 					<li><a href="marketChat"><i class="fa-regular fa-comment-dots fa-flip-horizontal"></i> 채팅</a></li>
 					<li><a href="logout" data-reload="reload" class="">로그아웃</a></li>
 					<c:if test="${sessionScope.sId eq 'admin' }">
