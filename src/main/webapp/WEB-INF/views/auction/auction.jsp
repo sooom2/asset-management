@@ -674,7 +674,7 @@ function connect2() {
 		$("#auctionLog_nickname").html(sessionName + "님");
 		
 		// 경매 로그
-		var auctionLog = "<div class='chat_myself'>" + "<" + logTime + "> " + sessionName + "님&nbsp;&nbsp;<span>" + message.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + "</div>";
+		var auctionLog = "<div class='chat_myself'>" + "<" + logTime + "> " + sessionName + "님&nbsp;&nbsp;<span>" + message + "원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span>" + "</div>";
 		$(".logBox").append(auctionLog);
 		$('.auction_log').scrollTop($('.auction_log')[0].scrollHeight + 100);
 		
