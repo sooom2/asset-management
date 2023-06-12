@@ -803,6 +803,8 @@
             ) w
       ON
          i.item_code = w.wish_item_code
+      WHERE 
+      		item_status != "거래완료"
       ORDER BY i.item_count DESC LIMIT 5
       
    </select>
