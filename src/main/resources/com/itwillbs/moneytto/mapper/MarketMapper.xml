@@ -916,8 +916,8 @@
 	<!-- 관리자 아이템 목록 -->
 	<select id="selectadminItem" resultType="hashmap">
 		SELECT 
-			i.*
-			, ROW_NUMBER() OVER(ORDER BY r.report_code ) AS rownum
+			ROW_NUMBER() OVER(ORDER BY  CAST(r.report_code AS UNSIGNED) DESC ) AS rownum
+			,i.*
 			, count(*) over() AS totalCnt
 			, r.report_targetId
 			, r.member_id AS repId
@@ -932,7 +932,7 @@
 					FROM report
 					GROUP BY item_code) AS rc
 				ON i.item_code = rc.item_code
-		WHERE 1=1
+			WHERE 1=1
 			AND r.report_code IS NOT null
 		<if test="searchKeyword != null and !searchKeyword.equals('')">
 			AND (item_subject LIKE '%${searchKeyword}%' OR item_content LIKE '%${searchKeyword}%')
