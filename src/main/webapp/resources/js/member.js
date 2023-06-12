@@ -128,24 +128,24 @@ $(document).ready(function(){
 			// => 4점 : 안전, 3점 : 보통, 2점 : 위험, 1점 이하 : 사용 불가능한 패스워드
 			switch(count) {
 				case 4 :  
-					$("#checkPasswdResult").html("안전").css("color", "green"); 
+					$("#checkPasswdResult").html("사용가능한 비밀번호 입니다.").css("color", "green");
 					passwdStatus = true;
 					break;
 				case 3 :  
-					$("#checkPasswdResult").html("보통").css("color", "yellow"); 
+					$("#checkPasswdResult").html("사용가능한 비밀번호 입니다.").css("color", "green");
 					passwdStatus = true;
 					break;
 				case 2 :  
-					$("#checkPasswdResult").html("위험").css("color", "orange"); 
+					$("#checkPasswdResult").html("사용가능한 비밀번호 입니다.").css("color", "green");
 					passwdStatus = true;
 					break;
 				case 1 :
 				case 0 :
-					$("#checkPasswdResult").html("사용 불가능한 패스워드").css("color", "red"); break;
+					$("#checkPasswdResult").html("사용 불가능한 패스워드").css("color", "red");break; 
 					passwdStatus = false;
+					
 			}
-			$("#checkPasswdResult").html("사용가능한 비밀번호 입니다.").css("color", "green");
-			passwdStatus = true;
+			
 		}
 		
 	});

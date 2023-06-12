@@ -144,8 +144,8 @@ public class BankController {
 		
 		// access_token 이 null 일 경우 "계좌 인증 필수" 메세지 출력 후 이전페이지로 돌아가기
 		if(access_token == null) {
-			model.addAttribute("msg", "계좌 인증이 필요합니다.");
-			return "fail_back";
+			model.addAttribute("msg", "토큰이 만료되었습니다. \n 계좌 등록을 다시 진행해주세요.");
+			return "success";
 		}
 		
 		// 사용자 정보 조회(REST API 요청)		
@@ -184,7 +184,6 @@ public class BankController {
 		
 		// 세션 객체의 엑세스 토큰을 Map 객체에 추가
 		map.put("access_token", (String)session.getAttribute("access_token"));
-		logger.info("★★★★★★ bank_accountDetail : " + map);
 		
 		// BankApiService - requestAccountDetail() 메서드를 호출하여
 		// 계좌 상세정보 조회 요청
@@ -228,7 +227,6 @@ public class BankController {
 		System.out.println("==================================");
 		
 		
-		// 이체 내역 남기는 DB 테이블 작업
 //		String trade_code = UUID.randomUUID().toString().substring(0, 8);
 		String trade_code = result.getApi_tran_id();
 		String trade_amount = map.get("tran_amt");
@@ -245,7 +243,6 @@ public class BankController {
 		// 만약, 응답코드(rsp_code) 가 "A0000" 이 아니면, 처리 실패이므로
 		// 응답메세지(rsp_message) 를 화면에 출력 후 이전페이지로 돌아가기
 		
-		//TODO 실패하는데................................................................
 		//일단 이부분 주석치면 페이지 넘어가긴해서링....
 		// 몰겟음...
 //		if(!result.getRsp_code().equals("A0000")) {
@@ -401,6 +398,12 @@ public class BankController {
 		
 		String id = (String)session.getAttribute("sId");
 		HashMap<String, String> member = memberService.getMember(id);
+		if(member.get("member_auth_status").equals("N")) {
+			model.addAttribute("msg", "계좌 인증 후 환급 받을 수 있습니다.");
+			model.addAttribute("isClose", true);
+			return "fail_back";
+		}
+		
 		
 		
 		

@@ -156,11 +156,12 @@ function reviewDelete(item_code){
 						<div class="memberInfoMyDataBox" onclick='location.href="memberUpdateForm"'>
 							<div class="memberInfoSettingMyData">내정보 수정하기</div>
 						</div>
-						<c:if test="${member.member_auth_status eq 'Y'  }">
-							<div class="memberInfoMyDataBox" onclick='bankDeposit()' style="margin-top: 10px;">
-								<div class="memberInfoSettingMyData">포인트 환급받기</div>
-							</div>
-						</c:if>
+						<div class="memberInfoMyDataBox" onclick='payment()' style="margin-top: 10px;">
+							<div class="memberInfoSettingMyData">포인트 충전하기</div>
+						</div>
+						<div class="memberInfoMyDataBox" onclick='bankDeposit()' style="margin-top: 10px;">
+							<div class="memberInfoSettingMyData">포인트 환급받기</div>
+						</div>
 					</c:if>
 				</div>
 			</div>
