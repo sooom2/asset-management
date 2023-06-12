@@ -34,7 +34,8 @@
 	<select id="selectTradeChart" resultType="hashmap">
 		SELECT 
 			ROW_NUMBER() OVER(ORDER BY t.date DESC ) AS rownum
-			, t.item_code  -- 날짜별로 카운트 하는거 추가해야함
+			, count(t.item_code) over() AS totalCnt   -- 날짜별로 카운트 하는거 추가해야함
+			, t.item_code 
 			, t.subject
 			, t.member_id
 			, t.price

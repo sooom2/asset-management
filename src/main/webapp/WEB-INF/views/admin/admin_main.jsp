@@ -16,6 +16,7 @@
 <link href="resources/css/styles.css" rel="stylesheet" />
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
 	crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -45,32 +46,41 @@
 									
 <!-- 								막대	============================================================== -->
 									<div>
-									  <canvas id="barChart"></canvas>
+									    <canvas id="mixedChart"></canvas>
 									</div>
 									
-									<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-									
 									<script>
-									  const ctx = document.getElementById('barChart');
+									    var trade1 = ${accountCnt.totalCnt};
 									
-									  new Chart(ctx, {
-									    type: 'bar',
-									    data: {
-									      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-									      datasets: [{
-									        label: '# of Votes',
-									        data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
-									        borderWidth: 1
-									      }]
-									    },
-									    options: {
-									      scales: {
-									        y: {
-									          beginAtZero: true
+									    var ctx = document.getElementById('mixedChart').getContext('2d');
+									
+									    var mixedChart = new Chart(ctx, {
+									        type: 'bar',
+									        data: {
+									            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+									            datasets: [{
+									                label: 'Sales',
+									                data: [50, 60, 70, 80, 90, 100],
+									                backgroundColor: 'rgba(54, 162, 235, 0.5)'
+									            }]
+									        },
+									        options: {
+									            responsive: true,
+									            scales: {
+									                y: {
+									                    beginAtZero: true
+									                }
+									            }
 									        }
-									      }
-									    }
-									  });
+									    });
+									
+									    mixedChart.data.datasets.push({
+									        type: 'line',
+									        label: 'Average',
+									        data: [70, 70, 70, 70, 70, 70],
+									        borderColor: 'rgba(255, 99, 132, 1)',
+									        fill: false
+									    });
 									</script>
 <!-- 								막대끝	============================================================== -->
 
