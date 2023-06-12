@@ -67,8 +67,13 @@ public interface MemberMapper {
 
 	int updateMemberPoint(@Param("id")String id, @Param("pay_price") int pay_price);
 
-	
+	List<HashMap<String, String>> chat(String id);
+	List<HashMap<String, String>> report(String id);
+	List<HashMap<String, String>> point(String id);
+	List<HashMap<String, String>> auction(String id);
 
+	
+	
 	
 
 	

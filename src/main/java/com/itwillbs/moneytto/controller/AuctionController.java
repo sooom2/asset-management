@@ -263,7 +263,7 @@ public class AuctionController {
 	
 	// 결제 완료 
 	@PostMapping("/auctionPayResult")
-	public String auctionPayResult(@RequestParam Map<String, String> map, HttpSession session) {
+	public String auctionPayResult(@RequestParam Map<String, String> map, HttpSession session, Model model) {
 		String id = (String)session.getAttribute("sId");
 		HashMap<String, String> member = memberService.getMember(id);
 		// pay_code 생성, 추가
@@ -277,7 +277,13 @@ public class AuctionController {
 		// 포인트 차감
 		int updateCount = memberService.updateMemberPoint(id, Integer.parseInt(map.get("pay_price")));
 		
-		return "redirect:/auctionMain";
+		if(insertCount > 0 && updateCount > 0) {
+			return "redirect:/auctionMain";
+		} else {
+			model.addAttribute("msg", "결제에 실패하였습니다.");
+			return "fail_back";
+		}
+		
 	}
 	
 	// 결제 정보 페이지.

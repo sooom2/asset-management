@@ -181,7 +181,7 @@ function reviewDelete(item_code){
 				<div class="filterBarWrapper">
 					<div class="tabPcBox">
 						<div class="tabFilterTab">
-							<form class="SearchWrapper" style="width: 690px">
+							<form class="SearchWrapper" style="width: 730px">
 								<input type="text" placeholder="상품명 검색" id="searchInput"
 									class="SearchInput-ukztbj-1 inqgpT" value=""><img
 									src="https://ccimage.hellomarket.com/img/web/common/black_glass.svg"

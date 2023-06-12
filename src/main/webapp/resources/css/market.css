@@ -745,6 +745,15 @@ button {
     box-shadow: 2px 2px 0px #0000007d;
 }
 
-.topBtn {
-	width : 70px;
+
+#toTop {
+   position: fixed;   /* 포지션 고정 */
+   left: 200px;
+   bottom: 100px;     /* 밑에서 100px */
+   display: none;     /* 보여지지 없음 - 기본적으로  안보여지게 */
+   z-index: 9999;     /* 포지션을 먼저 지정후 z-좌표(레이어) : 9999입니다. */
+   width: 50px;
+   height: 60px;
+   cursor: pointer;
 }
+

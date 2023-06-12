@@ -21,17 +21,19 @@ public interface BankMapper {
 	
 	// 핀테크 번호 등록
 	int updateAccount(Map<String, String> map);
-	// 포인트 충전 했을 때
+	
+	HashMap<String, String> selectAccountById(String member_id);
+	
+	HashMap<String, String> selectAccountByMember(HashMap<String, String> member);
+	
+	// 포인트 충전 했을 때 Transaction
 	int insertAccountHistory(Map<String, String> map);
 
 	int updatePointAmount(Map<String, String> map);
 
-	HashMap<String, String> selectAccountById(String member_id);
-
-	HashMap<String, String> selectAccountByMember(HashMap<String, String> member);
-
 	int insertPointHistory(Map<String, String> map);
 
+//	int updateAccountBalance(Map<String, String> map);
 	
 // 관리자 계좌 내역들=========================================================================
 	// 계좌 내역 조회
@@ -39,5 +41,7 @@ public interface BankMapper {
 		
 	// 포인트 내역 조회
 	List<HashMap<String, String>> selectPointHistory(HashMap<String, String> map);
+
+	
 
 }

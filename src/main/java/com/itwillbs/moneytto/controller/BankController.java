@@ -1,8 +1,10 @@
 package com.itwillbs.moneytto.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -285,12 +287,12 @@ public class BankController {
 		
 		// BankApiService - deposit() 메서드 호출하여 출금이체 요청
 		// 파라미터 : Map 객체   리턴타입 : AccountDepositResponseListVO(result)
-		AccountDepositListResponseVO result = apiService.deposit(map);
+//		AccountDepositListResponseVO result = apiService.deposit(map);
 		System.out.println("==================================");
-		System.out.println("입금 요청 처리 결과 : " + result);
+//		System.out.println("입금 요청 처리 결과 : " + result);
 		System.out.println("==================================");
 		
-		String trade_code = result.getApi_tran_id();
+		String trade_code = UUID.randomUUID().toString().substring(0, 8);
 		String trade_amount = map.get("tran_amt");
 //		String trade_amount = result.getTran_amt();
 //		String trade_date = result.getBank_tran_date();
@@ -301,7 +303,7 @@ public class BankController {
 		map.put("trade_date", trade_date);
 		
 		// Model 객체에 AccountDepositResponseListVO 객체 저장(속성명 : result)
-		model.addAttribute("result", result);
+//		model.addAttribute("result", result);
 		
 		System.out.println("==================================");
 		System.out.println(map);
@@ -311,18 +313,18 @@ public class BankController {
 		//TODO 출금 작업 아직 못햇음.. 
 		model.addAttribute("isClose", true);
 		if(insertCount == 0) {
-			model.addAttribute("msg", "포인트 충전에 실패하였습니다. 다시 확인해주세요.");
+			model.addAttribute("msg", "포인트 환급에 실패하였습니다. 다시 확인해주세요.");
 		}else {
-			model.addAttribute("msg", trade_amount + " 포인트 충전되었습니다.");
+			model.addAttribute("msg", trade_amount + " 원 환급되었습니다.");
 			
 		}
-		
+		//히히
 		// 만약, 응답코드(rsp_code) 가 "A0000" 이 아니면, 처리 실패이므로
 		// 응답메세지(rsp_message) 를 화면에 출력 후 이전페이지로 돌아가기
-		if(!result.getRsp_code().equals("A0000")) {
-			model.addAttribute("msg", result.getRsp_message());
-			return "fail_back";
-		}
+//		if(!result.getRsp_code().equals("A0000")) {
+//			model.addAttribute("msg", result.getRsp_message());
+//			return "fail_back";
+//		}
 //		return "bank/deposit_result";
 		
 		return "";

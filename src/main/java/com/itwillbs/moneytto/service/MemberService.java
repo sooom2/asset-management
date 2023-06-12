@@ -212,6 +212,25 @@ public class MemberService {
 	public int updateMemberPoint(String id, int pay_price) {
 		return mapper.updateMemberPoint(id, pay_price);
 	}
+	
+
+	//====================================================================
+	//알람
+	public List<HashMap<String, String>> getChat(String id) {
+		return mapper.chat(id);
+	}
+
+	public List<HashMap<String, String>> getReport(String id) {
+		return mapper.report(id);
+	}
+
+	public List<HashMap<String, String>> getPoint(String id) {
+		return mapper.point(id);
+	}
+
+	public List<HashMap<String, String>> getAuction(String id) {
+		return mapper.auction(id);
+	}
 
 	
 

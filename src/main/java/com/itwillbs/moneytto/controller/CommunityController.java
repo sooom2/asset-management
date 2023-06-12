@@ -203,6 +203,9 @@ public class CommunityController {
 	    
 	    String id = (String)session.getAttribute("sId");
 	
+	    
+	    
+	    
 
 	    return "board/noticeList";
 	}

@@ -809,49 +809,54 @@ $(function() {
 	    });
 	
 	
+	    let clickCount = 0;
 	    
-	    
-	    $(".card_box li").one("click", function() {
+	    $(".card_box li").on("click", function() {
 	        const clickedListItem = $(this);
 	        room_code = clickedListItem.find('.room_code').val();
 	        item_code = clickedListItem.find('.item_code').val();
-	        messages(target,opponent_img,opponent_nickname);
 	        
-	        console.log("room_code: " + room_code + " item_code: " + item_code);
-	        $.ajax({
-	            type: "GET",
-	            url: "getTarget",
-	            dataType: "text",
-	            data: {
-	                room_code: room_code,
-	                item_code: item_code
-	            },
-	            success: function(result) {
-	                let parsedObject = JSON.parse(result);
-	                target = parsedObject.opponent_id;
-	                if (!$(this).parent().is("ul > div:first-child")) {
-	                	opponent_img = parsedObject.opponent_image;
-	                	opponent_nickname = parsedObject.opponent_nickname;
-	                    
-	                }
-	                ws.onclose = function(event) {
-	                    console.log('연결종료');
-	                };
-	                ws.onerror = function(event) {
-	                    console.log('연결에러');
-	                };
-	            }
-	        });
+// 	        console.log("list 에서 눌렀을때 === 방번호: " + room_code + " 아이템코드: " + item_code + " target: " + target);
+		        $.ajax({
+		            type: "GET",
+		            url: "getTarget",
+		            dataType: "text",
+		            data: {
+		                room_code: room_code,
+		                item_code: item_code
+		            },
+		            success: function(result) {
+		                let parsedObject = JSON.parse(result);
+		                target = parsedObject.opponent_id;
+		                if (!$(this).parent().is("ul > div:first-child")) {
+		                	opponent_img = parsedObject.opponent_image;
+		                	opponent_nickname = parsedObject.opponent_nickname;
+		                    
+		                }
+		                ws.onclose = function(event) {
+		                    console.log('연결종료');
+		                };
+		                ws.onerror = function(event) {
+		                    console.log('연결에러');
+		                };
+				        console.log("list 에서 눌렀을때 ajax후 === 방번호: " + room_code + " 아이템코드: " + item_code + " target: " + target);
+				        messages(target,opponent_img,opponent_nickname);
+				        clickCount = 0;
+		            }
+		        });
+		        
+		        clickCount++;  
 	    });
 	    
 	    
 	    
 	    function messages(target,opponent_img,opponent_nickname) {
+// 	    	alert(target);
 	        ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
 	        socket = ws;
 	        ws.onopen = function() {
 	            console.log('연결완료');
-	            console.log("방번호: " + room_code + " 아이템코드: " + item_code + " target: " + target);
+// 	            console.log("방번호: " + room_code + " 아이템코드: " + item_code + " target: " + target);
 	            const data = {
 	                "room_code": room_code,
 	                "item_code": item_code,

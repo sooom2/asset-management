@@ -389,6 +389,39 @@
 				review_item_code = #{item_code}
 			AND	reviewer_id = #{id}
 	</select>
+	<select id="chat" resultType="hashmap">
+		SELECT * 
+		FROM market_chat_messages
+		WHERE 1=1
+		 	AND (sell_member_id =#{id}
+			 OR	buy_member_id = #{id})
+		 	AND DATE(chat_time) = DATE(NOW());
+	</select>
+	<select id="report" resultType="hashmap">
+		SELECT * 
+			FROM report 
+		WHERE 1=1
+			AND report_targetId = #{id}
+			AND DATE(report_date) = DATE(NOW())
+			AND report_statusYN = 'Y'
 	
+	</select>
+	<select id="point" resultType="hashmap">
+		SELECT * 
+			FROM point_history
+		WHERE 1=1
+			AND member_id = #{id}
+			AND DATE(point_date) = DATE(NOW())
+			
+	</select>
+	<select id="auction" resultType="hashmap">
+		SELECT auction_paid.*,auction.auction_item_name
+			FROM auction_paid 
+			LEFT JOIN auction 
+				ON auction.auction_code = auction_paid.auction_code 
+			WHERE 1=1
+				AND member_id = #{id}
+				AND DATE(pay_date) = DATE(NOW())
+	</select>
 	
 </mapper>
