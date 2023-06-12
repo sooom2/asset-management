@@ -20,7 +20,7 @@
 
 
 $(function() {
-	
+	// 드세요..
 	var today = new Date();
 
 	let year = today.getFullYear();
