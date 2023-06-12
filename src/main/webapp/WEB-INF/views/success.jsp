@@ -8,9 +8,11 @@ $(document).ready(function() {
 	swal({
 		text : message,
 	}).then(function(){
-		window.opener.location.href = "${target}";
-		if(${isClose}){
+		if("${isClose}"){
 			window.close();			
+			window.opener.location.href = "${target}";
+		}else{
+			location.href = "${target}";	
 		}
 	});
 });
