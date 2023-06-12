@@ -41,7 +41,7 @@
 						<div class="col-xl-3 col-md-6">
 							<div class="card bg-primary text-black mb-4">
 								<div class="card-body font20">
-									소셜가계부<br> <span class="fontB">${resCount }</span>건
+									수익률<br>
 									
 <!-- 								막대	============================================================== -->
 									<div>
@@ -56,10 +56,10 @@
 									  new Chart(ctx, {
 									    type: 'bar',
 									    data: {
-									      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+									      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
 									      datasets: [{
 									        label: '# of Votes',
-									        data: [12, 19, 3, 5, 2, 3],
+									        data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
 									        borderWidth: 1
 									      }]
 									    },
@@ -107,7 +107,7 @@
 										var cate5 = ${categoryCnt.cate5} + ${categoryCnt.cate11};
 										var cate6 = ${categoryCnt.cate6};
 										var cate7 = ${categoryCnt.cate7} + ${categoryCnt.cate12};
-										alert("확인1:" + cate1 + " 2:" + cate2 + " 3:" + cate3 + " 4:" + cate4 + " 5:" + cate5 + " 6:" + cate6 + " 7:" + cate7);
+										
 										var ctx1 = document.getElementById('chart1').getContext('2d');
 										var chart1 = new Chart(ctx1, {
 										    type: 'doughnut',

@@ -23,6 +23,11 @@ public class AdminService {
 		return mapper.registImage(images);
 	}
 
+	// 1. 수익률 비교 위해 계좌내역 조회
+	public List<HashMap<String, String>> selectTradeChart(HashMap<String, String> map) {
+		return mapper.selectTradeChart(map);
+	}
+
 	// 2. 관리자 카테고리별 차트
 	public List<HashMap<String, String>> selectCategoryChart(HashMap<String, String> map) {
 		return mapper.selectCategoryChart(map);
@@ -32,6 +37,7 @@ public class AdminService {
 	public List<HashMap<String, String>> selectPayTypeChart(HashMap<String, String> map) {
 		return mapper.selectPayTypeChart(map);
 	}
+
 
 	
 }
