@@ -440,7 +440,10 @@ function toggleLike(element) {
 		textarea.select();
 		document.execCommand("copy");
 		document.body.removeChild(textarea);
-		alert("URL이 복사되었습니다.")
+		swal({	
+    		icon: "success",
+    		text: "URL이 복사되었습니다!"
+        });
 	}
 	
 	
