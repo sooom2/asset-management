@@ -47,14 +47,17 @@ public class BankService {
 	
 	@Transactional 
 	public int writeHistory(Map<String, String> map) {
-		
+		// 거래 내역
 		int insertAccountHistory = mapper.insertAccountHistory(map);
-		
+		// 포인트 거래내역
 		int insertPointHistory = mapper.insertPointHistory(map);
+		// 멤버테이블에 포인트 잔액 수정
+		int updatePointAccount = mapper.updatePointAmount(map);
+		// 어카운트테이블에 잔액 수정
+//		int updateAccountBalance = mapper.updateAccountBalance(map);
 		
-		int updateAccount = mapper.updatePointAmount(map);
-		
-		if (insertAccountHistory > 0 && insertPointHistory > 0 && updateAccount > 0) {
+		if (insertAccountHistory > 0 && insertPointHistory > 0 && updatePointAccount > 0) {
+//				&& updateAccountBalance > 0) {
 	        return 1; 
 	    } else {
 	        return 0;

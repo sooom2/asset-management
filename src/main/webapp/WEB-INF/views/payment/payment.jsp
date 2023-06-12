@@ -54,7 +54,7 @@ $(function(){
 
 <form method="post" autocomplete="off" action="bank_withdraw">
 <input type="hidden" name="id" value="${member.member_id }"> 
-<input type="hidden" name="trade_type" value="이체">
+<input type="hidden" name="trade_type" value="충전">
 <input type="hidden" name="member_name" value="${member.member_name }">
 <input type="hidden" name="fintech_use_num" value="${fintech_use_num }"> 
 <input type="hidden" name="user_name" value="${user_name }">
