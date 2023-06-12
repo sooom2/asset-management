@@ -96,9 +96,9 @@
 							
 							<!-- 가격상세 -->
 							<div class="priceDetail fEjcIX" style="display: none;">
-								<input type="text" placeholder="최저금액" class="item_price_min cRHAEh" value="" onkeyup="priceInput(this)">
+								<input type="text" placeholder="최저금액" class="item_price_min cRHAEh" value="" onkeyup="this.value=this.value.replace(/[^-0-9]/g,''); priceInput(this);">
 								<div class="price__StartPointText-sc-1yxjw4n-1 cOhRDO">원 부터~</div>
-								<input type="text" placeholder="최고금액" class="item_price_max dfgaGw" value=""  onkeyup="priceInput(this)">
+								<input type="text" placeholder="최고금액" class="item_price_max dfgaGw" value=""  onkeyup="this.value=this.value.replace(/[^-0-9]/g,''); priceInput(this);">
 								<div class="price__EndPointText-sc-1yxjw4n-4 ecxgoB">원 까지</div>
 								<button class="priceApplyBtn ezrKUu">적용하기</button>
 							</div>
@@ -243,13 +243,17 @@
 		
 		// 금액 단위 콤마
 		function priceReplace(price) {
-			var price = price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-			return price;
+			return price.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
 		}
+		// 금액 단위 언콤마
+		function uncomma(price) {
+			var price = String(price);
+			return price.replace(/[^\d]+/g, '');
+	    }
 		
 		// 금액 입력
-		function priceInput(price) {
-			
+		function priceInput(priceInput) {
+			priceInput.value = priceReplace(uncomma(priceInput.value));
 		}
 		
 		// ajax에서 받은 데이터로 div 생성
@@ -425,7 +429,6 @@
 			$(window).scroll(function() {
 				if ($(this).scrollTop() > 250) {
 					$('#toTop').fadeIn();
-					$('#toTop').css('left', $('#sidebar').offset().left);
 				} else {
 					$('#toTop').fadeOut();
 				}
@@ -520,8 +523,8 @@
 			
 			// 가격 설정
 			$(document).on("click", ".priceApplyBtn", function(e) {
-				var item_price_min = $(".item_price_min").val();
-				var item_price_max = $(".item_price_max").val();
+				var item_price_min = uncomma($(".item_price_min").val());
+				var item_price_max = uncomma($(".item_price_max").val());
 				
 				if(item_price_min == "" && item_price_max == "") return;
 				
