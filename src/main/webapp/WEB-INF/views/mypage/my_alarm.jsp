@@ -8,11 +8,34 @@
 <meta charset="UTF-8">
 <title>머니또</title>
 <style type="text/css">
-
-
 </style>
 <link href="${path }/resources/css/myAlarm.css" rel="stylesheet">
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+
+
+$(function() {
+	var today = new Date();
+
+	let year = today.getFullYear();
+	let month = ('0' + (today.getMonth() + 1)).slice(-2);
+	let day = ('0' + today.getDate()).slice(-2);
+
+	let dateString = month  + '월 ' + day + '일';
+
+	$(".alarm_date").empty();
+	$(".alarm_date").append(dateString);
+	
+	
+});
+
+</script>
 </head>
 <body>
 <jsp:include page="../nav.jsp" />
@@ -28,8 +51,9 @@
 				
 				<!-- 알림리스트 -->
 				<div class="alarm_list_box">
-					<li class="alarm_date">05월 18일</li>
+					<li class="alarm_date"></li>
 				</div>
+				<c:forEach var="chat" items="${chat}">
 				<div class="alarm_list_box">
 					<li class="alarm_list isRead">
 						<div class="alarm_list_contents" style="right: 0; pointer-events: auto">
@@ -49,6 +73,7 @@
 						</div>
 					</li>
 				</div>
+				</c:forEach>
 			</div>
 		</div>
 	</section>

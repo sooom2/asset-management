@@ -342,4 +342,34 @@ public class MemberController {
 		
 		return result; 
 	}
+	
+	//알람페이지
+	@GetMapping("todayAlram")
+	public String todayAlram(HttpSession session,Model model) {
+		String id = (String)session.getAttribute("sId");
+		
+		List<HashMap<String, String>> chatList = memberService.getChat(id);
+		List<HashMap<String, String>> report = memberService.getReport(id);
+		List<HashMap<String, String>> point = memberService.getPoint(id);
+		List<HashMap<String, String>> auction = memberService.getAuction(id);
+		
+		String opponentId = null;
+//		if( != null)		
+//			chat.get(0).get("chat_mem_id")
+		
+		for(HashMap<String, String> chat : chatList) {
+			if(chat.get("chat_member_id") != id) {
+				opponentId = chat.get("chat_member_id");
+			}
+		}
+		System.out.println(opponentId);
+		
+		model.addAttribute("opponentId",opponentId);
+		model.addAttribute("chatList",chatList);
+		model.addAttribute("report",report);
+		model.addAttribute("point",point);
+		model.addAttribute("auction",auction);
+		
+		return "mypage/my_alram";
+	}
 }

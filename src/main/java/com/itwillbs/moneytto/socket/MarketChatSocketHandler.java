@@ -57,14 +57,20 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 		HashMap<String, String> sellDetail = marketChatService.getSellID(item_code);
 		String buyId = target;
 		String sellId = sellDetail.get("member_id");
-		
 												//상대방아이디
 		// 내아이디랑 sellId랑 다르면 buy아이디는 target
-		
 		if(name == sellId) {
 			buyId = target;
+			sellId = name;
+			System.out.println("내가 살때 buy_ID는 target ==============================");
+			System.out.println("사는사람 : " + buyId + "파는사람 : " + sellId);
+			System.out.println("==============================");
 		} else if(name != sellId) {
 			buyId = name;
+			sellId = target;
+			System.out.println("내가 팔때 buyID 는 나 =============================");
+			System.out.println("사는사람 : " + buyId + "파는사람 : " + sellId);
+			System.out.println("==============================");
 		}
 		
 		// name 세션 // sellId 아이템 조회
@@ -86,8 +92,9 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
             sessionList.put(session, room_code);
             // RoomList에 추가
             marketList.put(room_code, sessionTwo);
-            
+            System.out.println("marketList =================================");
             System.out.println(marketList);
+            System.out.println("=================================");
             
 		}
             // 채팅방이 존재 할 때
@@ -113,12 +120,12 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 			TextMessage textMessage = new TextMessage(name + ":" + messages);
                 
 			int sessionCount = 0;
-     
+//			room_code = marketList.get(room_code);
 			// 해당 코드에 session에 뿌려줌.
-			for(WebSocketSession sess : marketList.get(room_code)) {
-				sess.sendMessage(textMessage);
-				sessionCount++;
-			}
+//			for(WebSocketSession sess : marketList.get(room_code)) {
+//				sess.sendMessage(textMessage);
+//			}
+			session.sendMessage(textMessage);
 			
 			
             System.out.println("===============================");
