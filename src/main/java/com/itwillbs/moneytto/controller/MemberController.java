@@ -353,15 +353,9 @@ public class MemberController {
 		List<HashMap<String, String>> auction = memberService.getAuction(id);
 		
 		String opponentId = null;
-//		if( != null)		
-//			chat.get(0).get("chat_mem_id")
 		
-		for(HashMap<String, String> chat : chatList) {
-			if(chat.get("chat_member_id") != id) {
-				opponentId = chat.get("chat_member_id");
-			}
-		}
-		System.out.println(opponentId);
+		System.out.println(auction);
+		
 		System.out.println(chatList);
 		model.addAttribute("opponentId",opponentId);
 		model.addAttribute("chatList",chatList);

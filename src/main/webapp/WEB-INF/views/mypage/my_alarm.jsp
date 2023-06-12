@@ -16,11 +16,11 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 <script type="text/javascript">
 
 
 $(function() {
+	
 	var today = new Date();
 
 	let year = today.getFullYear();
@@ -33,6 +33,11 @@ $(function() {
 	$(".alarm_date").append(dateString);
 	
 	
+	$('.close').on('click', function() {
+		
+	    $(this).closest('.alarm_list_box').addClass('isRead').css('display', 'none');
+
+	});
 });
 
 </script>
@@ -55,7 +60,7 @@ $(function() {
 				</div>
 				<c:forEach var="chatList" items="${chatList}">
 				<div class="alarm_list_box">
-					<li class="alarm_list isRead">
+					<li class="alarm_list">
 						<div class="alarm_list_contents" style="right: 0; pointer-events: auto">
 								<a href="https://www.hellomarket.com/m/coupon" target="_blank" rel="noreferrer">
 									<div class="contents">
@@ -83,7 +88,7 @@ $(function() {
 				</c:forEach>
 				<c:forEach var="report" items="${report}">
 					<div class="alarm_list_box">
-						<li class="alarm_list isRead">
+						<li class="alarm_list">
 							<div class="alarm_list_contents" style="right: 0; pointer-events: auto">
 									<a href="https://www.hellomarket.com/m/coupon" target="_blank" rel="noreferrer">
 										<div class="contents">
@@ -103,11 +108,11 @@ $(function() {
 					</div>
 				</c:forEach>
 <!-- 			포인트 -->
-					<c:forEach var="report" items="${point}">
+					<c:forEach var="point" items="${point}">
 						<c:choose>
-						<c:when test="${point eq null }">
+						<c:when test="${point ne null }">
 						<div class="alarm_list_box">
-							<li class="alarm_list isRead">
+							<li class="alarm_list">
 								<div class="alarm_list_contents" style="right: 0; pointer-events: auto">
 										<a href="https://www.hellomarket.com/m/coupon" target="_blank" rel="noreferrer">
 											<div class="contents">
@@ -129,9 +134,9 @@ $(function() {
 					</c:choose>
 				</c:forEach>
 				<!-- 경매 -->
-				<c:forEach var="report" items="${auction}">
+				<c:forEach var="auction" items="${auction}">
 					<div class="alarm_list_box">
-						<li class="alarm_list isRead">
+						<li class="alarm_list">
 							<div class="alarm_list_contents" style="right: 0; pointer-events: auto">
 									<a href="https://www.hellomarket.com/m/coupon" target="_blank" rel="noreferrer">
 										<div class="contents">
@@ -139,7 +144,7 @@ $(function() {
 												<img src="https://ccimg.hellomarket.com/images/2023/member_profile/03/08/13/0838615_53080_1.jpg?size=s4" alt="세컨웨어 할인 쿠폰">
 											</div>
 											<div class="info_no_item_img">
-													<p class="title">${auction.auction_item_name } - ${auction.pay_price}원에  낙찰 완료</p>
+													<p class="title">${auction.auction_item_name } - ${auction.pay_price}원에  낙찰 </p>
 											</div>
 										</div>
 									</a>
