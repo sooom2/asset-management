@@ -147,7 +147,7 @@
 				</div>
             </div>
         </div>
-        <a id="toTop" href="#">TOP</a>
+       	<img src="${path }/resources/images/top.jpg" id="toTop">
 	</div>
           
 <script type="text/javascript">
@@ -539,7 +539,6 @@
 				} else {
 					$("#item_price_max").val(item_price_max);
 				}
-				
 				
 				// 가격 필터에 추가
 				if($(".tagListFilterBox").find(".tagPrice").length > 0) {
