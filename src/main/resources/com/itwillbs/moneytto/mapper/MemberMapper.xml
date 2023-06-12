@@ -266,7 +266,7 @@
 							WHEN #{grade_score} >= 50		THEN '3'
 							WHEN #{grade_score} >= 10		THEN '2'
 							WHEN #{grade_score} >= 1		THEN '1'
-							WHEN #{grade_score} >= -5		THEN '0'
+							WHEN #{grade_score} &lt; 0		THEN '0'
 							ELSE '1'  
 						END);
 	</select>
