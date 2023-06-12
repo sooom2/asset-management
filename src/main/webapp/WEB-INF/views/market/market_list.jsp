@@ -147,7 +147,7 @@
 				</div>
             </div>
         </div>
-<%-- 		<img src="${path }/resources/images/top.png" alt="top" class="topBtn" onclick=""/> --%>
+        <a id="toTop" href="#">TOP</a>
 	</div>
           
 <script type="text/javascript">
@@ -419,6 +419,24 @@
 		
 		$(function () {
 			marketItemList();
+			
+			// 상단 이동 버튼
+			// 보이기 | 숨기기
+			$(window).scroll(function() {
+				if ($(this).scrollTop() > 250) {
+					$('#toTop').fadeIn();
+					$('#toTop').css('left', $('#sidebar').offset().left);
+				} else {
+					$('#toTop').fadeOut();
+				}
+		    });
+		    // 버튼 클릭시
+		    $("#toTop").click(function() {   
+		    $('html, body').animate({scrollTop : 0}, 400);          // 속도 400
+		    	return false;
+		    });
+			
+			
 			
 			// 더보기
 			$(document).on("click", ".chall_more", function(e) {
