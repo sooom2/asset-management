@@ -151,9 +151,11 @@ ul {
 }
 
 .order_card .cont .item_title {
-    font-size: 17px;
+    font-size: 13px;
     line-height: 25px;
     margin: 0 0 1px;
+    color: #BB2649;
+    font-weight: bold;
 }
 
 .order_card .cont .item_price {

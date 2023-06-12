@@ -262,7 +262,7 @@
             data: {
                 auction_code: "${auction.auction_code }",
                 success_id: success_nickname.substring(0, success_nickname.length -1),
-                success_price: $("#lastLogPrice").html().toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","),
+                success_price: $("#lastLogPrice").html(),
                 deposit: ${deposit}
             },
             success: function(result) {
@@ -662,7 +662,7 @@ function connect2() {
 		// 낙찰 최대금액
 	//	var auctionMax = "<span>" + message + "</span>원&nbsp;<i class='fa-solid fa-comment-dollar'></i>";
 	//	$(".auction_price").html(auctionMax);
-		$(".auction_price").find("span").html(message);
+		$(".auction_price").find("span").html(message.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
 // 		$("#btnAskingPrice").attr("data-price",message);
 		//  입찰하기 부분이 현재 최고가 기준으로 변경됨 (속성만)
 		// 보여주는 부분을 변경하려면 val()을 수정해야하는것
