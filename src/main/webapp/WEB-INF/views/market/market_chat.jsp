@@ -114,7 +114,7 @@ $(function() {
 	    }
 
 		$('a.sch_date').on("click",function(){
-// 			sch_date();
+			sch_date();
 		});
 	   // 탈퇴한회원처리 ( disabled 하기)
 	   let isExistMember = "${opponentId.opponent_delete_status}"
@@ -186,13 +186,10 @@ $(function() {
 
 	       // 모든 아이콘의 이미지를 원래 이미지로 초기화
 	       $(".report_check_icon").attr("src", originalImage);
-
 	       // 선택한 아이콘의 이미지를 활성화 이미지로 변경
 	       $(this).attr("src", activeImage);
-
 	       var reportType = $(this).attr("id");
 	       $("#report_type").val(reportType);
-
 	       $(".report_btn").css("background", "#bb2649");
 	   });
 
@@ -207,6 +204,8 @@ $(function() {
 	   $(document).on("click", ".report_btn", function() {
 		 
 	       var reportType = $("#report_type").val();
+	       
+			
 	       if (reportType == "") {
 	           swal({	
            		icon: "warning",
@@ -218,15 +217,14 @@ $(function() {
 	           		text: "신고 완료!"
                });
 	           
-	           report();
-	           $(".ReactModalPortal").remove();
+               report(); 
+               $(".ReactModalPortal").remove();
 	       }
 	   });
 
 	   // 모달창 닫기
 	   $(document).on("click", ".close", function() {
 	       $(".ReactModalPortal").remove();
-// 	       location.reload();
 	   });
 
 
@@ -235,6 +233,11 @@ $(function() {
 	       let opponentId = "${opponentId.opponent_id}";
 	       let reportType = $("#report_type").val();
 	       let reportContent = $("#report_content").val();
+	       alert(reportType);
+    	   if (typeof reportContent === "undefined" || reportContent === "") {
+	    	   reportContent = reportType;
+	    	   alert(reportContent);
+	    	}
 	       $.ajax({
 	           type: "GET",
 	           url: "report",
@@ -246,7 +249,7 @@ $(function() {
 	           },
 	           dataType: "json",
 	           success: function(result) {
-	        	   location.reload();
+	        	   
 	           }
 	           
 	       });
@@ -384,20 +387,12 @@ $(function() {
 
 		let currentDate;
 		let tradeDate;
-// 		if (new Date($("input.sch_box").val()) < new Date() && $('input.active').val() != '거래완료' ){
-// 	    	alert("ddd");
-// 			alert(room_code + "해당방의 거래가 일정이 지났습니다. 거래를 완료를 해주세요");
-// 		}
-		
 		//왼쪽 list 눌렸을때
 		
 		function chatDetail(room_code) {
 			//다른채팅방에서 글을쓰고 다른 채팅방 누를경우
-// 			alert(room_code);	
 			$('.chat_input').val('');
 
-// 			alert("chatDetail 눌렸을때 잘못됨 : " + item_code);
-			
 			new Promise((succ, fail) => {
 				$.ajax({
 	               type: "GET",
@@ -920,8 +915,7 @@ $(function() {
 
       <!-- 신고 모달창 -->
       <div class="ReactModalPortal" style="display: none;">
-         <div
-            class="detail_report">
+         <div class="detail_report">
             <div class="modal_main" tabindex="-1" role="dialog">
                <div class="modal_parent">
                   <div class="modal_container">
@@ -931,7 +925,7 @@ $(function() {
                         <div class="report_list_wrapper">
                            <div class="report_list_box">
                               <img src="${path }/resources/images/chat/ico_unChecked.png" id="카톡/오픈채팅 등 머니또채팅밖에서 대화를 유도해요" alt="체크박스 아이콘" class="report_check_icon">
-                              <div class="report_list">카톡/오픈채팅 등 당근채팅밖에서 대화를 유도해요</div>
+                              <div class="report_list">카톡/오픈채팅 등 머니또 채팅밖에서 대화를 유도해요</div>
                            </div>
                            <div class="report_list_box">
                               <img src="${path }/resources/images/chat/ico_unChecked.png" id="신분증/계좌와 같은 개인정보를 수집하고, 잠적했어요" alt="체크박스 아이콘" class="report_check_icon">

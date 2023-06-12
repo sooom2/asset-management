@@ -258,7 +258,7 @@ public class BankController {
 		map.put("trade_amount", trade_amount);
 		map.put("trade_date", trade_date);
 		
-		System.out.println("==================================");
+		System.out.println("map ==================================");
 		System.out.println(map);
 		System.out.println("==================================");
 		int insertCount = bankService.writeHistory(map);

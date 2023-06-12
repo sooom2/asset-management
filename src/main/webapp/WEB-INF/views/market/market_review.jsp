@@ -135,7 +135,7 @@ h2{
 <body>
 	<div class="con">
 		<form class="review" action="reviewRegist" method="POST">
-		  	<div class="star-rating">
+			<div class="star-rating">
 				<input type="radio" id="5-stars" name="rating" value="5" />
 				<label for="5-stars" class="star">&#9733;</label>
 				<input type="radio" id="4-stars" name="rating" value="4" />
