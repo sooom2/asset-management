@@ -16,9 +16,16 @@
 	rel="stylesheet" />
 <link href="${pageContext.request.contextPath }/resources/css/adminAuction.css" rel="stylesheet" />
 <link href="${pageContext.request.contextPath }/resources/css/styles.css" rel="stylesheet" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
 	crossorigin="anonymous"></script>
 <script type="text/javascript">
+	$(function() {
+		$("#file").on('change',function(){
+			  var fileName = $("#file").val();
+			  $(".upload-name").val(fileName);
+		});
+	});
 
 	function search(idx) {
 		idx = parseInt(idx);
@@ -48,6 +55,45 @@
 		dis.style.display = "none";
 	}
 </script>
+<style type="text/css">
+.filebox .upload-name {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 78%;
+    color: #999999;
+}
+.filebox label {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    cursor: pointer;
+    height: 40px;
+    margin-left: 10px;
+}
+.filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+#submitBtn {
+    margin: auto;
+    display: block;
+    width: 50%;
+}
+
+input[type=radio] {
+	height: 12px !important;
+}
+
+</style>
 </head>
 <body>
 <jsp:include page="admin_nav_top.jsp" />
@@ -75,8 +121,8 @@
 							</div>
 							<div>
 								<label for="auction_type">경매 타입</label>
-								<input type="radio" name="auction_type" value="실시간 경매" checked="checked">
-								<input type="radio" name="auction_type" value="기간 경매">
+								<input type="radio" name="auction_type" value="실시간 경매" checked="checked">실시간 경매&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="radio" name="auction_type" value="기간 경매">기간 경매
 							</div>
 							<div>
 								<label for="auction_category">카테고리</label>
@@ -111,10 +157,15 @@
 							</div>
 							<div>
 								<label for="customer_name">이미지 등록</label>
-								<input type="text" name="image_name" required placeholder="상품 이미지를 등록하세요.">
+								<div class="filebox" style="height: 80px">
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								    <input class="upload-name" value="첨부파일" placeholder="상품 이미지를 등록하세요." style="width: 65%">
+								    <label for="file">파일찾기</label> 
+								    <input type="file" name="file" id="file">
+								</div>
 							</div>
 							<div>
-								<input type="submit" value="등록" style="border: 1px solid #8d8d8d;">
+								<input id="submitBtn" type="submit" value="등록" style="border: 1px solid #8d8d8d;">
 							</div>
 						</form>
 					</div>
