@@ -473,7 +473,6 @@ function toggleLike(element) {
 			var reportType = $(this).attr("id");
 			$("#report_type").val(reportType);
 			
-			
 			$(".IZaFu").css("background", "#bb2649");
 		});
 		
@@ -505,7 +504,7 @@ function toggleLike(element) {
 			} else {
 				swal({	
 	        		icon: "success",
-	        		text: "신고가 성공적으로 접수되었습니다!"
+	        		text: "성공적으로 접수되었습니다!"
 		        });
 				report();
 			}
