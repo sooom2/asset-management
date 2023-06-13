@@ -198,13 +198,11 @@ public class CommunityController {
 // ----------------공지사항추가 ---------------------
 	
 	@GetMapping(value = "noticeList")
-	public String noticeList(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
-	    List<HashMap<String, String>> boardList = service.boardList(board);
+	public String noticeList(@RequestParam HashMap<String, String> board, Model model) {
+	    List<HashMap<String, String>> noticeList = service.noticeList(board);
 	    
-	    String id = (String)session.getAttribute("sId");
 	
-	    
-	    
+	    model.addAttribute("noticeList", noticeList);
 	    
 
 	    return "board/noticeList";

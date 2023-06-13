@@ -111,7 +111,6 @@
 		<form id="iForm" class="form-container">
 			<h2 class="tit">머니또 공지사항<span class="emoji">🍀</span></h2>
 			<div class="button-search-container">
-			
 
 				<!-- 검색 입력 박스와 검색 버튼 -->
 				<div id="search-container">
@@ -130,18 +129,18 @@
 					<th id="board-header">조회수</th>
 				</tr>
 				<%-- boardList를 반복하여 데이터를 출력 --%>
-				<c:forEach items="${boardList}" var="boardList" varStatus="loop">
+				<c:forEach items="${noticeList}" var="noticeList" varStatus="loop">
 					<tr>
 						<td id="board-data">${loop.index + 1}</td>
 						<td id="board-data">
 							<div class="board-info">
-								<a href="commBoardView?comm_code=${boardList.comm_code}"
-									class="board-title">${boardList.comm_title}</a> <span
-									class="comment-count">(${boardList.comment_count})</span>
+								<a href="commBoardView?comm_code=${noticeList.comm_code}"
+									class="board-title">${noticeList.notice_subject}</a> <span
+									class="comment-count">(${noticeList.notice_count})</span>
 							</div>
 						</td>
-						<td id="board-data">${boardList.formatted_date}</td>
-						<td id="board-data">${boardList.comm_count}</td>
+						<td id="board-data">${noticeList.notice_date}</td>
+						<td id="board-data">${noticeList.notice_count}</td>
 					</tr>
 				</c:forEach>
 			</table>
