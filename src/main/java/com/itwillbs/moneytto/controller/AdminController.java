@@ -2,24 +2,28 @@ package com.itwillbs.moneytto.controller;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.itwillbs.moneytto.service.*;
+import com.itwillbs.moneytto.service.AdminService;
+import com.itwillbs.moneytto.service.AuctionService;
+import com.itwillbs.moneytto.service.BankService;
+import com.itwillbs.moneytto.service.MarketService;
+import com.itwillbs.moneytto.service.MemberService;
+import com.mysql.cj.xdevapi.JsonArray;
 
 @Controller
 public class AdminController {
@@ -48,7 +52,7 @@ public class AdminController {
 			map.put("startNum", "0");
 			map.put("endNum", "10");
 		}
-		// 1. 수익률 비교 위해 계좌내역 조회
+		// 1. 거래량 조회
 		List<HashMap<String, String>> tradeChart = service.selectTradeChart(map); // 좀 있다 수정
 		// 2. 카테고리별 차트
 		List<HashMap<String, String>> categoryChart = service.selectCategoryChart(map);
@@ -60,13 +64,43 @@ public class AdminController {
 		HashMap<String, String> countMap = new HashMap<>();
 		// 내역이 존재할 경우
 		// 1. 
+		//TODO 임시 테스트 
+		JSONArray jsonArry = new JSONArray(tradeChart);
+		model.addAttribute("jsonArray", jsonArry);
+		
+		
+		
+		
+		// ==============================================================================================
+		// ==============================================================================================
 		if(tradeChart.size() > 0) {
 			// 새로운 이름 필요해서 생성
 			HashMap<String, String> accountCnt = new HashMap<>();
 			// 인덱스 첫번째
-			countMap = tradeChart.get(0);
+			System.out.println(tradeChart.size());
+			// accountCnt에 저장위해
+//			for(int i = 0; i < 7; i++) {
+//				int num = 7 - tradeChart.size();
+//				if(num > 0 && i - num != i) {
+//					
+//					
+//				}
+//				countMap = tradeChart.get(i);
+//				String tradeResult = String.valueOf(countMap.get("dateCnt")) != null ? String.valueOf(countMap.get("dateCnt")) : "0";
+//				accountCnt.put("day_"+i, tradeResult);
+//				continue;
+//			}
+//			accountCnt.put("day_2", tradeResult);
+//			accountCnt.put("day_3", tradeResult);
+//			accountCnt.put("day_4", tradeResult);
+//			accountCnt.put("day_5", tradeResult);
+//			accountCnt.put("day_6", tradeResult);
+//			accountCnt.put("day_7", tradeResult);
+//			System.out.println(accountCnt);
 			// 스트링 타입으로 생성한 이름으로 저장
-			accountCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+//			accountCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+			
+			
 			model.addAttribute("accountCnt", accountCnt);
 			System.out.println("1번 확인: " + tradeChart);
 		}
@@ -162,29 +196,47 @@ public class AdminController {
 			// 인덱스 첫번째
 			countMap = payTypeChart.get(0);
 			// 스트링 타입으로 생성한 이름으로 저장
-			payTypeCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
-			String tradeCnt = "";
-			String safeCnt = "";
-			// categoryChart에 저장된 List들 중 맞는 값 찾기 위해 반복
-			for (HashMap<String, String> chart : payTypeChart) {
-				// switch 조건
-				String marketPayType = chart.get("market_pay_type");
-				switch (marketPayType) {
-					case "직접거래":
-						tradeCnt = String.valueOf(chart.get("trade_cnt"));
-						break;
-					case "안전결제":
-						safeCnt = String.valueOf(chart.get("safe_cnt"));
-						break;
-					default:
-						break;
-				}
-			}
-			// payTypeCnt에 저장
-			payTypeCnt.put("tradeCnt", tradeCnt);
-			payTypeCnt.put("safeCnt", safeCnt);
+			payTypeCnt.put("tradeCnt", String.valueOf(countMap.get("payTypeCnt")));
+			// 인덱스 두번째
+			countMap = payTypeChart.get(1);
+			// 스트링 타입으로 생성한 이름으로 저장
+			payTypeCnt.put("safeCnt", String.valueOf(countMap.get("payTypeCnt")));
+			System.out.println("확인용: " + payTypeCnt);
+			
+			// payTypeCnt 저장
 			model.addAttribute("payTypeCnt", payTypeCnt);
+			System.out.println("model " + model);
 		}
+		// 3번 눌렀을 경우 사용할 코드
+//		if(payTypeChart.size() > 0) {
+//			// 새로운 이름 필요해서 생성
+//			HashMap<String, String> payTypeCnt = new HashMap<>();
+//			// 인덱스 첫번째
+//			countMap = payTypeChart.get(0);
+//			// 스트링 타입으로 생성한 이름으로 저장
+//			payTypeCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+//			String tradeCnt = "";
+//			String safeCnt = "";
+//			// categoryChart에 저장된 List들 중 맞는 값 찾기 위해 반복
+//			for (HashMap<String, String> chart : payTypeChart) {
+//				// switch 조건
+//				String marketPayType = chart.get("market_pay_type");
+//				switch (marketPayType) {
+//				case "직접거래":
+//					tradeCnt = String.valueOf(chart.get("trade_cnt")) != null ? String.valueOf(chart.get("trade_cnt")) : "0";
+//					break;
+//				case "안전결제":
+//					safeCnt = String.valueOf(chart.get("safe_cnt")) != null ? String.valueOf(chart.get("safe_cnt")) : "0";
+//					break;
+//				default:
+//					break;
+//				}
+//			}
+//			// payTypeCnt에 저장
+//			payTypeCnt.put("tradeCnt", tradeCnt);
+//			payTypeCnt.put("safeCnt", safeCnt);
+//			model.addAttribute("payTypeCnt", payTypeCnt);
+//		}
 		// 4. 
 		if(reviewChart.size() > 0) {
 			// 새로운 이름 필요해서 생성
@@ -196,7 +248,7 @@ public class AdminController {
 			model.addAttribute("reviewCnt", reviewCnt);
 		}
 		// 내역을 model에 저장
-		model.addAttribute("accountChart", tradeChart);
+		model.addAttribute("tradeChart", tradeChart);
 		model.addAttribute("categoryChart", categoryChart);
 		model.addAttribute("payTypeChart", payTypeChart);
 		model.addAttribute("reviewChart", reviewChart);

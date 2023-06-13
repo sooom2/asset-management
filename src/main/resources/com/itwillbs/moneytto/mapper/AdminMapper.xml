@@ -30,17 +30,13 @@
 			)
 	</insert>
 
-<!-- 1. 수익률 비교 위해 계좌내역 조회 -->
+<!-- 1. 거래량 조회 -->
 	<select id="selectTradeChart" resultType="hashmap">
 		SELECT 
 			ROW_NUMBER() OVER(ORDER BY t.date DESC ) AS rownum
-			, count(t.item_code) over() AS totalCnt   -- 날짜별로 카운트 하는거 추가해야함
-			, t.item_code 
-			, t.subject
-			, t.member_id
-			, t.price
-			, t.category
 			, t.date
+			, count(*) AS dateCnt
+			, dateDiff(now(), t.date) AS dayDiff
 		FROM 
 			(SELECT
 				mp.item_code AS item_code
@@ -48,7 +44,7 @@
 				, sell_id AS member_id 
 				, market_price AS price
 				, i.item_category AS category
-				, mp.market_date AS date
+				, date(mp.market_date) AS date
 				FROM market_paid mp
 					LEFT JOIN item i
 						ON mp.item_code = i.item_code
@@ -59,7 +55,7 @@
 				, al.member_id AS member_id 
 				, a. success_price AS price
 				, a.auction_category AS category
-				, al.log_time 	AS date
+				, date(al.log_time) 	AS date
 				FROM auction a
 					LEFT JOIN 
 						(SELECT
@@ -71,6 +67,87 @@
 							GROUP BY auction_code) al
 					ON a.auction_code = al.auction_code
 				WHERE auction_type = '경매 완료') t
+			GROUP BY date
+<!-- 		SELECT  -->
+<!-- 			ROW_NUMBER() OVER(ORDER BY t.date DESC ) AS rownum -->
+<!-- 			, count(t.item_code) over() AS totalCnt -->
+<!-- 			, t.item_code  -->
+<!-- 			, t.subject -->
+<!-- 			, t.member_id -->
+<!-- 			, t.price -->
+<!-- 			, t.category -->
+<!-- 			, date(t.date) AS date -->
+<!-- 			, ttt.dateCnt AS dateCnt -->
+<!-- 		FROM  -->
+<!-- 			(SELECT -->
+<!-- 				mp.item_code AS item_code -->
+<!-- 				, item_subject AS subject -->
+<!-- 				, sell_id AS member_id  -->
+<!-- 				, market_price AS price -->
+<!-- 				, i.item_category AS category -->
+<!-- 				, mp.market_date AS date -->
+<!-- 				FROM market_paid mp -->
+<!-- 					LEFT JOIN item i -->
+<!-- 						ON mp.item_code = i.item_code -->
+<!-- 			UNION ALL  -->
+<!-- 			SELECT  -->
+<!-- 				a.auction_code AS item_code -->
+<!-- 				, a.auction_item_name AS subject -->
+<!-- 				, al.member_id AS member_id  -->
+<!-- 				, a. success_price AS price -->
+<!-- 				, a.auction_category AS category -->
+<!-- 				, al.log_time 	AS date -->
+<!-- 				FROM auction a -->
+<!-- 					LEFT JOIN  -->
+<!-- 						(SELECT -->
+<!-- 								auction_code -->
+<!-- 								, max(member_id) AS member_id -->
+<!-- 								, max(log_content) -->
+<!-- 								, max(log_time) AS log_time -->
+<!-- 							FROM auction_log -->
+<!-- 							GROUP BY auction_code) al -->
+<!-- 					ON a.auction_code = al.auction_code -->
+<!-- 				WHERE auction_type = '경매 완료') t -->
+<!-- 				LEFT JOIN ( -->
+<!-- 		SELECT  -->
+<!-- 			t2.date AS date -->
+<!-- 			, count(*) AS dateCnt -->
+<!-- 		FROM  -->
+<!-- 			(SELECT -->
+<!-- 				mp2.item_code AS item_code -->
+<!-- 				, item_subject AS subject -->
+<!-- 				, sell_id AS member_id  -->
+<!-- 				, market_price AS price -->
+<!-- 				, i2.item_category AS category -->
+<!-- 				, date(mp2.market_date) AS date -->
+<!-- 				FROM market_paid mp2 -->
+<!-- 					LEFT JOIN item i2 -->
+<!-- 						ON mp2.item_code = i2.item_code -->
+<!-- 			UNION ALL  -->
+<!-- 			SELECT  -->
+<!-- 				a2.auction_code AS item_code -->
+<!-- 				, a2.auction_item_name AS subject -->
+<!-- 				, al2.member_id AS member_id  -->
+<!-- 				, a2. success_price AS price -->
+<!-- 				, a2.auction_category AS category -->
+<!-- 				, date(al2.log_time) 	AS date -->
+<!-- 				FROM auction a2 -->
+<!-- 					LEFT JOIN  -->
+<!-- 						(SELECT -->
+<!-- 								auction_code -->
+<!-- 								, max(member_id) AS member_id -->
+<!-- 								, max(log_content) -->
+<!-- 								, max(log_time) AS log_time -->
+<!-- 							FROM auction_log -->
+<!-- 							GROUP BY auction_code) al2 -->
+<!-- 					ON a2.auction_code = al2.auction_code -->
+<!-- 				WHERE auction_type = '경매 완료') t2 -->
+<!-- 					GROUP BY date) ttt -->
+<!-- 				ON date(t.date) = date(ttt.date) -->
+<!-- 		WHERE 1=1 -->
+<!-- 		<if test="startNum != null and !startNum.equals('')"> -->
+<!-- 			LIMIT ${startNum}, ${endNum} -->
+<!-- 		</if> -->
 	</select>
 
 
@@ -126,29 +203,36 @@
 
 <!-- 3. 관리자 직거래, 안전거래 비교 차트 -->
 	<select id="selectPayTypeChart" resultType="hashmap">
-		SELECT 
-			ROW_NUMBER() OVER(ORDER BY market_code DESC ) AS rownum
-			, mp.*
-			, count(mp.market_code) over() AS totalCnt
-			, mpc1.trade_type_cnt AS trade_cnt
-			, mpc2.safe_type_cnt AS safe_cnt
-		FROM market_paid mp
-			LEFT JOIN 
-				(SELECT  market_pay_type, count(market_pay_type) AS trade_type_cnt
-					FROM market_paid
-					WHERE market_pay_type = '직접거래'
-					GROUP BY market_pay_type) AS mpc1
-				ON mp.market_pay_type = mpc1.market_pay_type
-			LEFT JOIN 
-				(SELECT  market_pay_type, count(market_pay_type) AS safe_type_cnt
-					FROM market_paid
-					WHERE market_pay_type = '안전결제'
-					GROUP BY market_pay_type) AS mpc2
-				ON mp.market_pay_type = mpc2.market_pay_type
-		WHERE 1=1
-		<if test="startNum != null and !startNum.equals('')">
-			LIMIT ${startNum}, ${endNum}
-		</if>
+		
+		SELECT
+			market_pay_type
+			, count(*) AS payTypeCnt
+		FROM market_paid mp 
+			GROUP BY market_pay_type
+		
+<!-- 		SELECT  -->
+<!-- 			ROW_NUMBER() OVER(ORDER BY market_code DESC ) AS rownum -->
+<!-- 			, mp.* -->
+<!-- 			, count(mp.market_code) over() AS totalCnt -->
+<!-- 			, mpc1.trade_type_cnt AS trade_cnt -->
+<!-- 			, mpc2.safe_type_cnt AS safe_cnt -->
+<!-- 		FROM market_paid mp -->
+<!-- 			LEFT JOIN  -->
+<!-- 				(SELECT  market_pay_type, count(market_pay_type) AS trade_type_cnt -->
+<!-- 					FROM market_paid -->
+<!-- 					WHERE market_pay_type = '직접거래' -->
+<!-- 					GROUP BY market_pay_type) AS mpc1 -->
+<!-- 				ON mp.market_pay_type = mpc1.market_pay_type -->
+<!-- 			LEFT JOIN  -->
+<!-- 				(SELECT  market_pay_type, count(market_pay_type) AS safe_type_cnt -->
+<!-- 					FROM market_paid -->
+<!-- 					WHERE market_pay_type = '안전결제' -->
+<!-- 					GROUP BY market_pay_type) AS mpc2 -->
+<!-- 				ON mp.market_pay_type = mpc2.market_pay_type -->
+<!-- 		WHERE 1=1 -->
+<!-- 		<if test="startNum != null and !startNum.equals('')"> -->
+<!-- 			LIMIT ${startNum}, ${endNum} -->
+<!-- 		</if> -->
 	</select>
 	
 	

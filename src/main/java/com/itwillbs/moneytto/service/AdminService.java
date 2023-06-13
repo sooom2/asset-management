@@ -23,7 +23,7 @@ public class AdminService {
 		return mapper.registImage(images);
 	}
 
-	// 1. 수익률 비교 위해 계좌내역 조회
+	// 1. 거래량 조회
 	public List<HashMap<String, String>> selectTradeChart(HashMap<String, String> map) {
 		return mapper.selectTradeChart(map);
 	}

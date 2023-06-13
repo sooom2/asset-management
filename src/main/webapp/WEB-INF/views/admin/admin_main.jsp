@@ -1,6 +1,7 @@
  <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +20,14 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+<!-- <script type="text/javascript"> -->
+<%-- var list = ${jsonArray}; --%>
+<!-- var now = Date.now(); -->
+<!-- for(var element of list){ -->
+<!-- 	console.log(element.date.compareTo(now)); -->
+<!-- } -->
 
+<!-- </script> -->
 <%-- 	<c:if test="${sessionScope.sId  ne 'admin' }"> --%>
 <!-- 		<script type="text/javascript"> -->
 <!-- 			alert("잘못된 접근입니다!"); -->
@@ -44,23 +52,42 @@
 								<div class="card-body font20">
 									수익률<br>
 									
-<!-- 								막대	============================================================== -->
+<!-- 								혼합 시작	============================================================== -->
 									<div>
 									    <canvas id="mixedChart"></canvas>
 									</div>
 									
 									<script>
-									    var trade1 = ${accountCnt.totalCnt};
-									
+										var list = ${jsonArray};
+										
+// 										const now = Date.now();
+// 										let year = now.getFullYear();
+// 										let month = now.getMonth() < 10 ? "0" + (now.getMonth() + 1) : now.getMonth() + 1;
+// 										let day = now.getDate();
+										
+// 										var nowDate1 = year + "-" + month + "-" + day;
+// 										console.log("오늘 날짜 nowDate : " + nowDate);
+// 										for(var i = 0; i < list.length ; i ++){
+// 											console.log("list[i].date : " + list[i].date);
+// // 											console.log(list[i].date);
+											
+// 										}
+// 										let today = nEW DATE();
+// 										CONSOLE.LOG(Today);
+// 									    var trade1 = ${accountCnt.totalCnt};
+
+// 									    const trade1 = ${tradeChart};
+// 										console.log(${tradeChart});
+										var result =     
 									    var ctx = document.getElementById('mixedChart').getContext('2d');
 									
 									    var mixedChart = new Chart(ctx, {
 									        type: 'bar',
 									        data: {
-									            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+									            labels: [list[6].date , list[5].date, list[4].date, list[3].date, list[2].date, list[1].date, list[0].date],
 									            datasets: [{
 									                label: 'Sales',
-									                data: [50, 60, 70, 80, 90, 100],
+									                data: [50, 60, 70, 80, 20, 40, 20],
 									                backgroundColor: 'rgba(54, 162, 235, 0.5)'
 									            }]
 									        },
@@ -82,7 +109,7 @@
 									        fill: false
 									    });
 									</script>
-<!-- 								막대끝	============================================================== -->
+<!-- 								혼합 끝	============================================================== -->
 
 									
 								</div>
@@ -199,94 +226,9 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-xl-3 col-md-6">
-							<div class="card bg-success text-black mb-4">
-								<div class="card-body font20">
-									스토어 주문<br> <span class="fontB">${payCount }</span> 건
-									
-<!-- 								라인시작	============================================================== -->		
-									<div style="width:100%;">
-									  <canvas id="lineChart"></canvas>
-									</div>
-									
-									<script>
-									new Chart(document.getElementById("lineChart"), {
-									    type: 'line',
-									    data: {
-									        labels: ['1', '2', '3', '4', '5', '6', '7'],
-									        datasets: [{
-									            label: '테스트 데이터셋',
-									            data: [
-									                10,
-									                3,
-									                30,
-									                23,
-									                10,
-									                5,
-									                50
-									            ],
-									            borderColor: "rgba(255, 201, 14, 1)",
-									            backgroundColor: "rgba(255, 255, 255, 0)",
-									            fill: true,
-									            lineTension: 0
-									        }]
-									    },
-									    options: {
-									        responsive: true,
-									        title: {
-									            display: true,
-									            text: '라인 차트 테스트'
-									        },
-									        tooltips: {
-									            mode: 'index',
-									            intersect: false,
-									        },
-									        hover: {
-									            mode: 'nearest',
-									            intersect: true
-									        },
-									        scales: {
-									            xAxes: [{
-									                display: true,
-									                scaleLabel: {
-									                    display: true,
-									                    labelString: 'x축'
-									                }
-									            }],
-									            yAxes: [{
-									                display: true,
-									                ticks: {
-									                    suggestedMin: 0,
-									                },
-									                scaleLabel: {
-									                    display: true,
-									                    labelString: 'y축'
-									                }
-									            }]
-									        }
-									    }
-									});
-									
-									</script>						
-<!-- 								라인 끝	============================================================== -->									
-								
-								
-								</div>
-								<div
-									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-black stretched-link" href="admin_item_pay">더보기</a>
-									<div class="small text-black">
-										<svg class="svg-inline--fa fa-angle-right" aria-hidden="true"
-											focusable="false" data-prefix="fas" data-icon="angle-right"
-											role="img" xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 256 512" data-fa-i2svg="">
-											<path fill="currentColor"
-												d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path>
-										</svg>
-									</div>
-								</div>
-							</div>
-						</div>
+						
+						
+						
 					</div>
 					<div class="card mb-4">
 						<div class="card-header">
