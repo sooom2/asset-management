@@ -57,9 +57,26 @@
 
 $(function() {
 	
+	// 충전하기 버튼
+	$('#pointBtn').on("click", function() {
+		window.open("payment", "머니또 충전", "width=500,height=600");
+	});
+	
+	// 경매 등록 버튼
 	$("#auctionEnroll").on("click", function() {
 		event.preventDefault()
-		 swal({
+		
+		if(${member.get('member_point')} < ${deposit}) {
+			
+			swal({
+			    title: "잔액이 부족합니다.",
+			    text: "충전하기 버튼을 눌러 충전해주세요.",
+			    icon: "warning",
+			    buttons: "확인"
+			});
+			
+		} else {
+			swal({
 			    title: "경매에 참여 하시겠습니까?",
 			    text: "1. 낙찰 후 경매 포기 시 보증금은 되돌려 받을 수 없습니다.\n2. 유찰 시 보증금은 즉시 되돌려 받습니다.",
 			    icon: "success",
@@ -85,6 +102,9 @@ $(function() {
 			    	location.href="auctionEnroll?auction_code=${auction.get('auction_code')}&deposit=${deposit}";
 			    }
 		  	});
+		}
+		
+		 
 		
 		
 	});// onclick
@@ -214,7 +234,7 @@ $(function() {
 					<div class="itemControllerWrapper">
 						<div class="SomeonesItemWrapper">
 							<div width="90%" class="SomeonesModifyButton"data-cd="${marketItem.item_code }" style="background:#268BFF">
-								<div color="#FFFFFF" class="SomeonesItemText" >충전하기</div>
+								<div color="#FFFFFF" id="pointBtn" class="SomeonesItemText" >충전하기</div>
 							</div>
 						</div>
 					</div>
