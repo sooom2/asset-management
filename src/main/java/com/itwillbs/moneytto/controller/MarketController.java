@@ -295,7 +295,7 @@ public class MarketController {
 	            System.out.println("사는사람 ==================================");
 	            System.out.println(sellId);
 	            System.out.println("==================================");
-	            String str ="직접결제";
+	            String str ="직접거래";
 	            int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date,str);
 	         }
 	         
