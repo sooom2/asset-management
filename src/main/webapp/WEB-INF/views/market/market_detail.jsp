@@ -489,7 +489,7 @@ function toggleLike(element) {
 			if($("#session_id").val() == "") {
 				swal({	
 	        		icon: "warning",
-	        		text: "신고는 로그인 후 가능합니다."
+	        		text: "로그인 후 이용해주세요."
 		        });
 				ReactModalPortal
 				return;
