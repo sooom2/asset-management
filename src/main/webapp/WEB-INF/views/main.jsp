@@ -106,7 +106,7 @@
 							<div class="main_title"><div style="font-size: 20px;height: 40px">우리동네 안심 중고직거래마켓<br></div>머니또</div>
 							<p class="description">머니또에서 동네 주민들과<br>가깝고 따뜻한 거래를 지금 경험해보세요</p>
 							<div class="buttons">
-								<a href="" class="whiteButton button_main" >인기상품</a>
+								<a href="market_list" class="whiteButton button_main" >인기상품</a>
 							</div>
 						</div>
 					</li>
@@ -115,7 +115,7 @@
 							<div class="main_title"><div style="font-size: 20px;height: 40px">우리끼리<br></div>머니또 경매</div>
 							<p class="description">머니또와 함께 거래를 시작해보세요!</p>
 							<div class="buttons">
-								<a href="" class="violetButton button_main">경매바로가기</a>
+								<a href="auctionMain" class="violetButton button_main">경매바로가기</a>
 							</div>
 						</div>
 					</li>
@@ -124,7 +124,7 @@
 							<div class="main_title"><div style="font-size: 20px;height: 40px">이웃과함께하는 동네생활<br></div>머니또 커뮤니티</div>
 							<p class="description">우리 동네의 다양한 이야기를 이웃과 함께 나누어요.</p>
 							<div class="buttons">
-								<a href="" class="whiteButton button_main" >커뮤니티바로가기</a>
+								<a href="commBoard" class="whiteButton button_main" >커뮤니티바로가기</a>
 							</div>
 						</div>
 					</li>

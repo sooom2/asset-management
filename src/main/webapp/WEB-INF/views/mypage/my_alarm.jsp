@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -71,9 +74,17 @@ $(function() {
 											<c:choose>
 												<c:when test="${sessionScope.sId ne chatList.buy_member_id}">
 													<p class="title">${chatList.buy_member_id} 님에게 메세지가 도착했습니다</p>
+													<p>
+														<fmt:parseDate var="parsedDate" value="${chatList.chat_time }" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+														<fmt:formatDate value="${parsedDate}" pattern="MM월 dd일 a hh시mm분 " />
+													</p>
 												</c:when>
 												<c:otherwise>
 													<p class="title">${chatList.sell_member_id} 님에게 메세지가 도착했습니다</p>
+													<p>
+														<fmt:parseDate var="parsedDate" value="${chatList.chat_time }" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+														<fmt:formatDate value="${parsedDate}" pattern="MM월 dd일 a hh시mm분 " />
+													</p>
 												</c:otherwise>
 											</c:choose>
 										</div>
