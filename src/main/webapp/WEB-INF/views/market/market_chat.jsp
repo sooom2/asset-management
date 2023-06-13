@@ -594,7 +594,7 @@ $(function() {
 						let str = '';
 						str += '<a class="sch_date">';
 						str += '<i class="fa-regular fa-circle-check"></i>';
-						str += '<input type="text" class="sch_box" style="border: none; width: 90px;" readonly value="' + result.marketPaid.market_date + '"/>거래완료';
+						str += '<input type="text" class="sch_box" style="border: none; width: 90px;" readonly value="' + result.marketPaid.market_date + '"/><strong>거래완료</strong>';
 						str += '</a>';
 						$('.scheduling').append(str);
 					}
@@ -845,7 +845,7 @@ $(function() {
                <!-- left -->
                <div class="left_main">
                   <div class="left_main_header">
-                     <div class="title">MY CHAT LIST - 내역있을때</div>
+                     <div class="title"><i class="fa-regular fa-face-smile"></i> MY CHAT LIST <i class="fa-regular fa-face-smile"></i></div>
                   </div>
                   <ul>
                   <!-- 채팅방 목록-->
@@ -935,7 +935,7 @@ $(function() {
 		                             <a class="sch_date">
 		                             	<i class="fa-regular fa-circle-check"></i>
 			                            <input type="text" class="sch_box" style="border: none; width: 90px;" readonly value="${market_paid.market_date }"/>
-		                           		<span>거래완료</span>
+		                           		<span><strong>거래완료</strong></span>
 		                             </a>
                            		</c:otherwise>
                            	</c:choose>
@@ -1036,7 +1036,7 @@ $(function() {
                <!-- left -->
                <div class="left_main">
                   <div class="left_main_header">
-                     <div class="title">MY CHAT LIST- 암것도없을때</div>
+                     <div class="title"><i class="fa-solid fa-heart"></i> MY CHAT LIST <i class="fa-solid fa-heart"></i></div>
                   </div>
                   <ul>
                   <!-- 채팅방 목록-->

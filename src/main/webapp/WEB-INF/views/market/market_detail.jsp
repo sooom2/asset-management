@@ -181,6 +181,7 @@ function toggleLike(element) {
 					</div>
 					<div class="SubTitleWrapper">
 						<div class="SubTitleDetailBox">
+							<div class="views">조회수 ${marketItem.item_count}</div>
 							<div class="SubTitleDetailText">${marketItem.item_date}</div>
 						</div>
 					</div>
@@ -473,7 +474,6 @@ function toggleLike(element) {
 			var reportType = $(this).attr("id");
 			$("#report_type").val(reportType);
 			
-			
 			$(".IZaFu").css("background", "#bb2649");
 		});
 		
@@ -505,7 +505,7 @@ function toggleLike(element) {
 			} else {
 				swal({	
 	        		icon: "success",
-	        		text: "신고가 성공적으로 접수되었습니다!"
+	        		text: "성공적으로 접수되었습니다!"
 		        });
 				report();
 			}

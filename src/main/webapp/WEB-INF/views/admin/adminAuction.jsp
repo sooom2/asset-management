@@ -109,78 +109,77 @@ input[type=radio] {
 				<!-- 모달 -->
 				<div class="regist_container">
 					<div class="content">
-						<form action="auction_regist" class="myForm" method="post" enctype="multipart/form-data">
+						<form action="auction_regist" class="myForm" method="post" enctype="multipart/form-data" style="width: 1000px;">
 						<h4 style="text-align: center;">경매 등록</h4><hr>
-								<div style="display:inline-block ;width: 100%;">
-									<div style="display:inline-block;width: 374px;">
-										<label for="auction_type" style="display: inline-block;width: 118px;">경매 타입</label>
-										<div style="display: inline-block;height: 33px;width: 236px;text-align: center;border: 1px solid #a7a7a7;line-height: 30px;">
-											<input type="radio" name="auction_type" value="실시간 경매" checked="checked">실시간 경매&nbsp;&nbsp;&nbsp;&nbsp;
-											<input type="radio" name="auction_type" value="기간 경매">기간 경매
+								<div>
+									<div style="display:inline-block ;width: 900px;">
+										<div style="display:inline-block;width: 49%;">
+											<label for="auction_type" style="display: inline-block;width: 118px;">경매 타입</label>
+											<div style="display: inline-block;height: 33px;width: 236px;text-align: center;border: 1px solid #a7a7a7;line-height: 30px;">
+												<input type="radio" name="auction_type" value="실시간 경매" checked="checked">실시간 경매&nbsp;&nbsp;&nbsp;&nbsp;
+												<input type="radio" name="auction_type" value="기간 경매">기간 경매
+											</div>
+										</div>
+										<div style="display:inline-block;width: 50%;">
+											<label for="auction_category" style=" width: 80px;">카테고리</label>
+											<select name="auction_category" style="width: 240px;height: 33px;">
+												<option value="">항목선택</option>
+												<option value="의류">의류</option>
+												<option value="시계/쥬얼리">시계/쥬얼리</option>
+												<option value="디지털/가전">디지털/가전</option>
+												<option value="스포츠/레저">스포츠/레저</option>
+												<option value="차량/오토바이">차량/오토바이</option>
+											</select>
 										</div>
 									</div>
-									<div style="display:inline-block;">
-										<label for="auction_category" style=" width: 80px;">카테고리</label>
-										<select name="auction_category" style="width: 195px;height: 33px;">
-											<option value="">항목선택</option>
-											<option value="의류">의류</option>
-											<option value="시계/쥬얼리">시계/쥬얼리</option>
-											<option value="디지털/가전">디지털/가전</option>
-											<option value="스포츠/레저">스포츠/레저</option>
-											<option value="차량/오토바이">차량/오토바이</option>
-										</select>
+							
+									<div>
+										<label for="auction_name">상품명</label>
+										<input type="text" name="auction_item_name" required="" placeholder="상품명을 입력하세요." style="width: 649px;">
+									</div>
+									<div class="form-group">
+									    <label for="comments">상품 설명</label>
+									    <textarea name="auction_content" maxlength="500"></textarea>
+									</div>
+								<div style="display: inline-block;width: 900px;"> 
+									<div style="display: inline-block;    width: 445px;">
+										<label for="customer_name">시작가</label>
+										<input type="text" name="auction_present_price" required="" placeholder="시작가를 입력하세요." style="width: 270px;">
+									</div>
+									<div style="display: inline-block;  width: 50%;">
+										<label for="customer_name">즉시 구매가</label>
+										<input type="text" name="auction_immediate_price" required="" placeholder="즉시 구매가를 입력하세요." style="width: 200px">
 									</div>
 								</div>
-						
-						
-						
+								<div style="display: inline-block;width: 100%"> 
+									<div style="display: inline-block;width: 445px;">
+										<label for="customer_name">시작일</label>
+										<input type="datetime-local" name="auction_start_date" required="required" style=" width: 271px;">
+									</div>
+									<div style="display: inline-block;">
+										<label for="customer_name">종료일</label>
+										<input type="datetime-local" name="auction_end_date" required="required" style="width: 201px;">
+									</div>
+								</div>
+								<div class="form-group">
+								    <label for="comments">공지사항</label>
+								    <textarea name="auction_notice" maxlength="500"></textarea>
+								</div>
+								<div style="display: inline-block;width: 100%">
+									<label for="customer_name" style="display: inline-block;width: 121px;">이미지 등록</label>
+									<div class="filebox" style="display: inline-block;    height: 80px;    width: 645px;">
+									    <input class="upload-name" value="첨부파일" placeholder="상품 이미지를 등록하세요." style="width: 483px;">
+									    <label for="file" style="display: inline-block;  width: 150px;line-height: 20px; text-align: center; padding-left: 18px;">파일찾기</label> 
+									    <input type="file" name="file" id="file">
+									</div>
+								</div>
 								<div>
-									<label for="auction_name">상품명</label>
-									<input type="text" name="auction_item_name" required placeholder="상품명을 입력하세요." style="width: 536px;">
+									<input id="submitBtn" type="submit" value="등록" style="border: 1px solid #8d8d8d;margin-left: 124px;width: 645px;">
 								</div>
-								<div class="form-group" >
-								    <label for="comments">상품 설명</label>
-								    <textarea name="auction_content" maxlength="500"></textarea>
-								</div>
-							<div style="display: inline-block;width: 100%"> 
-								<div style="display: inline-block;    width: 45%;">
-									<label for="customer_name">시작가</label>
-									<input type="text" name="auction_present_price" required placeholder="시작가를 입력하세요." style="width: 211px;">
-								</div>
-								<div style="display: inline-block;  width: 50%;">
-									<label for="customer_name">즉시 구매가</label>
-									<input type="text" name="auction_immediate_price" required placeholder="즉시 구매가를 입력하세요." style="width: 200px">
-								</div>
-							</div>
-							<div style="display: inline-block;width: 100%"> 
-								<div style="display: inline-block;">
-									<label for="customer_name">시작일</label>
-									<input type="datetime-local" name="auction_start_date" required="required">
-								</div>
-								<div style="display: inline-block;">
-									<label for="customer_name">종료일</label>
-									<input type="datetime-local" name="auction_end_date" required="required" style="width: 201px;">
-								</div>
-							</div>
-							<div class="form-group">
-							    <label for="comments">공지사항</label>
-							    <textarea name="auction_notice" maxlength="500"></textarea>
-							</div>
-							<div style="display: inline-block;width: 100%">
-								<label for="customer_name" style="display: inline-block;width: 121px;">이미지 등록</label>
-								<div class="filebox" style="display: inline-block;    height: 80px;    width: 531px;">
-								    <input class="upload-name" value="첨부파일" placeholder="상품 이미지를 등록하세요." style="width: 400px;">
-								    <label for="file" style="display: inline-block;  width: 120px;line-height: 20px; text-align: center; padding-left: 18px;">파일찾기</label> 
-								    <input type="file" name="file" id="file">
-								</div>
-							</div>
-							<div>
-								<input id="submitBtn" type="submit" value="등록" style="border: 1px solid #8d8d8d;">
 							</div>
 						</form>
 					</div>
-				</div>
-					
+				</div>	
 				<!-- 테이블 -->
 				<div class="datatable-container">
 					<h3 class="text-center font-weight-light my-4">경매품목관리</h3>
