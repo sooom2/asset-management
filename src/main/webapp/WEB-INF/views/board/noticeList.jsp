@@ -17,7 +17,7 @@
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="resources/js/jquery-3.6.4.js"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
   // 검색 함수
   function search() {
@@ -63,6 +63,20 @@
       search();
     }
   }
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // 제목 클릭 이벤트 처리
+    const boardTitles = document.querySelectorAll(".board-title");
+
+    boardTitles.forEach((title) => {
+      title.addEventListener("click", (event) => {
+        event.preventDefault();
+        swal("준비중 입니다.");
+      });
+    });
+  });
 </script>
 
 <style>
@@ -134,9 +148,8 @@
 						<td id="board-data">${loop.index + 1}</td>
 						<td id="board-data">
 							<div class="board-info">
-								<a href="commBoardView?comm_code=${noticeList.comm_code}"
-									class="board-title">${noticeList.notice_subject}</a> <span
-									class="comment-count">(${noticeList.notice_count})</span>
+								<a href="#" class="board-title">${noticeList.notice_subject}</a>
+								<span class="comment-count">(${noticeList.notice_count})</span>
 							</div>
 						</td>
 						<td id="board-data">${noticeList.notice_date}</td>
