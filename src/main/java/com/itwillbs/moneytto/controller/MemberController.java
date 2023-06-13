@@ -76,7 +76,7 @@ public class MemberController {
 		
 		member.put("member_location",location);		
 		
-		member.put("member_image", "http://c3d2212t3file.itwillbs.com/files/webapps/Moneytto/resources/upload/member/profile_default.jpg");
+		member.put("member_image", "http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg");
 		// 3) 입력받은 사진 이미지 설정
 		// 기본 이미지 설정 안하면 통과하게.. 
 		if(member.get("file") != null) {
