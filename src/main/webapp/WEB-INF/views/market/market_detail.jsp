@@ -181,6 +181,7 @@ function toggleLike(element) {
 					</div>
 					<div class="SubTitleWrapper">
 						<div class="SubTitleDetailBox">
+							<div class="views">조회수 ${marketItem.item_count}</div>
 							<div class="SubTitleDetailText">${marketItem.item_date}</div>
 						</div>
 					</div>
