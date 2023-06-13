@@ -40,7 +40,7 @@ public class AuctionChatSocketHandler extends TextWebSocketHandler {
 
 	@Override  
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-		
+		Date nowDate = new Date();
 		String msg = (String)message.getPayload();
 		JSONObject jObject = new JSONObject(msg);
 	    String name = jObject.getString("name");
@@ -74,7 +74,7 @@ public class AuctionChatSocketHandler extends TextWebSocketHandler {
         
         // 채팅 메세지 입력 시
         else if(auctionList.get(auctionCode) != null && !messages.equals("ENTER")) {
-        	Date nowDate = new Date();
+        	
     		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm"); 
     		String chatTime = simpleDateFormat.format(nowDate);
             // 채팅 출력
