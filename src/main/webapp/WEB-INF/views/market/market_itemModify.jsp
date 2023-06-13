@@ -203,8 +203,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 초기 태그 값 설정
   updateTagList();
-});
 
+  // 수정 폼 제출 이벤트 핸들러
+  var form = document.getElementById('modifyForm');
+  form.addEventListener('submit', function(event) {
+    // 제거한 태그를 hiddenInput의 값에서 제거
+    var removedTags = originalTags.filter(function(tag) {
+      return !tags.includes(tag);
+    });
+    hiddenInput.value = tags.concat(removedTags).join(',');
+  });
+});
 
 
 	
