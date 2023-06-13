@@ -781,6 +781,7 @@ public class MarketController {
 
 	        // 아이템 등록
 	        int insertCount = service.insertItem(item);
+	        
 
 	        // 아이템 등록에 성공한 경우에만 사진 정보 저장
 	        if (insertCount > 0) {
