@@ -107,6 +107,7 @@
     object-fit: cover;
     opacity: 100%;
     display: inline-flex;
+    cursor: pointer;
 }
 
  .NavigationCustomNavigationContainer {
@@ -994,7 +995,7 @@
 }
 
 .trade_status input[type="button"] {
-    cursor: pointer;
+    cursor: auto;
 }
 
 

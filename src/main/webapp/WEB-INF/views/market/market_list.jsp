@@ -15,7 +15,7 @@
 </head>
 <body>
 <input type="hidden" id="item_category" name="item_category" value="">
-<input type="hidden" id="item_status" name="item_status" value="판매중">
+<input type="hidden" id="item_status" name="item_status" value="1">
 <input type="hidden" id="item_price_min" name="item_price_min" value="0">
 <input type="hidden" id="item_price_max" name="item_price_max" value="999999999999999">
 <input type="hidden" id="member_grade" name="member_grade" value="">
@@ -577,7 +577,7 @@
 			$(document).on("click", "#complete", function(e) {
 				var completeChecked = $("#complete").prop("checked")
 				if(completeChecked) {
-					$("#item_status").val("판매중");
+					$("#item_status").val("1");
 				} else {
 					$("#item_status").val("");
 				}
@@ -589,7 +589,7 @@
 			$(document).on("click", "#grade", function(e) {
 				var gradeChecked = $("#grade").prop("checked")
 				if(gradeChecked) {
-					$("#member_grade").val("새싹");
+					$("#member_grade").val("1");
 				} else {
 					$("#member_grade").val("");
 				}
