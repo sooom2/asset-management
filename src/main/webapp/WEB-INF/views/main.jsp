@@ -17,7 +17,6 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="resources/js/jquery.bxslider.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/wish.js"></script>
-
 <script type="text/javascript">
 	$(function() {
 		//메인 슬라이 더
