@@ -53,10 +53,12 @@ $(document).ready(function(){
  	 	
  	 	updateSearchCount(searchCount);
  	});
-  	
   	function updateSearchCount(count) {
   	    $('.listCount').text('검색된 항목 수: ' + count);
   	  }
+  	
+  	
+  	
   	
  });
  
@@ -110,7 +112,36 @@ function reviewDelete(item_code){
 		}
 	});
 }
+function reviewHide(review_code) {
+	event.preventDefault();
 
+	swal({
+		title:"리뷰를 숨기시겠습니까?",
+		text: "숨긴 리뷰는 작성자만 확인할 수 있습니다.",
+		icon: "warning",
+		buttons: {
+			confirm: {
+				text: "숨김",
+				value: true,
+				visible: true,
+				className: "",
+				closeModal: true,
+			},
+			cancel: {
+				text: "취소",
+				value: false,
+				visible: true,
+				className: "",
+				closeModal: true,
+			},
+		},
+	}).then((result) => {
+		if(result){
+			location.href="reviewHide?review_code="+review_code;
+		}
+	});
+	    
+ }
 
 </script>
 </head>
@@ -281,14 +312,14 @@ function reviewDelete(item_code){
 								<th id="board-header" style="width: 15%;">날짜</th>
 							</tr>
 						    <c:forEach items="${itemList}" var="item" varStatus="status">
-						    	<c:if test="${item.hideReview eq 'N' }">
+						    	<c:if test="${item.hide_review eq 'N' }">
 						        <tr>
 						            <td id="board-data">${itemList.size() - status.index}</td>
 						            <td id="board-data" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"><a href="market_detail?item_code=${item.review_item_code}" class="board-title">${item.review_content}</a></td>
 						            <td id="board-data">${item.rating}</td>
 				            		<td id="board-data">
 				            			<c:if test= "${sessionScope.sId eq member.member_id }">
-						       		    <a href="#"class="board-title" onclick="reviewHide('${item.item_code}')">숨김</a>
+						       		    <a href="#"class="board-title" onclick="reviewHide('${item.review_code}')">숨김</a>
 						       		    </c:if>
 				            		</td>
 						            <td id="board-data">${item.review_date}</td>

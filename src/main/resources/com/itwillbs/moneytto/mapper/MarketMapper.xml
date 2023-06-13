@@ -725,7 +725,7 @@
       SET 
           hide_review = 'Y'
       WHERE
-          reviewer_id = #{reviewer_id}
+          review_code = #{review_code}
    </update>
    
    <delete id="deleteReview">
