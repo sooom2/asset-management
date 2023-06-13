@@ -590,7 +590,7 @@
     -webkit-box-align: center;
     align-items: center;
     height: 103px;
-    background: rgb(249, 250, 251);
+    background: rgb(255 247 249);
     border: 1.2px solid rgb(229, 232, 235);
     border-radius: 10px;
 }
@@ -660,7 +660,7 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
 .ezrKUu {
     width: 164px;
     height: 44px;
-    background: rgb(176, 184, 193);
+    background: rgb(187 38 73);
     border-radius: 8px;
     margin-left: 10px;
     letter-spacing: -0.2px;
