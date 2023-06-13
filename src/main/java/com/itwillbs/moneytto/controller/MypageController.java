@@ -143,7 +143,7 @@ public class MypageController {
 	        // 저장될 로컬 파일 경로
 	        String filePath = uploadDir + "/" + storedFileName;
 	        // DB에 저장될 이름
-	        String saveDir = "http://c3d2212t3file.itwillbs.com/files/webapps/Moneytto/resources/upload/member/" + storedFileName;
+	        String saveDir = "http://c3d2212t3.itwillbs.com/Moneytto/resources/upload/member" + storedFileName;
 	        
 	        try {
 				file.transferTo(new File(filePath));
