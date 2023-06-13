@@ -868,7 +868,6 @@ public class MarketController {
 	    try {
 	        String itemCode = item.get("item_code");
 		    String originalItemTag = service.getItemTag(itemCode);
-		    System.out.println(originalItemTag);
 	        item.put("id", id);
 	        
 	        // 가격에서 쉼표 제거

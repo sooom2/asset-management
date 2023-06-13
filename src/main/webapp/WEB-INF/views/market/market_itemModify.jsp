@@ -134,7 +134,7 @@ $(window).load(function() {
 });
 
 
-
+// 태그기능
 document.addEventListener('DOMContentLoaded', function() {
   var tagInput = document.querySelector('.tagTagInput');
   var tagButton = document.querySelector('.tagButton');
