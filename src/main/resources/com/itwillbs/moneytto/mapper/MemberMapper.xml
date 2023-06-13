@@ -422,6 +422,7 @@
 			WHERE 1=1
 				AND member_id = #{id}
 				AND DATE(pay_date) = DATE(NOW())
+				LIMIT 1
 	</select>
 	
 </mapper>

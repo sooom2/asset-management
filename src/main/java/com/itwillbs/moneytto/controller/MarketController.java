@@ -734,17 +734,14 @@ public class MarketController {
 		
 		int updateCount = service.hideReview(review);
 		
-		if(updateCount > 0) {				//insert 성공
-			model.addAttribute("msg", "숨긴 리뷰는 작성자 외 다른 사람에게도 보이지 않습니다.");
+		if(updateCount > 0) {	
+			//insert 성공
+			model.addAttribute("msg", "리뷰를 숨겼습니다.");
 		}else {								//insert 실패
 			model.addAttribute("msg", "ERROR 리뷰 숨기기에 실패하였습니다.");
-			
 		}
-		
-		model.addAttribute("isClose", true);
-		model.addAttribute("isReload", true);
-		
-		return"fail_back";
+		model.addAttribute("target", "mypage");
+		return"success";
 		
 	}
 	@GetMapping("recentlyMessage")
