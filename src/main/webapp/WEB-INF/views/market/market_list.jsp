@@ -256,6 +256,18 @@
 			priceInput.value = priceReplace(uncomma(priceInput.value));
 		}
 		
+			
+		// 조회 결과 없을 때 div 생성
+		function makeEmptyDiv() {
+			var str = '<div class="EmptyEmptyBox">';
+			str += '<div class="EmptyTitle">아쉽게도, 현재 검색된 상품이 없어요</div>';
+			str += '<div class="EmptyGuide">필터를 재설정하거나 전체 상품 보기를 선택해주세요</div>';
+			str += '<div class="EmptyBtnBox" onclick="location.reload();">';
+			str += '<img src="https://ccimage.hellomarket.com/img/web/common/refresh_mark.svg" alt="초기화 마크" class="EmptyResetMark-xvqyzf-4 YrGaN">';
+			str += '<div class="EmptyShowAllText">전체 상품 보기</div></div></div>';
+			$(".itemWrapper").append(str);
+		}
+		
 		// ajax에서 받은 데이터로 div 생성
 		function makeDiv(response) {
 			for(let item of response) {
@@ -353,7 +365,6 @@
 			}
  
 			if(str.includes(doubleChar)) {
-// 				console.log("중복 구분자 제거");
 				str = str.replace(doubleChar, character);
 			}
 
@@ -409,6 +420,7 @@
 	 				 if (response.length == 0) {
 	 		           let count = 0;
 	 		           $(".Count").empty().append(count);
+	 		           makeEmptyDiv();
 	 		           return;
 	 				 } 
 	 				 // div 생성
@@ -438,7 +450,6 @@
 		    $('html, body').animate({scrollTop : 0}, 400);          // 속도 400
 		    	return false;
 		    });
-			
 			
 			
 			// 더보기
@@ -482,7 +493,6 @@
 				var item_tag = $("#tag").val();
 				var item_price_min = $("#item_price_min").val();
 				var item_price_max = $("#item_price_max").val();
-// 				console.log("text : " + text);
 				
 				/*
 					1: 카테고리
@@ -490,7 +500,6 @@
 					3: 태그
 				*/
 				var data = $(this).parent().find(".tagListName").data("cd");
-// 				console.log(data);
 				
 				switch(data) {
 					case 1: 
@@ -637,8 +646,6 @@
 				event.preventDefault(); // 폼 제출 기본 동작 막기
 				var input = $("#searchTag").val();
 				var tagValue = $("#tag").val();
-// 				console.log("tagValue : " + tagValue);
-// 				console.log("input : " + input);
 
 				tag(input);
 				

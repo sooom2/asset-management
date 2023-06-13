@@ -757,3 +757,54 @@ button {
    cursor: pointer;
 }
 
+
+.EmptyEmptyBox {
+    height: 500px;
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    overflow: auto;
+}
+
+.EmptyTitle {
+    color: rgb(52, 58, 63);
+    margin-bottom: 8px;
+    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: "Pretendard Variable";
+    line-height: 100%;
+}
+
+.EmptyGuide {
+    color: rgb(105, 112, 119);
+    letter-spacing: -0.4px;
+    font-weight: 400;
+    font-size: 0.875rem;
+    font-family: "Pretendard Variable";
+    line-height: 145%;
+}
+
+.EmptyBtnBox {
+    margin-top: 16px;
+    width: 158px;
+    height: 42px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border: 1px solid rgb(52, 58, 63);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.EmptyShowAllText {
+    color: rgb(52, 58, 63);
+    letter-spacing: -0.6px;
+    font-weight: 500;
+    font-size: 0.938rem;
+    font-family: "Pretendard Variable";
+    line-height: 120%;
+}
+
