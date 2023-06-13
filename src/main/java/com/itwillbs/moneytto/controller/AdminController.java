@@ -39,6 +39,9 @@ public class AdminController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Autowired
+	private  CommunityService commService;
+	
 // 메인=============================================
 	@RequestMapping(value = "admin", method = {RequestMethod.GET, RequestMethod.POST})
 	public String adminMain(@RequestParam HashMap<String, String> map, Model model) {
@@ -355,17 +358,32 @@ public class AdminController {
 	// 게시판=============================================
 		// 공지
 		@RequestMapping(value = "adminNoticeBoard")
-		public String adminNoticeBoard(Model model) {
+		public String adminNoticeBoard(@RequestParam HashMap<String, String> board, Model model) {
+			List<HashMap<String, String>> noticeList = commService.noticeList(board);
+
+			model.addAttribute("noticeList", noticeList);
+
 			return "admin/adminNoticeBoard";
 		}
 		
 		// 커뮤니티
 		@RequestMapping(value = "adminFreeBoard")
-		public String adminFreeBoard() {
-			
+		public String adminFreeBoard(@RequestParam HashMap<String, String> board, Model model, HttpSession session) {
+
+			List<HashMap<String, String>> boardList = commService.boardList(board);
+
+			String id = (String) session.getAttribute("sId");
+
+			for (HashMap<String, String> boardItem : boardList) {
+				String comm_code = boardItem.get("comm_code");
+				int commentCount = commService.commentCount(comm_code);
+				boardItem.put("comment_count", String.valueOf(commentCount));
+			}
+
+			model.addAttribute("boardList", boardList);
+
 			return "admin/adminFreeBoard";
 		}
-		
 	
 // 회원관리=============================================
 	@RequestMapping(value = "adminMember")
@@ -423,5 +441,20 @@ public class AdminController {
 		
 		return "admin/adminReport";
 	}
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
