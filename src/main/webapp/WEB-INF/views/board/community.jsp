@@ -132,7 +132,7 @@
 					<th id="board-header">글번호</th>
 					<th id="board-header">제목</th>
 					<th id="board-header">작성자</th>
-					<th id="board-header">날짜</th>
+					<th id="board-header">작성일</th>
 					<th id="board-header">조회수</th>
 				</tr>
 				<%-- boardList를 반복하여 데이터를 출력 --%>

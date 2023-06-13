@@ -10,7 +10,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 
-<title>아이무비관리자페이지</title>
+<title>머니또관리자페이지</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
 	rel="stylesheet" />
@@ -74,7 +74,6 @@
 		<jsp:include page="admin_nav_side.jsp" />
 		
 		
-		
 		<!-- 고정 -->
 		<div id="layoutSidenav_content">
 			
@@ -111,8 +110,7 @@
 																<label for="cinema_name">문의지점 : </label> 
 																<select name="cinema_name" onchange="selectCinema()"
 																	style="margin-top: 0px; !important">
-																	<option value="none" selected="selected" disabled>극장
-																		선택</option>
+																	<option value="none" selected="selected" disabled>선택</option>
 																	<option value="none" disabled>=======================</option>
 																	<option value="전체공지">전체공지</option>
 																	<c:forEach var="cinema" items="${cinemaList }">
@@ -186,41 +184,26 @@
 							<tr>
 								<th data-sortable="true" style="width: 7%;"><a href="#"
 									class="datatable-sorter">공지번호</a></th>
-								<th data-sortable="true" style="width: 10%;"><a href="#"
-									class="datatable-sorter">문의지점</a></th>
-								<th data-sortable="true" style="width: 13%;"><a href="#"
+								<th data-sortable="true" style="width: 40%;"><a href="#"
 									class="datatable-sorter">제목</a></th>
-								<!-- 								<th data-sortable="true" style="width: 10%;"><a href="#" -->
-								<!-- 									class="datatable-sorter">내용</a></th> -->
+								<th data-sortable="true" style="width: 20%;"><a href="#"
+									class="datatable-sorter">일자</a></th>
 								<th data-sortable="true" style="width: 7%;"><a href="#"
-									class="datatable-sorter">작성일</a></th>
-								<th data-sortable="true" style="width: 10%;"><a href="#"
 									class="datatable-sorter">수정/삭제</a></th>
-								<!-- 								<th data-sortable="true" style="width: 20%;"><a href="#" -->
-								<!-- 									class="datatable-sorter">줄거리</a></th> -->
-								<!-- 								<th data-sortable="true" style="width: 20%;"><a href="#" -->
-								<!-- 									class="datatable-sorter">수정</a></th> -->
 							</tr>
-						</thead>
-						<!-- 회원목록 -->
+						</thead>	
+						
 						<tbody>
-							<input type="hidden" name="memberName" value="${paramMap.memberName}">
-							<input type="hidden" name="memberTel" value="${paramMap.memberTel}">
-							<input type="hidden" name="memberEmail" value="${paramMap.memberEmail}">
-							<input type="hidden" name="startNum" value="${paramMap.startNum}">
-							<input type="hidden" name="endNum" value="${paramMap.endNum}">
-							<input type="hidden" name="pageNum" value="${paramMap.pageNum}">
-							<input type="hidden" name="table_name" value="">
-							<input type="hidden" name="code" value="">
-							<c:forEach var="noticeBoard" items="${noticeBoardList }">
+		
+							<c:forEach var="noticeList" items="${noticeList }">
 								<tr data-index="0">
-									<td>${noticeBoard.rownum }</td>
-									<td>${noticeBoard.cinema_name }</td>
-									<td>${noticeBoard.notice_subject }</td>
-									<td>${noticeBoard.notice_write_date }</td>
-									<td class="modi"><input class="btn btn-block btn-more"
-										type="button" value="M O R E"
-										onclick="location.href='admin_notice_update?notice_code=${noticeBoard.notice_code }'"></td>
+									<td>${noticeList.notice_no }</td>
+									<td>${noticeList.notice_subject }</td>
+									<td>${noticeList.notice_date }</td>
+									<td>
+										<input type="button" value="수정/삭제">
+									
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>

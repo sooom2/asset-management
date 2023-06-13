@@ -216,6 +216,9 @@
 			message = data.split("|")[1];
 			image = data.split("|")[2];
 			chatTime = data.split("|")[3];
+			sessionCnt = data.split("|")[4];
+			
+			$('#sessionCount2').html(sessionCnt + "/20명");
 			
 		    // 로그인 한 클라이언트와 타 클라이언트를 분류
 			if(sessionNickname == cur_session) {
@@ -472,7 +475,7 @@
 								<div class="info">
 									<div id="sessionCount">
 										<span>${member.get('member_nickname') }</span>
-										<span id="sessionCount2">0/100명</span>
+										<span id="sessionCount2">0/20명</span>
 									</div>
 								</div>
 							</a>
