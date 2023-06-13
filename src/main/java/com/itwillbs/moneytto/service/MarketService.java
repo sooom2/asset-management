@@ -130,6 +130,12 @@ public class MarketService {
 		return mapper.hideReview(review);
 	}
 
+
+
+	public String getItemTag(String itemCode) {
+		return mapper.getItemTag(itemCode);
+	}
+
 		
 	
 	

@@ -778,6 +778,7 @@ public class MarketController {
 
 	        // 아이템 등록
 	        int insertCount = service.insertItem(item);
+	        
 
 	        // 아이템 등록에 성공한 경우에만 사진 정보 저장
 	        if (insertCount > 0) {
@@ -862,19 +863,31 @@ public class MarketController {
 	public String itemModifyPro(@RequestParam HashMap<String, String> item, Model model, HttpSession session, @RequestParam(value = "file", required = false) List<MultipartFile> files) {
 	    String id = (String) session.getAttribute("sId");
 	    String uploadDir = session.getServletContext().getRealPath("/resources/upload");
+	    
 	    System.out.println(item);
 	    try {
 	        String itemCode = item.get("item_code");
+		    String originalItemTag = service.getItemTag(itemCode);
+		    System.out.println(originalItemTag);
 	        item.put("id", id);
-
+	        
 	        // 가격에서 쉼표 제거
 	        String itemPrice = item.get("item_price");
 	        itemPrice = itemPrice.replace(",", "");
 	        item.put("item_price", itemPrice);
+	        
+	        // 아이템 수정 시 item_tag 값이 비어있으면 원래 저장된 item_tag 값을 유지
+	        String itemTag = item.get("item_tag");
+	        if (itemTag == null || itemTag.isEmpty()) {
+	            // 원래 저장된 태그 값을 가져와서 설정
+	            itemTag = originalItemTag;
+	            item.put("item_tag", itemTag);
+	        }
+
 
 	        // 아이템 수정
 	        int updateCount = service.updateItem(item);
-
+	        	
 	        // 사진 수정 여부 확인
 	        boolean photoChanged = false;
 	        if (files != null && !files.isEmpty()) {
@@ -892,6 +905,7 @@ public class MarketController {
 	            if (photoChanged) {
 	                int deleteCount = service.removeImage(itemCode);
 	            }
+	            
 
 	            // 새로운 사진 정보를 저장
 	            if (files != null && !files.isEmpty()) {
