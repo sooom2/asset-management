@@ -20,8 +20,8 @@ $(function() {
 	$('.addr_search').on("click", function() {
 		new daum.Postcode({
             oncomplete: function(data) {
-            	 $('input[name=receiverAddr1]').val(data.address);
-            	 $('input[name=receiverAddr2]').focus(); //상세입력 포커싱
+            	 $('input[name=member_address]').val(data.address);
+            	 $('input[name=member_address_detail]').focus(); //상세입력 포커싱
             }
         }).open();
 	});
@@ -67,6 +67,12 @@ $(function() {
 	$('#item_point').html("${member.member_point }".replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원");
 	// 콤마 빼기.
 	$('input[name=pay_price]').val(${lastLog.log_content });
+	
+	
+	// 충전하기 버튼
+	$('.radio_desc').on("click", function() {
+		window.open("payment", "머니또 충전", "width=500,height=600");
+	});
 	
 	
 	
@@ -184,7 +190,7 @@ $(function() {
 										<li><dl>
 												<dt>주소</dt>
 												<dd>
-													<div readonly="" name="receiverAddr1" class="div_input_st">주소</div>
+													<div name="receiverAddr1" class="div_input_st">주소</div>
 													<input type="text" name="member_address"
 														placeholder="주소 입력" class="w_10" value="${member.get('member_address') }">&nbsp;&nbsp;
 													<button class="addr_search">주소찾기</button>
@@ -194,7 +200,7 @@ $(function() {
 											<dl>
 												<dt></dt>
 												<dd>
-													<div readonly="" name="receiverAddr2" class="div_input_st">상세주소</div>
+													<div name="receiverAddr2" class="div_input_st">상세주소</div>
 													<input type="text" name="member_address_detail"
 														placeholder="상세주소 입력" class="w_10" value="${member.get('member_address_detail') }">
 												</dd>
@@ -262,8 +268,8 @@ $(function() {
 															<ul>
 																<li>
 																	<div class="wrapper_div other_wrapper_div_option checked">
-																		<div class="info">
-																			<label for="CreditCard" class="radio_desc">충전하기</label>
+																		<div class="info radio_desc" style="cursor: pointer">
+																			<label style="cursor: pointer" for="CreditCard" class="radio_desc">충전하기</label>
 																		</div>
 																		<div class="exp"></div>
 																	</div>

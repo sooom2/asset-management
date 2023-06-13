@@ -26,6 +26,8 @@ public interface CommunityMapper {
 
 	int deleteBoard(String comm_code);
 
+	List<HashMap<String, String>> noticeList(HashMap<String, String> board);
+
 	
 
 	

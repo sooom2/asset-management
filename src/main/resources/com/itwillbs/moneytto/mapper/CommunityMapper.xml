@@ -3,23 +3,22 @@
 <mapper namespace="com.itwillbs.moneytto.mapper.CommunityMapper">
 	
 	<!--커뮤니티 글등록 -->
-	<insert id = "insertBoard">
-<!-- 		<selectKey keyProperty="comm_code" resultType="int" order="BEFORE"> -->
-<!-- 			SELECT IFNULL(MAX(comm_code), 0) FROM community -->
-<!-- 		</selectKey> -->
-  <selectKey keyProperty="comm_code" resultType="String" order="BEFORE">
-    SELECT CONCAT(IFNULL(MAX(CAST(comm_code AS UNSIGNED)), 0) + 1, '') FROM community
-  </selectKey>
-		INSERT 
-			INTO community
-			VALUES (
-				#{comm_code}
-				,#{id}
-				,#{comm_title}
-				,#{comm_content}
-				,now()
-				,"0"			
-			)
+	<insert id="insertBoard">
+	<selectKey keyProperty="comm_code" resultType="String"
+		order="BEFORE">
+		SELECT CONCAT(IFNULL(MAX(CAST(comm_code AS UNSIGNED)), 0) + 1, '') FROM
+		community
+	</selectKey>
+	INSERT
+	INTO community
+	VALUES (
+	#{comm_code}
+	,#{id}
+	,#{comm_title}
+	,#{comm_content}
+	,now()
+	,"0"
+	)
 	</insert>
 	
 	<!-- 조회수 증가 -->
@@ -29,20 +28,13 @@
 	  WHERE comm_code = #{comm_code}
 	</update>
 
-<!-- 	<select id = "boardList" resultType="hashmap"> -->
-<!-- 		SELECT * FROM community -->
-<!-- 	</select> -->
 
-<!-- 커뮤니티 리스트 -->
+	<!-- 커뮤니티 리스트 -->
 	<select id="boardList" resultType="hashmap">
-<!-- 	  SELECT c.*, m.member_nickname -->
-<!-- 	  FROM community c -->
-<!-- 	  LEFT JOIN member m ON c.member_id = m.member_id -->
-<!-- 	  ORDER BY c.comm_date DESC -->
-  SELECT c.*, DATE_FORMAT(c.comm_date, '%Y-%m-%d') AS formatted_date, m.member_nickname
-  FROM community c
-  LEFT JOIN member m ON c.member_id = m.member_id
-  ORDER BY c.comm_date DESC
+	  SELECT c.*, DATE_FORMAT(c.comm_date, '%Y-%m-%d') AS formatted_date, m.member_nickname
+	  FROM community c
+	  LEFT JOIN member m ON c.member_id = m.member_id
+	  ORDER BY c.comm_date DESC
 	</select>
 	
 	<select id="boardDetail" parameterType="String" resultType="HashMap">
@@ -62,13 +54,7 @@
 		)
 	</insert>
 	
-<!-- 	댓글 리스트 -->
-
-<!-- 	<select id="replyList" resultType="hashmap"> -->
-<!-- 		SELECT * FROM reply -->
-<!-- 		WHERE comm_code = #{comm_code} -->
-<!-- 	</select> -->
-
+	<!-- 	댓글 리스트 -->
 	<select id="replyList" resultType="hashmap">
 	  SELECT r.*, m.member_nickname
 	  FROM reply r
@@ -100,6 +86,19 @@
     LEFT JOIN reply r ON r.comm_code = c.comm_code
     WHERE c.comm_code = #{comm_code}
 </delete>
+
+
+	<select id="noticeList" resultType="hashmap">
+	  SELECT * FROM notice
+	  ORDER BY notice_date DESC
+	</select>
+
+
+
+
+
+
+
 
 	
 	

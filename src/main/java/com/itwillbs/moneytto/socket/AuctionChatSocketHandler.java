@@ -40,18 +40,14 @@ public class AuctionChatSocketHandler extends TextWebSocketHandler {
 
 	@Override  
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-		
+		Date nowDate = new Date();
 		String msg = (String)message.getPayload();
 		JSONObject jObject = new JSONObject(msg);
 	    String name = jObject.getString("name");
 	    String messages = jObject.getString("message");
 	    String auctionCode = jObject.getString("auctionCode");
-		System.out.println("name : " + name);
-		System.out.println("messages : " + messages);
-		System.out.println("auctionCode : " + auctionCode);
 		String image = memberService.selectImage(name);
 		
-		System.out.println(image);
 		// 채팅 세션 목록에 채팅방이 존재 X
 		if(auctionList.get(auctionCode) == null && messages.equals("ENTER")) {
             
@@ -78,11 +74,11 @@ public class AuctionChatSocketHandler extends TextWebSocketHandler {
         
         // 채팅 메세지 입력 시
         else if(auctionList.get(auctionCode) != null && !messages.equals("ENTER")) {
-        	Date nowDate = new Date();
+        	
     		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm"); 
     		String chatTime = simpleDateFormat.format(nowDate);
             // 채팅 출력
-            TextMessage textMessage = new TextMessage(name + "|" + messages + "|" + image + "|" + chatTime);
+            TextMessage textMessage = new TextMessage(name + "|" + messages + "|" + image + "|" + chatTime + "|" + i);
             
             int sessionCount = 0;
  
@@ -103,7 +99,6 @@ public class AuctionChatSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
 		i--;
-		System.out.println(session.getId() + " 연결 종료 / 총 접속 인원 : " + i + "명");
         // sessionList에 session이 있다면
         if(sessionList.get(session) != null) {
             // 해당 session의 방 번호를 가져와서, 방을 찾고, 그 방의 ArrayList<session>에서 해당 session을 지운다.

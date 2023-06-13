@@ -123,6 +123,19 @@ public class MarketService {
 		return mapper.deleteReview(paramMap);
 	}
 
+
+
+	public int hideReview(HashMap<String, String> review) {
+		
+		return mapper.hideReview(review);
+	}
+
+
+
+	public String getItemTag(String itemCode) {
+		return mapper.getItemTag(itemCode);
+	}
+
 		
 	
 	

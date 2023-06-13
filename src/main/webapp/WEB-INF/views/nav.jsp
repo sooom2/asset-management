@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <link href="${path }/resources/css/common.css" rel="stylesheet">
 <link href="${path }/resources/css/inc.css" rel="stylesheet">
-<script src="https://kit.fontawesome.com/b2ab45b73f.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/81736b67fc.js" crossorigin="anonymous"></script>
 <script>
 function logout() {
 // 	카카오 로그인 아닐시 session "token" = true

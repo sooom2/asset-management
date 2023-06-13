@@ -280,16 +280,28 @@ public class MarketController {
 	      String get_item_code = item_detail.get("item_code");
 	      
 	      
+	      //여기까진됨
 	      if(get_item_status.equals("거래완료")) {
+	         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 	         int updateCount = marketChatService.isUpdate(get_item_code);
-	         
-	         if(updateCount < 1) {
-	        	 String str ="직접결제";
-	        	 int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date,str);
+	         System.out.println("==================================");
+	         System.out.println(updateCount);
+	         System.out.println("==================================");
+	         if(updateCount > 0) {
+	            System.out.println("거래내역에 이미있음");
+	         }else { //거래내역에없을때 
+	            // market_paid insert 작업
+	            // 거래코드, 판매자아이디, 아이템코드, 산사람, 판사람, 가격 , 판매방법 , 날짜
+	            System.out.println("사는사람 ==================================");
+	            System.out.println(sellId);
+	            System.out.println("==================================");
+	            String str ="직접거래";
+	            int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date,str);
 	         }
 	         
+	         
 	      } else {
-	         // 거래완료 > 거래중/판매중으로 바꿨을때 marketPaid에서 삭제
+	         // market_paid 에서 삭제되야함
 	         int delMarketPaid = marketChatService.deltMarketPaid(item_detail,sellId);
 	      }
 	   }
@@ -690,7 +702,9 @@ public class MarketController {
 			case "insert":	int insertCount = service.writeReview(review);
 				
 				if(insertCount > 0) {				//insert 성공
-					model.addAttribute("msg", "리뷰가 성공적으로 등록되었습니다.");
+					model.addAttribute("msg", "리뷰가 등록되었습니다. 			회원 등급 포인트가 5점 적립되었습니다.");
+					
+					
 				}else {								//insert 실패
 					model.addAttribute("msg", "리뷰 작성에 실패하였습니다.");
 					
@@ -709,15 +723,27 @@ public class MarketController {
 			break;
 		}
 		
-		//TODO 성공하면 창꺼지게해죠 06.08
-		//TODO 네~ 06.11
 		model.addAttribute("isClose", true);
 		model.addAttribute("isReload", true);
 		
 		return"fail_back";
 		
 	}
-
+	@RequestMapping(value = "reviewHide", method = RequestMethod.GET)
+	public String reviewHide(@RequestParam HashMap<String, String> review,HttpSession session, Model model) {
+		
+		int updateCount = service.hideReview(review);
+		
+		if(updateCount > 0) {	
+			//insert 성공
+			model.addAttribute("msg", "리뷰를 숨겼습니다.");
+		}else {								//insert 실패
+			model.addAttribute("msg", "ERROR 리뷰 숨기기에 실패하였습니다.");
+		}
+		model.addAttribute("target", "mypage");
+		return"success";
+		
+	}
 	@GetMapping("recentlyMessage")
 	@ResponseBody
 	public String recentlyMessage(@RequestParam String room_code) throws JsonProcessingException {
@@ -752,6 +778,7 @@ public class MarketController {
 
 	        // 아이템 등록
 	        int insertCount = service.insertItem(item);
+	        
 
 	        // 아이템 등록에 성공한 경우에만 사진 정보 저장
 	        if (insertCount > 0) {
@@ -768,7 +795,11 @@ public class MarketController {
 
 	                    String filePath = uploadDir + "/" + storedFileName;
 
-	                    String saveFileName = "http://c3d2212t3.itwillbs.com/images/" + storedFileName;
+	                    String saveFileName = "http://c3d2212t3.itwillbs.com/Moneytto/resources/upload/" + storedFileName;
+	                    
+	                    
+	                    
+	                    
 	                    File dest = new File(filePath);
 	                    file.transferTo(dest);
 
@@ -832,19 +863,30 @@ public class MarketController {
 	public String itemModifyPro(@RequestParam HashMap<String, String> item, Model model, HttpSession session, @RequestParam(value = "file", required = false) List<MultipartFile> files) {
 	    String id = (String) session.getAttribute("sId");
 	    String uploadDir = session.getServletContext().getRealPath("/resources/upload");
+	    
 	    System.out.println(item);
 	    try {
 	        String itemCode = item.get("item_code");
+		    String originalItemTag = service.getItemTag(itemCode);
 	        item.put("id", id);
-
+	        
 	        // 가격에서 쉼표 제거
 	        String itemPrice = item.get("item_price");
 	        itemPrice = itemPrice.replace(",", "");
 	        item.put("item_price", itemPrice);
+	        
+	        // 아이템 수정 시 item_tag 값이 비어있으면 원래 저장된 item_tag 값을 유지
+	        String itemTag = item.get("item_tag");
+	        if (itemTag == null || itemTag.isEmpty()) {
+	            // 원래 저장된 태그 값을 가져와서 설정
+	            itemTag = originalItemTag;
+	            item.put("item_tag", itemTag);
+	        }
+
 
 	        // 아이템 수정
 	        int updateCount = service.updateItem(item);
-
+	        	
 	        // 사진 수정 여부 확인
 	        boolean photoChanged = false;
 	        if (files != null && !files.isEmpty()) {
@@ -862,6 +904,7 @@ public class MarketController {
 	            if (photoChanged) {
 	                int deleteCount = service.removeImage(itemCode);
 	            }
+	            
 
 	            // 새로운 사진 정보를 저장
 	            if (files != null && !files.isEmpty()) {
@@ -877,7 +920,7 @@ public class MarketController {
 
 	                        String filePath = uploadDir + "/" + storedFileName;
 
-	                        String saveFileName = "http://c3d2212t3.itwillbs.com/images/" + storedFileName;
+	                        String saveFileName = "http://c3d2212t3.itwillbs.com/Moneytto/resources/upload/" + storedFileName;
 	                        File dest = new File(filePath);
 	                        // upload 디렉토리가 없을때 생성하는 메서드
 	                        dest.mkdirs();

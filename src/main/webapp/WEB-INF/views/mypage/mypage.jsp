@@ -53,10 +53,12 @@ $(document).ready(function(){
  	 	
  	 	updateSearchCount(searchCount);
  	});
-  	
   	function updateSearchCount(count) {
   	    $('.listCount').text('검색된 항목 수: ' + count);
   	  }
+  	
+  	
+  	
   	
  });
  
@@ -110,7 +112,36 @@ function reviewDelete(item_code){
 		}
 	});
 }
+function reviewHide(review_code) {
+	event.preventDefault();
 
+	swal({
+		title:"리뷰를 숨기시겠습니까?",
+		text: "숨긴 리뷰는 작성자만 확인할 수 있습니다.",
+		icon: "warning",
+		buttons: {
+			confirm: {
+				text: "숨김",
+				value: true,
+				visible: true,
+				className: "",
+				closeModal: true,
+			},
+			cancel: {
+				text: "취소",
+				value: false,
+				visible: true,
+				className: "",
+				closeModal: true,
+			},
+		},
+	}).then((result) => {
+		if(result){
+			location.href="reviewHide?review_code="+review_code;
+		}
+	});
+	    
+ }
 
 </script>
 </head>
@@ -265,7 +296,7 @@ function reviewDelete(item_code){
 						       		     	</td>
 						            	</c:otherwise>
 						            </c:choose>
-						            <td id="board-data">${item.market_date}</td>
+						            <td id="board-data">${item.review_date}</td>
 						        </tr>
 						    </c:forEach>
 						</table>
@@ -274,24 +305,26 @@ function reviewDelete(item_code){
 					<c:when test="${param.itemList eq 'recivedReview'}">
 						<table id="board-table">
 							<tr>
-								<th id="board-header">리뷰</th>
+								<th id="board-header">리 뷰</th>
 								<th id="board-header">상세보기</th>
 								<th id="board-header" style="width: 4%;">별점</th>
 								<th id="board-header" style="width: 10%;">리뷰</th>
 								<th id="board-header" style="width: 15%;">날짜</th>
 							</tr>
 						    <c:forEach items="${itemList}" var="item" varStatus="status">
+						    	<c:if test="${item.hide_review eq 'N' }">
 						        <tr>
 						            <td id="board-data">${itemList.size() - status.index}</td>
 						            <td id="board-data" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"><a href="market_detail?item_code=${item.review_item_code}" class="board-title">${item.review_content}</a></td>
 						            <td id="board-data">${item.rating}</td>
 				            		<td id="board-data">
 				            			<c:if test= "${sessionScope.sId eq member.member_id }">
-						       		    <a href="#"class="board-title" onclick="reviewDelete('${item.item_code}')">삭제</a>
+						       		    <a href="#"class="board-title" onclick="reviewHide('${item.review_code}')">숨김</a>
 						       		    </c:if>
 				            		</td>
 						            <td id="board-data">${item.review_date}</td>
 						        </tr>
+						        </c:if>
 						    </c:forEach>
 						</table>
 					</c:when>
@@ -308,6 +341,7 @@ function reviewDelete(item_code){
 										<img src="${path }/resources/images/main/noThumbnail.jpg" alt="itemImg" class="itemThumbnail" />		                                  		
 	                              	</c:otherwise>
 	                            </c:choose>
+	                            	<input type="button" value="${item.item_status }" class="status active">
 								<c:choose>
 	                       	 		<c:when test="${not empty item.wish_code }">
 	                       	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg" />
@@ -322,9 +356,17 @@ function reviewDelete(item_code){
 								<div class="itemText subject">${item.item_subject }</div>
 								<div class="itemText"><fmt:formatNumber value="${item.item_price  }" pattern="#,###" />원</div>
 								<div class="itemTagBox">
-								<c:forEach var="item_tag" items ="${fn:split(item.item_tag, ',') }">
-								<div class="itemSizeTag">${item_tag }</div>
-								</c:forEach>
+								<c:forEach var="item_tag"
+											items="${fn:split(item.item_tag, ',')}">
+											<c:choose>
+												<c:when test="${not empty item_tag}">
+													<div class="itemSizeTag">${item_tag}</div>
+												</c:when>
+												<c:otherwise>
+													<div class="itemSizeTag" style="visibility: hidden;"></div>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
 								</div>
 							</div>
 						</div>

@@ -180,6 +180,10 @@ public interface MarketMapper {
 
    int updateExistStatus(String room_code);
 
+   int hideReview(HashMap<String, String> review);
+
+   String getItemTag(String itemCode);
+
 
 	
 }

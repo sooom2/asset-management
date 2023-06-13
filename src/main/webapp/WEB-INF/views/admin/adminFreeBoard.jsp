@@ -10,7 +10,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 
-<title>아이무비관리자페이지</title>
+<title>머니또관리자페이지</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
 	rel="stylesheet" />
@@ -58,7 +58,7 @@
 							<div class="cinema_name">
 								<label for="cinema_name"></label>
 								<select name="cinema_name" onchange="" style="margin-top: 0px; !important"> 
-									<option value="전체공지" selected="selected" >전체공지</option>
+									<option value="커뮤니티" selected="selected" >커뮤니티</option>
 									<c:forEach var="cinema" items="${cinemaList }">
 										<option value="${cinema.cinema_name}" ${paramMap.cinema_name == cinema.cinema_name ? 'selected' : ''}>${cinema.cinema_name}</option>
 									</c:forEach>
@@ -80,32 +80,36 @@
 					<table id="datatablesSimple" class="datatable-table">
 						<thead>
 							<tr>
-								<th data-sortable="true" style="width: 7%;"><a href="#"
-									class="datatable-sorter">공지번호</a></th>
-								<th data-sortable="true" style="width: 10%;"><a href="#"
-									class="datatable-sorter">문의지점</a></th>
-								<th data-sortable="true" style="width: 13%;"><a href="#"
+								<th data-sortable="true" style="width: 5%;"><a href="#"
+									class="datatable-sorter">글번호</a></th>
+								<th data-sortable="true" style="width: 20%;"><a href="#"
 									class="datatable-sorter">제목</a></th>
-								<th data-sortable="true" style="width: 7%;"><a href="#"
+								<th data-sortable="true" style="width: 10%;"><a href="#"
+									class="datatable-sorter">작성자</a></th>
+								<th data-sortable="true" style="width: 10%;"><a href="#"
 									class="datatable-sorter">작성일</a></th>
 								<th data-sortable="true" style="width: 10%;"><a href="#"
 									class="datatable-sorter">수정/삭제</a></th>
 							</tr>
 						</thead>
-						<!-- 회원목록 -->
+						
 						<tbody>
-							<c:forEach var="noticeBoard" items="${noticeBoardList }">
-								<tr data-index="0">
-									<td>${noticeBoard.rownum }</td>
-									<td>${noticeBoard.cinema_name }</td>
-									<td>${noticeBoard.notice_subject }</td>
-									<td>${noticeBoard.notice_write_date }</td>
-									<td class="modi"><input class="btn btn-block btn-more"
-										type="button" value="M O R E"
-										onclick="location.href='admin_notice_update?notice_code=${noticeBoard.notice_code }'"></td>
-								</tr>
-							</c:forEach>
-						</tbody>
+								<c:forEach items="${boardList}" var="boardList" varStatus="loop">
+									<tr>
+										<td id="board-data">${loop.index + 1}</td>
+										<td id="board-data">
+											<div class="board-info">
+												<a href="commBoardView?comm_code=${boardList.comm_code}"
+													class="board-title">${boardList.comm_title}</a> <span
+													class="comment-count">(${boardList.comment_count})</span>
+											</div>
+										</td>
+										<td id="board-data">${boardList.member_id}</td>
+										<td id="board-data">${boardList.formatted_date}</td>
+										<td id="board-data"><input type="button" value="수정/삭제"></td>
+									</tr>
+								</c:forEach>
+							</tbody>
 					</table>
 				
 					</form>

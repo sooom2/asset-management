@@ -18,7 +18,7 @@
 
 .myForm div label{
 	width: 120px;
-	text-align: right;
+	text-align: left;
 	line-height: 55px;
 	font-weight: 800;
 	padding-right: 15px;
@@ -44,7 +44,7 @@
 }
 .myForm div textarea{
 	height: 100px;
-	width: 536px;
+	width: 650px;
 	border: 1px solid #a9a9a9ee;
 }
 

@@ -55,6 +55,10 @@ public class CommunityService {
 		return mapper.deleteBoard(comm_code);
 	}
 
+	public List<HashMap<String, String>> noticeList(HashMap<String, String> board) {
+		return mapper.noticeList(board);
+	}
+
 
 
 

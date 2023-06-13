@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -20,7 +23,7 @@
 
 
 $(function() {
-	// 드세요..
+	
 	var today = new Date();
 
 	let year = today.getFullYear();
@@ -62,18 +65,26 @@ $(function() {
 				<div class="alarm_list_box">
 					<li class="alarm_list">
 						<div class="alarm_list_contents" style="right: 0; pointer-events: auto">
-								<a href="https://www.hellomarket.com/m/coupon" target="_blank" rel="noreferrer">
+								<a href="marketChat" target="_blank" rel="noreferrer">
 									<div class="contents">
 										<div class="profile">
-												<img src="https://ccimg.hellomarket.com/images/2023/member_profile/03/08/13/0838615_53080_1.jpg?size=s4" alt="세컨웨어 할인 쿠폰">
+											<img src="${path }/resources/images/mypage/alarm_msg.png" alt="알람~">
 										</div>
 										<div class="info_no_item_img">
 											<c:choose>
 												<c:when test="${sessionScope.sId ne chatList.buy_member_id}">
 													<p class="title">${chatList.buy_member_id} 님에게 메세지가 도착했습니다</p>
+													<p>
+														<fmt:parseDate var="parsedDate" value="${chatList.chat_time }" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+														<fmt:formatDate value="${parsedDate}" pattern="MM월 dd일 a hh시mm분 " />
+													</p>
 												</c:when>
 												<c:otherwise>
 													<p class="title">${chatList.sell_member_id} 님에게 메세지가 도착했습니다</p>
+													<p>
+														<fmt:parseDate var="parsedDate" value="${chatList.chat_time }" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+														<fmt:formatDate value="${parsedDate}" pattern="MM월 dd일 a hh시mm분 " />
+													</p>
 												</c:otherwise>
 											</c:choose>
 										</div>
@@ -90,10 +101,10 @@ $(function() {
 					<div class="alarm_list_box">
 						<li class="alarm_list">
 							<div class="alarm_list_contents" style="right: 0; pointer-events: auto">
-									<a href="https://www.hellomarket.com/m/coupon" target="_blank" rel="noreferrer">
+									<a href="" target="_blank" rel="noreferrer">
 										<div class="contents">
 											<div class="profile">
-												<img src="https://ccimg.hellomarket.com/images/2023/member_profile/03/08/13/0838615_53080_1.jpg?size=s4" alt="세컨웨어 할인 쿠폰">
+												<img src="${path }/resources/images/mypage/alarm_report.png" alt="알람~">
 											</div>
 											<div class="info_no_item_img">
 													<p class="title">${report.member_id}님 께서 신고 하셨습니다</p>
@@ -114,10 +125,10 @@ $(function() {
 						<div class="alarm_list_box">
 							<li class="alarm_list">
 								<div class="alarm_list_contents" style="right: 0; pointer-events: auto">
-										<a href="https://www.hellomarket.com/m/coupon" target="_blank" rel="noreferrer">
+										<a href="mypage?member_id=${sessionScope.sId }" target="_blank" rel="noreferrer">
 											<div class="contents">
 												<div class="profile">
-													<img src="https://ccimg.hellomarket.com/images/2023/member_profile/03/08/13/0838615_53080_1.jpg?size=s4" alt="세컨웨어 할인 쿠폰">
+												<img src="${path }/resources/images/mypage/alarm_point.png" alt="알람~">
 												</div>
 												<div class="info_no_item_img">
 														<p class="title">[${point.point_type}]  ${point.point_change } 원 ${point.point_type} 완료</p>
@@ -138,10 +149,10 @@ $(function() {
 					<div class="alarm_list_box">
 						<li class="alarm_list">
 							<div class="alarm_list_contents" style="right: 0; pointer-events: auto">
-									<a href="https://www.hellomarket.com/m/coupon" target="_blank" rel="noreferrer">
+									<a href="auctionMain" target="_blank" rel="noreferrer">
 										<div class="contents">
 											<div class="profile">
-												<img src="https://ccimg.hellomarket.com/images/2023/member_profile/03/08/13/0838615_53080_1.jpg?size=s4" alt="세컨웨어 할인 쿠폰">
+												<img src="${path }/resources/images/mypage/alarm_auction.png" alt="알람~">
 											</div>
 											<div class="info_no_item_img">
 													<p class="title">${auction.auction_item_name } - ${auction.pay_price}원에  낙찰 </p>

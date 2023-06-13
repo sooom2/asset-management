@@ -579,9 +579,9 @@
             AND   i.item_tag REGEXP #{item_tag}
          </if>
          <if test = 'item_status != null and !item_status.equals("") '>
-            AND   i.item_status = #{item_status}
-            AND replace(i.item_price,',','') BETWEEN ${item_price_min} AND ${item_price_max}
+            AND   i.item_status != "거래완료"
          </if>
+            AND replace(i.item_price,',','') BETWEEN ${item_price_min} AND ${item_price_max}
          <if test = 'member_grade != null and !member_grade.equals("") '>
             AND   m.grade_score >= 50 
          </if>
@@ -662,20 +662,29 @@
    <!-- 상품 등록 수정 -->
    
    <update id="updateItem">
-     UPDATE item
-     SET
-       item_code = #{item_code},
-       member_id = #{id},
-       item_subject = #{item_subject},
-       item_content = #{item_content},
-       item_price = #{item_price},
-       item_price_offer = IFNULL((SELECT CASE WHEN #{item_price_offer} = 'on' THEN 'Y' ELSE 'N' END), 'N'),
-       item_tag = #{item_tag},
-       item_category = #{item_category},
-       item_status = '판매중',
-       item_date = NOW()
-     WHERE item_code = #{item_code}
+	UPDATE item
+	SET
+	item_code = #{item_code},
+	member_id = #{id},
+	item_subject = #{item_subject},
+	item_content = #{item_content},
+	item_price = #{item_price},
+	item_price_offer = IFNULL((SELECT CASE WHEN #{item_price_offer} = 'on' THEN 'Y' ELSE
+	'N' END), 'N'),
+	item_tag = #{item_tag},
+	item_category = #{item_category},
+	item_status = '판매중',
+	item_date = NOW()
+	WHERE item_code = #{item_code}
    </update>
+   
+   <select id="getItemTag" resultType="String">
+    SELECT item_tag FROM item
+    WHERE item_code = #{item_code}
+   
+   </select>
+   
+   
    
    <select id="selectBuyItem" resultType="hashmap">
       SELECT pay.*
@@ -703,6 +712,7 @@
          , #{review_content}
          , now()
          , #{rating}
+         , 'N'
          )
    </insert>
    
@@ -716,6 +726,15 @@
          1 = 1
          AND reviewer_id = #{reviewer_id}
          AND   review_item_code = #{item_code}
+   </update>
+   
+   <update id="hideReview">
+      UPDATE
+         review 
+      SET 
+          hide_review = 'Y'
+      WHERE
+          review_code = #{review_code}
    </update>
    
    <delete id="deleteReview">
