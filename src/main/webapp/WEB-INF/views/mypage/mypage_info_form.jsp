@@ -100,8 +100,8 @@ $(function(){
 			$("#memeber_pw").focus();
 			return false;
 		} else if(!passwd2Status) {
-			swal("비밀번호확인을 확인하세요");
-			$("#member_pw2").focus();
+			swal("비밀번호 오류입니다.");
+			$("#member_pw3").focus();
 			return false;
 		} else if($("#member_address1").val() == "") {
 			swal("주소를 입력하세요");
@@ -174,27 +174,17 @@ $(function(){
 		}
 		
 	});
-	// 비밀번호확인 검증
-	$("#member_pw2").on("change", function() {
-		if($("#member_pw").val() == $("#member_pw2").val()) {
-			$("#checkPasswd2Result").html("비밀번호 일치").css("color", "green");
-			passwd2Status = true;
-		} else {
-			$("#checkPasswd2Result").html("비밀번호 불일치").css("color", "red");
-			passwd2Status = false;
-		}
-	});
-		$("#member_pw3").on("change", function() {
+	$("#member_pw3").on("change", function() {
 		let passwd = $("#member_pw3").val(); 
 		let lengthRegex = /^[A-Za-z0-9!@#$%]{8,16}$/;
 		
 		if(!lengthRegex.exec(passwd)) {
 			$("#checkPasswd2Result").html("영문자, 숫자, 특수문자 8 ~ 16자 필수").css("color", "red");
 			$("#member_pw3").select();
-			passwdStatus = false;
+			passwd2Status = false;
 		} else {
 			$("#checkPasswd2Result").html("사용가능한 비밀번호 입니다.").css("color", "green");
-			passwdStatus = true;
+			passwd2Status = true;
 		}
 		
 	});
