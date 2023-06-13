@@ -34,52 +34,30 @@
 <link href="${path }/resources/css/payment.css" rel ="stylesheet">
 </head>
 <script type="text/javascript">
-$(function(){
-// 	$('.button_section').click(function(){
-// 		if(confirm("등록된 간편결제 계좌로 충전하시겠습니까?")){
-// 			$("form").submit();
-// 		}
-					
-// 	})
-	
-// 	$('#point2').change(function(){
-// 		console.log($('#point2').val());
-// 		console.log($('#point1').text());
-// 		var point1 = Number($('#point1').text());
-// 		var point2 = Number($('#point2').val());
-// 		$('._totalPayAmt').text(point1 + point2)
-// 	})
-
-
+$(function() {
 	$('.getAccountAmt').on("click", function() {
-	    let queryString = $("form[name=accountInfo]").serialize();
-	    $.ajax({
-	        type: 'post',
-	        url: 'bank_accountDetail_pay',
-	        data: queryString,
-	        dataType: 'text',
-	        success: function(result) {
-	            var parsedResult = JSON.parse(result);
-	            let bank_name = parsedResult.bank_name;
-	            let balance_amt = parsedResult.balance_amt;
-	            $(".accountAmtResult").text(bank_name+" - " + balance_amt+"원");
-	            $("input.getAccountAmt").remove();
-	        }
-	    });
+		let queryString = $("form[name=accountInfo]").serialize();
+		$.ajax({
+			type: 'post',
+			url: 'bank_accountDetail_pay',
+			data: queryString,
+			dataType: 'text',
+			success: function(result) {
+				var parsedResult = JSON.parse(result);
+				let bank_name = parsedResult.bank_name;
+				let balance_amt = parsedResult.balance_amt;
+				$(".accountAmtResult").text(bank_name + " - " + balance_amt + "원");
+				$("input.getAccountAmt").remove();
+			}
+		});
 	});
-
 	let today = new Date();
-	
 	var year = today.getFullYear();
 	var month = ('0' + (today.getMonth() + 1)).slice(-2);
 	var day = ('0' + today.getDate()).slice(-2);
-	var dateString = year + '-' + month  + '-' + day;
-
-	$('.item_pay_date span').append('<strong>'+dateString+'</strong>');
-	
-	
-	
-	$('.chargePay').on("click",function(){
+	var dateString = year + '-' + month + '-' + day;
+	$('.item_pay_date span').append('<strong>' + dateString + '</strong>');
+	$('.chargePay').on("click", function() {
 		let chargePoint = $('#point2').val();
 		let fintech_use_num = "${fintech_use_num }";
 		let member_name = "${member.member_name}";
@@ -90,29 +68,25 @@ $(function(){
 		$.ajax({
 			type: 'post',
 			url: 'bank_withdraw',
-		 	data: {
-		 	    id: id,
-		 	    trade_type:'충전',
-		 	    member_name: member_name,
-		 		fintech_use_num: fintech_use_num,
-		 		user_name: user_name,
-		 	   	tran_amt : chargePoint
-		 	},
+			data: {
+				id: id,
+				trade_type: '충전',
+				member_name: member_name,
+				fintech_use_num: fintech_use_num,
+				user_name: user_name,
+				tran_amt: chargePoint
+			},
 			success: function(response) {
-				swal({	
-	        		icon: "success",
-	        		text: chargePoint+"point 충전되었습니다"
+				swal({
+					icon: "success",
+					text: chargePoint + "point 충전되었습니다"
 				}).then(function() {
-				    location.reload();
+					location.reload();
 				});
-	 	  	}
+			}
 		});
-		
-		
 	});
-	
-
-	$('.chargeAllPay').on("click",function(){
+	$('.chargeAllPay').on("click", function() {
 		let chargePoint;
 		let fintech_use_num = "${fintech_use_num }";
 		let member_name = "${member.member_name}";
@@ -122,112 +96,99 @@ $(function(){
 		let id = "${sessionScope.sId}";
 		let item_price = parseInt("${item.item_price}");
 		let my_point = parseInt("${member.member_point}");
-		if(item_price > my_point){
+		if(item_price > my_point) {
 			chargePoint = item_price - my_point;
-		} else{
-			swal({	
-        		icon: "info",
-        		text: "보유포인트가 더 많습니다"
+		} else {
+			swal({
+				icon: "info",
+				text: "보유포인트가 더 많습니다"
 			}).then(function() {
-				
-				 let result = swal({
-	                	icon: "info",
-	                    buttons: {
-	                        confirm: {
-	                            text: "확인",
-	                            value: true,
-	                            visible: true,
-	                            className: "",
-	                            closeModal: true,
-	                        },
-	                        cancel: {
-	                            text: "취소",
-	                            value: false,
-	                            visible: true,
-	                            className: "",
-	                            closeModal: true,
-	                        }
-	                    },
-	                    text: "송금하시겠습니까?",
-	                });
-					
-				 	
-	                result.then((confirmed) => {
-	                    if (confirmed) {
-	                    	pointTrade();
-	                    }
-	                });
-				
+				let result = swal({
+					icon: "info",
+					buttons: {
+						confirm: {
+							text: "확인",
+							value: true,
+							visible: true,
+							className: "",
+							closeModal: true,
+						},
+						cancel: {
+							text: "취소",
+							value: false,
+							visible: true,
+							className: "",
+							closeModal: true,
+						}
+					},
+					text: "송금하시겠습니까?",
+				});
+				result.then((confirmed) => {
+					if(confirmed) {
+						pointTrade();
+					}
+				});
 			});
-			
-			
 		}
-		
 		$.ajax({
 			type: 'post',
 			url: 'bank_withdraw',
-		 	data: {
-		 	    id: id,
-		 	    trade_type:'충전',
-		 	    member_name: member_name,
-		 		fintech_use_num: fintech_use_num,
-		 		user_name: user_name,
-		 	   	tran_amt : chargePoint
-		 	},
+			data: {
+				id: id,
+				trade_type: '충전',
+				member_name: member_name,
+				fintech_use_num: fintech_use_num,
+				user_name: user_name,
+				tran_amt: chargePoint
+			},
 			success: function(response) {
-				swal({	
-	        		icon: "success",
-	        		text: chargePoint+"point 충전되었습니다"
+				swal({
+					icon: "success",
+					text: chargePoint + "point 충전되었습니다"
 				}).then(function() {
-				    location.reload();
+					location.reload();
 				});
-	 	  	}
+			}
 		});
-		
-		
 	});
-	
 	let item_price = parseInt("${item.item_price}");
 	let my_point = parseInt("${member.member_point}");
 	let urlParams = new URLSearchParams(window.location.search);
-    let item_code = urlParams.get('item_code');
+	let item_code = urlParams.get('item_code');
 	let sellId = "${item.member_name }";
-	$('.tradeBtn').on("click",function(){
-		if(my_point < item_price){
-			swal({	
-        		icon: "warning",
-        		text: "POINT를 충전해주세요"
+	$('.tradeBtn').on("click", function() {
+		if(my_point < item_price) {
+			swal({
+				icon: "warning",
+				text: "POINT를 충전해주세요"
 			});
 		} else {
 			pointTrade();
 		}
 	});
-	
-	
-	
-	function pointTrade(){
-			$.ajax({
-			      type: "GET",
-			      url: "pointTrade",
-			      data: {
-			        my_point: my_point,
-			        item_price: item_price,
-			        item_code: item_code,
-			        sellId: sellId,
-			        trade_date: dateString
-			      },
-			      success: function(response) {
-			    	  swal({	
-			        		icon: "success",
-			        		text: "송금완료"
-			    	  }).then(function() {
-						    window.close();
-						    opener.parent.location.reload(); 
-					  });
-			      }
-			    });	
-	}
 
+	function pointTrade() {
+		$.ajax({
+			type: "GET",
+			url: "pointTrade",
+			data: {
+				my_point: my_point,
+				item_price: item_price,
+				item_code: item_code,
+				sellId: sellId,
+				trade_date: dateString
+			},
+			success: function(response) {
+				swal({
+					icon: "success",
+					text: "송금완료"
+				}).then(function() {
+					window.close();
+					opener.parent.location.reload();
+				});
+			}
+		});
+	}
 })
 
 </script>
