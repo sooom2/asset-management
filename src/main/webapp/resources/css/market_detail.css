@@ -614,20 +614,6 @@
 }
 
 
- .DivergedLinkTitle {
-     -webkit-letter-spacing: -0.4px;
-     -moz-letter-spacing: -0.4px;
-     -ms-letter-spacing: -0.4px;
-     letter-spacing: -0.4px;
-     font-weight: 400;
-     font-size: 1rem;
-     font-family: Pretendard Variable;
-     color: #4e5968;
-     cursor: pointer;
-     -webkit-text-decoration-line: underline;
-     text-decoration-line: underline;
-}
-
  .CategoryArrow {
      margin: auto 6px;
      width: 5px;
@@ -643,7 +629,6 @@
     font-size: 1rem;
     font-family: Pretendard Variable;
     color: #4e5968;
-    cursor: pointer;
     -webkit-text-decoration-line: underline;
     text-decoration-line: underline;
 }
@@ -887,7 +872,6 @@
 }
 
 .jsrScO {
-    cursor: pointer;
     padding: 12px 14px;
     margin: 0px 6px 6px 0px;
     background: rgb(255, 255, 255);
