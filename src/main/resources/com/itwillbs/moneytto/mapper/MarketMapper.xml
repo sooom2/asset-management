@@ -662,19 +662,20 @@
    <!-- 상품 등록 수정 -->
    
    <update id="updateItem">
-     UPDATE item
-     SET
-       item_code = #{item_code},
-       member_id = #{id},
-       item_subject = #{item_subject},
-       item_content = #{item_content},
-       item_price = #{item_price},
-       item_price_offer = IFNULL((SELECT CASE WHEN #{item_price_offer} = 'on' THEN 'Y' ELSE 'N' END), 'N'),
-       item_tag = CASE WHEN #{item_tag} IS NULL OR #{item_tag} = '' THEN (SELECT item_tag FROM item WHERE item_code = #{item_code}) ELSE #{item_tag} END,
-       item_category = #{item_category},
-       item_status = '판매중',
-       item_date = NOW()
-     WHERE item_code = #{item_code}
+	UPDATE item
+	SET
+	item_code = #{item_code},
+	member_id = #{id},
+	item_subject = #{item_subject},
+	item_content = #{item_content},
+	item_price = #{item_price},
+	item_price_offer = IFNULL((SELECT CASE WHEN #{item_price_offer} = 'on' THEN 'Y' ELSE
+	'N' END), 'N'),
+	item_tag = #{item_tag},
+	item_category = #{item_category},
+	item_status = '판매중',
+	item_date = NOW()
+	WHERE item_code = #{item_code}
    </update>
    
    <select id="getItemTag" resultType="String">
