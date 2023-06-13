@@ -134,82 +134,203 @@ $(window).load(function() {
 });
 
 
-	//태그기능 
+// 	//태그기능 
+// document.addEventListener('DOMContentLoaded', function() {
+// 	var tagInput = document.querySelector('.tagTagInput');
+// 	var tagButton = document.querySelector('.tagButton');
+// 	var tagListWrapper = document.querySelector('.ListWrapper');
+// 	var tagForm = document.getElementById('tag');
+
+// 	var tags = [];
+// 	 // 수정된 부분: 초기 태그 값 설정
+//     var hiddenInput = document.querySelector('input[name="item_tag"]');
+//     if (hiddenInput.value) {
+//         tags = hiddenInput.value.split(',');
+//     }
+
+// 	function updateTagList() {
+// 		tagListWrapper.innerHTML = '';
+
+// 		tags.slice(0, 5).forEach(function(tag, index) {
+// 			var tagItem = document.createElement('span');
+// 			tagItem.classList.add('tagItem');
+// 			tagItem.textContent = '#' + tag;
+
+// 			// X 아이콘 추가
+// 			var removeIcon = document.createElement('span');
+// 			removeIcon.classList.add('removeIcon');
+// 			removeIcon.textContent = 'X';
+// 			removeIcon.setAttribute('data-index', index);
+// 			tagItem.appendChild(removeIcon);
+
+// 			tagListWrapper.appendChild(tagItem);
+// 		});
+
+
+// 		// 수정된 부분: hidden input의 값을 업데이트
+//         hiddenInput.value = tags.join(',');
+//     }
+
+// 	function addTag() {
+// 		var tagValue = tagInput.value.trim();
+
+// 		if (tagValue === '') {
+// 			return;
+// 		}
+
+// 		if (tags.length >= 5 || tags.includes(tagValue)) {
+// 			tagInput.value = '';
+// 			tagInput.focus();
+// 			return;
+// 		}
+
+// 		tags.push(tagValue);
+// 		updateTagList();
+
+// 		tagInput.value = '';
+// 		tagInput.focus();
+// 	}
+
+// 	function removeTag(event) {
+// 		if (event.target.classList.contains('removeIcon')) {
+// 			var index = event.target.getAttribute('data-index');
+// 			tags.splice(index, 1);
+// 			updateTagList();
+
+
+// 			   hiddenInput.value = tags.join(',');
+//         }
+// 	}
+
+// 	tagButton.addEventListener('click', function(event) {
+// 		event.preventDefault();
+// 		addTag();
+// 	});
+
+// 	tagListWrapper.addEventListener('click', removeTag);
+
+// 	tagForm.addEventListener('submit', function(event) {
+// 		event.preventDefault();
+// 	});
+// });
+
 document.addEventListener('DOMContentLoaded', function() {
-	var tagInput = document.querySelector('.tagTagInput');
-	var tagButton = document.querySelector('.tagButton');
-	var tagListWrapper = document.querySelector('.ListWrapper');
-	var tagForm = document.getElementById('tag');
+  var tagInput = document.querySelector('.tagTagInput');
+  var tagButton = document.querySelector('.tagButton');
+  var tagListWrapper = document.querySelector('.ListWrapper');
+  var hiddenInput = document.querySelector('input[name="item_tag"]');
+  var originalTags = hiddenInput.value ? hiddenInput.value.split(',') : [];
+  var tags = [];
 
-	var tags = [];
+  function updateTagList() {
+    tagListWrapper.innerHTML = '';
 
-	function updateTagList() {
-		tagListWrapper.innerHTML = '';
+    tags.slice(0, 5).forEach(function(tag, index) {
+      var tagItem = document.createElement('span');
+      tagItem.classList.add('tagItem');
+      tagItem.textContent = '#' + tag;
 
-		tags.slice(0, 5).forEach(function(tag, index) {
-			var tagItem = document.createElement('span');
-			tagItem.classList.add('tagItem');
-			tagItem.textContent = '#' + tag;
+      var removeIcon = document.createElement('span');
+      removeIcon.classList.add('removeIcon');
+      removeIcon.textContent = 'X';
+      removeIcon.setAttribute('data-index', index);
+      tagItem.appendChild(removeIcon);
 
-			// X 아이콘 추가
-			var removeIcon = document.createElement('span');
-			removeIcon.classList.add('removeIcon');
-			removeIcon.textContent = 'X';
-			removeIcon.setAttribute('data-index', index);
-			tagItem.appendChild(removeIcon);
+      tagListWrapper.appendChild(tagItem);
+    });
 
-			tagListWrapper.appendChild(tagItem);
-		});
+    hiddenInput.value = tags.join(',');
+  }
 
-		// 수정된 부분: hidden input의 값을 업데이트
-		var hiddenInput = document.querySelector('input[name="item_tag"]');
-		hiddenInput.setAttribute('value', tags.join(','));
-	}
+//   function addTag() {
+//     var tagValue = tagInput.value.trim();
 
-	function addTag() {
-		var tagValue = tagInput.value.trim();
+//     if (tagValue === '') {
+//       return;
+//     }
 
-		if (tagValue === '') {
-			return;
-		}
+//     if (tags.length >= 5 || tags.includes(tagValue)) {
+//       tagInput.value = '';
+//       tagInput.focus();
+//       return;
+//     }
 
-		if (tags.length >= 5 || tags.includes(tagValue)) {
-			tagInput.value = '';
-			tagInput.focus();
-			return;
-		}
+//     tags.push(tagValue);
+//     updateTagList();
 
-		tags.push(tagValue);
-		updateTagList();
+//     tagInput.value = '';
+//     tagInput.focus();
+//   }
+document.addEventListener('DOMContentLoaded', function() {
+  var tagInput = document.querySelector('.tagTagInput');
+  var tagButton = document.querySelector('.tagButton');
+  var tagListWrapper = document.querySelector('.ListWrapper');
+  var hiddenInput = document.querySelector('input[name="item_tag"]');
+  var originalTags = hiddenInput.value ? hiddenInput.value.split(',') : [];
+  var tags = originalTags;
 
-		tagInput.value = '';
-		tagInput.focus();
-	}
+  function updateTagList() {
+    tagListWrapper.innerHTML = '';
 
-	function removeTag(event) {
-		if (event.target.classList.contains('removeIcon')) {
-			var index = event.target.getAttribute('data-index');
-			tags.splice(index, 1);
-			updateTagList();
+    tags.slice(0, 5).forEach(function(tag, index) {
+      var tagItem = document.createElement('span');
+      tagItem.classList.add('tagItem');
+      tagItem.textContent = '#' + tag;
 
-			// 수정된 부분: hidden input의 값을 업데이트
-			var hiddenInput = document
-					.querySelector('input[name="item_tag"]');
-			hiddenInput.setAttribute('value', tags.join(','));
-		}
-	}
+      var removeIcon = document.createElement('span');
+      removeIcon.classList.add('removeIcon');
+      removeIcon.textContent = 'X';
+      removeIcon.setAttribute('data-index', index);
+      tagItem.appendChild(removeIcon);
 
-	tagButton.addEventListener('click', function(event) {
-		event.preventDefault();
-		addTag();
-	});
+      tagListWrapper.appendChild(tagItem);
+    });
 
-	tagListWrapper.addEventListener('click', removeTag);
+    hiddenInput.value = tags.join(',');
+  }
 
-	tagForm.addEventListener('submit', function(event) {
-		event.preventDefault();
-	});
+  function addTag() {
+    var tagValue = tagInput.value.trim();
+
+    if (tagValue === '') {
+      // 입력값이 없는 경우 기존 태그를 그대로 유지
+      tags = originalTags;
+      updateTagList();
+      return;
+    }
+
+    if (tags.length >= 5 || tags.includes(tagValue)) {
+      tagInput.value = '';
+      tagInput.focus();
+      return;
+    }
+
+    tags.push(tagValue);
+    updateTagList();
+
+    tagInput.value = '';
+    tagInput.focus();
+  }
+
+  function removeTag(event) {
+    if (event.target.classList.contains('removeIcon')) {
+      var index = event.target.getAttribute('data-index');
+      tags.splice(index, 1);
+      updateTagList();
+    }
+  }
+
+  tagButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    addTag();
+  });
+
+  tagListWrapper.addEventListener('click', removeTag);
+
+  // 초기 태그 값 설정
+  updateTagList();
 });
+
 
 
 	
@@ -280,7 +401,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	color: #bb2649;
 }
 
-
 /* 태그 아이콘 */
 .removeIcon {
 	display: inline-block;
@@ -307,7 +427,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		<section class="content">
 			<h1>중고거래의 시작 머니또마켓</h1>
 			<h2>상품 등록 페이지</h2>
-			<form class="updateItem" action="itemModifyPro" method="post" enctype="multipart/form-data">
+			<form class="updateItem" action="itemModifyPro" method="post"
+				enctype="multipart/form-data">
 				<div class="regist_main_area">
 					<div class="regist_top">
 						<div class="regist_box_top">
@@ -336,7 +457,7 @@ document.addEventListener('DOMContentLoaded', function() {
 											src="https://ccimage.hellomarket.com/img/web/regist/image_camera_x3.png"
 											alt="기본 상품 등록 이미지" class="default">
 										<ul class="image_list">
-										
+
 											<!-- 이미지 미리보기 영역 -->
 											<c:forEach items="${images}" var="image">
 												<li>
@@ -397,7 +518,8 @@ document.addEventListener('DOMContentLoaded', function() {
 											<div class="TextTextWrapper">유아동/반려동물</div>
 											<div class="TextTextWrapper">그외기타</div>
 										</div>
-										<input type="hidden" name="item_category" value="${marketItem.item_category}">
+										<input type="hidden" name="item_category"
+											value="${marketItem.item_category}">
 									</div>
 								</dd>
 							</dl>
@@ -451,21 +573,24 @@ document.addEventListener('DOMContentLoaded', function() {
 										<img
 											src="https://ccimage.hellomarket.com/img/web/regist/tag_icon_x3.png"
 											class="tagTagIcon"> <input
-											placeholder="태그를 입력해주세요(최대 5개)" class="tagTagInput" value="">
+											placeholder="태그를 입력해주세요(최대 5개)" class="tagTagInput"
+											value="${item_tag != null ? item_tag : ''}">
 									</div>
 									<button class="tagButton">추가</button>
 									<div class="ListWrapper"></div>
-									<input type="hidden" name="item_tag" value="">
+									<input type="hidden" name="item_tag" value="${marketItem.item_tag}"> 
+									<input type="hidden" name="item_tag_original" value="${marketItem.item_tag}">
 								</dd>
 							</dl>
-							
+
+
 							<dl class="text_area" id="desc">
 								<dt class="TitleTitleWrapper">
 									<label class="Title">상품설명</label>
 									<div class="TitleEssentialMark">*</div>
 								</dt>
 								<dd>
-									<textarea rows="5" class="introduce" name="item_content" 
+									<textarea rows="5" class="introduce" name="item_content"
 										placeholder="상품의 상태를 정확하게 알 수 있는 정보를 꼭 포함해 주세요!   (최대 2,500자)">${marketItem.item_content }</textarea>
 								</dd>
 							</dl>
@@ -478,8 +603,8 @@ document.addEventListener('DOMContentLoaded', function() {
 								<button class="btn_item_cancel" type="button">취소</button>
 							</a>
 							<button class="btn_item_submit" type="submit">상품 수정</button>
-							<input type="hidden" id="item_code" name="item_code" value="${marketItem.item_code}">
-							<a href="main">
+							<input type="hidden" id="item_code" name="item_code"
+								value="${marketItem.item_code}"> <a href="main">
 								<button class="btn_item_cancel" type="button">상품 삭제</button>
 							</a>
 						</div>
