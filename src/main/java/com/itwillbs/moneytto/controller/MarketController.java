@@ -785,7 +785,11 @@ public class MarketController {
 
 	                    String filePath = uploadDir + "/" + storedFileName;
 
-	                    String saveFileName = "http://c3d2212t3.itwillbs.com/images/" + storedFileName;
+	                    String saveFileName = "http://c3d2212t3.itwillbs.com/Moneytto/resources/upload/" + storedFileName;
+	                    
+	                    
+	                    
+	                    
 	                    File dest = new File(filePath);
 	                    file.transferTo(dest);
 
@@ -894,7 +898,7 @@ public class MarketController {
 
 	                        String filePath = uploadDir + "/" + storedFileName;
 
-	                        String saveFileName = "http://c3d2212t3.itwillbs.com/images/" + storedFileName;
+	                        String saveFileName = "http://c3d2212t3.itwillbs.com/Moneytto/resources/upload/" + storedFileName;
 	                        File dest = new File(filePath);
 	                        // upload 디렉토리가 없을때 생성하는 메서드
 	                        dest.mkdirs();
