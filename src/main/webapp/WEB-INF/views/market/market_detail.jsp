@@ -486,6 +486,15 @@ function toggleLike(element) {
 		
 		// 신고하기 버튼
 		$(document).on("click", ".IZaFu", function(e) {
+			if($("#session_id").val() == "") {
+				swal({	
+	        		icon: "warning",
+	        		text: "로그인 후 이용해주세요."
+		        });
+				ReactModalPortal
+				return;
+			}
+			
 			var reportType = $("#report_type").val();
 			
 			if(reportType == "") {
@@ -499,7 +508,6 @@ function toggleLike(element) {
 	        		text: "신고가 성공적으로 접수되었습니다!"
 		        });
 				report();
-				
 			}
 		});
 		

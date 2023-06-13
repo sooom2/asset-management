@@ -113,11 +113,13 @@ public class MypageController {
 		
 		String member_pw = paramMember.get("member_pw");
 		String member_pw2 = paramMember.get("member_pw3");	//css 상으로 member_pw3이 들어와서
+		System.out.println(paramMember);
+		
 		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodedMember_pw = member.get("member_pw");
 					
-		if(member_pw == null || !passwordEncoder.matches(member_pw2, encodedMember_pw)){
+		if(member_pw == null || !passwordEncoder.matches(member_pw, encodedMember_pw)){
 			
 			model.addAttribute("msg", "정보를 수정하려면 기존의 비밀번호와 일치해야 합니다!");
 			return "fail_back";
@@ -178,7 +180,7 @@ public class MypageController {
 		
 		//세션아이디 저장
 		String id = (String)session.getAttribute("sId");
-		if(id == null) {
+		if(id == null) { 
 			model.addAttribute("msg", "권한이 없습니다!");
 			return "fail_back";
 		}

@@ -265,7 +265,7 @@ function reviewDelete(item_code){
 						       		     	</td>
 						            	</c:otherwise>
 						            </c:choose>
-						            <td id="board-data">${item.market_date}</td>
+						            <td id="board-data">${item.review_date}</td>
 						        </tr>
 						    </c:forEach>
 						</table>
@@ -274,7 +274,7 @@ function reviewDelete(item_code){
 					<c:when test="${param.itemList eq 'recivedReview'}">
 						<table id="board-table">
 							<tr>
-								<th id="board-header">리뷰</th>
+								<th id="board-header">리 뷰</th>
 								<th id="board-header">상세보기</th>
 								<th id="board-header" style="width: 4%;">별점</th>
 								<th id="board-header" style="width: 10%;">리뷰</th>
