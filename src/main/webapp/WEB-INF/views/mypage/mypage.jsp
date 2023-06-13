@@ -310,6 +310,7 @@ function reviewDelete(item_code){
 										<img src="${path }/resources/images/main/noThumbnail.jpg" alt="itemImg" class="itemThumbnail" />		                                  		
 	                              	</c:otherwise>
 	                            </c:choose>
+	                            	<input type="button" value="${item.item_status }" class="status active">
 								<c:choose>
 	                       	 		<c:when test="${not empty item.wish_code }">
 	                       	 			<img src="${path }/resources/images/main/ico_heart_on_x3.png" alt="좋아요 아이콘" class="WishWishImg" />
@@ -324,9 +325,17 @@ function reviewDelete(item_code){
 								<div class="itemText subject">${item.item_subject }</div>
 								<div class="itemText"><fmt:formatNumber value="${item.item_price  }" pattern="#,###" />원</div>
 								<div class="itemTagBox">
-								<c:forEach var="item_tag" items ="${fn:split(item.item_tag, ',') }">
-								<div class="itemSizeTag">${item_tag }</div>
-								</c:forEach>
+								<c:forEach var="item_tag"
+											items="${fn:split(item.item_tag, ',')}">
+											<c:choose>
+												<c:when test="${not empty item_tag}">
+													<div class="itemSizeTag">${item_tag}</div>
+												</c:when>
+												<c:otherwise>
+													<div class="itemSizeTag" style="visibility: hidden;"></div>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
 								</div>
 							</div>
 						</div>
