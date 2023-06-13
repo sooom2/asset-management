@@ -690,7 +690,9 @@ public class MarketController {
 			case "insert":	int insertCount = service.writeReview(review);
 				
 				if(insertCount > 0) {				//insert 성공
-					model.addAttribute("msg", "리뷰가 성공적으로 등록되었습니다.");
+					model.addAttribute("msg", "리뷰가 등록되었습니다. 			회원 등급 포인트가 5점 적립되었습니다.");
+					
+					
 				}else {								//insert 실패
 					model.addAttribute("msg", "리뷰 작성에 실패하였습니다.");
 					
@@ -709,15 +711,30 @@ public class MarketController {
 			break;
 		}
 		
-		//TODO 성공하면 창꺼지게해죠 06.08
-		//TODO 네~ 06.11
 		model.addAttribute("isClose", true);
 		model.addAttribute("isReload", true);
 		
 		return"fail_back";
 		
 	}
-
+	@RequestMapping(value = "reviewHide", method = RequestMethod.GET)
+	public String reviewHide(@RequestParam HashMap<String, String> review,HttpSession session, Model model) {
+		
+		int updateCount = service.hideReview(review);
+		
+		if(updateCount > 0) {				//insert 성공
+			model.addAttribute("msg", "숨긴 리뷰는 작성자 외 다른 사람에게도 보이지 않습니다.");
+		}else {								//insert 실패
+			model.addAttribute("msg", "ERROR 리뷰 숨기기에 실패하였습니다.");
+			
+		}
+		
+		model.addAttribute("isClose", true);
+		model.addAttribute("isReload", true);
+		
+		return"fail_back";
+		
+	}
 	@GetMapping("recentlyMessage")
 	@ResponseBody
 	public String recentlyMessage(@RequestParam String room_code) throws JsonProcessingException {

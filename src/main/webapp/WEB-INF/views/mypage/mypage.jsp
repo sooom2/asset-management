@@ -281,17 +281,19 @@ function reviewDelete(item_code){
 								<th id="board-header" style="width: 15%;">날짜</th>
 							</tr>
 						    <c:forEach items="${itemList}" var="item" varStatus="status">
+						    	<c:if test="${item.hideReview eq 'N' }">
 						        <tr>
 						            <td id="board-data">${itemList.size() - status.index}</td>
 						            <td id="board-data" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"><a href="market_detail?item_code=${item.review_item_code}" class="board-title">${item.review_content}</a></td>
 						            <td id="board-data">${item.rating}</td>
 				            		<td id="board-data">
 				            			<c:if test= "${sessionScope.sId eq member.member_id }">
-						       		    <a href="#"class="board-title" onclick="reviewDelete('${item.item_code}')">삭제</a>
+						       		    <a href="#"class="board-title" onclick="reviewHide('${item.item_code}')">숨김</a>
 						       		    </c:if>
 				            		</td>
 						            <td id="board-data">${item.review_date}</td>
 						        </tr>
+						        </c:if>
 						    </c:forEach>
 						</table>
 					</c:when>

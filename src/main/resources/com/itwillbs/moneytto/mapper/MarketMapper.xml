@@ -703,6 +703,7 @@
          , #{review_content}
          , now()
          , #{rating}
+         , 'N'
          )
    </insert>
    
@@ -716,6 +717,15 @@
          1 = 1
          AND reviewer_id = #{reviewer_id}
          AND   review_item_code = #{item_code}
+   </update>
+   
+   <update id="hideReview">
+      UPDATE
+         review 
+      SET 
+          hide_review = 'Y'
+      WHERE
+          reviewer_id = #{reviewer_id}
    </update>
    
    <delete id="deleteReview">
