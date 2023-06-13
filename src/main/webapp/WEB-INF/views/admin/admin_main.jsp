@@ -16,6 +16,7 @@
 <link href="resources/css/styles.css" rel="stylesheet" />
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
 	crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -41,36 +42,45 @@
 						<div class="col-xl-3 col-md-6">
 							<div class="card bg-primary text-black mb-4">
 								<div class="card-body font20">
-									소셜가계부<br> <span class="fontB">${resCount }</span>건
+									수익률<br>
 									
 <!-- 								막대	============================================================== -->
 									<div>
-									  <canvas id="barChart"></canvas>
+									    <canvas id="mixedChart"></canvas>
 									</div>
 									
-									<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-									
 									<script>
-									  const ctx = document.getElementById('barChart');
+									    var trade1 = ${accountCnt.totalCnt};
 									
-									  new Chart(ctx, {
-									    type: 'bar',
-									    data: {
-									      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-									      datasets: [{
-									        label: '# of Votes',
-									        data: [12, 19, 3, 5, 2, 3],
-									        borderWidth: 1
-									      }]
-									    },
-									    options: {
-									      scales: {
-									        y: {
-									          beginAtZero: true
+									    var ctx = document.getElementById('mixedChart').getContext('2d');
+									
+									    var mixedChart = new Chart(ctx, {
+									        type: 'bar',
+									        data: {
+									            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+									            datasets: [{
+									                label: 'Sales',
+									                data: [50, 60, 70, 80, 90, 100],
+									                backgroundColor: 'rgba(54, 162, 235, 0.5)'
+									            }]
+									        },
+									        options: {
+									            responsive: true,
+									            scales: {
+									                y: {
+									                    beginAtZero: true
+									                }
+									            }
 									        }
-									      }
-									    }
-									  });
+									    });
+									
+									    mixedChart.data.datasets.push({
+									        type: 'line',
+									        label: 'Average',
+									        data: [70, 70, 70, 70, 70, 70],
+									        borderColor: 'rgba(255, 99, 132, 1)',
+									        fill: false
+									    });
 									</script>
 <!-- 								막대끝	============================================================== -->
 
@@ -107,7 +117,7 @@
 										var cate5 = ${categoryCnt.cate5} + ${categoryCnt.cate11};
 										var cate6 = ${categoryCnt.cate6};
 										var cate7 = ${categoryCnt.cate7} + ${categoryCnt.cate12};
-										alert("확인1:" + cate1 + " 2:" + cate2 + " 3:" + cate3 + " 4:" + cate4 + " 5:" + cate5 + " 6:" + cate6 + " 7:" + cate7);
+										
 										var ctx1 = document.getElementById('chart1').getContext('2d');
 										var chart1 = new Chart(ctx1, {
 										    type: 'doughnut',

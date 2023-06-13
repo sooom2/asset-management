@@ -5,7 +5,7 @@
 }
 
 .content {
-	width: 41%;
+	width: 65%;
 	margin: 0 auto;
 	float: center;
 }
@@ -44,7 +44,7 @@
 }
 .myForm div textarea{
 	height: 100px;
-	width: 450px;
+	width: 650px;
 	border: 1px solid #a9a9a9ee;
 }
 

@@ -120,11 +120,6 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 			TextMessage textMessage = new TextMessage(name + ":" + messages);
                 
 			int sessionCount = 0;
-//			room_code = marketList.get(room_code);
-			// 해당 코드에 session에 뿌려줌.
-//			for(WebSocketSession sess : marketList.get(room_code)) {
-//				sess.sendMessage(textMessage);
-//			}
 			session.sendMessage(textMessage);
 			
 			

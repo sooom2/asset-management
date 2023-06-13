@@ -128,24 +128,24 @@ $(document).ready(function(){
 			// => 4점 : 안전, 3점 : 보통, 2점 : 위험, 1점 이하 : 사용 불가능한 패스워드
 			switch(count) {
 				case 4 :  
-					$("#checkPasswdResult").html("안전").css("color", "green"); 
+					$("#checkPasswdResult").html("사용가능한 비밀번호 입니다.").css("color", "green");
 					passwdStatus = true;
 					break;
 				case 3 :  
-					$("#checkPasswdResult").html("보통").css("color", "yellow"); 
+					$("#checkPasswdResult").html("사용가능한 비밀번호 입니다.").css("color", "green");
 					passwdStatus = true;
 					break;
 				case 2 :  
-					$("#checkPasswdResult").html("위험").css("color", "orange"); 
+					$("#checkPasswdResult").html("사용가능한 비밀번호 입니다.").css("color", "green");
 					passwdStatus = true;
 					break;
 				case 1 :
 				case 0 :
-					$("#checkPasswdResult").html("사용 불가능한 패스워드").css("color", "red"); break;
+					$("#checkPasswdResult").html("사용 불가능한 패스워드").css("color", "red");break; 
 					passwdStatus = false;
+					
 			}
-			$("#checkPasswdResult").html("사용가능한 비밀번호 입니다.").css("color", "green");
-			passwdStatus = true;
+			
 		}
 		
 	});
@@ -206,51 +206,3 @@ $(document).ready(function(){
 	    
   });
 });
-function confirmQuit() {
-event.preventDefault()
- swal({
-	    title: "회원 탈퇴를 하시겠습니까?",
-	    text: "탈퇴시 회원정보가 삭제됩니다.\n 동일한 ID로 가입하실 수 없습니다.",
-	    icon: "warning",
-	    buttons: {
-	      confirm: {
-	        text: "탈퇴하기",
-	        value: true,
-	        visible: true,
-	        className: "",
-	        closeModal: true,
-	      },
-	      cancel: {
-	        text: "취소",
-	        value: false,
-	        visible: true,
-	        className: "",
-	        closeModal: true,
-	      },
-	    },
-	  }).then((confirmResult) => {
-	    if (confirmResult) {
-	      swal({
-	        title: "정말로 회원 탈퇴를 하시겠습니까?",
-	        text: "탈퇴시 회원정보가 삭제됩니다.\n 동일한 ID로 가입하실 수 없습니다.",
-	        icon: "warning",
-	        buttons: {
-	          cancel: {
-	            text: "취소",
-	            value: false,
-	            visible: true,
-	            className: "",
-	            closeModal: true,
-	          },
-	          confirm: {
-	            text: "탈퇴하기",
-	            value: true,
-	            visible: true,
-	            className: "",
-	            closeModal: true,
-	          },
-	        },
-	      })
-	    }
-  	});
-}

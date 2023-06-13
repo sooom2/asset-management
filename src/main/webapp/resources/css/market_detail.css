@@ -107,6 +107,7 @@
     object-fit: cover;
     opacity: 100%;
     display: inline-flex;
+    cursor: pointer;
 }
 
  .NavigationCustomNavigationContainer {
@@ -384,18 +385,6 @@
 }
 
 
- .SubTitleDetailText {
-     -webkit-letter-spacing: 0px;
-     -moz-letter-spacing: 0px;
-     -ms-letter-spacing: 0px;
-     letter-spacing: 0px;
-     font-weight: 500;
-     font-size: 0.875rem;
-     font-family: Pretendard Variable;
-     color: #8b95a1;
-     margin-right: 6px;
-}
-
 .SubTitleWishBox {
      cursor: pointer;
      display: -webkit-box;
@@ -410,7 +399,7 @@
      margin: auto 6px auto 12px;
 }
 
-.SubTitleDetailText {
+.SubTitleDetailText, .views{
     -webkit-letter-spacing: 0px;
     -moz-letter-spacing: 0px;
     -ms-letter-spacing: 0px;
@@ -422,14 +411,18 @@
     margin-right: 6px;
 }
 
-  .SubTitleTagBox {
+.views {
+	margin-right: 370px !important;
+}
+
+.SubTitleTagBox {
                 display: -webkit-box;
                 display: -webkit-flex;
                 display: -ms-flexbox;
                 display: flex;
             }
 
- .SubTitleTagText {
+.SubTitleTagText {
      -webkit-letter-spacing: 0px;
      -moz-letter-spacing: 0px;
      -ms-letter-spacing: 0px;
@@ -577,7 +570,7 @@
 
 
 .DescriptionWrapper {
-    margin: 30px 42px 30px 0;
+    margin: 10px 42px 30px 0;
     padding-top: 32px;
     border-top: 1px solid #e5e8eb;
     line-height: 160%;
@@ -994,7 +987,7 @@
 }
 
 .trade_status input[type="button"] {
-    cursor: pointer;
+    cursor: auto;
 }
 
 

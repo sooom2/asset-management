@@ -83,8 +83,6 @@ public class MarketController {
 		    model.addAttribute("nickname",nickname);
 		}
 		
-		System.out.println("navSearch!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + navSearch);
-		
 		return "market/nav_market_list";
 	}
 	
@@ -206,26 +204,18 @@ public class MarketController {
 	@ResponseBody
 	@GetMapping(value = "report")
 	public boolean report(Model model, HttpSession session, @RequestParam HashMap<String, String> map) {
-		System.out.println("report =========================================================");
-		System.out.println(map);
-		System.out.println("report =========================================================");
 		String id = (String)session.getAttribute("sId");
 		map.put("id", id);
-		System.out.println("report 확인용: " + map);
 		// view 에 보낼 결과
 		boolean result = false;
 		
 		int insertReport = service.insertReport(map);
-//		System.out.println("insertReport : " + insertReport);
 		if(insertReport > 0 ) {
 			result = true;
 		}
 		return result;
 	}
 	
-	
-	
-		
 	
 	@GetMapping(value = "itemRegist")
 	public String itemRegist(Model model,HttpSession session) {
@@ -279,44 +269,27 @@ public class MarketController {
 	      //물건판매자
 	      HashMap<String, String> sellDetail = marketChatService.getSellID(item_code.get("item_code"));
 	      String sellId = null;
-	      // 내가판매자
+	      // session 이랑 비교해서 파는사람이 나면 내가판매자
 	      if((String)session.getAttribute("sId") == sellDetail.get("member_id")) {
 	         sellId = (String)session.getAttribute("sId");
-	         System.out.println(sellId + "내가판매자일때");
 	      } else {
 	         //상대방이 판매자
 	         sellId = sellDetail.get("member_id").toString();
-	         System.out.println(sellId + "상대방이 판매자일때");
-	         
 	      }
 	      
 	      String get_item_code = item_detail.get("item_code");
 	      
 	      
-	      
-	      
-	      //여기까진됨
 	      if(get_item_status.equals("거래완료")) {
-	         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 	         int updateCount = marketChatService.isUpdate(get_item_code);
-	         System.out.println("==================================");
-	         System.out.println(updateCount);
-	         System.out.println("==================================");
-	         if(updateCount > 0) {
-	            System.out.println("거래내역에 이미있음");
-	         }else { //거래내역에없을때 
-	            // market_paid insert 작업
-	            // 거래코드, 판매자아이디, 아이템코드, 산사람, 판사람, 가격 , 판매방법 , 날짜
-	            System.out.println("사는사람 ==================================");
-	            System.out.println(sellId);
-	            System.out.println("==================================");
-	            String str ="직접결제";
-	            int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date,str);
+	         
+	         if(updateCount < 1) {
+	        	 String str ="직접결제";
+	        	 int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date,str);
 	         }
 	         
-	         
 	      } else {
-	         // market_paid 에서 삭제되야함
+	         // 거래완료 > 거래중/판매중으로 바꿨을때 marketPaid에서 삭제
 	         int delMarketPaid = marketChatService.deltMarketPaid(item_detail,sellId);
 	      }
 	   }
@@ -354,17 +327,11 @@ public class MarketController {
 	         // 아이템선택후 들어가야함
 	         // 채팅방이있는지 조회한후 채팅방 생성 //
 	         int createRoom = marketChatService.isInsertChatRoom(item_code, id);
-	         System.out.println("1 ==========================================");
-	         System.out.println(createRoom);
-	         System.out.println("1 ==========================================");
 	         model.addAttribute("createRoom", createRoom);
 	         if (createRoom > 0) { // 방이있을때()
 	            
 	            // 대화한 내역
 	            chatList = marketChatService.getMyChatRecentList(id);
-	            System.out.println("1 ==========================================");
-	            System.out.println(chatList);
-	            System.out.println("1 ==========================================");
 
 
 	            //아이템코드에 해당하는 roomcode 찾기
@@ -373,33 +340,21 @@ public class MarketController {
 	            // 2. room_code로 채팅내용조회
 	            chatDetail = marketChatService.getChatDetail(room_code);
 	            model.addAttribute("chatDetail", chatDetail);
-	            System.out.println("2 ==========================================");
-	            System.out.println(chatDetail);
-	            System.out.println("2 ==========================================");
 	            item_subject = chatDetail.get(0).get("item_subject");
 	         
 	            // 3. 상대방 판매상품갯수조회
 	            // 상대방의 아이디 조회
 	            opponentId = marketChatService.getOpponentId(room_code, id);
-	            System.out.println("3 ==========================================");
-	            System.out.println(opponentId.get("opponent_id"));
-	            System.out.println("3 ==========================================");
 	            // 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
 	            sellCount = marketChatService.getSellCount(opponentId.get("opponent_id"));
 	            myChatList = marketChatService.getMyChatList(id);
 	            
-	            System.out.println("4 ==========================================");
-	            System.out.println(myChatList);
-	            System.out.println("4 ==========================================");
 	            item = marketChatService.getItemList(item_code);
 	            sellId = item.get("member_id");
 
-	            System.out.println("chatDetail 에서  방이있을경우" + item_code + ",룸코드: " + room_code);
 	         } else { // 방이없을때
 	               
 	            // 해당 상품 조회
-	            
-	            
 	            chatList = marketChatService.getItemDetail(item_code);
 	            myChatList = marketChatService.getMyChatList(id);
 	            if (myChatList != null) {
@@ -407,12 +362,9 @@ public class MarketController {
 	            } else {
 	               room_code = 1;
 	            }
-	            System.out.println("대화한적이 없다!!!!! 최근 방번호에 active 되야하는디");
 	            // 상대방아이디 - 상품의 member_id
-//	               sellId = chatList.get("opponent_id");
 	            // 방이없을땐 보통 판매자,,
 	            item = marketChatService.getItemList(item_code);
-
 	            sellId = item.get("member_id");
 
 	         }
@@ -422,19 +374,11 @@ public class MarketController {
 	         // 최근에 열린 채팅 내역 보이게
 	         // 1. 최근 room_code 조회
 	         chatList = marketChatService.getMyChatRecentList(id);
-	         System.out.println("nav1 ========================================");
-	         System.out.println(chatList);
-	         System.out.println("nav1 ========================================");
 	         if (chatList != null && chatList.size() > 0) {
-	            System.out.println(chatList.get("member_id"));
 	            room_code = chatList.get("room_code");
-	            System.out.println(room_code+ "는 뭘까");
 	            // 2. room_code로 채팅 내용 조회
 	            chatDetail = marketChatService.getChatDetail(room_code);
 
-	            System.out.println("nav2 ==================================");
-	            System.out.println(chatDetail);
-	            System.out.println("nav2 ==================================");
 	            item_subject = chatDetail.get(0).get("item_subject");
 	            
 	            if (chatDetail != null && !chatDetail.isEmpty()) {
@@ -448,9 +392,6 @@ public class MarketController {
 	            // 3. 상대방 판매상품갯수조회
 	            // 상대방의 아이디 조회
 	            opponentId = marketChatService.getOpponentId(room_code, id);
-	            System.out.println("opponentId ==========================");
-	            System.out.println(opponentId);
-	            System.out.println("==========================");
 	            // 상대방의 아이디로 물건 판매개수조회 (판매완료되면 안보여야함 > 거래상태 확인)
 	            sellCount = marketChatService.getSellCount(opponentId.get("opponent_id"));
 	            myChatList = marketChatService.getMyChatList(id);
@@ -478,7 +419,6 @@ public class MarketController {
 	      
 	      // header에는 판매자 의정보!! ㅠㅠ
 	      HashMap<String, String> sellDetail = marketChatService.getSellDetail(room_code);
-	      System.out.println(room_code);
 	      HashMap<String, String> trade_date = marketChatService.getTradeDate(room_code);
 	      
 	      
@@ -497,39 +437,26 @@ public class MarketController {
 	      model.addAttribute("sellCount", sellCount);
 	      model.addAttribute("room_code", room_code);
 	      model.addAttribute("item_code", item_code);
-	      System.out.println("===============????=========================================");
-	      System.out.println(chatList + ": " + myChatList + ": " + opponentId);
-	      System.out.println("==================????===========================================");
 	      return "market/market_chat";
 
 	   }// market_chat
-	   
-	   
 	   
 	   @RequestMapping(value = "market_payment", method = {RequestMethod.GET, RequestMethod.POST})
 	   public String store_pay2(HttpSession session
 								, Model model
 								, @RequestParam(value = "item_code", defaultValue = "market0029") String item_code) {
-								// 테스트용으로 임의로 default 값 넣어둔 상태
-			
 			
 			HashMap<String, String> item = service.getMarketItem(item_code);
 			String id = (String)session.getAttribute("sId");
-			if(id == null) {		//TODO 임시로 넣어둔건데 세션아이디 없으면 fail_back으로 가게 하면될거같아요
-				id = "admin";		
+			if(id == null) {	
+				model.addAttribute("msg","로그인해주세요");
+				return "fail_back";
 			}
 			HashMap<String, String> member = memberService.getMember(id);
 			HashMap<String, String> account = bankService.getAccount(id);
-			System.out.println("member ==================================");
-			System.out.println(member);
-			System.out.println("==================================");
-			
 			// 세션에 저장된 엑세스 토큰 및 사용자 번호 변수에 저장
 			String access_token = (String)session.getAttribute("access_token");
 			String user_seq_no =  (String)session.getAttribute("user_seq_no");
-			System.out.println("access_token : " + access_token);
-			System.out.println("user_seq_no : " + user_seq_no);
-			
 			// access_token 이 null 일 경우 "계좌 인증 필수" 메세지 출력 후 이전페이지로 돌아가기
 			if(access_token == null) {
 				model.addAttribute("msg", "계좌 인증이 필요합니다.");
@@ -543,7 +470,6 @@ public class MarketController {
 			// => 파라미터 : 엑세스토큰, 사용자번호   리턴타입 : ResponseUserInfoVO(userInfo)
 			ResponseUserInfoVO userInfo = apiService.requestUserInfo(access_token, user_seq_no);
 			
-			System.out.println("유저인포");
 		
 			HashMap<String, String> accountInfo = bankService.getAccount((String)session.getAttribute("sId"));
 			
@@ -559,10 +485,7 @@ public class MarketController {
 			System.out.println("/bank_userInfo : " + userInfo);
 			System.out.println("==================================");
 			
-			System.out.println("itemImage.get(0) ==================================");
-			System.out.println(itemImage.get(0));
 			String itemImg = itemImage.get(0).get("image_name");
-			System.out.println("itemImage.get(0).get(\"image_name\") ==================================");
 			
 			
 			System.out.println("======================================================");
@@ -570,8 +493,6 @@ public class MarketController {
 			System.out.println("item_image : " + itemImage.toString());
 			System.out.println("member : " + member.toString());
 			System.out.println("account : " + account);
-			System.out.println("======================================================");
-			System.out.println(itemImg);
 			System.out.println("======================================================");
 			model.addAttribute("itemImg", itemImg);
 			model.addAttribute("member", member);
@@ -590,12 +511,6 @@ public class MarketController {
 				@RequestParam Map<String, String> map, HttpSession session, Model model) throws JsonProcessingException {
 
 			
-//			response.setCharacterEncoding("UTF-8");
-
-			
-			System.out.println("map ===================================================");
-			System.out.println(map);
-			System.out.println("===================================================");
 			// 미로그인 또는 엑세스토큰 없을 경우 "fail_back" 페이지를 통해
 			// "권한이 없습니다!" 출력 후 이전페이지로 돌아가기
 			if(session.getAttribute("sId") == null || session.getAttribute("access_token") == null) {
@@ -621,25 +536,14 @@ public class MarketController {
 				model.addAttribute("msg", "정보 조회 실패 - " + account.getRsp_message());
 				return "fail_back";
 			}
-			System.out.println("account ======================================================");
-			System.out.println(account);
-			System.out.println("account ======================================================");
 			
 			//AccountDetailVO 객체 저장
 			model.addAttribute("account", account);
 			model.addAttribute("account_num_masked", map.get("account_num_masked"));
 			model.addAttribute("access_token", map.get("access_token"));
 			model.addAttribute("user_name", map.get("user_name"));
-//			long amt = account.getBalance_amt();
-			
-			
-			
 			ObjectMapper mapper = new ObjectMapper();
 			String jsonStr = mapper.writeValueAsString(account);
-			System.out.println("jsonStr ======================================================");
-			System.out.println(jsonStr);
-			System.out.println("jsonStr ======================================================");
-			
 			
 			return jsonStr;
 			
@@ -694,10 +598,6 @@ public class MarketController {
 			HashMap<String, String> item = marketChatService.getItem_code(room_code);
 			String item_code = item.get("item_code");
 			int isReview = marketChatService.isReview(item_code);
-			System.out.println("isReview ==================================");
-		    System.out.println(room_code+","+isReview);
-		    System.out.println("isReview ==================================");
-			
 			return isReview;
 		}
 	   
@@ -747,7 +647,7 @@ public class MarketController {
 	      if(updateCount > 0) {
 	    	  result.put("result", "채팅방 나가기 성공");
 	      }else {
-	    	  result.put("result", "채팅방 지박령 성공");
+	    	  result.put("result", "채팅방 지박령 성공ㅋ");
 	      }
 	      return result.toString();
 	     
@@ -785,10 +685,6 @@ public class MarketController {
 	
 	@RequestMapping(value = "reviewRegist", method = RequestMethod.POST)
 	public String reviewRegist(@RequestParam HashMap<String, String> review,HttpSession session, Model model) {
-		System.out.println("==============================");
-		System.out.println(review);
-		System.out.println(review.get("review_type"));
-		System.out.println("==============================");
 		
 		switch (review.get("review_type")) {
 			case "insert":	int insertCount = service.writeReview(review);
@@ -1069,19 +965,6 @@ public class MarketController {
 		
 		return "fail_back";
 	}
-	
-	//payment
-	
-	
-//	// 사용자 정보 조회
-//	@GetMapping("/bank_userInfoPay")
-//	public String requestUserInfo(HttpSession session, Model model) {
-//		
-//		
-//		return "bank/bank_user_info";
-//	}
-
-
 
 
 }

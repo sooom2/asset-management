@@ -49,7 +49,7 @@ public class AdminController {
 			map.put("endNum", "10");
 		}
 		// 1. 수익률 비교 위해 계좌내역 조회
-		List<HashMap<String, String>> accountChart = bankService.selectAccountHistory(map); // 좀 있다 수정
+		List<HashMap<String, String>> tradeChart = service.selectTradeChart(map); // 좀 있다 수정
 		// 2. 카테고리별 차트
 		List<HashMap<String, String>> categoryChart = service.selectCategoryChart(map);
 		// 3. 직거래, 안전거래 비교 차트
@@ -60,14 +60,15 @@ public class AdminController {
 		HashMap<String, String> countMap = new HashMap<>();
 		// 내역이 존재할 경우
 		// 1. 
-		if(accountChart.size() > 0) {
+		if(tradeChart.size() > 0) {
 			// 새로운 이름 필요해서 생성
 			HashMap<String, String> accountCnt = new HashMap<>();
 			// 인덱스 첫번째
-			countMap = accountChart.get(0);
+			countMap = tradeChart.get(0);
 			// 스트링 타입으로 생성한 이름으로 저장
 			accountCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
 			model.addAttribute("accountCnt", accountCnt);
+			System.out.println("1번 확인: " + tradeChart);
 		}
 		// 2. 
 		if(categoryChart.size() > 0) {
@@ -136,7 +137,6 @@ public class AdminController {
 						break;
 				}
 			}
-			System.out.println("확인1: " + cate1 + " 2: " + cate2 + " 3: " + cate3 + " 4: " + cate4 + " 5: " + cate5 + " 6: " + cate6 + " 7: " + cate7);
 			// categoryCnt에 저장위해
 			categoryCnt.put("cate1", cate1);
 			categoryCnt.put("cate2", cate2);
@@ -154,7 +154,6 @@ public class AdminController {
 //				categoryCnt.put("cate" + i, "cate" + i);
 //			}
 			model.addAttribute("categoryCnt", categoryCnt);
-			System.out.println("확인용333333" + model);
 		}
 		// 3. 
 		if(payTypeChart.size() > 0) {
@@ -197,12 +196,12 @@ public class AdminController {
 			model.addAttribute("reviewCnt", reviewCnt);
 		}
 		// 내역을 model에 저장
-		model.addAttribute("accountChart", accountChart);
+		model.addAttribute("accountChart", tradeChart);
 		model.addAttribute("categoryChart", categoryChart);
 		model.addAttribute("payTypeChart", payTypeChart);
 		model.addAttribute("reviewChart", reviewChart);
 		model.addAttribute("pageCnt", map);
-		System.out.println("adminMain에서" + accountChart);
+		System.out.println("adminMain에서" + tradeChart);
 		System.out.println("adminMain에서" + model);
 		
 		return "admin/admin_main";
@@ -238,8 +237,6 @@ public class AdminController {
 		model.addAttribute("accountHistory", accountHistory);
 		// 
 		model.addAttribute("pageCnt", map);
-		System.out.println("adminAccount에서" + accountHistory);
-		System.out.println("adminAccount에서" + map);
 		
 		return "admin/adminAccount";
 	}
@@ -264,8 +261,6 @@ public class AdminController {
 		model.addAttribute("pointHistory", pointHistory);
 		// 
 		model.addAttribute("pageCnt", map);
-		System.out.println("adminPoint에서" + pointHistory);
-		System.out.println("adminPoint에서" + map);
 		
 		return "admin/adminPoint";
 	}
@@ -291,8 +286,6 @@ public class AdminController {
 		// 내역을 model에 저장
 		model.addAttribute("auction", auction);
 		model.addAttribute("pageCnt", map);
-		System.out.println("adminAuction에서" + auction);
-		System.out.println("adminAuction에서" + map);
 		
 		return "admin/adminAuction";
 	}
@@ -354,8 +347,6 @@ public class AdminController {
 		// 내역을 model에 저장
 		model.addAttribute("adminItem", adminItem);
 		model.addAttribute("pageCnt", map);
-		System.out.println("adminItem에서1" + adminItem);
-		System.out.println("adminItem에서" + map);
 		
 		return "admin/adminItem";
 	}
@@ -396,8 +387,6 @@ public class AdminController {
 		model.addAttribute("adminMember", adminMember);
 		// 
 		model.addAttribute("pageCnt", map);
-		System.out.println("adminMember에서" + adminMember);
-		System.out.println("adminMember에서" + map);
 		
 		return "admin/adminMember";
 	}
@@ -431,8 +420,6 @@ public class AdminController {
 		model.addAttribute("adminReport", adminReport);
 		// 
 		model.addAttribute("pageCnt", map);
-		System.out.println("adminReport에서1" + adminReport);
-		System.out.println("adminReport에서2" + map);
 		
 		return "admin/adminReport";
 	}

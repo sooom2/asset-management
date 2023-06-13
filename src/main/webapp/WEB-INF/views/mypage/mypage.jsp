@@ -156,11 +156,12 @@ function reviewDelete(item_code){
 						<div class="memberInfoMyDataBox" onclick='location.href="memberUpdateForm"'>
 							<div class="memberInfoSettingMyData">내정보 수정하기</div>
 						</div>
-						<c:if test="${member.member_auth_status eq 'Y'  }">
-							<div class="memberInfoMyDataBox" onclick='bankDeposit()' style="margin-top: 10px;">
-								<div class="memberInfoSettingMyData">포인트 환급받기</div>
-							</div>
-						</c:if>
+						<div class="memberInfoMyDataBox" onclick='payment()' style="margin-top: 10px;">
+							<div class="memberInfoSettingMyData">포인트 충전하기</div>
+						</div>
+						<div class="memberInfoMyDataBox" onclick='bankDeposit()' style="margin-top: 10px;">
+							<div class="memberInfoSettingMyData">포인트 환급받기</div>
+						</div>
 					</c:if>
 				</div>
 			</div>
@@ -181,7 +182,7 @@ function reviewDelete(item_code){
 				<div class="filterBarWrapper">
 					<div class="tabPcBox">
 						<div class="tabFilterTab">
-							<form class="SearchWrapper" style="width: 690px">
+							<form class="SearchWrapper" style="width: 730px">
 								<input type="text" placeholder="상품명 검색" id="searchInput"
 									class="SearchInput-ukztbj-1 inqgpT" value=""><img
 									src="https://ccimage.hellomarket.com/img/web/common/black_glass.svg"
@@ -264,7 +265,7 @@ function reviewDelete(item_code){
 						       		     	</td>
 						            	</c:otherwise>
 						            </c:choose>
-						            <td id="board-data">${item.market_date}</td>
+						            <td id="board-data">${item.review_date}</td>
 						        </tr>
 						    </c:forEach>
 						</table>
@@ -273,7 +274,7 @@ function reviewDelete(item_code){
 					<c:when test="${param.itemList eq 'recivedReview'}">
 						<table id="board-table">
 							<tr>
-								<th id="board-header">리뷰</th>
+								<th id="board-header">리 뷰</th>
 								<th id="board-header">상세보기</th>
 								<th id="board-header" style="width: 4%;">별점</th>
 								<th id="board-header" style="width: 10%;">리뷰</th>

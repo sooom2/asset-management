@@ -154,7 +154,7 @@
 							<c:forEach begin="${pageCnt.pageNum-pageCnt.pageNum%10}" end="${(pageCnt.totalCnt == null ? 1 : pageCnt.totalCnt/10) + (pageCnt.totalCnt%10> 0 ? 1 : 0) -1}" varStatus="status">
 								<c:choose>
 									<c:when test="${pageCnt.pageNum eq status.index+1}">
-										<strong class="active">${status.index+1}</strong>
+										<strong class="active" style="line-height: 36px;padding: 0 13px">${status.index+1}</strong>
 									</c:when>
 									<c:otherwise>
 										<a title="${status.index+1}페이지보기" href="javascript:search('${status.index}')" pageNum="${status.index+1}">${status.index+1}</a>

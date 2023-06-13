@@ -54,7 +54,7 @@ $(function(){
 
 <form method="post" autocomplete="off" action="bank_deposit">
 <input type="hidden" name="id" value="${member.member_id }"> 
-<input type="hidden" name="trade_type" value="출금">
+<input type="hidden" name="trade_type" value="환급">
 <input type="hidden" name="fintech_use_num" value="120211385488932372338507">
 <input type="hidden" name="member_name" value="${member.member_name }">
 <div class="container" id="container">

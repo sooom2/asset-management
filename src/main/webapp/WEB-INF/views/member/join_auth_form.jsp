@@ -8,12 +8,12 @@
 <title>Insert title here</title>
 <link href="${path}/resources/css/member.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="${path}/resources/js/naveridlogin_js_sdk_2.0.2.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 <script>
 //카카오
-Kakao.init('bf0c05681627cc5d65f40192f843de1b'); 
+Kakao.init('1e29d96072ee2bce354a10f8ac53225f'); 
 Kakao.isInitialized(); 
 function kakaoLogin() {
     Kakao.Auth.login({
@@ -27,7 +27,7 @@ function kakaoLogin() {
 		       	console.log(account)
 				$('#form-kakao-login input[name=email]').val(account.email);
 				$('#form-kakao-login input[name=accessToken]').val(accessToken);
-				// 사용자 정보가 포함된 폼을 서버로 제출.
+				// 사용자 정보가 포함된 폼을 서버로 제출.dd
 				document.querySelector('#form-kakao-login').submit();
         	  
           },
@@ -41,74 +41,57 @@ function kakaoLogin() {
       },
     })
   }
-function naverLogin(){
-	let naverloginpop = window.open("about:blank","authWindow","width=500, height=700");
-	naverloginpop.location = "https://nid.naver.com/oauth2.0/authorize"
-	+"?response_type=code"
-	+"&client_id=mV2ILHR9EiZ5mjCPt4vg"
-	+"&redirect_uri=http://localhost:8082/moneytto/naverLogin"
-	+"&state=63fbad94-92d6-45b2-9eb3-b879e454a289"
-	
-	
-}  
-
 
 $(function() {
-	// 테스트 용
-	$("#btn-join").on("click", function() {
-			location.href="joinform"
-		
-	});
-// 실제용
 // 인증번호 확인.
-// 	let mailStatus = false;
+	let mailStatus = false;
 	
 // 	이메일 인증
-// 	$('#mail-Check-Btn').click(function() {
-// 		const email = $('#join-id').val() // 이메일 주소값 얻어오기
-// 		const checkInput = $('.mail-check-input') // 인증번호 입력하는곳
+	$('#mail-Check-Btn').click(function() {
+		const email = $('#join-id').val() // 이메일 주소값 얻어오기
+		const checkInput = $('.mail-check-input') // 인증번호 입력하는곳
 		
-// 		$.ajax({
-// 			type : 'get',
-// 			url : 'mailCheck?email=' + email,
-// 			success : function(data) {
-// 				console.log("data : " +  data);
-// 				checkInput.attr('disabled',false);
-// 				code = data;
-// 				alert('인증번호가 전송되었습니다.')
-// 			}			
-// 		})
-// 	});
+		$.ajax({
+			type : 'get',
+			url : 'mailCheck?email=' + email,
+			success : function(data) {
+				console.log("data : " +  data);
+				checkInput.attr('disabled',false);
+				code = data;
+				alert('인증번호가 전송되었습니다.')
+			}			
+		})
+	});
 	
-// 	//인증번호 비교 
-// 	$('.mail-check-input').blur(function () {
-// 		const inputCode = $(this).val();
-// 		const resultMsg = $('#mail-check-warn');
+	//인증번호 비교 
+	$('.mail-check-input').blur(function () {
+		const inputCode = $(this).val();
+		const resultMsg = $('#mail-check-warn');
 		
-// 		if(inputCode == code){
-// 			resultMsg.html('인증번호가 일치합니다.');
-// 			resultMsg.css('color','green');
-// 			$('#mail-Check-Btn').attr('disabled',true);
-// 			$('#join-id').attr('readonly',true);
-// 			$('#join-id').attr('onFocus', 'this.initialSelect = this.selectedIndex');
-// 	        $('#join-id').attr('onChange', 'this.selectedIndex = this.initialSelect');
-// 	        mailStatus = true;
-// 		}else{
-// 			resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요.');
-// 			resultMsg.css('color','red');
-// 		}
-// 	});
+		if(inputCode == code){
+			resultMsg.html('인증번호가 일치합니다.');
+			resultMsg.css('color','green');
+			$('#mail-Check-Btn').attr('disabled',true);
+			$('#join-id').attr('readonly',true);
+			$('#join-id').attr('onFocus', 'this.initialSelect = this.selectedIndex');
+	        $('#join-id').attr('onChange', 'this.selectedIndex = this.initialSelect');
+	        mailStatus = true;
+		}else{
+			resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요.');
+			resultMsg.css('color','red');
+		}
+	});
 	
-// 	$("#btn-join").on("click", function() {
-// 		if(!mailStatus) {
-// 			alert("이메일 인증을 확인해주시기 바랍니다.");
-// 			return false;
-// 		} else {
-// 			location.href="joinform?email=" + $('#join-id').val();
-// 			return true;
-// 		}
+	$("#btn-join").on("click", function() {
+		if(!mailStatus) {
+			alert("이메일 인증을 확인해주시기 바랍니다.");
+			return false;
+		} else {
+			location.href="joinform?email=" + $('#join-id').val();
+			return true;
+		}
 		
-// 	});
+	});
 });
 
 
@@ -133,7 +116,7 @@ $(function() {
 								<span>소셜 계정으로 가입</span>
 							</div>
 							<div class="join-social">
-								<div id="naver_id_login" class="nv" onclick ="naverLogin()">
+								<div id="naver_id_login" class="nv" >
 									<a id="naver_id_login_anchor" class="social-connect nv">네이버</a>
 								</div>
 								<span onclick="kakaoLogin();">
@@ -174,6 +157,54 @@ $(function() {
    		</form>
 		</div>
 	</div>
+
+
+	
+	
+<script type="text/javascript">
+var naver_id_login = new naver_id_login("mV2ILHR9EiZ5mjCPt4vg", "naverLogin");
+var state = naver_id_login.getUniqState();
+naver_id_login.setButton("white", 2,40);
+// naver_id_login.setDomain("localhost:8082");
+naver_id_login.setState(state);
+naver_id_login.setPopup();
+naver_id_login.init_naver_id_login();
+// function naverSignInCallback() {
+// 	naver_id_login.getProfileData('프로파일항목명');
+	// 프로필 항목은 개발가이드를 참고하시기 바랍니다.
+// 	alert(naver_id_login.getProfileData('email'));
+// 	alert(naver_id_login.getProfileData('nickname'));
+// 	alert(naver_id_login.getProfileData('age'));
+
+// }
+// naver_id_login.get_naver_userprofile("naverSignInCallback()");
+
+function naverSignInCallback() {
+    Kakao.Auth.login({
+      success: function (response) {
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function (response) {
+		       	var accessToken = naver_id_login.getAccessToken();
+		       	naver_id_login.setAccessToken(accessToken);
+		       	var account = response.kakao_account;
+		       	console.log(account)
+// 				$('#form-kakao-login input[name=email]').val(account.email);
+// 				$('#form-kakao-login input[name=accessToken]').val(accessToken);
+				// 사용자 정보가 포함된 폼을 서버로 제출.
+// 				document.querySelector('#form-kakao-login').submit();
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  }	
+</script>
 <jsp:include page="../footer.jsp" />
 </body>
 </html>

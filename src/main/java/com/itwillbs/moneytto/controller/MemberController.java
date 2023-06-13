@@ -13,6 +13,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,7 +32,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.itwillbs.moneytto.service.BankService;
 import com.itwillbs.moneytto.service.MailSendService;
 import com.itwillbs.moneytto.service.MemberService;
-import com.itwillbs.moneytto.vo.AccountVO;
 
 @Controller
 public class MemberController {
@@ -172,9 +172,33 @@ public class MemberController {
 	// ******************************************************************
 	//네이버 로그인 확인
 	@RequestMapping(value = "naverLogin", method = {RequestMethod.GET, RequestMethod.POST})
-	public String naver(@RequestParam HashMap<String, String> paramMap,HttpSession session) {
-		
-		return "member/mem_join_form";
+	public String naver(@RequestParam HashMap<String, String> paramMap,  Model model,HttpSession session) {
+			System.out.println(paramMap);
+			
+//			 URI uri = UriComponentsBuilder.fromUriString("https://nid.naver.com/oauth2.0/token")
+//				        .queryParam("grant_type", "authorization_code")
+//				        .queryParam("client_id", "mV2ILHR9EiZ5mjCPt4vg")
+//				        .queryParam("client_secret", "YsLGmS4PFb")
+//				        .queryParam("code", paramMap.get("code"))
+//				        .queryParam("state", "63fbad94-92d6-45b2-9eb3-b879e454a289")
+//				        .encode()
+//				        .build()
+//				        .toUri();
+//			
+//		    // Spring 요청 제공 클래스 
+//		    RequestEntity<Void> req = RequestEntity.get(uri).build();
+//				        
+//		    // Spring 제공 restTemplate
+//		    ResponseEntity<HashMap<String,String>> resp = new RestTemplate().exchange(req, new ParameterizedTypeReference<HashMap<String, String>>() {});
+//		    HashMap<String, String> resultMap = resp.getBody();
+		    
+			System.out.println(paramMap);
+//			resultMap.get("access token");
+			model.addAttribute("isClose", true);
+			model.addAttribute("msg", "네이버 로그인 인증에 성공하였습니다.");
+			model.addAttribute("target", "member/mem_join_form");
+			
+		return "success";
 	}
 	
 	// 카카오 로그인 확인
@@ -344,32 +368,25 @@ public class MemberController {
 	}
 	
 	//알람페이지
-	@GetMapping("todayAlram")
+	@GetMapping("todayAlarm")
 	public String todayAlram(HttpSession session,Model model) {
 		String id = (String)session.getAttribute("sId");
-		
 		List<HashMap<String, String>> chatList = memberService.getChat(id);
 		List<HashMap<String, String>> report = memberService.getReport(id);
 		List<HashMap<String, String>> point = memberService.getPoint(id);
 		List<HashMap<String, String>> auction = memberService.getAuction(id);
 		
 		String opponentId = null;
-//		if( != null)		
-//			chat.get(0).get("chat_mem_id")
 		
-		for(HashMap<String, String> chat : chatList) {
-			if(chat.get("chat_member_id") != id) {
-				opponentId = chat.get("chat_member_id");
-			}
-		}
-		System.out.println(opponentId);
+		System.out.println(auction);
 		
+		System.out.println(chatList);
 		model.addAttribute("opponentId",opponentId);
 		model.addAttribute("chatList",chatList);
 		model.addAttribute("report",report);
 		model.addAttribute("point",point);
 		model.addAttribute("auction",auction);
 		
-		return "mypage/my_alram";
+		return "mypage/my_alarm";
 	}
 }

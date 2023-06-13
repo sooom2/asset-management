@@ -181,6 +181,7 @@ function toggleLike(element) {
 					</div>
 					<div class="SubTitleWrapper">
 						<div class="SubTitleDetailBox">
+							<div class="views">조회수 ${marketItem.item_count}</div>
 							<div class="SubTitleDetailText">${marketItem.item_date}</div>
 						</div>
 					</div>
@@ -440,7 +441,10 @@ function toggleLike(element) {
 		textarea.select();
 		document.execCommand("copy");
 		document.body.removeChild(textarea);
-		alert("URL이 복사되었습니다.")
+		swal({	
+    		icon: "success",
+    		text: "URL이 복사되었습니다!"
+        });
 	}
 	
 	
@@ -470,7 +474,6 @@ function toggleLike(element) {
 			var reportType = $(this).attr("id");
 			$("#report_type").val(reportType);
 			
-			
 			$(".IZaFu").css("background", "#bb2649");
 		});
 		
@@ -483,6 +486,15 @@ function toggleLike(element) {
 		
 		// 신고하기 버튼
 		$(document).on("click", ".IZaFu", function(e) {
+			if($("#session_id").val() == "") {
+				swal({	
+	        		icon: "warning",
+	        		text: "로그인 후 이용해주세요."
+		        });
+				ReactModalPortal
+				return;
+			}
+			
 			var reportType = $("#report_type").val();
 			
 			if(reportType == "") {
@@ -493,10 +505,9 @@ function toggleLike(element) {
 			} else {
 				swal({	
 	        		icon: "success",
-	        		text: "신고가 성공적으로 접수되었습니다!"
+	        		text: "성공적으로 접수되었습니다!"
 		        });
 				report();
-				
 			}
 		});
 		
