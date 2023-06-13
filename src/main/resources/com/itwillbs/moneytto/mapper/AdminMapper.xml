@@ -68,6 +68,8 @@
 					ON a.auction_code = al.auction_code
 				WHERE auction_type = '경매 완료') t
 			GROUP BY date
+			
+			
 <!-- 		SELECT  -->
 <!-- 			ROW_NUMBER() OVER(ORDER BY t.date DESC ) AS rownum -->
 <!-- 			, count(t.item_code) over() AS totalCnt -->
@@ -160,6 +162,7 @@
 			, buy_id
 			, date
 			, cate_cnt
+			, count(code) over() AS totalCnt
 		FROM 
 			(SELECT 
 				mp.item_code  AS code

@@ -18,11 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.itwillbs.moneytto.service.AdminService;
-import com.itwillbs.moneytto.service.AuctionService;
-import com.itwillbs.moneytto.service.BankService;
-import com.itwillbs.moneytto.service.MarketService;
-import com.itwillbs.moneytto.service.MemberService;
+import com.itwillbs.moneytto.service.*;
 import com.mysql.cj.xdevapi.JsonArray;
 
 @Controller
@@ -44,11 +40,11 @@ public class AdminController {
 	private MemberService memberService;
 	
 	@Autowired
-	private  CommunityService commService;
+	private CommunityService commService;
 	
 // 메인=============================================
 	@RequestMapping(value = "admin", method = {RequestMethod.GET, RequestMethod.POST})
-	public String adminMain(@RequestParam HashMap<String, String> map, Model model) {
+	public String adminMain(@RequestParam(name ="chartList" , defaultValue = "sellItem") String chartType, @RequestParam HashMap<String, String> map, Model model) {
 		// 페이지 번호, 글목록수 제한
 		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
 			map.put("pageNum", "1");
@@ -71,8 +67,17 @@ public class AdminController {
 		JSONArray jsonArry = new JSONArray(tradeChart);
 		model.addAttribute("jsonArray", jsonArry);
 		
-		
-		
+//		List<HashMap<String,String>> chartList = null;
+//		
+//	    switch (chartType) {
+//		    case "sellItem"    		: chartList = memberService.getSellItemList(map);		break;
+//		    case "wishItem"    		: chartList = memberService.getWishItemList(map); 		break;
+//	        case "buyItem" 	   		: chartList = memberService.getBuyItemList(map);		break;
+//	        case "auctionPay"		: chartList = auctionService.getMyAuction(map);			break;
+//	        case "writtenReview"	: chartList = memberService.getWrittenReviewList(map);	break;
+//	        case "recivedReview"	: chartList = memberService.getReceivedReviewList(map);	break;
+//	    }
+
 		
 		// ==============================================================================================
 		// ==============================================================================================
@@ -101,7 +106,7 @@ public class AdminController {
 //			accountCnt.put("day_7", tradeResult);
 //			System.out.println(accountCnt);
 			// 스트링 타입으로 생성한 이름으로 저장
-//			accountCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+			accountCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
 			
 			
 			model.addAttribute("accountCnt", accountCnt);
@@ -134,44 +139,18 @@ public class AdminController {
 				// switch 조건
 				String categorySwi = chart.get("category");
 				switch (categorySwi) {
-					case "패션/의류/잡화/뷰티":
-						cate1 = cateResult;
-						break;
-					case "가전제품/모바일/PC":
-						cate2 = cateResult;
-						break;
-					case "가구/인테리어":
-						cate3 = cateResult;
-						break;
-					case "도서/음반/문구/티켓":
-						cate4 = cateResult;
-						break;
-					case "게임/스포츠/취미":
-						cate5 = cateResult;
-						break;
-					case "유아동/반려동물":
-						cate6 = cateResult;
-						break;
-					case "그외기타":
-						cate7 = cateResult;
-						break;
-					case "의류":
-						cate8 = cateResult;
-						break;
-					case "시계/쥬얼리":
-						cate9 = cateResult;
-						break;
-					case "디지털/가전":
-						cate10 = cateResult;
-						break;
-					case "스포츠/레저":
-						cate11 = cateResult;
-						break;
-					case "차량/오토바이":
-						cate12 = cateResult;
-						break;
-					default:
-						break;
+					case "패션/의류/잡화/뷰티"	: cate1 = cateResult; break;
+					case "가전제품/모바일/PC"	: cate2 = cateResult; break;
+					case "가구/인테리어"		: cate3 = cateResult; break;
+					case "도서/음반/문구/티켓"	: cate4 = cateResult; break;
+					case "게임/스포츠/취미"		: cate5 = cateResult; break;
+					case "유아동/반려동물"		: cate6 = cateResult; break;
+					case "그외기타"				: cate7 = cateResult; break;
+					case "의류"					: cate8 = cateResult; break;
+					case "시계/쥬얼리"			: cate9 = cateResult; break;
+					case "디지털/가전"			: cate10= cateResult; break;
+					case "스포츠/레저"			: cate11= cateResult; break;
+					case "차량/오토바이"		: cate12= cateResult; break;
 				}
 			}
 			// categoryCnt에 저장위해
@@ -250,6 +229,8 @@ public class AdminController {
 			reviewCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
 			model.addAttribute("reviewCnt", reviewCnt);
 		}
+		
+		
 		// 내역을 model에 저장
 		model.addAttribute("tradeChart", tradeChart);
 		model.addAttribute("categoryChart", categoryChart);
