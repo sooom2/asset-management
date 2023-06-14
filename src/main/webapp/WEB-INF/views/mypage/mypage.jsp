@@ -23,15 +23,14 @@ $(document).ready(function(){
 	
 	// 등급정보
 	$(".memberInfoReviewBox i").on("click", function() {
-		
 		$(".gradeInfo").show();
 	});
 	
 	// 등급정보 닫기
 	$(document).on("click", ".close", function() {
-		$(".gradeInfo").remove();
-		location.reload();	
+		$(".gradeInfo").hide();
 	});
+	
 	//모달 드래그
 	$('.gradeWrapper').draggable();
 	
@@ -200,11 +199,13 @@ function reviewHide(review_code) {
 							                    </thead>
 							                    <tbody>
 													<c:forEach var="grade" items="${gradeInfo }">
-							                        <tr>
-							                            <th style="padding: 10px"><img src="${grade.grade_img }" style="display:inline; width: 25px; height: 25px;">  ${grade.grade_name }</th>
-							                            <th style="padding: 10px;">${grade.grade_score }</th>
-							                        </tr>
-												</c:forEach>
+								                        <c:if test="${ grade.grade_id ne 10}">
+								                        <tr>
+								                            <th style="padding: 10px"><img src="${grade.grade_img }" style="display:inline; width: 25px; height: 25px;">  ${grade.grade_name }</th>
+								                            <th style="padding: 10px;">${grade.grade_score }</th>
+								                        </tr>
+								                        </c:if>
+													</c:forEach>
 							                    </tbody>
 						                	</table>
 										</div>
