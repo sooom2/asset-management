@@ -66,6 +66,12 @@ public class MarketController {
 		if (id != null) {
 		    HashMap<String, String> member = memberService.getMember(id);
 		    String nickname = member.get("member_nickname");
+		    
+		    String addr = member.get("member_address");
+		    String city  =addr.substring(0, addr.indexOf(" ", addr.indexOf(" ") + 1));
+
+		    System.out.println(city);
+		    model.addAttribute("city",city);
 		    model.addAttribute("nickname",nickname);
 		}
 		

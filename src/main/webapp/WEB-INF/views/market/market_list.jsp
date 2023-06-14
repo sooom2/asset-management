@@ -33,6 +33,7 @@
 		<div class="layout__Children-sc-1fg0dfe-2 jjXXzz"></div>
    	    <div class="newSearchWrapper">
    	    <!-- 카테고리 -->
+   	    	<div><h1 style="margin-top: 48px;font-size: 30px;">${city }</h1></div>
 			<div class="webWrapper">
 				<div class="barWrapper">
 					<div class="FilterBoxWrapper FilterCategory">
@@ -121,6 +122,7 @@
 			<div class="searchedListWrapper">
 				<div class="searchedListTopWrapper">
  					<div class="CountListCount">
+						반경 10km 이내에                     
 						<span class="Count"></span>개의 상품이 있습니다.                    
 					</div>
                     <!-- 정렬 -->
