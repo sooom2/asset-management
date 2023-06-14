@@ -109,12 +109,13 @@ keyframes titleAnimation { 0% {
 	animation: titleAnimation 2s ease-in-out;
 	animation-fill-mode: forwards;
 }
-
 .image-wrapper {
+    display: inline-block;
+    padding-top: 5px;
+    float: left;
 	width: 40px;
 	height: 40px;
 	border-radius: 10px;
-	display: inline-block;
 }
 
 .image-wrapper img {
@@ -123,17 +124,19 @@ keyframes titleAnimation { 0% {
 	object-fit: cover;
 	border-radius: 50px;
 }
-.author-cell {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
 
+.board-data{
+	line-height: 45px;
+}
 .author-nickname {
   margin-left: 10px;
 }
+
 #board-table th:nth-child(2) {
-  width: 35%;
+  width: 45%;
+}
+
+#board-table th:nth-child(3) {
 }
 
 </style>
@@ -207,11 +210,15 @@ keyframes titleAnimation { 0% {
           <span class="comment-count">(${boardList.comment_count})</span>
         </div>
       </td>
-      <td id="board-data" class="author-cell" style="text-align: center;">
-        <div class="image-wrapper">
-          <img src="${boardList.member_image}">
-        </div>
-        <span class="author-nickname">${boardList.member_nickname}</span>
+      <td id="board-data" class="author-cell" >
+      	<div style="line-height: 50px">
+	        <div class="image-wrapper">
+	          <img src="${boardList.member_image}">
+	        </div>
+	        <div style="display: inline-block; width: 115px;text-align: left; ">
+		        <span class="author-nickname">${boardList.member_nickname}</span>
+	        </div>
+      	</div>
       </td>
       <td id="board-data">${boardList.formatted_date}</td>
       <td id="board-data">${boardList.comm_count}</td>

@@ -5,8 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.WebSocketMessage;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.itwillbs.moneytto.mapper.BankMapper;
 import com.itwillbs.moneytto.mapper.MarketMapper;
 
 @Service
@@ -14,6 +15,9 @@ public class MarketChatService {
 
 	@Autowired
 	private MarketMapper mapper;
+	
+	@Autowired
+	private BankMapper bankMapper;
 
 	//채팅방 item 정보
 	public HashMap<String, String> getItem(String item_code) {
@@ -88,8 +92,24 @@ public class MarketChatService {
 	
 	
 	//거래내역업데이트
+	@Transactional
 	public int insertMarketPaid(HashMap<String, String> item_detail, String sellId,String buyId,String trade_date,String str) {
-		return mapper.insertMarketPaid(item_detail,sellId,buyId,trade_date,str);
+		//TODO 포인트 내역찍기
+		//TODO 멤버 포인트 충전해주기
+		HashMap<String, String> map = new HashMap<String,String>();
+		map.put("trade_code", "");
+		map.put("id", sellId);
+		map.put("trade_amount", item_detail.get("item_price"));
+		map.put("trade_type", "거래대금지급");
+		map.put("trade_date", trade_date);
+		int insertCount1 = bankMapper.insertPointHistory(map);
+		int updateCount1 = bankMapper.updatePointAmount(map); 
+		int insertCount2  = mapper.insertMarketPaid(item_detail,sellId,buyId,trade_date,str);
+		
+		if(insertCount1 > 0 && updateCount1 > 0 && insertCount2 > 0 ) return 1;
+		
+		return 0;
+				
 	}
 	// 거래내역삭제
 	public int deltMarketPaid(HashMap<String, String> item_detail, String sellId) {
