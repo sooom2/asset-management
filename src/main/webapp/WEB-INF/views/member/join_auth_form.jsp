@@ -162,7 +162,7 @@ $(function() {
 	
 	
 <script type="text/javascript">
-var naver_id_login = new naver_id_login("mV2ILHR9EiZ5mjCPt4vg", "http://localhost:8082/moneytto/naverLogin");
+var naver_id_login = new naver_id_login("mV2ILHR9EiZ5mjCPt4vg", "http://c3d2212t3.itwillbs.com/Moneytto/naverLogin");
 var state = naver_id_login.getUniqState();
 naver_id_login.setButton("white", 2,40);
 naver_id_login.setState(state);

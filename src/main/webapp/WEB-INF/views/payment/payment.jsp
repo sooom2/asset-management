@@ -6,33 +6,44 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta charset="utf-8">
-<!-- 기기 분기처리 스크립트 -->
-
 <script type="text/javascript">
-	var doc = document.documentElement;
-	doc.setAttribute('data-useragent', navigator.userAgent);
-	var sAgent =  navigator.userAgent;
-	if (sAgent.indexOf("WebKit") < 0) {
-		window.onerror = function(){
-			return true;
-		}
-	}
 </script>
 <title>머니또페이</title>
 <link rel="shortcut icon" href="https://img.pay.naver.net/static/images/customer/favicon.ico" />
-<!-- 넘빨개여,,,ㅠ -->
 <link type="text/css" rel="stylesheet" href="//img.pay.naver.net/z/mstatic/css/service/mobile/nsp/order_common.css?1684912786775">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link href="${path }/resources/css/payment.css" rel ="stylesheet">
 </head>
 <script type="text/javascript">
 $(function(){
 	$('.button_section').click(function(){
-		if(confirm("등록된 간편결제 계좌로 충전하시겠습니까?")){
-			$("form").submit();
-		}
-					
+		 swal({
+			    title: "포인트 충전",
+			    text: "등록된 간편결제 계좌로 충전하시겠습니까?",
+			    icon: "info",
+			    buttons: {
+			      confirm: {
+			        text: "확인",
+			        value: true,
+			        visible: true,
+			        className: "",
+			        closeModal: true,
+			      },
+			      cancel: {
+			        text: "취소",
+			        value: false,
+			        visible: true,
+			        className: "",
+			        closeModal: true,
+			      },
+			    },
+			 }).then((confirmResult) => {
+				 if(confirmResult){
+					 $("form").submit();					 
+			 }
+		});
 	})
 	
 	$('#point2').change(function(){

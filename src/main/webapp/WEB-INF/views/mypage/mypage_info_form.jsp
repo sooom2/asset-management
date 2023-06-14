@@ -76,7 +76,7 @@ function confirmQuit() {
 		            closeModal: true,
 		          },
 		        },
-		      }).then((quitResult) = >{
+		      }).then((quitResult) =>{
 		    	  if(quitResult){
 		    		  $("#quitPro").submit()
 		    	  }
@@ -102,7 +102,7 @@ $(function(){
 		if(!passwdStatus) {
 			swal("비밀번호를 확인하세요");
 			$("#memeber_pw").focus();
-			return false;
+// 			return false;
 		} else if(!passwd2Status) {
 			swal("비밀번호 오류입니다.");
 			$("#member_pw3").focus();
