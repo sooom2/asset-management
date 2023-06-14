@@ -232,7 +232,7 @@ input[type=radio] {
 <!-- 								<th data-sortable="true" style="width: 30%;"><a href="#" -->
 <!-- 									class="datatable-sorter">작성자</a></th> -->
 								<th data-sortable="true" style="width: 8%;"><a href="#"
-									class="datatable-sorter">작성일자</a></th>
+									class="datatable-sorter">시작일자</a></th>
 <!-- 								<th data-sortable="true" style="width: 20%;"><a href="#" -->
 <!-- 									class="datatable-sorter">freeBoard#</a></th> -->
 								<th data-sortable="true" style="width: 8%;"><a href="#"
@@ -247,7 +247,7 @@ input[type=radio] {
 									<td>${auction.auction_item_name }</td>
 									<td>${auction.auction_type }</td>
 <%-- 									<td>${oneBoard.one_subject }</td> --%>
-									<td>${auction.auction_date }</td>
+									<td>${auction.auction_start_date }</td>
 <%-- 									<td>${oneBoard.one_write_date }</td> --%>
 									<td class="modi"><input class="btn btn-block btn-more"
 										type="button" value="M O R E" onclick="location.href='admin_one_rep?one_code=${auction.auction_code }'"></td>

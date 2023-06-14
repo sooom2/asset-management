@@ -53,7 +53,7 @@
 						<div class="collapse" id="tradeMgm" aria-labelledby="" data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
 								<a class="nav-link" href="adminItem">중고거래</a>
-								<a class="nav-link" href="adminAuction">경매관리</a>
+								<a class="nav-link" href="adminAuction">경매</a>
 							</nav>
 						</div>
 						
@@ -82,10 +82,13 @@
 							</div> 회원관리
 						</a>
 						<!-- 중고거래 -->
-					<div class="sb-sidenav-menu-heading">ETC</div>
-						<a class="nav-link" href="adminReport">
-							<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>신고관리
-						</a>
+<!-- 					<div class="sb-sidenav-menu-heading">ETC</div> -->
+<!-- 						<a class="nav-link" href="adminChatBot"> -->
+<!-- 							<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>챗봇 -->
+<!-- 						</a> -->
+<!-- 						<a class="nav-link" href="adminReport"> -->
+<!-- 							<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>신고관리 -->
+<!-- 						</a> -->
 						<!-- lnb -->
 					</div>
 				</div>
