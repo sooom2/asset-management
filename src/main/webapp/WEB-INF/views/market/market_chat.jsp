@@ -1004,7 +1004,9 @@ $(function() {
                                            <div class="chat_opponent_image_box">
                                                <img class="chat_opponent_profile_image" src="${oppProfileImg}" alt="상대방이미지">
                                            </div>
-                                           <div class="chat_opponent_title"> <img alt="등급이미지" src="${opponent_grade.grade_img}" style="display:inline-block ;width: 15px;margin-bottom: -5px;"> ${opponentId.opponent_nickname }</div>
+                                           <div class="chat_opponent_title"> 
+                                           <img alt="등급이미지" src="${opponent_grade.grade_img}" style="display:inline-block ;width: 15px;margin-bottom: -5px;"> 
+                                           ${opponentId.opponent_nickname }</div>
                                            <div class="chat_opponent_message">
                                                <span>${chatDetail.chat_content }</span>
 												<fmt:parseDate var="formattedDate" value="${chatDetail.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" />

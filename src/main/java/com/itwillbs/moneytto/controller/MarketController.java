@@ -428,7 +428,7 @@ public class MarketController {
 	      HashMap<String, String> trade_date = marketChatService.getTradeDate(room_code);
 	      
 	      
-	      HashMap<String, String> opponent = memberService.getMember(opponentId.get("opponent_id"));
+	      HashMap<String, String> opponent = memberService.getMember(sellDetail.get("sell_id"));
 	      HashMap<String, String> opponent_grade = memberService.getMemberGrade(opponent);
 
 	      
@@ -448,7 +448,6 @@ public class MarketController {
 	      model.addAttribute("room_code", room_code);
 	      model.addAttribute("item_code", item_code);
 	      model.addAttribute("opponent_grade",opponent_grade);
-	      
 	      
 	      return "market/market_chat";
 
