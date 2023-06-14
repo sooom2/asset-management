@@ -157,7 +157,7 @@ function toggleLike(element) {
 							alt="신고하기" class="TopNavigationIcon report">
 						<img
 							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_share.png"
-							alt="공유하기" class="TopNavigationIcon">
+							alt="공유하기" class="TopNavigationIcon share">
 						<!-- 공유하기 -->
 						<div class="Share__Wrapper-sc-1nwaldt-0 gXuuDJ" style="display: none;">
 							<div class="Share__IconBox-sc-1nwaldt-4 exALGq">
@@ -526,7 +526,7 @@ function toggleLike(element) {
 		
 	
 		// 공유하기
-		$(document).on("click", ".TopNavigationIcon", function(e) {
+		$(document).on("click", ".share", function(e) {
 			if($('.gXuuDJ').css('display') === 'none'){
 				$(".gXuuDJ").show();
 			} else{
