@@ -245,7 +245,7 @@ function reviewHide(review_code) {
 						            <td id="board-data">${status.index +1}</td>
 						           <td id="board-data">
 									   <div class="board-info">
-									      <a href="auctionMain" class="board-title">${item.auction_item_name}</a>
+									      <a href="auctionFinish?auction_code=${item.auction_code}" class="board-title">${item.auction_item_name}</a>
 									   </div>
 									</td>
 						            <td id="board-data">${item.success_price}</td>
