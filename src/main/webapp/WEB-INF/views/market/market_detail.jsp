@@ -416,11 +416,11 @@ function toggleLike(element) {
 		       			if(result){
 		       				$(".ReactModalPortal").remove();
 		       			} else {
-		       				alert("신고 접수에 실패하였습니다.");
+		       				swal("자신의 게시글을 신고할 수 없습니다.");
 		       			}
 		       		},
 		       		error : function(XMLHttpRequest, textStatus, errorThrown) {
-		       			alert("신고 접수에 실패하였습니다.");
+		       			swal("신고 접수에 실패하였습니다.");
 					}
 			});
 	}
@@ -503,10 +503,6 @@ function toggleLike(element) {
 	        		text: "신고 사유를 선택해주세요!"
 		        });
 			} else {
-				swal({	
-	        		icon: "success",
-	        		text: "성공적으로 접수되었습니다!"
-		        });
 				report();
 			}
 		});

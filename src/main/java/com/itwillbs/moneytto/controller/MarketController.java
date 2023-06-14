@@ -211,14 +211,16 @@ public class MarketController {
 	@GetMapping(value = "report")
 	public boolean report(Model model, HttpSession session, @RequestParam HashMap<String, String> map) {
 		String id = (String)session.getAttribute("sId");
-		map.put("id", id);
-		// view 에 보낼 결과
+		// view 에 보낼 결과		
 		boolean result = false;
-		
-		int insertReport = service.insertReport(map);
-		if(insertReport > 0 ) {
-			result = true;
+		// 06.14 세션과 비교하여 자신 신고 막기
+		if(!map.get("targetId").equals(id)) {
+			int insertReport = service.insertReport(map);
+			
+			if(insertReport > 0 ) result = true;
+				
 		}
+		
 		return result;
 	}
 	
