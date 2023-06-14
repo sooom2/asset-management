@@ -1,7 +1,10 @@
 package com.itwillbs.moneytto.service;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,25 +95,14 @@ public class MarketChatService {
 	
 	
 	//거래내역업데이트
-	@Transactional
+	
 	public int insertMarketPaid(HashMap<String, String> item_detail, String sellId,String buyId,String trade_date,String str) {
-		//TODO 포인트 내역찍기
-		//TODO 멤버 포인트 충전해주기
-		HashMap<String, String> map = new HashMap<String,String>();
-		map.put("trade_code", "");
-		map.put("id", sellId);
-		map.put("trade_amount", item_detail.get("item_price"));
-		map.put("trade_type", "거래대금지급");
-		map.put("trade_date", trade_date);
-		int insertCount1 = bankMapper.insertPointHistory(map);
-		int updateCount1 = bankMapper.updatePointAmount(map); 
-		int insertCount2  = mapper.insertMarketPaid(item_detail,sellId,buyId,trade_date,str);
-		
-		if(insertCount1 > 0 && updateCount1 > 0 && insertCount2 > 0 ) return 1;
-		
-		return 0;
+
+		return mapper.insertMarketPaid(item_detail,sellId,buyId,trade_date,str);
 				
 	}
+	
+	
 	// 거래내역삭제
 	public int deltMarketPaid(HashMap<String, String> item_detail, String sellId) {
 		return mapper.delMarketPaid(item_detail,sellId);
@@ -198,6 +190,26 @@ public class MarketChatService {
 	//TODO 06.11 19:08 채팅방 나가기 YN 설정
 	public int updateExistStatus(String room_code) {
 		return mapper.updateExistStatus(room_code);
+	}
+	
+	@Transactional
+	public int updateHistory(HashMap<String, String> review) {
+		//TODO 포인트 내역찍기
+		//TODO 멤버 포인트 충전해주기
+		
+		HashMap<String,String> item = mapper.marketItem(review.get("item_code"));
+		System.out.println(item);  
+		review.put("trade_code", UUID.randomUUID().toString().substring(0, 8));
+		review.put("id", review.get("target_id"));    
+		review.put("trade_type", "거래대금지급");  
+		review.put("trade_amount", item.get("item_price"));
+//		review.put("trade_date", item.get("item_date").toString());
+		
+		int insertCount1 = bankMapper.insertPointHistory(review);
+		int updateCount1 = bankMapper.updatePointAmount(review);
+		
+		if(insertCount1 > 0 && updateCount1  > 0 ) return 1;
+		return 0;
 	}
 
 

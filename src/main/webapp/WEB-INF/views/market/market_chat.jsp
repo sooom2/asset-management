@@ -357,8 +357,10 @@ $(function() {
 					let trade_date = result.chatDetail[0].trade_date;
 					let opponent_delete_status = result.opponentId.opponent_delete_status;
 					let opponent_nickname = result.opponentId.opponent_nickname;
+					let opponent_grade_img = result.grade_img;
 					item_code = result.chatDetail[0].item_code;
 					let opponent_id = result.opponentId.opponent_id;
+// 					alert(opponent_grade_img);
 					//신고
 					function report(opponent_id, item_code) {
 						let reportType = $("#report_type").val();
@@ -466,7 +468,7 @@ $(function() {
 								"<div class='chat_opponent_box'>" +
 								"<div class='chat_opponent_image_box'>" +
 								"<img class='chat_opponent_profile_image' src='" + profileImg + "' alt='상대방이미지'></div>" +
-								"<div class='chat_opponent_title'>" + opponent_nickname + "</div>" +
+								"<div class='chat_opponent_title'><img src='"+opponent_grade_img+"' style='display:inline; width: 15px; margin-bottom: -5px'> " + opponent_nickname + "</div>" +
 								"<div class='chat_opponent_message'>" +
 								"<span>" + result.chatDetail[i].chat_content + "</span>" +
 								"<div class='chat_opponent_timeago'>" + formatChatTime + "</div></div></div></div>";
@@ -1002,7 +1004,9 @@ $(function() {
                                            <div class="chat_opponent_image_box">
                                                <img class="chat_opponent_profile_image" src="${oppProfileImg}" alt="상대방이미지">
                                            </div>
-                                           <div class="chat_opponent_title">${opponentId.opponent_nickname }</div>
+                                           <div class="chat_opponent_title"> 
+                                           <img alt="등급이미지" src="${opponent_grade.grade_img}" style="display:inline-block ;width: 15px;margin-bottom: -5px;"> 
+                                           ${opponentId.opponent_nickname }</div>
                                            <div class="chat_opponent_message">
                                                <span>${chatDetail.chat_content }</span>
 												<fmt:parseDate var="formattedDate" value="${chatDetail.chat_time}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
