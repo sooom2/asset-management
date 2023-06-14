@@ -101,14 +101,19 @@
 				, #{id}
 				, #{trade_amount}
 				, #{trade_type}
-				, #{trade_date}
-			)
+				, now()
+				)
 	</insert>
+	
+	
 	<!-- 포인트 차감 ㅋㅋ.. -->
 	<update id="updatePointAmount">
 		UPDATE member
 			SET member_point = (
 				<if test="trade_type eq '충전'">
+				SELECT t.member_point + #{trade_amount}
+    			</if>
+    			<if test="trade_type eq '거래대금지급'">
 				SELECT t.member_point + #{trade_amount}
     			</if>
     			<if test="trade_type eq '환급'">
@@ -122,6 +127,7 @@
 			)
 			WHERE member_id = #{id}
 	</update>
+	
 	
 	
 <!-- 관리자 계좌시작===================================================== -->

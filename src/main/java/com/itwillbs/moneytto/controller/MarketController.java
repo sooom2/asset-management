@@ -282,24 +282,18 @@ public class MarketController {
 	      
 	      //여기까진됨
 	      if(get_item_status.equals("거래완료")) {
-	         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 	         int updateCount = marketChatService.isUpdate(get_item_code);
-	         System.out.println("==================================");
-	         System.out.println(updateCount);
-	         System.out.println("==================================");
 	         if(updateCount > 0) {
+	        	 
 	            System.out.println("거래내역에 이미있음");
+	            
 	         }else { //거래내역에없을때 
 	            // market_paid insert 작업
 	            // 거래코드, 판매자아이디, 아이템코드, 산사람, 판사람, 가격 , 판매방법 , 날짜
-	            System.out.println("사는사람 ==================================");
-	            System.out.println(sellId);
-	            System.out.println("==================================");
 	            String str ="직접거래";
 	            int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date,str);
+	            
 	         }
-	         
-	         
 	      } else {
 	         // market_paid 에서 삭제되야함
 	         int delMarketPaid = marketChatService.deltMarketPaid(item_detail,sellId);
@@ -434,6 +428,10 @@ public class MarketController {
 	      HashMap<String, String> trade_date = marketChatService.getTradeDate(room_code);
 	      
 	      
+	      HashMap<String, String> opponent = memberService.getMember(opponentId.get("opponent_id"));
+	      HashMap<String, String> opponent_grade = memberService.getMemberGrade(opponent);
+
+	      
 	      //리뷰가 있으면 후기작성 안보이게 - 후기작성까지 됬으면 거래중 판매중 disabled
 	      
 	      int isReview = marketChatService.isReview(item_code);
@@ -449,6 +447,9 @@ public class MarketController {
 	      model.addAttribute("sellCount", sellCount);
 	      model.addAttribute("room_code", room_code);
 	      model.addAttribute("item_code", item_code);
+	      model.addAttribute("opponent_grade",opponent_grade);
+	      
+	      
 	      return "market/market_chat";
 
 	   }// market_chat
@@ -515,13 +516,13 @@ public class MarketController {
 			
 		}
 	   
-		// 계좌 상세정보 조회(2.3.1. 잔액조회 API)
-		// /balance/fin_num
 		@PostMapping(value="bank_accountDetail_pay", produces = "application/text; charset=UTF-8")
 		@ResponseBody
 		public String getAccountDetail(
 				@RequestParam Map<String, String> map, HttpSession session, Model model) throws JsonProcessingException {
-
+			System.out.println("=================");
+			System.out.println(map);
+			System.out.println("=================");
 			
 			// 미로그인 또는 엑세스토큰 없을 경우 "fail_back" 페이지를 통해
 			// "권한이 없습니다!" 출력 후 이전페이지로 돌아가기
@@ -640,12 +641,18 @@ public class MarketController {
 	      
 	      String sId = (String)session.getAttribute("sId");
 	      
+	      
 	      List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
 	      HashMap<String, String> opponentId = marketChatService.getOpponentId(room_code, sId);
+	     
+	      
+	      HashMap<String, String> member = memberService.getMember(opponentId.get("opponent_id"));
+	      HashMap<String, String> grade = memberService.getMemberGrade(member);
+
 	      JSONObject result = new JSONObject();
 	      result.put("chatDetail", chatDetail);
 	      result.put("opponentId", opponentId);
-	      
+	      result.put("grade_img", grade.get("grade_img"));
 	      return result.toString();
 	   }
 	   
@@ -703,8 +710,8 @@ public class MarketController {
 				
 				if(insertCount > 0) {				//insert 성공
 					model.addAttribute("msg", "리뷰가 등록되었습니다. 			회원 등급 포인트가 5점 적립되었습니다.");
-					
-					
+//					int historyUpdate = marketChatService.updateHistory(item_detail, sellId ,trade_date);
+					int historyUpdate = marketChatService.updateHistory(review);
 				}else {								//insert 실패
 					model.addAttribute("msg", "리뷰 작성에 실패하였습니다.");
 					

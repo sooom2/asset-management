@@ -33,10 +33,10 @@ public interface BankMapper {
 
 	int insertPointHistory(Map<String, String> map);
 
-//	int updateAccountBalance(Map<String, String> map);
+//	int updateAccountBalance(Map<String, String> map); 
 	
 // 관리자 계좌 내역들=========================================================================
-	// 계좌 내역 조회
+	// 계좌 내역 조회 
 	List<HashMap<String, String>> selectAccountHistory(HashMap<String, String> map);
 		
 	// 포인트 내역 조회

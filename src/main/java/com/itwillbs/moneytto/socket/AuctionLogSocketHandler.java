@@ -56,7 +56,7 @@ public class AuctionLogSocketHandler extends TextWebSocketHandler {
 //		System.out.println("sessionList : " + sessionList);
 	    // 로그 시간
 	    Date nowDate = new Date();
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm"); 
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("M월dd일 HH:mm");
 		String logTime = simpleDateFormat.format(nowDate); 
 		
 	    // DB저장 방코드와 채팅코드도 넘겨야 하고 그건 컨트롤러에서 받을꺼고 페이지 들어올때

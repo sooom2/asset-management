@@ -76,6 +76,10 @@ function confirmQuit() {
 		            closeModal: true,
 		          },
 		        },
+		      }).then((quitResult) = >{
+		    	  if(quitResult){
+		    		  $("#quitPro").submit()
+		    	  }
 		      })
 		    }
 	  	});

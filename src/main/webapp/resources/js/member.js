@@ -79,7 +79,7 @@ $(document).ready(function(){
 			let regex = /^[A-Za-z0-9!@#$%]{4,8}$/;
 			
 			if(!regex.exec(id)) { 
-				$("#checkIdResult").html("영문자, 숫자, 특수문자 조합 4 ~ 8글자").css("color", "red");
+				$("#checkIdResult").html("영문자, 숫자 조합 4 ~ 8글자").css("color", "red");
 				idStatus = false;
 			} else { 
 				$.ajax({

@@ -136,17 +136,23 @@ public class MemberController {
 							, Model model, HttpSession session) {
 
 	    HashMap<String, String> member = memberService.getMember(member_id);
+	    HashMap<String, String> grade = memberService.getMemberGrade(member);
 
 	    if (member != null) {
 	        String hashedPassword = member.get("member_pw");
 		    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 		    if (passwordEncoder.matches(member_pw, hashedPassword)) {
+		    	if(member.get("member_delete_status").equals("Y")) {
+		    		model.addAttribute("msg", "탈퇴한 회원입니다.");
+		    		return "fail_back";
+		    	}
+		    	session.setAttribute("grade_img", grade.get("grade_img"));
 		    	session.setAttribute("member_image", member.get("member_image"));
 		        session.setAttribute("sId", member.get("member_id"));
 		        session.setAttribute("token", "true");
 		        session.setAttribute("nickname", member.get("member_nickname"));
-		       
+//		        session.setAttribute("member_grade_image", member_grade_image);
 				// 만약, 계좌 정보가 존재할 경우(account != null)
 		        HashMap<String, String> account = bankService.getAccount(member.get("member_id"));
 				if(account != null) {
@@ -174,11 +180,11 @@ public class MemberController {
 	@RequestMapping(value = "naverLogin", method = {RequestMethod.GET, RequestMethod.POST})
 	public String naver(@RequestParam HashMap<String, String> paramMap,  Model model,HttpSession session) {
 		
-		
+			System.out.println(paramMap);
 			model.addAttribute("isClose", true);
 			model.addAttribute("msg", "네이버 로그인 인증에 성공하였습니다.");
 			model.addAttribute("target", "joinform");
-			
+			//TODO 회원탈퇴 진행시켜
 		return "success";
 	}
 	

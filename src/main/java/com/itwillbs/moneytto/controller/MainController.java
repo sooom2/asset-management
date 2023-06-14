@@ -28,7 +28,6 @@ public class MainController {
 	public String main(Model model,HttpSession session) {
 		
 		String id = (String)session.getAttribute("sId");
-		
 
 		List<HashMap<String,String>> itemList = mainService.getMainItemList(id);
 		List<HashMap<String,String>> recentItemList = mainService.getRecentItemList(id);
