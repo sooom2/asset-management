@@ -20,7 +20,7 @@
 				<div class="title">회원가입</div>
 				<div class="wrap-member-box wrap-join-box" id="join_confirm_section" >
 					<ul class="join-indicator">
-						<li>이메일 입력(소셜 가입)</li>
+						<li>이메일 입력(소셜가입)</li>
 						<li class="selected">회원정보 입력</li>
 						<li>가입 완료</li>
 					</ul>
