@@ -103,24 +103,24 @@
 														</div>
 													</div>
 												</div>
-												<div class="row mb-3">
-													<div class="dropdown bootstrap-select">
-														<div class="form-floating mb-3 mb-md-0 selectbox">
-															<div class="cinema_name">
-																<label for="cinema_name">문의지점 : </label> 
-																<select name="cinema_name" onchange="selectCinema()"
-																	style="margin-top: 0px; !important">
-																	<option value="none" selected="selected" disabled>선택</option>
-																	<option value="none" disabled>=======================</option>
-																	<option value="전체공지">전체공지</option>
-																	<c:forEach var="cinema" items="${cinemaList }">
-																		<option value="${cinema.get('cinema_name') }">${cinema.get("cinema_name")}</option>
-																	</c:forEach>
-																</select>
-															</div>
-														</div>
-													</div>
-												</div>
+<!-- 												<div class="row mb-3"> -->
+<!-- 													<div class="dropdown bootstrap-select"> -->
+<!-- 														<div class="form-floating mb-3 mb-md-0 selectbox"> -->
+<!-- 															<div class="cinema_name"> -->
+<!-- 																<label for="cinema_name">문의지점 : </label>  -->
+<!-- 																<select name="cinema_name" onchange="selectCinema()" -->
+<!-- 																	style="margin-top: 0px; !important"> -->
+<!-- 																	<option value="none" selected="selected" disabled>선택</option> -->
+<!-- 																	<option value="none" disabled>=======================</option> -->
+<!-- 																	<option value="전체공지">전체공지</option> -->
+<%-- 																	<c:forEach var="cinema" items="${cinemaList }"> --%>
+<%-- 																		<option value="${cinema.get('cinema_name') }">${cinema.get("cinema_name")}</option> --%>
+<%-- 																	</c:forEach> --%>
+<!-- 																</select> -->
+<!-- 															</div> -->
+<!-- 														</div> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
 
 												<hr>
 												<div class="row mb-3">

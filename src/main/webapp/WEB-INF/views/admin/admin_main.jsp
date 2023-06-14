@@ -281,6 +281,7 @@
 						<c:choose>
 							<c:when test="${param.chartList eq 'tradeAdmin'}">
 <!-- 						 1번차트 클릭시 -->
+								<!-- 일자별 몇건인지 보여주는게 좋지 않나? -->
 								<div class="card-header">
 									<svg class="svg-inline--fa fa-table me-1" aria-hidden="true"
 										focusable="false" data-prefix="fas" data-icon="table"
@@ -289,7 +290,7 @@
 										<path fill="currentColor"
 											d="M64 256V160H224v96H64zm0 64H224v96H64V320zm224 96V320H448v96H288zM448 256H288V160H448v96zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z"></path>
 									</svg>
-									거래비율
+									일별 거래량
 								</div>
 								<div class="card-body">
 									<form id="iForm">
@@ -315,8 +316,8 @@
 														<tr>
 															<th data-sortable="true" style="width: 10%;"><a
 																href="#" class="datatable-sorter">번호</a></th>
-															<th data-sortable="true" style="width: 10%;"><a
-																href="#" class="datatable-sorter">전체거래량</a></th>
+<!-- 															<th data-sortable="true" style="width: 10%;"><a -->
+<!-- 																href="#" class="datatable-sorter">전체거래량</a></th> -->
 															<th data-sortable="true" style="width: 10%;"><a
 																href="#" class="datatable-sorter">가격</a></th>
 															<th data-sortable="true" style="width: 10%;"><a
@@ -330,7 +331,7 @@
 														<tbody>
 															<tr data-index="0">
 																<td>${chartList.rownum }</td>
-																<td>${chartList.totalCnt }</td>
+<%-- 																<td>${chartList.totalCnt }</td> --%>
 																<td>${chartList.price }</td>
 																<td>${chartList.category }</td>
 																<td>${chartList.d }</td>
@@ -350,6 +351,7 @@
 							
 							<c:when test="${param.chartList eq 'payTypeAdmin'}">
 						<!--  3번차트 클릭시 -->
+<!-- 								거래 종류 , 종류별 수, 날짜 이것만 보여줘도 될듯한데 -->
 								<div class="card-header">
 									<svg class="svg-inline--fa fa-table me-1" aria-hidden="true"
 										focusable="false" data-prefix="fas" data-icon="table"
@@ -386,8 +388,8 @@
 														<tr>
 															<th data-sortable="true" style="width: 10%;"><a
 																href="#" class="datatable-sorter">번호</a></th>
-															<th data-sortable="true" style="width: 10%;"><a
-																href="#" class="datatable-sorter">코드</a></th>
+<!-- 															<th data-sortable="true" style="width: 10%;"><a -->
+<!-- 																href="#" class="datatable-sorter">코드</a></th> -->
 															<th data-sortable="true" style="width: 10%;"><a
 																href="#" class="datatable-sorter">구매자</a></th>
 															<th data-sortable="true" style="width: 10%;"><a
@@ -407,7 +409,7 @@
 														<tbody>
 															<tr data-index="0">
 																<td>${payTypeAdmin.rownum }</td>
-																<td>${payTypeAdmin.market_code }</td>
+<%-- 																<td>${payTypeAdmin.market_code }</td> --%>
 																<td>${payTypeAdmin.buy_id }</td>
 																<td>${payTypeAdmin.sell_id }</td>
 																<td>${payTypeAdmin.market_price }</td>
