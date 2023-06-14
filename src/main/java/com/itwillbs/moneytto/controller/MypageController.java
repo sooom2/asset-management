@@ -74,7 +74,6 @@ public class MypageController {
 	    }
 	    
 	    List<HashMap<String, String>> gradeInfo = memberService.getGrade();
-	    System.out.println(gradeInfo);
 	    model.addAttribute("gradeInfo",gradeInfo);
 	    model.addAttribute("grade", memberService.getMemberGrade(member));
 	    model.addAttribute("member", member);

@@ -150,7 +150,7 @@ public class MemberController {
 		        session.setAttribute("sId", member.get("member_id"));
 		        session.setAttribute("token", "true");
 		        session.setAttribute("nickname", member.get("member_nickname"));
-		       
+//		        session.setAttribute("member_grade_image", member_grade_image);
 				// 만약, 계좌 정보가 존재할 경우(account != null)
 		        HashMap<String, String> account = bankService.getAccount(member.get("member_id"));
 				if(account != null) {

@@ -507,13 +507,13 @@ public class MarketController {
 			
 		}
 	   
-		// 계좌 상세정보 조회(2.3.1. 잔액조회 API)
-		// /balance/fin_num
 		@PostMapping(value="bank_accountDetail_pay", produces = "application/text; charset=UTF-8")
 		@ResponseBody
 		public String getAccountDetail(
 				@RequestParam Map<String, String> map, HttpSession session, Model model) throws JsonProcessingException {
-
+			System.out.println("=================");
+			System.out.println(map);
+			System.out.println("=================");
 			
 			// 미로그인 또는 엑세스토큰 없을 경우 "fail_back" 페이지를 통해
 			// "권한이 없습니다!" 출력 후 이전페이지로 돌아가기
