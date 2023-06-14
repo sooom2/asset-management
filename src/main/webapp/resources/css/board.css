@@ -47,7 +47,7 @@ background-color: #bb26491a;
 font-weight: bold;
 }
 
-#board-data {padding: 4px;text-align: center;border-bottom: 1px solid #bb2649;word-wrap: break-word; /* 긴 텍스트 줄바꿈 처리 */}
+#board-data {padding: 4px;text-align: center;border-bottom: 1px solid #d7d7d7;word-wrap: break-word; /* 긴 텍스트 줄바꿈 처리 */}
 
 .tit {
 margin-bottom: 20px;
@@ -75,6 +75,7 @@ th#board-number {
 }
 #board-data {
   text-align: center; /* 테이블 데이터 가운데 정렬 */
+  line-height: 45px;
 }
 
 td a {
