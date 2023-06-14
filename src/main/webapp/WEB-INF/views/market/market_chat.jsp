@@ -633,18 +633,21 @@ $(function() {
 	let target;
 	let opponent_img;
 	let opponent_nickname;
+	let opponent_grade_img;
 	if(paramItemCode) {
 		target = "${sellId}";
 		item_code = "${param.item_code}";
 		opponent_img = "${sellDetail.sell_image}"
 		opponent_nickname = "${sellDetail.sell_nickname}"
+		opponent_grade_img = "${opponent_grade.grade_img}"
 	} else {
 		target = "${opponentId.opponent_id}";
 		item_code = "${item_code}";
-		opponent_img = "${opponentId.opponent_image}"
-		opponent_nickname = "${opponentId.opponent_nickname}"
+		opponent_img = "${opponentId.opponent_image}";
+		opponent_nickname = "${opponentId.opponent_nickname}";
+		opponent_grade_img = "${opponent_grade.grade_img}"
 	}
-	messages(target, opponent_img, opponent_nickname);
+	messages(target, opponent_img, opponent_nickname,opponent_grade_img);
 	console.log("nav에서 아이템코드: " + item_code + " room_code: " + room_code + " target: " + target);
 
 	function chatSend(target) {
@@ -688,10 +691,12 @@ $(function() {
 			},
 			success: function(result) {
 				let parsedObject = JSON.parse(result);
-				target = parsedObject.opponent_id;
+				target = parsedObject.opponentId.opponent_id;
+				console.log(parsedObject);
 				if(!$(this).parent().is("ul > div:first-child")) {
-					opponent_img = parsedObject.opponent_image;
-					opponent_nickname = parsedObject.opponent_nickname;
+					opponent_img = parsedObject.opponentId.opponent_image;
+					opponent_nickname = parsedObject.opponentId.opponent_nickname;
+					opponent_grade_img = parsedObject.grade_img;
 				}
 				ws.onclose = function(event) {
 					console.log('연결종료');
@@ -700,15 +705,14 @@ $(function() {
 					console.log('연결에러');
 				};
 				console.log("list 에서 눌렀을때 ajax후 === 방번호: " + room_code + " 아이템코드: " + item_code + " target: " + target);
-				messages(target, opponent_img, opponent_nickname);
+				messages(target, opponent_img, opponent_nickname,opponent_grade_img);
 				clickCount = 0;
 			}
 		});
 		clickCount++;
 	});
 
-	function messages(target, opponent_img, opponent_nickname) {
-		// 	    	alert(target);
+	function messages(target, opponent_img, opponent_nickname,opponent_grade_img) {
 		ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
 		socket = ws;
 		ws.onopen = function() {
@@ -749,7 +753,7 @@ $(function() {
 			} else {
 				var str = " <div class='chat_opponent'><div class='chat_opponent_box'><div class='chat_opponent_image_box'>";
 				str += "<img class='chat_opponent_profile_image' src='" + opponent_img + "' alt='상대방이미지'> </div>";
-				str += "<div class='chat_opponent_title'>" + opponent_nickname + "</div>";
+				str += "<div class='chat_opponent_title'><img alt='등급이미지' src='"+ opponent_grade_img +"' style='display:inline-block ;width: 15px;margin-bottom: -5px;'> " + opponent_nickname + "</div>";
 				str += "<div class='chat_opponent_message'>";
 				str += "<span>" + message + "</span>";
 				str += "<div class='chat_opponent_timeago'>" + amPm + " " + hours + ":" + minutes + " </div></div></div></div>";

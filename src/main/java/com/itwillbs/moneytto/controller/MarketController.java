@@ -382,6 +382,11 @@ public class MarketController {
 	            sellId = item.get("member_id");
 
 	         }
+		     HashMap<String, String> opponent_grade = memberService.getMemberGrade(sellId);
+		     System.out.println("==================");
+
+		     model.addAttribute("opponent_grade",opponent_grade); 	
+	         System.out.println(opponent_grade);
 	         model.addAttribute("sellId", sellId);
 	      } else { // nav로들어갈때
 	         
@@ -411,7 +416,12 @@ public class MarketController {
 	            myChatList = marketChatService.getMyChatList(id);
 
 	         }
-
+		     HashMap<String, String> sellDetail = marketChatService.getSellDetail(room_code);
+	         HashMap<String, String> opponent = memberService.getMember(sellDetail.get("sell_id"));
+		     HashMap<String, String> opponent_grade = memberService.getMemberGrade(opponent);
+		     System.out.println("opponent_grade ==================");
+		     System.out.println(opponent_grade);
+		     model.addAttribute("opponent_grade",opponent_grade); 	
 	      }//nav
 	      
 	      if (chatList != null && myChatList != null && opponentId != null) {
@@ -436,9 +446,7 @@ public class MarketController {
 	      HashMap<String, String> trade_date = marketChatService.getTradeDate(room_code);
 	      
 	      
-	      HashMap<String, String> opponent = memberService.getMember(sellDetail.get("sell_id"));
-	      HashMap<String, String> opponent_grade = memberService.getMemberGrade(opponent);
-
+	     
 	      
 	      //리뷰가 있으면 후기작성 안보이게 - 후기작성까지 됬으면 거래중 판매중 disabled
 	      
@@ -455,7 +463,7 @@ public class MarketController {
 	      model.addAttribute("sellCount", sellCount);
 	      model.addAttribute("room_code", room_code);
 	      model.addAttribute("item_code", item_code);
-	      model.addAttribute("opponent_grade",opponent_grade);
+//	      
 	      
 	      return "market/market_chat";
 
@@ -631,18 +639,23 @@ public class MarketController {
 			return arrTradeDate.toString();
 	   }
 	   
-	   @GetMapping("getTarget")
+	   @GetMapping(value = "getTarget" , produces = "application/text; charset=UTF-8")
 	   @ResponseBody
 	   public String getTarget(int room_code,HttpSession session) {
 	      String id = (String)session.getAttribute("sId");
 	            
 	      HashMap<String, String> opponentId = marketChatService.getOpponentId(room_code, id);
-	      JSONObject arrOpponent = new JSONObject(opponentId);
+	      HashMap<String, String> member = memberService.getMember(opponentId.get("opponent_id"));
 	      
+	      
+	      HashMap<String, String> grade = memberService.getMemberGrade(member);
+	      JSONObject arrOpponent = new JSONObject();
+	      arrOpponent.put("opponentId", opponentId);
+	      arrOpponent.put("grade_img", grade.get("grade_img"));
 	      return arrOpponent.toString();
 	   }
 
-	   @GetMapping("chatDetail")
+	   @GetMapping(value = "chatDetail", produces = "application/text; charset=UTF-8")
 	   @ResponseBody
 	   public String chatDetail(Model model, @RequestParam(defaultValue="0") int room_code,HttpSession session) {
 	      
