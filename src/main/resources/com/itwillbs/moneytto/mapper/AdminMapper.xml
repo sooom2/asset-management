@@ -152,6 +152,48 @@
 <!-- 		</if> -->
 	</select>
 
+<!-- 1. 거래량 상세 -->
+	<select id="selectTradeAdmin" resultType="hashmap">
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY t.date DESC ) AS rownum
+			, count(t.item_code) over() AS totalCnt   -- 날짜별로 카운트 하는거 추가해야함
+			, t.item_code 
+			, t.subject
+			, t.member_id
+			, t.price
+			, t.category
+			, date(t.date) d
+		FROM 
+			(SELECT
+				mp.item_code AS item_code
+				, item_subject AS subject
+				, sell_id AS member_id 
+				, market_price AS price
+				, i.item_category AS category
+				, mp.market_date AS date
+				FROM market_paid mp
+					LEFT JOIN item i
+						ON mp.item_code = i.item_code
+			UNION ALL 
+			SELECT 
+				a.auction_code AS item_code
+				, a.auction_item_name AS subject
+				, al.member_id AS member_id 
+				, a. success_price AS price
+				, a.auction_category AS category
+				, al.log_time 	AS date
+				FROM auction a
+					LEFT JOIN 
+						(SELECT
+								auction_code
+								, max(member_id) AS member_id
+								, max(log_content)
+								, max(log_time) AS log_time
+							FROM auction_log
+							GROUP BY auction_code) al
+					ON a.auction_code = al.auction_code
+				WHERE auction_type = '경매 완료') t
+	</select>
 
 <!-- 2. 관리자 카테고리별 차트 -->
 	<select id="selectCategoryChart" resultType="hashmap">
@@ -198,10 +240,10 @@
 								GROUP BY auction_category) AS ac
 					ON a.auction_category = ac.auction_category
 				WHERE auction_type  = '경매 완료') AS auction
-		WHERE 1=1
-		<if test="startNum != null and !startNum.equals('')">
-			LIMIT ${startNum}, ${endNum}
-		</if>
+<!-- 		WHERE 1=1 -->
+<!-- 		<if test="startNum != null and !startNum.equals('')"> -->
+<!-- 			LIMIT ${startNum}, ${endNum} -->
+<!-- 		</if> -->
 	</select>
 
 <!-- 3. 관리자 직거래, 안전거래 비교 차트 -->
@@ -212,31 +254,33 @@
 			, count(*) AS payTypeCnt
 		FROM market_paid mp 
 			GROUP BY market_pay_type
-		
-<!-- 		SELECT  -->
-<!-- 			ROW_NUMBER() OVER(ORDER BY market_code DESC ) AS rownum -->
-<!-- 			, mp.* -->
-<!-- 			, count(mp.market_code) over() AS totalCnt -->
-<!-- 			, mpc1.trade_type_cnt AS trade_cnt -->
-<!-- 			, mpc2.safe_type_cnt AS safe_cnt -->
-<!-- 		FROM market_paid mp -->
-<!-- 			LEFT JOIN  -->
-<!-- 				(SELECT  market_pay_type, count(market_pay_type) AS trade_type_cnt -->
-<!-- 					FROM market_paid -->
-<!-- 					WHERE market_pay_type = '직접거래' -->
-<!-- 					GROUP BY market_pay_type) AS mpc1 -->
-<!-- 				ON mp.market_pay_type = mpc1.market_pay_type -->
-<!-- 			LEFT JOIN  -->
-<!-- 				(SELECT  market_pay_type, count(market_pay_type) AS safe_type_cnt -->
-<!-- 					FROM market_paid -->
-<!-- 					WHERE market_pay_type = '안전결제' -->
-<!-- 					GROUP BY market_pay_type) AS mpc2 -->
-<!-- 				ON mp.market_pay_type = mpc2.market_pay_type -->
+	</select>
+	
+<!-- 3. 관리자 직거래, 안전거래 비교 상세 -->
+	<select id="selectPayTypeAdmin"  resultType="hashmap">
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY market_code DESC ) AS rownum
+			, mp.*
+			, count(mp.market_code) over() AS totalCnt
+			, mpc1.trade_type_cnt AS trade_cnt
+			, mpc2.safe_type_cnt AS safe_cnt
+		FROM market_paid mp
+			LEFT JOIN 
+				(SELECT  market_pay_type, count(market_pay_type) AS trade_type_cnt
+					FROM market_paid
+					WHERE market_pay_type = '직접거래'
+					GROUP BY market_pay_type) AS mpc1
+				ON mp.market_pay_type = mpc1.market_pay_type
+			LEFT JOIN 
+				(SELECT  market_pay_type, count(market_pay_type) AS safe_type_cnt
+					FROM market_paid
+					WHERE market_pay_type = '안전결제'
+					GROUP BY market_pay_type) AS mpc2
+				ON mp.market_pay_type = mpc2.market_pay_type
 <!-- 		WHERE 1=1 -->
 <!-- 		<if test="startNum != null and !startNum.equals('')"> -->
 <!-- 			LIMIT ${startNum}, ${endNum} -->
 <!-- 		</if> -->
 	</select>
-	
 	
 </mapper>

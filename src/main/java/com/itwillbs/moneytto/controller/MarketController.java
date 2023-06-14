@@ -428,6 +428,10 @@ public class MarketController {
 	      HashMap<String, String> trade_date = marketChatService.getTradeDate(room_code);
 	      
 	      
+	      HashMap<String, String> opponent = memberService.getMember(opponentId.get("opponent_id"));
+	      HashMap<String, String> opponent_grade = memberService.getMemberGrade(opponent);
+
+	      
 	      //리뷰가 있으면 후기작성 안보이게 - 후기작성까지 됬으면 거래중 판매중 disabled
 	      
 	      int isReview = marketChatService.isReview(item_code);
@@ -443,6 +447,9 @@ public class MarketController {
 	      model.addAttribute("sellCount", sellCount);
 	      model.addAttribute("room_code", room_code);
 	      model.addAttribute("item_code", item_code);
+	      model.addAttribute("opponent_grade",opponent_grade);
+	      
+	      
 	      return "market/market_chat";
 
 	   }// market_chat
@@ -634,12 +641,18 @@ public class MarketController {
 	      
 	      String sId = (String)session.getAttribute("sId");
 	      
+	      
 	      List<HashMap<String, String>> chatDetail = marketChatService.getChatDetail(room_code);
 	      HashMap<String, String> opponentId = marketChatService.getOpponentId(room_code, sId);
+	     
+	      
+	      HashMap<String, String> member = memberService.getMember(opponentId.get("opponent_id"));
+	      HashMap<String, String> grade = memberService.getMemberGrade(member);
+
 	      JSONObject result = new JSONObject();
 	      result.put("chatDetail", chatDetail);
 	      result.put("opponentId", opponentId);
-	      
+	      result.put("grade_img", grade.get("grade_img"));
 	      return result.toString();
 	   }
 	   

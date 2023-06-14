@@ -44,7 +44,7 @@ public class AdminController {
 	
 // 메인=============================================
 	@RequestMapping(value = "admin", method = {RequestMethod.GET, RequestMethod.POST})
-	public String adminMain(@RequestParam(name ="chartList" , defaultValue = "sellItem") String chartType, @RequestParam HashMap<String, String> map, Model model) {
+	public String adminMain(@RequestParam(name ="chartList" , defaultValue = "cateAdmin") String chartType, @RequestParam HashMap<String, String> map, Model model) {
 		// 페이지 번호, 글목록수 제한
 		if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
 			map.put("pageNum", "1");
@@ -62,25 +62,29 @@ public class AdminController {
 		// 중복제거 위해 사용
 		HashMap<String, String> countMap = new HashMap<>();
 		// 내역이 존재할 경우
-		// 1. 
 		//TODO 임시 테스트 
 		JSONArray jsonArry = new JSONArray(tradeChart);
 		model.addAttribute("jsonArray", jsonArry);
+//		JSONArray dayArry = new JSONArray(dayChart);
+//		model.addAttribute("dayArry", dayArry);
 		
-//		List<HashMap<String,String>> chartList = null;
-//		
-//	    switch (chartType) {
-//		    case "sellItem"    		: chartList = memberService.getSellItemList(map);		break;
-//		    case "wishItem"    		: chartList = memberService.getWishItemList(map); 		break;
-//	        case "buyItem" 	   		: chartList = memberService.getBuyItemList(map);		break;
-//	        case "auctionPay"		: chartList = auctionService.getMyAuction(map);			break;
-//	        case "writtenReview"	: chartList = memberService.getWrittenReviewList(map);	break;
-//	        case "recivedReview"	: chartList = memberService.getReceivedReviewList(map);	break;
-//	    }
-
+		List<HashMap<String,String>> chartList = null;
+	    switch (chartType) {
+		    // 1.
+		    case "tradeAdmin"    	: chartList = service.selectTradeAdmin(map);			break;
+	    	// 2.
+		    case "cateAdmin"    	: chartList = service.selectCategoryChart(map);			break;
+		    // 3.
+	        case "payTypeAdmin"		: chartList = service.selectPayTypeAdmin(map);			break;
+	    }
+	    model.addAttribute("chartList", chartList);
+	    model.addAttribute("payTypeAdmin", chartList);
+	    model.addAttribute("payTypeAdmin", chartList);
+	    System.out.println("dsfasdfaasdafss" + chartList);
 		
 		// ==============================================================================================
 		// ==============================================================================================
+	    // 1. 
 		if(tradeChart.size() > 0) {
 			// 새로운 이름 필요해서 생성
 			HashMap<String, String> accountCnt = new HashMap<>();
@@ -120,6 +124,7 @@ public class AdminController {
 			countMap = categoryChart.get(0);
 			// 스트링 타입으로 생성한 이름으로 저장
 			categoryCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+			// String[] strArr = [12];
 			String cate1 = "0";
 			String cate2 = "0";
 			String cate3 = "0";
@@ -184,6 +189,7 @@ public class AdminController {
 			// 스트링 타입으로 생성한 이름으로 저장
 			payTypeCnt.put("safeCnt", String.valueOf(countMap.get("payTypeCnt")));
 			System.out.println("확인용: " + payTypeCnt);
+			payTypeCnt.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
 			
 			// payTypeCnt 저장
 			model.addAttribute("payTypeCnt", payTypeCnt);
@@ -230,7 +236,7 @@ public class AdminController {
 			model.addAttribute("reviewCnt", reviewCnt);
 		}
 		
-		
+		// TODO
 		// 내역을 model에 저장
 		model.addAttribute("tradeChart", tradeChart);
 		model.addAttribute("categoryChart", categoryChart);
