@@ -157,6 +157,7 @@
 		SELECT 
 			a.*
 			, ap.pay_code
+			, DATE_FORMAT(a.auction_end_date, '%Y-%m-%d') AS formatted_date
 		FROM 
 			auction a
 		LEFT JOIN

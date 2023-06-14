@@ -101,9 +101,11 @@
 				, #{id}
 				, #{trade_amount}
 				, #{trade_type}
-				, #{trade_date}
-			)
+				, now()
+				)
 	</insert>
+	
+	
 	<!-- 포인트 차감 ㅋㅋ.. -->
 	<update id="updatePointAmount">
 		UPDATE member

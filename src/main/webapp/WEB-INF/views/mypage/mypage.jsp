@@ -249,7 +249,7 @@ function reviewHide(review_code) {
 									   </div>
 									</td>
 						            <td id="board-data">${item.success_price}</td>
-						            <td id="board-data">${item.auction_end_date}</td>
+						            <td id="board-data">${item.formatted_date}</td>
 						            <c:choose>
 						            	<c:when test="${not empty item.pay_code }">
 						            		<td id="board-data">
@@ -285,8 +285,7 @@ function reviewHide(review_code) {
 						            	<c:when test="${not empty item.rating }">
 					            		<td id="board-data">
 							            	<a href="javascript:void(0)" onclick="openCenteredWindow('reviewForm?item_code=${item.item_code}' , '머니또', 400 ,400)" class="board-title">
-							       		     			수정 </a>|
-							       		    <a href="#"class="board-title" onclick="reviewDelete('${item.item_code}')">삭제</a>
+							       		     			수정 </a>
 					            		</td>
 						            	</c:when>
 						            	<c:otherwise>
