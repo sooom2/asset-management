@@ -282,25 +282,16 @@ public class MarketController {
 	      
 	      //여기까진됨
 	      if(get_item_status.equals("거래완료")) {
-	         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 	         int updateCount = marketChatService.isUpdate(get_item_code);
-	         System.out.println("==================================");
-	         System.out.println(updateCount);
-	         System.out.println("==================================");
 	         if(updateCount > 0) {
 	            System.out.println("거래내역에 이미있음");
 	         }else { //거래내역에없을때 
 	            // market_paid insert 작업
 	            // 거래코드, 판매자아이디, 아이템코드, 산사람, 판사람, 가격 , 판매방법 , 날짜
-	            System.out.println("사는사람 ==================================");
-	            System.out.println(sellId);
-	            System.out.println("==================================");
 	            String str ="직접거래";
 	            int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date,str);
 	            
 	         }
-	         
-	         
 	      } else {
 	         // market_paid 에서 삭제되야함
 	         int delMarketPaid = marketChatService.deltMarketPaid(item_detail,sellId);

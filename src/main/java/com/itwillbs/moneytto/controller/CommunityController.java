@@ -36,7 +36,12 @@ public class CommunityController {
 	    if (id != null) {
 		    HashMap<String, String> member = memberService.getMember(id);
 		    String nickname = member.get("member_nickname");
+		    String memberImage = member.get("member_image");
+		    
 		    model.addAttribute("nickname",nickname);
+		    model.addAttribute("memberImage", memberImage);
+		    
+		    
 		}
 	    
 	    for (HashMap<String, String> boardItem : boardList) {
@@ -46,7 +51,7 @@ public class CommunityController {
 	    }
 
 	    model.addAttribute("boardList", boardList);
-	  
+	    
 
 	    return "board/community";
 	}
