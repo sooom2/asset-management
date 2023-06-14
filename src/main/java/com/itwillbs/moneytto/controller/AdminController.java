@@ -342,7 +342,7 @@ public class AdminController {
 			Map<String, String> images = new HashMap<String, String>();
 			System.out.println(file.getOriginalFilename());
 			
-			String image_name = "http://c3d2212t3.itwillbs.com/Moneytto/resources/upload/" + file.getOriginalFilename();
+			String image_name = "http://c3d2212t3.itwillbs.com/images/" + file.getOriginalFilename();
 			images.put("image_code", (new Random().nextInt(1000000) + 1) + "");
 			images.put("table_code", uuid);
 			images.put("image_name", image_name);
