@@ -28,6 +28,11 @@ public class AdminService {
 		return mapper.selectTradeChart(map);
 	}
 
+	// 1. 거래량 상세
+	public List<HashMap<String, String>> selectTradeAdmin(HashMap<String, String> map) {
+		return mapper.selectTradeAdmin(map);
+	}
+
 	// 2. 관리자 카테고리별 차트
 	public List<HashMap<String, String>> selectCategoryChart(HashMap<String, String> map) {
 		return mapper.selectCategoryChart(map);
@@ -37,6 +42,13 @@ public class AdminService {
 	public List<HashMap<String, String>> selectPayTypeChart(HashMap<String, String> map) {
 		return mapper.selectPayTypeChart(map);
 	}
+
+	// 3. 직거래, 안전거래 비교 상세
+	public List<HashMap<String, String>> selectPayTypeAdmin(HashMap<String, String> map) {
+		return mapper.selectPayTypeAdmin(map);
+	}
+
+
 
 
 	
