@@ -162,48 +162,13 @@ $(function() {
 	
 	
 <script type="text/javascript">
-var naver_id_login = new naver_id_login("mV2ILHR9EiZ5mjCPt4vg", "naverLogin");
+var naver_id_login = new naver_id_login("mV2ILHR9EiZ5mjCPt4vg", "http://localhost:8082/moneytto/naverLogin");
 var state = naver_id_login.getUniqState();
 naver_id_login.setButton("white", 2,40);
-// naver_id_login.setDomain("localhost:8082");
 naver_id_login.setState(state);
 naver_id_login.setPopup();
 naver_id_login.init_naver_id_login();
-// function naverSignInCallback() {
-// 	naver_id_login.getProfileData('프로파일항목명');
-	// 프로필 항목은 개발가이드를 참고하시기 바랍니다.
-// 	alert(naver_id_login.getProfileData('email'));
-// 	alert(naver_id_login.getProfileData('nickname'));
-// 	alert(naver_id_login.getProfileData('age'));
 
-// }
-// naver_id_login.get_naver_userprofile("naverSignInCallback()");
-
-function naverSignInCallback() {
-    Kakao.Auth.login({
-      success: function (response) {
-        Kakao.API.request({
-          url: '/v2/user/me',
-          success: function (response) {
-		       	var accessToken = naver_id_login.getAccessToken();
-		       	naver_id_login.setAccessToken(accessToken);
-		       	var account = response.kakao_account;
-		       	console.log(account)
-// 				$('#form-kakao-login input[name=email]').val(account.email);
-// 				$('#form-kakao-login input[name=accessToken]').val(accessToken);
-				// 사용자 정보가 포함된 폼을 서버로 제출.
-// 				document.querySelector('#form-kakao-login').submit();
-          },
-          fail: function (error) {
-            console.log(error)
-          },
-        })
-      },
-      fail: function (error) {
-        console.log(error)
-      },
-    })
-  }	
 </script>
 <jsp:include page="../footer.jsp" />
 </body>

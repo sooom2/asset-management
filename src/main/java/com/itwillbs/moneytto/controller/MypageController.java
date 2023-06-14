@@ -73,7 +73,8 @@ public class MypageController {
 	        case "recivedReview"	: itemList =  memberService.getReceivedReviewList(member); break;
 	    }
 	    
-	    
+	    List<HashMap<String, String>> gradeInfo = memberService.getGrade();
+	    model.addAttribute("gradeInfo",gradeInfo);
 	    model.addAttribute("grade", memberService.getMemberGrade(member));
 	    model.addAttribute("member", member);
 	    model.addAttribute("itemType", itemType);
@@ -143,7 +144,7 @@ public class MypageController {
 	        // 저장될 로컬 파일 경로
 	        String filePath = uploadDir + "/" + storedFileName;
 	        // DB에 저장될 이름
-	        String saveDir = "http://c3d2212t3.itwillbs.com/Moneytto/resources/upload/member" + storedFileName;
+	        String saveDir = "http://c3d2212t3.itwillbs.com/Moneytto/resources/upload/member/" + storedFileName;
 	        
 	        try {
 				file.transferTo(new File(filePath));
@@ -223,5 +224,7 @@ public class MypageController {
 		
 		return "";
 	}
+	
+	
 	
 }

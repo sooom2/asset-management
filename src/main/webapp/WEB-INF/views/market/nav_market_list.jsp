@@ -241,6 +241,15 @@
 		});
 		
 		
+		// 더보기
+		$(document).on("click", ".chall_more", function(e) {
+			e.preventDefault();
+			$(".itemThumbnailBox:hidden").slice(0, 20).show();
+			if($(".itemThumbnailBox:hidden").length == 0) {
+				$(".chall_more").fadeOut(100);
+			}
+		});
+		
 	});
 	
 	

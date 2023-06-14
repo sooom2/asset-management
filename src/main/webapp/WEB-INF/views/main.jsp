@@ -245,14 +245,17 @@
 											</c:choose>
 										</c:forEach>
 									</div>
-									<div class="itemTimeTag">
-										<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
-										<fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd " />
-									</div>
-									<div class="itemTimeTag">
-										<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
-										<fmt:formatDate value="${parsedDate}" pattern="ahh시 mm분" />
-									</div>
+									<!-- 여기 날짜 태그가... 적용이안돼요  -->
+<!-- 									<div> -->
+<!-- 										<div class="itemTimeTag"> -->
+<%-- 											<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" /> --%>
+<%-- 											<fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd " /> --%>
+<!-- 										</div> -->
+<!-- 										<div class="itemTimeTag"> -->
+<%-- 											<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" /> --%>
+<%-- 											<fmt:formatDate value="${parsedDate}" pattern="ahh시 mm분" /> --%>
+<!-- 										</div> -->
+<!-- 									</div> -->
 								</div>
 							</div>
 						</c:forEach>

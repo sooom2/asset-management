@@ -148,6 +148,7 @@
 				) im ON i.item_code = im.table_code
 		WHERE
 			i.member_id = #{member_id}
+		ORDER BY item_date desc
 	</select>
 	
 	<select id="selectWishItemList" resultType="hashmap">
@@ -174,6 +175,8 @@
 			w.wish_item_code = im.table_code
 		WHERE
 			w.member_id = #{member_id}
+		ORDER BY
+			w.wish_date DESC
 	</select>
 	
 	<select id="selectBuyItemList" resultType="hashmap">
@@ -225,7 +228,7 @@
 			,member_bday = ''
 			,member_tel = ''
 			,member_image = 'http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg'
-			,member_delete_status = 'N'
+			,member_delete_status = 'Y'
 		WHERE
 			 member_id = #{member_id}
 		
@@ -424,5 +427,11 @@
 				AND DATE(pay_date) = DATE(NOW())
 				LIMIT 1
 	</select>
+	
+	<select id="grade" resultType="hashmap">
+		SELECT *
+			FROM grades;
+	</select>
+	
 	
 </mapper>

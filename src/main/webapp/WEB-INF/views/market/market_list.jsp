@@ -320,6 +320,7 @@
 				str += price + '원';
 				str += '</div>';
 				
+				
 				if(tag != "") {
 					str += '<div class="itemTagBox">';
 					
@@ -376,6 +377,7 @@
 		function marketItemList() {
 			$(".itemThumbnailBox").remove();
 			$(".chall_more").remove();
+			$(".EmptyEmptyBox").remove();
 
 			var item_category = $("#item_category").val();
 			var item_tag = $("#tag").val();

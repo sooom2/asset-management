@@ -10,7 +10,7 @@ public interface AdminMapper {
 
 	int registImage(Map<String, String> images);
 
-	// 1. 수익률 비교 위해 계좌내역 조회
+	// 1. 거래량 조회
 	List<HashMap<String, String>> selectTradeChart(HashMap<String, String> map);
 
 	// 2. 관리자 카테고리별 차트

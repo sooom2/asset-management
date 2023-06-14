@@ -157,7 +157,7 @@ function toggleLike(element) {
 							alt="신고하기" class="TopNavigationIcon report">
 						<img
 							src="https://ccimage.hellomarket.com/img/web/item/detail/ico_share.png"
-							alt="공유하기" class="TopNavigationIcon">
+							alt="공유하기" class="TopNavigationIcon share">
 						<!-- 공유하기 -->
 						<div class="Share__Wrapper-sc-1nwaldt-0 gXuuDJ" style="display: none;">
 							<div class="Share__IconBox-sc-1nwaldt-4 exALGq">
@@ -373,8 +373,8 @@ function toggleLike(element) {
 		        imageUrl:
 		        	$("#item_image").val(),
 		        link: {
-		          mobileWebUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
-		          webUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
+		          mobileWebUrl: 'http://c3d2212t3.itwillbs.com/Moneytto/market_detail?item_code=' + $("#item_code").val(),
+		          webUrl: 'http://c3d2212t3.itwillbs.com/Moneytto/market_detail?item_code=' + $("#item_code").val(),
 		        },
 		      },
 		      commerce: {
@@ -385,8 +385,8 @@ function toggleLike(element) {
 		    	  {
  		          title: '웹으로 보기',
  		          link: {
- 		            mobileWebUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
- 		            webUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
+ 		            mobileWebUrl: 'http://c3d2212t3.itwillbs.com/Moneytto/market_detail?item_code=' + $("#item_code").val(),
+ 		            webUrl: 'http://c3d2212t3.itwillbs.com/Moneytto/market_detail?item_code=' + $("#item_code").val(),
  					},
  				},
 		      ],
@@ -513,8 +513,7 @@ function toggleLike(element) {
 		
 		// 모달창 닫기
 		$(document).on("click", ".close", function(e) {
-			$(".ReactModalPortal").remove();
-			location.reload();	
+			$(".ReactModalPortal").hide();
 		});
 		
 		
@@ -526,7 +525,7 @@ function toggleLike(element) {
 		
 	
 		// 공유하기
-		$(document).on("click", ".TopNavigationIcon", function(e) {
+		$(document).on("click", ".share", function(e) {
 			if($('.gXuuDJ').css('display') === 'none'){
 				$(".gXuuDJ").show();
 			} else{

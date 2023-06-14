@@ -72,6 +72,9 @@ public interface MemberMapper {
 	List<HashMap<String, String>> point(String id);
 	List<HashMap<String, String>> auction(String id);
 
+	List<HashMap<String, String>> grade();
+
+
 	
 	
 	

@@ -76,7 +76,7 @@ public class MemberController {
 		
 		member.put("member_location",location);		
 		
-		member.put("member_image", "http://c3d2212t3file.itwillbs.com/files/webapps/Moneytto/resources/upload/member/profile_default.jpg");
+		member.put("member_image", "http://c3d2212t3.itwillbs.com/images/member/profile_default.jpg");
 		// 3) 입력받은 사진 이미지 설정
 		// 기본 이미지 설정 안하면 통과하게.. 
 		if(member.get("file") != null) {
@@ -136,17 +136,23 @@ public class MemberController {
 							, Model model, HttpSession session) {
 
 	    HashMap<String, String> member = memberService.getMember(member_id);
+	    HashMap<String, String> grade = memberService.getMemberGrade(member);
 
 	    if (member != null) {
 	        String hashedPassword = member.get("member_pw");
 		    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 		    if (passwordEncoder.matches(member_pw, hashedPassword)) {
+		    	if(member.get("member_delete_status").equals("Y")) {
+		    		model.addAttribute("msg", "탈퇴한 회원입니다.");
+		    		return "fail_back";
+		    	}
+		    	session.setAttribute("grade_img", grade.get("grade_img"));
 		    	session.setAttribute("member_image", member.get("member_image"));
 		        session.setAttribute("sId", member.get("member_id"));
 		        session.setAttribute("token", "true");
 		        session.setAttribute("nickname", member.get("member_nickname"));
-		       
+//		        session.setAttribute("member_grade_image", member_grade_image);
 				// 만약, 계좌 정보가 존재할 경우(account != null)
 		        HashMap<String, String> account = bankService.getAccount(member.get("member_id"));
 				if(account != null) {
@@ -173,31 +179,12 @@ public class MemberController {
 	//네이버 로그인 확인
 	@RequestMapping(value = "naverLogin", method = {RequestMethod.GET, RequestMethod.POST})
 	public String naver(@RequestParam HashMap<String, String> paramMap,  Model model,HttpSession session) {
+		
 			System.out.println(paramMap);
-			
-//			 URI uri = UriComponentsBuilder.fromUriString("https://nid.naver.com/oauth2.0/token")
-//				        .queryParam("grant_type", "authorization_code")
-//				        .queryParam("client_id", "mV2ILHR9EiZ5mjCPt4vg")
-//				        .queryParam("client_secret", "YsLGmS4PFb")
-//				        .queryParam("code", paramMap.get("code"))
-//				        .queryParam("state", "63fbad94-92d6-45b2-9eb3-b879e454a289")
-//				        .encode()
-//				        .build()
-//				        .toUri();
-//			
-//		    // Spring 요청 제공 클래스 
-//		    RequestEntity<Void> req = RequestEntity.get(uri).build();
-//				        
-//		    // Spring 제공 restTemplate
-//		    ResponseEntity<HashMap<String,String>> resp = new RestTemplate().exchange(req, new ParameterizedTypeReference<HashMap<String, String>>() {});
-//		    HashMap<String, String> resultMap = resp.getBody();
-		    
-			System.out.println(paramMap);
-//			resultMap.get("access token");
 			model.addAttribute("isClose", true);
 			model.addAttribute("msg", "네이버 로그인 인증에 성공하였습니다.");
-			model.addAttribute("target", "member/mem_join_form");
-			
+			model.addAttribute("target", "joinform");
+			//TODO 회원탈퇴 진행시켜
 		return "success";
 	}
 	

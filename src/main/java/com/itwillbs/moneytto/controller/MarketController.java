@@ -282,24 +282,18 @@ public class MarketController {
 	      
 	      //여기까진됨
 	      if(get_item_status.equals("거래완료")) {
-	         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 	         int updateCount = marketChatService.isUpdate(get_item_code);
-	         System.out.println("==================================");
-	         System.out.println(updateCount);
-	         System.out.println("==================================");
 	         if(updateCount > 0) {
+	        	 
 	            System.out.println("거래내역에 이미있음");
+	            
 	         }else { //거래내역에없을때 
 	            // market_paid insert 작업
 	            // 거래코드, 판매자아이디, 아이템코드, 산사람, 판사람, 가격 , 판매방법 , 날짜
-	            System.out.println("사는사람 ==================================");
-	            System.out.println(sellId);
-	            System.out.println("==================================");
 	            String str ="직접거래";
 	            int insertMarketPaid = marketChatService.insertMarketPaid(item_detail,sellId,(String)session.getAttribute("sId"),trade_date,str);
+	            
 	         }
-	         
-	         
 	      } else {
 	         // market_paid 에서 삭제되야함
 	         int delMarketPaid = marketChatService.deltMarketPaid(item_detail,sellId);
@@ -515,13 +509,13 @@ public class MarketController {
 			
 		}
 	   
-		// 계좌 상세정보 조회(2.3.1. 잔액조회 API)
-		// /balance/fin_num
 		@PostMapping(value="bank_accountDetail_pay", produces = "application/text; charset=UTF-8")
 		@ResponseBody
 		public String getAccountDetail(
 				@RequestParam Map<String, String> map, HttpSession session, Model model) throws JsonProcessingException {
-
+			System.out.println("=================");
+			System.out.println(map);
+			System.out.println("=================");
 			
 			// 미로그인 또는 엑세스토큰 없을 경우 "fail_back" 페이지를 통해
 			// "권한이 없습니다!" 출력 후 이전페이지로 돌아가기
@@ -703,8 +697,8 @@ public class MarketController {
 				
 				if(insertCount > 0) {				//insert 성공
 					model.addAttribute("msg", "리뷰가 등록되었습니다. 			회원 등급 포인트가 5점 적립되었습니다.");
-					
-					
+//					int historyUpdate = marketChatService.updateHistory(item_detail, sellId ,trade_date);
+					int historyUpdate = marketChatService.updateHistory(review);
 				}else {								//insert 실패
 					model.addAttribute("msg", "리뷰 작성에 실패하였습니다.");
 					
@@ -863,19 +857,30 @@ public class MarketController {
 	public String itemModifyPro(@RequestParam HashMap<String, String> item, Model model, HttpSession session, @RequestParam(value = "file", required = false) List<MultipartFile> files) {
 	    String id = (String) session.getAttribute("sId");
 	    String uploadDir = session.getServletContext().getRealPath("/resources/upload");
+	    
 	    System.out.println(item);
 	    try {
 	        String itemCode = item.get("item_code");
+		    String originalItemTag = service.getItemTag(itemCode);
 	        item.put("id", id);
-
+	        
 	        // 가격에서 쉼표 제거
 	        String itemPrice = item.get("item_price");
 	        itemPrice = itemPrice.replace(",", "");
 	        item.put("item_price", itemPrice);
+	        
+	        // 아이템 수정 시 item_tag 값이 비어있으면 원래 저장된 item_tag 값을 유지
+	        String itemTag = item.get("item_tag");
+	        if (itemTag == null || itemTag.isEmpty()) {
+	            // 원래 저장된 태그 값을 가져와서 설정
+	            itemTag = originalItemTag;
+	            item.put("item_tag", itemTag);
+	        }
+
 
 	        // 아이템 수정
 	        int updateCount = service.updateItem(item);
-
+	        	
 	        // 사진 수정 여부 확인
 	        boolean photoChanged = false;
 	        if (files != null && !files.isEmpty()) {
@@ -893,6 +898,7 @@ public class MarketController {
 	            if (photoChanged) {
 	                int deleteCount = service.removeImage(itemCode);
 	            }
+	            
 
 	            // 새로운 사진 정보를 저장
 	            if (files != null && !files.isEmpty()) {

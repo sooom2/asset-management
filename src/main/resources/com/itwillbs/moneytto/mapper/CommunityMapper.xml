@@ -31,7 +31,7 @@
 
 	<!-- 커뮤니티 리스트 -->
 	<select id="boardList" resultType="hashmap">
-	  SELECT c.*, DATE_FORMAT(c.comm_date, '%Y-%m-%d') AS formatted_date, m.member_nickname
+	  SELECT c.*, DATE_FORMAT(c.comm_date, '%Y-%m-%d') AS formatted_date, m.member_nickname, m.member_image
 	  FROM community c
 	  LEFT JOIN member m ON c.member_id = m.member_id
 	  ORDER BY c.comm_date DESC
