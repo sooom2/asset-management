@@ -136,7 +136,7 @@ public class AuctionController {
 		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
 		// 내가 입찰한 가격
 		HashMap<String, String> myLog = service.selectMyLog(id, auction_code);
-		boolean lastLogYN = lastLog != null ? true : false; 
+		boolean lastLogYN = lastLog != null ? true : false;
 		model.addAttribute("auctionLog", auctionLog);
 		model.addAttribute("lastLog", lastLog);
 		model.addAttribute("lastLogYN", lastLogYN);
@@ -201,7 +201,7 @@ public class AuctionController {
 		String auction_code = deposit.get("auction_code");
 		HashMap<String, String> member = memberService.getMember(id);
 		HashMap<String, String> auction = service.selectAuctionCode(auction_code);
-		
+		System.out.println(member);
 		
 		model.addAttribute("member", member);
 		model.addAttribute("auction", auction);

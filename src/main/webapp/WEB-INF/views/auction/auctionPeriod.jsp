@@ -55,6 +55,38 @@
   font-family: 'Pretendard-Regular';
 }
 
+#btnAskingPrice {
+	width: 219px;
+	height: 25px;
+	border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: #BB2649;
+}
+
+#btnBid {
+	border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: #BB2649;
+    width: 42px;
+    height: 25px;
+}
+
+#btnPurchase {
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: #BB2649;
+    width: 100px;
+    height: 25px;
+}
+#auctionRegist {
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: #BB2649;
+}
 </style>
 <script type="text/javascript">
 	// 경매 타이머
@@ -378,7 +410,7 @@
 				<div class="auction_center">
 					
 					<div class="auction_realTime">
-						<span style="font-size: 25px;">실시간 경매</span>
+						<span style="font-size: 25px;">기간 경매</span>
 						<c:choose>
 							<c:when test="${not empty lastLog }">
 								<div class="auction_price"><span id="lastLogPrice">${lastLog.log_content }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
@@ -405,9 +437,7 @@
 						<div class="auction_log">
 							<div class="logBox">
 								<c:forEach var="auctionLog" items="${auctionLog }">
-									<div class='chat_myself'>
-<%-- 										${auctionLog.member_nickname }님&nbsp;&nbsp;<span>${auctionLog.log_content }원&nbsp;&nbsp;입찰!&nbsp;&nbsp;</span> --%>
-										<${auctionLog.log_time }>&nbsp;${auctionLog.member_nickname }님&nbsp;&nbsp;<span>${auctionLog.log_content }원&nbsp;&nbsp;입찰!</span>
+									<div class='chat_myself'><${auctionLog.log_time }>&nbsp;${auctionLog.member_nickname }님&nbsp;&nbsp;<span>${auctionLog.log_content }원&nbsp;&nbsp;입찰!</span>
 									</div>
 								</c:forEach>
 <!-- 								<div class="chat_myself"> -->
@@ -446,7 +476,7 @@
 							</div>
 							<div class="bid_right">
 								<div>${deposit }원</div>
-								<div><input type="button" id="btnAskingPrice" value="즉시입찰(+${askingPrice })" style="width: 228px"
+								<div><input type="button" id="btnAskingPrice" value="즉시입찰(+${askingPrice })" 
 										data-price="${askingPrice }" class="btn"></div>
 								<div>
 									<input type="text" id="logPrice" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="금액입력">

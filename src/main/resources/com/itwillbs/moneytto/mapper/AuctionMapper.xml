@@ -41,6 +41,7 @@
 			<if test="startNum != null and !startNum.equals('')">
 				LIMIT ${startNum}, ${endNum}
 			</if>
+		ORDER BY auction_start_date ASC
 	</select>
 	
 	<select id="selectAuctionCode" resultType="hashmap">
@@ -114,7 +115,7 @@
 			, auction_log.auction_code
 			, auction_log.member_id
 			, auction_log.log_content
-			, DATE_FORMAT(log_time, '%H:%i') 'log_time'
+			, DATE_FORMAT(log_time, '%c월%d일 %H:%i') 'log_time'
 			, member.member_nickname
 				FROM auction_log
 					LEFT JOIN member

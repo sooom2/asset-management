@@ -55,6 +55,39 @@
   font-family: 'Pretendard-Regular';
 }
 
+#btnAskingPrice {
+	width: 219px;
+	height: 25px;
+	border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: #BB2649;
+}
+
+#btnBid {
+	border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: #BB2649;
+    width: 42px;
+    height: 25px;
+}
+
+#btnPurchase {
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: #BB2649;
+    width: 100px;
+    height: 25px;
+}
+#auctionRegist {
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: #BB2649;
+}
+
 </style>
 <script type="text/javascript">
 	// 경매 타이머
@@ -447,7 +480,7 @@
 							</div>
 							<div class="bid_right">
 								<div>${deposit }원</div>
-								<div><input type="button" id="btnAskingPrice" value="즉시입찰(+${askingPrice })" style="width: 228px"
+								<div><input type="button" id="btnAskingPrice" value="즉시입찰(+${askingPrice })"
 										data-price="${askingPrice }" class="btn"></div>
 								<div>
 									<input type="text" id="logPrice" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="금액입력">
@@ -659,7 +692,7 @@ function connect2() {
 		sessionId = data.split("|")[0];
 		sessionName = data.split("|")[1];
 		message = data.split("|")[2];
-		logTime = data.split("|")[3];
+		logTime = data.split("|")[3].split(" ").[1];
 	
 		
 		// 낙찰 최대금액

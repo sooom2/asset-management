@@ -37,7 +37,7 @@ $(function() {
 		<!-- inner-wrap -->
 <!-- 			<a href="auction">생성후채팅방</a> -->
 			<div class="inner-wrap">
-				<h2 class="tit" style="display: inline-block;">소셜 가계부</h2>
+				<h2 class="tit" style="display: inline-block;">머니또 경매</h2>
 				<ul class="auctionTab">
 					<li class="on" data-tab="tab1"><a href="#">실시간경매</a></li>
 					<li data-tab="tab2"><a href="#">기간경매</a></li>
