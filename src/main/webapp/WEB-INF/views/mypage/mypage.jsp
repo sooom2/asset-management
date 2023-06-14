@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="${path }/resources/css/member.css">
 <link href="${path }/resources/css/board.css"rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.js">>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/wish.js"></script>
 <script type="text/javascript" src="${path }/resources/js/common.js"></script>
@@ -20,18 +21,19 @@
 
 $(document).ready(function(){
 	
-	
 	// 등급정보
-	$(".memberInfoReviewBox i").on("click", function(e) {
+	$(".memberInfoReviewBox i").on("click", function() {
+		
 		$(".gradeInfo").show();
 	});
 	
 	// 등급정보 닫기
-	$(document).on("click", ".close", function(e) {
+	$(document).on("click", ".close", function() {
 		$(".gradeInfo").remove();
 		location.reload();	
 	});
-	
+	//모달 드래그
+	$('.gradeWrapper').draggable();
 	
   	$(".itemThumbnail, .itemTextBox").on("click",function(){
   		var item_code = $(this).closest(".item").attr("data-cd");
@@ -180,7 +182,7 @@ function reviewHide(review_code) {
 							<i class="fa-regular fa-circle-question" style="margin-top: 9px;   margin-left: 5px;  color: #6d6d6d;"></i>
 						</div>
 					</div>
-					<div class="gradeInfo" style="display: none" >
+					<div class="gradeInfo modal" style="display: none" >
 						<div class="detail_grade">
 							<div class="modal_main" tabindex="-1" role="dialog">
 								<div class="modal_parent">
