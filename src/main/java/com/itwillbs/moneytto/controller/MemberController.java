@@ -136,6 +136,7 @@ public class MemberController {
 							, Model model, HttpSession session) {
 
 	    HashMap<String, String> member = memberService.getMember(member_id);
+	    HashMap<String, String> grade = memberService.getMemberGrade(member);
 
 	    if (member != null) {
 	        String hashedPassword = member.get("member_pw");
@@ -146,6 +147,7 @@ public class MemberController {
 		    		model.addAttribute("msg", "탈퇴한 회원입니다.");
 		    		return "fail_back";
 		    	}
+		    	session.setAttribute("grade_img", grade.get("grade_img"));
 		    	session.setAttribute("member_image", member.get("member_image"));
 		        session.setAttribute("sId", member.get("member_id"));
 		        session.setAttribute("token", "true");

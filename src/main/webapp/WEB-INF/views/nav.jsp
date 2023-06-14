@@ -64,7 +64,7 @@ function payment(){
 			<c:if test="${not empty sessionScope.sId }">
 				<div class="mem_profile">
 					<img src="${sessionScope.member_image }" alt="프로필 이미지" class="profileImg">
-					<div class="mem_nickName" >${sessionScope.nickname }</div>
+					<div class="mem_nickName" ><img src="${sessionScope.grade_img }" style="display:inline; width: 15px; margin-bottom: -1px"> ${sessionScope.nickname }</div>
 				</div>	
 			</c:if>
 			<a href="itemRegist" class="menu-item">

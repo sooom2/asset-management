@@ -74,6 +74,7 @@ public interface MemberMapper {
 
 	List<HashMap<String, String>> grade();
 
+
 	
 	
 	
