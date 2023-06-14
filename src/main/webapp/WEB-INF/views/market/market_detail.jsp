@@ -513,8 +513,7 @@ function toggleLike(element) {
 		
 		// 모달창 닫기
 		$(document).on("click", ".close", function(e) {
-			$(".ReactModalPortal").remove();
-			location.reload();	
+			$(".ReactModalPortal").hide();
 		});
 		
 		

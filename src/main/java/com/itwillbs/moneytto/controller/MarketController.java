@@ -284,7 +284,9 @@ public class MarketController {
 	      if(get_item_status.equals("거래완료")) {
 	         int updateCount = marketChatService.isUpdate(get_item_code);
 	         if(updateCount > 0) {
+	        	 
 	            System.out.println("거래내역에 이미있음");
+	            
 	         }else { //거래내역에없을때 
 	            // market_paid insert 작업
 	            // 거래코드, 판매자아이디, 아이템코드, 산사람, 판사람, 가격 , 판매방법 , 날짜
@@ -708,8 +710,8 @@ public class MarketController {
 				
 				if(insertCount > 0) {				//insert 성공
 					model.addAttribute("msg", "리뷰가 등록되었습니다. 			회원 등급 포인트가 5점 적립되었습니다.");
-					
-					
+//					int historyUpdate = marketChatService.updateHistory(item_detail, sellId ,trade_date);
+					int historyUpdate = marketChatService.updateHistory(review);
 				}else {								//insert 실패
 					model.addAttribute("msg", "리뷰 작성에 실패하였습니다.");
 					
