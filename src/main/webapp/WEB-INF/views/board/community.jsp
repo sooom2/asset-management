@@ -94,15 +94,16 @@
 	margin-left: 3px;
 }
 
-@
-keyframes titleAnimation { 0% {
-	transform: scale(1.2);
-}
-
-50%
-{transform:scale(1);
-}
-100%{transform:scale(1.2);}
+@keyframes titleAnimation {
+  0% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
 }
 
 .tit {

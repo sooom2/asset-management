@@ -106,7 +106,7 @@
 										</td>
 										<td id="board-data">${boardList.member_id}</td>
 										<td id="board-data">${boardList.formatted_date}</td>
-										<td id="board-data"><input type="button" value="수정/삭제"></td>
+										<td id="board-data"><input type="button" value="수정">&nbsp; <input type="button" value="삭제"></td>
 									</tr>
 								</c:forEach>
 							</tbody>

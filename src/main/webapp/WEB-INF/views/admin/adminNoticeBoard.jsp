@@ -200,8 +200,7 @@
 									<td>${noticeList.notice_no }</td>
 									<td>${noticeList.notice_subject }</td>
 									<td>${noticeList.notice_date }</td>
-									<td>
-										<input type="button" value="수정/삭제">
+									<td><input type="button" value="수정">&nbsp; <input type="button" value="삭제"></td>
 									
 									</td>
 								</tr>

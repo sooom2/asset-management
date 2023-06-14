@@ -369,7 +369,7 @@ $(window).load(function() {
 												<img
 													src="https://ccimage.hellomarket.com/img/common/middle_dot.svg"
 													alt="중간 도트" class="MiddleDotTextDotImg">
-												<div class="MiddleDotText">클릭 또는 이미지를 드래그하여 등록할 수 있어요</div>
+												<div class="MiddleDotText">이미지등록을 클릭하여 등록할 수 있어요</div>
 											</div>
 											<div class="MiddleDotTextWrapper">
 												<img
