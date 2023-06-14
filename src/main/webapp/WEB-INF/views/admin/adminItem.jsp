@@ -60,69 +60,10 @@
 
 			<!-- 들어갈내용 -->
 			<main>
-				<!-- 모달 -->
-<!-- 				<div class="regist_container"> -->
-<!-- 					<div class="content"> -->
-<!-- 						<form action="adminItem_regist" class="myForm" method="post" enctype="multipart/form-data"> -->
-<!-- 						<h4>경매 등록</h4> -->
-<!-- 							<div> -->
-<!-- 								<label for="adminItem_name">상품명</label> -->
-<!-- 								<input type="text" name="adminItem_item_name" required placeholder="상품명을 입력하세요."> -->
-<!-- 							</div> -->
-<!-- 							<div class="form-group"> -->
-<!-- 							    <label for="comments">상품 설명</label> -->
-<!-- 							    <textarea name="adminItem_content" maxlength="500"></textarea> -->
-<!-- 							</div> -->
-<!-- 							<div> -->
-<!-- 								<label for="adminItem_type">경매 타입</label> -->
-<!-- 								<input type="radio" name="adminItem_type" value="실시간 경매" checked="checked"> -->
-<!-- 								<input type="radio" name="adminItem_type" value="기간 경매"> -->
-<!-- 							</div> -->
-<!-- 							<div> -->
-<!-- 								<label for="adminItem_category">카테고리</label> -->
-<!-- 								<select name="adminItem_category"> -->
-<!-- 									<option value="">항목선택</option> -->
-<!-- 									<option value="의류">의류</option> -->
-<!-- 									<option value="시계/쥬얼리">시계/쥬얼리</option> -->
-<!-- 									<option value="디지털/가전">디지털/가전</option> -->
-<!-- 									<option value="스포츠/레저">스포츠/레저</option> -->
-<!-- 									<option value="차량/오토바이">차량/오토바이</option> -->
-<!-- 								</select> -->
-<!-- 							</div> -->
-<!-- 							<div> -->
-<!-- 								<label for="customer_name">시작가</label> -->
-<!-- 								<input type="text" name="adminItem_present_price" required placeholder="시작가를 입력하세요."> -->
-<!-- 							</div> -->
-<!-- 							<div> -->
-<!-- 								<label for="customer_name">즉시 구매가</label> -->
-<!-- 								<input type="text" name="adminItem_immediate_price" required placeholder="즉시 구매가를 입력하세요."> -->
-<!-- 							</div> -->
-<!-- 							<div> -->
-<!-- 								<label for="customer_name">시작일</label> -->
-<!-- 								<input type="datetime-local" name="adminItem_start_date" required="required"> -->
-<!-- 							</div> -->
-<!-- 							<div> -->
-<!-- 								<label for="customer_name">종료일</label> -->
-<!-- 								<input type="datetime-local" name="adminItem_end_date" required="required"> -->
-<!-- 							</div> -->
-<!-- 							<div class="form-group"> -->
-<!-- 							    <label for="comments">공지사항</label> -->
-<!-- 							    <textarea name="adminItem_notice" maxlength="500"></textarea> -->
-<!-- 							</div> -->
-<!-- 							<div> -->
-<!-- 								<label for="customer_name">이미지 등록</label> -->
-<!-- 								<input type="text" name="image_name" required placeholder="상품 이미지를 등록하세요."> -->
-<!-- 							</div> -->
-<!-- 							<div> -->
-<!-- 								<input type="submit" value="등록" style="border: 1px solid #8d8d8d;"> -->
-<!-- 							</div> -->
-<!-- 						</form> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
 					
 				<!-- 테이블 -->
 				<div class="datatable-container">
-					<h3 class="text-center font-weight-light my-4">거래 물품</h3>
+					<h3 class="text-center font-weight-light my-4">거래 물품 신고 상황</h3>
 					
 					<form id="iForm" >
 					<div class="">
@@ -178,7 +119,9 @@
 								<th data-sortable="true" style="width: 8%;"><a href="#"
 									class="datatable-sorter">신고횟수</a></th>
 								<th data-sortable="true" style="width: 8%;"><a href="#"
-									class="datatable-sorter">삭제</a></th>
+									class="datatable-sorter">처리상황</a></th>
+								<th data-sortable="true" style="width: 8%;"><a href="#"
+									class="datatable-sorter">신고처리</a></th>
 							</tr>
 						</thead>
 						<!-- 회원목록 -->
@@ -192,9 +135,10 @@
 									<td>${adminItem.repId }</td>
 									<td>${adminItem.report_content }</td>
 									<td>${adminItem.rep_cnt }</td>
+									<td>N</td>
 									<td class="modi">
 										<input class="btn btn-block btn-more"
-										type="button" value="삭제" onclick="location.href='admin_one_rep?one_code=${adminItem.item_code }'">
+										type="button" value="처리" onclick="location.href='admin_one_rep?one_code=${adminItem.item_code }'">
 									</td>
 								</tr>
 							</c:forEach>
