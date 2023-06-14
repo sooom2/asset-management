@@ -428,4 +428,10 @@
 				LIMIT 1
 	</select>
 	
+	<select id="grade" resultType="hashmap">
+		SELECT *
+			FROM grades;
+	</select>
+	
+	
 </mapper>

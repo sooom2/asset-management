@@ -73,7 +73,8 @@ public class MypageController {
 	        case "recivedReview"	: itemList =  memberService.getReceivedReviewList(member); break;
 	    }
 	    
-	    
+	    List<HashMap<String, String>> gradeInfo = memberService.getGrade();
+	    model.addAttribute("gradeInfo",gradeInfo);
 	    model.addAttribute("grade", memberService.getMemberGrade(member));
 	    model.addAttribute("member", member);
 	    model.addAttribute("itemType", itemType);
@@ -223,5 +224,7 @@ public class MypageController {
 		
 		return "";
 	}
+	
+	
 	
 }

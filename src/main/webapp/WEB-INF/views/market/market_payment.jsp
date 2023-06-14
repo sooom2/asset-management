@@ -57,35 +57,69 @@ $(function() {
 	var day = ('0' + today.getDate()).slice(-2);
 	var dateString = year + '-' + month + '-' + day;
 	$('.item_pay_date span').append('<strong>' + dateString + '</strong>');
-	$('.chargePay').on("click", function() {
-		let chargePoint = $('#point2').val();
-		let fintech_use_num = "${fintech_use_num }";
-		let member_name = "${member.member_name}";
-		let user_name = "${userInfo.user_name}";
-		let queryString = $("form[name=withdraw]").serialize();
-		let access_token = "${access_token}";
-		let id = "${sessionScope.sId}";
-		$.ajax({
-			type: 'post',
-			url: 'bank_withdraw',
-			data: {
-				id: id,
-				trade_type: '충전',
-				member_name: member_name,
-				fintech_use_num: fintech_use_num,
-				user_name: user_name,
-				tran_amt: chargePoint
-			},
-			success: function(response) {
-				swal({
-					icon: "success",
-					text: chargePoint + "point 충전되었습니다"
-				}).then(function() {
-					location.reload();
+		$('.chargePay').on("click", function() {
+			let chargePoint = $('#point2').val();
+			let fintech_use_num = "${fintech_use_num }";
+			let member_name = "${member.member_name}";
+			let user_name = "${userInfo.user_name}";
+			let queryString = $("form[name=withdraw]").serialize();
+			let access_token = "${access_token}";
+			let id = "${sessionScope.sId}";
+			if($('#point2').val() != '0'){
+				
+				let result = swal({
+					icon: "info",
+					buttons: {
+						confirm: {
+							text: "확인",
+							value: true,
+							visible: true,
+							className: "",
+							closeModal: true,
+						},
+						cancel: {
+							text: "취소",
+							value: false,
+							visible: true,
+							className: "",
+							closeModal: true,
+						}
+					},
+					text: chargePoint + "point 충전하시겠습니까?"
 				});
+				result.then((confirmed) => {
+					if(confirmed) {
+						$.ajax({
+							type: 'post',
+							url: 'bank_withdraw',
+							data: {
+								id: id,
+								trade_type: '충전',
+								member_name: member_name,
+								fintech_use_num: fintech_use_num,
+								user_name: user_name,
+								tran_amt: chargePoint
+							},
+							success: function(response) {
+								swal({
+									icon: "success",
+									text: chargePoint + "point 충전되었습니다"
+								}).then(function() {
+									location.reload();
+								});
+							}
+						});
+					}
+				});
+			}else{
+				swal({
+					icon: "info",
+					text: "충전할금액을 입력해주세요"
+				})
 			}
 		});
-	});
+		
+		
 	$('.chargeAllPay').on("click", function() {
 		let chargePoint;
 		let fintech_use_num = "${fintech_use_num }";
@@ -183,9 +217,15 @@ $(function() {
 					icon: "success",
 					text: "송금완료"
 				}).then(function() {
-					window.close();
-					opener.parent.location.reload();
-				});
+
+					swal({
+					icon: "info",
+					text: "후기를 작성해주세요~!"
+					}).then(function(){
+						window.close();
+						opener.parent.location.reload();
+					});
+				})
 			}
 		});
 	}
@@ -218,7 +258,7 @@ $(function() {
 			<input type="hidden" name="user_name" value="${userInfo.user_name }">
 			<input type="hidden" name="id" value="${member.member_id }"> 
 			<input type="hidden" name="member_name" value="${member.member_name }">
-			<input type="hidden" name="trade_type" value="이체">
+			<input type="hidden" name="trade_type" value="조회">
 			<div>
 				<input type="button" value="내계좌 잔고조회" class="getAccountAmt" style="display: block;    float: right;    cursor: pointer;    width: 150px; background-color: #fff;    border: 1px solid #bababa;    height: 30px;    font-size: 15px;    margin-top: 8px;">
 				<div class="accountAmtResult" style="display: inline-block;  float: right; font-size: 15px;"></div>

@@ -2284,3 +2284,54 @@ input[type=date], input[type=email], input[type=number], input[type=password], i
     text-overflow: ellipsis;
     background: rgb(44, 44, 44);
 }
+
+
+
+.detail_grade, .overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+/*     background-color: rgba(0,0,0,.75); */
+    z-index: 9999;
+    outline: 0;
+}
+
+
+.modal_main {
+    width: 100%;
+    height: 100%;
+    outline: 0;
+}
+
+.modal_parent {
+    display: table;
+    height: 100%;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.modal_parent .modal_container {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.gradeWrapper {
+    width: 490px;
+    margin: 0px auto;
+    background: rgb(255 255 255);
+    border-radius: 17px;
+    box-shadow: 2px 3px 6px 3px #3e3e3e;
+    padding: 10px
+}
+
+.gradeCloseIcon {
+    width: 17px;
+    height: 17px;
+    display: flex;
+    cursor: pointer;
+    margin: 10px 34px 10px auto;
+}

@@ -13,12 +13,26 @@
 <link rel="stylesheet" href="${path }/resources/css/member.css">
 <link href="${path }/resources/css/board.css"rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.js">>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/wish.js"></script>
 <script type="text/javascript" src="${path }/resources/js/common.js"></script>
 <script>
 
 $(document).ready(function(){
+	
+	// 등급정보
+	$(".memberInfoReviewBox i").on("click", function() {
+		$(".gradeInfo").show();
+	});
+	
+	// 등급정보 닫기
+	$(document).on("click", ".close", function() {
+		$(".gradeInfo").hide();
+	});
+	
+	//모달 드래그
+	$('.gradeWrapper').draggable();
 	
   	$(".itemThumbnail, .itemTextBox").on("click",function(){
   		var item_code = $(this).closest(".item").attr("data-cd");
@@ -164,6 +178,40 @@ function reviewHide(review_code) {
 						<div class="memberInfoText">등급</div>
 						<div class="memberInfoRating">
 							<div class="memberInfoCount"><img src="${grade.grade_img }" style="display:inline; width: 25px; height: 25px;">${grade.grade_name }</div>
+							<i class="fa-regular fa-circle-question" style="margin-top: 9px;   margin-left: 5px;  color: #6d6d6d;"></i>
+						</div>
+					</div>
+					<div class="gradeInfo modal" style="display: none" >
+						<div class="detail_grade">
+							<div class="modal_main" tabindex="-1" role="dialog">
+								<div class="modal_parent">
+									<div class="modal_container">
+										<div class="gradeWrapper">
+											<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_close_modal.png" alt="닫기 아이콘" class="gradeCloseIcon close">
+											<h1 style="font-size: 20px">등급 기준</h1>
+											<hr>
+											<table style="width: 40%;  margin: 0 auto;">
+												 <thead>
+							                        <tr style="border-bottom: 1px solid #b9b9b9;">
+							                            <th style="width: 60%;padding-bottom:10px ;">등 급 명</th>
+							                            <th style="width: 60%;padding-bottom:10px ;">기 준 점 수</th>
+							                        </tr>
+							                    </thead>
+							                    <tbody>
+													<c:forEach var="grade" items="${gradeInfo }">
+								                        <c:if test="${ grade.grade_id ne 10}">
+								                        <tr>
+								                            <th style="padding: 10px"><img src="${grade.grade_img }" style="display:inline; width: 25px; height: 25px;">  ${grade.grade_name }</th>
+								                            <th style="padding: 10px;">${grade.grade_score }</th>
+								                        </tr>
+								                        </c:if>
+													</c:forEach>
+							                    </tbody>
+						                	</table>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					<c:if test= "${sessionScope.sId eq member.member_id }">
