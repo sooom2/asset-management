@@ -335,6 +335,7 @@
 			item i
 		ON
 			i.item_code = mp.item_code
+		ORDER BY review_date desc
 	</select>
 	<select id="selectWrittenReviewListById" resultType="hashmap">
 		SELECT
@@ -368,6 +369,7 @@
 			i.item_code = r.review_item_code
 		WHERE
 			r.target_id = #{member_id}
+		ORDER BY review_date desc
 	</select>
 	<select id="selectRecivedReviewListById" resultType="hashmap">
 		SELECT

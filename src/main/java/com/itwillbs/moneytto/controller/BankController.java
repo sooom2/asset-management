@@ -315,6 +315,8 @@ public class BankController {
 			model.addAttribute("msg", trade_amount + " 원 환급되었습니다.");
 			
 		}
+		model.addAttribute("target", "mypage");
+		model.addAttribute("isClose", true);
 		//히히
 		// 만약, 응답코드(rsp_code) 가 "A0000" 이 아니면, 처리 실패이므로
 		// 응답메세지(rsp_message) 를 화면에 출력 후 이전페이지로 돌아가기
@@ -324,7 +326,7 @@ public class BankController {
 //		}
 //		return "bank/deposit_result";
 		
-		return "";
+		return "success";
 	}
 	
 	@PostMapping("bank_regist")
