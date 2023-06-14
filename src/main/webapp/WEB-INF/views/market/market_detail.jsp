@@ -373,8 +373,8 @@ function toggleLike(element) {
 		        imageUrl:
 		        	$("#item_image").val(),
 		        link: {
-		          mobileWebUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
-		          webUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
+		          mobileWebUrl: 'http://c3d2212t3.itwillbs.com/Moneytto/market_detail?item_code=' + $("#item_code").val(),
+		          webUrl: 'http://c3d2212t3.itwillbs.com/Moneytto/market_detail?item_code=' + $("#item_code").val(),
 		        },
 		      },
 		      commerce: {
@@ -385,8 +385,8 @@ function toggleLike(element) {
 		    	  {
  		          title: '웹으로 보기',
  		          link: {
- 		            mobileWebUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
- 		            webUrl: 'http://localhost:8082/moneytto/market_detail?item_code=' + $("#item_code").val(),
+ 		            mobileWebUrl: 'http://c3d2212t3.itwillbs.com/Moneytto/market_detail?item_code=' + $("#item_code").val(),
+ 		            webUrl: 'http://c3d2212t3.itwillbs.com/Moneytto/market_detail?item_code=' + $("#item_code").val(),
  					},
  				},
 		      ],
