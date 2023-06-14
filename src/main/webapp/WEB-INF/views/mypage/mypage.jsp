@@ -20,6 +20,19 @@
 
 $(document).ready(function(){
 	
+	
+	// 등급정보
+	$(".memberInfoReviewBox i").on("click", function(e) {
+		$(".gradeInfo").show();
+	});
+	
+	// 등급정보 닫기
+	$(document).on("click", ".close", function(e) {
+		$(".gradeInfo").remove();
+		location.reload();	
+	});
+	
+	
   	$(".itemThumbnail, .itemTextBox").on("click",function(){
   		var item_code = $(this).closest(".item").attr("data-cd");
 		location.href="market_detail?item_code="+item_code
@@ -164,6 +177,38 @@ function reviewHide(review_code) {
 						<div class="memberInfoText">등급</div>
 						<div class="memberInfoRating">
 							<div class="memberInfoCount"><img src="${grade.grade_img }" style="display:inline; width: 25px; height: 25px;">${grade.grade_name }</div>
+							<i class="fa-regular fa-circle-question" style="margin-top: 9px;   margin-left: 5px;  color: #6d6d6d;"></i>
+						</div>
+					</div>
+					<div class="gradeInfo" style="display: none" >
+						<div class="detail_grade">
+							<div class="modal_main" tabindex="-1" role="dialog">
+								<div class="modal_parent">
+									<div class="modal_container">
+										<div class="gradeWrapper">
+											<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_close_modal.png" alt="닫기 아이콘" class="gradeCloseIcon close">
+											<h1 style="font-size: 20px">등급 기준</h1>
+											<hr>
+											<table style="width: 40%;  margin: 0 auto;">
+												 <thead>
+							                        <tr style="border-bottom: 1px solid #b9b9b9;">
+							                            <th style="width: 60%;padding-bottom:10px ;">등 급 명</th>
+							                            <th style="width: 60%;padding-bottom:10px ;">기 준 점 수</th>
+							                        </tr>
+							                    </thead>
+							                    <tbody>
+													<c:forEach var="grade" items="${gradeInfo }">
+							                        <tr>
+							                            <th style="padding: 10px"><img src="${grade.grade_img }" style="display:inline; width: 25px; height: 25px;">  ${grade.grade_name }</th>
+							                            <th style="padding: 10px;">${grade.grade_score }</th>
+							                        </tr>
+												</c:forEach>
+							                    </tbody>
+						                	</table>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					<c:if test= "${sessionScope.sId eq member.member_id }">

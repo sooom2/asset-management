@@ -231,6 +231,10 @@ public class MemberService {
 	public List<HashMap<String, String>> getAuction(String id) {
 		return mapper.auction(id);
 	}
+	//등급
+	public List<HashMap<String, String>> getGrade() {
+		return mapper.grade();
+	}
 
 	
 
