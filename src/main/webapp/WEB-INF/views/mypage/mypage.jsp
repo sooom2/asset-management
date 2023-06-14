@@ -131,7 +131,7 @@ function reviewHide(review_code) {
 
 	swal({
 		title:"리뷰를 숨기시겠습니까?",
-		text: "숨긴 리뷰는 작성자만 확인할 수 있습니다.",
+		text: "숨긴 리뷰는 본인만 확인할 수 있습니다.",
 		icon: "warning",
 		buttons: {
 			confirm: {
@@ -359,21 +359,37 @@ function reviewHide(review_code) {
 								<th id="board-header" style="width: 15%;">날짜</th>
 							</tr>
 						    <c:forEach items="${itemList}" var="item" varStatus="status">
-<%-- 						    <c:when test="${sessionScope.sId eq member.member_id }">	 --%>
-						    	<c:if test="${item.hide_review eq 'N' }">
-						        <tr>
-						            <td id="board-data">${itemList.size() - status.index}</td>
-						            <td id="board-data" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"><a href="market_detail?item_code=${item.review_item_code}" class="board-title">${item.review_content}</a></td>
-						            <td id="board-data">${item.rating}</td>
-				            		<td id="board-data">
-				            			<c:if test= "${sessionScope.sId eq member.member_id }">
-						       		    <a href="#"class="board-title" onclick="reviewHide('${item.review_code}')">숨기기</a>
-						       		    </c:if>
-				            		</td>
-						            <td id="board-data">${item.review_date}</td>
-						        </tr>
-						        </c:if>
-<%-- 					        </c:when> --%>
+						    <c:choose>
+						    	<c:when test="${item.hide_review eq 'N' && sessionScope.sId ne member.member_id }">
+							        <tr>
+							            <td id="board-data">${itemList.size() - status.index}</td>
+							            <td id="board-data" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"><a href="market_detail?item_code=${item.review_item_code}" class="board-title">${item.review_content}</a></td>
+							            <td id="board-data">${item.rating}</td>
+					            		<td id="board-data">
+					            			<c:if test= "${sessionScope.sId eq member.member_id }">
+							       		    <a href="#"class="board-title" onclick="reviewHide('${item.review_code}')">숨기기</a>
+							       		    </c:if>
+					            		</td>
+							            <td id="board-data">${item.review_date}</td>
+							        </tr>
+						        </c:when>
+						        <c:otherwise>
+						        	<tr>
+							            <td id="board-data">${itemList.size() - status.index}</td>
+							            <td id="board-data" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"><a href="market_detail?item_code=${item.review_item_code}" class="board-title">${item.review_content}</a></td>
+							            <td id="board-data">${item.rating}</td>
+					            		<td id="board-data">
+					            			<c:if test= "${{item.hide_review eq 'N' }">
+							       		    	<a href="#"class="board-title" onclick="reviewHide('${item.review_code}')">숨기기</a>
+							       		    </c:if>
+							       		    <c:if test= "${{item.hide_review eq 'Y' }">
+							       		    	<a href="#"class="board-title" onclick="reviewHide('${item.review_code}')">보이기</a>
+							       		    </c:if>
+					            		</td>
+							            <td id="board-data">${item.review_date}</td>
+							        </tr>
+						        </c:otherwise>
+					        </c:choose>
 						    </c:forEach>
 						</table>
 					</c:when>

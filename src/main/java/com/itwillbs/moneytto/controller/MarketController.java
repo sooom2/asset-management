@@ -1022,6 +1022,21 @@ public class MarketController {
 		
 		return "fail_back";
 	}
+	@RequestMapping(value = "displayReview", method = RequestMethod.GET)
+	public String displayReview(@RequestParam HashMap<String, String> review,HttpSession session, Model model) {
+		
+		int updateCount = service.hideReview(review);
+		
+		if(updateCount > 0) {	
+			//insert 성공
+			model.addAttribute("msg", "리뷰가 다른 사람에게도 보입니다.");
+		}else {								//insert 실패
+			model.addAttribute("msg", "ERROR 리뷰 숨기기에 실패하였습니다.");
+		}
+		model.addAttribute("target", "mypage");
+		return"success";
+		
+	}
 
 
 }

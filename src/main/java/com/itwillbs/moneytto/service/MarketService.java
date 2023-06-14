@@ -135,8 +135,11 @@ public class MarketService {
 	public String getItemTag(String itemCode) {
 		return mapper.getItemTag(itemCode);
 	}
-
+	
+	public int displayReview(HashMap<String, String> review) {
 		
+		return mapper.displayReview(review);
+	}
 	
 	
 }

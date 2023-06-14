@@ -83,9 +83,6 @@
 						</a>
 						<!-- 중고거래 -->
 					<div class="sb-sidenav-menu-heading">ETC</div>
-						<a class="nav-link" href="adminChatBot">
-							<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>챗봇
-						</a>
 						<a class="nav-link" href="adminReport">
 							<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>신고관리
 						</a>

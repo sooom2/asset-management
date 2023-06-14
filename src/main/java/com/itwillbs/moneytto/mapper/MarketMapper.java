@@ -184,6 +184,6 @@ public interface MarketMapper {
 
    String getItemTag(String itemCode);
 
-
+   int displayReview(HashMap<String, String> review);
 	
 }

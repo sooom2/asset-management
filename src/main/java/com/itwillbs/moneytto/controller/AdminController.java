@@ -449,15 +449,6 @@ public class AdminController {
 		return "admin/adminMember";
 	}
 	
-	
-// 챗봇=============================================
-	@RequestMapping(value = "adminChatBot")
-	public String adminChatBot() {
-		
-		return "admin/adminChatBot";
-	}
-
-	
 // 신고=============================================
 	@RequestMapping(value = "adminReport")
 	public String adminReport(@RequestParam HashMap<String, String> map, Model model) {

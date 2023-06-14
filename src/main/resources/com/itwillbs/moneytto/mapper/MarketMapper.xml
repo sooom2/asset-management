@@ -737,6 +737,15 @@
           review_code = #{review_code}
    </update>
    
+    <update id="displayReview">
+      UPDATE
+         review 
+      SET 
+          hide_review = 'N'
+      WHERE
+          review_code = #{review_code}
+   </update>
+   
    <delete id="deleteReview">
       DELETE      
       FROM
