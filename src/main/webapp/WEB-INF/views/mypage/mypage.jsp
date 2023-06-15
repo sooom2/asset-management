@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="${path }/resources/css/member.css">
 <link href="${path }/resources/css/board.css"rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.js">>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/wish.js"></script>
 <script type="text/javascript" src="${path }/resources/js/common.js"></script>
 <script>
@@ -89,22 +89,23 @@ function memberAuth(){
 function bankDeposit(){
 		window.open("depositForm", "_blank","width=500,height=650,top=100,left=600");
 	}
-function reviewDelete(item_code){
+function reviewDisplay(review_code){
 	event.preventDefault();
 
 	swal({
-		text: "리뷰를 삭제하시겠습니까?",
-		icon: "warning",
+		title:"숨긴 리뷰를 다시 보이게 할까요?",
+		text: "모든 사용자들이 해당 리뷰를 확인할 수 있습니다.",
+		icon: "info",
 		buttons: {
 			confirm: {
-				text: "삭제",
+				text: "네",
 				value: true,
 				visible: true,
 				className: "",
 				closeModal: true,
 			},
 			cancel: {
-				text: "취소",
+				text: "아니오",
 				value: false,
 				visible: true,
 				className: "",
@@ -113,16 +114,7 @@ function reviewDelete(item_code){
 		},
 	}).then((result) => {
 		if(result){
-			$.ajax({
-				url: "deleteReview?item_code=" + item_code,
-				method: "GET",
-				success: function(response){
-					location.reload();
-				},
-				error: function(xhr, status, error){
-					console.error(error);
-				}
-			});
+			location.href="displayReview?review_code="+review_code;
 		}
 	});
 }
@@ -360,30 +352,18 @@ function reviewHide(review_code) {
 							</tr>
 						    <c:forEach items="${itemList}" var="item" varStatus="status">
 						    <c:choose>
-						    	<c:when test="${item.hide_review eq 'N' && sessionScope.sId ne member.member_id }">
-							        <tr>
-							            <td id="board-data">${itemList.size() - status.index}</td>
-							            <td id="board-data" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"><a href="market_detail?item_code=${item.review_item_code}" class="board-title">${item.review_content}</a></td>
-							            <td id="board-data">${item.rating}</td>
-					            		<td id="board-data">
-					            			<c:if test= "${sessionScope.sId eq member.member_id }">
-							       		    <a href="#"class="board-title" onclick="reviewHide('${item.review_code}')">숨기기</a>
-							       		    </c:if>
-					            		</td>
-							            <td id="board-data">${item.review_date}</td>
-							        </tr>
-						        </c:when>
+						    	<c:when test="${item.hide_review eq 'Y' && sessionScope.sId ne member.member_id }"></c:when>
 						        <c:otherwise>
 						        	<tr>
 							            <td id="board-data">${itemList.size() - status.index}</td>
 							            <td id="board-data" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"><a href="market_detail?item_code=${item.review_item_code}" class="board-title">${item.review_content}</a></td>
 							            <td id="board-data">${item.rating}</td>
 					            		<td id="board-data">
-					            			<c:if test= "${item.hide_review eq 'N' }">
+					            			<c:if test= "${item.hide_review eq 'N' && sessionScope.sId eq member.member_id}">
 							       		    	<a href="#"class="board-title" onclick="reviewHide('${item.review_code}')">숨기기</a>
 							       		    </c:if>
-							       		    <c:if test= "${item.hide_review eq 'Y' }">
-							       		    	<a href="#"class="board-title" onclick="reviewHide('${item.review_code}')">보이기</a>
+							       		    <c:if test= "${item.hide_review eq 'Y' && sessionScope.sId eq member.member_id}">
+							       		    	<a href="#"class="board-title" onclick="reviewDisplay('${item.review_code}')">보이기</a>
 							       		    </c:if>
 					            		</td>
 							            <td id="board-data">${item.review_date}</td>

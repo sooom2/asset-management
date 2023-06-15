@@ -1038,7 +1038,7 @@ public class MarketController {
 	@RequestMapping(value = "displayReview", method = RequestMethod.GET)
 	public String displayReview(@RequestParam HashMap<String, String> review,HttpSession session, Model model) {
 		
-		int updateCount = service.hideReview(review);
+		int updateCount = service.displayReview(review);
 		
 		if(updateCount > 0) {	
 			//insert 성공
