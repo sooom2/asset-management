@@ -55,7 +55,7 @@
 			<div class="form-group">
 				<label for="content">Content</label>
 				<textarea class="form-control summernote" rows="5" cols=""
-					id="content" name="comm_content" required></textarea>
+					id="content" name="comm_content" ></textarea>
 			</div>
 
 			<div>
@@ -83,7 +83,12 @@
 $(document).ready(function() {
 	$("form[name='writeForm']").submit(function(e) {
 		e.preventDefault(); // 기본 폼 제출 동작을 막음
-		
+	    // 본문 내용 체크
+	    var content = $('.summernote').summernote('code');
+	    if (!content.trim()) {
+	      $('#content-error').show();
+	      return;
+	    }
 		$.ajax({
 			url: "BoardWritePro",
 			type: "POST",
@@ -97,7 +102,7 @@ $(document).ready(function() {
 				});
 			},
 			error: function() {
-				alert("게시물 등록에 실패했습니다.");
+				swal("게시물 등록에 실패했습니다.");
 			}
 		});
 	});

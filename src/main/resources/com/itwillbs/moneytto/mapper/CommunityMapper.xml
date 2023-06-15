@@ -3,12 +3,17 @@
 <mapper namespace="com.itwillbs.moneytto.mapper.CommunityMapper">
 	
 	<!--커뮤니티 글등록 -->
+<!-- 	<insert id="insertBoard"> -->
+<!-- 	<selectKey keyProperty="comm_code" resultType="String" -->
+<!-- 		order="BEFORE"> -->
+<!-- 		SELECT CONCAT(IFNULL(MAX(CAST(comm_code AS UNSIGNED)), 0) + 1, '') FROM -->
+<!-- 		community -->
+<!-- 	</selectKey> -->
 	<insert id="insertBoard">
-	<selectKey keyProperty="comm_code" resultType="String"
-		order="BEFORE">
-		SELECT CONCAT(IFNULL(MAX(CAST(comm_code AS UNSIGNED)), 0) + 1, '') FROM
-		community
-	</selectKey>
+  <selectKey keyProperty="comm_code" resultType="String" order="BEFORE">
+    SELECT CONCAT(IFNULL(MAX(CAST(comm_code AS UNSIGNED)), 0) + 1, '') FROM community
+  </selectKey>
+  <if test="comm_content != null and !comm_content.trim().isEmpty()">
 	INSERT
 	INTO community
 	VALUES (
@@ -19,6 +24,7 @@
 	,now()
 	,"0"
 	)
+	</if>
 	</insert>
 	
 	<!-- 조회수 증가 -->
