@@ -226,6 +226,24 @@ public class MarketController {
 	}
 	
 	
+	@GetMapping(value = "itemRegist_mobile")
+	public String itemRegist_mobile(Model model,HttpSession session) {
+		
+		//session아이디로 닉네임 얻기
+		String id = (String)session.getAttribute("sId");
+		HashMap<String, String> member = memberService.getMember(id);
+		
+		if(id==null) {
+			model.addAttribute("msg","로그인이 필요합니다.");
+			return "fail_back";
+		}
+		    String nickname = member.get("member_nickname");
+		    model.addAttribute("nickname",nickname);
+		
+		return "market/market_itemRegist_mobile";
+	}
+	
+	
 	@GetMapping(value = "itemRegist")
 	public String itemRegist(Model model,HttpSession session) {
 		
