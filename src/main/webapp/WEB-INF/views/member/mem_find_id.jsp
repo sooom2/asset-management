@@ -8,20 +8,21 @@
 <link href="${pageContext.request.contextPath }/resources/css/member.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/find.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 $(function() {
 	
 	$("form").submit(function() {
 		if($("#member_name").val() == "") {
-			alert("이름을 입력하세요.");
+			swal("이름을 입력하세요.");
 			$("#member_name").focus();
 			return false;
 		} else if($("#member_bday").val() == "") {
-			alert("생년월일을 입력하세요.");
+			swal("생년월일을 입력하세요.");
 			$("#member_bday").focus();
 			return false;
 		} else if($("#member_tel").val() == "") {
-			alert("휴대폰번호를 입력하세요.");
+			swal("휴대폰번호를 입력하세요.");
 			$("#member_tel").focus();
 			return false;
 		}

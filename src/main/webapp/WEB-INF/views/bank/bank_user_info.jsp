@@ -7,18 +7,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
 	<c:choose>
 		<c:when test="${empty sessionScope.sId }">
 			<script type="text/javascript">
-				alert("로그인 후 사용 가능합니다");
+				swal("로그인 후 사용 가능합니다");
 				location.href = "./";
 			</script>
 		</c:when>
 		<c:when test="${empty sessionScope.access_token }">
 			<script type="text/javascript">
-				alert("계좌인증 후 사용 가능합니다");
+				swal("계좌인증 후 사용 가능합니다");
 				location.href = "MemberInfo.me";
 			</script>
 		</c:when>

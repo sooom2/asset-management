@@ -11,6 +11,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/pay.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 	
 	// 아임포트 결제
@@ -33,11 +34,11 @@
 		} else {
 			// 결제 수단 선택
 			if($('input[name="radio_choice"]:checked').val() == null) {
-				alert("결제수단을 선택하세요.");
+				swal("결제수단을 선택하세요.");
 
 				// 이용약관 동의
 			} else if(!$("#chk01").prop("checked") || !$("#chk02").prop("checked")) {
-				alert("이용약관에 모두 동의하셔야 합니다.");
+				swal("이용약관에 모두 동의하셔야 합니다.");
 				
 				// 아임포트 결제
 			} else {
@@ -53,13 +54,13 @@
 			        
 			    }, function (rsp) { // callback
 			        if (rsp.success) {
-					    alert("결제가 완료되었습니다.");
+					    swal("결제가 완료되었습니다.");
 					    location.href = "store_paySuccess?pay_code=" + rsp.merchant_uid + "&pay_type=" 
 					    				+ rsp.pay_method + "&pay_price=" + rsp.paid_amount
 					    				+ "&pay_status=" + rsp.status + "&item_code=" + ${item.get('item_code')} 
 					    				+ "&point=" + $("#totDcAmtView").text();
 			        } else {
-			            alert("실패 : 코드" + rep.error_code + ") / 메세지()"
+			            swal("실패 : 코드" + rep.error_code + ") / 메세지()"
 			            	  + rsp.error_msg + ")");
 			        }
 			    });
@@ -825,7 +826,7 @@
 // 					$("#totDcAmtView").text($(this).val());
 // 					$("#lstPayAmtView").text(${item_price } - $(this).val());
 // 				} else {
-// 					alert("사용가능 포인트를 확인하세요.");
+// 					swal("사용가능 포인트를 확인하세요.");
 // 				}
 // 			});
 			

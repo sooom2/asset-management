@@ -8,13 +8,14 @@
 <title>Insert title here</title>
 <link href="${path}/resources/css/member.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 function NotReload(){
     if( (event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) {
         event.keyCode = 0;
         event.cancelBubble = true;
         event.returnValue = false;
-       	alert("이미 회원가입이 완료되었습니다.");
+       	swal("이미 회원가입이 완료되었습니다.");
     } 
 }
 document.onkeydown = NotReload;

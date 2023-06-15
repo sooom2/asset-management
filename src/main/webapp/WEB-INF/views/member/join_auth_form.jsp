@@ -10,6 +10,7 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
 //카카오
@@ -58,7 +59,7 @@ $(function() {
 				console.log("data : " +  data);
 				checkInput.attr('disabled',false);
 				code = data;
-				alert('인증번호가 전송되었습니다.')
+				swal('인증번호가 전송되었습니다.')
 			}			
 		})
 	});
@@ -84,7 +85,7 @@ $(function() {
 	
 	$("#btn-join").on("click", function() {
 		if(!mailStatus) {
-			alert("이메일 인증을 확인해주시기 바랍니다.");
+			swal("이메일 인증을 확인해주시기 바랍니다.");
 			return false;
 		} else {
 			location.href="joinform?email=" + $('#join-id').val();

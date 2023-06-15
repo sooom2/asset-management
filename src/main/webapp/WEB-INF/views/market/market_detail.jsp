@@ -24,7 +24,7 @@ $(function() {
 	});
 	$(".SomeonesModifyButton").click(function() {
 		
-// 		alert("수정페이지 만들면 이동 : 판매자랑 세션 아이디랑 같을 경우 채팅하기 버튼 없어요!");
+// 		swal("수정페이지 만들면 이동 : 판매자랑 세션 아이디랑 같을 경우 채팅하기 버튼 없어요!");
 		var item_code = $(this).data('cd');
 	    location.href = "itemModify?item_code=" + item_code;
 	    
@@ -61,14 +61,14 @@ function toggleLike(element) {
 	      data: { item_code: item_code },
 	      success: function(response) {
 	        if (response === "success") {
-	          alert("상품이 삭제되었습니다.");
+	          swal("상품이 삭제되었습니다.");
 	          window.location.href = "main";  // 메인 페이지로 이동
 	        } else {
-	          alert("상품 삭제에 실패하였습니다.");
+	          swal("상품 삭제에 실패하였습니다.");
 	        }
 	      },
 	      error: function() {
-	        alert("상품 삭제 중 오류가 발생하였습니다.");
+	        swal("상품 삭제 중 오류가 발생하였습니다.");
 	      }
 	    });
 	  }

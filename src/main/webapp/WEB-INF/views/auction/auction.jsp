@@ -349,7 +349,7 @@
         		}
             },
             error: function(error) {
-                alert("error:" + error);
+                swal("error:" + error);
             }
         });
 		
@@ -421,7 +421,7 @@
 								<div class="auction_price"><span id="lastLogPrice">${auction.auction_present_price }</span>원&nbsp;<i class="fa-solid fa-comment-dollar"></i></div>
 							</c:otherwise>
 						</c:choose>
-						<div class="auction_alert"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
+						<div class="auction_swal"><span>서버 요청과 3초 정도 느릴수 있습니다.</span></div>
 						<div class="auction_id">
 <!-- 						<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
 						<c:choose>
@@ -578,20 +578,20 @@ $(document).ready(function() {
 			chatLog = $("#logPrice").val();
 			
 			if(chatLog == ""){
-				alert("금액을 입력해주세요");
+				swal("금액을 입력해주세요");
 				return false;
 			} else if(chatLog < ${price} ) {
-				alert("최소금액 보다 높게 입력해주세요");
+				swal("최소금액 보다 높게 입력해주세요");
 				$("#logPrice").val("");
 				chatLog = nowPrice;
 				return false;
 			} else if(chatLog <= $("#lastLogPrice").html()) {
-				alert("현재 입찰금액 보다 높게 입력해주세요");
+				swal("현재 입찰금액 보다 높게 입력해주세요");
 				$("#logPrice").val("");
 				chatLog = nowPrice;
 				return false;
 			} else if(chatLog > numPurchase) {
-				alert("즉시구매 가격 이하로 입력해주세요");
+				swal("즉시구매 가격 이하로 입력해주세요");
 				$("#logPrice").val("");
 				chatLog = nowPrice;
 				numPurchase += "";
@@ -646,7 +646,7 @@ $(document).ready(function() {
 			console.log("2번" + chatLog);
 // 			}
 			if(chatLog > numPurchase) {
-				alert("즉시구매 가격 이하로 입력해주세요");
+				swal("즉시구매 가격 이하로 입력해주세요");
 				$("#logPrice").val("");
 				chatLog = nowPrice;
 				numPurchase += "";

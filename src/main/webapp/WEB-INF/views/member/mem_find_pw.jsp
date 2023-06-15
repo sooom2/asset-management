@@ -8,29 +8,30 @@
 <link href="${pageContext.request.contextPath }/resources/css/member.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/find.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 $(function() {
 	//휴대폰 번호 인증
 	var code2 = "";
 	$("#btnSend").click(function(){
 		if($("#member_id").val() == "") {
-			alert("아이디를 입력하세요.");
+			swal("아이디를 입력하세요.");
 			$("#member_id").focus();
 			return false;
 		} else if($("#member_name").val() == "") {
-			alert("이름을 입력하세요.");
+			swal("이름을 입력하세요.");
 			$("#member_name").focus();
 			return false;
 		} else if($("#member_bday").val() == "") {
-			alert("생년월일을 입력하세요.");
+			swal("생년월일을 입력하세요.");
 			$("#member_bday").focus();
 			return false;
 		} else if($("#member_tel").val() == "") {
-			alert("휴대폰번호를 입력하세요.");
+			swal("휴대폰번호를 입력하세요.");
 			$("#member_tel").focus();
 			return false;
 		}
-		alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
+		swal("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
 		var phone = $("#member_tel").val();
 		$.ajax({
 	        type:"GET",
@@ -38,7 +39,7 @@ $(function() {
 	        cache : false,
 	        success:function(data){
 	        	if(data == "error"){
-	        		alert("휴대폰 번호가 올바르지 않습니다.")
+	        		swal("휴대폰 번호가 올바르지 않습니다.")
 					$("#phoneCheck").text("유효한 번호를 입력해주세요.");
 					$("#phoneCheck").css("color","red");
 					$("#member_tel").attr("autofocus",true);
@@ -57,7 +58,7 @@ $(function() {
 	//휴대폰 인증번호 대조
 	$("#btnAuth").click(function(){
 		if(code2 == ""){
-			alert("인증 요청을 진행해주세요.");
+			swal("인증 요청을 진행해주세요.");
 			return false;	
 		}
 		if($("#member_tel2").val() == code2){
@@ -77,23 +78,23 @@ $(function() {
 	// 입력 확인.
 	$("form").submit(function() {
 		if($("#member_id").val() == "") {
-			alert("아이디를 입력하세요.");
+			swal("아이디를 입력하세요.");
 			$("#member_id").focus();
 			return false;
 		} else if($("#member_name").val() == "") {
-			alert("이름을 입력하세요.");
+			swal("이름을 입력하세요.");
 			$("#member_name").focus();
 			return false;
 		} else if($("#member_bday").val() == "") {
-			alert("생년월일을 입력하세요.");
+			swal("생년월일을 입력하세요.");
 			$("#member_bday").focus();
 			return false;
 		} else if($("#member_tel").val() == "") {
-			alert("휴대폰번호를 입력하세요.");
+			swal("휴대폰번호를 입력하세요.");
 			$("#member_tel").focus();
 			return false;
 		} else if(!$("#phoneDoubleChk").val()) {
-			alert("인증번호를 확인하세요.");
+			swal("인증번호를 확인하세요.");
 			return false;
 		}
 		return true;

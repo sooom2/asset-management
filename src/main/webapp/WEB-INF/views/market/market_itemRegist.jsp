@@ -10,6 +10,7 @@
 <title>Insert title here</title>
 <link href="${path }/resources/css/itemRegist.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 $(window).load(function() {
 	  var maxImageCount = 5;
@@ -24,7 +25,7 @@ $(window).load(function() {
 	     files = event.target.files;
 
 	    if (files.length + imageList.children.length > maxImageCount) {
-	      alert('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
+	      swal('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
 	      fileInput.value = '';
 	      return;
 	    }
@@ -33,7 +34,7 @@ $(window).load(function() {
 	      var file = files[i];
 
 	      if (imageList.children.length >= maxImageCount) {
-	        alert('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
+	        swal('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
 	        fileInput.value = '';
 	        return;
 	      }
@@ -318,7 +319,7 @@ $(window).load(function() {
         event.preventDefault();
 
         // 오류 메시지 표시 또는 원하는 작업 수행
-        alert("필수 항목을 모두 입력해주세요.");
+        swal("필수 항목을 모두 입력해주세요.");
       }
     });
   });

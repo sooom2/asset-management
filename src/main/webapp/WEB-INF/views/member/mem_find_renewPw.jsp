@@ -8,6 +8,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/member.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/find.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 $(function() {
 	let passwdStatus = false;
@@ -44,11 +45,11 @@ $(function() {
 	
 	$("form").submit(function() {
 		if(!passwdStatus) {
-			alert("비밀번호를 확인하세요");
+			swal("비밀번호를 확인하세요");
 			$("#member_pw").focus();
 			return false;
 		} else if(!passwd2Status) {
-			alert("비밀번호를 확인하세요");
+			swal("비밀번호를 확인하세요");
 			$("#member_pw2").focus();
 			return false;
 		}

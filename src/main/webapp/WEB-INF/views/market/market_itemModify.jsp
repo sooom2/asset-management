@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link href="${path }/resources/css/itemRegist.css" rel="stylesheet">
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -24,7 +25,7 @@ $(window).load(function() {
     var files = event.target.files;
 
     if (files.length + imageList.children.length > maxImageCount) {
-      alert('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
+      swal('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
       fileInput.value = '';
       return;
     }
@@ -33,7 +34,7 @@ $(window).load(function() {
       var file = files[i];
 
       if (imageList.children.length >= maxImageCount) {
-        alert('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
+        swal('최대 ' + maxImageCount + '장의 사진만 업로드할 수 있습니다.');
         fileInput.value = '';
         return;
       }

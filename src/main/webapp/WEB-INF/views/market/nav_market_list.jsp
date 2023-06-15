@@ -9,6 +9,7 @@
 <link href="${path }/resources/css/market.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/moment.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -285,7 +286,7 @@ function wish(){
 			
 		})	
 	}else{
-		alert("로그인 후 이용할 수 있습니다.");
+		swal("로그인 후 이용할 수 있습니다.");
 	}
 }	
 </script>

@@ -11,6 +11,7 @@
 <script type="text/javascript" src="${path }/resources/js/moment.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -738,7 +739,7 @@ function wish(){
 			
 		})	
 	}else{
-		alert("로그인 후 이용할 수 있습니다.");
+		swal("로그인 후 이용할 수 있습니다.");
 	}
 }	
 </script>
