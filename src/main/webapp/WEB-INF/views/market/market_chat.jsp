@@ -640,16 +640,16 @@ $(function() {
 		opponent_img = "${chatList.member_image}";
 		opponent_nickname = "${chatList.member_nickname}";
 		opponent_grade_img = "${opponent_grade.grade_img}";
-		alert("상품으로  : " + "${chatList.member_image}");
-		alert("상품으로 : " + opponent_nickname + ", " + opponent_grade_img +", " + opponent_img);
+// 		alert("상품으로  : " + "${chatList.member_image}");
+// 		alert("상품으로 : " + opponent_nickname + ", " + opponent_grade_img +", " + opponent_img);
 	} else {
 		target = "${opponentId.opponent_id}";
 		item_code = "${item_code}";
 		opponent_img = "${opponentId.opponent_image}";
 		opponent_nickname = "${opponentId.opponent_nickname}";
 		opponent_grade_img = "${opponent_grade.grade_img}";
-		alert("nav"+opponent_img);
-		alert(opponent_nickname + ", " + opponent_grade_img +", " + opponent_img);
+// 		alert("nav"+opponent_img);
+// 		alert(opponent_nickname + ", " + opponent_grade_img +", " + opponent_img);
 	}
 	messages(target, opponent_img, opponent_nickname,opponent_grade_img);
 	console.log("nav에서 아이템코드: " + item_code + " room_code: " + room_code + " target: " + target);
