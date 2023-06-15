@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>머니머니머니또</title>
-<link href="${path }/resources/css/main_mobile.css" rel="stylesheet">
+<%-- <link href="${path }/resources/css/main_mobile.css" rel="stylesheet"> --%>
 <link href="${path }/resources/css/market_mobile.css" rel="stylesheet">
 <link href="${path }/resources/css/common.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
@@ -22,7 +22,7 @@
 		// 상품 페이지 이동
   	$(".itemThumbnail, .itemTextBox").on("click",function(){
   		var item_code = $(this).closest(".item").attr("data-cd");
-		location.href="market_detail?item_code="+item_code
+		location.href="market_detail_m?item_code="+item_code
 	})
 	
 	
@@ -41,7 +41,7 @@
 						<a href="auctionMain" style="color: #fff">경매</a>
 					</div>
 					<div class="menu" style=" display: inline-block;margin-right: 15px;color: #fff">
-						<a href="market_list" style="color: #fff">중고거래</a>
+						<a href="market_list_mobile" style="color: #fff">중고거래</a>
 					</div>
 					<div class="menu" style=" display: inline-block;margin-right: 15px;color: #fff">
 						<a href="commBoard" style="color: #fff">커뮤니티</a>

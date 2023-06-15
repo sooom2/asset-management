@@ -11,6 +11,7 @@
 <link href="${path }/resources/css/itemRegist.css" rel="stylesheet">
 <link href="${path }/resources/css/main_mobile.css" rel="stylesheet">
 <link href="${path }/resources/css/market_mobile.css" rel="stylesheet">
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
