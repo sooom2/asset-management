@@ -404,8 +404,10 @@ public class MarketController {
 	            if (chatDetail != null && !chatDetail.isEmpty()) {
 
 	               model.addAttribute("chatDetail", chatDetail);
+	               
+	               
 	            }
-
+	            
 	            HashMap<String, String> mapItemCode = marketChatService.getItem_code(room_code);
 	            item_code = mapItemCode.get("item_code");
 	            System.out.println("nav에서 들어갔을때 " + item_code);
@@ -416,13 +418,15 @@ public class MarketController {
 	            sellCount = marketChatService.getSellCount(opponentId.get("opponent_id"));
 	            myChatList = marketChatService.getMyChatList(id);
 
+	            HashMap<String, String> opponent = memberService.getMember(opponentId.get("opponent_id"));
+		         if(opponent != null ) {
+		        	 HashMap<String, String> opponent_grade = memberService.getMemberGrade(opponent);
+		        	 model.addAttribute("opponent_grade",opponent_grade); 	
+		         }
+	            
+	            
 	         }
-		     HashMap<String, String> sellDetail = marketChatService.getSellDetail(room_code);
-	         HashMap<String, String> opponent = memberService.getMember(sellDetail.get("sell_id"));
-		     HashMap<String, String> opponent_grade = memberService.getMemberGrade(opponent);
-		     System.out.println("opponent_grade ==================");
-		     System.out.println(opponent_grade);
-		     model.addAttribute("opponent_grade",opponent_grade); 	
+	         
 	      }//nav
 	      
 	      if (chatList != null && myChatList != null && opponentId != null) {
@@ -437,7 +441,7 @@ public class MarketController {
 	         
 
 	      }
-	      if(chatList !=null) {
+	      if( chatList !=null) {
 	         item = marketChatService.getItemList(item_code);
 	         sellId = item.get("member_id");
 	      }

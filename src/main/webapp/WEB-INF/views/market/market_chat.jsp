@@ -826,7 +826,7 @@ $(function() {
 
 
       <!-- 채팅내역없을때 -->
-      <c:if test="${empty param.item_code and empty myChatList}">
+      <c:if test="${empty param.item_code and empty myChatList and empty opponent_grade}">
          <section class="content">
             <div class="main_area">
                <div class="content_area">
