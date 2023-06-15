@@ -81,7 +81,7 @@ function memberAuth(){
 	authWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize"
 	+"?response_type=code"
 	+"&client_id=${client_id}"
-	+"&redirect_uri=http://localhost:8082/moneytto/memberAuth"
+	+"&redirect_uri=http://c3d2212t3.itwillbs.com/Moneytto/memberAuth"
 	+"&scope=login inquiry transfer oob"
 	+"&state=11111111111111111111111111111111"
 	+"&auth_type=0";
@@ -181,6 +181,8 @@ function reviewHide(review_code) {
 										<div class="gradeWrapper">
 											<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_close_modal.png" alt="닫기 아이콘" class="gradeCloseIcon close">
 											<h1 style="font-size: 20px">등급 기준</h1>
+											<br>
+											<h1 style="font-size: 20px">나의 점수	${member.grade_score}</h1>
 											<hr>
 											<table style="width: 40%;  margin: 0 auto;">
 												 <thead>

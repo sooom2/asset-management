@@ -54,7 +54,7 @@ public class MarketService {
 	
 	public int writeReview(HashMap<String, String> review) {
 		
-//		mapper.updateMemberGrade(review);
+		mapper.updateMemberGrade(review);
 		
 		return mapper.insertReview(review);
 	}
