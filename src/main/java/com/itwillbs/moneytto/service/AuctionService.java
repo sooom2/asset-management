@@ -38,8 +38,8 @@ public class AuctionService {
 	}
 
 	// 경매 상세 기록 검색
-	public List<HashMap<String, String>> selectAuctionLog(String auction_code) {
-		return mapper.selectAuctionLog(auction_code);
+	public List<HashMap<String, String>> selectAuctionLog(String auction_code, String auction_type) {
+		return mapper.selectAuctionLog(auction_code, auction_type);
 	}
 	
 	// 경매 기록 최고값 검색

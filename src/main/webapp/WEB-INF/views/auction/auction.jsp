@@ -692,8 +692,7 @@ function connect2() {
 		sessionId = data.split("|")[0];
 		sessionName = data.split("|")[1];
 		message = data.split("|")[2];
-		logTime = data.split("|")[3].split(" ").[1];
-	
+		logTime = data.split("|")[3].split(" ")[1];
 		
 		// 낙찰 최대금액
 	//	var auctionMax = "<span>" + message + "</span>원&nbsp;<i class='fa-solid fa-comment-dollar'></i>";

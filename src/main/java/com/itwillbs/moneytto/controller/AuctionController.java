@@ -40,7 +40,6 @@ public class AuctionController {
 	public String auctionMain(@RequestParam HashMap<String, String> map, Model model) { 
 		// 이미지 코드와 경매 코드를 찾아서 목록 뿌리기
 		List<HashMap<String, String>> auction = service.selectAuction(map);
-		System.out.println("@@@@@@@@@@@@@@@" + auction);
 		model.addAttribute("auction", auction);
 		
 		return "auction/auctionMain";
@@ -72,7 +71,7 @@ public class AuctionController {
 		// 경매 로그===============================================================================
 		
 		// 경매 기록(상세 내용) 검색
-		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(auction_code);
+		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(auction_code, auction.get("auction_type"));
 		// 경매 기록 최고값 검색
 		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
 		// 내가 입찰한 가격
@@ -131,7 +130,7 @@ public class AuctionController {
 		// 경매 로그===============================================================================
 		
 		// 경매 기록(상세 내용) 검색
-		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(auction_code);
+		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(auction_code, auction.get("auction_type"));
 		// 경매 기록 최고값 검색
 		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
 		// 내가 입찰한 가격
@@ -175,7 +174,7 @@ public class AuctionController {
 		model.addAttribute("member", member);
 		
 		// 경매 기록(상세 내용) 검색
-		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(auction_code);
+		List<HashMap<String, String>> auctionLog = service.selectAuctionLog(auction_code, auction.get("auction_type"));
 		// 경매 기록 최고값 검색
 		HashMap<String, String> lastLog = service.selectLastLog(auction_code);
 		model.addAttribute("auctionLog", auctionLog);

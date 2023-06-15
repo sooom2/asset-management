@@ -24,7 +24,7 @@ public interface AuctionMapper {
 	HashMap<String, String> selectAuctionRoom(String auction_code);
 
 	// 경매 상세 기록 검색
-	List<HashMap<String, String>> selectAuctionLog(@Param("auction_code") String auction_code);
+	List<HashMap<String, String>> selectAuctionLog(@Param("auction_code") String auction_code, @Param("auction_type") String auction_type);
 
 	// 경매 기록 최고값 검색
 	HashMap<String, String> selectLastLog(@Param("auction_code")String auction_code);
