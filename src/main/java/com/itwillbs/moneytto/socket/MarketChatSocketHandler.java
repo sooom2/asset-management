@@ -3,7 +3,6 @@ package com.itwillbs.moneytto.socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.json.JSONObject;
@@ -56,9 +55,30 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 		// 채팅 세션 목록에 채팅방이 존재 X
 		
 		HashMap<String, String> sellDetail = marketChatService.getSellID(item_code);
-		//상대방아이디
+		String buyId = target;
+		String sellId = sellDetail.get("member_id");
+												//상대방아이디
 		// 내아이디랑 sellId랑 다르면 buy아이디는 target
+		if(name == sellId) {
+			buyId = target;
+			sellId = name;
+			System.out.println("내가 살때 buy_ID는 target ==============================");
+			System.out.println("사는사람 : " + buyId + "파는사람 : " + sellId);
+			System.out.println("==============================");
+		} else if(name != sellId) {
+			buyId = name;
+			sellId = target;
+			System.out.println("내가 팔때 buyID 는 나 =============================");
+			System.out.println("사는사람 : " + buyId + "파는사람 : " + sellId);
+			System.out.println("==============================");
+		}
 		
+		// name 세션 // sellId 아이템 조회
+		// sellId  = name >>> sellId
+		// target = buyId
+		System.out.println("sellId ===========================");
+		System.out.println(sellId);
+		System.out.println("===========================");
 		
 		if(marketList.get(room_code) == null && messages.contains(name)) {
 			System.out.println("===========================");
@@ -86,18 +106,13 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 			System.out.println("===========================");
 			System.out.println("생성된 "+room_code+"번 채팅방으로 입장");
 			System.out.println("===========================");
+	            	
+     
 		}
 
 		// 채팅 메세지 입력 시
 		else if(marketList.get(room_code) != null && !messages.contains(name)) {
 			// 채팅 출력
-			
-			String buyId = target;
-			String sellId = sellDetail.get("member_id");
-			
-			if(sellId.equals(buyId)) {
-				buyId = name;
-			}
 			
 			System.out.println("===========================");
 			System.out.println(room_code);
@@ -105,29 +120,23 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 			TextMessage textMessage = new TextMessage(name + ":" + messages);
                 
 			int sessionCount = 0;
-
-			for (WebSocketSession sess : marketList.get(room_code)) {
-				System.out.println("sess ================================================");
-				System.out.println(sess + "//////////");
-				System.out.println(marketList.get(room_code) + "//////////");
-				System.out.println("================================================");
-			    sess.sendMessage(textMessage);
-			    sessionCount++;
+//			session.sendMessage(textMessage);
+			
+			// 해당 코드에 session에 뿌려줌.
+			for(WebSocketSession sess : marketList.get(room_code)) {
+				sess.sendMessage(textMessage);
+				sessionCount++;
 			}
 			
-			boolean sessionExists = false;
-			for (WebSocketSession sess : marketList.get(room_code)) {
-			    if (sess.getId().equals(session.getId())) {
-			        sessionExists = true;
-			        break;
-			    }
-			}
-
-			if (!sessionExists) {
-				marketList.get(room_code).add(session);
-			}
+            System.out.println("===============================");
+            System.out.println(room_code+", "+ sellId +", "+name+", "+messages+", "+name);
+            System.out.println("===============================");
+            
            
             int roomCodeExists = marketChatService.roomCodeExists(room_code);
+            System.out.println("===============================");
+            System.out.println(roomCodeExists);
+            System.out.println("===============================");
             
             if(roomCodeExists < 1) {
             	int insertChatRoom = marketChatService.insertChatRoom(room_code,item_code, messages);
@@ -147,27 +156,17 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
        
 		
 	
+	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-	    // sessionList에 session이 있다면
-	    if (sessionList.containsKey(session)) {
-	        String roomCode = sessionList.get(session);
-	        System.out.println("roomCode ===================================");
-	        System.out.println(roomCode);
-	        System.out.println("roomCode ===================================");
-	        // 해당 session의 방 번호를 가져와서, 방을 찾고, 그 방의 ArrayList<session>에서 해당 session을 지운다.
-	        ArrayList<WebSocketSession> sessions = marketList.get(roomCode);
-	        if (sessions != null) {
-	            sessions.remove(session);
-	            
-	            // 방에 더 이상 세션이 없는 경우 방을 제거한다.
-	            if (sessions.isEmpty()) {
-	                marketList.remove(roomCode);
-	            }
-	        }
-	        
-	        sessionList.remove(session);
-	    }
+        // sessionList에 session이 있다면
+        if(sessionList.get(session) != null) {
+            // 해당 session의 방 번호를 가져와서, 방을 찾고, 그 방의 ArrayList<session>에서 해당 session을 지운다.
+        	marketList.get(sessionList.get(session)).remove(session);
+            sessionList.remove(session);
+        }
+		
+		
 	}
 	
 	@Override
