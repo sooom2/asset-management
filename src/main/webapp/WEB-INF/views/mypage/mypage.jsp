@@ -379,10 +379,10 @@ function reviewHide(review_code) {
 							            <td id="board-data" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"><a href="market_detail?item_code=${item.review_item_code}" class="board-title">${item.review_content}</a></td>
 							            <td id="board-data">${item.rating}</td>
 					            		<td id="board-data">
-					            			<c:if test= "${{item.hide_review eq 'N' }">
+					            			<c:if test= "${item.hide_review eq 'N' }">
 							       		    	<a href="#"class="board-title" onclick="reviewHide('${item.review_code}')">숨기기</a>
 							       		    </c:if>
-							       		    <c:if test= "${{item.hide_review eq 'Y' }">
+							       		    <c:if test= "${item.hide_review eq 'Y' }">
 							       		    	<a href="#"class="board-title" onclick="reviewHide('${item.review_code}')">보이기</a>
 							       		    </c:if>
 					            		</td>
