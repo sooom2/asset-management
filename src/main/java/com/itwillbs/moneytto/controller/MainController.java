@@ -3,11 +3,14 @@ package com.itwillbs.moneytto.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,21 +28,47 @@ public class MainController {
 	private MemberService memberService;
 	
 	@RequestMapping(value = "main", method = RequestMethod.GET)
-	public String main(Model model,HttpSession session) {
+	public String main(Model model,HttpSession session, HttpServletRequest request) {
 		
-		String id = (String)session.getAttribute("sId");
+		Device device =  DeviceUtils.getCurrentDevice(request);
+		if(device != null) {
+			if(device.isNormal()) {
+				System.out.println("PC 접속");
+				String id = (String)session.getAttribute("sId");
 
-		List<HashMap<String,String>> itemList = mainService.getMainItemList(id);
-		List<HashMap<String,String>> recentItemList = mainService.getRecentItemList(id);
-		
-		model.addAttribute("itemList", itemList);
-		model.addAttribute("recentItemList", recentItemList);
-		
-		System.out.println("==================================");
-		System.out.println("메인 아이템 : ");
-		System.out.println("==================================");
-		
-		return "main";
+				List<HashMap<String,String>> itemList = mainService.getMainItemList(id);
+				List<HashMap<String,String>> recentItemList = mainService.getRecentItemList(id);
+				
+				model.addAttribute("itemList", itemList);
+				model.addAttribute("recentItemList", recentItemList);
+				
+				System.out.println("==================================");
+				System.out.println("메인 아이템 : ");
+				System.out.println("==================================");
+				
+				return "main";
+				
+			}else if(device.isMobile()) {
+				System.out.println("모바일 접속");
+				
+				String id = (String)session.getAttribute("sId");
+
+				List<HashMap<String,String>> itemList = mainService.getMainItemList(id);
+				List<HashMap<String,String>> recentItemList = mainService.getRecentItemList(id);
+				
+				model.addAttribute("itemList", itemList);
+				model.addAttribute("recentItemList", recentItemList);
+				
+				System.out.println("==================================");
+				System.out.println("메인 아이템 : ");
+				System.out.println("==================================");
+				
+				return "main_mobile";
+			}
+			
+		}
+		return "";
+
 	}
 	
 	@GetMapping("/myAlarm")
