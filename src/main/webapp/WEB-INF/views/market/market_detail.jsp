@@ -415,6 +415,7 @@ function toggleLike(element) {
 					success : function(result){
 		       			if(result){
 		       				$(".ReactModalPortal").remove();
+		       				swal("게시물을 신고하였습니다. \n 허위신고시 불이익이 있을 수 있습니다.")
 		       			} else {
 		       				swal("자신의 게시글을 신고할 수 없습니다.");
 		       			}

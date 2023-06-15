@@ -215,6 +215,7 @@ public class MarketController {
 		boolean result = false;
 		// 06.14 세션과 비교하여 자신 신고 막기
 		if(!map.get("targetId").equals(id)) {
+			map.put("id", id);
 			int insertReport = service.insertReport(map);
 			
 			if(insertReport > 0 ) result = true;
