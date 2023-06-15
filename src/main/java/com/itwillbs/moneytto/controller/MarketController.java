@@ -381,10 +381,13 @@ public class MarketController {
 	            // 방이없을땐 보통 판매자,,
 	            item = marketChatService.getItemList(item_code);
 	            sellId = item.get("member_id");
-
+	            
 	         }
 		     HashMap<String, String> opponent_grade = memberService.getMemberGrade(sellId);
 		     System.out.println("==================");
+		     System.out.println("chatList ==============");
+		     System.out.println(chatList);
+		     System.out.println("==============");
 
 		     model.addAttribute("opponent_grade",opponent_grade); 	
 	         System.out.println(opponent_grade);
@@ -449,9 +452,7 @@ public class MarketController {
 	      // header에는 판매자 의정보!! ㅠㅠ
 	      HashMap<String, String> sellDetail = marketChatService.getSellDetail(room_code);
 	      HashMap<String, String> trade_date = marketChatService.getTradeDate(room_code);
-	      
-	      
-	     
+	
 	      
 	      //리뷰가 있으면 후기작성 안보이게 - 후기작성까지 됬으면 거래중 판매중 disabled
 	      
