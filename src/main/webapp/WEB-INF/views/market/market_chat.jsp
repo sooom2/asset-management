@@ -717,7 +717,7 @@ $(function() {
 	});
 
 	function messages(target, opponent_img, opponent_nickname,opponent_grade_img) {
-		alert(target+","+opponent_img+","+opponent_nickname)
+// 		alert(target+","+opponent_img+","+opponent_nickname)
 		ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/market_chat");
 		socket = ws;
 		ws.onopen = function() {
