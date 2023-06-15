@@ -952,6 +952,7 @@
 			, r.report_targetId
 			, r.member_id AS repId
 			, r.report_content
+			, r.report_statusYN
 			, rc.rep_cnt
 		FROM item i
 			LEFT JOIN report r 
@@ -974,6 +975,15 @@
 			LIMIT ${startNum}, ${endNum}
 		</if>
 	</select>
+	
+	<!-- 중고거래 아이템 신고 처리 -->
+	<update id="updateAdminItemReport">
+		UPDATE report
+			SET report_statusYN = 'Y'
+			WHERE item_code = #{item_code}
+			AND report_targetId = #{report_targetId}
+			AND member_id  = #{repId}
+	</update>
 	
 	<!-- 관리자 신고 관리 -->
 	<select id="selectAdminReport" resultType="hashmap">

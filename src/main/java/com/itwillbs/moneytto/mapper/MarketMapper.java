@@ -141,12 +141,6 @@ public interface MarketMapper {
    List<HashMap<String, String>> navMarketItemList(@Param("navSearch") String navSearch, @Param("sort") String sort, @Param("id") String id);
 
    
-// 관리자에서 사용하기 위한======================================================================================
-   // 관리자 아이템 목록
-   List<HashMap<String, String>> selectadminItem(HashMap<String, String> map);
-
-   // 관리자 신고 목록
-   List<HashMap<String, String>> selectAdminReport(HashMap<String, String> map);
    
    void increaseViews(String item_code);
 
@@ -185,5 +179,16 @@ public interface MarketMapper {
    String getItemTag(String itemCode);
 
    int displayReview(HashMap<String, String> review);
+
+// 관리자에서 사용하기 위한 시작======================================================================================
+   // 관리자 아이템 목록
+   List<HashMap<String, String>> selectadminItem(HashMap<String, String> map);
+   
+   // 관리자 신고 목록
+   List<HashMap<String, String>> selectAdminReport(HashMap<String, String> map);
+
+   // 중고거래 아이템 신고 처리
+   int updateAdminItemReport(HashMap<String, String> map);
+// 관리자에서 사용하기 위한 끝======================================================================================
 	
 }

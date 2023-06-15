@@ -93,16 +93,6 @@ public class MarketService {
 	}
 
 	
-// 관리자에서 사용하기 위한======================================================================================
-	// 관리자 아이템 목록
-	public List<HashMap<String, String>> selectadminItem(HashMap<String, String> map) {
-		return mapper.selectadminItem(map);
-	}
-
-	// 관리자 신고 목록
-	public List<HashMap<String, String>> selectAdminReport(HashMap<String, String> map) {
-		return mapper.selectAdminReport(map);
-	}
 
 
 
@@ -140,6 +130,25 @@ public class MarketService {
 		
 		return mapper.displayReview(review);
 	}
+
+
+// 관리자에서 사용하기 위한 시작======================================================================================
+	// 관리자 아이템 목록
+	public List<HashMap<String, String>> selectadminItem(HashMap<String, String> map) {
+		return mapper.selectadminItem(map);
+	}
+	
+	// 관리자 신고 목록
+	public List<HashMap<String, String>> selectAdminReport(HashMap<String, String> map) {
+		return mapper.selectAdminReport(map);
+	}
+
+	// 중고거래 아이템 신고 처리
+	public int updateAdminItemReport(HashMap<String, String> map) {
+		return mapper.updateAdminItemReport(map);
+	}
+// 관리자에서 사용하기 위한 끝======================================================================================
+
 	
 	
 }

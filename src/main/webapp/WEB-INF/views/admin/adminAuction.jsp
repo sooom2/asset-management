@@ -96,6 +96,11 @@ input[type=radio] {
 </style>
 </head>
 <body>
+	<c:if test="${sessionScope.sId  ne 'admin' }">
+		<script type="text/javascript">
+			location.href = "./";
+		</script>
+	</c:if>
 <jsp:include page="admin_nav_top.jsp" />
 	<div id="layoutSidenav">
 		<!-- 고정  -->
@@ -168,8 +173,8 @@ input[type=radio] {
 								<div style="display: inline-block;width: 100%">
 									<label for="customer_name" style="display: inline-block;width: 121px;">이미지 등록</label>
 									<div class="filebox" style="display: inline-block;    height: 80px;    width: 645px;">
-									    <input class="upload-name" value="첨부파일" placeholder="상품 이미지를 등록하세요." style="width: 483px;">
-									    <label for="file" style="display: inline-block;  width: 150px;line-height: 20px; text-align: center; padding-left: 18px;">파일찾기</label> 
+									    <input class="upload-name" value="첨부파일" placeholder="상품 이미지를 등록하세요." style="width: 424px;">
+									    <label for="file" style="display: inline-block;  width: 150px;line-height: 23px; text-align: center; padding-left: 18px;">파일찾기</label> 
 									    <input type="file" name="file" id="file">
 									</div>
 								</div>

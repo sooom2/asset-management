@@ -286,7 +286,7 @@
 	<!-- 관리자 회원목록 -->
 	<select id="selectAdminMember" resultType="hashmap">
 		SELECT 
-			ROW_NUMBER() OVER(ORDER BY member_bday DESC ) AS rownum
+			ROW_NUMBER() OVER(ORDER BY member_date DESC ) AS rownum
 			, m.*
 			, count(*) over() AS totalCnt
 			, ifnull(rc.rep_cnt, 0) AS rep_cnt

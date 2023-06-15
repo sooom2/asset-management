@@ -46,6 +46,11 @@
 </script>
 </head>
 <body>
+	<c:if test="${sessionScope.sId  ne 'admin' }">
+		<script type="text/javascript">
+			location.href = "./";
+		</script>
+	</c:if>
 <jsp:include page="admin_nav_top.jsp" />
 	<div id="layoutSidenav">
 		<!-- 고정  -->
@@ -119,7 +124,7 @@
 									<td>${accountHistory.trade_amount }</td>
 									<td>${accountHistory.trade_type }</td>
 									<td>${accountHistory.trade_balance }</td>
-									<td>${accountHistory.trade_date }</td>
+									<td>${accountHistory.trade_date_day }</td>
 <!-- 									<td class="modi"><input class="btn btn-block btn-more" -->
 <%-- 										type="button" value="M O R E" onclick="location.href='admin_one_rep?one_code=${oneBoard.one_code }'"></td> --%>
 								</tr>

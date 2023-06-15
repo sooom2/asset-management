@@ -47,12 +47,24 @@
 		let dis = document.querySelector(".admin-modal");
 		dis.style.display = "none";
 	}
+	
+	function reportStatus(item_code, report_targetId, repId) {
+		console.log(item_code + report_targetId + repId);
+		location.href="adminItemReport?item_code="+item_code+"&report_targetId="+report_targetId+"&repId="+repId;
+		console.log(item_code + report_targetId + repId);
+	}
+	
 </script>
 </head>
 <body>
+<c:if test="${sessionScope.sId  ne 'admin' }">
+	<script type="text/javascript">
+		location.href = "./";
+	</script>
+</c:if>
 <jsp:include page="admin_nav_top.jsp" />
 	<div id="layoutSidenav">
-		<!-- 고정  -->
+		<!-- 고정  확인  -->
 		<jsp:include page="admin_nav_side.jsp" />
 		<!-- 고정 -->
 
@@ -135,10 +147,10 @@
 									<td>${adminItem.repId }</td>
 									<td>${adminItem.report_content }</td>
 									<td>${adminItem.rep_cnt }</td>
-									<td>N</td>
+									<td>${adminItem.report_statusYN }</td>
 									<td class="modi">
 										<input class="btn btn-block btn-more"
-										type="button" value="처리" onclick="location.href='admin_one_rep?one_code=${adminItem.item_code }'">
+										type="button" value="처리" onclick="reportStatus('${adminItem.item_code }','${adminItem.report_targetId }','${adminItem.repId }')">
 									</td>
 								</tr>
 							</c:forEach>

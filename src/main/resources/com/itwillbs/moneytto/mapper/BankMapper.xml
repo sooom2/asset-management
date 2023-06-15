@@ -133,7 +133,11 @@
 <!-- 관리자 계좌시작===================================================== -->
 	<!-- 계좌 내역 조회 -->
 	<select id="selectAccountHistory" resultType="hashmap">
-		SELECT ROW_NUMBER() OVER(ORDER BY trade_date DESC ) AS rownum, ah.*, count(*) over() AS totalCnt
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY trade_date DESC ) AS rownum
+			, ah.*
+			, DATE_FORMAT(ah.trade_date, '%Y-%m-%d %H:%m:%s') AS trade_date_day
+			, count(*) over() AS totalCnt
 			FROM account_history ah
 				WHERE 1=1
 				<if test="searchKeyword != null and !searchKeyword.equals('')">
@@ -152,6 +156,7 @@
 		SELECT 
 			ROW_NUMBER() OVER(ORDER BY point_date DESC ) AS rownum
 			, ph.*
+			, DATE_FORMAT(ph.point_date, '%Y-%m-%d %H:%m:%s') AS point_date_day
 			, count(*) over() AS totalCnt
 			, m.member_point
 		FROM point_history ph

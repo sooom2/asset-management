@@ -68,6 +68,11 @@
 </script>
 </head>
 <body>
+<c:if test="${sessionScope.sId  ne 'admin' }">
+	<script type="text/javascript">
+		location.href = "./";
+	</script>
+</c:if>
 <jsp:include page="admin_nav_top.jsp" />
 	<div id="layoutSidenav">
 		<!-- 고정  -->

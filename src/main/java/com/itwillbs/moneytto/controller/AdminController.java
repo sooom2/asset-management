@@ -79,7 +79,6 @@ public class AdminController {
 	    }
 	    model.addAttribute("chartList", chartList);
 	    model.addAttribute("payTypeAdmin", chartList);
-	    model.addAttribute("payTypeAdmin", chartList);
 	    System.out.println("dsfasdfaasdafss" + chartList);
 		
 		// ==============================================================================================
@@ -115,6 +114,7 @@ public class AdminController {
 			
 			model.addAttribute("accountCnt", accountCnt);
 			System.out.println("1번 확인: " + tradeChart);
+			System.out.println("1번 확인222: " + accountCnt);
 		}
 		// 2. 
 		if(categoryChart.size() > 0) {
@@ -159,18 +159,18 @@ public class AdminController {
 				}
 			}
 			// categoryCnt에 저장위해
-			categoryCnt.put("cate1", cate1);
-			categoryCnt.put("cate2", cate2);
+			categoryCnt.put("cate1", (Integer.parseInt(cate1) + Integer.parseInt(cate8) + Integer.parseInt(cate9)) +"");
+			categoryCnt.put("cate2", (Integer.parseInt(cate2) + Integer.parseInt(cate10)) + "");
 			categoryCnt.put("cate3", cate3);
 			categoryCnt.put("cate4", cate4);
-			categoryCnt.put("cate5", cate5);
+			categoryCnt.put("cate5", (Integer.parseInt(cate5) + Integer.parseInt(cate11)) + "");
 			categoryCnt.put("cate6", cate6);
-			categoryCnt.put("cate7", cate7);
-			categoryCnt.put("cate8", cate8);
-			categoryCnt.put("cate9", cate9);
-			categoryCnt.put("cate10", cate10);
-			categoryCnt.put("cate11", cate11);
-			categoryCnt.put("cate12", cate12);
+			categoryCnt.put("cate7", (Integer.parseInt(cate7) + Integer.parseInt(cate12)) + "");
+//			categoryCnt.put("cate8", Integer.parseInt(cate8) + "");
+//			categoryCnt.put("cate9", cate9);
+//			categoryCnt.put("cate10", cate10);
+//			categoryCnt.put("cate11", cate11);
+//			categoryCnt.put("cate12", cate12);
 //			for (int i = 1; i <= 7; i++) {
 //				categoryCnt.put("cate" + i, "cate" + i);
 //			}
@@ -390,6 +390,37 @@ public class AdminController {
 		// 내역을 model에 저장
 		model.addAttribute("adminItem", adminItem);
 		model.addAttribute("pageCnt", map);
+		
+		return "admin/adminItem";
+	}
+
+	// 중고거래 신고처리
+	@RequestMapping(value = "/adminItemReport", method = {RequestMethod.GET, RequestMethod.POST})
+	public String adminItemReport(@RequestParam HashMap<String, String> map, Model model) {
+		System.out.println("dsafsdaf' +" + map);
+		
+		// 중고거래 아이템 신고 처리
+		int itemReportCnt = marketService.updateAdminItemReport(map);
+		
+		if(itemReportCnt > 0) {
+			// 페이지 번호, 글목록수 제한
+			if(map.get("startNum") == null || "".equals(map.get("startNum"))) {
+				map.put("pageNum", "1");
+				map.put("startNum", "0");
+				map.put("endNum", "10");
+			}
+			System.out.println("dsaf"  + itemReportCnt);
+			// 중고거래 목록 검색
+			List<HashMap<String, String>> adminItem = marketService.selectadminItem(map);
+			// 내역이 존재할 경우
+			if(adminItem.size() > 0) {
+				HashMap<String, String> countMap = adminItem.get(0);
+				map.put("totalCnt", String.valueOf(countMap.get("totalCnt")));
+			}
+			// 내역을 model에 저장
+			model.addAttribute("adminItem", adminItem);
+			model.addAttribute("pageCnt", map);
+		}
 		
 		return "admin/adminItem";
 	}

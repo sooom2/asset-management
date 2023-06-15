@@ -45,6 +45,11 @@
 </script>
 </head>
 <body>
+	<c:if test="${sessionScope.sId  ne 'admin' }">
+		<script type="text/javascript">
+			location.href = "./";
+		</script>
+	</c:if>
 	<!-- <script type="text/javascript"> -->
 	<%-- var list = ${jsonArray}; --%>
 	<!-- var now = Date.now(); -->
@@ -175,13 +180,13 @@
 									<canvas id="chart1"></canvas>
 									<script>
 										
-										var cate1 = ${categoryCnt.cate1} + ${categoryCnt.cate8} + ${categoryCnt.cate9};
-										var cate2 = ${categoryCnt.cate2} + ${categoryCnt.cate10};
+										var cate1 = ${categoryCnt.cate1};
+										var cate2 = ${categoryCnt.cate2};
 										var cate3 = ${categoryCnt.cate3};
 										var cate4 = ${categoryCnt.cate4};
-										var cate5 = ${categoryCnt.cate5} + ${categoryCnt.cate11};
+										var cate5 = ${categoryCnt.cate5};
 										var cate6 = ${categoryCnt.cate6};
-										var cate7 = ${categoryCnt.cate7} + ${categoryCnt.cate12};
+										var cate7 = ${categoryCnt.cate7};
 										
 										var ctx1 = document.getElementById('chart1').getContext('2d');
 										var chart1 = new Chart(ctx1, {
@@ -314,30 +319,40 @@
 												<table id="datatablesSimple" class="datatable-table">
 													<thead>
 														<tr>
+														
 															<th data-sortable="true" style="width: 10%;"><a
-																href="#" class="datatable-sorter">번호</a></th>
-<!-- 															<th data-sortable="true" style="width: 10%;"><a -->
-<!-- 																href="#" class="datatable-sorter">전체거래량</a></th> -->
+																href="#" class="datatable-sorter">${tradeChart[6].date }</a></th>
 															<th data-sortable="true" style="width: 10%;"><a
-																href="#" class="datatable-sorter">가격</a></th>
+																href="#" class="datatable-sorter">${tradeChart[5].date }</a></th>
 															<th data-sortable="true" style="width: 10%;"><a
-																href="#" class="datatable-sorter">카테고리</a></th>
+																href="#" class="datatable-sorter">${tradeChart[4].date }</a></th>
 															<th data-sortable="true" style="width: 10%;"><a
-																href="#" class="datatable-sorter">날짜</a></th>
+																href="#" class="datatable-sorter">${tradeChart[3].date }</a></th>
+															<th data-sortable="true" style="width: 10%;"><a
+																href="#" class="datatable-sorter">${tradeChart[2].date }</a></th>
+															<th data-sortable="true" style="width: 10%;"><a
+																href="#" class="datatable-sorter">${tradeChart[1].date }</a></th>
+															<th data-sortable="true" style="width: 10%;"><a
+																href="#" class="datatable-sorter">${tradeChart[0].date }</a></th>
+															<th data-sortable="true" style="width: 10%;"><a
+																href="#" class="datatable-sorter">전체</a></th>
 														</tr>
 													</thead>
 													<!-- 회원목록 -->
-													<c:forEach var="chartList" items="${chartList }">
+<%-- 													<c:forEach var="chartList" items="${chartList }"> --%>
 														<tbody>
 															<tr data-index="0">
-																<td>${chartList.rownum }</td>
-<%-- 																<td>${chartList.totalCnt }</td> --%>
-																<td>${chartList.price }</td>
-																<td>${chartList.category }</td>
-																<td>${chartList.d }</td>
+																<td>${tradeChart[6].dateCnt }</td>
+																<td>${tradeChart[5].dateCnt }</td>
+																<td>${tradeChart[4].dateCnt }</td>
+																<td>${tradeChart[3].dateCnt }</td>
+																<td>${tradeChart[2].dateCnt }</td>
+																<td>${tradeChart[1].dateCnt }</td>
+																<td>${tradeChart[0].dateCnt }</td>
+																<td>${chartList.size() }</td>
 															</tr>
 														</tbody>
-													</c:forEach>
+<%-- 													</c:forEach> --%>
 													</tbody>
 												</table>
 											</div>
@@ -474,32 +489,38 @@
 													<thead>
 														<tr>
 															<th data-sortable="true" style="width: 10%;"><a
-																href="#" class="datatable-sorter">번호</a></th>
+																href="#" class="datatable-sorter">패션/의류/잡화/뷰티</a></th>
 															<th data-sortable="true" style="width: 10%;"><a
-																href="#" class="datatable-sorter">코드</a></th>
+																href="#" class="datatable-sorter">가전제품/모바일/PC</a></th>
 															<th data-sortable="true" style="width: 10%;"><a
-																href="#" class="datatable-sorter">카테고리</a></th>
+																href="#" class="datatable-sorter">가구/인테리어</a></th>
 															<th data-sortable="true" style="width: 10%;"><a
-																href="#" class="datatable-sorter">구매자</a></th>
+																href="#" class="datatable-sorter">도서/음반/문구/티켓</a></th>
 															<th data-sortable="true" style="width: 10%;"><a
-																href="#" class="datatable-sorter">날짜</a></th>
+																href="#" class="datatable-sorter">게임/스포츠/취미</a></th>
 															<th data-sortable="true" style="width: 10%;"><a
-																href="#" class="datatable-sorter">카테고리별 수</a></th>
+																href="#" class="datatable-sorter">유아동/반려동물</a></th>
+															<th data-sortable="true" style="width: 10%;"><a
+																href="#" class="datatable-sorter">그외기타</a></th>
+															<th data-sortable="true" style="width: 10%;"><a
+																href="#" class="datatable-sorter">전체</a></th>
 														</tr>
 													</thead>
 													<!-- 회원목록 -->
-													<c:forEach var="categoryChart" items="${categoryChart }">
+<%-- 													<c:forEach var="categoryChart" items="${categoryChart }"> --%>
 														<tbody>
 															<tr data-index="0">
-																<td>${categoryChart.rownum }</td>
-																<td>${categoryChart.code }</td>
-																<td>${categoryChart.category }</td>
-																<td>${categoryChart.buy_id }</td>
-																<td>${categoryChart.date }</td>
-																<td>${categoryChart.cate_cnt }</td>
+																<td>${categoryCnt.cate1}</td>
+																<td>${categoryCnt.cate2}</td>
+																<td>${categoryCnt.cate3}</td>
+																<td>${categoryCnt.cate4}</td>
+																<td>${categoryCnt.cate5}</td>
+																<td>${categoryCnt.cate6}</td>
+																<td>${categoryCnt.cate7}</td>
+																<td>${categoryCnt.totalCnt == null ? 0 : categoryCnt.totalCnt}</td>
 															</tr>
 														</tbody>
-													</c:forEach>
+<%-- 													</c:forEach> --%>
 													</tbody>
 												</table>
 											</div>
