@@ -9,8 +9,8 @@
 <head>
 <meta charset="UTF-8">
 <title>머니머니머니또</title>
-<%-- <link href="${path }/resources/css/main_mobile.css" rel="stylesheet"> --%>
-<link href="${path }/resources/css/market_mobile.css" rel="stylesheet">
+<link href="${path }/resources/css/main_mobile.css" rel="stylesheet">
+<%-- <link href="${path }/resources/css/market_mobile.css" rel="stylesheet"> --%>
 <link href="${path }/resources/css/common.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
