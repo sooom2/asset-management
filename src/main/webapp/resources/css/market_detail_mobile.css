@@ -348,7 +348,7 @@
     -ms-letter-spacing: 0px;
     letter-spacing: 0px;
     font-weight: 600;
-    font-size: 1.9rem;
+    font-size: 4.9rem;
     font-family: Pretendard Variable;
     color: #191f28;
     margin: 12px 0 24px;
@@ -361,7 +361,7 @@
      -ms-letter-spacing: 0px;
      letter-spacing: 0px;
      font-weight: 800;
-     font-size: 1.75rem;
+     font-size: 5.75rem;
      font-family: Pretendard Variable;
      color: #191f28;
 }
@@ -602,7 +602,7 @@
      -ms-letter-spacing: -0.4px;
      letter-spacing: -0.4px;
      font-weight: 400;
-     font-size: 1.238rem;
+     font-size: 4.238rem;
      font-family: Pretendard Variable;
      line-height: 160%;
      color: #4e5968;
@@ -618,7 +618,7 @@
     -ms-letter-spacing: -0.2px;
     letter-spacing: -0.2px;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 2rem;
     font-family: Pretendard Variable;
     line-height: 135%;
     color: #191f28;
@@ -646,7 +646,7 @@
     -ms-letter-spacing: -0.4px;
     letter-spacing: -0.4px;
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 2rem;
     font-family: Pretendard Variable;
     color: #4e5968;
     -webkit-text-decoration-line: underline;
@@ -878,7 +878,7 @@
 .irWNGN {
     letter-spacing: -0.2px;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 2rem;
     font-family: "Pretendard Variable";
     line-height: 135%;
     color: rgb(25, 31, 40);
@@ -897,12 +897,13 @@
     background: rgb(255, 255, 255);
     border-radius: 6px;
     border: 1px solid rgb(229, 232, 235);
+    /* font-size: 2rem; */
 }
 
 .fKGvTO {
     letter-spacing: 0px;
     font-weight: 600;
-    font-size: 0.875rem;
+    font-size: 1.875rem;
     font-family: "Pretendard Variable";
 }
 
@@ -988,7 +989,7 @@
     background: #bb2649;
     color: #fff!important;
     border: 1px solid #b6b6b6;
-    font-size: 1.3rem;
+    font-size: 4.3rem;
 }
 
 .trade_status input[type="button"] {

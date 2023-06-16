@@ -9,6 +9,7 @@
 <link href="resources/css/swiper.min.css" rel="stylesheet" />
 <link href="${path }/resources/css/main_mobile.css" rel="stylesheet">
 <link href="${path }/resources/css/market_detail_mobile.css" rel="stylesheet">
+<link href="${path }/resources/css/common.css" rel="stylesheet">
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -78,7 +79,7 @@ function toggleLike(element) {
 
 </script>
 </head>
-<body>
+<body style="width: 1200px;">
 <input type="hidden" id="item_code" name="item_code" value="${marketItem.item_code }">
 <input type="hidden" id="target_id" name="target_id" value="${marketItem.member_id}"/>
 <input type="hidden" id="report_type" name="report_type" value=""/>
@@ -553,8 +554,6 @@ function toggleLike(element) {
 	});
 
 </script>
-	
-	<jsp:include page="../footer.jsp" />
 	
 </body>
 </html>

@@ -16,7 +16,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <title>Insert title here</title>
 </head>
-<body>
+<body style="width: 1200px">
 <input type="hidden" id="item_category" name="item_category" value="">
 <input type="hidden" id="item_status" name="item_status" value="1">
 <input type="hidden" id="item_price_min" name="item_price_min" value="0">
