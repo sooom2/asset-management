@@ -78,6 +78,26 @@ public class MarketController {
 		return "market/market_list";
 	}
 	
+	@GetMapping(value = "market_list_mobile")
+	public String marketList_mobile(Model model,HttpSession session) {
+		
+		//session아이디로 닉네임 얻기
+		String id = (String)session.getAttribute("sId");
+		if (id != null) {
+			HashMap<String, String> member = memberService.getMember(id);
+			String nickname = member.get("member_nickname");
+			
+			String addr = member.get("member_address");
+			String city  =addr.substring(0, addr.indexOf(" ", addr.indexOf(" ") + 1));
+			
+			System.out.println(city);
+			model.addAttribute("city",city);
+			model.addAttribute("nickname",nickname);
+		}
+		
+		return "market/market_list_m";
+	}
+	
 	@GetMapping(value = "nav_market_list")
 	public String marketList(Model model,HttpSession session, String navSearch) {
 		
@@ -205,6 +225,55 @@ public class MarketController {
 
 		return "market/market_detail";
 	}
+	//m
+	@GetMapping(value = "market_detail_m")
+	public String marketDetail_m(Model model, HttpSession session, String item_code) {
+		
+		//session아이디로 닉네임 얻기
+		String id = (String)session.getAttribute("sId");
+		if (id != null) {
+			HashMap<String, String> member = memberService.getMember(id);
+			String nickname = member.get("member_nickname");
+			model.addAttribute("nickname",nickname);
+		}
+		
+		Set<String> viewedItems = (Set<String>) session.getAttribute("viewed_items");
+		
+		if (viewedItems == null) {
+			viewedItems = new HashSet<>();
+		}
+		
+		
+		// 상품 조회수 증가 처리
+		if (!viewedItems.contains(item_code)) {
+			service.increaseViews(item_code);
+			viewedItems.add(item_code);
+			session.setAttribute("viewed_items", viewedItems);
+		}
+		
+		// 아이템 상세
+		HashMap<String, String> marketItem = service.getMarketItem(item_code);
+		model.addAttribute("marketItem", marketItem);
+		
+		// 아이템 이미지
+		List<HashMap<String, String>> itemImage = service.getItemImage(item_code);
+		model.addAttribute("itemImage", itemImage);
+		
+		List<HashMap<String, String>> itemWish = memberService.getWishItem(id, item_code);
+		model.addAttribute("itemWish", itemWish);
+		
+		HashMap<String, String> grade= memberService.getMemberGrade(marketItem.get("member_id"));
+		System.out.println(grade);
+		model.addAttribute("grade", grade);
+		
+		// 탈퇴한 회원의 상품 조회 불가
+		if(marketItem.get("member_delete_status").equals("Y")) {
+			model.addAttribute("msg", "탈퇴한 회원입니다.");
+			return "fail_back";
+		}
+		
+		return "market/market_detail_m";
+	}
 	
 	// 신고하기
 	@ResponseBody
@@ -223,6 +292,24 @@ public class MarketController {
 		}
 		
 		return result;
+	}
+	
+	
+	@GetMapping(value = "itemRegist_mobile")
+	public String itemRegist_mobile(Model model,HttpSession session) {
+		
+		//session아이디로 닉네임 얻기
+		String id = (String)session.getAttribute("sId");
+		HashMap<String, String> member = memberService.getMember(id);
+		
+		if(id==null) {
+			model.addAttribute("msg","로그인이 필요합니다.");
+			return "fail_back";
+		}
+		    String nickname = member.get("member_nickname");
+		    model.addAttribute("nickname",nickname);
+		
+		return "market/market_itemRegist_mobile";
 	}
 	
 	

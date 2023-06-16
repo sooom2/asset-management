@@ -46,7 +46,8 @@ public class MainController {
 				System.out.println("메인 아이템 : ");
 				System.out.println("==================================");
 				
-				return "main";
+//				return "main";
+				return "main_mobile";
 				
 			}else if(device.isMobile()) {
 				System.out.println("모바일 접속");

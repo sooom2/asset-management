@@ -1004,6 +1004,14 @@
 			</if>
 	</select>
 <!-- 관리자 끝======================================================================================= -->
+	<update id="updateMemberGrade">
+		UPDATE
+			 member
+		SET
+			 grade_score = grade_score + 5
+		WHERE
+			member_id IN (#{target_id}, #{reviewer_id});
+	</update>
 
    
 </mapper>

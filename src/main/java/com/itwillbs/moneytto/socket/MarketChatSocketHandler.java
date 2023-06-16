@@ -95,6 +95,7 @@ public class MarketChatSocketHandler extends TextWebSocketHandler {
 				buyId = name;
 			}
 			
+			
 			System.out.println("===========================");
 			System.out.println(room_code);
 			System.out.println("===========================");

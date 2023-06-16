@@ -218,6 +218,12 @@ public class MemberController {
 		
 		return "member/mem_login_form";
 	}
+	//회원로그인
+	@GetMapping(value = "memLogin_mobile")
+	public String memLogin_mobile() {
+		
+		return "member/mem_login_form_mobile";
+	}
 	
 	// 이메일 인증
 	@GetMapping(value = "mailCheck")

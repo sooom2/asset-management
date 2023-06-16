@@ -9,82 +9,20 @@
 <head>
 <meta charset="UTF-8">
 <title>머니머니머니또</title>
-<link href="${path }/resources/css/main.css" rel="stylesheet">
-<link href="${path }/resources/css/market.css" rel="stylesheet">
-<link href="${path }/resources/css/inc.css" rel="stylesheet">
+<link href="${path }/resources/css/main_mobile.css" rel="stylesheet">
+<%-- <link href="${path }/resources/css/market_mobile.css" rel="stylesheet"> --%>
 <link href="${path }/resources/css/common.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="resources/js/jquery.bxslider.min.js"></script>
 <script type="text/javascript" src="${path }/resources/js/wish.js"></script>
 <script type="text/javascript">
 	$(function() {
-		//메인 슬라이 더
-		if ($(".bxslider-main").length) {
-			var slider_main_info = [];
-			slider_main = $('.bxslider-main').bxSlider(
-					{
-						auto : true,
-						speed : 1000,
-						minSlides : 1,
-						maxSlides : 1,
-						slideWidth : 4096,
-						slideMargin : 0,
-						infiniteLoop : true,
-						adaptiveHeight : true,
-						adaptiveHeightSpeed : 1,
-						hideControlOnEnd : false,
-						preloadImages : 'visible',
-						controls : false
-					});
-
-			setTimeout(function() {
-				slider_main.redrawSlider();
-				$(".slider-main .bx-pager").append(
-						'<span class="custom-control pause">pause</span>');
-			}, 1000);
-		}
-		var customControlStatus;
-		$(document).on("click", ".custom-control", function() {
-			if ($(".custom-control").hasClass("pause")) {
-				slider_main.stopAuto();
-				$(".custom-control").removeClass("pause").addClass("play");
-				$(".custom-control").html("play");
-				customControlStatus = 'play';
-			} else {
-				slider_main.startAuto();
-				$(".custom-control").removeClass("play").addClass("pause");
-				$(".custom-control").html("pause");
-
-				customControlStatus = 'pause';
-			}
-		});
-		$(window).on("orientationchange load resize", function() {
-			if (!$(".custom-control").length) {
-				if (customControlStatus == 'play') {
-					$(".slider-main .bx-pager")
-							.append(
-									'<span class="custom-control play">play</span>');
-				} else {
-					$(".slider-main .bx-pager")
-							.append(
-									'<span class="custom-control pause">pause</span>');
-				}
-			}
-		});
-
-		$(document).on("click", ".slider-main .bx-pager-link", function() {
-			slider_main.stopAuto();
-			$(".custom-control").removeClass("pause").addClass("play");
-			$(".custom-control").html("play");
-			customControlStatus = 'play';
-		});
-		//메인 슬라이더
-		
 		// 상품 페이지 이동
   	$(".itemThumbnail, .itemTextBox").on("click",function(){
   		var item_code = $(this).closest(".item").attr("data-cd");
-		location.href="market_detail?item_code="+item_code
+		location.href="market_detail_m?item_code="+item_code
 	})
 	
 	
@@ -94,46 +32,62 @@
 
 <body id="top">
 	
-	<jsp:include page="nav_mobile.jsp" />
-	
 	<div id="content">
-		<!-- 메인슬라이더 -->
-		<div class="section group section-main-slider" id="main-slider">
-			<div class="slider-main">
-				<ul class="bxslider-main">
-					<li style="background: url('resources/images/main/001.png') center center no-repeat;">
-						<div style="width: 980px;margin: 0 auto;height: 550px; margin-top: 160px;">
-							<div class="main_title"><div style="font-size: 20px;height: 40px">우리동네 안심 중고직거래마켓<br></div>머니또</div>
-							<p class="description">머니또에서 동네 주민들과<br>가깝고 따뜻한 거래를 지금 경험해보세요</p>
-							<div class="buttons">
-								<a href="market_list" class="whiteButton button_main" >인기상품</a>
-							</div>
-						</div>
-					</li>
-					<li style="background: url('resources/images/main/002.png') center center no-repeat;">
-						<div style="width: 980px;margin: 0 auto;height: 550px; margin-top: 160px;">
-							<div class="main_title"><div style="font-size: 20px;height: 40px">우리끼리<br></div>머니또 경매</div>
-							<p class="description">머니또와 함께 거래를 시작해보세요!</p>
-							<div class="buttons">
-								<a href="auctionMain" class="violetButton button_main">경매바로가기</a>
-							</div>
-						</div>
-					</li>
-					<li style="background: url('resources/images/main/003.png') center center no-repeat;">
-						<div style="width: 980px;margin: 0 auto;height: 550px; margin-top: 160px;">
-							<div class="main_title"><div style="font-size: 20px;height: 40px">이웃과함께하는 동네생활<br></div>머니또 커뮤니티</div>
-							<p class="description">우리 동네의 다양한 이야기를 이웃과 함께 나누어요.</p>
-							<div class="buttons">
-								<a href="commBoard" class="whiteButton button_main" >커뮤니티바로가기</a>
-							</div>
-						</div>
-					</li>
-				</ul>
+		<div class="layout__Header-sc-1fg0dfe-0 iSTjqT" style="background-color: #BB2649">
+			<div class="TopNavigation__Wrapper-sc-6acoe4-0 iqcBld" style="border-bottom: 1px solid #2f2f2f; ">
+				<div class="menu2" style=" display: inline-block;margin-left:5px;margin-top:2px; font-size: 2vh;padding: 27px 10px;color: #fff!important; ">
+					<a href="main"><div style="display: inline-block;height: 30px;"><img src="${path }/resources/images/header/mobile_logo.png" style="height: 46px;    margin-bottom: 10px;"></div></a>
+					<div class="menu" style=" display: inline-block;    margin-right: 15px; color: #fff">
+						<a href="auctionMain" style="color: #fff">경매</a>
+					</div>
+					<div class="menu" style=" display: inline-block;margin-right: 15px;color: #fff">
+						<a href="market_list_mobile" style="color: #fff">중고거래</a>
+					</div>
+					<div class="menu" style=" display: inline-block;margin-right: 15px;color: #fff">
+						<a href="commBoard" style="color: #fff">커뮤니티</a>
+					</div>
+					<div class="menu" style=" display: inline-block;color: #fff ">
+						<a href="noticeList" style="color: #fff">공지사항</a>
+					</div>
+				</div>
+				<div class="jCbMwE" style=" margin-top:25px;display: inline-block;margin-right:15px; float: right; padding: 6px;color: #fff ">
+					
+						
+				<c:choose>
+					<c:when test="${empty sessionScope.sId }">
+						<a href="memLogin_mobile" style="color: #fff;font-size: 45px"><i class="fa-regular fa-circle-user"></i></a>	
+					</c:when>
+					<c:otherwise>
+						<a href="todayAlarm" style="color: #fff;margin-right:15px;  font-size: 40px"><i class="fa-regular fa-bell"></i></a>
+						<a href="marketChat" style="color: #fff;margin-right:15px;  font-size: 40px"><i class="fa-regular fa-comment-dots fa-flip-horizontal" ></i></a>
+						<a href="logout" style="color: #fff;margin-right:15px;  font-size: 40px"><i class="fa-solid fa-right-from-bracket"></i></a>
+						<c:if test="${sessionScope.sId ne 'admin' }">
+							<a href="itemRegist_mobile" style="color: #fff;margin-right:15px;  font-size: 40px"><i class="fa-solid fa-boxes-packing"></i></a>
+						</c:if>
+						<c:if test="${sessionScope.sId eq 'admin' }">
+						<a href="admin" style="color: #fff;margin-right:15px;  font-size: 40px"><i class="fa-solid fa-screwdriver-wrench"></i></a>
+						</c:if>
+					</c:otherwise>
+				</c:choose>
+			</div>
 			</div>
 		</div>
-		<!-- 메인슬라이더 -->
-		
-		
+		<div>
+			<div>
+			<div style="background: url(resources/images/main/001.png) center center no-repeat fixed;   background-position: -1215px -31px;">
+				<div style="height: 550px;">
+					<div style="padding: 135px 100px 100px 100px">
+						<div class="main_title">
+						<div style="font-size: 40px;height: 40px;margin-bottom: 45px">우리동네 안심 중고직거래마켓<br>
+						</div><span style="font-size: 80px">머니또</span></div>
+<!-- 						<p class="description" style="font-size: 30px">머니또에서 동네 주민들과<br>가깝고 따뜻한 거래를 지금 경험해보세요</p> -->
+						<div class="buttons">
+							<a href="market_list" class="whiteButton button_main" style="font-size: 40px;">인기상품</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="section group main-board">
 			<div class="section group goods-board">
 				<div class="bestSell_list_wrap">
@@ -167,7 +121,7 @@
 								</div>
 								<div class="itemTextBox">
 									<div class="itemCategory">${item.item_category }</div>
-									<div class="itemText subject">${item.item_subject }</div>
+									<div class="itemText subject" style="width: 450px;">${item.item_subject }</div>
 									<div class="itemText"><fmt:formatNumber value="${item.item_price }" pattern="#,###" />원</div>
 									<div class="itemTagBox">
 										<c:forEach var="item_tag"
@@ -181,16 +135,6 @@
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
-									</div>
-									<div>
-										<div class="itemTimeTag">
-											<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
-											<fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd " />
-										</div>
-										<div class="itemTimeTag">
-											<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" />
-											<fmt:formatDate value="${parsedDate}" pattern="ahh시 mm분" />
-										</div>
 									</div>
 								</div>
 							</div>
@@ -245,30 +189,16 @@
 											</c:choose>
 										</c:forEach>
 									</div>
-									<!-- 여기 날짜 태그가... 적용이안돼요  -->
-<!-- 									<div> -->
-<!-- 										<div class="itemTimeTag"> -->
-<%-- 											<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" /> --%>
-<%-- 											<fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd " /> --%>
-<!-- 										</div> -->
-<!-- 										<div class="itemTimeTag"> -->
-<%-- 											<fmt:parseDate var="parsedDate" value="${item.item_date}" pattern="yyyy-MM-dd'T'HH:mm:ss" /> --%>
-<%-- 											<fmt:formatDate value="${parsedDate}" pattern="ahh시 mm분" /> --%>
-<!-- 										</div> -->
-<!-- 									</div> -->
 								</div>
 							</div>
 						</c:forEach>
 					</div>
 				</div>
-				
-				
 				<a href="market_list">
-					<div class="chall_more">더 많은 상품 보러가기</div>
+					<div class="chall_more" style="margin-top: 30px;">더 많은 상품 보러가기</div>
 				</a>
 			</div>
 		</div>
 	</div>
-	<jsp:include page="footer.jsp" />
 </body>
 </html>

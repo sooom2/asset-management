@@ -181,6 +181,8 @@ function reviewHide(review_code) {
 										<div class="gradeWrapper">
 											<img src="https://ccimage.hellomarket.com/img/web/item/detail/ico_close_modal.png" alt="닫기 아이콘" class="gradeCloseIcon close">
 											<h1 style="font-size: 20px">등급 기준</h1>
+											<br>
+											<h1 style="font-size: 20px">나의 점수	${member.grade_score}</h1>
 											<hr>
 											<table style="width: 40%;  margin: 0 auto;">
 												 <thead>

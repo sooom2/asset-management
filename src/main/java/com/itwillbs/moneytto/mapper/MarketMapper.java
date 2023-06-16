@@ -190,5 +190,7 @@ public interface MarketMapper {
    // 중고거래 아이템 신고 처리
    int updateAdminItemReport(HashMap<String, String> map);
 // 관리자에서 사용하기 위한 끝======================================================================================
+
+   int updateMemberGrade(HashMap<String, String> review);
 	
 }

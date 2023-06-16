@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="${path }/resources/css/common.css" rel="stylesheet">
-<link href="${path }/resources/css/inc.css" rel="stylesheet">
+<link href="${path }/resources/css/inc_mobile.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/81736b67fc.js" crossorigin="anonymous"></script>
 <script>
 function logout() {
